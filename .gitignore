@@ -35,11 +35,7 @@ captures/
 
 # Intellij
 *.iml
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/gradle.xml
-.idea/dictionaries
-.idea/libraries
+.idea/*
 
 # Keystore files
 *.jks
@@ -99,3 +95,8 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+app/libs/
+app/src/main/res/drawable/
+gradle/wrapper/gradle-wrapper.jar
+gradlew
+gradlew.bat
