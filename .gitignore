@@ -101,3 +101,6 @@ gradle/wrapper/gradle-wrapper.jar
 gradlew
 gradlew.bat
 .idea/
+
+# Api Keys
+app/src/main/res/values/keys.xml
