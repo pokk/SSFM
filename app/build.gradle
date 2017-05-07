@@ -13,17 +13,24 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
     }
+
     configurations.all {
         resolutionStrategy.force "com.google.code.findbugs:jsr305:3.0.1"
+    }
+
+    dataBinding {
+        enabled = true
     }
 }
 

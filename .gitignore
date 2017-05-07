@@ -35,7 +35,7 @@ captures/
 
 # Intellij
 *.iml
-.idea/*
+.idea/
 
 # Keystore files
 *.jks
@@ -96,11 +96,9 @@ crashlytics-build.properties
 fabric.properties
 
 app/libs/
-app/src/main/res/drawable/
 gradle/wrapper/gradle-wrapper.jar
 gradlew
 gradlew.bat
-.idea/
 
 # Api Keys
 app/src/main/res/values/keys.xml
