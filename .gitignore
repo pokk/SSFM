@@ -100,3 +100,4 @@ app/src/main/res/drawable/
 gradle/wrapper/gradle-wrapper.jar
 gradlew
 gradlew.bat
+.idea/
