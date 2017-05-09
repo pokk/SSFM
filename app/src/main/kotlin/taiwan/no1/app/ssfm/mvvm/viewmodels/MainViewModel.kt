@@ -1,10 +1,10 @@
-package taiwan.no1.app.ssfm.viewmodels
+package taiwan.no1.app.ssfm.mvvm.viewmodels
 
 import android.content.Context
 import android.databinding.ObservableField
 import android.view.View
 import com.devrapid.kotlinknifer.AppLog
-import taiwan.no1.app.ssfm.models.TestModel
+import taiwan.no1.app.ssfm.mvvm.models.TestModel
 
 /**
  *

@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.models
+package taiwan.no1.app.ssfm.mvvm.models
 
 /**
  *

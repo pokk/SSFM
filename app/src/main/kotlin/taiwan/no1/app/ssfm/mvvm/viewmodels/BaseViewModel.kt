@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.viewmodels
+package taiwan.no1.app.ssfm.mvvm.viewmodels
 
 import android.content.Context
 import android.databinding.BaseObservable

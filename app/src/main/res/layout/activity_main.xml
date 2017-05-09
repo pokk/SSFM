@@ -9,13 +9,13 @@
         <import type="android.view.View"/>
         <variable
             name="viewmodel"
-            type="taiwan.no1.app.ssfm.viewmodels.MainViewModel"/>
+            type="taiwan.no1.app.ssfm.mvvm.viewmodels.MainViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="taiwan.no1.app.ssfm.ui.activities.MainActivity">
+        tools:context=".mvvm.ui.activities.MainActivity">
 
         <TextView
             android:id="@+id/tv_test"

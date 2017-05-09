@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.ui.activities
+package taiwan.no1.app.ssfm.mvvm.ui.activities
 
 import android.app.Activity
 import android.content.Intent

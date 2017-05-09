@@ -1,11 +1,11 @@
-package taiwan.no1.app.ssfm.ui.activities
+package taiwan.no1.app.ssfm.mvvm.ui.activities
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityMainBinding
-import taiwan.no1.app.ssfm.viewmodels.MainViewModel
+import taiwan.no1.app.ssfm.mvvm.viewmodels.MainViewModel
 
 
 class MainActivity: AppCompatActivity() {
