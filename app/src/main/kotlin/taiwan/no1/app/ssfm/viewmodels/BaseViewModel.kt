@@ -1,6 +1,7 @@
 package taiwan.no1.app.ssfm.viewmodels
 
 import android.content.Context
+import android.databinding.BaseObservable
 
 /**
  *
@@ -8,4 +9,4 @@ import android.content.Context
  * @since   5/8/17
  */
 
-abstract class BaseViewModel(protected val context: Context) 
+abstract class BaseViewModel(protected val context: Context): BaseObservable()

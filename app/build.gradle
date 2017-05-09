@@ -40,7 +40,10 @@ dependencies {
     // My own tool library
     compile "com.devrapid.jieyi:kotlinknifer:0.0.5"
     /* For language */
+    // Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    // Kotlin DataBinding
+    kapt "com.android.databinding:compiler:2.3.1"
     /* For architecture */
     // Dagger 2
     kapt "com.google.dagger:dagger-compiler:2.10"
@@ -63,6 +66,8 @@ dependencies {
     compile "com.jakewharton.rxbinding2:rxbinding-design-kotlin:2.0.0"
     compile "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7-kotlin:2.0.0"
     compile "com.jakewharton.rxbinding2:rxbinding-leanback-v17-kotlin:2.0.0"
+    // RxCommand
+    compile "com.shundaojia:rxcommand:1.0.0"
     /* For internet */
     // Retrofit 2
     compile "com.squareup.retrofit2:retrofit:2.1.0"
@@ -80,7 +85,6 @@ dependencies {
         exclude group: "com.android.support", module: "support-annotations"
     })
 
-    kapt "com.android.databinding:compiler:2.3.1"
 }
 
 repositories {

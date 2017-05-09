@@ -13,15 +13,17 @@ import taiwan.no1.app.ssfm.models.TestModel
  */
 
 class MainViewModel(mContext: Context): BaseViewModel(mContext) {
-    var title: ObservableField<String> = ObservableField()
+    private val model: TestModel = TestModel("Jieyi", 20)
+
+    var test: ObservableField<TestModel> = ObservableField()
 
     init {
         AppLog.w()
-        val model: TestModel = TestModel("Jieyi", 20)
-        this.title.set(model.name)
+        this.test.set(this.model)
     }
 
     fun itemClick(view: View) {
-        AppLog.w("Hello")
+        AppLog.d(view)
+        this.model.name = "ggg"
     }
 }

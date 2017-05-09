@@ -6,11 +6,10 @@
 
     <data>
 
+        <import type="android.view.View"/>
         <variable
             name="viewmodel"
             type="taiwan.no1.app.ssfm.viewmodels.MainViewModel"/>
-
-        <import type="android.view.View"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -22,7 +21,7 @@
             android:id="@+id/tv_test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewmodel.title}"
+            android:text="@{viewmodel.test.name}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.48"
             app:layout_constraintLeft_toLeftOf="parent"
