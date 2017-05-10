@@ -8,4 +8,4 @@ import android.databinding.BaseObservable
  * @author  jieyi
  * @since   5/8/17
  */
-abstract class BaseViewModel(protected val context: Context): BaseObservable()
+abstract class BaseViewModel(protected val context: Context): BaseObservable(), IViewModel
