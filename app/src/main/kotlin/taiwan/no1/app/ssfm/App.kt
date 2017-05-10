@@ -10,7 +10,6 @@ import taiwan.no1.app.ssfm.internal.di.components.AppComponent
  * @author  jieyi
  * @since   5/9/17
  */
-
 class App: Application() {
     companion object {
         lateinit private var context: Context

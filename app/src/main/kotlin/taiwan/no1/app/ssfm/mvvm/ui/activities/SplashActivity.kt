@@ -10,7 +10,6 @@ import android.os.Handler
  * @author  jieyi
  * @since   5/7/17
  */
-
 class SplashActivity: Activity() {
     companion object {
         private val SPLASH_DELAY_TIME: Long = 500

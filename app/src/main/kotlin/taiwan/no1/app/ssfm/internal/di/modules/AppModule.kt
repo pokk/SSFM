@@ -14,7 +14,6 @@ import javax.inject.Singleton
  * @author  jieyi
  * @since   5/9/17
  */
-
 @Module
 class AppModule(private val app: Application) {
     @Provides

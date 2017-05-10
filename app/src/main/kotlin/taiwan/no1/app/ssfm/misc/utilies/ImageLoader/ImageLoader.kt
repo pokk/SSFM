@@ -6,5 +6,4 @@ package taiwan.no1.app.ssfm.misc.utilies.ImageLoader
  * @author  jieyi
  * @since   5/9/17
  */
-
 class ImageLoader

@@ -14,7 +14,6 @@ import com.trello.rxlifecycle2.components.support.RxFragment
  * @author  jieyi
  * @since   5/9/17
  */
-
 abstract class BaseFragment: RxFragment() {
     protected var rootView: View? = null
 

@@ -13,7 +13,6 @@ import taiwan.no1.app.ssfm.internal.di.components.AppComponent
  * @author  jieyi
  * @since   5/9/17
  */
-
 abstract class BaseActivity: RxAppCompatActivity() {
 
     //region Activity lifecycle

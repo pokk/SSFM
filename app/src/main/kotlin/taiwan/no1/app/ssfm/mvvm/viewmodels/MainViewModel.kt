@@ -11,7 +11,6 @@ import taiwan.no1.app.ssfm.mvvm.models.TestModel
  * @author  jieyi
  * @since   5/8/17
  */
-
 class MainViewModel(mContext: Context): BaseViewModel(mContext) {
     private val model: TestModel = TestModel("Jieyi", 20)
 
