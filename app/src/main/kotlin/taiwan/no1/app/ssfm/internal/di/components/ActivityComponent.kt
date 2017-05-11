@@ -16,7 +16,7 @@ interface ActivityComponent {
     object Initializer {
         fun init(appComponent: AppComponent): ActivityComponent = DaggerActivityComponent.builder()
                 .appComponent(appComponent)
-                .activityViewModelModule(ActivityModule())
+                .activityModule(ActivityModule())
                 .build()
     }
 

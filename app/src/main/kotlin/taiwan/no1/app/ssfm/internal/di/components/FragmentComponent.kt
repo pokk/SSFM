@@ -16,7 +16,7 @@ interface FragmentComponent {
     object Initializer {
         fun init(appComponent: AppComponent): FragmentComponent = DaggerFragmentComponent.builder()
                 .appComponent(appComponent)
-                .fragmentViewModelModule(FragmentModule())
+                .fragmentModule(FragmentModule())
                 .build()
     }
 

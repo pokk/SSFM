@@ -14,6 +14,7 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityMainBinding
 import taiwan.no1.app.ssfm.internal.di.HasComponent
 import taiwan.no1.app.ssfm.internal.di.components.FragmentComponent
+import taiwan.no1.app.ssfm.misc.utilies.SharedPreferences.SharedPrefs
 import taiwan.no1.app.ssfm.mvvm.ui.AdvancedActivity
 import taiwan.no1.app.ssfm.mvvm.viewmodels.MainViewModel
 
@@ -25,6 +26,7 @@ class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>(), HasC
                 R.layout.activity_main)
 //        binding.setVariable(BR.viewmodel, MainViewModel(this.applicationContext))
         binding.viewmodel = MainViewModel(this)
+        SharedPrefs.setPrefSettings(getSharedPreferences("Test", MODE_PRIVATE))
     }
 
     override fun onResume() {
