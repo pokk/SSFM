@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 
 /**
+ * Welcome activity.
  *
  * @author  jieyi
  * @since   5/7/17

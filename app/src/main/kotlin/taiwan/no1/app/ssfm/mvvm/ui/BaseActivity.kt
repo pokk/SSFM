@@ -5,7 +5,9 @@ import android.os.PersistableBundle
 import android.support.annotation.CallSuper
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import taiwan.no1.app.ssfm.App
+import taiwan.no1.app.ssfm.internal.di.components.ActivityComponent
 import taiwan.no1.app.ssfm.internal.di.components.AppComponent
+import taiwan.no1.app.ssfm.internal.di.components.FragmentComponent
 
 /**
  * Base activity for collecting all common methods here.
@@ -32,21 +34,21 @@ abstract class BaseActivity: RxAppCompatActivity() {
     }
     //endregion
 
-//    /**
-//     * Get the [ActivityComponent] for injecting a presenter and a use case.
-//     *
-//     * @return [ActivityComponent]
-//     */
-//    protected fun getComponent(): ActivityComponent =
-//            ActivityComponent.Initializer.init(this.getApplicationComponent())
-//
-//    /**
-//     * Provide the [FragmentComponent] to fragments for injecting a presenter and use cases.
-//     *
-//     * @return [FragmentComponent]
-//     */
-//    protected fun provideFragmentComponent(): FragmentComponent =
-//            FragmentComponent.Initializer.init(this.getApplicationComponent())
+    /**
+     * Get the [ActivityComponent] for injecting a presenter and a use case.
+     *
+     * @return [ActivityComponent]
+     */
+    protected fun getComponent(): ActivityComponent =
+            ActivityComponent.Initializer.init(this.getApplicationComponent())
+
+    /**
+     * Provide the [FragmentComponent] to fragments for injecting a presenter and use cases.
+     *
+     * @return [FragmentComponent]
+     */
+    protected fun provideFragmentComponent(): FragmentComponent =
+            FragmentComponent.Initializer.init(this.getApplicationComponent())
 
     /**
      * Get the Main Application component for dependency injection.
