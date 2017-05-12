@@ -1,10 +1,17 @@
 package taiwan.no1.app.ssfm.mvvm.models.data.local
 
-import taiwan.no1.app.ssfm.mvvm.models.data.repositories.IDateStore
+import de.umass.lastfm.Session
+import io.reactivex.Observable
+import taiwan.no1.app.ssfm.mvvm.models.data.IDateStore
 
 /**
  *
  * @author  jieyi
  * @since   5/10/17
  */
-class LocalDataStore: IDateStore
+class LocalDataStore: IDateStore {
+    override fun obtainSession(user: String, pwd: String, key: String, secret: String): Observable<Session> {
+        /* no-op */
+        throw Exception("Local database has no session...")
+    }
+}
