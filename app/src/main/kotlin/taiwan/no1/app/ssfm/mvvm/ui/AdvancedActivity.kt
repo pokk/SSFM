@@ -13,7 +13,7 @@ import taiwan.no1.app.ssfm.mvvm.viewmodels.IViewModel
  * @author  jieyi
  * @since   5/10/17
  */
-abstract class AdvancedActivity<VM: IViewModel, B: ViewDataBinding>: BaseActivity() {
+abstract class AdvancedActivity<out VM: IViewModel, out B: ViewDataBinding>: BaseActivity() {
     protected val binding: B by lazy {
         val (activity, layoutId) = this.provideBindingLayoutId()
         DataBindingUtil.setContentView<B>(activity, layoutId)
