@@ -16,8 +16,8 @@ class DataRepository(private val localDataStore: IDateStore, private val remoteD
         return this.remoteDataStore.obtainSession(user, pwd, key, secret)
     }
 
-    override fun getSearchMusicRes(): Observable<SearchMusicModel> {
-        return this.remoteDataStore.getSearchMusicRes()
+    override fun getSearchMusicRes(keyword: String): Observable<SearchMusicModel> {
+        return this.remoteDataStore.getSearchMusicRes(keyword)
     }
 
     override fun getDetailMusicRes(hash: String): Observable<DetailMusicModel> {

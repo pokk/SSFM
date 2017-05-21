@@ -12,7 +12,7 @@ import taiwan.no1.app.ssfm.mvvm.models.data.IDateStore
  * @since   5/10/17
  */
 class LocalDataStore: IDateStore {
-    override fun getSearchMusicRes(): Observable<SearchMusicModel> {
+    override fun getSearchMusicRes(keyword: String): Observable<SearchMusicModel> {
         /* no-op */
         throw Exception("Local database has no session...")
     }

@@ -12,8 +12,8 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.RestfulApiFactory
-import taiwan.no1.app.ssfm.mvvm.models.data.remote.config.IApiConfig
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.services.MusicServices
+import javax.inject.Named
 import javax.inject.Singleton
 
 /**
@@ -60,10 +60,19 @@ class NetModule(val context: Context) {
 
     @Provides
     @Singleton
-    fun provideRetrofit2(baseBuilder: Retrofit.Builder, restfulApiFactory: RestfulApiFactory): MusicServices {
-        val config: IApiConfig = restfulApiFactory.createMusicConfig()
-        val retrofit: Retrofit = baseBuilder.baseUrl(config.getApiBaseUrl()).build()
+    @Named("music1")
+    fun provideRetrofit2_1(baseBuilder: Retrofit.Builder, restfulApiFactory: RestfulApiFactory): MusicServices =
+            with(baseBuilder) {
+                baseUrl(restfulApiFactory.createMusic1Config().getApiBaseUrl())
+                build()
+            }.create(MusicServices::class.java)
 
-        return retrofit.create(MusicServices::class.java)
-    }
+    @Provides
+    @Singleton
+    @Named("music2")
+    fun provideRetrofit2_2(baseBuilder: Retrofit.Builder, restfulApiFactory: RestfulApiFactory): MusicServices =
+            with(baseBuilder) {
+                baseUrl(restfulApiFactory.createMusic2Config().getApiBaseUrl())
+                build()
+            }.create(MusicServices::class.java)
 }

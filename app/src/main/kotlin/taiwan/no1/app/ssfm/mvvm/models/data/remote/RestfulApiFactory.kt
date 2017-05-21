@@ -19,5 +19,7 @@ class RestfulApiFactory @Inject constructor() {
      *
      * @return Music http service config.
      */
-    fun createMusicConfig(): IApiConfig = MusicConfig()
+    fun createMusic1Config(): IApiConfig = MusicConfig()
+
+    fun createMusic2Config(): IApiConfig = MusicConfig()
 }

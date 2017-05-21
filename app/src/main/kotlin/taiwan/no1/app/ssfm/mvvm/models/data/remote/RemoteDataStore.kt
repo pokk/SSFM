@@ -12,6 +12,7 @@ import taiwan.no1.app.ssfm.mvvm.models.SearchMusicModel
 import taiwan.no1.app.ssfm.mvvm.models.data.IDateStore
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.services.MusicServices
 import javax.inject.Inject
+import javax.inject.Named
 
 /**
  *
@@ -20,7 +21,12 @@ import javax.inject.Inject
  */
 class RemoteDataStore @Inject constructor(private val context: Context): IDateStore {
     @Inject
+    @Named("music1")
     lateinit var musicService: MusicServices
+
+//    @Inject
+//    @Named("music2")
+//    lateinit var musicService1: MusicServices
 
     init {
         NetComponent.Initializer.init().inject(this@RemoteDataStore)
@@ -33,9 +39,9 @@ class RemoteDataStore @Inject constructor(private val context: Context): IDateSt
                 it.onComplete()
             }).subscribeOn(Schedulers.io())
 
-    override fun getSearchMusicRes(): Observable<SearchMusicModel> {
+    override fun getSearchMusicRes(keyword: String): Observable<SearchMusicModel> {
         val query: Map<String, String> = mapOf(Pair("format", "json"),
-                Pair("keyword", "laday gaga"),
+                Pair("keyword", keyword),
                 Pair("page", "1"),
                 Pair("pagesize", "20"),
                 Pair("showtype", "1"))
@@ -44,11 +50,8 @@ class RemoteDataStore @Inject constructor(private val context: Context): IDateSt
     }
 
     override fun getDetailMusicRes(hash: String): Observable<DetailMusicModel> {
-        val query: Map<String, String> = mapOf(Pair("format", "json"),
-                Pair("keyword", "laday gaga"),
-                Pair("page", "1"),
-                Pair("pagesize", "20"),
-                Pair("showtype", "1"))
+        val query: Map<String, String> = mapOf(Pair("r", "play/getdata"),
+                Pair("keyword", hash))
         
         return this.musicService.getMusic(query).subscribeOn(Schedulers.io())
     }

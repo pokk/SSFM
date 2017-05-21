@@ -57,7 +57,7 @@ class MainViewModel(activity: Activity): BaseViewModel(activity) {
 //                    logw()
 //                })
 
-        repo.getSearchMusicRes().subscribeBy({
+        repo.getSearchMusicRes("lady gaga").subscribeBy({
             logw(it.toString())
         }, {
             loge(it.message)
