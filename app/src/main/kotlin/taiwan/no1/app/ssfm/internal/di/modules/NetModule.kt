@@ -61,7 +61,7 @@ class NetModule(val context: Context) {
     @Provides
     @Singleton
     fun provideRetrofit2(baseBuilder: Retrofit.Builder, restfulApiFactory: RestfulApiFactory): MusicServices {
-        val config: IApiConfig = restfulApiFactory.createMovieDBConfig()
+        val config: IApiConfig = restfulApiFactory.createMusicConfig()
         val retrofit: Retrofit = baseBuilder.baseUrl(config.getApiBaseUrl()).build()
 
         return retrofit.create(MusicServices::class.java)

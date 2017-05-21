@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 /**
  * @author jieyi
- *
  * @since 5/20/17
  */
 
@@ -19,13 +18,11 @@ data class SearchMusic(
             var timestamp: Int = 0,
             var total: Int = 0,
             var aggregation: List<AggregationBean>? = null,
-            var info: List<InfoBean>? = null
-    )
+            var info: List<InfoBean>? = null)
 
     data class AggregationBean(
             var key: String? = null,
-            var count: Int = 0
-    )
+            var count: Int = 0)
 
     data class InfoBean(
             var m4afilesize: Int = 0,
@@ -56,6 +53,5 @@ data class SearchMusic(
             var hash: String? = null,
             var sqfilesize: Int = 0,
             var othername: String? = null,
-            var group: List<*>? = null
-    )
+            var group: List<*>? = null)
 }
