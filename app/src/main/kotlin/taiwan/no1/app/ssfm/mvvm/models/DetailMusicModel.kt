@@ -5,7 +5,7 @@ package taiwan.no1.app.ssfm.mvvm.models
  * @since 5/22/17
  */
 
-data class DetailMusic(
+data class DetailMusicModel(
         var status: Int = 0,
         var err_code: Int = 0,
         var data: DataBean? = null) {

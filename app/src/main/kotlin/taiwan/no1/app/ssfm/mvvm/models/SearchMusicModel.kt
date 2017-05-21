@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
  * @since 5/20/17
  */
 
-data class SearchMusic(
+data class SearchMusicModel(
         var status: Int = 0,
         var error: String? = null,
         var data: DataBean? = null,

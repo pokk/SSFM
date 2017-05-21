@@ -7,7 +7,8 @@ import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.schedulers.Schedulers
 import taiwan.no1.app.internal.di.components.NetComponent
-import taiwan.no1.app.ssfm.mvvm.models.SearchMusic
+import taiwan.no1.app.ssfm.mvvm.models.DetailMusicModel
+import taiwan.no1.app.ssfm.mvvm.models.SearchMusicModel
 import taiwan.no1.app.ssfm.mvvm.models.data.IDateStore
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.services.MusicServices
 import javax.inject.Inject
@@ -32,7 +33,7 @@ class RemoteDataStore @Inject constructor(private val context: Context): IDateSt
                 it.onComplete()
             }).subscribeOn(Schedulers.io())
 
-    override fun getSearchMusicRes(): Observable<SearchMusic> {
+    override fun getSearchMusicRes(): Observable<SearchMusicModel> {
         val query: Map<String, String> = mapOf(Pair("format", "json"),
                 Pair("keyword", "laday gaga"),
                 Pair("page", "1"),
@@ -40,5 +41,15 @@ class RemoteDataStore @Inject constructor(private val context: Context): IDateSt
                 Pair("showtype", "1"))
 
         return this.musicService.searchMusic(query).subscribeOn(Schedulers.io())
+    }
+
+    override fun getDetailMusicRes(hash: String): Observable<DetailMusicModel> {
+        val query: Map<String, String> = mapOf(Pair("format", "json"),
+                Pair("keyword", "laday gaga"),
+                Pair("page", "1"),
+                Pair("pagesize", "20"),
+                Pair("showtype", "1"))
+        
+        return this.musicService.getMusic(query).subscribeOn(Schedulers.io())
     }
 }
