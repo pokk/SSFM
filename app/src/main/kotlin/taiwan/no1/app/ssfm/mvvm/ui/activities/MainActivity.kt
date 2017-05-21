@@ -3,15 +3,7 @@ package taiwan.no1.app.ssfm.mvvm.ui.activities
 import android.app.Activity
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import com.devrapid.kotlinknifer.logd
-import com.devrapid.kotlinknifer.logi
-import com.devrapid.kotlinknifer.logw
-import de.umass.lastfm.Artist
-import de.umass.lastfm.Authenticator
 import de.umass.lastfm.Caller
-import io.reactivex.Observable
-import io.reactivex.ObservableOnSubscribe
-import io.reactivex.schedulers.Schedulers
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityMainBinding
 import taiwan.no1.app.ssfm.internal.di.HasComponent
@@ -45,16 +37,16 @@ class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>(), HasC
         val key = this.getString(R.string.lastfm_key)
         val secret = this.getString(R.string.lastfm_secret_key)
 
-        Observable.just("").subscribeOn(Schedulers.computation()).map {
-            val session = Authenticator.getMobileSession(user, password, key, secret)
-            logw(session)
-            val top = Artist.getTopAlbums("ladygaga", session.apiKey)
-            logd(top)
-        }.subscribe {
-            logi(Thread.currentThread())
-        }
-
-        val o = Observable.create(ObservableOnSubscribe<String> { it.onNext("string") }).subscribe { logw(it) }
+//        Observable.just("").subscribeOn(Schedulers.computation()).map {
+//            val session = Authenticator.getMobileSession(user, password, key, secret)
+//            logw(session)
+//            val top = Artist.getTopAlbums("ladygaga", session.apiKey)
+//            logd(top)
+//        }.subscribe {
+//            logi(Thread.currentThread())
+//        }
+//
+//        val o = Observable.create(ObservableOnSubscribe<String> { it.onNext("string") }).subscribe { logw(it) }
     }
 
     override fun bind() {

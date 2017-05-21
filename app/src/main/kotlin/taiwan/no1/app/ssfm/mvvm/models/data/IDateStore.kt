@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.mvvm.models.data
 
 import de.umass.lastfm.Session
 import io.reactivex.Observable
+import taiwan.no1.app.ssfm.mvvm.models.SearchMusic
 
 /**
  * Interface that represents a data store from where data is retrieved.
@@ -21,4 +22,6 @@ interface IDateStore {
      */
     // NOTE: 5/13/17 We should keep the 'Session' and 'UserName' in the shared preferences.
     fun obtainSession(user: String, pwd: String, key: String, secret: String): Observable<Session>
+
+    fun getSearchMusicRes(): Observable<SearchMusic>
 }
