@@ -36,6 +36,7 @@ class NetModule(val context: Context) {
     @Singleton
     fun provideGson(): Gson = with(GsonBuilder()) {
         setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        setLenient()
         create()
     }
 

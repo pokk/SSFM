@@ -2,9 +2,9 @@ package taiwan.no1.app.ssfm.mvvm.models.data.local
 
 import de.umass.lastfm.Session
 import io.reactivex.Observable
-import taiwan.no1.app.ssfm.mvvm.models.DetailMusicModel
 import taiwan.no1.app.ssfm.mvvm.models.SearchMusicModel
 import taiwan.no1.app.ssfm.mvvm.models.data.IDateStore
+import taiwan.no1.app.ssfm.mvvm.models.test
 
 /**
  *
@@ -22,7 +22,7 @@ class LocalDataStore: IDateStore {
         throw Exception("Local database has no session...")
     }
 
-    override fun getDetailMusicRes(hash: String): Observable<DetailMusicModel> {
+    override fun getDetailMusicRes(hash: String): Observable<test> {
         /* no-op */
         throw Exception("Local database has no session...")
     }

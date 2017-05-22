@@ -29,9 +29,6 @@ class MainViewModel(activity: Activity): BaseViewModel(activity) {
     }
 
     fun itemClick(view: View) {
-//        logd(view)
-        this.model.name = "ggg"
-
         val user = this.context.getString(R.string.lastfm_name)
         val password = this.context.getString(R.string.lastfm_password)
         val key = this.context.getString(R.string.lastfm_key)
@@ -57,8 +54,8 @@ class MainViewModel(activity: Activity): BaseViewModel(activity) {
 //                    logw()
 //                })
 
-        repo.getSearchMusicRes("lady gaga").subscribeBy({
-            logw(it.toString())
+        repo.getDetailMusicRes("e2a060761620ff482a272b67b204774d").subscribeBy({
+            logw(it)
         }, {
             loge(it.message)
             loge(it)
