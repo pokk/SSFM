@@ -9,7 +9,7 @@ package taiwan.no1.app.ssfm.mvvm.models.data.remote.config
 class Music2Config: IApiConfig {
     companion object {
         const val API_REQUEST = "track.scrobble"
-        // All basic http api url of KoGou Detail Music.
+        // All basic http api url of downloading Music.
         private const val BASE_URL = "http://ws.audioscrobbler.com/2.0/"
     }
 
