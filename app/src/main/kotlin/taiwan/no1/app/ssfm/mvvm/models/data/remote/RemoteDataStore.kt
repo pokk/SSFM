@@ -20,13 +20,11 @@ import javax.inject.Named
  * @since   5/10/17
  */
 class RemoteDataStore @Inject constructor(private val context: Context): IDateStore {
-    @Inject
-    @Named("music1")
+    @field:[Inject Named("music1")]
     lateinit var musicService: MusicServices
 
-//    @Inject
-//    @Named("music2")
-//    lateinit var musicService1: MusicServices
+    @field:[Inject Named("music2")]
+    lateinit var musicService1: MusicServices
 
     init {
         NetComponent.Initializer.init().inject(this@RemoteDataStore)
@@ -52,7 +50,7 @@ class RemoteDataStore @Inject constructor(private val context: Context): IDateSt
     override fun getDetailMusicRes(hash: String): Observable<DetailMusicModel> {
         val query: Map<String, String> = mapOf(Pair("r", "play/getdata"),
                 Pair("keyword", hash))
-        
+
         return this.musicService.getMusic(query).subscribeOn(Schedulers.io())
     }
 }
