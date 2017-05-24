@@ -2,9 +2,9 @@ package taiwan.no1.app.ssfm.mvvm.models.data.repositories
 
 import de.umass.lastfm.Session
 import io.reactivex.Observable
+import taiwan.no1.app.ssfm.mvvm.models.DetailMusicModel
 import taiwan.no1.app.ssfm.mvvm.models.SearchMusicModel
 import taiwan.no1.app.ssfm.mvvm.models.data.IDateStore
-import taiwan.no1.app.ssfm.mvvm.models.test
 
 /**
  *
@@ -20,7 +20,7 @@ class DataRepository(private val localDataStore: IDateStore, private val remoteD
         return this.remoteDataStore.getSearchMusicRes(keyword)
     }
 
-    override fun getDetailMusicRes(hash: String): Observable<test> {
+    override fun getDetailMusicRes(hash: String): Observable<DetailMusicModel> {
         return this.remoteDataStore.getDetailMusicRes(hash)
     }
 }

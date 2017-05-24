@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.mvvm.models.data.remote
 
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.config.IApiConfig
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.config.Music1Config
+import taiwan.no1.app.ssfm.mvvm.models.data.remote.config.Music2Config
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,5 +22,5 @@ class RestfulApiFactory @Inject constructor() {
      */
     fun createMusic1Config(): IApiConfig = Music1Config()
 
-    fun createMusic2Config(): IApiConfig = Music1Config()
+    fun createMusic2Config(): IApiConfig = Music2Config()
 }

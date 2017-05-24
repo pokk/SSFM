@@ -2,8 +2,8 @@ package taiwan.no1.app.ssfm.mvvm.models.data
 
 import de.umass.lastfm.Session
 import io.reactivex.Observable
+import taiwan.no1.app.ssfm.mvvm.models.DetailMusicModel
 import taiwan.no1.app.ssfm.mvvm.models.SearchMusicModel
-import taiwan.no1.app.ssfm.mvvm.models.test
 
 /**
  * Interface that represents a data store from where data is retrieved.
@@ -26,5 +26,5 @@ interface IDateStore {
 
     fun getSearchMusicRes(keyword: String): Observable<SearchMusicModel>
 
-    fun getDetailMusicRes(hash: String): Observable<test>
+    fun getDetailMusicRes(hash: String): Observable<DetailMusicModel>
 }
