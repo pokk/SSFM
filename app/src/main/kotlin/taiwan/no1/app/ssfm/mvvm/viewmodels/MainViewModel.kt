@@ -6,6 +6,7 @@ import android.view.View
 import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
+import de.umass.lastfm.Chart
 import io.reactivex.rxkotlin.subscribeBy
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.mvvm.models.TestModel
@@ -13,6 +14,7 @@ import taiwan.no1.app.ssfm.mvvm.models.data.IDateStore
 import taiwan.no1.app.ssfm.mvvm.models.data.local.LocalDataStore
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.RemoteDataStore
 import taiwan.no1.app.ssfm.mvvm.models.data.repositories.DataRepository
+import kotlin.concurrent.thread
 
 /**
  *
@@ -53,6 +55,14 @@ class MainViewModel(activity: Activity): BaseViewModel(activity) {
 //                }, {
 //                    logw()
 //                })
+
+        thread {
+            //            val chart = Chart.getTopArtists(key)
+//            val artists = chart.pageResults
+//            artists.forEach { logd(it.getImageURL(ImageSize.LARGE)) }
+
+            val chart = Chart.getTopTracks(key).pageResults.forEach { it }
+        }
 
         repo.getDetailMusicRes("e2a060761620ff482a272b67b204774d").subscribeBy({
             logw(it)

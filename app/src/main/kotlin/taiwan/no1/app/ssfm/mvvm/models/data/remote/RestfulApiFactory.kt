@@ -7,7 +7,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * Factory that creates different implementations of [taiwan.no1.app.ssfm.mvvm.models.data.remote.config.IApiConfig].
+ * Factory that creates different implementations of [IApiConfig].
  *
  * @author  jieyi
  * @since   5/10/17
@@ -21,5 +21,10 @@ class RestfulApiFactory @Inject constructor() {
      */
     fun createMusic1Config(): IApiConfig = Music1Config()
 
+    /**
+     * Create a new http service configuration.
+     *
+     * @return Music http service config.
+     */
     fun createMusic2Config(): IApiConfig = Music2Config()
 }

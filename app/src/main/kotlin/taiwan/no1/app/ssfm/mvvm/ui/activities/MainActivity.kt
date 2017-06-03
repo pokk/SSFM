@@ -44,12 +44,10 @@ class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>(), HasC
         val key = this.getString(R.string.lastfm_key)
         val secret = this.getString(R.string.lastfm_secret_key)
 
-
         val repo = DataRepository(LocalDataStore(), RemoteDataStore(this.applicationContext))
 
         repo.getDetailMusicRes("e2a060761620ff482a272b67b204774d").
             subscribeBy({
-                logw("321")
                 logw(it)
             }, {
                 loge(it.message)

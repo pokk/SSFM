@@ -23,7 +23,6 @@ import javax.inject.Named
 class RemoteDataStore @Inject constructor(private val context: Context): IDateStore {
     @field:[Inject Named("music1")]
     lateinit var musicService1: MusicServices
-
     @field:[Inject Named("music2")]
     lateinit var musicService2: MusicServices
 
