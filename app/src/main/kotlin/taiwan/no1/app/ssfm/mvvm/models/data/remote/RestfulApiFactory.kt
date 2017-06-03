@@ -14,7 +14,6 @@ import javax.inject.Singleton
  */
 @Singleton
 class RestfulApiFactory @Inject constructor() {
-
     /**
      * Create a new http service configuration.
      *
