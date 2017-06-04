@@ -1,8 +1,7 @@
 package taiwan.no1.app.ssfm.mvvm.models.data.remote
 
 import android.content.Context
-import de.umass.lastfm.Authenticator
-import de.umass.lastfm.Session
+import de.umass.lastfm.*
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.schedulers.Schedulers
@@ -55,5 +54,41 @@ class RemoteDataStore @Inject constructor(private val context: Context): IDateSt
             Pair(this.context.getString(R.string.t_pair8), hash))
 
         return this.musicService2.getMusic(query).subscribeOn(Schedulers.io())
+    }
+
+    override fun getChartTopArtist(): Observable<List<Artist>> {
+        TODO()
+    }
+
+    override fun getChartTopTracks(): Observable<List<Track>> {
+        TODO()
+    }
+
+    override fun getSimilarArtist(): Observable<List<Artist>> {
+        TODO()
+    }
+
+    override fun getArtistTopAlbum(): Observable<List<Track>> {
+        TODO()
+    }
+
+    override fun getArtistTags(): Observable<List<Tag>> {
+        TODO()
+    }
+
+    override fun getSimilarTracks(): Observable<List<Track>> {
+        TODO()
+    }
+
+    override fun getLovedTracks(): Observable<List<Track>> {
+        TODO()
+    }
+
+    override fun loveTrack(): Observable<Track> {
+        TODO()
+    }
+
+    override fun unloveTrack(): Observable<Track> {
+        TODO()
     }
 }

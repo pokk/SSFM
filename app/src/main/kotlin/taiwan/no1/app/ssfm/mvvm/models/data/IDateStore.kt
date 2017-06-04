@@ -55,5 +55,9 @@ interface IDateStore {
 
     fun getSimilarTracks(): Observable<List<Track>>
 
-    fun 
+    fun getLovedTracks(): Observable<List<Track>>
+
+    fun loveTrack(): Observable<Track>
+
+    fun unloveTrack(): Observable<Track>
 }

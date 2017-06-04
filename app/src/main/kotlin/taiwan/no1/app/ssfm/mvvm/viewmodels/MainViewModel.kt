@@ -33,7 +33,7 @@ class MainViewModel(activity: Activity): BaseViewModel(activity) {
     fun itemClick(view: View) {
         val user = this.context.getString(R.string.lastfm_name)
         val password = this.context.getString(R.string.lastfm_password)
-        val key = this.context.getString(R.string.lastfm_key)
+        val key = this.context.getString(R.string.lastfm_api_key)
         val secret = this.context.getString(R.string.lastfm_secret_key)
 
         val remote: IDateStore = RemoteDataStore(this.context)

@@ -41,7 +41,7 @@ class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>(), HasC
 
         val user = this.getString(R.string.lastfm_name)
         val password = this.getString(R.string.lastfm_password)
-        val key = this.getString(R.string.lastfm_key)
+        val key = this.getString(R.string.lastfm_api_key)
         val secret = this.getString(R.string.lastfm_secret_key)
 
         val repo = DataRepository(LocalDataStore(), RemoteDataStore(this.applicationContext))
