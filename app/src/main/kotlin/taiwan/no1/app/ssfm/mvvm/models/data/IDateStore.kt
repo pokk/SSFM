@@ -1,8 +1,8 @@
 package taiwan.no1.app.ssfm.mvvm.models.data
 
+import de.umass.lastfm.Album
 import de.umass.lastfm.Artist
 import de.umass.lastfm.Session
-import de.umass.lastfm.Tag
 import de.umass.lastfm.Track
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.mvvm.models.DetailMusicModel
@@ -15,18 +15,6 @@ import taiwan.no1.app.ssfm.mvvm.models.SearchMusicModel
  * @since   5/10/17
  */
 interface IDateStore {
-    /**
-     * Retrieve the user session(This session's expired date is no limitation).
-     *
-     * @param user user name.
-     * @param pwd user password.
-     * @param key api key.
-     * @param secret
-     * @return The user session.
-     */
-    // NOTE: 5/13/17 We should keep the 'Session' and 'UserName' in the shared preferences.
-    fun obtainSession(user: String, pwd: String, key: String, secret: String): Observable<Session>
-
     /**
      * Retrieve the musics or the artists information by the keyword.
      *
@@ -43,21 +31,33 @@ interface IDateStore {
      */
     fun getDetailMusicRes(hash: String): Observable<DetailMusicModel>
 
-    fun getChartTopArtist(): Observable<List<Artist>>
+    /**
+     * Retrieve the user session(This session's expired date is no limitation).
+     *
+     * @param user user name.
+     * @param pwd user password.
+     * @param key api key.
+     * @param secret
+     * @return The user session.
+     */
+    // NOTE: 5/13/17 We should keep the 'Session' and 'UserName' in the shared preferences.
+    fun obtainSession(user: String, pwd: String): Observable<Session>
 
-    fun getChartTopTracks(): Observable<List<Track>>
+    fun getChartTopArtist(page: Int = 1): Observable<Collection<Artist>>
 
-    fun getSimilarArtist(): Observable<List<Artist>>
+    fun getChartTopTracks(page: Int = 1): Observable<Collection<Track>>
 
-    fun getArtistTopAlbum(): Observable<List<Track>>
+    fun getSimilarArtist(artist: String): Observable<Collection<Artist>>
 
-    fun getArtistTags(): Observable<List<Tag>>
+    fun getArtistTopAlbum(artist: String): Observable<Collection<Album>>
 
-    fun getSimilarTracks(): Observable<List<Track>>
+    fun getArtistTags(artist: String, session: Session): Observable<Collection<String>>
 
-    fun getLovedTracks(): Observable<List<Track>>
+    fun getSimilarTracks(artist: String, mbid: String): Observable<Collection<Track>>
 
-    fun loveTrack(): Observable<Track>
+    fun getLovedTracks(user: String, page: Int = 1): Observable<Collection<Track>>
 
-    fun unloveTrack(): Observable<Track>
+    fun loveTrack(artist: String, track: String, session: Session): Observable<Track>
+
+    fun unloveTrack(artist: String, track: String, session: Session): Observable<Track>
 }

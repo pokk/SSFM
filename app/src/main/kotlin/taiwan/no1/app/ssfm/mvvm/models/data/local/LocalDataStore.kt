@@ -1,8 +1,8 @@
 package taiwan.no1.app.ssfm.mvvm.models.data.local
 
+import de.umass.lastfm.Album
 import de.umass.lastfm.Artist
 import de.umass.lastfm.Session
-import de.umass.lastfm.Tag
 import de.umass.lastfm.Track
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.mvvm.models.DetailMusicModel
@@ -20,49 +20,49 @@ class LocalDataStore: IDateStore {
         TODO("Local database has no session...")
     }
 
-    override fun obtainSession(user: String, pwd: String, key: String, secret: String): Observable<Session> {
-        /* no-op */
-        TODO("Local database has no session...")
-    }
-
     override fun getDetailMusicRes(hash: String): Observable<DetailMusicModel> {
         /* no-op */
         TODO("Local database has no session...")
     }
 
-    override fun getChartTopArtist(): Observable<List<Artist>> {
+    override fun obtainSession(user: String, pwd: String): Observable<Session> {
+        /* no-op */
+        TODO("Local database has no session...")
+    }
+
+    override fun getChartTopArtist(page: Int): Observable<Collection<Artist>> {
         TODO()
     }
 
-    override fun getChartTopTracks(): Observable<List<Track>> {
+    override fun getChartTopTracks(page: Int): Observable<Collection<Track>> {
         TODO()
     }
 
-    override fun getSimilarArtist(): Observable<List<Artist>> {
+    override fun getSimilarArtist(artist: String): Observable<Collection<Artist>> {
         TODO()
     }
 
-    override fun getArtistTopAlbum(): Observable<List<Track>> {
+    override fun getArtistTopAlbum(artist: String): Observable<Collection<Album>> {
         TODO()
     }
 
-    override fun getArtistTags(): Observable<List<Tag>> {
+    override fun getArtistTags(artist: String, session: Session): Observable<Collection<String>> {
         TODO()
     }
 
-    override fun getSimilarTracks(): Observable<List<Track>> {
+    override fun getSimilarTracks(artist: String, mbid: String): Observable<Collection<Track>> {
         TODO()
     }
 
-    override fun getLovedTracks(): Observable<List<Track>> {
+    override fun getLovedTracks(user: String, page: Int): Observable<Collection<Track>> {
         TODO()
     }
 
-    override fun loveTrack(): Observable<Track> {
+    override fun loveTrack(artist: String, track: String, session: Session): Observable<Track> {
         TODO()
     }
 
-    override fun unloveTrack(): Observable<Track> {
+    override fun unloveTrack(artist: String, track: String, session: Session): Observable<Track> {
         TODO()
     }
 }

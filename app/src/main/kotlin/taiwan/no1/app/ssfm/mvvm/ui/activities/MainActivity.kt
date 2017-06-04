@@ -4,10 +4,9 @@ import android.app.Activity
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import com.devrapid.kotlinknifer.logd
-import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
-import de.umass.lastfm.Caller
-import io.reactivex.rxkotlin.subscribeBy
+import de.umass.lastfm.Radio
+import de.umass.lastfm.Track
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityMainBinding
 import taiwan.no1.app.ssfm.internal.di.HasComponent
@@ -36,8 +35,8 @@ class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>(), HasC
         // NOTE: 5/11/17 We can use the cache as like this way.
 //        Caller.getInstance().cache = FileSystemCache(File("${Environment.getExternalStorageDirectory()}/.lastfm"))
 
-        Caller.getInstance().cache = null
-        Caller.getInstance().userAgent = "tst"
+//        Caller.getInstance().cache = null
+//        Caller.getInstance().userAgent = "tst"
 
         val user = this.getString(R.string.lastfm_name)
         val password = this.getString(R.string.lastfm_password)
@@ -46,15 +45,20 @@ class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>(), HasC
 
         val repo = DataRepository(LocalDataStore(), RemoteDataStore(this.applicationContext))
 
-        repo.getDetailMusicRes("e2a060761620ff482a272b67b204774d").
-            subscribeBy({
-                logw(it)
-            }, {
-                loge(it.message)
-                loge(it)
-            }, {
-                logd()
-            })
+//        repo.getDetailMusicRes("e2a060761620ff482a272b67b204774d").
+//            subscribeBy({
+//                logw(it)
+//            }, {
+//                loge(it.message)
+//                loge(it)
+//            }, {
+//                logd()
+//            })
+        repo.obtainSession(user, password).subscribe {
+            logd(it)
+            logw(Track.unlove("cher", "believe", it))
+            Radio.tune(Radio.RadioStation("test"), it)
+        }
     }
 
     override fun bind() {
