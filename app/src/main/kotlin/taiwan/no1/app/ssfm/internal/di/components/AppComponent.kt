@@ -17,8 +17,8 @@ import javax.inject.Singleton
 interface AppComponent {
     object Initializer {
         fun init(app: App): AppComponent = DaggerAppComponent.builder()
-            .appModule(AppModule(app))
-            .build()
+                .appModule(AppModule(app))
+                .build()
     }
 
     // Exposed to sub-graphs.

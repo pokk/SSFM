@@ -53,27 +53,27 @@ class NetModule(val context: Context) {
     fun provideBaseRetrofitBuilder(converter: GsonConverterFactory,
                                    callAdapter: RxJava2CallAdapterFactory,
                                    okHttpClient: OkHttpClient): Retrofit.Builder =
-        Retrofit.Builder().apply {
-            addConverterFactory(converter)
-            addCallAdapterFactory(callAdapter)
-            client(okHttpClient)
-        }
+            Retrofit.Builder().apply {
+                addConverterFactory(converter)
+                addCallAdapterFactory(callAdapter)
+                client(okHttpClient)
+            }
 
     @Provides
     @Singleton
     @Named("music1")
     fun provideRetrofit2_1(baseBuilder: Retrofit.Builder, restfulApiFactory: RestfulApiFactory): MusicServices =
-        with(baseBuilder) {
-            baseUrl(restfulApiFactory.createMusic1Config().getApiBaseUrl())
-            build()
-        }.create(MusicServices::class.java)
+            with(baseBuilder) {
+                baseUrl(restfulApiFactory.createMusic1Config().getApiBaseUrl())
+                build()
+            }.create(MusicServices::class.java)
 
     @Provides
     @Singleton
     @Named("music2")
     fun provideRetrofit2_2(baseBuilder: Retrofit.Builder, restfulApiFactory: RestfulApiFactory): MusicServices =
-        with(baseBuilder) {
-            baseUrl(restfulApiFactory.createMusic2Config().getApiBaseUrl())
-            build()
-        }.create(MusicServices::class.java)
+            with(baseBuilder) {
+                baseUrl(restfulApiFactory.createMusic2Config().getApiBaseUrl())
+                build()
+            }.create(MusicServices::class.java)
 }

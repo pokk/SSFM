@@ -27,5 +27,5 @@ class AppModule(private val app: Application) {
     @Provides
     @Singleton
     fun provideSharePreferences(application: Application): SharedPreferences =
-        PreferenceManager.getDefaultSharedPreferences(application)
+            PreferenceManager.getDefaultSharedPreferences(application)
 }

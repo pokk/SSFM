@@ -15,9 +15,9 @@ import taiwan.no1.app.ssfm.internal.di.modules.FragmentModule
 interface FragmentComponent {
     object Initializer {
         fun init(appComponent: AppComponent): FragmentComponent = DaggerFragmentComponent.builder()
-            .appComponent(appComponent)
-            .fragmentModule(FragmentModule())
-            .build()
+                .appComponent(appComponent)
+                .fragmentModule(FragmentModule())
+                .build()
     }
 
     /**

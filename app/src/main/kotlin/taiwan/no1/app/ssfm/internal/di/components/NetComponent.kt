@@ -17,8 +17,8 @@ import javax.inject.Singleton
 interface NetComponent {
     object Initializer {
         @JvmStatic fun init(): NetComponent = DaggerNetComponent.builder()
-            .netModule(NetModule(App.getAppContext()))
-            .build()
+                .netModule(NetModule(App.getAppContext()))
+                .build()
     }
 
     fun inject(remoteDataStore: RemoteDataStore)

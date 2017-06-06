@@ -23,7 +23,7 @@ class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>(), HasC
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityMainBinding = DataBindingUtil.setContentView<ActivityMainBinding>(this,
-            R.layout.activity_main)
+                R.layout.activity_main)
 //        binding.setVariable(BR.viewmodel, MainViewModel(this.applicationContext))
         binding.viewmodel = MainViewModel(this)
         SharedPrefs.setPrefSettings(getSharedPreferences("Test", MODE_PRIVATE))

@@ -40,7 +40,7 @@ abstract class BaseActivity: RxAppCompatActivity() {
      * @return [ActivityComponent]
      */
     protected fun getComponent(): ActivityComponent =
-        ActivityComponent.Initializer.init(this.getApplicationComponent())
+            ActivityComponent.Initializer.init(this.getApplicationComponent())
 
     /**
      * Provide the [FragmentComponent] to fragments for injecting a presenter and use cases.
@@ -48,7 +48,7 @@ abstract class BaseActivity: RxAppCompatActivity() {
      * @return [FragmentComponent]
      */
     protected fun provideFragmentComponent(): FragmentComponent =
-        FragmentComponent.Initializer.init(this.getApplicationComponent())
+            FragmentComponent.Initializer.init(this.getApplicationComponent())
 
     /**
      * Get the Main Application component for dependency injection.
