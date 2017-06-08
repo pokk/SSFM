@@ -22,7 +22,7 @@ class MenuItem(context: Context): LinearLayout(context) {
 
     init {
         val view = (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).
-                inflate(R.layout.custom_menu_item, this)
+            inflate(R.layout.custom_menu_item, this)
         this.iv_icon = view.iv_icon
         this.tv_menu = view.tv_title
     }

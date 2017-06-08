@@ -7,7 +7,8 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 
-internal class TouchDisableView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null): ViewGroup(
+internal class TouchDisableView @JvmOverloads constructor(context: Context,
+                                                          attrs: AttributeSet? = null): ViewGroup(
     context,
     attrs) {
 

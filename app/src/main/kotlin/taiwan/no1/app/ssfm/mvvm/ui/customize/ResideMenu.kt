@@ -1,5 +1,7 @@
 package taiwan.no1.app.ssfm.mvvm.ui.customize
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
@@ -15,6 +17,15 @@ import taiwan.no1.app.ssfm.R
 import java.util.*
 
 class ResideMenu: FrameLayout {
+    companion object {
+        val DIRECTION_LEFT = 0
+        val DIRECTION_RIGHT = 1
+        private val PRESSED_MOVE_HORIZONTAL = 2
+        private val PRESSED_DOWN = 3
+        private val PRESSED_DONE = 4
+        private val PRESSED_MOVE_VERTICAL = 5
+        private val ROTATE_Y_ANGLE = 10
+    }
 
     private var imageViewShadow: ImageView? = null
     private var imageViewBackground: ImageView? = null
@@ -123,7 +134,8 @@ class ResideMenu: FrameLayout {
         var bottomPadding = viewActivity!!.paddingBottom + insets.bottom
         val hasBackKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_BACK)
         val hasHomeKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_HOME)
-        if (!hasBackKey || !hasHomeKey) {//there's a navigation bar
+        if (!hasBackKey || !hasHomeKey) {
+            //there's a navigation bar
             bottomPadding += navigationBarHeight
         }
 
@@ -430,9 +442,9 @@ class ResideMenu: FrameLayout {
             scaleDown.playTogether(ObjectAnimator.ofFloat(target, "rotationY", angle))
         }
 
-        scaleDown.setInterpolator(AnimationUtils.loadInterpolator(activity,
-            android.R.anim.decelerate_interpolator))
-        scaleDown.setDuration(250)
+        scaleDown.interpolator = AnimationUtils.loadInterpolator(activity,
+            android.R.anim.decelerate_interpolator)
+        scaleDown.duration = 250
         return scaleDown
     }
 
@@ -459,7 +471,7 @@ class ResideMenu: FrameLayout {
             scaleUp.playTogether(ObjectAnimator.ofFloat(target, "rotationY", 0))
         }
 
-        scaleUp.setDuration(250)
+        scaleUp.duration = 250
         return scaleUp
     }
 
@@ -470,7 +482,7 @@ class ResideMenu: FrameLayout {
             ObjectAnimator.ofFloat(target, "alpha", alpha)
         )
 
-        alphaAnimation.setDuration(250)
+        alphaAnimation.duration = 250
         return alphaAnimation
     }
 
@@ -669,14 +681,4 @@ class ResideMenu: FrameLayout {
         }
     }
 
-    companion object {
-
-        val DIRECTION_LEFT = 0
-        val DIRECTION_RIGHT = 1
-        private val PRESSED_MOVE_HORIZONTAL = 2
-        private val PRESSED_DOWN = 3
-        private val PRESSED_DONE = 4
-        private val PRESSED_MOVE_VERTICAL = 5
-        private val ROTATE_Y_ANGLE = 10
-    }
 }

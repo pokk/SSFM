@@ -15,9 +15,9 @@ import taiwan.no1.app.ssfm.internal.di.modules.ActivityModule
 interface ActivityComponent {
     object Initializer {
         fun init(appComponent: AppComponent): ActivityComponent = DaggerActivityComponent.builder()
-                .appComponent(appComponent)
-                .activityModule(ActivityModule())
-                .build()
+            .appComponent(appComponent)
+            .activityModule(ActivityModule())
+            .build()
     }
 
     /**
