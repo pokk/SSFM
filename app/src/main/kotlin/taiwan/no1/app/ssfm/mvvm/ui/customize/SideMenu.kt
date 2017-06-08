@@ -64,13 +64,11 @@ class SideMenu: FrameLayout {
 
     var mScaleValue = 0.5f
     var mUse3D = false
-
     val screenHeight: Int
         get() {
             this.activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
             return displayMetrics.heightPixels
         }
-
     val screenWidth: Int
         get() {
             this.activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
@@ -154,9 +152,8 @@ class SideMenu: FrameLayout {
     private val animationListener = object: Animator.AnimatorListener {
         override fun onAnimationStart(animation: Animator) {
             if (this@SideMenu.isOpened) {
-                this@SideMenu.hideScrollViewMenu(this@SideMenu.llMenu)
                 this@SideMenu.showScrollViewMenu(this@SideMenu.llMenu)
-                this@SideMenu.menuListener?.let { it.openMenu() }
+                this@SideMenu.menuListener?.openMenu()
             }
         }
 
@@ -169,7 +166,7 @@ class SideMenu: FrameLayout {
                 this@SideMenu.viewActivity.touchDisabled = false
                 this@SideMenu.viewActivity.setOnClickListener(null)
                 this@SideMenu.hideScrollViewMenu(this@SideMenu.llMenu)
-                this@SideMenu.menuListener?.let { it.closeMenu() }
+                this@SideMenu.menuListener?.closeMenu()
             }
         }
 
@@ -267,6 +264,7 @@ class SideMenu: FrameLayout {
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         val currentActivityScaleX = this.viewActivity.scaleX
+
         if (1.0f == currentActivityScaleX) {
             this.setScaleDirection()
         }
@@ -290,6 +288,7 @@ class SideMenu: FrameLayout {
                 if (PRESSED_DOWN == this.pressedState) {
                     if (yOffset > 25 || yOffset < -25) {
                         this.pressedState = PRESSED_MOVE_VERTICAL
+
                         return@action_move
                     }
                     if (xOffset < -50 || xOffset > 50) {
@@ -302,7 +301,8 @@ class SideMenu: FrameLayout {
 
                     val targetScale = getTargetScale(ev.rawX)
                     if (this.mUse3D) {
-                        var angle = (-1 * ROTATE_Y_ANGLE) * ((1 - targetScale) * 2).toInt()
+                        val angle = (-1 * ROTATE_Y_ANGLE) * ((1 - targetScale) * 2).toInt()
+
                         this.viewActivity.rotationY = angle
                         this.iv_shadow.scaleX = targetScale - shadowAdjustScaleX
                         this.iv_shadow.scaleY = targetScale - shadowAdjustScaleY
