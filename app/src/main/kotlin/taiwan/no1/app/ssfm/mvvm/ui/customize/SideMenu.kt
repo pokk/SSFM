@@ -16,12 +16,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
+import android.widget.LinearLayout
+import com.devrapid.kotlinknifer.logd
 import kotlinx.android.synthetic.main.custom_menu_view.view.*
 import kotlinx.android.synthetic.main.custom_scroll_menu.view.*
 import taiwan.no1.app.ssfm.R
-import taiwan.no1.app.ssfm.mvvm.ui.customize.ResideMenu.Companion.DIRECTION_LEFT
-import taiwan.no1.app.ssfm.mvvm.ui.customize.ResideMenu.Companion.DIRECTION_RIGHT
-import java.util.*
 
 
 /**
@@ -43,7 +42,7 @@ class SideMenu: FrameLayout {
     lateinit private var viewDecor: ViewGroup
 
     lateinit var vScrollMenu: View
-//    private val llMenu: LinearLayout by lazy { this.vScrollMenu.ll_menu }
+    private val llMenu: LinearLayout by lazy { this.vScrollMenu.ll_menu }
 
 
     var isOpened: Boolean = false
@@ -62,7 +61,6 @@ class SideMenu: FrameLayout {
     private var lastRawX = 0f
     private var isInIgnoredView = false
     private var pressedState = PRESSED_DOWN
-    private val disabledSwipeDirection = ArrayList<Int>()
     private var lastActionDownX = 0f
     private var lastActionDownY = 0f
 
@@ -87,17 +85,39 @@ class SideMenu: FrameLayout {
     }
 
     init {
-        (this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).let {
+    }
+
+    private fun initValue(activity: Activity) {
+        this.activity = activity
+        this.viewDecor = activity.window.decorView as ViewGroup
+        this.viewActivity = TouchDisableView(this.activity)
+
+        val mContent = this.viewDecor.getChildAt(0)
+        this.viewDecor.removeViewAt(0)
+        this.viewActivity.content = mContent
+        this.addView(viewActivity)
+
+        (this.vScrollMenu.parent as ViewGroup).removeView(this.vScrollMenu)
+    }
+
+    constructor(context: Context, @LayoutRes resMenu: Int): super(context) {
+        (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).let {
             it.inflate(R.layout.custom_menu_view, this)
 
-            this.vScrollMenu = it.inflate(R.layout.custom_scroll_menu, this, false)
+            this.vScrollMenu = if (0 <= resMenu) {
+                it.inflate(resMenu, this, false)
+            }
+            else {
+                it.inflate(R.layout.custom_scroll_menu, this, false)
+            }
             this.rl_menu_holder.addView(this.vScrollMenu)
         }
     }
 
-    constructor(context: Context, @LayoutRes resMenu: Int): super(context)
-
     fun attachActivity(activity: Activity) {
+        initValue(activity)
+        this.setShadowAdjustScaleXByOrientation()
+        this.viewDecor.addView(this, 0)
     }
 
     fun setBackground(@DrawableRes resBackground: Int) = this.iv_background.setImageResource(resBackground)
@@ -106,7 +126,7 @@ class SideMenu: FrameLayout {
 
     fun addMenuItem(menuItem: MenuItem) {
         this.menuItems.add(menuItem)
-        this.ll_menu.addView(menuItem)
+        this.llMenu.addView(menuItem)
     }
 
     fun addIgnoredView(v: View) = this.ignoredViews.add(v)
@@ -123,10 +143,9 @@ class SideMenu: FrameLayout {
         val scaleDown_shadow = buildScaleDownAnimation(this.iv_shadow,
             this.mScaleValue + this.shadowAdjustScaleX,
             this.mScaleValue + this.shadowAdjustScaleY)
-        val alpha_menu = buildMenuAnimation(this.ll_menu, 1.0f)
-        scaleDown_shadow.addListener(animationListener)
+        val alpha_menu = buildMenuAnimation(this.llMenu, 1.0f)
+        scaleDown_shadow.addListener(this.animationListener)
         scaleDown_activity.playTogether(scaleDown_shadow, alpha_menu)
-//        scaleDown_activity.playTogether(alpha_menu)
         scaleDown_activity.start()
     }
 
@@ -134,34 +153,54 @@ class SideMenu: FrameLayout {
         this.isOpened = false
         val scaleUp_activity = buildScaleUpAnimation(viewActivity, 1.0f, 1.0f)
         val scaleUp_shadow = buildScaleUpAnimation(this.iv_shadow, 1.0f, 1.0f)
-        val alpha_menu = buildMenuAnimation(this.ll_menu, 0.0f)
-        scaleUp_activity.addListener(animationListener)
+        val alpha_menu = buildMenuAnimation(this.llMenu, 0.0f)
+        scaleUp_activity.addListener(this.animationListener)
         scaleUp_activity.playTogether(scaleUp_shadow, alpha_menu)
-//        scaleUp_activity.playTogether(alpha_menu)
         scaleUp_activity.start()
     }
 
-    fun setSwipeDirectionDisable(direction: Int) = this.disabledSwipeDirection.add(direction)
-
-    private fun setShadowAdjustScaleXByOrientation() = resources.configuration.orientation.let {
-        when (it) {
-            Configuration.ORIENTATION_LANDSCAPE -> {
-                this.shadowAdjustScaleX = 0.034f
-                this.shadowAdjustScaleY = 0.12f
-            }
-            Configuration.ORIENTATION_PORTRAIT -> {
-                this.shadowAdjustScaleX = 0.06f
-                this.shadowAdjustScaleY = 0.07f
+    private val animationListener = object: Animator.AnimatorListener {
+        override fun onAnimationStart(animation: Animator) {
+            if (this@SideMenu.isOpened) {
+                this@SideMenu.showScrollViewMenu(this@SideMenu.llMenu)
+                this@SideMenu.menuListener?.let { it.openMenu() }
             }
         }
+
+        override fun onAnimationEnd(animation: Animator) {
+            if (this@SideMenu.isOpened) {
+                this@SideMenu.viewActivity.touchDisabled = true
+                this@SideMenu.viewActivity.setOnClickListener(this@SideMenu.viewActivityOnClickListener)
+            }
+            else {
+                this@SideMenu.viewActivity.touchDisabled = false
+                this@SideMenu.viewActivity.setOnClickListener(null)
+                this@SideMenu.hideScrollViewMenu(this@SideMenu.llMenu)
+                this@SideMenu.menuListener?.let { it.closeMenu() }
+            }
+        }
+
+        override fun onAnimationCancel(animation: Animator) {}
+
+        override fun onAnimationRepeat(animation: Animator) {}
+    }
+
+    private fun setShadowAdjustScaleXByOrientation() = when (resources.configuration.orientation) {
+        Configuration.ORIENTATION_LANDSCAPE -> {
+            this.shadowAdjustScaleX = 0.034f
+            this.shadowAdjustScaleY = 0.12f
+        }
+        Configuration.ORIENTATION_PORTRAIT -> {
+            this.shadowAdjustScaleX = 0.06f
+            this.shadowAdjustScaleY = 0.07f
+        }
+        else -> TODO("noop")
     }
 
     private fun rebuildMenu() {
-        this.ll_menu.removeAllViews()
-        this.menuItems.forEach { this.ll_menu.addView(it) }
+        this.llMenu.removeAllViews()
+        this.menuItems.forEach { this.llMenu.addView(it) }
     }
-
-    private fun isInDisableDirection(direction: Int): Boolean = this.disabledSwipeDirection.contains(direction)
 
     private fun setScaleDirection() {
         val screenWidth = screenWidth
@@ -176,106 +215,51 @@ class SideMenu: FrameLayout {
 
     private val viewActivityOnClickListener = View.OnClickListener { if (this.isOpened) this.closeMenu() }
 
-    private val animationListener = object: Animator.AnimatorListener {
-        override fun onAnimationStart(animation: Animator) {
-            if (this@SideMenu.isOpened) {
-                this@SideMenu.showScrollViewMenu(this@SideMenu.ll_menu)
-                this@SideMenu.menuListener?.let { it.openMenu() }
+    private fun buildScaleDownAnimation(target: View, targetScaleX: Float, targetScaleY: Float): AnimatorSet =
+        // scaleDownAnimation
+        AnimatorSet().also {
+            it.playTogether(ObjectAnimator.ofFloat(target, "scaleX", targetScaleX),
+                ObjectAnimator.ofFloat(target, "scaleY", targetScaleY))
+
+            if (this.mUse3D) {
+                it.playTogether(ObjectAnimator.ofFloat(target, "rotationY", -1 * ROTATE_Y_ANGLE))
             }
+
+            it.interpolator = AnimationUtils.loadInterpolator(this.activity, android.R.anim.decelerate_interpolator)
+            it.duration = 250
         }
 
-        override fun onAnimationEnd(animation: Animator) {
-            if (this@SideMenu.isOpened) {
-                this@SideMenu.viewActivity.setTouchDisable(true)
-                this@SideMenu.viewActivity.setOnClickListener(this@SideMenu.viewActivityOnClickListener)
+    private fun buildScaleUpAnimation(target: View, targetScaleX: Float, targetScaleY: Float): AnimatorSet =
+        // scaleAnimation
+        AnimatorSet().also {
+            it.playTogether(ObjectAnimator.ofFloat(target, "scaleX", targetScaleX),
+                ObjectAnimator.ofFloat(target, "scaleY", targetScaleY))
+
+            if (this.mUse3D) {
+                it.playTogether(ObjectAnimator.ofFloat(target, "rotationY", 0f))
             }
-            else {
-                this@SideMenu.viewActivity.setTouchDisable(false)
-                this@SideMenu.viewActivity.setOnClickListener(null)
-                this@SideMenu.hideScrollViewMenu(this@SideMenu.ll_menu)
-                this@SideMenu.menuListener?.let { it.closeMenu() }
-            }
+
+            it.duration = 250
         }
 
-        override fun onAnimationCancel(animation: Animator) {}
-
-        override fun onAnimationRepeat(animation: Animator) {}
-    }
-
-    private fun buildScaleDownAnimation(target: View, targetScaleX: Float, targetScaleY: Float): AnimatorSet {
-        val scaleDown = AnimatorSet()
-
-        scaleDown.playTogether(ObjectAnimator.ofFloat(target, "scaleX", targetScaleX),
-            ObjectAnimator.ofFloat(target, "scaleY", targetScaleY))
-
-        if (this.mUse3D) {
-            scaleDown.playTogether(ObjectAnimator.ofFloat(target, "rotationY", -1 * ROTATE_Y_ANGLE))
+    private fun buildMenuAnimation(target: View, alpha: Float): AnimatorSet =
+        // alphaAnimation
+        AnimatorSet().also {
+            it.playTogether(ObjectAnimator.ofFloat(target, "alpha", alpha))
+            it.duration = 250
         }
-
-        scaleDown.interpolator = AnimationUtils.loadInterpolator(this.activity, android.R.anim.decelerate_interpolator)
-        scaleDown.duration = 250
-
-        return scaleDown
-    }
-
-    private fun buildScaleUpAnimation(target: View,
-                                      targetScaleX: Float,
-                                      targetScaleY: Float): AnimatorSet = AnimatorSet().also {
-
-        val scaleUp = AnimatorSet()
-//        
-//        scaleUp.playTogether(ObjectAnimator.ofFloat(target, "scaleX", targetScaleX),
-//            ObjectAnimator.ofFloat(target, "scaleY", targetScaleY))
-//
-//        if (this.mUse3D) {
-//            scaleUp.playTogether(ObjectAnimator.ofFloat(target, "rotationY", 0f))
-//        }
-//
-//        scaleUp.duration = 250
-//
-//        return scaleUp
-    }
-
-//    private fun buildScaleUpAnimation(target: View, targetScaleX: Float, targetScaleY: Float): AnimatorSet {
-//        val scaleUp = AnimatorSet()
-//
-//        scaleUp.playTogether(ObjectAnimator.ofFloat(target, "scaleX", targetScaleX),
-//            ObjectAnimator.ofFloat(target, "scaleY", targetScaleY))
-//
-//        if (this.mUse3D) {
-//            scaleUp.playTogether(ObjectAnimator.ofFloat(target, "rotationY", 0f))
-//        }
-//
-//        scaleUp.duration = 250
-//
-//        return scaleUp
-//    }
-
-    private fun buildMenuAnimation(target: View, alpha: Float): AnimatorSet {
-        val alphaAnimation = AnimatorSet()
-
-        alphaAnimation.playTogether(ObjectAnimator.ofFloat(target, "alpha", alpha))
-        alphaAnimation.duration = 250
-
-        return alphaAnimation
-    }
 
     private fun isInIgnoredView(ev: MotionEvent): Boolean {
         val rect = Rect()
 
         this.ignoredViews.forEach {
             it.getGlobalVisibleRect(rect)
-            if (rect.contains(ev.x.toInt(), ev.y.toInt()))
+            if (rect.contains(ev.x.toInt(), ev.y.toInt())) {
                 return true
+            }
         }
 
         return false
-    }
-
-    // FIXME: 6/7/17 modify!!!
-    private fun setScaleDirectionByRawX(currentRawX: Float) {
-        if (currentRawX < lastRawX) setScaleDirection(DIRECTION_RIGHT)
-        else setScaleDirection(DIRECTION_LEFT)
     }
 
     private fun getTargetScale(currentRawX: Float): Float {
@@ -290,8 +274,9 @@ class SideMenu: FrameLayout {
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         val currentActivityScaleX = this.viewActivity.scaleX
-        if (1.0f == currentActivityScaleX)
-            this.setScaleDirectionByRawX(ev.rawX)
+        if (1.0f == currentActivityScaleX) {
+            this.setScaleDirection()
+        }
 
         when (ev.action) {
             MotionEvent.ACTION_DOWN -> {
@@ -300,12 +285,12 @@ class SideMenu: FrameLayout {
                 this.isInIgnoredView = this.isInIgnoredView(ev) && !this.isOpened
                 this.pressedState = PRESSED_DOWN
             }
-            MotionEvent.ACTION_MOVE -> {
-                if (this.isInIgnoredView || this.isInDisableDirection(scaleDirection))
-                    break
-
-                if (this.pressedState != PRESSED_DOWN && this.pressedState != PRESSED_MOVE_HORIZONTAL)
-                    break
+            MotionEvent.ACTION_MOVE -> run action_move@ {
+                logd(ev.x, ev.y)
+                if ((this.pressedState != PRESSED_DOWN && this.pressedState != PRESSED_MOVE_HORIZONTAL) ||
+                    this.isInIgnoredView) {
+                    return@action_move
+                }
 
                 val xOffset = (ev.x - lastActionDownX).toInt()
                 val yOffset = (ev.y - lastActionDownY).toInt()
@@ -313,7 +298,7 @@ class SideMenu: FrameLayout {
                 if (this.pressedState == PRESSED_DOWN) {
                     if (yOffset > 25 || yOffset < -25) {
                         this.pressedState = PRESSED_MOVE_VERTICAL
-                        break
+                        return@action_move
                     }
                     if (xOffset < -50 || xOffset > 50) {
                         this.pressedState = PRESSED_MOVE_HORIZONTAL
@@ -343,9 +328,10 @@ class SideMenu: FrameLayout {
                     return true
                 }
             }
-            MotionEvent.ACTION_UP -> {
-                if (isInIgnoredView || this.pressedState != PRESSED_MOVE_HORIZONTAL)
-                    break
+            MotionEvent.ACTION_UP -> run action_up@ {
+                if (isInIgnoredView || this.pressedState != PRESSED_MOVE_HORIZONTAL) {
+                    return@action_up
+                }
 
                 this.pressedState = PRESSED_DONE
                 if (this.isOpened) {
