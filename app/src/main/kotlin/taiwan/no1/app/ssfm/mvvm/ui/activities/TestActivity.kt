@@ -19,7 +19,7 @@ class TestActivity: Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        this.menu = SideMenu(this, -1)
+        this.menu = SideMenu(this)
         this.menu.attachActivity(this)
 
         val titles = arrayOf("Home", "Profile", "Calendar", "Settings")

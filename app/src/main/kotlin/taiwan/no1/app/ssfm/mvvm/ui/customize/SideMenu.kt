@@ -17,7 +17,6 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import android.widget.LinearLayout
-import com.devrapid.kotlinknifer.logd
 import kotlinx.android.synthetic.main.custom_menu_view.view.*
 import kotlinx.android.synthetic.main.custom_scroll_menu.view.*
 import taiwan.no1.app.ssfm.R
@@ -40,29 +39,28 @@ class SideMenu: FrameLayout {
     lateinit private var activity: Activity
     lateinit private var viewActivity: TouchDisableView
     lateinit private var viewDecor: ViewGroup
-
     lateinit var vScrollMenu: View
-    private val llMenu: LinearLayout by lazy { this.vScrollMenu.ll_menu }
-
 
     var isOpened: Boolean = false
         private set
-    private var shadowAdjustScaleX = 0f
-    private var shadowAdjustScaleY = 0f
-    private var ignoredViews = mutableListOf<View>()
+    var menuListener: OnMenuListener? = null
     var menuItems = mutableListOf<MenuItem>()
         get() = field
         set(value) {
             field = value
             this.rebuildMenu()
         }
+
+    private val llMenu: LinearLayout by lazy { this.vScrollMenu.ll_menu }
+    private var shadowAdjustScaleX = 0f
+    private var shadowAdjustScaleY = 0f
+    private var ignoredViews = mutableListOf<View>()
     private val displayMetrics = DisplayMetrics()
-    var menuListener: OnMenuListener? = null
     private var lastRawX = 0f
-    private var isInIgnoredView = false
-    private var pressedState = PRESSED_DOWN
     private var lastActionDownX = 0f
     private var lastActionDownY = 0f
+    private var isInIgnoredView = false
+    private var pressedState = PRESSED_DOWN
 
     var mScaleValue = 0.5f
     var mUse3D = false
@@ -84,7 +82,13 @@ class SideMenu: FrameLayout {
         fun closeMenu()
     }
 
-    init {
+    constructor(context: Context, @LayoutRes resMenu: Int = -1): super(context) {
+        (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).let {
+            it.inflate(R.layout.custom_menu_view, this)
+
+            this.vScrollMenu = it.inflate(if (0 <= resMenu) resMenu else R.layout.custom_scroll_menu, this, false)
+            this.rl_menu_holder.addView(this.vScrollMenu)
+        }
     }
 
     private fun initValue(activity: Activity) {
@@ -95,23 +99,9 @@ class SideMenu: FrameLayout {
         val mContent = this.viewDecor.getChildAt(0)
         this.viewDecor.removeViewAt(0)
         this.viewActivity.content = mContent
-        this.addView(viewActivity)
+        this.addView(this.viewActivity)
 
         (this.vScrollMenu.parent as ViewGroup).removeView(this.vScrollMenu)
-    }
-
-    constructor(context: Context, @LayoutRes resMenu: Int): super(context) {
-        (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).let {
-            it.inflate(R.layout.custom_menu_view, this)
-
-            this.vScrollMenu = if (0 <= resMenu) {
-                it.inflate(resMenu, this, false)
-            }
-            else {
-                it.inflate(R.layout.custom_scroll_menu, this, false)
-            }
-            this.rl_menu_holder.addView(this.vScrollMenu)
-        }
     }
 
     fun attachActivity(activity: Activity) {
@@ -144,6 +134,7 @@ class SideMenu: FrameLayout {
             this.mScaleValue + this.shadowAdjustScaleX,
             this.mScaleValue + this.shadowAdjustScaleY)
         val alpha_menu = buildMenuAnimation(this.llMenu, 1.0f)
+
         scaleDown_shadow.addListener(this.animationListener)
         scaleDown_activity.playTogether(scaleDown_shadow, alpha_menu)
         scaleDown_activity.start()
@@ -154,6 +145,7 @@ class SideMenu: FrameLayout {
         val scaleUp_activity = buildScaleUpAnimation(viewActivity, 1.0f, 1.0f)
         val scaleUp_shadow = buildScaleUpAnimation(this.iv_shadow, 1.0f, 1.0f)
         val alpha_menu = buildMenuAnimation(this.llMenu, 0.0f)
+
         scaleUp_activity.addListener(this.animationListener)
         scaleUp_activity.playTogether(scaleUp_shadow, alpha_menu)
         scaleUp_activity.start()
@@ -162,6 +154,7 @@ class SideMenu: FrameLayout {
     private val animationListener = object: Animator.AnimatorListener {
         override fun onAnimationStart(animation: Animator) {
             if (this@SideMenu.isOpened) {
+                this@SideMenu.hideScrollViewMenu(this@SideMenu.llMenu)
                 this@SideMenu.showScrollViewMenu(this@SideMenu.llMenu)
                 this@SideMenu.menuListener?.let { it.openMenu() }
             }
@@ -263,9 +256,9 @@ class SideMenu: FrameLayout {
     }
 
     private fun getTargetScale(currentRawX: Float): Float {
-        var scaleFloatX = (currentRawX - lastRawX) / screenWidth * 0.75f
-
+        val scaleFloatX = (currentRawX - lastRawX) / screenWidth * 0.75f
         var targetScale = this.viewActivity.scaleX - scaleFloatX
+
         targetScale = if (targetScale > 1.0f) 1.0f else targetScale
         targetScale = if (targetScale < 0.5f) 0.5f else targetScale
 
@@ -286,7 +279,6 @@ class SideMenu: FrameLayout {
                 this.pressedState = PRESSED_DOWN
             }
             MotionEvent.ACTION_MOVE -> run action_move@ {
-                logd(ev.x, ev.y)
                 if ((this.pressedState != PRESSED_DOWN && this.pressedState != PRESSED_MOVE_HORIZONTAL) ||
                     this.isInIgnoredView) {
                     return@action_move
@@ -295,7 +287,7 @@ class SideMenu: FrameLayout {
                 val xOffset = (ev.x - lastActionDownX).toInt()
                 val yOffset = (ev.y - lastActionDownY).toInt()
 
-                if (this.pressedState == PRESSED_DOWN) {
+                if (PRESSED_DOWN == this.pressedState) {
                     if (yOffset > 25 || yOffset < -25) {
                         this.pressedState = PRESSED_MOVE_VERTICAL
                         return@action_move
@@ -305,7 +297,7 @@ class SideMenu: FrameLayout {
                         ev.action = MotionEvent.ACTION_CANCEL
                     }
                 }
-                else if (this.pressedState == PRESSED_MOVE_HORIZONTAL) {
+                else if (PRESSED_MOVE_HORIZONTAL == this.pressedState) {
                     if (currentActivityScaleX < 0.95) showScrollViewMenu(this.vScrollMenu)
 
                     val targetScale = getTargetScale(ev.rawX)
@@ -347,7 +339,15 @@ class SideMenu: FrameLayout {
         return super.dispatchTouchEvent(ev)
     }
 
-    private fun showScrollViewMenu(scrollViewMenu: View) = scrollViewMenu.parent?.let { this.addView(scrollViewMenu) }
+    private fun showScrollViewMenu(scrollViewMenu: View) {
+        if (null == scrollViewMenu.parent) {
+            this.addView(scrollViewMenu)
+        }
+    }
 
-    private fun hideScrollViewMenu(scrollViewMenu: View) = scrollViewMenu.parent?.let { this.removeView(scrollViewMenu) }
+    private fun hideScrollViewMenu(scrollViewMenu: View) {
+        if (null == scrollViewMenu.parent) {
+            this.removeView(scrollViewMenu)
+        }
+    }
 }
