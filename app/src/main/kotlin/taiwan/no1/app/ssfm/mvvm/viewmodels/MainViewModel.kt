@@ -41,25 +41,25 @@ class MainViewModel(activity: Activity): BaseViewModel(activity) {
 
         val repo = DataRepository(local, remote)
 
-//        repo.obtainSession(user, password, key, secret).
-//                // TODO: 5/12/17 Consider a good way to import this life cycle.
-//                //                compose(RxLifecycleAndroid.bindActivity((this.context as MainActivity).lifecycle())).
-//                subscribeBy({
-//                    logw(it)
-//                    // NOTE: 5/12/17 Just one place hold kind of the operation.
-//                    this.context.getSharedPreferences("Test", MODE_PRIVATE).edit().putString("session",
-//                            Gson().toJson(it)).
-//                            apply()
-//                }, {
-//                    loge(it)
-//                }, {
-//                    logw()
-//                })
+        //        repo.obtainSession(user, password, key, secret).
+        //                // TODO: 5/12/17 Consider a good way to import this life cycle.
+        //                //                compose(RxLifecycleAndroid.bindActivity((this.context as MainActivity).lifecycle())).
+        //                subscribeBy({
+        //                    logw(it)
+        //                    // NOTE: 5/12/17 Just one place hold kind of the operation.
+        //                    this.context.getSharedPreferences("Test", MODE_PRIVATE).edit().putString("session",
+        //                            Gson().toJson(it)).
+        //                            apply()
+        //                }, {
+        //                    loge(it)
+        //                }, {
+        //                    logw()
+        //                })
 
         thread {
             //            val chart = Chart.getTopArtists(key)
-//            val artists = chart.pageResults
-//            artists.forEach { logd(it.getImageURL(ImageSize.LARGE)) }
+            //            val artists = chart.pageResults
+            //            artists.forEach { logd(it.getImageURL(ImageSize.LARGE)) }
 
             val chart = Chart.getTopTracks(key).pageResults.forEach { it }
         }

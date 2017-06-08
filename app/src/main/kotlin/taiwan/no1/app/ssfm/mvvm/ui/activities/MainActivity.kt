@@ -23,8 +23,8 @@ class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>(), HasC
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityMainBinding = DataBindingUtil.setContentView<ActivityMainBinding>(this,
-                R.layout.activity_main)
-//        binding.setVariable(BR.viewmodel, MainViewModel(this.applicationContext))
+            R.layout.activity_main)
+        //        binding.setVariable(BR.viewmodel, MainViewModel(this.applicationContext))
         binding.viewmodel = MainViewModel(this)
         SharedPrefs.setPrefSettings(getSharedPreferences("Test", MODE_PRIVATE))
     }
@@ -33,10 +33,10 @@ class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>(), HasC
         super.onResume()
 
         // NOTE: 5/11/17 We can use the cache as like this way.
-//        Caller.getInstance().cache = FileSystemCache(File("${Environment.getExternalStorageDirectory()}/.lastfm"))
+        //        Caller.getInstance().cache = FileSystemCache(File("${Environment.getExternalStorageDirectory()}/.lastfm"))
 
-//        Caller.getInstance().cache = null
-//        Caller.getInstance().userAgent = "tst"
+        //        Caller.getInstance().cache = null
+        //        Caller.getInstance().userAgent = "tst"
 
         val user = this.getString(R.string.lastfm_name)
         val password = this.getString(R.string.lastfm_password)
@@ -45,15 +45,15 @@ class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>(), HasC
 
         val repo = DataRepository(LocalDataStore(), RemoteDataStore(this.applicationContext))
 
-//        repo.getDetailMusicRes("e2a060761620ff482a272b67b204774d").
-//            subscribeBy({
-//                logw(it)
-//            }, {
-//                loge(it.message)
-//                loge(it)
-//            }, {
-//                logd()
-//            })
+        //        repo.getDetailMusicRes("e2a060761620ff482a272b67b204774d").
+        //            subscribeBy({
+        //                logw(it)
+        //            }, {
+        //                loge(it.message)
+        //                loge(it)
+        //            }, {
+        //                logd()
+        //            })
         repo.obtainSession(user, password).subscribe {
             logd(it)
             logw(Track.unlove("cher", "believe", it))

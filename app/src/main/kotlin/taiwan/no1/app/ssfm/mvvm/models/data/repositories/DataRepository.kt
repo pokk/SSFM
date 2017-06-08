@@ -14,7 +14,8 @@ import taiwan.no1.app.ssfm.mvvm.models.data.IDateStore
  * @author  jieyi
  * @since   5/10/17
  */
-class DataRepository(private val localDataStore: IDateStore, private val remoteDataStore: IDateStore): IDateStore {
+class DataRepository(private val localDataStore: IDateStore,
+                     private val remoteDataStore: IDateStore): IDateStore {
     override fun obtainSession(user: String, pwd: String): Observable<Session> {
         return this.remoteDataStore.obtainSession(user, pwd)
     }

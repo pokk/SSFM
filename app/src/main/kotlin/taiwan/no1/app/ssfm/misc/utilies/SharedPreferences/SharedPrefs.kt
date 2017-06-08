@@ -12,8 +12,9 @@ import kotlin.reflect.KProperty
  * @author  jieyi
  * @since   5/12/17
  */
-class SharedPrefs<T>(var defaultValue: T, val objectType: Class<T>? = null, var onChange: (() -> Unit)? = null):
-        ReadWriteProperty<Any, T> {
+class SharedPrefs<T>(var defaultValue: T, val objectType: Class<T>? = null,
+                     var onChange: (() -> Unit)? = null):
+    ReadWriteProperty<Any, T> {
     companion object {
         var prefs: SharedPreferences by Delegates.notNull()
         fun setPrefSettings(pref: SharedPreferences) {
@@ -37,8 +38,8 @@ class SharedPrefs<T>(var defaultValue: T, val objectType: Class<T>? = null, var 
             is Set<*> -> prefs.getStringSet(name, defaultValue as Set<String>) as T
         // Using json format to deserialize a string to an object.
             else -> this.gson.fromJson(prefs.getString(name, null) ?:
-                    throw KotlinNullPointerException("There is no kind of $name was stored in the shared preferences."),
-                    objectType)
+                throw KotlinNullPointerException("There is no kind of $name was stored in the shared preferences."),
+                objectType)
         }
     }
 
