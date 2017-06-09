@@ -1,19 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civ_icon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        tools:text="Jieyi Wu"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toLeftOf="@+id/civ_icon"
+        app:layout_constraintTop_toBottomOf="@+id/civ_icon"
+        tools:layout_constraintLeft_creator="1"/>
+
+    <TextView
+        android:id="@+id/tv_place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Taiwan, Hualien"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toLeftOf="@+id/civ_icon"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1"/>
 
     <ScrollView
         android:id="@+id/sv_menu"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
         android:scrollbars="none"
-        tools:ignore="UselessParent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_place"
+        app:layout_constraintVertical_bias="0.100000024"
+        tools:ignore="UselessParent"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1">
 
         <LinearLayout
             android:id="@+id/ll_menu"
@@ -23,4 +62,4 @@
         </LinearLayout>
     </ScrollView>
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

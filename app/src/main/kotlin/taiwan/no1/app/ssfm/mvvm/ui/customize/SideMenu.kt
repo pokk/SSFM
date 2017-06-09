@@ -105,8 +105,7 @@ class SideMenu: FrameLayout {
                     return@action_move
                 }
 
-                val xOffset = (ev.x - lastActionDownX).toInt()
-                val yOffset = (ev.y - lastActionDownY).toInt()
+                val (xOffset, yOffset) = Pair((ev.x - lastActionDownX).toInt(), (ev.y - lastActionDownY).toInt())
 
                 if (PRESSED_DOWN == this.pressedState) {
                     if (25 < yOffset || -25 > yOffset) {
@@ -216,6 +215,7 @@ class SideMenu: FrameLayout {
         val mContent = this.viewDecor.getChildAt(0)
         this.viewDecor.removeViewAt(0)
         this.viewActivity.content = mContent
+        // TODO: 6/9/17 I cant bring the viewActivity to the front.
         this.addView(this.viewActivity)
 
         (this.vScrollMenu.parent as ViewGroup).removeView(this.vScrollMenu)
@@ -265,8 +265,7 @@ class SideMenu: FrameLayout {
     }
 
     private fun setScaleDirection() {
-        val pivotX = screenWidth * 2.85f
-        val pivotY = screenHeight * 0.45f
+        val (pivotX, pivotY) = Pair(screenWidth * 2.85f, screenHeight * 0.5f)
 
         this.viewActivity.pivotX = pivotX
         this.viewActivity.pivotY = pivotY
