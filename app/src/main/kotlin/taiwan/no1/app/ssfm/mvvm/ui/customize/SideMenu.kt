@@ -30,9 +30,9 @@ import taiwan.no1.app.ssfm.R
 class SideMenu: FrameLayout {
     companion object {
         private const val PRESSED_MOVE_HORIZONTAL = 2
-        private const val PRESSED_DOWN = 3
-        private const val PRESSED_DONE = 4
-        private const val PRESSED_MOVE_VERTICAL = 5
+        private const val PRESSED_MOVE_VERTICAL = 3
+        private const val PRESSED_DOWN = 4
+        private const val PRESSED_DONE = 5
         private const val ROTATE_Y_ANGLE = 10f
     }
 
@@ -62,7 +62,7 @@ class SideMenu: FrameLayout {
     private var isInIgnoredView = false
     private var pressedState = PRESSED_DOWN
 
-    var mScaleValue = 0.5f
+    var mScaleValue = 0.75f
     var mUse3D = false
     val screenHeight: Int
         get() {
@@ -89,17 +89,83 @@ class SideMenu: FrameLayout {
         }
     }
 
-    private fun initValue(activity: Activity) {
-        this.activity = activity
-        this.viewDecor = activity.window.decorView as ViewGroup
-        this.viewActivity = TouchDisableView(this.activity)
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        val currentActivityScaleX = this.viewActivity.scaleX
 
-        val mContent = this.viewDecor.getChildAt(0)
-        this.viewDecor.removeViewAt(0)
-        this.viewActivity.content = mContent
-        this.addView(this.viewActivity)
+        if (1.0f == currentActivityScaleX) {
+            this.setScaleDirection()
+        }
 
-        (this.vScrollMenu.parent as ViewGroup).removeView(this.vScrollMenu)
+        when (ev.action) {
+            MotionEvent.ACTION_DOWN -> {
+                lastActionDownX = ev.x
+                lastActionDownY = ev.y
+                this.isInIgnoredView = this.isInIgnoredView(ev) && !this.isOpened
+                this.pressedState = PRESSED_DOWN
+            }
+            MotionEvent.ACTION_MOVE -> run action_move@ {
+                if ((PRESSED_DOWN != this.pressedState && PRESSED_MOVE_HORIZONTAL != this.pressedState) ||
+                    this.isInIgnoredView) {
+                    return@action_move
+                }
+
+                val xOffset = (ev.x - lastActionDownX).toInt()
+                val yOffset = (ev.y - lastActionDownY).toInt()
+
+                if (PRESSED_DOWN == this.pressedState) {
+                    if (25 < yOffset || -25 > yOffset) {
+                        this.pressedState = PRESSED_MOVE_VERTICAL
+
+                        return@action_move
+                    }
+                    if (50 < xOffset || -50 > xOffset) {
+                        this.pressedState = PRESSED_MOVE_HORIZONTAL
+                        ev.action = MotionEvent.ACTION_CANCEL
+                    }
+                }
+                else if (PRESSED_MOVE_HORIZONTAL == this.pressedState) {
+                    if (0.95 > currentActivityScaleX) {
+                        showScrollViewMenu(this.vScrollMenu)
+                    }
+
+                    val targetScale = getTargetScale(ev.rawX)
+                    if (this.mUse3D) {
+                        val angle = (-1 * ROTATE_Y_ANGLE) * ((1 - targetScale) * 2).toInt()
+
+                        this.viewActivity.rotationY = angle
+                        this.iv_shadow.scaleX = targetScale - shadowAdjustScaleX
+                        this.iv_shadow.scaleY = targetScale - shadowAdjustScaleY
+                    }
+                    else {
+                        this.iv_shadow.scaleX = targetScale + shadowAdjustScaleX
+                        this.iv_shadow.scaleY = targetScale + shadowAdjustScaleY
+                    }
+                    this.viewActivity.scaleX = targetScale
+                    this.viewActivity.scaleY = targetScale
+                    this.vScrollMenu.alpha = (1 - targetScale) * 2.0f
+
+                    lastRawX = ev.rawX
+
+                    return true
+                }
+            }
+            MotionEvent.ACTION_UP -> run action_up@ {
+                if (this.isInIgnoredView || PRESSED_MOVE_HORIZONTAL != this.pressedState) {
+                    return@action_up
+                }
+
+                this.pressedState = PRESSED_DONE
+                if (this.isOpened) {
+                    if (0.56f < currentActivityScaleX) this.closeMenu() else this.openMenu()
+                }
+                else {
+                    if (0.94f > currentActivityScaleX) this.openMenu() else this.closeMenu()
+                }
+            }
+        }
+        lastRawX = ev.rawX
+
+        return super.dispatchTouchEvent(ev)
     }
 
     fun attachActivity(activity: Activity) {
@@ -128,8 +194,7 @@ class SideMenu: FrameLayout {
 
         this.isOpened = true
         val scaleDown_activity = buildScaleDownAnimation(this.viewActivity, this.mScaleValue, this.mScaleValue)
-        val scaleDown_shadow = buildScaleDownAnimation(this.iv_shadow,
-            this.mScaleValue + this.shadowAdjustScaleX,
+        val scaleDown_shadow = buildScaleDownAnimation(this.iv_shadow, this.mScaleValue + this.shadowAdjustScaleX,
             this.mScaleValue + this.shadowAdjustScaleY)
         val alpha_menu = buildMenuAnimation(this.llMenu, 1.0f)
 
@@ -147,6 +212,19 @@ class SideMenu: FrameLayout {
         scaleUp_activity.addListener(this.animationListener)
         scaleUp_activity.playTogether(scaleUp_shadow, alpha_menu)
         scaleUp_activity.start()
+    }
+
+    private fun initValue(activity: Activity) {
+        this.activity = activity
+        this.viewDecor = activity.window.decorView as ViewGroup
+        this.viewActivity = TouchDisableView(this.activity)
+
+        val mContent = this.viewDecor.getChildAt(0)
+        this.viewDecor.removeViewAt(0)
+        this.viewActivity.content = mContent
+        this.addView(this.viewActivity)
+
+        (this.vScrollMenu.parent as ViewGroup).removeView(this.vScrollMenu)
     }
 
     private val animationListener = object: Animator.AnimatorListener {
@@ -181,8 +259,8 @@ class SideMenu: FrameLayout {
             this.shadowAdjustScaleY = 0.12f
         }
         Configuration.ORIENTATION_PORTRAIT -> {
-            this.shadowAdjustScaleX = 0.06f
-            this.shadowAdjustScaleY = 0.07f
+            this.shadowAdjustScaleX = 0.05f
+            this.shadowAdjustScaleY = 0.06f
         }
         else -> TODO("noop")
     }
@@ -193,14 +271,13 @@ class SideMenu: FrameLayout {
     }
 
     private fun setScaleDirection() {
-        val screenWidth = screenWidth
-        val pivotX = screenWidth * 1.5f
-        val pivotY = screenHeight * 0.5f
+        val pivotX = screenWidth * 2.85f
+        val pivotY = screenHeight * 0.45f
 
         this.viewActivity.pivotX = pivotX
         this.viewActivity.pivotY = pivotY
-        this.iv_shadow.pivotX = pivotX
-        this.iv_shadow.pivotY = pivotY
+        this.iv_shadow.pivotX = pivotX * 1.1f
+        this.iv_shadow.pivotY = pivotY * 1.1f
     }
 
     private val viewActivityOnClickListener = View.OnClickListener { if (this.isOpened) this.closeMenu() }
@@ -253,90 +330,13 @@ class SideMenu: FrameLayout {
     }
 
     private fun getTargetScale(currentRawX: Float): Float {
-        val scaleFloatX = (currentRawX - lastRawX) / screenWidth * 0.75f
+        val scaleFloatX = (currentRawX - lastRawX) / screenWidth * 0.5f
         var targetScale = this.viewActivity.scaleX - scaleFloatX
 
-        targetScale = if (targetScale > 1.0f) 1.0f else targetScale
-        targetScale = if (targetScale < 0.5f) 0.5f else targetScale
+        targetScale = if (1.0f < targetScale) 1.0f else targetScale
+        targetScale = if (0.5f > targetScale) 0.5f else targetScale
 
         return targetScale
-    }
-
-    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
-        val currentActivityScaleX = this.viewActivity.scaleX
-
-        if (1.0f == currentActivityScaleX) {
-            this.setScaleDirection()
-        }
-
-        when (ev.action) {
-            MotionEvent.ACTION_DOWN -> {
-                lastActionDownX = ev.x
-                lastActionDownY = ev.y
-                this.isInIgnoredView = this.isInIgnoredView(ev) && !this.isOpened
-                this.pressedState = PRESSED_DOWN
-            }
-            MotionEvent.ACTION_MOVE -> run action_move@ {
-                if ((this.pressedState != PRESSED_DOWN && this.pressedState != PRESSED_MOVE_HORIZONTAL) ||
-                    this.isInIgnoredView) {
-                    return@action_move
-                }
-
-                val xOffset = (ev.x - lastActionDownX).toInt()
-                val yOffset = (ev.y - lastActionDownY).toInt()
-
-                if (PRESSED_DOWN == this.pressedState) {
-                    if (yOffset > 25 || yOffset < -25) {
-                        this.pressedState = PRESSED_MOVE_VERTICAL
-
-                        return@action_move
-                    }
-                    if (xOffset < -50 || xOffset > 50) {
-                        this.pressedState = PRESSED_MOVE_HORIZONTAL
-                        ev.action = MotionEvent.ACTION_CANCEL
-                    }
-                }
-                else if (PRESSED_MOVE_HORIZONTAL == this.pressedState) {
-                    if (currentActivityScaleX < 0.95) showScrollViewMenu(this.vScrollMenu)
-
-                    val targetScale = getTargetScale(ev.rawX)
-                    if (this.mUse3D) {
-                        val angle = (-1 * ROTATE_Y_ANGLE) * ((1 - targetScale) * 2).toInt()
-
-                        this.viewActivity.rotationY = angle
-                        this.iv_shadow.scaleX = targetScale - shadowAdjustScaleX
-                        this.iv_shadow.scaleY = targetScale - shadowAdjustScaleY
-                    }
-                    else {
-                        this.iv_shadow.scaleX = targetScale + shadowAdjustScaleX
-                        this.iv_shadow.scaleY = targetScale + shadowAdjustScaleY
-                    }
-                    this.viewActivity.scaleX = targetScale
-                    this.viewActivity.scaleY = targetScale
-                    this.vScrollMenu.alpha = (1 - targetScale) * 2.0f
-
-                    lastRawX = ev.rawX
-
-                    return true
-                }
-            }
-            MotionEvent.ACTION_UP -> run action_up@ {
-                if (isInIgnoredView || this.pressedState != PRESSED_MOVE_HORIZONTAL) {
-                    return@action_up
-                }
-
-                this.pressedState = PRESSED_DONE
-                if (this.isOpened) {
-                    if (currentActivityScaleX > 0.56f) this.closeMenu() else this.openMenu()
-                }
-                else {
-                    if (currentActivityScaleX < 0.94f) this.openMenu() else this.closeMenu()
-                }
-            }
-        }
-        lastRawX = ev.rawX
-
-        return super.dispatchTouchEvent(ev)
     }
 
     private fun showScrollViewMenu(scrollViewMenu: View) {
