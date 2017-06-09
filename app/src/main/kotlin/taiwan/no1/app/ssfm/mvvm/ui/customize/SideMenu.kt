@@ -16,7 +16,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
-import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.custom_menu_view.view.*
 import kotlinx.android.synthetic.main.custom_scroll_menu.view.*
 import taiwan.no1.app.ssfm.R
@@ -34,14 +33,11 @@ class SideMenu: FrameLayout {
         private const val PRESSED_DOWN = 4
         private const val PRESSED_DONE = 5
         private const val ROTATE_Y_ANGLE = 10f
+        private const val ANIMATION_DURATION = 250L
     }
 
-    lateinit private var activity: Activity
-    lateinit private var viewActivity: TouchDisableView
-    lateinit private var viewDecor: ViewGroup
     lateinit var vScrollMenu: View
-
-    var isOpened: Boolean = false
+    var isOpened = false
         private set
     var menuListener: OnMenuListener? = null
     var menuItems = mutableListOf<MenuItem>()
@@ -50,30 +46,30 @@ class SideMenu: FrameLayout {
             field = value
             this.rebuildMenu()
         }
+    var mScaleValue = 0.75f
+    var mUse3D = false
 
-    private val llMenu: LinearLayout by lazy { this.vScrollMenu.ll_menu }
+    lateinit private var activity: Activity
+    lateinit private var viewActivity: TouchDisableView
+    lateinit private var viewDecor: ViewGroup
+    private val llMenu by lazy { this.vScrollMenu.ll_menu }
+    private val displayMetrics by lazy { DisplayMetrics() }
+    private val screenHeight by lazy {
+        this.activity.windowManager.defaultDisplay.getMetrics(this.displayMetrics)
+        this.displayMetrics.heightPixels
+    }
+    private val screenWidth by lazy {
+        this.activity.windowManager.defaultDisplay.getMetrics(this.displayMetrics)
+        this.displayMetrics.widthPixels
+    }
+    private var ignoredViews = mutableListOf<View>()
     private var shadowAdjustScaleX = 0f
     private var shadowAdjustScaleY = 0f
-    private var ignoredViews = mutableListOf<View>()
-    private val displayMetrics = DisplayMetrics()
     private var lastRawX = 0f
     private var lastActionDownX = 0f
     private var lastActionDownY = 0f
-    private var isInIgnoredView = false
     private var pressedState = PRESSED_DOWN
-
-    var mScaleValue = 0.75f
-    var mUse3D = false
-    val screenHeight: Int
-        get() {
-            this.activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
-            return displayMetrics.heightPixels
-        }
-    val screenWidth: Int
-        get() {
-            this.activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
-            return displayMetrics.widthPixels
-        }
+    private var isInIgnoredView = false
 
     interface OnMenuListener {
         fun openMenu()
@@ -142,7 +138,7 @@ class SideMenu: FrameLayout {
                     }
                     this.viewActivity.scaleX = targetScale
                     this.viewActivity.scaleY = targetScale
-                    this.vScrollMenu.alpha = (1 - targetScale) * 2.0f
+                    this.llMenu.alpha = (1 - targetScale) * 2.0f
 
                     lastRawX = ev.rawX
 
@@ -169,7 +165,7 @@ class SideMenu: FrameLayout {
     }
 
     fun attachActivity(activity: Activity) {
-        initValue(activity)
+        this.initValue(activity)
         this.setShadowAdjustScaleXByOrientation()
         this.viewDecor.addView(this, 0)
     }
@@ -199,19 +195,17 @@ class SideMenu: FrameLayout {
         val alpha_menu = buildMenuAnimation(this.llMenu, 1.0f)
 
         scaleDown_shadow.addListener(this.animationListener)
-        scaleDown_activity.playTogether(scaleDown_shadow, alpha_menu)
-        scaleDown_activity.start()
+        scaleDown_activity.also { it.playTogether(scaleDown_shadow, alpha_menu) }.start()
     }
 
     fun closeMenu() {
         this.isOpened = false
-        val scaleUp_activity = buildScaleUpAnimation(viewActivity, 1.0f, 1.0f)
+        val scaleUp_activity = buildScaleUpAnimation(this.viewActivity, 1.0f, 1.0f)
         val scaleUp_shadow = buildScaleUpAnimation(this.iv_shadow, 1.0f, 1.0f)
         val alpha_menu = buildMenuAnimation(this.llMenu, 0.0f)
 
         scaleUp_activity.addListener(this.animationListener)
-        scaleUp_activity.playTogether(scaleUp_shadow, alpha_menu)
-        scaleUp_activity.start()
+        scaleUp_activity.also { it.playTogether(scaleUp_shadow, alpha_menu) }.start()
     }
 
     private fun initValue(activity: Activity) {
@@ -238,7 +232,7 @@ class SideMenu: FrameLayout {
         override fun onAnimationEnd(animation: Animator) {
             if (this@SideMenu.isOpened) {
                 this@SideMenu.viewActivity.touchDisabled = true
-                this@SideMenu.viewActivity.setOnClickListener(this@SideMenu.viewActivityOnClickListener)
+                this@SideMenu.viewActivity.setOnClickListener { if (this@SideMenu.isOpened) this@SideMenu.closeMenu() }
             }
             else {
                 this@SideMenu.viewActivity.touchDisabled = false
@@ -280,8 +274,6 @@ class SideMenu: FrameLayout {
         this.iv_shadow.pivotY = pivotY * 1.1f
     }
 
-    private val viewActivityOnClickListener = View.OnClickListener { if (this.isOpened) this.closeMenu() }
-
     private fun buildScaleDownAnimation(target: View, targetScaleX: Float, targetScaleY: Float): AnimatorSet =
         // scaleDownAnimation
         AnimatorSet().also {
@@ -293,7 +285,7 @@ class SideMenu: FrameLayout {
             }
 
             it.interpolator = AnimationUtils.loadInterpolator(this.activity, android.R.anim.decelerate_interpolator)
-            it.duration = 250
+            it.duration = ANIMATION_DURATION
         }
 
     private fun buildScaleUpAnimation(target: View, targetScaleX: Float, targetScaleY: Float): AnimatorSet =
@@ -306,14 +298,14 @@ class SideMenu: FrameLayout {
                 it.playTogether(ObjectAnimator.ofFloat(target, "rotationY", 0f))
             }
 
-            it.duration = 250
+            it.duration = ANIMATION_DURATION
         }
 
     private fun buildMenuAnimation(target: View, alpha: Float): AnimatorSet =
         // alphaAnimation
         AnimatorSet().also {
             it.playTogether(ObjectAnimator.ofFloat(target, "alpha", alpha))
-            it.duration = 250
+            it.duration = ANIMATION_DURATION
         }
 
     private fun isInIgnoredView(ev: MotionEvent): Boolean {

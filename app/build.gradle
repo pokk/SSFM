@@ -77,7 +77,6 @@ dependencies {
     compile "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
     // Glide
     compile "com.github.bumptech.glide:glide:3.8.0"
-
     // LastFM api
     compile "de.u-mass:lastfm-java:0.1.2"
 
@@ -89,7 +88,6 @@ dependencies {
     androidTestCompile("com.android.support.test.espresso:espresso-core:2.2.2", {
         exclude group: "com.android.support", module: "support-annotations"
     })
-
 }
 
 repositories {
