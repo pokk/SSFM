@@ -169,7 +169,7 @@ class SideMenu: FrameLayout {
         this.viewDecor.addView(this, 0)
     }
 
-    fun setBackground(@DrawableRes resBackground: Int) = this.iv_background.setImageResource(resBackground)
+    fun setMenuBackground(@DrawableRes resBackground: Int) = this.iv_background.setImageResource(resBackground)
 
     fun setShadowVisible(isVisible: Boolean) = this.iv_shadow.setBackgroundResource(if (isVisible) R.drawable.shadow else 0)
 
