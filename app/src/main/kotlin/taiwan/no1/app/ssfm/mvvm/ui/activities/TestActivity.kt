@@ -21,7 +21,7 @@ class TestActivity: Activity() {
 
         this.menu = SideMenu(this)
         this.menu.attachActivity(this)
-        this.menu.setMenuBackground(R.drawable.menu_background)
+        this.menu.setMenuBackground(R.drawable.bkg_menu)
 
         val titles = arrayOf("Home", "Profile", "Calendar", "Settings")
         val icon = arrayOf(R.drawable.navigation_empty_icon,

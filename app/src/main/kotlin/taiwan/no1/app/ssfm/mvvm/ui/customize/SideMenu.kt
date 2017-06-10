@@ -16,8 +16,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
-import kotlinx.android.synthetic.main.custom_menu_view.view.*
-import kotlinx.android.synthetic.main.custom_scroll_menu.view.*
+import kotlinx.android.synthetic.main.custom_menu_scroll_view.view.*
+import kotlinx.android.synthetic.main.custom_menu_view_container.view.*
 import taiwan.no1.app.ssfm.R
 
 
@@ -78,9 +78,9 @@ class SideMenu: FrameLayout {
 
     constructor(context: Context, @LayoutRes resMenu: Int = -1): super(context) {
         (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).let {
-            it.inflate(R.layout.custom_menu_view, this)
+            it.inflate(R.layout.custom_menu_view_container, this)
 
-            this.vScrollMenu = it.inflate(if (0 <= resMenu) resMenu else R.layout.custom_scroll_menu, this, false)
+            this.vScrollMenu = it.inflate(if (0 <= resMenu) resMenu else R.layout.custom_menu_scroll_view, this, false)
             this.rl_menu_holder.addView(this.vScrollMenu)
         }
     }
