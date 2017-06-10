@@ -137,7 +137,7 @@ class SideMenu: FrameLayout {
                     }
                     this.viewActivity.scaleX = targetScale
                     this.viewActivity.scaleY = targetScale
-                    this.llMenu.alpha = (1 - targetScale) * 2.0f
+                    this.vScrollMenu.alpha = (1 - targetScale) * 2.0f
 
                     lastRawX = ev.rawX
 
@@ -191,7 +191,7 @@ class SideMenu: FrameLayout {
         val scaleDown_activity = buildScaleDownAnimation(this.viewActivity, this.mScaleValue, this.mScaleValue)
         val scaleDown_shadow = buildScaleDownAnimation(this.iv_shadow, this.mScaleValue + this.shadowAdjustScaleX,
             this.mScaleValue + this.shadowAdjustScaleY)
-        val alpha_menu = buildMenuAnimation(this.llMenu, 1.0f)
+        val alpha_menu = buildMenuAnimation(this.vScrollMenu, 1.0f)
 
         scaleDown_shadow.addListener(this.animationListener)
         scaleDown_activity.also { it.playTogether(scaleDown_shadow, alpha_menu) }.start()
@@ -201,7 +201,7 @@ class SideMenu: FrameLayout {
         this.isOpened = false
         val scaleUp_activity = buildScaleUpAnimation(this.viewActivity, 1.0f, 1.0f)
         val scaleUp_shadow = buildScaleUpAnimation(this.iv_shadow, 1.0f, 1.0f)
-        val alpha_menu = buildMenuAnimation(this.llMenu, 0.0f)
+        val alpha_menu = buildMenuAnimation(this.vScrollMenu, 0.0f)
 
         scaleUp_activity.addListener(this.animationListener)
         scaleUp_activity.also { it.playTogether(scaleUp_shadow, alpha_menu) }.start()
