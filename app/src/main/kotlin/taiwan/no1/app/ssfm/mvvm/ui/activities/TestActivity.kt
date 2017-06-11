@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.mvvm.ui.activities
 
 import android.app.Activity
 import android.os.Bundle
+import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.mvvm.ui.customize.MenuItem
@@ -23,15 +24,18 @@ class TestActivity: Activity() {
         this.menu.attachActivity(this)
         this.menu.setMenuBackground(R.drawable.bkg_menu)
 
-        val titles = arrayOf("Home", "Profile", "Calendar", "Settings")
-        val icon = arrayOf(R.drawable.navigation_empty_icon,
-            R.drawable.navigation_empty_icon,
-            R.drawable.navigation_empty_icon,
-            R.drawable.navigation_empty_icon)
+        val icons = resources.obtainTypedArray(R.array.ic_side_menu)
+        val titles = resources.obtainTypedArray(R.array.side_menu)
 
-        titles.zip(icon, { title, icon ->
-            this.menu.addMenuItem(MenuItem(this, icon, title))
-        })
+        logd(icons.length(), titles.length())
+
+        for (index in 0..(icons.length() - 1)) run {
+            logd(icons.getResourceId(index, -1), titles.getString(index))
+            this.menu.addMenuItem(MenuItem(this, icons.getResourceId(index, -1), titles.getString(index)))
+        }
+
+        icons.recycle()
+        titles.recycle()
     }
 
     override fun onResume() {

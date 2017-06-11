@@ -10,20 +10,17 @@
     android:paddingTop="10dp"
     tools:background="@drawable/bkg_menu">
 
-    <ImageView
-        android:id="@+id/iv_icon"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:scaleType="centerCrop"
-        tools:ignore="ContentDescription"
-        tools:src="@drawable/jieyi_icon"/>
-
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"
+        android:paddingEnd="0dp"
+        android:paddingStart="18dp"
+        android:maxLines="1"
         android:textColor="@color/colorWhite"
         android:textSize="18sp"
+        tools:drawableStart="@drawable/ic_music"
         tools:text="Music"/>
 </LinearLayout>

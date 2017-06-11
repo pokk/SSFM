@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="ic_side_menu">
+        <item>@drawable/ic_download</item>
+        <item>@drawable/ic_music</item>
+        <item>@drawable/ic_favorite</item>
+        <item>@drawable/ic_search</item>
+        <item>@drawable/ic_chart</item>
+        <item>@drawable/ic_settings</item>
+    </integer-array>
+
+    <string-array name="side_menu">
+        <item>Home</item>
+        <item>My Playlist</item>
+        <item>My Favorite</item>
+        <item>Search</item>
+        <item>Charts</item>
+        <item>Settings</item>
+    </string-array>
+</resources>
