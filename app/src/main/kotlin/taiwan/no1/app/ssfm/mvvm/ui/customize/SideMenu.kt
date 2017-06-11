@@ -94,8 +94,8 @@ class SideMenu: FrameLayout {
 
         when (ev.action) {
             MotionEvent.ACTION_DOWN -> {
-                lastActionDownX = ev.x
-                lastActionDownY = ev.y
+                this.lastActionDownX = ev.x
+                this.lastActionDownY = ev.y
                 this.isInIgnoredView = this.isInIgnoredView(ev) && !this.isOpened
                 this.pressedState = PRESSED_DOWN
             }
@@ -105,7 +105,8 @@ class SideMenu: FrameLayout {
                     return@action_move
                 }
 
-                val (xOffset, yOffset) = Pair((ev.x - lastActionDownX).toInt(), (ev.y - lastActionDownY).toInt())
+                val (xOffset, yOffset) = Pair((ev.x - this.lastActionDownX).toInt(),
+                    (ev.y - this.lastActionDownY).toInt())
 
                 if (PRESSED_DOWN == this.pressedState) {
                     if (25 < yOffset || -25 > yOffset) {
@@ -113,14 +114,14 @@ class SideMenu: FrameLayout {
 
                         return@action_move
                     }
-                    if (50 < xOffset || -50 > xOffset) {
+                    if (30 < xOffset || -30 > xOffset) {
                         this.pressedState = PRESSED_MOVE_HORIZONTAL
                         ev.action = MotionEvent.ACTION_CANCEL
                     }
                 }
                 else if (PRESSED_MOVE_HORIZONTAL == this.pressedState) {
-                    if (0.95 > currentActivityScaleX) {
-                        showScrollViewMenu(this.vScrollMenu)
+                    if (0.95f > currentActivityScaleX) {
+                        this.showScrollViewMenu(this.vScrollMenu)
                     }
 
                     val targetScale = getTargetScale(ev.rawX)
@@ -128,18 +129,19 @@ class SideMenu: FrameLayout {
                         val angle = (-1 * ROTATE_Y_ANGLE) * ((1 - targetScale) * 2).toInt()
 
                         this.viewActivity.rotationY = angle
-                        this.iv_shadow.scaleX = targetScale - shadowAdjustScaleX
-                        this.iv_shadow.scaleY = targetScale - shadowAdjustScaleY
+                        this.iv_shadow.scaleX = targetScale - this.shadowAdjustScaleX
+                        this.iv_shadow.scaleY = targetScale - this.shadowAdjustScaleY
                     }
                     else {
-                        this.iv_shadow.scaleX = targetScale + shadowAdjustScaleX
-                        this.iv_shadow.scaleY = targetScale + shadowAdjustScaleY
+                        this.iv_shadow.scaleX = targetScale + this.shadowAdjustScaleX
+                        this.iv_shadow.scaleY = targetScale + this.shadowAdjustScaleY
                     }
                     this.viewActivity.scaleX = targetScale
                     this.viewActivity.scaleY = targetScale
-                    this.vScrollMenu.alpha = (1 - targetScale) * 2.0f
 
-                    lastRawX = ev.rawX
+                    this.vScrollMenu.alpha = (1 - targetScale) * 4f
+
+                    this.lastRawX = ev.rawX
 
                     return true
                 }
@@ -151,14 +153,14 @@ class SideMenu: FrameLayout {
 
                 this.pressedState = PRESSED_DONE
                 if (this.isOpened) {
-                    if (0.56f < currentActivityScaleX) this.closeMenu() else this.openMenu()
+                    if (0.79f < currentActivityScaleX) this.closeMenu() else this.openMenu()
                 }
                 else {
-                    if (0.94f > currentActivityScaleX) this.openMenu() else this.closeMenu()
+                    if (0.93f > currentActivityScaleX) this.openMenu() else this.closeMenu()
                 }
             }
         }
-        lastRawX = ev.rawX
+        this.lastRawX = ev.rawX
 
         return super.dispatchTouchEvent(ev)
     }
@@ -265,7 +267,7 @@ class SideMenu: FrameLayout {
     }
 
     private fun setScaleDirection() {
-        val (pivotX, pivotY) = Pair(screenWidth * 2.85f, screenHeight * 0.5f)
+        val (pivotX, pivotY) = Pair(this.screenWidth * 2.85f, this.screenHeight * 0.5f)
 
         this.viewActivity.pivotX = pivotX
         this.viewActivity.pivotY = pivotY
@@ -321,7 +323,7 @@ class SideMenu: FrameLayout {
     }
 
     private fun getTargetScale(currentRawX: Float): Float {
-        val scaleFloatX = (currentRawX - lastRawX) / screenWidth * 0.5f
+        val scaleFloatX = (currentRawX - this.lastRawX) / this.screenWidth * 0.5f
         var targetScale = this.viewActivity.scaleX - scaleFloatX
 
         targetScale = if (1.0f < targetScale) 1.0f else targetScale

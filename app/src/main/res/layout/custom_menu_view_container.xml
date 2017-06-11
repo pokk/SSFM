@@ -12,6 +12,12 @@
         tools:background="@drawable/bkg_menu"
         tools:ignore="ContentDescription"/>
 
+    <RelativeLayout
+        android:id="@+id/rl_menu_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </RelativeLayout>
+
     <ImageView
         android:id="@+id/iv_shadow"
         android:layout_width="fill_parent"
@@ -19,10 +25,4 @@
         android:background="@drawable/shadow"
         android:scaleType="fitXY"
         tools:ignore="ContentDescription"/>
-
-    <RelativeLayout
-        android:id="@+id/rl_menu_holder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </RelativeLayout>
 </merge>
