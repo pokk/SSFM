@@ -18,11 +18,6 @@
         android:src="@drawable/bkg_menu_fog"
         tools:ignore="ContentDescription"/>
 
-    <RelativeLayout
-        android:id="@+id/rl_menu_holder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
     <ImageView
         android:id="@+id/iv_shadow"
         android:layout_width="fill_parent"
@@ -30,4 +25,10 @@
         android:background="@drawable/shadow"
         android:scaleType="fitXY"
         tools:ignore="ContentDescription"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_menu_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:showIn="@layout/custom_menu_scroll_view"/>
 </merge>
