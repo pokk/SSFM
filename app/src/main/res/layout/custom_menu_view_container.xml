@@ -12,11 +12,16 @@
         tools:background="@drawable/bkg_menu"
         tools:ignore="ContentDescription"/>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/bkg_menu_fog"
+        tools:ignore="ContentDescription"/>
+
     <RelativeLayout
         android:id="@+id/rl_menu_holder"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </RelativeLayout>
+        android:layout_height="match_parent"/>
 
     <ImageView
         android:id="@+id/iv_shadow"
