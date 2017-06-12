@@ -1,6 +1,5 @@
-package taiwan.no1.app.ssfm.mvvm.ui.customize
+package taiwan.no1.app.ssfm.customized
 
-import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.app.Activity
@@ -16,9 +15,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
+import com.devrapid.kotlinknifer.animatorListener
 import kotlinx.android.synthetic.main.custom_menu_scroll_view.view.*
 import kotlinx.android.synthetic.main.custom_menu_view_container.view.*
 import taiwan.no1.app.ssfm.R
+import java.lang.ref.WeakReference
 
 
 /**
@@ -36,11 +37,14 @@ class SideMenu: FrameLayout {
         private const val ANIMATION_DURATION = 250L
     }
 
+    //region Variables
+    // Public variables
     lateinit var vScrollMenu: View
     var isOpened = false
         private set
-    var menuListener: OnMenuListener? = null
-    var menuItems = mutableListOf<MenuItem>()
+    var menuListener = MenuListener()
+        private set
+    var menuItems = mutableListOf<WeakReference<MenuItem>>()
         get() = field
         set(value) {
             field = value
@@ -48,10 +52,10 @@ class SideMenu: FrameLayout {
         }
     var mScaleValue = 0.75f
     var mUse3D = false
-
     lateinit private var activity: Activity
     lateinit private var viewActivity: TouchDisableView
     lateinit private var viewDecor: ViewGroup
+    // Private variables
     private val llMenu by lazy { this.vScrollMenu.ll_menu }
     private val displayMetrics by lazy { DisplayMetrics() }
     private val screenHeight by lazy {
@@ -62,6 +66,26 @@ class SideMenu: FrameLayout {
         this.activity.windowManager.defaultDisplay.getMetrics(this.displayMetrics)
         this.displayMetrics.widthPixels
     }
+    private val animationListener = WeakReference(animatorListener {
+        this.onAnimationStart {
+            if (this@SideMenu.isOpened) {
+                this@SideMenu.showScrollViewMenu(this@SideMenu.llMenu)
+                this@SideMenu.menuListener._openMenu.get()?.invoke()
+            }
+        }
+        this.onAnimationEnd {
+            if (this@SideMenu.isOpened) {
+                this@SideMenu.viewActivity.touchDisabled = true
+                this@SideMenu.viewActivity.setOnClickListener { if (this@SideMenu.isOpened) this@SideMenu.closeMenu() }
+            }
+            else {
+                this@SideMenu.viewActivity.touchDisabled = false
+                this@SideMenu.viewActivity.setOnClickListener(null)
+                this@SideMenu.hideScrollViewMenu(this@SideMenu.llMenu)
+                this@SideMenu.menuListener._openMenu.get()?.invoke()
+            }
+        }
+    })
     private var ignoredViews = mutableListOf<View>()
     private var shadowAdjustScaleX = 0f
     private var shadowAdjustScaleY = 0f
@@ -70,10 +94,14 @@ class SideMenu: FrameLayout {
     private var lastActionDownY = 0f
     private var pressedState = PRESSED_DOWN
     private var isInIgnoredView = false
+    //endregion
 
-    interface OnMenuListener {
-        fun openMenu()
-        fun closeMenu()
+    class MenuListener {
+        var _openMenu = WeakReference({})
+        var _closeMenu = WeakReference({})
+
+        internal fun openMenu(open: () -> Unit): MenuListener = this.also { it._openMenu = WeakReference(open) }
+        internal fun closeMenu(close: () -> Unit): MenuListener = this.also { it._closeMenu = WeakReference(close) }
     }
 
     constructor(context: Context, @LayoutRes resMenu: Int = -1): super(context) {
@@ -85,7 +113,7 @@ class SideMenu: FrameLayout {
         }
     }
 
-    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+    override fun dispatchTouchEvent(ev: android.view.MotionEvent): Boolean {
         val currentActivityScaleX = this.viewActivity.scaleX
 
         if (1.0f == currentActivityScaleX) {
@@ -165,6 +193,12 @@ class SideMenu: FrameLayout {
         return super.dispatchTouchEvent(ev)
     }
 
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+
+        this.menuItems.clear()
+    }
+
     fun attachActivity(activity: Activity) {
         this.initValue(activity)
         this.setShadowAdjustScaleXByOrientation()
@@ -176,7 +210,7 @@ class SideMenu: FrameLayout {
     fun setShadowVisible(isVisible: Boolean) = this.iv_shadow.setBackgroundResource(if (isVisible) R.drawable.shadow else 0)
 
     fun addMenuItem(menuItem: MenuItem) {
-        this.menuItems.add(menuItem)
+        this.menuItems.add(WeakReference(menuItem))
         this.llMenu.addView(menuItem)
     }
 
@@ -195,7 +229,7 @@ class SideMenu: FrameLayout {
             this.mScaleValue + this.shadowAdjustScaleY)
         val alpha_menu = buildMenuAnimation(this.vScrollMenu, 1.0f)
 
-        scaleDown_shadow.addListener(this.animationListener)
+        scaleDown_shadow.addListener(this.animationListener.get())
         scaleDown_activity.also { it.playTogether(scaleDown_shadow, alpha_menu) }.start()
     }
 
@@ -205,7 +239,7 @@ class SideMenu: FrameLayout {
         val scaleUp_shadow = buildScaleUpAnimation(this.iv_shadow, 1.0f, 1.0f)
         val alpha_menu = buildMenuAnimation(this.vScrollMenu, 0.0f)
 
-        scaleUp_activity.addListener(this.animationListener)
+        scaleUp_activity.addListener(this.animationListener.get())
         scaleUp_activity.also { it.playTogether(scaleUp_shadow, alpha_menu) }.start()
     }
 
@@ -223,32 +257,6 @@ class SideMenu: FrameLayout {
         (this.vScrollMenu.parent as ViewGroup).removeView(this.vScrollMenu)
     }
 
-    private val animationListener = object: Animator.AnimatorListener {
-        override fun onAnimationStart(animation: Animator) {
-            if (this@SideMenu.isOpened) {
-                this@SideMenu.showScrollViewMenu(this@SideMenu.llMenu)
-                this@SideMenu.menuListener?.openMenu()
-            }
-        }
-
-        override fun onAnimationEnd(animation: Animator) {
-            if (this@SideMenu.isOpened) {
-                this@SideMenu.viewActivity.touchDisabled = true
-                this@SideMenu.viewActivity.setOnClickListener { if (this@SideMenu.isOpened) this@SideMenu.closeMenu() }
-            }
-            else {
-                this@SideMenu.viewActivity.touchDisabled = false
-                this@SideMenu.viewActivity.setOnClickListener(null)
-                this@SideMenu.hideScrollViewMenu(this@SideMenu.llMenu)
-                this@SideMenu.menuListener?.closeMenu()
-            }
-        }
-
-        override fun onAnimationCancel(animation: Animator) {}
-
-        override fun onAnimationRepeat(animation: Animator) {}
-    }
-
     private fun setShadowAdjustScaleXByOrientation() = when (resources.configuration.orientation) {
         Configuration.ORIENTATION_LANDSCAPE -> {
             this.shadowAdjustScaleX = 0.034f
@@ -263,7 +271,7 @@ class SideMenu: FrameLayout {
 
     private fun rebuildMenu() {
         this.llMenu.removeAllViews()
-        this.menuItems.forEach { this.llMenu.addView(it) }
+        this.menuItems.forEach { this.llMenu.addView(it.get()) }
     }
 
     private fun setScaleDirection() {

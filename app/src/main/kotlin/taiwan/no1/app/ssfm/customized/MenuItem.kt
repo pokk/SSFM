@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.ui.customize
+package taiwan.no1.app.ssfm.customized
 
 import android.content.Context
 import android.support.annotation.DrawableRes
@@ -8,7 +8,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import kotlinx.android.synthetic.main.custom_menu_item.view.*
 import taiwan.no1.app.ssfm.R
-
 
 /**
  *

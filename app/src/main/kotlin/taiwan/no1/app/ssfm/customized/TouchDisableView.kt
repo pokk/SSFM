@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.ui.customize
+package taiwan.no1.app.ssfm.customized
 
 
 import android.content.Context
