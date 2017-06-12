@@ -15,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
+import com.devrapid.kotlinknifer.WeakRef
 import com.devrapid.kotlinknifer.animatorListener
 import kotlinx.android.synthetic.main.custom_menu_scroll_view.view.*
 import kotlinx.android.synthetic.main.custom_menu_view_container.view.*
@@ -27,7 +28,7 @@ import java.lang.ref.WeakReference
  * @author  jieyi
  * @since   6/7/17
  */
-class SideMenu: FrameLayout {
+class SideMenu(context: Context, @LayoutRes resMenu: Int = -1): FrameLayout(context) {
     companion object {
         private const val PRESSED_MOVE_HORIZONTAL = 2
         private const val PRESSED_MOVE_VERTICAL = 3
@@ -38,7 +39,7 @@ class SideMenu: FrameLayout {
     }
 
     //region Variables
-    // Public variables
+    // ** Public variables
     lateinit var vScrollMenu: View
     var isOpened = false
         private set
@@ -55,22 +56,20 @@ class SideMenu: FrameLayout {
     lateinit private var activity: Activity
     lateinit private var viewActivity: TouchDisableView
     lateinit private var viewDecor: ViewGroup
-    // Private variables
+    // ** Private variables
     private val llMenu by lazy { this.vScrollMenu.ll_menu }
     private val displayMetrics by lazy { DisplayMetrics() }
     private val screenHeight by lazy {
-        this.activity.windowManager.defaultDisplay.getMetrics(this.displayMetrics)
-        this.displayMetrics.heightPixels
+        this.displayMetrics.let { this.activity.windowManager.defaultDisplay.getMetrics(it); it.heightPixels }
     }
     private val screenWidth by lazy {
-        this.activity.windowManager.defaultDisplay.getMetrics(this.displayMetrics)
-        this.displayMetrics.widthPixels
+        this.displayMetrics.let { this.activity.windowManager.defaultDisplay.getMetrics(it); it.widthPixels }
     }
-    private val animationListener = WeakReference(animatorListener {
+    private val animationListener = animatorListener {
         this.onAnimationStart {
             if (this@SideMenu.isOpened) {
                 this@SideMenu.showScrollViewMenu(this@SideMenu.llMenu)
-                this@SideMenu.menuListener._openMenu.get()?.invoke()
+                this@SideMenu.menuListener._openMenu?.invoke()
             }
         }
         this.onAnimationEnd {
@@ -82,10 +81,10 @@ class SideMenu: FrameLayout {
                 this@SideMenu.viewActivity.touchDisabled = false
                 this@SideMenu.viewActivity.setOnClickListener(null)
                 this@SideMenu.hideScrollViewMenu(this@SideMenu.llMenu)
-                this@SideMenu.menuListener._openMenu.get()?.invoke()
+                this@SideMenu.menuListener._closeMenu?.invoke()
             }
         }
-    })
+    }
     private var ignoredViews = mutableListOf<View>()
     private var shadowAdjustScaleX = 0f
     private var shadowAdjustScaleY = 0f
@@ -96,15 +95,7 @@ class SideMenu: FrameLayout {
     private var isInIgnoredView = false
     //endregion
 
-    class MenuListener {
-        var _openMenu = WeakReference({})
-        var _closeMenu = WeakReference({})
-
-        internal fun openMenu(open: () -> Unit): MenuListener = this.also { it._openMenu = WeakReference(open) }
-        internal fun closeMenu(close: () -> Unit): MenuListener = this.also { it._closeMenu = WeakReference(close) }
-    }
-
-    constructor(context: Context, @LayoutRes resMenu: Int = -1): super(context) {
+    init {
         (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).let {
             it.inflate(R.layout.custom_menu_view_container, this)
 
@@ -205,6 +196,34 @@ class SideMenu: FrameLayout {
         this.viewDecor.addView(this, 0)
     }
 
+    fun openMenu() {
+        this.setScaleDirection()
+
+        this.isOpened = true
+        // Scale down for the activity.
+        this.buildScaleDownAnimation(this.viewActivity, this.mScaleValue, this.mScaleValue).also {
+            val scaleDown_shadow = this.buildScaleDownAnimation(this.iv_shadow,
+                this.mScaleValue + this.shadowAdjustScaleX,
+                this.mScaleValue + this.shadowAdjustScaleY)
+            val alpha_menu = this.buildMenuAnimation(this.vScrollMenu, 1.0f)
+
+            it.addListener(this.animationListener)
+            it.playTogether(scaleDown_shadow, alpha_menu)
+        }.start()
+    }
+
+    fun closeMenu() {
+        this.isOpened = false
+        // Scale up for the activity.
+        this.buildScaleUpAnimation(this.viewActivity, 1.0f, 1.0f).also {
+            val scaleUp_shadow = this.buildScaleUpAnimation(this.iv_shadow, 1.0f, 1.0f)
+            val alpha_menu = this.buildMenuAnimation(this.vScrollMenu, 0.0f)
+
+            it.addListener(this.animationListener)
+            it.playTogether(scaleUp_shadow, alpha_menu)
+        }.start()
+    }
+
     fun setMenuBackground(@DrawableRes resBackground: Int) = this.iv_background.setImageResource(resBackground)
 
     fun setShadowVisible(isVisible: Boolean) = this.iv_shadow.setBackgroundResource(if (isVisible) R.drawable.shadow else 0)
@@ -219,29 +238,6 @@ class SideMenu: FrameLayout {
     fun removeIgnoredView(v: View) = this.ignoredViews.remove(v)
 
     fun clearIgnoredViewList() = this.ignoredViews.clear()
-
-    fun openMenu() {
-        this.setScaleDirection()
-
-        this.isOpened = true
-        val scaleDown_activity = buildScaleDownAnimation(this.viewActivity, this.mScaleValue, this.mScaleValue)
-        val scaleDown_shadow = buildScaleDownAnimation(this.iv_shadow, this.mScaleValue + this.shadowAdjustScaleX,
-            this.mScaleValue + this.shadowAdjustScaleY)
-        val alpha_menu = buildMenuAnimation(this.vScrollMenu, 1.0f)
-
-        scaleDown_shadow.addListener(this.animationListener.get())
-        scaleDown_activity.also { it.playTogether(scaleDown_shadow, alpha_menu) }.start()
-    }
-
-    fun closeMenu() {
-        this.isOpened = false
-        val scaleUp_activity = buildScaleUpAnimation(this.viewActivity, 1.0f, 1.0f)
-        val scaleUp_shadow = buildScaleUpAnimation(this.iv_shadow, 1.0f, 1.0f)
-        val alpha_menu = buildMenuAnimation(this.vScrollMenu, 0.0f)
-
-        scaleUp_activity.addListener(this.animationListener.get())
-        scaleUp_activity.also { it.playTogether(scaleUp_shadow, alpha_menu) }.start()
-    }
 
     private fun initValue(activity: Activity) {
         this.activity = activity
@@ -284,7 +280,7 @@ class SideMenu: FrameLayout {
     }
 
     private fun buildScaleDownAnimation(target: View, targetScaleX: Float, targetScaleY: Float): AnimatorSet =
-        // scaleDownAnimation
+        // scale down animation
         AnimatorSet().also {
             it.playTogether(ObjectAnimator.ofFloat(target, "scaleX", targetScaleX),
                 ObjectAnimator.ofFloat(target, "scaleY", targetScaleY))
@@ -298,7 +294,7 @@ class SideMenu: FrameLayout {
         }
 
     private fun buildScaleUpAnimation(target: View, targetScaleX: Float, targetScaleY: Float): AnimatorSet =
-        // scaleAnimation
+        // scale animation
         AnimatorSet().also {
             it.playTogether(ObjectAnimator.ofFloat(target, "scaleX", targetScaleX),
                 ObjectAnimator.ofFloat(target, "scaleY", targetScaleY))
@@ -311,7 +307,7 @@ class SideMenu: FrameLayout {
         }
 
     private fun buildMenuAnimation(target: View, alpha: Float): AnimatorSet =
-        // alphaAnimation
+        // alpha animation
         AnimatorSet().also {
             it.playTogether(ObjectAnimator.ofFloat(target, "alpha", alpha))
             it.duration = ANIMATION_DURATION
@@ -350,5 +346,16 @@ class SideMenu: FrameLayout {
         if (null == scrollViewMenu.parent) {
             this.removeView(scrollViewMenu)
         }
+    }
+
+    /**
+     * Menu Listener.
+     */
+    class MenuListener {
+        var _openMenu by WeakRef({})
+        var _closeMenu by WeakRef({})
+
+        internal fun openMenu(open: () -> Unit): MenuListener = this.also { it._openMenu = open }
+        internal fun closeMenu(close: () -> Unit): MenuListener = this.also { it._closeMenu = close }
     }
 }

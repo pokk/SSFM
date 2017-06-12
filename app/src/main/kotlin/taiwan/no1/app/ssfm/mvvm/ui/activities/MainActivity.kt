@@ -3,6 +3,7 @@ package taiwan.no1.app.ssfm.mvvm.ui.activities
 import android.app.Activity
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import com.devrapid.kotlinknifer.SharedPrefs
 import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.logw
 import de.umass.lastfm.Radio
@@ -11,7 +12,6 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityMainBinding
 import taiwan.no1.app.ssfm.internal.di.HasComponent
 import taiwan.no1.app.ssfm.internal.di.components.FragmentComponent
-import taiwan.no1.app.ssfm.misc.utilies.SharedPreferences.SharedPrefs
 import taiwan.no1.app.ssfm.mvvm.models.data.local.LocalDataStore
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.RemoteDataStore
 import taiwan.no1.app.ssfm.mvvm.models.data.repositories.DataRepository
@@ -34,7 +34,6 @@ class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>(), HasC
 
         // NOTE: 5/11/17 We can use the cache as like this way.
         //        Caller.getInstance().cache = FileSystemCache(File("${Environment.getExternalStorageDirectory()}/.lastfm"))
-
         //        Caller.getInstance().cache = null
         //        Caller.getInstance().userAgent = "tst"
 
