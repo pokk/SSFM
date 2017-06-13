@@ -1,8 +1,11 @@
 package taiwan.no1.app.ssfm.internal.di.components
 
-import dagger.Component
+import dagger.Subcomponent
+import dagger.android.AndroidInjector
 import taiwan.no1.app.ssfm.internal.di.annotations.PerActivity
 import taiwan.no1.app.ssfm.internal.di.modules.ActivityModule
+import taiwan.no1.app.ssfm.mvvm.ui.activities.TestActivity
+
 
 /**
  * A component whose lifetime is the life of the Activity.
@@ -11,16 +14,11 @@ import taiwan.no1.app.ssfm.internal.di.modules.ActivityModule
  * @since   5/11/17
  */
 @PerActivity
-@Component(dependencies = arrayOf(AppComponent::class), modules = arrayOf(ActivityModule::class))
-interface ActivityComponent {
-    object Initializer {
-        fun init(appComponent: AppComponent): ActivityComponent = DaggerActivityComponent.builder()
-            .appComponent(appComponent)
-            .activityModule(ActivityModule())
-            .build()
-    }
-
+@Subcomponent(modules = arrayOf(ActivityModule::class))
+interface ActivityComponent: AndroidInjector<TestActivity> {
     /**
      * After injected an activity, the presenter of the activity should be provided in [ActivityModule].
      */
+    @Subcomponent.Builder
+    abstract class Builder: AndroidInjector.Builder<TestActivity>()
 }

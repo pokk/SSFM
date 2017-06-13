@@ -13,12 +13,12 @@ import taiwan.no1.app.ssfm.internal.di.modules.FragmentModule
 @PerFragment
 @Component(dependencies = arrayOf(AppComponent::class), modules = arrayOf(FragmentModule::class))
 interface FragmentComponent {
-    object Initializer {
-        fun init(appComponent: AppComponent): FragmentComponent = DaggerFragmentComponent.builder()
-            .appComponent(appComponent)
-            .fragmentModule(FragmentModule())
-            .build()
-    }
+//    object Initializer {
+//        fun init(appComponent: AppComponent): FragmentComponent = DaggerFragmentComponent.builder()
+//            .appComponent(appComponent)
+//            .fragmentModule(FragmentModule())
+//            .build()
+//    }
 
     /**
      * After injected an activity, the presenter of the activity should be provided in [FragmentModule].

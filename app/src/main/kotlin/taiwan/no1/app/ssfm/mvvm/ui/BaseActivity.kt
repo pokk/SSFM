@@ -3,9 +3,8 @@ package taiwan.no1.app.ssfm.mvvm.ui
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.annotation.CallSuper
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
-import taiwan.no1.app.ssfm.App
-import taiwan.no1.app.ssfm.internal.di.components.ActivityComponent
+import dagger.android.AndroidInjection
+import dagger.android.support.DaggerAppCompatActivity
 import taiwan.no1.app.ssfm.internal.di.components.AppComponent
 import taiwan.no1.app.ssfm.internal.di.components.FragmentComponent
 
@@ -15,12 +14,12 @@ import taiwan.no1.app.ssfm.internal.di.components.FragmentComponent
  * @author  jieyi
  * @since   5/9/17
  */
-abstract class BaseActivity: RxAppCompatActivity() {
-
+abstract class BaseActivity: DaggerAppCompatActivity() {
     //region Activity lifecycle
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
+        AndroidInjection.inject(this)
     }
 
     @CallSuper
@@ -39,21 +38,21 @@ abstract class BaseActivity: RxAppCompatActivity() {
      *
      * @return [ActivityComponent]
      */
-    protected fun getComponent(): ActivityComponent =
-        ActivityComponent.Initializer.init(this.getApplicationComponent())
+//    protected fun getComponent(): ActivityComponent =
+//        ActivityComponent.Initializer.init(this.getApplicationComponent())
 
     /**
      * Provide the [FragmentComponent] to fragments for injecting a presenter and use cases.
      *
      * @return [FragmentComponent]
      */
-    protected fun provideFragmentComponent(): FragmentComponent =
-        FragmentComponent.Initializer.init(this.getApplicationComponent())
+//    protected fun provideFragmentComponent(): FragmentComponent =
+//        FragmentComponent.Initializer.init(this.getApplicationComponent())
 
     /**
      * Get the Main Application component for dependency injection.
      *
      * @return [AppComponent]
      */
-    protected fun getApplicationComponent(): AppComponent = App.appComponent()
+//    protected fun getApplicationComponent(): AppComponent = App.appComponent()
 }

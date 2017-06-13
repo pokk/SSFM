@@ -10,8 +10,6 @@ import de.umass.lastfm.Radio
 import de.umass.lastfm.Track
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityMainBinding
-import taiwan.no1.app.ssfm.internal.di.HasComponent
-import taiwan.no1.app.ssfm.internal.di.components.FragmentComponent
 import taiwan.no1.app.ssfm.mvvm.models.data.local.LocalDataStore
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.RemoteDataStore
 import taiwan.no1.app.ssfm.mvvm.models.data.repositories.DataRepository
@@ -19,7 +17,7 @@ import taiwan.no1.app.ssfm.mvvm.ui.AdvancedActivity
 import taiwan.no1.app.ssfm.mvvm.viewmodels.MainViewModel
 
 
-class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>(), HasComponent<FragmentComponent> {
+class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityMainBinding = DataBindingUtil.setContentView<ActivityMainBinding>(this,
@@ -72,5 +70,5 @@ class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>(), HasC
 
     override fun provideViewModel(): MainViewModel = MainViewModel(this)
 
-    override fun getFragmentComponent(): FragmentComponent = super.provideFragmentComponent()
+//    override fun getFragmentComponent(): FragmentComponent = super.provideFragmentComponent()
 }

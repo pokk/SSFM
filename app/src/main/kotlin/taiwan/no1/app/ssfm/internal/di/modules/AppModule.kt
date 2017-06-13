@@ -2,8 +2,6 @@ package taiwan.no1.app.ssfm.internal.di.modules
 
 import android.app.Application
 import android.content.Context
-import android.content.SharedPreferences
-import android.preference.PreferenceManager
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -15,17 +13,12 @@ import javax.inject.Singleton
  * @since   5/9/17
  */
 @Module
-class AppModule(private val app: Application) {
+class AppModule {
     @Provides
     @Singleton
-    fun provideApplication(): Application = app
+    fun provideApplication(app: Application): Application = app
 
     @Provides
     @Singleton
-    fun provideAppContext(): Context = app
-
-    @Provides
-    @Singleton
-    fun provideSharePreferences(application: Application): SharedPreferences =
-        PreferenceManager.getDefaultSharedPreferences(application)
+    fun provideAppContext(app: Application): Context = app.applicationContext
 }
