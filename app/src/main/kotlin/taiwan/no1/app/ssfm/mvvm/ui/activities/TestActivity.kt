@@ -4,10 +4,11 @@ package taiwan.no1.app.ssfm.mvvm.ui.activities
 import android.os.Bundle
 import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.logw
-import dagger.android.support.DaggerAppCompatActivity
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.customized.MenuItem
 import taiwan.no1.app.ssfm.customized.SideMenu
+import taiwan.no1.app.ssfm.mvvm.ui.BaseActivity
+import javax.inject.Inject
 
 
 /**
@@ -15,13 +16,12 @@ import taiwan.no1.app.ssfm.customized.SideMenu
  * @author  jieyi
  * @since   6/8/17
  */
-class TestActivity: DaggerAppCompatActivity() {
+class TestActivity: BaseActivity() {
     lateinit var menu: SideMenu
-//    @Inject
+    @Inject
     lateinit var name: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
-//        AndroidInjection.inject(this)
-        
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -36,7 +36,7 @@ class TestActivity: DaggerAppCompatActivity() {
             logd(icons.getResourceId(index, -1), titles.getString(index))
             this.menu.addMenuItem(MenuItem(this, icons.getResourceId(index, -1), titles.getString(index)))
         }
-        
+
         logw(name)
 
         icons.recycle()

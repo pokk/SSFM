@@ -49,6 +49,7 @@ dependencies {
     /* For architecture */
     // Dagger 2
     kapt "com.google.dagger:dagger-compiler:2.11"
+    kapt "com.google.dagger:dagger-android-processor:2.11"
     compile "com.google.dagger:dagger:2.11"
     compile 'com.google.dagger:dagger-android-support:2.11'
     annotationProcessor "com.google.dagger:dagger-compiler:2.11"

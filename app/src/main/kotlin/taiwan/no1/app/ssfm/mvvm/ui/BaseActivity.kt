@@ -1,12 +1,15 @@
 package taiwan.no1.app.ssfm.mvvm.ui
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.annotation.CallSuper
+import android.support.v4.app.Fragment
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import dagger.android.AndroidInjection
-import dagger.android.support.DaggerAppCompatActivity
-import taiwan.no1.app.ssfm.internal.di.components.AppComponent
-import taiwan.no1.app.ssfm.internal.di.components.FragmentComponent
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasFragmentInjector
+import dagger.android.support.HasSupportFragmentInjector
+import javax.inject.Inject
 
 /**
  * Base activity for collecting all common methods here.
@@ -14,12 +17,18 @@ import taiwan.no1.app.ssfm.internal.di.components.FragmentComponent
  * @author  jieyi
  * @since   5/9/17
  */
-abstract class BaseActivity: DaggerAppCompatActivity() {
+abstract class BaseActivity: RxAppCompatActivity(), HasFragmentInjector, HasSupportFragmentInjector {
+    // Copy from [DaggerAppCompatActivity], becz this cant inherit two classes.
+    @Inject
+    lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
+    @Inject
+    lateinit var frameworkFragmentInjector: DispatchingAndroidInjector<android.app.Fragment>
+
     //region Activity lifecycle
     @CallSuper
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
+        super.onCreate(savedInstanceState)
     }
 
     @CallSuper
@@ -33,26 +42,7 @@ abstract class BaseActivity: DaggerAppCompatActivity() {
     }
     //endregion
 
-    /**
-     * Get the [ActivityComponent] for injecting a presenter and a use case.
-     *
-     * @return [ActivityComponent]
-     */
-//    protected fun getComponent(): ActivityComponent =
-//        ActivityComponent.Initializer.init(this.getApplicationComponent())
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> = this.supportFragmentInjector
 
-    /**
-     * Provide the [FragmentComponent] to fragments for injecting a presenter and use cases.
-     *
-     * @return [FragmentComponent]
-     */
-//    protected fun provideFragmentComponent(): FragmentComponent =
-//        FragmentComponent.Initializer.init(this.getApplicationComponent())
-
-    /**
-     * Get the Main Application component for dependency injection.
-     *
-     * @return [AppComponent]
-     */
-//    protected fun getApplicationComponent(): AppComponent = App.appComponent()
+    override fun fragmentInjector(): AndroidInjector<android.app.Fragment> = this.frameworkFragmentInjector
 }
