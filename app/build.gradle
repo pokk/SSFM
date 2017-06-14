@@ -3,6 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+def buildDateTime = project.hasProperty('devBuild') ? 100 : new Date().format('yyMMddHHmm').toInteger()
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -10,7 +12,7 @@ android {
         applicationId "taiwan.no1.app"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 1
+        versionCode buildDateTime
         versionName "1.0"
         renderscriptTargetApi 19
         renderscriptSupportModeEnabled true    // Enable RS support
@@ -20,6 +22,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            ext.alwaysUpdateBuildId = false
         }
     }
     sourceSets {
@@ -34,6 +39,14 @@ android {
     dataBinding {
         enabled = true
     }
+    dexOptions {
+        javaMaxHeapSize = '4g'
+    }
+    if (project.hasProperty('devBuild')) {
+        aaptOptions.cruncherEnabled = false
+        splits.abi.enable = false
+        splits.density.enable = false
+    }
 }
 
 dependencies {
@@ -44,8 +57,12 @@ dependencies {
     /* For language */
     // Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    // Kotlin Anko
+    compile "org.jetbrains.anko:anko-commons:$anko_version"
+    compile "org.jetbrains.anko:anko-sdk25:$anko_version" // sdk15, sdk19, sdk21, sdk23 are also available
+    compile "org.jetbrains.anko:anko-sdk25-coroutines:$anko_version"
     // Kotlin DataBinding
-    kapt "com.android.databinding:compiler:2.3.1"
+    kapt "com.android.databinding:compiler:2.3.3"
     /* For architecture */
     // Dagger 2
     kapt "com.google.dagger:dagger-compiler:2.11"
@@ -98,4 +115,10 @@ dependencies {
 
 repositories {
     mavenCentral()
+}
+
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
 }
