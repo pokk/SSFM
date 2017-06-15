@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.internal.di.annotations
+package taiwan.no1.app.ssfm.internal.di.annotations.scope
 
 import javax.inject.Scope
 
