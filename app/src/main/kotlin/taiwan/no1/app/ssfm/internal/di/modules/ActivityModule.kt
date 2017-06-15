@@ -12,6 +12,7 @@ import taiwan.no1.app.ssfm.internal.di.annotations.PerActivity
  */
 @Module
 class ActivityModule {
+    // TODO: 6/15/17 TEST CODE!! IT WILL BE DELETED.
     @PerActivity
     @Provides
     fun provideName(): String = "TEST"

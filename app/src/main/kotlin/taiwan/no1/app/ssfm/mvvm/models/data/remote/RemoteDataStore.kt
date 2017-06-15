@@ -7,6 +7,7 @@ import io.reactivex.ObservableEmitter
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.schedulers.Schedulers
 import taiwan.no1.app.ssfm.R
+import taiwan.no1.app.ssfm.internal.di.components.NetComponent
 import taiwan.no1.app.ssfm.mvvm.models.DetailMusicModel
 import taiwan.no1.app.ssfm.mvvm.models.SearchMusicModel
 import taiwan.no1.app.ssfm.mvvm.models.data.IDateStore
@@ -30,7 +31,7 @@ class RemoteDataStore @Inject constructor(private val context: Context): IDateSt
     private val lastfm_secret by lazy { this.context.getString(R.string.lastfm_secret_key) }
 
     init {
-//        NetComponent.Initializer.init().inject(this@RemoteDataStore)
+        NetComponent.Initializer.init().inject(this@RemoteDataStore)
     }
 
     override fun getSearchMusicRes(keyword: String): Observable<SearchMusicModel> {
