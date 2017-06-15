@@ -105,6 +105,8 @@ dependencies {
     /* UI */
     // Circle Imageview
     compile "de.hdodenhof:circleimageview:2.1.0"
+    // Blur View
+    compile 'com.github.mmin18:realtimeblurview:1.1.0'
 
     compile "com.android.support:appcompat-v7:25.3.1"
     compile 'com.android.support.constraint:constraint-layout:1.1.0-beta1'

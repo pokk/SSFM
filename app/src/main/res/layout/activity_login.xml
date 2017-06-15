@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="@drawable/bkg_login"
+    android:background="@drawable/bkg_login"
     tools:context=".mvvm.ui.activities.TestActivity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="25dp">
@@ -15,12 +15,12 @@
         android:id="@+id/iv_bkg_fog"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@drawable/bkg_login_fog"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription"
-        tools:src="@drawable/bkg_menu_fog"/>
+        tools:ignore="ContentDescription"/>
 
     <EditText
         android:id="@+id/et_email"
@@ -34,10 +34,12 @@
         android:ems="10"
         android:inputType="textPassword"
         android:textColor="@color/colorWhite"
+        android:textColorHint="@color/colorWhiteSmoke"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@+id/btn_login"
         app:layout_constraintRight_toRightOf="@+id/btn_login"
         app:layout_constraintTop_toBottomOf="@+id/et_pwd"
+        tools:ignore="TextFields"
         tools:text="my password"/>
 
     <EditText
@@ -53,8 +55,8 @@
         android:hint="Name or Email"
         android:inputType="textPersonName"
         android:textColor="@color/colorWhite"
-        android:textColorHint="@color/colorGray"
-        android:textSize="12dp"
+        android:textColorHint="@color/colorAntiqueWhite"
+        android:textSize="16sp"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintLeft_toLeftOf="@+id/et_email"
         app:layout_constraintRight_toRightOf="@+id/et_email"
@@ -103,8 +105,8 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:fontFamily=""
+            android:gravity="center"
             android:text="Let's Rock"
             android:textColor="@color/colorWhite"
             android:textSize="40sp"
