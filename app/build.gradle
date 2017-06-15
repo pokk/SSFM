@@ -28,7 +28,10 @@ android {
         }
     }
     sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
+        main {
+            java.srcDirs += 'src/main/kotlin'
+            assets.srcDirs += 'assets'
+        }
     }
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
