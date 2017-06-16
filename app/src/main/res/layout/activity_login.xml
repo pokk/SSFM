@@ -10,7 +10,6 @@
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="25dp">
 
-
     <ImageView
         android:id="@+id/iv_bkg_fog"
         android:layout_width="0dp"
@@ -26,6 +25,26 @@
         android:id="@+id/et_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:drawablePadding="20dp"
+        android:drawableStart="@drawable/ic_user"
+        android:ems="10"
+        android:hint="Name or Email"
+        android:inputType="textPersonName"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="#99FFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintLeft_toLeftOf="@+id/et_pwd"
+        app:layout_constraintRight_toRightOf="@+id/et_pwd"
+        app:layout_constraintTop_toBottomOf="@+id/tv_subtitle"
+        tools:ignore="TextFields"
+        tools:text="pokkbaby@gmail.com"/>
+
+    <EditText
+        android:id="@+id/et_pwd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
         android:layout_marginTop="10dp"
@@ -38,30 +57,9 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@+id/btn_login"
         app:layout_constraintRight_toRightOf="@+id/btn_login"
-        app:layout_constraintTop_toBottomOf="@+id/et_pwd"
-        tools:ignore="TextFields"
+        app:layout_constraintTop_toBottomOf="@+id/et_email"
         tools:text="my password"/>
 
-    <EditText
-        android:id="@+id/et_pwd"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="70dp"
-        android:drawablePadding="20dp"
-        android:drawableStart="@drawable/ic_user"
-        android:ems="10"
-        android:hint="Name or Email"
-        android:inputType="textPersonName"
-        android:textColor="@color/colorWhite"
-        android:textColorHint="#99FFFFFF"
-        android:textSize="16sp"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintLeft_toLeftOf="@+id/et_email"
-        app:layout_constraintRight_toRightOf="@+id/et_email"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        tools:text="pokkbaby@gmail.com"/>
 
     <Button
         android:id="@+id/btn_login"
@@ -70,23 +68,23 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="52dp"
         android:layout_marginRight="52dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/bkg_btn_login"
         android:text="Login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_email"
+        app:layout_constraintTop_toBottomOf="@+id/et_pwd"
         app:layout_constraintVertical_bias="0"/>
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/ll_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="125dp"
+        android:layout_marginTop="105dp"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -94,7 +92,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageView"
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_marginEnd="10dp"
@@ -102,16 +99,29 @@
             tools:ignore="ContentDescription"/>
 
         <taiwan.no1.app.ssfm.customized.FontTextView
-            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:gravity="center"
-            android:text="Let's Rock"
+            android:text="Let's Music"
             android:textColor="@color/colorWhite"
             android:textSize="35sp"
             android:textStyle="bold|italic"
             app:font="streetwear.otf"/>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Let's rock our life"
+        android:textColor="#DDFFFFFF"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_logo"/>
 
 </android.support.constraint.ConstraintLayout>
