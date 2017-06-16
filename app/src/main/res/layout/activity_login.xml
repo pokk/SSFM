@@ -55,7 +55,7 @@
         android:hint="Name or Email"
         android:inputType="textPersonName"
         android:textColor="@color/colorWhite"
-        android:textColorHint="@color/colorAntiqueWhite"
+        android:textColorHint="#99FFFFFF"
         android:textSize="16sp"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintLeft_toLeftOf="@+id/et_email"
@@ -84,9 +84,9 @@
         android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="124dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="125dp"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -101,16 +101,16 @@
             app:srcCompat="@drawable/ic_login_logo"
             tools:ignore="ContentDescription"/>
 
-        <TextView
+        <taiwan.no1.app.ssfm.customized.FontTextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily=""
+            android:layout_height="55dp"
             android:gravity="center"
             android:text="Let's Rock"
             android:textColor="@color/colorWhite"
-            android:textSize="40sp"
-            android:textStyle="bold|italic"/>
+            android:textSize="35sp"
+            android:textStyle="bold|italic"
+            app:font="streetwear.otf"/>
 
     </LinearLayout>
 
