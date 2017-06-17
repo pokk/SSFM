@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'org.fabiomsr.drawableoptimizer'
 
 def buildDateTime = project.hasProperty('devBuild') ? 100 : new Date().format('yyMMddHHmm').toInteger()
 
@@ -44,6 +45,13 @@ android {
     }
     dexOptions {
         javaMaxHeapSize = '4g'
+    }
+    drawableOptimizer {
+        optimizer = 'zopfli'
+        compressionLevel = 9
+        iterations = 15
+        onlyOnRelease = true
+        logLevel = 'info'
     }
     if (project.hasProperty('devBuild')) {
         aaptOptions.cruncherEnabled = false
