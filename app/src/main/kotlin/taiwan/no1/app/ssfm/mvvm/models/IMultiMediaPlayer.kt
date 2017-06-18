@@ -10,9 +10,9 @@ interface IMultiMediaPlayer {
     fun stop()
     fun pause()
     fun resume()
-    fun replay()
-    fun seekto()
-    fun duration()
-    fun setLoop(is_loop: Boolean)
-    fun isLooping(): Boolean
+    fun replay(is_replay: Boolean)
+    fun seekto(sec: Int)
+    fun duration(): Int
+    fun isReplay(): Boolean
+    fun isPlaying(): Boolean
 }
