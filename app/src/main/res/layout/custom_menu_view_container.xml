@@ -22,7 +22,7 @@
         android:id="@+id/iv_shadow"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@drawable/shadow"
+        android:background="@drawable/iv_shadow"
         android:scaleType="fitXY"
         tools:ignore="ContentDescription"/>
 

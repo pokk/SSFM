@@ -47,7 +47,5 @@ class TestActivity: BaseActivity() {
         super.onResume()
 
         this.menu.menuListener.openMenu { logd("open the menu!!") }.closeMenu { logd("close the menu!!") }
-
-//        this.textView.typeface = Typeface.createFromAsset(assets, "fonts/streetwear.otf")
     }
 }
