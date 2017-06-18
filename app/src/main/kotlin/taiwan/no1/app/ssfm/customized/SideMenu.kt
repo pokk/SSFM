@@ -17,6 +17,7 @@ import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import com.devrapid.kotlinknifer.WeakRef
 import com.devrapid.kotlinknifer.animatorListener
+import com.devrapid.kotlinknifer.logw
 import kotlinx.android.synthetic.main.custom_menu_scroll_view.view.*
 import kotlinx.android.synthetic.main.custom_menu_view_container.view.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
@@ -29,6 +30,7 @@ import java.lang.ref.WeakReference
  * @author  jieyi
  * @since   6/7/17
  */
+@Suppress("EXPERIMENTAL_FEATURE_WARNING")
 class SideMenu(context: Context, @LayoutRes resMenu: Int = -1): FrameLayout(context) {
     companion object {
         private const val PRESSED_MOVE_HORIZONTAL = 2
@@ -76,12 +78,15 @@ class SideMenu(context: Context, @LayoutRes resMenu: Int = -1): FrameLayout(cont
         this.onAnimationEnd {
             if (this@SideMenu.isOpened) {
                 this@SideMenu.viewActivity.touchDisabled = true
-//                this@SideMenu.viewActivity.setOnClickListener { if (this@SideMenu.isOpened) this@SideMenu.closeMenu() }
+                logw(this@SideMenu.viewActivity.hasOnClickListeners())
                 this@SideMenu.viewActivity.onClick { if (this@SideMenu.isOpened) this@SideMenu.closeMenu() }
+                logw(this@SideMenu.viewActivity.hasOnClickListeners())
             }
             else {
                 this@SideMenu.viewActivity.touchDisabled = false
-                this@SideMenu.viewActivity.setOnClickListener(null)
+                logw(this@SideMenu.viewActivity.hasOnClickListeners())
+//                this@SideMenu.viewActivity.setOnClickListener(null)
+                logw(this@SideMenu.viewActivity.hasOnClickListeners())
                 this@SideMenu.hideScrollViewMenu(this@SideMenu.llMenu)
                 this@SideMenu.menuListener._closeMenu?.invoke()
             }
