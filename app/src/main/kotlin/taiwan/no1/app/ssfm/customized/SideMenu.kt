@@ -227,7 +227,7 @@ class SideMenu(context: Context, @LayoutRes resMenu: Int = -1): FrameLayout(cont
 
     fun setMenuBackground(@DrawableRes resBackground: Int) = this.iv_background.setImageResource(resBackground)
 
-    fun setShadowVisible(isVisible: Boolean) = this.iv_shadow.setBackgroundResource(if (isVisible) R.drawable.iv_shadow else 0)
+    fun setShadowVisible(isVisible: Boolean) = this.iv_shadow.setBackgroundResource(if (isVisible) R.drawable.shadow else 0)
 
     fun addMenuItem(menuItem: MenuItem) {
         this.menuItems.add(WeakReference(menuItem))
