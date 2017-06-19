@@ -39,8 +39,7 @@ abstract class BaseFragment: RxFragment(), HasFragmentInjector {
         this.retainInstance = true
 
         // FIXED: https://www.zybuluo.com/kimo/note/255244
-        if (null == rootView)
-            rootView = inflater.inflate(this.inflateView(), null)
+        rootView ?: let { rootView = inflater.inflate(this.inflateView(), null) }
         val parent: ViewGroup? = rootView?.parent as ViewGroup?
         parent?.removeView(rootView)
 

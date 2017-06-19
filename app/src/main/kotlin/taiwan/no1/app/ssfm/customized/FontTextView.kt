@@ -8,23 +8,27 @@ import taiwan.no1.app.ssfm.R
 
 /**
  * For inputting customize special font.
+ *
+ * @author  jieyi
+ * @since   6/14/17
  */
 class FontTextView: TextView {
     constructor(context: Context): super(context) {
-        this.init(null, 0)
+        this.init(context, null, 0)
     }
 
     constructor(context: Context, attrs: AttributeSet): super(context, attrs) {
-        this.init(attrs, 0)
+        this.init(context, attrs, 0)
     }
 
-    constructor(context: Context, attrs: AttributeSet, defStyle: Int): super(context, attrs, defStyle) {
-        this.init(attrs, defStyle)
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int): super(context, attrs, defStyleAttr) {
+        this.init(context, attrs, defStyleAttr)
     }
 
-    private fun init(attrs: AttributeSet?, defStyle: Int) {
-        context.obtainStyledAttributes(attrs, R.styleable.FontTextView).also {
-            it.getString(R.styleable.FontTextView_font)?.let {
+
+    private fun init(context: Context, attrs: AttributeSet?, defStyleAttr: Int) {
+        context.obtainStyledAttributes(attrs, R.styleable.FontTextView, defStyleAttr, 0).also {
+            it.getString(R.styleable.FontTextView_font).let {
                 this.typeface = Typeface.createFromAsset(this.context.assets, "fonts/$it")
             }
         }.recycle()

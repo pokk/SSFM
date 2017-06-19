@@ -337,17 +337,9 @@ class SideMenu(context: Context, @LayoutRes resMenu: Int = -1): FrameLayout(cont
         return targetScale
     }
 
-    private fun showScrollViewMenu(scrollViewMenu: View) {
-        if (null == scrollViewMenu.parent) {
-            this.addView(scrollViewMenu)
-        }
-    }
+    private fun showScrollViewMenu(scrollViewMenu: View) = scrollViewMenu.parent ?: let { this.addView(scrollViewMenu) }
 
-    private fun hideScrollViewMenu(scrollViewMenu: View) {
-        if (null == scrollViewMenu.parent) {
-            this.removeView(scrollViewMenu)
-        }
-    }
+    private fun hideScrollViewMenu(scrollViewMenu: View) = scrollViewMenu.parent ?: let { this.removeView(scrollViewMenu) }
 
     /**
      * Menu Listener.
