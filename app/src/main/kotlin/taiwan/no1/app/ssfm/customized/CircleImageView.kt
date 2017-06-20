@@ -44,8 +44,11 @@ class CircleImageView: ImageView {
 
     private val paintBorder = Paint().apply { this.isAntiAlias = true }
     private val paint = Paint().apply { this.isAntiAlias = true }
-    private var mRadius = 0 //圓形圖片的半徑
-    private var mScale = 0f //圖片的縮放比例
+    private var mRadius = 0  // 圓形圖片的半徑
+    private var mScale = 0f  // 圖片的縮放比例
+    private val mBitmap by lazy { this.drawableToBitmap(this.drawable) }
+    private val mMatrix by lazy { Matrix() }
+    private var mBitmapShader = BitmapShader(this.mBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
 
     constructor(context: Context): super(context) {
         this.init(context, null, 0)
@@ -86,18 +89,16 @@ class CircleImageView: ImageView {
     }
 
     override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
-
-        val bitmap = this.drawableToBitmap(this.drawable)
-        val bitmapShader = BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
-
-        this.mScale = (mRadius * 2.0f) / minOf(bitmap.height, bitmap.width)
-
-        this.paint.shader = bitmapShader.apply {
-            this.setLocalMatrix(Matrix().apply { setScale(this@CircleImageView.mScale, this@CircleImageView.mScale) })
-        }
+        this.paint.shader = this.setBitmapShader()
 
         canvas.drawCircle(this.mRadius.toFloat(), this.mRadius.toFloat(), this.mRadius.toFloat(), this.paint)
+    }
+
+    private fun setBitmapShader() = BitmapShader(this.mBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP).also {
+        it.setLocalMatrix(this.mMatrix.also {
+            this.mScale = (mRadius * 2.0f) / minOf(this.mBitmap.height, this.mBitmap.width)
+            it.setScale(this.mScale, this.mScale)
+        })
     }
 
     private fun drawableToBitmap(drawable: Drawable): Bitmap {
