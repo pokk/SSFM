@@ -5,8 +5,10 @@ import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
+import android.view.View
 import android.widget.ImageView
-import com.devrapid.kotlinknifer.getColor
+import com.devrapid.kotlinknifer.getResColor
+import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.R
 
 
@@ -18,8 +20,8 @@ import taiwan.no1.app.ssfm.R
 class CircleImageView: ImageView {
     companion object {
         const val DEFAULT_BORDER_WIDTH = 0f
-        const val DEFAULT_DORDER_COLOR = R.color.colorWhite
-        const val DEFAULT_SHADOW_RADIUS = 0f
+        const val DEFAULT_BORDER_COLOR = R.color.colorWhite
+        const val DEFAULT_SHADOW_RADIUS = 8f
         const val DEFAULT_SHADOW_COLOR = R.color.colorWhite
     }
 
@@ -31,24 +33,31 @@ class CircleImageView: ImageView {
         }
     var shadowRadius = DEFAULT_SHADOW_RADIUS
         set(value) {
+            field = value
+            drawShadow()
             this.invalidate()
         }
-    var borderColor = DEFAULT_DORDER_COLOR
+    var borderColor = DEFAULT_BORDER_COLOR
         set(value) {
+            field = (value)
             this.invalidate()
         }
     var shadowColor = DEFAULT_SHADOW_COLOR
         set(value) {
+            field = getResColor(value)
+            drawShadow()
             this.invalidate()
         }
 
-    private val paintBorder = Paint().apply { this.isAntiAlias = true }
-    private val paint = Paint().apply { this.isAntiAlias = true }
-    private var mRadius = 0  // 圓形圖片的半徑
-    private var mScale = 0f  // 圖片的縮放比例
+    private val paintBorder = Paint().apply {
+        this.isAntiAlias = true
+        this.color = getResColor(DEFAULT_BORDER_COLOR)
+    }
+    private val paintImg = Paint().apply { this.isAntiAlias = true }
+    private var mRadius = 0
+    private var mScale = 0f
     private val mBitmap by lazy { this.drawableToBitmap(this.drawable) }
     private val mMatrix by lazy { Matrix() }
-    private var mBitmapShader = BitmapShader(this.mBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
 
     constructor(context: Context): super(context) {
         this.init(context, null, 0)
@@ -65,10 +74,12 @@ class CircleImageView: ImageView {
     private fun init(context: Context, attrs: AttributeSet?, defStyleAttr: Int) {
         context.obtainStyledAttributes(attrs, R.styleable.CircleImageView, defStyleAttr, 0).also {
             this.borderWidth = it.getDimension(R.styleable.CircleImageView_border_width, DEFAULT_BORDER_WIDTH)
-            this.borderColor = it.getColor(R.styleable.CircleImageView_border_color, getColor(DEFAULT_DORDER_COLOR))
+            this.borderColor = it.getColor(R.styleable.CircleImageView_border_color, getResColor(DEFAULT_BORDER_COLOR))
             this.shadowRadius = it.getFloat(R.styleable.CircleImageView_shadow_radius, DEFAULT_SHADOW_RADIUS)
-            this.shadowColor = it.getColor(R.styleable.CircleImageView_shadow_color, getColor(DEFAULT_SHADOW_COLOR))
+            this.shadowColor = it.getColor(R.styleable.CircleImageView_shadow_color, getResColor(DEFAULT_SHADOW_COLOR))
         }.recycle()
+
+        logw(this.shadowColor)
     }
 
     override fun getScaleType(): ScaleType = ScaleType.CENTER_CROP
@@ -89,9 +100,15 @@ class CircleImageView: ImageView {
     }
 
     override fun onDraw(canvas: Canvas) {
-        this.paint.shader = this.setBitmapShader()
+        this.paintImg.shader = this.setBitmapShader()
 
-        canvas.drawCircle(this.mRadius.toFloat(), this.mRadius.toFloat(), this.mRadius.toFloat(), this.paint)
+        // Draw the circle border.
+        canvas.drawCircle(this.mRadius.toFloat(), this.mRadius.toFloat(),
+            this.mRadius.toFloat() - (this.shadowRadius + this.shadowRadius / 2), this.paintBorder)
+        // Draw the circle image.
+        canvas.drawCircle(this.mRadius.toFloat(), this.mRadius.toFloat(),
+            this.mRadius.toFloat() - this.borderWidth - (this.shadowRadius + this.shadowRadius / 2),
+            this.paintImg)
     }
 
     private fun setBitmapShader() = BitmapShader(this.mBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP).also {
@@ -99,6 +116,11 @@ class CircleImageView: ImageView {
             this.mScale = (mRadius * 2.0f) / minOf(this.mBitmap.height, this.mBitmap.width)
             it.setScale(this.mScale, this.mScale)
         })
+    }
+
+    private fun drawShadow() {
+        this.setLayerType(View.LAYER_TYPE_SOFTWARE, this.paintBorder)
+        this.paintBorder.setShadowLayer(this.shadowRadius, 0.0f, this.shadowRadius / 2, this.shadowColor)
     }
 
     private fun drawableToBitmap(drawable: Drawable): Bitmap {
