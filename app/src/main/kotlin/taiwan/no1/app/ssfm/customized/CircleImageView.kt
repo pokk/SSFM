@@ -4,11 +4,11 @@ import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.support.annotation.ColorInt
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
 import com.devrapid.kotlinknifer.getResColor
-import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.R
 
 
@@ -37,21 +37,21 @@ class CircleImageView: ImageView {
             drawShadow()
             this.invalidate()
         }
-    var borderColor = DEFAULT_BORDER_COLOR
-        set(value) {
-            field = (value)
+    var borderColor = getResColor(DEFAULT_BORDER_COLOR)
+        set(@ColorInt value) {
+            field = value
+            this.paintBorder.color = value
             this.invalidate()
         }
-    var shadowColor = DEFAULT_SHADOW_COLOR
-        set(value) {
-            field = getResColor(value)
+    var shadowColor = getResColor(DEFAULT_SHADOW_COLOR)
+        set(@ColorInt value) {
+            field = value
             drawShadow()
             this.invalidate()
         }
 
     private val paintBorder = Paint().apply {
         this.isAntiAlias = true
-        this.color = getResColor(DEFAULT_BORDER_COLOR)
     }
     private val paintImg = Paint().apply { this.isAntiAlias = true }
     private var mRadius = 0
@@ -79,7 +79,7 @@ class CircleImageView: ImageView {
             this.shadowColor = it.getColor(R.styleable.CircleImageView_shadow_color, getResColor(DEFAULT_SHADOW_COLOR))
         }.recycle()
 
-        logw(this.shadowColor)
+        this.paintBorder.color = this.borderColor
     }
 
     override fun getScaleType(): ScaleType = ScaleType.CENTER_CROP
@@ -120,7 +120,7 @@ class CircleImageView: ImageView {
 
     private fun drawShadow() {
         this.setLayerType(View.LAYER_TYPE_SOFTWARE, this.paintBorder)
-        this.paintBorder.setShadowLayer(this.shadowRadius, 0.0f, this.shadowRadius / 2, this.shadowColor)
+        this.paintBorder.setShadowLayer(this.shadowRadius * 1.5f, 0f, this.shadowRadius / 2, this.shadowColor)
     }
 
     private fun drawableToBitmap(drawable: Drawable): Bitmap {
