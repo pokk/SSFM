@@ -111,8 +111,6 @@ dependencies {
     // LastFM api
     compile "de.u-mass:lastfm-java:0.1.2"
     /* UI */
-    // Circle Imageview
-    compile "de.hdodenhof:circleimageview:2.1.0"
     // Blur View
     compile 'com.github.mmin18:realtimeblurview:1.1.0'
 
