@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@color/colorDarkGray">
+
+    <ImageButton
+        android:id="@+id/ib_play"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@null"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ib_next"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ib_previous"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_play_circle"/>
+
+    <ImageButton
+        android:id="@+id/ib_next"
+        android:layout_width="67dp"
+        android:layout_height="match_parent"
+        android:background="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ib_shuffle"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ib_play"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_skip_next"/>
+
+    <ImageButton
+        android:id="@+id/ib_repeat"
+        android:layout_width="67dp"
+        android:layout_height="match_parent"
+        android:background="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ib_previous"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_repeat"/>
+
+    <ImageButton
+        android:id="@+id/ib_shuffle"
+        android:layout_width="68dp"
+        android:layout_height="match_parent"
+        android:background="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ib_next"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_shuffle"/>
+
+    <ImageButton
+        android:id="@+id/ib_previous"
+        android:layout_width="67dp"
+        android:layout_height="match_parent"
+        android:background="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ib_play"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ib_repeat"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_skip_previous"/>
+</android.support.constraint.ConstraintLayout>
