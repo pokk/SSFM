@@ -6,15 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    tool:background="@color/colorPrimary"
-    android:padding="8dp">
+    android:padding="8dp"
+    tool:background="@color/colorPrimary">
 
     <RelativeLayout
         android:id="@+id/rl_content"
-        android:layout_width="match_parent"
+        android:layout_width="352dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:background="@color/colorPrimaryDark"
         android:orientation="vertical"
@@ -23,7 +21,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tool:layout_editor_absoluteX="8dp">
 
         <ImageView
             android:id="@+id/iv_action"
@@ -64,20 +63,21 @@
             android:layout_marginStart="40dp"
             android:textColor="@color/colorWhite"
             android:textSize="20sp"
-            tool:text="2"
-            />
+            tool:text="2"/>
     </RelativeLayout>
 
+    <!-- TODO: Change shadow color. -->
     <ImageView
         android:id="@+id/iv_music_icon"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:background="@drawable/shadow"
         android:layout_marginBottom="8dp"
-        android:paddingEnd="5dp"
+        android:background="@drawable/shadow"
         android:paddingBottom="5dp"
+        android:paddingEnd="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tool:src="@drawable/jieyi_icon"/>
+        tool:src="@drawable/sample_lady_gaga"
+        tool:layout_editor_absoluteX="0dp"/>
 </android.support.constraint.ConstraintLayout>
