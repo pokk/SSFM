@@ -6,7 +6,7 @@ import android.support.annotation.StringRes
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.TextView
-import kotlinx.android.synthetic.main.custom_menu_item.view.*
+import kotlinx.android.synthetic.main.item_custom_menu.view.*
 import taiwan.no1.app.ssfm.R
 
 /**
@@ -19,7 +19,7 @@ class MenuItem(context: Context): LinearLayout(context) {
 
     init {
         val view = (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).
-            inflate(R.layout.custom_menu_item, this)
+            inflate(R.layout.item_custom_menu, this)
         this.tv_menu = view.tv_title
     }
 

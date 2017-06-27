@@ -114,7 +114,10 @@ dependencies {
     // Blur View
     compile 'com.github.mmin18:realtimeblurview:1.1.0'
 
-    compile "com.android.support:appcompat-v7:25.3.1"
+    //noinspection GradleCompatible
+    compile "com.android.support:appcompat-v7:25.4.0"
+    compile "com.android.support:cardview-v7:25.4.0"
+    compile "com.android.support:recyclerview-v7:25.4.0"
     compile 'com.android.support.constraint:constraint-layout:1.1.0-beta1'
 
     testCompile "junit:junit:4.12"
