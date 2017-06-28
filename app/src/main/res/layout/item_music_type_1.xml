@@ -32,12 +32,13 @@
             tool:src="@drawable/ic_play_circle"/>
 
         <TextView
-            android:id="@+id/tv_track_name"
+            android:id="@+id/tv_album_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_toEndOf="@+id/tv_track_name"
+            android:layout_toEndOf="@+id/tv_number"
             android:layout_toStartOf="@+id/iv_action"
             android:textColor="@color/colorWhite"
             android:textStyle="bold"
@@ -47,14 +48,14 @@
             android:id="@+id/tv_singer_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/tv_track_name"
-            android:layout_below="@+id/tv_track_name"
-            android:layout_toStartOf="@+id/iv_action"
+            android:layout_alignEnd="@+id/tv_album_name"
+            android:layout_alignStart="@+id/tv_album_name"
+            android:layout_below="@+id/tv_album_name"
             android:textColor="@color/colorWhite"
             tool:text="Lady Gaga"/>
 
         <TextView
-            android:id="@+id/tv_track_name"
+            android:id="@+id/tv_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"

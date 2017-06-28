@@ -18,7 +18,7 @@
         app:srcCompat="@drawable/ic_play_circle"/>
 
     <TextView
-        android:id="@+id/tv_track_name"
+        android:id="@+id/tv_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -28,22 +28,24 @@
         tool:text="2"/>
 
     <TextView
-        android:id="@+id/tv_track_name"
+        android:id="@+id/tv_album_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="10"
-        android:gravity="left"
-        tool:text="The Cure"
-        android:textColor="@color/colorWhite"/>
+        android:gravity="start"
+        android:textColor="@color/colorWhite"
+        tool:text="The Cure"/>
 
     <ImageView
         android:id="@+id/iv_frequency"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:src="@drawable/ic_sound_bars_pulse"/>
+        android:src="@drawable/ic_sound_bars_pulse"
+        android:visibility="invisible"
+        tool:visibility="visible"/>
 
     <TextView
         android:id="@+id/tv_total_time"
