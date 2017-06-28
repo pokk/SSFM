@@ -23,7 +23,7 @@ class TestActivity: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.test_customize_view)
 
         this.menu = SideMenu(this)
         this.menu.attachActivity(this)
