@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.mvvm.models
 
 import android.media.MediaPlayer
 import com.devrapid.kotlinknifer.logd
+import com.devrapid.kotlinknifer.logi
 
 /**
  * Created by weian on 2017/6/18.
@@ -72,7 +73,9 @@ class MediaPlayerModel: IMultiMediaPlayer,
 
     override fun duration(): Int {
         logd("get duration of media")
-        return this.mMediaPlayer?.duration ?: -1
+        return this.mMediaPlayer?.let {
+            it.duration / 1000
+        } ?: -1
     }
 
     override fun isReplay(): Boolean {
@@ -96,7 +99,10 @@ class MediaPlayerModel: IMultiMediaPlayer,
     }
 
     override fun current(): Int {
-        return this.mMediaPlayer?.currentPosition ?: 0
+        logi("current time")
+        return this.mMediaPlayer?.let {
+            it.currentPosition / 1000
+        } ?: 0
     }
 
     override fun getState(): IPlayerHander.EPlayerState {
