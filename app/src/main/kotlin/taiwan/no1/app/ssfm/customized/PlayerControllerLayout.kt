@@ -3,11 +3,9 @@ package taiwan.no1.app.ssfm.customized
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
-import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.logw
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.collections.forEachWithIndex
@@ -23,14 +21,19 @@ import taiwan.no1.app.ssfm.R
  */
 class PlayerControllerLayout: ViewGroup {
     val propertis: ImageButton.() -> Unit = {
-        this.backgroundColor = Color.TRANSPARENT
+        this.backgroundColor = Color.BLACK
         this.scaleType = ImageView.ScaleType.CENTER
     }
     val listImageButtons = listOf(imageButton(R.drawable.ic_repeat, propertis),
-        imageButton(R.drawable.ic_skip_previous),
-        imageButton(R.drawable.ic_play_circle),
-        imageButton(R.drawable.ic_skip_next),
-        imageButton(R.drawable.ic_shuffle))
+        imageButton(R.drawable.ic_skip_previous, propertis),
+        imageButton(R.drawable.ic_play_circle, propertis),
+        imageButton(R.drawable.ic_skip_next, propertis),
+        imageButton(R.drawable.ic_shuffle, propertis))
+    val listBtnListeneers = mutableListOf({ imagebtn: ImageButton -> },
+        { imagebtn: ImageButton -> },
+        { imagebtn: ImageButton -> },
+        { imagebtn: ImageButton -> },
+        { imagebtn: ImageButton -> })
     var isPlayingState = false
     var isRepeatingAll = true
 
@@ -50,6 +53,21 @@ class PlayerControllerLayout: ViewGroup {
     }
 
     fun init(context: Context, attrs: AttributeSet?, defStyleAttr: Int) {
+        this.listImageButtons.zip(this.listBtnListeneers).forEachWithIndex { index, (btn, listener) ->
+            btn.onClick {
+                listener(it as ImageButton)
+                when (index) {
+                    0 -> {
+                        this@PlayerControllerLayout.isRepeatingAll = !this@PlayerControllerLayout.isRepeatingAll
+                        it.imageResource = if (this@PlayerControllerLayout.isRepeatingAll) R.drawable.ic_repeat else R.drawable.ic_repeat_one
+                    }
+                    2 -> {
+                        this@PlayerControllerLayout.isPlayingState = !this@PlayerControllerLayout.isPlayingState
+                        it.imageResource = if (this@PlayerControllerLayout.isPlayingState) R.drawable.ic_play_circle else R.drawable.ic_pause_circle
+                    }
+                }
+            }
+        }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -60,38 +78,59 @@ class PlayerControllerLayout: ViewGroup {
         this.measureChildren(widthMeasureSpec, heightMeasureSpec)
     }
 
-    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         if (5 < this.childCount)
             return
 
-        logd(l, t, r, b)
+        val layoutWidth = right - left
+        val layoutHeight = bottom - top
 
-        this.listImageButtons.forEachWithIndex { index, _ ->
-            val childView = this.getChildAt(index)
-            layoutParams = childView.layoutParams
-            logd(childView, layoutParams)
-            if (View.GONE == childView.visibility)
-                return@forEachWithIndex
-
-            logw(childView.measuredWidth, childView.measuredHeight)
-        }
+        // repeat button
+        val childViewRepeat = this.getChildAt(0)
+        childViewRepeat.layout(0, 0, childViewRepeat.measuredWidth, childViewRepeat.measuredHeight)
+        // previous button
+        val childViewPrevious = this.getChildAt(1)
+        childViewPrevious.layout(childViewRepeat.right,
+            0,
+            childViewRepeat.right + childViewPrevious.measuredWidth,
+            childViewPrevious.measuredHeight)
+        // play button
+        val childViewPlay = this.getChildAt(2)
+        childViewPlay.layout(layoutWidth / 2 - childViewPlay.measuredWidth / 2,
+            0,
+            layoutWidth / 2 + childViewPlay.measuredWidth / 2,
+            childViewPlay.measuredHeight)
+        // next button
+        val childViewNext = this.getChildAt(3)
+        childViewNext.layout(childViewPlay.right,
+            0,
+            childViewPlay.right + childViewNext.measuredWidth,
+            childViewNext.measuredHeight)
+        // shuffle button
+        val childViewShuffle = this.getChildAt(4)
+        childViewShuffle.layout(childViewNext.right,
+            0,
+            childViewNext.right + childViewShuffle.measuredWidth,
+            childViewShuffle.measuredHeight)
     }
 
-    fun setRepeatOnClick(listener: (ImageButton) -> Unit) = this.listImageButtons[0].onClick {
-        listener(it as ImageButton)
-        this@PlayerControllerLayout.isRepeatingAll = !this@PlayerControllerLayout.isRepeatingAll
-        it.imageResource = if (this@PlayerControllerLayout.isRepeatingAll) R.drawable.ic_repeat else R.drawable.ic_repeat_one
+    fun setRepeatOnClick(listener: (ImageButton) -> Unit) {
+        this.listBtnListeneers[0] = listener
     }
 
-    fun setPreviousOnClick(listener: (ImageButton) -> Unit) = this.listImageButtons[1].onClick { listener(it as ImageButton) }
-
-    fun setPlayOnClick(listener: (ImageButton) -> Unit) = this.listImageButtons[2].onClick {
-        listener(it as ImageButton)
-        this@PlayerControllerLayout.isPlayingState = !this@PlayerControllerLayout.isPlayingState
-        it.imageResource = if (this@PlayerControllerLayout.isPlayingState) R.drawable.ic_play_circle else R.drawable.ic_pause_circle
+    fun setPreviousOnClick(listener: (ImageButton) -> Unit) {
+        this.listBtnListeneers[1] = listener
     }
 
-    fun setNextOnClick(listener: (ImageButton) -> Unit) = this.listImageButtons[3].onClick { listener(it as ImageButton) }
+    fun setPlayOnClick(listener: (ImageButton) -> Unit) {
+        this.listBtnListeneers[2] = listener
+    }
 
-    fun setShuffleOnClick(listener: (ImageButton) -> Unit) = this.listImageButtons[4].onClick { listener(it as ImageButton) }
+    fun setNextOnClick(listener: (ImageButton) -> Unit) {
+        this.listBtnListeneers[3] = listener
+    }
+
+    fun setShuffleOnClick(listener: (ImageButton) -> Unit) {
+        this.listBtnListeneers[4] = listener
+    }
 }
