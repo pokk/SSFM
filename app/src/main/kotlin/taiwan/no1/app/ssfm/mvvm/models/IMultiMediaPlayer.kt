@@ -12,7 +12,9 @@ interface IMultiMediaPlayer {
     fun resume()
     fun replay(is_replay: Boolean)
     fun seekto(sec: Int)
+    fun current(): Int
     fun duration(): Int
     fun isReplay(): Boolean
     fun isPlaying(): Boolean
+    fun getState(): IPlayerHander.EPlayerState
 }

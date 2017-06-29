@@ -11,6 +11,7 @@ class MediaPlayerModel: IMultiMediaPlayer,
         MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener {
 
     private var mMediaPlayer: MediaPlayer ?= null
+    private var mState: IPlayerHander.EPlayerState = IPlayerHander.EPlayerState.EPlayerState_Stop
 
     constructor() {
         this.mMediaPlayer = MediaPlayer()
@@ -22,6 +23,7 @@ class MediaPlayerModel: IMultiMediaPlayer,
     override fun onPrepared(mp: MediaPlayer?) {
         logd("start playing")
         this.mMediaPlayer?.start()
+        this.mState = IPlayerHander.EPlayerState.EPlayerState_Playing
     }
 
     override fun onError(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
@@ -43,16 +45,19 @@ class MediaPlayerModel: IMultiMediaPlayer,
     override fun stop() {
         logd("stop player")
         this.mMediaPlayer?.stop()
+        this.mState = IPlayerHander.EPlayerState.EPlayerState_Stop
     }
 
     override fun pause() {
         logd("pause player")
         this.mMediaPlayer?.pause()
+        this.mState = IPlayerHander.EPlayerState.EPLayerState_Pause
     }
 
     override fun resume() {
         logd("resume player")
         this.mMediaPlayer?.start()
+        this.mState = IPlayerHander.EPlayerState.EPlayerState_Playing
     }
 
     override fun replay(is_replay: Boolean) {
@@ -88,5 +93,13 @@ class MediaPlayerModel: IMultiMediaPlayer,
                 "false"
         })
         return this.mMediaPlayer?.isPlaying ?: false
+    }
+
+    override fun current(): Int {
+        return this.mMediaPlayer?.currentPosition ?: 0
+    }
+
+    override fun getState(): IPlayerHander.EPlayerState {
+        return this.mState
     }
 }

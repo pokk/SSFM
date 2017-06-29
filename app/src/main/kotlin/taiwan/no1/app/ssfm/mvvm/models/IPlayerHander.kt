@@ -6,6 +6,12 @@ package taiwan.no1.app.ssfm.mvvm.models
  * Created by weian on 2017/6/18.
  */
 interface IPlayerHander {
+    enum class EPlayerState {
+        EPlayerState_Playing,
+        EPlayerState_Stop,
+        EPLayerState_Pause
+    }
+
     fun play()
     fun stop()
     fun pause()
