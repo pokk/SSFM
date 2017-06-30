@@ -6,11 +6,11 @@ import android.util.AttributeSet
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
-import com.devrapid.kotlinknifer.logw
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.collections.forEachWithIndex
 import org.jetbrains.anko.imageButton
 import org.jetbrains.anko.imageResource
+import org.jetbrains.anko.padding
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import taiwan.no1.app.ssfm.R
 
@@ -21,15 +21,19 @@ import taiwan.no1.app.ssfm.R
  */
 class PlayerControllerLayout: ViewGroup {
     val propertis: ImageButton.() -> Unit = {
-        this.backgroundColor = Color.BLACK
+        this.backgroundColor = Color.TRANSPARENT
         this.scaleType = ImageView.ScaleType.CENTER
     }
     val listImageButtons = listOf(imageButton(R.drawable.ic_repeat, propertis),
         imageButton(R.drawable.ic_skip_previous, propertis),
-        imageButton(R.drawable.ic_play_circle, propertis),
+        imageButton(R.drawable.ic_play_circle) {
+            this.backgroundColor = Color.TRANSPARENT
+            this.padding = 0
+            this.scaleType = ImageView.ScaleType.FIT_CENTER
+        },
         imageButton(R.drawable.ic_skip_next, propertis),
         imageButton(R.drawable.ic_shuffle, propertis))
-    val listBtnListeneers = mutableListOf({ imagebtn: ImageButton -> },
+    val listBtnListeners = mutableListOf({ imagebtn: ImageButton -> },
         { imagebtn: ImageButton -> },
         { imagebtn: ImageButton -> },
         { imagebtn: ImageButton -> },
@@ -53,7 +57,7 @@ class PlayerControllerLayout: ViewGroup {
     }
 
     fun init(context: Context, attrs: AttributeSet?, defStyleAttr: Int) {
-        this.listImageButtons.zip(this.listBtnListeneers).forEachWithIndex { index, (btn, listener) ->
+        this.listImageButtons.zip(this.listBtnListeners).forEachWithIndex { index, (btn, listener) ->
             btn.onClick {
                 listener(it as ImageButton)
                 when (index) {
@@ -63,7 +67,7 @@ class PlayerControllerLayout: ViewGroup {
                     }
                     2 -> {
                         this@PlayerControllerLayout.isPlayingState = !this@PlayerControllerLayout.isPlayingState
-                        it.imageResource = if (this@PlayerControllerLayout.isPlayingState) R.drawable.ic_play_circle else R.drawable.ic_pause_circle
+                        it.imageResource = if (this@PlayerControllerLayout.isPlayingState) R.drawable.ic_pause_circle else R.drawable.ic_play_circle
                     }
                 }
             }
@@ -71,17 +75,27 @@ class PlayerControllerLayout: ViewGroup {
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        // Separate 6 blocks, center is occupied 2 blocks.
+        val unitWidth = MeasureSpec.getSize(widthMeasureSpec) / 6
 
-        logw(MeasureSpec.toString(widthMeasureSpec), MeasureSpec.toString(heightMeasureSpec))
-
-        this.measureChildren(widthMeasureSpec, heightMeasureSpec)
+        // Set the each of children components size.
+        this.listImageButtons.forEachWithIndex { index, _ ->
+            val childWidth = if (2 == index) unitWidth * 2 else unitWidth
+            this.getChildAt(index).measure(MeasureSpec.makeMeasureSpec(childWidth, MeasureSpec.EXACTLY),
+                MeasureSpec.makeMeasureSpec(200, MeasureSpec.EXACTLY))
+        }
+        // Pick the highest component's height.
+        val maxHeight = this.listImageButtons.map { it.height }.max() ?: MeasureSpec.getSize(heightMeasureSpec)
+        // Set this layout size.
+        this.setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), maxHeight)
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+        // Not allow to add more components into this view group.
         if (5 < this.childCount)
             return
 
+        // left, top, right, bottom are this layout's size.
         val layoutWidth = right - left
         val layoutHeight = bottom - top
 
@@ -115,22 +129,22 @@ class PlayerControllerLayout: ViewGroup {
     }
 
     fun setRepeatOnClick(listener: (ImageButton) -> Unit) {
-        this.listBtnListeneers[0] = listener
+        this.listBtnListeners[0] = listener
     }
 
     fun setPreviousOnClick(listener: (ImageButton) -> Unit) {
-        this.listBtnListeneers[1] = listener
+        this.listBtnListeners[1] = listener
     }
 
     fun setPlayOnClick(listener: (ImageButton) -> Unit) {
-        this.listBtnListeneers[2] = listener
+        this.listBtnListeners[2] = listener
     }
 
     fun setNextOnClick(listener: (ImageButton) -> Unit) {
-        this.listBtnListeneers[3] = listener
+        this.listBtnListeners[3] = listener
     }
 
     fun setShuffleOnClick(listener: (ImageButton) -> Unit) {
-        this.listBtnListeneers[4] = listener
+        this.listBtnListeners[4] = listener
     }
 }
