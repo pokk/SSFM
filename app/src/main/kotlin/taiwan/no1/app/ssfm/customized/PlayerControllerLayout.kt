@@ -27,7 +27,7 @@ import taiwan.no1.app.ssfm.pattern.state.RepeatState
  */
 class PlayerControllerLayout: ViewGroup {
     val properties: ImageButton.() -> Unit = {
-        this.backgroundColor = Color.TRANSPARENT
+        this.backgroundColor = Color.BLACK
         this.scaleType = ImageView.ScaleType.FIT_CENTER
         this.padding = 20
     }
@@ -88,14 +88,13 @@ class PlayerControllerLayout: ViewGroup {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         // Separate 6 blocks, center is occupied 2 blocks.
-        val unitWidth = (MeasureSpec.getSize(widthMeasureSpec).minus(this.paddingStart).minus(this.paddingEnd)).div(6)
+        val unitWidth = (MeasureSpec.getSize(widthMeasureSpec) - this.paddingStart - this.paddingEnd) / 6
 
         // Set the each of children components size.
         this.listImageButtons.forEachWithIndex { index, _ ->
             val childWidth = if (2 == index) unitWidth.times(2) else unitWidth
             this.getChildAt(index).measure(MeasureSpec.makeMeasureSpec(childWidth, MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(childWidth.minus(this.paddingTop).minus(this.paddingBottom),
-                    MeasureSpec.EXACTLY))
+                MeasureSpec.makeMeasureSpec(childWidth - this.paddingTop - this.paddingBottom, MeasureSpec.EXACTLY))
         }
         // Pick the highest component's height and plus left & right margin.
         val maxHeight = this.listImageButtons.map { it.height }.max()?.plus(this.paddingTop)?.plus(this.paddingBottom) ?:
@@ -111,8 +110,9 @@ class PlayerControllerLayout: ViewGroup {
         if (5 < this.childCount)
             return
 
-        val layoutWidth = right.minus(left)
+        val layoutWidth = right - left
         // b: bottom, t: top
+        // left, top, right, bottom are this layout's size.
         val b = this.listImageButtons.map { it.measuredHeight }.max()?.times(0.7)?.minus(this.paddingTop)?.
             minus(this.paddingBottom)?.toInt() ?: bottom
         val t = this.paddingTop
