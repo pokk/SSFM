@@ -21,7 +21,7 @@ import taiwan.no1.app.ssfm.R
  */
 class PlayerControllerLayout: ViewGroup {
     val propertis: ImageButton.() -> Unit = {
-        this.backgroundColor = Color.TRANSPARENT
+        this.backgroundColor = Color.BLACK
         this.scaleType = ImageView.ScaleType.CENTER
     }
     val listImageButtons = listOf(imageButton(R.drawable.ic_repeat, propertis),
@@ -76,16 +76,17 @@ class PlayerControllerLayout: ViewGroup {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         // Separate 6 blocks, center is occupied 2 blocks.
-        val unitWidth = MeasureSpec.getSize(widthMeasureSpec) / 6
+        val unitWidth = (MeasureSpec.getSize(widthMeasureSpec) - this.paddingStart - this.paddingEnd) / 6
 
         // Set the each of children components size.
         this.listImageButtons.forEachWithIndex { index, _ ->
             val childWidth = if (2 == index) unitWidth * 2 else unitWidth
             this.getChildAt(index).measure(MeasureSpec.makeMeasureSpec(childWidth, MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(200, MeasureSpec.EXACTLY))
+                MeasureSpec.makeMeasureSpec(childWidth - this.paddingTop - this.paddingBottom, MeasureSpec.EXACTLY))
         }
-        // Pick the highest component's height.
-        val maxHeight = this.listImageButtons.map { it.height }.max() ?: MeasureSpec.getSize(heightMeasureSpec)
+        // Pick the highest component's height and plus left & right margin.
+        val maxHeight = this.listImageButtons.map { it.height }.max()?.plus(this.paddingTop)?.plus(this.paddingBottom) ?:
+            MeasureSpec.getSize(heightMeasureSpec)
         // Set this layout size.
         this.setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), maxHeight)
     }
@@ -97,35 +98,53 @@ class PlayerControllerLayout: ViewGroup {
 
         // left, top, right, bottom are this layout's size.
         val layoutWidth = right - left
-        val layoutHeight = bottom - top
+        val b = this.listImageButtons.map { it.measuredHeight }.max()?.times(0.7)?.minus(this.paddingTop)?.
+            minus(this.paddingBottom)?.toInt() ?: bottom
+        val t = this.paddingTop
 
+        var prev: ImageButton? = null
+        var l: Int
+        var r: Int
+        this.listImageButtons.forEachWithIndex { index, btn ->
+            when (index) {
+                0 -> {
+                    l = this.paddingLeft
+                    r = this.paddingLeft + btn.measuredWidth
+                }
+                1 -> {
+                    Pair(prev!!.measuredHeight)
+                }
+                2 -> {
+
+                }
+                3 -> {
+                }
+                4 -> {
+                }
+            }
+            this.getChildAt(index).layout(l, t, r, b)
+            prev = btn
+        }
         // repeat button
         val childViewRepeat = this.getChildAt(0)
-        childViewRepeat.layout(0, 0, childViewRepeat.measuredWidth, childViewRepeat.measuredHeight)
+        childViewRepeat.layout(this.paddingLeft, this.paddingTop, this.paddingLeft + childViewRepeat.measuredWidth,
+            childHeight)
         // previous button
         val childViewPrevious = this.getChildAt(1)
-        childViewPrevious.layout(childViewRepeat.right,
-            0,
-            childViewRepeat.right + childViewPrevious.measuredWidth,
-            childViewPrevious.measuredHeight)
+        childViewPrevious.layout(childViewRepeat.right, this.paddingTop,
+            childViewRepeat.right + childViewPrevious.measuredWidth, childHeight)
         // play button
         val childViewPlay = this.getChildAt(2)
-        childViewPlay.layout(layoutWidth / 2 - childViewPlay.measuredWidth / 2,
-            0,
-            layoutWidth / 2 + childViewPlay.measuredWidth / 2,
-            childViewPlay.measuredHeight)
+        childViewPlay.layout(layoutWidth / 2 - childViewPlay.measuredWidth / 2, this.paddingTop,
+            layoutWidth / 2 + childViewPlay.measuredWidth / 2, childHeight)
         // next button
         val childViewNext = this.getChildAt(3)
-        childViewNext.layout(childViewPlay.right,
-            0,
-            childViewPlay.right + childViewNext.measuredWidth,
-            childViewNext.measuredHeight)
+        childViewNext.layout(childViewPlay.right, this.paddingTop,
+            childViewPlay.right + childViewNext.measuredWidth, childHeight)
         // shuffle button
         val childViewShuffle = this.getChildAt(4)
-        childViewShuffle.layout(childViewNext.right,
-            0,
-            childViewNext.right + childViewShuffle.measuredWidth,
-            childViewShuffle.measuredHeight)
+        childViewShuffle.layout(childViewNext.right, this.paddingTop,
+            childViewNext.right + childViewShuffle.measuredWidth, childHeight)
     }
 
     fun setRepeatOnClick(listener: (ImageButton) -> Unit) {
