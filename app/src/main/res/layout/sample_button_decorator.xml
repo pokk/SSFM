@@ -10,10 +10,8 @@
     <!--android:paddingBottom="40dp"-->
     <!--android:paddingLeft="20dp"/>-->
 
-    <taiwan.no1.app.ssfm.customized.PlayerControllerLayout
-        android:id="@+id/test"
+    <ImageButton
+        android:id="@+id/btn_test"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    </taiwan.no1.app.ssfm.customized.PlayerControllerLayout>
-
+        android:layout_height="wrap_content"/>
 </FrameLayout>
