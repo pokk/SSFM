@@ -87,7 +87,7 @@ class CircleImageView: ImageView {
 
     override fun setScaleType(scaleType: ScaleType) {
         if (ScaleType.CENTER_CROP != scaleType) {
-            throw IllegalArgumentException("ScaleType $scaleType not supported. ScaleType.CENTER_CROP is used by default. So you don't need to use ScaleType.")
+            error("ScaleType $scaleType not supported. ScaleType.CENTER_CROP is used by default. So you don't need to use ScaleType.")
         }
     }
 
@@ -96,7 +96,7 @@ class CircleImageView: ImageView {
 
         val size = minOf(this.measuredHeight, this.measuredWidth)
 
-        this.mRadius = size / 2
+        this.mRadius = size.div(2)
         this.setMeasuredDimension(size, size)
     }
 
@@ -104,24 +104,27 @@ class CircleImageView: ImageView {
         this.paintImg.shader = this.setBitmapShader()
 
         // Draw the circle border.
-        canvas.drawCircle(this.mRadius.toFloat(), this.mRadius.toFloat(),
-            this.mRadius.toFloat() - (this.shadowRadius + this.shadowRadius / 2), this.paintBorder)
+        canvas.drawCircle(this.mRadius.toFloat(),
+            this.mRadius.toFloat(),
+            this.mRadius.minus(this.shadowRadius.plus(this.shadowRadius.div(2))),
+            this.paintBorder)
         // Draw the circle image.
-        canvas.drawCircle(this.mRadius.toFloat(), this.mRadius.toFloat(),
-            this.mRadius.toFloat() - this.borderWidth - (this.shadowRadius + this.shadowRadius / 2),
+        canvas.drawCircle(this.mRadius.toFloat(),
+            this.mRadius.toFloat(),
+            this.mRadius.minus(this.borderWidth).minus(this.shadowRadius.plus(this.shadowRadius.div(2))),
             this.paintImg)
     }
 
     private fun setBitmapShader() = BitmapShader(this.mBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP).also {
         it.setLocalMatrix(this.mMatrix.also {
-            this.mScale = (mRadius * 2.0f) / minOf(this.mBitmap.height, this.mBitmap.width)
+            this.mScale = mRadius.times(2).div(minOf(this.mBitmap.height, this.mBitmap.width)).toFloat()
             it.setScale(this.mScale, this.mScale)
         })
     }
 
     private fun drawShadow() {
         this.setLayerType(View.LAYER_TYPE_SOFTWARE, this.paintBorder)
-        this.paintBorder.setShadowLayer(this.shadowRadius * 1.5f, 0f, this.shadowRadius / 2, this.shadowColor)
+        this.paintBorder.setShadowLayer(this.shadowRadius.times(1.5f), 0f, this.shadowRadius.div(2), this.shadowColor)
     }
 
     private fun drawableToBitmap(drawable: Drawable): Bitmap {

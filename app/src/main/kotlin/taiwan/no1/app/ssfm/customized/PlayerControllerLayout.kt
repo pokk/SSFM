@@ -90,13 +90,14 @@ class PlayerControllerLayout: ViewGroup {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         // Separate 6 blocks, center is occupied 2 blocks.
-        val unitWidth = (MeasureSpec.getSize(widthMeasureSpec) - this.paddingStart - this.paddingEnd) / 6
+        val unitWidth = (MeasureSpec.getSize(widthMeasureSpec).minus(this.paddingStart).minus(this.paddingEnd)).div(6)
 
         // Set the each of children components size.
         this.listImageButtons.forEachWithIndex { index, _ ->
-            val childWidth = if (2 == index) unitWidth * 2 else unitWidth
+            val childWidth = if (2 == index) unitWidth.times(2) else unitWidth
             this.getChildAt(index).measure(MeasureSpec.makeMeasureSpec(childWidth, MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(childWidth - this.paddingTop - this.paddingBottom, MeasureSpec.EXACTLY))
+                MeasureSpec.makeMeasureSpec(childWidth.minus(this.paddingTop).minus(this.paddingBottom),
+                    MeasureSpec.EXACTLY))
         }
         // Pick the highest component's height and plus left & right margin.
         val maxHeight = this.listImageButtons.map { it.height }.max()?.plus(this.paddingTop)?.plus(this.paddingBottom) ?:
@@ -112,7 +113,7 @@ class PlayerControllerLayout: ViewGroup {
         if (5 < this.childCount)
             return
 
-        val layoutWidth = right - left
+        val layoutWidth = right.minus(left)
         // b: bottom, t: top
         val b = this.listImageButtons.map { it.measuredHeight }.max()?.times(0.7)?.minus(this.paddingTop)?.
             minus(this.paddingBottom)?.toInt() ?: bottom
@@ -123,7 +124,8 @@ class PlayerControllerLayout: ViewGroup {
             // l: left, r: right
             val (l, r) = when (index) {
                 0 -> Pair(this.paddingLeft, this.paddingLeft + btn.measuredWidth)
-                2 -> Pair(layoutWidth / 2 - btn.measuredWidth / 2, layoutWidth / 2 + btn.measuredWidth / 2)
+                2 -> Pair(layoutWidth.div(2).minus(btn.measuredWidth.div(2)),
+                    layoutWidth.div(2).plus(btn.measuredWidth.div(2)))
                 1, 3, 4 -> Pair(prev.right, prev.right + btn.measuredWidth)
                 else -> Pair(0, 0)
             }
