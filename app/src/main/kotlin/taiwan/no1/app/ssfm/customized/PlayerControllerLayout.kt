@@ -10,10 +10,12 @@ import android.widget.ImageView
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.collections.forEachWithIndex
 import org.jetbrains.anko.imageButton
-import org.jetbrains.anko.imageResource
 import org.jetbrains.anko.padding
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import taiwan.no1.app.ssfm.R
+import taiwan.no1.app.ssfm.pattern.state.IControllerButtonState
+import taiwan.no1.app.ssfm.pattern.state.PauseState
+import taiwan.no1.app.ssfm.pattern.state.RepeatState
 
 /**
  * Player controller panel.
@@ -43,8 +45,23 @@ class PlayerControllerLayout: ViewGroup {
         { _: ImageButton -> },
         { _: ImageButton -> },
         { _: ImageButton -> })
-    var isPlayingState = false
-    var isRepeatingAll = true
+    val stateSetFunction = { state: IControllerButtonState ->
+        val classname = Thread.currentThread().stackTrace[5].className
+        val interfaces = Class.forName(classname).interfaces
+
+        if (interfaces.isEmpty() or ("IControllerButtonState" != interfaces[0].simpleName))
+            error("Can not set state by yourself.")
+
+        state
+    }
+    var statePlayMode: IControllerButtonState = PauseState()
+        set(value) {
+            field = this.stateSetFunction(value)
+        }
+    var stateRecycleMode: IControllerButtonState = RepeatState()
+        set(value) {
+            field = this.stateSetFunction(value)
+        }
 
     constructor(context: Context): super(context) {
         this.init()
@@ -64,14 +81,8 @@ class PlayerControllerLayout: ViewGroup {
             btn.onClick {
                 listener(it as ImageButton)
                 when (index) {
-                    0 -> {
-                        this@PlayerControllerLayout.isRepeatingAll = !this@PlayerControllerLayout.isRepeatingAll
-                        it.imageResource = if (this@PlayerControllerLayout.isRepeatingAll) R.drawable.ic_repeat else R.drawable.ic_repeat_one
-                    }
-                    2 -> {
-                        this@PlayerControllerLayout.isPlayingState = !this@PlayerControllerLayout.isPlayingState
-                        it.imageResource = if (this@PlayerControllerLayout.isPlayingState) R.drawable.ic_pause_circle else R.drawable.ic_play_circle
-                    }
+                    0 -> this@PlayerControllerLayout.stateRecycleMode.onclick(this@PlayerControllerLayout)
+                    2 -> this@PlayerControllerLayout.statePlayMode.onclick(this@PlayerControllerLayout)
                 }
             }
         }

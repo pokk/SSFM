@@ -2,8 +2,6 @@ package taiwan.no1.app.ssfm.mvvm.ui.activities
 
 //import android.app.Activity
 import android.os.Bundle
-import com.devrapid.kotlinknifer.logd
-import kotlinx.android.synthetic.main.test_player_controller.*
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.customized.SideMenu
 import taiwan.no1.app.ssfm.mvvm.ui.BaseActivity
@@ -22,7 +20,7 @@ class TestActivity: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.test_player_controller)
+        setContentView(R.layout.sample_button_decorator)
 //
 //        this.menu = SideMenu(this)
 //        this.menu.attachActivity(this)
@@ -44,10 +42,6 @@ class TestActivity: BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-
-        this.pcl_test.setRepeatOnClick {
-            logd("hello world")
-        }
 
 //        this.menu.menuListener.openMenu { logd("open the menu!!") }.closeMenu { logd("close the menu!!") }
 

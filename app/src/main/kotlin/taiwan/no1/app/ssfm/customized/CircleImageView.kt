@@ -13,6 +13,7 @@ import taiwan.no1.app.ssfm.R
 
 
 /**
+ * Circle image view with shadow.
  *
  * @author  jieyi
  * @since   6/19/17

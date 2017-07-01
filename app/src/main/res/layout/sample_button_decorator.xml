@@ -1,0 +1,19 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--<taiwan.no1.app.ssfm.customized.ButtonDecorator-->
+    <!--android:layout_width="300dp"-->
+    <!--android:layout_height="300dp"-->
+    <!--android:background="#ccc"-->
+    <!--android:paddingBottom="40dp"-->
+    <!--android:paddingLeft="20dp"/>-->
+
+    <taiwan.no1.app.ssfm.customized.PlayerControllerLayout
+        android:id="@+id/test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </taiwan.no1.app.ssfm.customized.PlayerControllerLayout>
+
+</FrameLayout>
