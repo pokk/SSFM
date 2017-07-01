@@ -8,7 +8,8 @@
     <taiwan.no1.app.ssfm.customized.PlayerControllerLayout
         android:id="@+id/pcl_test"
         android:layout_width="wrap_content"
-        android:background="@color/colorAccent"
+        android:paddingEnd="15dp"
+        android:paddingStart="15dp"
         android:layout_height="wrap_content">
     </taiwan.no1.app.ssfm.customized.PlayerControllerLayout>
 </LinearLayout>

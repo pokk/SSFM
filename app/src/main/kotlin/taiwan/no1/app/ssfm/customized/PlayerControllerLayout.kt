@@ -16,50 +16,50 @@ import org.jetbrains.anko.sdk25.coroutines.onClick
 import taiwan.no1.app.ssfm.R
 
 /**
+ * Player controller panel.
  *
  * @author  jieyi
  * @since   6/28/17
  */
 class PlayerControllerLayout: ViewGroup {
-    val propertis: ImageButton.() -> Unit = {
-        this.backgroundColor = Color.BLACK
-        this.scaleType = ImageView.ScaleType.CENTER
+    val properties: ImageButton.() -> Unit = {
+        this.backgroundColor = Color.TRANSPARENT
+        this.scaleType = ImageView.ScaleType.FIT_CENTER
+        this.padding = 20
     }
     val listImageButtons = listOf(
-        imageButton(R.drawable.selector_controller_repeat, propertis),
-        imageButton(R.drawable.selector_controller_previous, propertis),
+        imageButton(R.drawable.selector_controller_repeat, properties),
+        imageButton(R.drawable.selector_controller_previous, properties),
         imageButton(R.drawable.selector_controller_play) {
             this.backgroundColor = Color.TRANSPARENT
-            this.padding = 0
             this.scaleType = ImageView.ScaleType.FIT_CENTER
+            this.padding = 0
         },
-        imageButton(R.drawable.selector_controller_next, propertis),
-        imageButton(R.drawable.selector_controller_shuffle, propertis))
+        imageButton(R.drawable.selector_controller_next, properties),
+        imageButton(R.drawable.selector_controller_shuffle, properties))
     val listBtnListeners = mutableListOf(
-        { imagebtn: ImageButton -> },
-        { imagebtn: ImageButton -> },
-        { imagebtn: ImageButton -> },
-        { imagebtn: ImageButton -> },
-        { imagebtn: ImageButton -> })
+        { _: ImageButton -> },
+        { _: ImageButton -> },
+        { _: ImageButton -> },
+        { _: ImageButton -> },
+        { _: ImageButton -> })
     var isPlayingState = false
     var isRepeatingAll = true
 
-    init {
-    }
-
     constructor(context: Context): super(context) {
-        this.init(context, null, 0)
+        this.init()
     }
 
     constructor(context: Context, attrs: AttributeSet): super(context, attrs) {
-        this.init(context, attrs, 0)
+        this.init()
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int): super(context, attrs, defStyleAttr) {
-        this.init(context, attrs, defStyleAttr)
+        this.init()
     }
 
-    fun init(context: Context, attrs: AttributeSet?, defStyleAttr: Int) {
+    fun init() {
+        // Set each of image buttons' listener.
         this.listImageButtons.zip(this.listBtnListeners).forEachWithIndex { index, (btn, listener) ->
             btn.onClick {
                 listener(it as ImageButton)
