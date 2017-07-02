@@ -10,18 +10,18 @@ import taiwan.no1.app.ssfm.R
  * @author  jieyi
  * @since   7/2/17
  */
-class RepeatButtonDecorator(btn: ImageButton): BaseButtonDecorator(btn) {
+class RepeatPlayerButtonDecorator(btn: ImageButton): PlayerButtonDecorator(btn) {
     init {
         btn.imageResource = R.drawable.selector_controller_repeat
     }
 
     override fun changeNextState(imageBtn: ImageButton) {
         // TODO: 7/2/17 Here should be state pattern.
-        state = state.plus(1).rem(3)
-        when (state) {
-            0 -> imageBtn.imageResource = R.drawable.selector_controller_repeat
-            1 -> imageBtn.imageResource = R.drawable.selector_controller_repeat_one
-            2 -> imageBtn.imageResource = R.drawable.selector_controller_shuffle
-        }
+        val listImagesResource = listOf(R.drawable.selector_controller_repeat,
+            R.drawable.selector_controller_repeat_one,
+            R.drawable.selector_controller_shuffle)
+
+        state = state.plus(1).rem(listImagesResource.size)
+        imageBtn.imageResource = listImagesResource[state]
     }
 }

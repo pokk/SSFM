@@ -11,7 +11,7 @@ import taiwan.no1.app.ssfm.R
  * @author  jieyi
  * @since   7/2/17
  */
-class PlayButtonDecorator(btn: ImageButton): BaseButtonDecorator(btn) {
+class PlayPlayerButtonDecorator(btn: ImageButton): PlayerButtonDecorator(btn) {
     init {
         btn.apply {
             imageResource = R.drawable.selector_controller_play
@@ -21,10 +21,9 @@ class PlayButtonDecorator(btn: ImageButton): BaseButtonDecorator(btn) {
 
     override fun changeNextState(imageBtn: ImageButton) {
         // TODO: 7/2/17 Here should be state pattern.
-        state = state.plus(1).rem(2)
-        when (state) {
-            0 -> imageBtn.imageResource = R.drawable.selector_controller_play
-            1 -> imageBtn.imageResource = R.drawable.selector_controller_pause
-        }
+        val listImagesResource = listOf(R.drawable.selector_controller_play, R.drawable.selector_controller_pause)
+
+        state = state.plus(1).rem(listImagesResource.size)
+        imageBtn.imageResource = listImagesResource[state]
     }
 }

@@ -11,8 +11,6 @@ import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.collections.forEachWithIndex
 import org.jetbrains.anko.imageButton
 import org.jetbrains.anko.padding
-import org.jetbrains.anko.sdk25.coroutines.onClick
-import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.pattern.state.IControllerButtonState
 import taiwan.no1.app.ssfm.pattern.state.PauseState
 import taiwan.no1.app.ssfm.pattern.state.RepeatState
@@ -29,16 +27,7 @@ class PlayerControllerLayout: ViewGroup {
         this.scaleType = ImageView.ScaleType.FIT_CENTER
         this.padding = 20
     }
-    val listImageButtons = listOf(
-        imageButton(R.drawable.selector_controller_repeat, properties),
-        imageButton(R.drawable.selector_controller_previous, properties),
-        imageButton(R.drawable.selector_controller_play) {
-            this.backgroundColor = Color.TRANSPARENT
-            this.scaleType = ImageView.ScaleType.FIT_CENTER
-            this.padding = 0
-        },
-        imageButton(R.drawable.selector_controller_next, properties),
-        imageButton(R.drawable.selector_controller_shuffle, properties))
+    val listImageButtons = listOf(imageButton(), imageButton(), imageButton(), imageButton(), imageButton())
     val listBtnListeners = mutableListOf(
         { _: ImageButton -> },
         { _: ImageButton -> },
@@ -77,15 +66,15 @@ class PlayerControllerLayout: ViewGroup {
 
     fun init() {
         // Set each of image buttons' listener.
-        this.listImageButtons.zip(this.listBtnListeners).forEachWithIndex { index, (btn, listener) ->
-            btn.onClick {
-                listener(it as ImageButton)
-                when (index) {
-                    0 -> this@PlayerControllerLayout.stateRecycleMode.onclick(this@PlayerControllerLayout)
-                    2 -> this@PlayerControllerLayout.statePlayMode.onclick(this@PlayerControllerLayout)
-                }
-            }
-        }
+//        this.listImageButtons.zip(this.listBtnListeners).forEachWithIndex { index, (btn, listener) ->
+//            btn.onClick {
+//                listener(it as ImageButton)
+//                when (index) {
+//                    0 -> this@PlayerControllerLayout.stateRecycleMode.onclick(this@PlayerControllerLayout)
+//                    2 -> this@PlayerControllerLayout.statePlayMode.onclick(this@PlayerControllerLayout)
+//                }
+//            }
+//        }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

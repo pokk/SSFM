@@ -13,7 +13,7 @@ import org.jetbrains.anko.sdk25.coroutines.onClick
  * @author  jieyi
  * @since   7/2/17
  */
-abstract class BaseButtonDecorator(protected val imageButton: ImageButton): IButtonDecorate {
+abstract class PlayerButtonDecorator(protected val imageButton: ImageButton): IPlayerButton {
     open var listener: (btn: ImageButton) -> Unit = { _: ImageButton -> }
     open var state: Int = 0
 
@@ -23,8 +23,8 @@ abstract class BaseButtonDecorator(protected val imageButton: ImageButton): IBut
             it.scaleType = ImageView.ScaleType.FIT_CENTER
             it.padding = 20
             it.onClick {
-                this@BaseButtonDecorator.listener(imageButton)
-                this@BaseButtonDecorator.changeNextState(this@BaseButtonDecorator.imageButton)
+                this@PlayerButtonDecorator.listener(imageButton)
+                this@PlayerButtonDecorator.changeNextState(this@PlayerButtonDecorator.imageButton)
             }
         }
     }
