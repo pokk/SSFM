@@ -1,6 +1,7 @@
 package taiwan.no1.app.ssfm.pattern.decorate
 
 import android.widget.ImageButton
+import android.widget.ImageView
 import org.jetbrains.anko.imageResource
 import org.jetbrains.anko.padding
 import taiwan.no1.app.ssfm.R
@@ -16,6 +17,7 @@ class PlayPlayerButtonDecorator(btn: ImageButton): PlayerButtonDecorator(btn) {
         btn.apply {
             imageResource = R.drawable.selector_controller_play
             padding = 0
+            scaleType = ImageView.ScaleType.FIT_CENTER
         }
     }
 

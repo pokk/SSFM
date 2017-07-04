@@ -14,6 +14,7 @@ import org.jetbrains.anko.padding
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.pattern.decorate.NormalPlayerButtonDecorator
 import taiwan.no1.app.ssfm.pattern.decorate.PlayPlayerButtonDecorator
+import taiwan.no1.app.ssfm.pattern.decorate.PlayerButtonDecorator
 import taiwan.no1.app.ssfm.pattern.decorate.RepeatPlayerButtonDecorator
 import taiwan.no1.app.ssfm.pattern.state.IControllerButtonState
 import taiwan.no1.app.ssfm.pattern.state.PauseState
@@ -31,28 +32,13 @@ class PlayerControllerLayout: ViewGroup {
         this.scaleType = ImageView.ScaleType.FIT_CENTER
         this.padding = 20
     }
-    val listImageButtons = listOf(
-        imageButton(R.drawable.selector_controller_repeat),
-        imageButton(R.drawable.selector_controller_previous),
-        imageButton(R.drawable.selector_controller_play),
-        imageButton(R.drawable.selector_controller_next),
-        imageButton(R.drawable.selector_controller_shuffle))
+    val listImageButtons = listOf(imageButton(), imageButton(), imageButton(), imageButton(), imageButton())
     val listBtnListeners = mutableListOf(
         { _: ImageButton -> },
         { _: ImageButton -> },
         { _: ImageButton -> },
         { _: ImageButton -> },
         { _: ImageButton -> })
-    // Decorate the buttons after onMeasure() and on onLayout().
-    val listDecoratedButtons by lazy {
-        this.listImageButtons.mapIndexed { index, btn ->
-            when (index) {
-                0 -> RepeatPlayerButtonDecorator(btn)
-                2 -> PlayPlayerButtonDecorator(btn)
-                else -> NormalPlayerButtonDecorator(btn)
-            }
-        }
-    }
     val stateSetFunction = { state: IControllerButtonState ->
         val classname = Thread.currentThread().stackTrace[5].className
         val interfaces = Class.forName(classname).interfaces
@@ -70,6 +56,7 @@ class PlayerControllerLayout: ViewGroup {
         set(value) {
             field = this.stateSetFunction(value)
         }
+    lateinit var listDecoratedButtons: List<PlayerButtonDecorator>
 
     constructor(context: Context): super(context) {
         this.init()
@@ -122,8 +109,7 @@ class PlayerControllerLayout: ViewGroup {
             // l: left, r: right
             val (l, r) = when (index) {
                 0 -> Pair(this.paddingLeft, this.paddingLeft + btn.measuredWidth)
-                2 -> Pair(layoutWidth.div(2).minus(btn.measuredWidth.div(2)),
-                    layoutWidth.div(2).plus(btn.measuredWidth.div(2)))
+                2 -> Pair(layoutWidth / 2 - btn.measuredWidth / 2, layoutWidth / 2 + btn.measuredWidth / 2)
                 1, 3, 4 -> Pair(prev.right, prev.right + btn.measuredWidth)
                 else -> Pair(0, 0)
             }
@@ -131,8 +117,26 @@ class PlayerControllerLayout: ViewGroup {
             prev = btn
         }
 
-        // TODO: 7/4/17 Change the init position.
-        this.listDecoratedButtons
+        this.listDecoratedButtons = this.listImageButtons.mapIndexed { index, btn ->
+            when (index) {
+                0 -> RepeatPlayerButtonDecorator(btn)
+                1 -> NormalPlayerButtonDecorator(btn) {
+                    this.imageResource = R.drawable.selector_controller_previous
+                    this.padding = 20
+                }
+            // TODO: 7/4/17 This init icon won't be center in the beginning.
+                2 -> PlayPlayerButtonDecorator(btn)
+                3 -> NormalPlayerButtonDecorator(btn) {
+                    this.imageResource = R.drawable.selector_controller_next
+                    this.padding = 20
+                }
+                4 -> NormalPlayerButtonDecorator(btn) {
+                    this.imageResource = R.drawable.selector_controller_shuffle
+                    this.padding = 20
+                }
+                else -> NormalPlayerButtonDecorator(btn)
+            }
+        }
     }
 
     fun setRepeatOnClick(listener: (ImageButton) -> Unit) {
