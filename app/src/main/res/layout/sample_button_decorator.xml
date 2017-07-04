@@ -1,7 +1,8 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <taiwan.no1.app.ssfm.customized.PlayerControllerLayout
         android:layout_width="wrap_content"
@@ -9,8 +10,9 @@
         android:layout_height="wrap_content">
     </taiwan.no1.app.ssfm.customized.PlayerControllerLayout>
 
-    <ImageButton
-        android:id="@+id/btn_no1"
+    <taiwan.no1.app.ssfm.customized.RotatedCircleImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:rotate_sec="10"
+        android:src="@drawable/sample_jieyi_icon"/>
 </FrameLayout>

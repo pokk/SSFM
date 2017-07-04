@@ -18,12 +18,12 @@ import taiwan.no1.app.ssfm.R
  * @author  jieyi
  * @since   6/19/17
  */
-class CircleImageView: ImageView {
+open class CircleImageView: ImageView {
     companion object {
-        const val DEFAULT_BORDER_WIDTH = 0f
-        const val DEFAULT_BORDER_COLOR = R.color.colorWhite
-        const val DEFAULT_SHADOW_RADIUS = 8f
-        const val DEFAULT_SHADOW_COLOR = R.color.colorWhite
+        private const val DEFAULT_BORDER_WIDTH = 0f
+        private const val DEFAULT_BORDER_COLOR = R.color.colorWhite
+        private const val DEFAULT_SHADOW_RADIUS = 8f
+        private const val DEFAULT_SHADOW_COLOR = R.color.colorWhite
     }
 
     var borderWidth = DEFAULT_BORDER_WIDTH
@@ -51,14 +51,14 @@ class CircleImageView: ImageView {
             this.invalidate()
         }
 
-    private val paintBorder = Paint().apply {
+    protected val paintBorder = Paint().apply {
         this.isAntiAlias = true
     }
-    private val paintImg = Paint().apply { this.isAntiAlias = true }
-    private var mRadius = 0
-    private var mScale = 0f
-    private val mBitmap by lazy { this.drawableToBitmap(this.drawable) }
-    private val mMatrix by lazy { Matrix() }
+    protected val paintImg = Paint().apply { this.isAntiAlias = true }
+    protected var mRadius = 0
+    protected var mScale = 0f
+    protected val mBitmap by lazy { this.drawableToBitmap(this.drawable) }
+    protected val mMatrix by lazy { Matrix() }
 
     constructor(context: Context): super(context) {
         this.init(context, null, 0)
@@ -72,7 +72,7 @@ class CircleImageView: ImageView {
         this.init(context, attrs, defStyleAttr)
     }
 
-    private fun init(context: Context, attrs: AttributeSet?, defStyleAttr: Int) {
+    protected open fun init(context: Context, attrs: AttributeSet?, defStyleAttr: Int) {
         context.obtainStyledAttributes(attrs, R.styleable.CircleImageView, defStyleAttr, 0).also {
             this.borderWidth = it.getDimension(R.styleable.CircleImageView_border_width, DEFAULT_BORDER_WIDTH)
             this.borderColor = it.getColor(R.styleable.CircleImageView_border_color, getResColor(DEFAULT_BORDER_COLOR))
@@ -115,19 +115,25 @@ class CircleImageView: ImageView {
             this.paintImg)
     }
 
-    private fun setBitmapShader() = BitmapShader(this.mBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP).also {
+    override fun onStartTemporaryDetach() {
+        super.onStartTemporaryDetach()
+
+        this.setOnClickListener(null)
+    }
+
+    protected fun setBitmapShader() = BitmapShader(this.mBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP).also {
         it.setLocalMatrix(this.mMatrix.also {
             this.mScale = mRadius.times(2).div(minOf(this.mBitmap.height, this.mBitmap.width)).toFloat()
             it.setScale(this.mScale, this.mScale)
         })
     }
 
-    private fun drawShadow() {
+    protected fun drawShadow() {
         this.setLayerType(View.LAYER_TYPE_SOFTWARE, this.paintBorder)
         this.paintBorder.setShadowLayer(this.shadowRadius.times(1.5f), 0f, this.shadowRadius.div(2), this.shadowColor)
     }
 
-    private fun drawableToBitmap(drawable: Drawable): Bitmap {
+    protected fun drawableToBitmap(drawable: Drawable): Bitmap {
         if (drawable is BitmapDrawable) {
             return drawable.bitmap
         }

@@ -10,4 +10,8 @@
         <attr name="shadow_radius" format="float"/>
         <attr name="shadow_color" format="color"/>
     </declare-styleable>
+
+    <declare-styleable name="RotatedCircleImageView">
+        <attr name="rotate_sec" format="integer"/>
+    </declare-styleable>
 </resources>
