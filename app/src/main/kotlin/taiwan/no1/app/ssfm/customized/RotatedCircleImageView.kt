@@ -10,6 +10,7 @@ import org.jetbrains.anko.sdk25.coroutines.onClick
 import taiwan.no1.app.ssfm.R
 
 /**
+ * [CircleImageView] with rotated animation.
  *
  * @author  jieyi
  * @since   7/4/17
@@ -36,8 +37,7 @@ class RotatedCircleImageView: CircleImageView {
         super.init(context, attrs, defStyleAttr)
 
         context.obtainStyledAttributes(attrs, R.styleable.RotatedCircleImageView, defStyleAttr, 0).also {
-            this.rotateTime = it.getInteger(R.styleable.RotatedCircleImageView_rotate_sec,
-                ROTATE_TIME) * 1000L
+            this.rotateTime = it.getInteger(R.styleable.RotatedCircleImageView_rotate_sec, ROTATE_TIME) * 1000L
         }.recycle()
 
         this.onClick {
