@@ -11,6 +11,10 @@ import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.collections.forEachWithIndex
 import org.jetbrains.anko.imageButton
 import org.jetbrains.anko.padding
+import taiwan.no1.app.ssfm.R
+import taiwan.no1.app.ssfm.pattern.decorate.NormalPlayerButtonDecorator
+import taiwan.no1.app.ssfm.pattern.decorate.PlayPlayerButtonDecorator
+import taiwan.no1.app.ssfm.pattern.decorate.RepeatPlayerButtonDecorator
 import taiwan.no1.app.ssfm.pattern.state.IControllerButtonState
 import taiwan.no1.app.ssfm.pattern.state.PauseState
 import taiwan.no1.app.ssfm.pattern.state.RepeatState
@@ -27,13 +31,28 @@ class PlayerControllerLayout: ViewGroup {
         this.scaleType = ImageView.ScaleType.FIT_CENTER
         this.padding = 20
     }
-    val listImageButtons = listOf(imageButton(), imageButton(), imageButton(), imageButton(), imageButton())
+    val listImageButtons = listOf(
+        imageButton(R.drawable.selector_controller_repeat),
+        imageButton(R.drawable.selector_controller_previous),
+        imageButton(R.drawable.selector_controller_play),
+        imageButton(R.drawable.selector_controller_next),
+        imageButton(R.drawable.selector_controller_shuffle))
     val listBtnListeners = mutableListOf(
         { _: ImageButton -> },
         { _: ImageButton -> },
         { _: ImageButton -> },
         { _: ImageButton -> },
         { _: ImageButton -> })
+    // Decorate the buttons after onMeasure() and on onLayout().
+    val listDecoratedButtons by lazy {
+        this.listImageButtons.mapIndexed { index, btn ->
+            when (index) {
+                0 -> RepeatPlayerButtonDecorator(btn)
+                2 -> PlayPlayerButtonDecorator(btn)
+                else -> NormalPlayerButtonDecorator(btn)
+            }
+        }
+    }
     val stateSetFunction = { state: IControllerButtonState ->
         val classname = Thread.currentThread().stackTrace[5].className
         val interfaces = Class.forName(classname).interfaces
@@ -65,16 +84,6 @@ class PlayerControllerLayout: ViewGroup {
     }
 
     fun init() {
-        // Set each of image buttons' listener.
-//        this.listImageButtons.zip(this.listBtnListeners).forEachWithIndex { index, (btn, listener) ->
-//            btn.onClick {
-//                listener(it as ImageButton)
-//                when (index) {
-//                    0 -> this@PlayerControllerLayout.stateRecycleMode.onclick(this@PlayerControllerLayout)
-//                    2 -> this@PlayerControllerLayout.statePlayMode.onclick(this@PlayerControllerLayout)
-//                }
-//            }
-//        }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -121,6 +130,9 @@ class PlayerControllerLayout: ViewGroup {
             this.getChildAt(index).layout(l, t, r, b)
             prev = btn
         }
+
+        // TODO: 7/4/17 Change the init position.
+        this.listDecoratedButtons
     }
 
     fun setRepeatOnClick(listener: (ImageButton) -> Unit) {

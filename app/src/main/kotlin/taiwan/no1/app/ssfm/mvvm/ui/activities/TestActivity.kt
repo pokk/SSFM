@@ -2,11 +2,9 @@ package taiwan.no1.app.ssfm.mvvm.ui.activities
 
 //import android.app.Activity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.sample_button_decorator.*
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.customized.SideMenu
 import taiwan.no1.app.ssfm.mvvm.ui.BaseActivity
-import taiwan.no1.app.ssfm.pattern.decorate.NormalPlayerButtonDecorator
 import javax.inject.Inject
 
 
@@ -45,9 +43,9 @@ class TestActivity: BaseActivity() {
     override fun onResume() {
         super.onResume()
 
-        val btn = NormalPlayerButtonDecorator(btn_no1) {
-            imageResource = R.drawable.selector_controller_next
-        }
+//        val btn = NormalPlayerButtonDecorator(btn_no1) {
+//            imageResource = R.drawable.selector_controller_next
+//        }
 
 //        val btn: PlayerButtonDecorator = PlayPlayerButtonDecorator(btn_test)
 //        this.menu.menuListener.openMenu { logd("open the menu!!") }.closeMenu { logd("close the menu!!") }

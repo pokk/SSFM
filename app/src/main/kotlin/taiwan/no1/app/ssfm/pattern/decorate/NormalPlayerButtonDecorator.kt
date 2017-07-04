@@ -1,7 +1,6 @@
 package taiwan.no1.app.ssfm.pattern.decorate
 
 import android.widget.ImageButton
-import org.jetbrains.anko.imageResource
 
 /**
  * Decorator of normal player button without changing button image.
@@ -9,14 +8,23 @@ import org.jetbrains.anko.imageResource
  * @author  jieyi
  * @since   7/3/17
  */
-class NormalPlayerButtonDecorator(val btn: ImageButton,
-                                  setting: Wrapper.() -> Unit): PlayerButtonDecorator(btn) {
+class NormalPlayerButtonDecorator(val btn: ImageButton, setting: (Wrapper.() -> Unit)? = null):
+    PlayerButtonDecorator(btn) {
+
     init {
-        val wrapper = Wrapper().also(setting)
-        wrapper.imageResource?.let { this.btn.imageResource = it }
+        val wrapper = setting?.let(Wrapper()::also)
+
+        wrapper?.imageResource?.let(this.btn::setImageResource)
+        wrapper?.padding?.let { this.btn.setPadding(it, it, it, it) }
     }
 
     override fun changeNextState(imageBtn: ImageButton) {}
 
-    data class Wrapper(val imageResource: Int? = null)
+    data class Wrapper(
+        var imageResource: Int? = null,
+        var padding: Int? = null,
+        var paddingStart: Int? = null,
+        var paddingEnd: Int? = null,
+        var paddingTop: Int? = null,
+        var paddingBottom: Int? = null)
 }
