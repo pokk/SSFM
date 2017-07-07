@@ -6,8 +6,12 @@ package taiwan.no1.app.ssfm.mvvm.models
  * Created by weian on 2017/6/18.
  */
 interface IPlayList {
-    fun setList()
+    fun setList(total: Int)
     fun nowPlaying(): Int
-    fun previous()
-    fun next()
+    fun previous(): Int
+    fun next(): Int
+    fun loopOne(is_loop: Boolean)
+    fun loopAll(is_loop: Boolean)
+    fun random(is_random: Boolean)
+    fun isRandom(): Boolean
 }

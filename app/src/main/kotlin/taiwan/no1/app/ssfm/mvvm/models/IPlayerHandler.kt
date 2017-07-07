@@ -12,24 +12,30 @@ interface IPlayerHandler {
         EPLayerState_Pause
     }
 
+    /**
+     * real media player
+     */
     fun play()
     fun stop()
     fun pause()
     fun resume()
+    fun seekTo(sec: Int)
+    fun duration(): Int
+    fun current(): Int
+    fun isLooping(): Boolean
+    fun loopOne(is_loop: Boolean)
+    fun restTime(): Int
+
+    /**
+     * playlist
+     */
     fun previous()
     fun next()
-    fun replay()
-    fun seekTo()
-    fun duration()
     fun downloadProcess()
-    fun totalMusicTime()
-    fun loopOne()
-    fun loopAll()
-    fun random()
+    fun loopAll(is_loop: Boolean)
+    fun random(is_random: Boolean)
     fun playerStatus()
-    fun nowPlaying()
-    fun isLooping()
-    fun isRandom()
-    fun restTime()
-    fun setPlayList()
+    fun nowPlaying(): Int
+    fun isRandom(): Boolean
+    fun setPlayList(list: Array<String>)
 }
