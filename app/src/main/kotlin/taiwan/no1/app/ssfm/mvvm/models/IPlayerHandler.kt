@@ -19,11 +19,10 @@ interface IPlayerHandler {
     fun stop()
     fun pause()
     fun resume()
-    fun replay()
-    fun seekTo()
-    fun duration()
-    fun current()
-    fun isLooping()
+    fun seekTo(sec: Int)
+    fun duration(): Int
+    fun current(): Int
+    fun isLooping(): Boolean
     fun loopOne()
     fun restTime()
 
@@ -38,5 +37,5 @@ interface IPlayerHandler {
     fun playerStatus()
     fun nowPlaying()
     fun isRandom()
-    fun setPlayList()
+    fun setPlayList(list: Array<String>)
 }
