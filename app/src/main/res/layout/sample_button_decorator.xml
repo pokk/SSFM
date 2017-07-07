@@ -1,18 +1,11 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
-    <taiwan.no1.app.ssfm.customized.PlayerControllerLayout
-        android:layout_width="wrap_content"
-        android:id="@+id/panel"
-        android:layout_height="wrap_content">
-    </taiwan.no1.app.ssfm.customized.PlayerControllerLayout>
-
-    <taiwan.no1.app.ssfm.customized.RotatedCircleImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:rotate_sec="10"
-        android:src="@drawable/sample_jieyi_icon"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_test"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v4.view.ViewPager>
 </FrameLayout>

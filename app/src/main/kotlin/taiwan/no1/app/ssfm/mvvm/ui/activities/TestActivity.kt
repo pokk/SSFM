@@ -2,7 +2,11 @@ package taiwan.no1.app.ssfm.mvvm.ui.activities
 
 //import android.app.Activity
 import android.os.Bundle
+import com.devrapid.kotlinknifer.logw
+import kotlinx.android.synthetic.main.sample_button_decorator.*
 import taiwan.no1.app.ssfm.R
+import taiwan.no1.app.ssfm.customized.AdapterPager
+import taiwan.no1.app.ssfm.customized.PageTransformer
 import taiwan.no1.app.ssfm.customized.SideMenu
 import taiwan.no1.app.ssfm.mvvm.ui.BaseActivity
 import javax.inject.Inject
@@ -21,7 +25,7 @@ class TestActivity: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.sample_button_decorator)
-//
+
 //        this.menu = SideMenu(this)
 //        this.menu.attachActivity(this)
 //        this.menu.setMenuBackground(R.drawable.bkg_menu)
@@ -42,6 +46,16 @@ class TestActivity: BaseActivity() {
 
     override fun onResume() {
         super.onResume()
+
+        this.vp_test.adapter = AdapterPager(this.applicationContext,
+            listOf(R.drawable.image01,
+                R.drawable.image02,
+                R.drawable.image03,
+                R.drawable.image04,
+                R.drawable.image05))
+        this.vp_test.setPageTransformer(true, PageTransformer())
+
+        logw("Hello!!!")
 
 //        val btn = NormalPlayerButtonDecorator(btn_no1) {
 //            imageResource = R.drawable.selector_controller_next
