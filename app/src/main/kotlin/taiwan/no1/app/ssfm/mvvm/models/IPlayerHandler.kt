@@ -25,6 +25,7 @@ interface IPlayerHandler {
     fun current()
     fun isLooping()
     fun loopOne()
+    fun restTime()
 
     /**
      * playlist
@@ -37,6 +38,5 @@ interface IPlayerHandler {
     fun playerStatus()
     fun nowPlaying()
     fun isRandom()
-    fun restTime()
     fun setPlayList()
 }

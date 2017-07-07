@@ -3,6 +3,8 @@ package taiwan.no1.app.ssfm.mvvm.models
 import java.util.*
 
 /**
+ * for controlling play list
+ *
  * Created by weian on 2017/7/6.
  */
 
@@ -46,4 +48,18 @@ class PlayListModel: IPlayList {
         this.mCurrentIndex = this.getNextIndex()
         return this.mCurrentIndex
     }
+
+    override fun random(is_random: Boolean) {
+        this.misRandom = is_random
+    }
+
+    override fun loopOne(is_loop: Boolean) {
+        this.misLoopOne = is_loop
+    }
+
+    override fun loopAll(is_loop: Boolean) {
+        this.misLoopAll = is_loop
+    }
+
+    override fun isRandom(): Boolean = this.misRandom
 }

@@ -10,4 +10,8 @@ interface IPlayList {
     fun nowPlaying(): Int
     fun previous(): Int
     fun next(): Int
+    fun loopOne(is_loop: Boolean)
+    fun loopAll(is_loop: Boolean)
+    fun random(is_random: Boolean)
+    fun isRandom(): Boolean
 }
