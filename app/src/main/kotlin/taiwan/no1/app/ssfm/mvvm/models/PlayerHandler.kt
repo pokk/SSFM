@@ -35,49 +35,43 @@ class PlayerHandler: IPlayerHandler {
 
     override fun current(): Int = this.mPlayer.takeIf { it.isPlaying() }?.current() ?: 0
 
-    override fun isLooping(): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun isLooping(): Boolean = this.mPlayer.isReplay()
+
+    override fun loopOne(is_loop: Boolean) {
+        this.mPlayer.replay(is_loop)
     }
 
-    override fun loopOne() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun restTime() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun restTime(): Int = this.mPlayer.takeIf { it.isPlaying() }.let {
+        it?.duration()?.minus(it.current()) ?: 0
     }
 
     override fun previous() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.mPlayer.play(this.mPlayList[this.mPlayIndex.previous()])
     }
 
     override fun next() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.mPlayer.play(this.mPlayList[this.mPlayIndex.next()])
     }
 
     override fun downloadProcess() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun loopAll() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun loopAll(is_loop: Boolean) {
+        this.mPlayIndex.loopAll(is_loop)
     }
 
-    override fun random() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun random(is_random: Boolean) {
+        this.mPlayIndex.random(is_random)
     }
 
     override fun playerStatus() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun nowPlaying() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun nowPlaying(): Int = this.mPlayIndex.nowPlaying()
 
-    override fun isRandom() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun isRandom(): Boolean = this.mPlayIndex.isRandom()
 
     override fun setPlayList(list: Array<String>) {
         this.mPlayList = list

@@ -23,8 +23,8 @@ interface IPlayerHandler {
     fun duration(): Int
     fun current(): Int
     fun isLooping(): Boolean
-    fun loopOne()
-    fun restTime()
+    fun loopOne(is_loop: Boolean)
+    fun restTime(): Int
 
     /**
      * playlist
@@ -32,10 +32,10 @@ interface IPlayerHandler {
     fun previous()
     fun next()
     fun downloadProcess()
-    fun loopAll()
-    fun random()
+    fun loopAll(is_loop: Boolean)
+    fun random(is_random: Boolean)
     fun playerStatus()
-    fun nowPlaying()
-    fun isRandom()
+    fun nowPlaying(): Int
+    fun isRandom(): Boolean
     fun setPlayList(list: Array<String>)
 }
