@@ -52,7 +52,11 @@ class TestActivity: BaseActivity() {
                 R.drawable.image02,
                 R.drawable.image03,
                 R.drawable.image04,
-                R.drawable.image05))
+                R.drawable.image05,
+                R.drawable.image06,
+                R.drawable.image07,
+                R.drawable.image08,
+                R.drawable.image09))
         this.vp_test.setPageTransformer(true, PageTransformer())
 
         logw("Hello!!!")
