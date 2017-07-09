@@ -14,4 +14,9 @@
     <declare-styleable name="RotatedCircleImageView">
         <attr name="rotate_sec" format="integer"/>
     </declare-styleable>
+
+    <declare-styleable name="RotatedCircleWithIconImageView">
+        <attr name="src" format="integer"/>
+        <attr name="fore_icon" format="integer"/>
+    </declare-styleable>
 </resources>
