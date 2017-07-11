@@ -43,15 +43,18 @@ class RotatedCircleWithIconImageView: ViewGroup {
         }.recycle()
 
         this.rotatedCircleImageView = RotatedCircleImageView(context).apply {
-            this.imageResource = R.drawable.sample_lady_gaga
+            this.imageResource = R.drawable.sample_jieyi_icon
         }
         this.addView(this.rotatedCircleImageView)
-        this.controlButton = imageView(R.drawable.ic_play_arrow)
         this.timeControlButton = imageView()
+        this.controlButton = imageView(R.drawable.ic_play_arrow)
         this.timeLabels = listOf(textView("00:00").apply {
             textColor = R.color.colorWhite
             backgroundColor = R.color.colorGreen
-        }, textView("03:14"))
+        }, textView("03:14").apply {
+            textColor = R.color.colorDarkGray
+            backgroundColor = R.color.colorGreen
+        })
     }
 
     @SuppressLint("DrawAllocation")
@@ -65,23 +68,24 @@ class RotatedCircleWithIconImageView: ViewGroup {
             getDefaultSize(suggestedMinimumHeight, heightMeasureSpec))
     }
 
-    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
-        this.getChildAt(0).layout(
-            this.width / 3 - this.getChildAt(0).measuredWidth / 2,
-            this.height / 2 - this.getChildAt(0).measuredHeight / 2,
-            this.width / 2 + this.getChildAt(0).measuredWidth / 2,
-            this.height / 2 + this.getChildAt(0).measuredHeight / 2)
-        this.getChildAt(1).layout(this.width / 2 - this.controlButton.measuredWidth / 2,
-            this.height / 2 - this.controlButton.measuredHeight / 2,
-            this.width / 2 + this.controlButton.measuredWidth / 2,
-            this.height / 2 + this.controlButton.measuredHeight / 2)
-        this.getChildAt(2).layout(this.width / 4 + this.width / 2,
-            this.height - this.getChildAt(2).measuredHeight,
-            this.width / 4 + this.width / 2 + this.getChildAt(2).measuredWidth,
-            this.getChildAt(2).measuredHeight)
-        this.getChildAt(3).layout(this.width / 4,
-            this.height - this.getChildAt(3).measuredHeight,
-            this.width / 4 + this.getChildAt(3).measuredWidth,
-            this.getChildAt(3).measuredHeight)
+    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+        val w = this.width
+        val h = this.height
+
+        (0 until this.childCount).forEach {
+            val childW = this.getChildAt(it).measuredWidth
+            val childH = this.getChildAt(it).measuredHeight
+
+            when (it) {
+                1 -> this.getChildAt(it).layout(0, 0, 0, 0)
+                0, 2 -> this.getChildAt(it).layout(w / 2 - childW / 2,
+                    h / 2 - childH / 2,
+                    w / 2 + childW / 2,
+                    h / 2 + childH / 2)
+            // Two text views.
+                3 -> this.getChildAt(it).layout(w / 4 - childW / 2, h - childH, w / 4 + childW / 2, h)
+                4 -> this.getChildAt(it).layout(w / 4 * 3 - childW / 2, h - childH, w / 4 * 3 + childW / 2, h)
+            }
+        }
     }
 }
