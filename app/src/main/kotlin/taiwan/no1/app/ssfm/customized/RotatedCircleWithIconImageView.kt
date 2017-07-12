@@ -7,10 +7,7 @@ import android.util.AttributeSet
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import org.jetbrains.anko.backgroundColor
-import org.jetbrains.anko.imageView
-import org.jetbrains.anko.textColor
-import org.jetbrains.anko.textView
+import org.jetbrains.anko.*
 import taiwan.no1.app.ssfm.R
 
 class RotatedCircleWithIconImageView: ViewGroup {
@@ -26,7 +23,9 @@ class RotatedCircleWithIconImageView: ViewGroup {
     lateinit var timeControlButton: ImageView
         private set
 
-    private val innerPadding = 40
+    private val outerPadding = 40
+    private val innerPadding = outerPadding + 30
+    private val textOffset = outerPadding - 10
     private val p1 by lazy {
         Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG).apply {
             color = R.color.colorBlack
@@ -66,7 +65,7 @@ class RotatedCircleWithIconImageView: ViewGroup {
         }.recycle()
 
         this.rotatedCircleImageView = RotatedCircleImageView(context).apply {
-            //            imageResource = R.drawable.sample_jieyi_icon
+            imageResource = R.drawable.sample_jieyi_icon
         }
         this.addView(this.rotatedCircleImageView)
         this.timeControlButton = imageView()
@@ -84,6 +83,8 @@ class RotatedCircleWithIconImageView: ViewGroup {
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         // Measure all of children's width & height.
         this.measureChildren(widthMeasureSpec, heightMeasureSpec)
+        this.getChildAt(0).measure(MeasureSpec.makeMeasureSpec(this.width - 2 * innerPadding, MeasureSpec.EXACTLY),
+            MeasureSpec.makeMeasureSpec(this.height - 2 * innerPadding, MeasureSpec.EXACTLY))
         // Measure width & height of this view_group's layout(layout_width or layout_height will be `match_parent`
         // no matter what we set `wrap_content` or `match_patent` when we're using getDefaultSize).
         // We'll reset this method by another way for achieving `wrap_content`.
@@ -101,14 +102,21 @@ class RotatedCircleWithIconImageView: ViewGroup {
             val childH = this.getChildAt(it).measuredHeight
 
             when (it) {
+            // Inner image view.
                 1 -> this.getChildAt(it).layout(0, 0, size, size)
                 0, 2 -> this.getChildAt(it).layout(w / 2 - childW / 2,
                     h / 2 - childH / 2,
                     w / 2 + childW / 2,
                     h / 2 + childH / 2)
             // Two text views.
-                3 -> this.getChildAt(it).layout(w / 4 - childW / 2, h - childH, w / 4 + childW / 2, h)
-                4 -> this.getChildAt(it).layout(w / 4 * 3 - childW / 2, h - childH, w / 4 * 3 + childW / 2, h)
+                3 -> this.getChildAt(it).layout(w / 4 - childW / 2,
+                    h - childH - textOffset,
+                    w / 4 + childW / 2,
+                    h - textOffset)
+                4 -> this.getChildAt(it).layout(w / 4 * 3 - childW / 2,
+                    h - childH - textOffset,
+                    w / 4 * 3 + childW / 2,
+                    h - textOffset)
             }
         }
     }
@@ -116,14 +124,13 @@ class RotatedCircleWithIconImageView: ViewGroup {
     override fun onDraw(canvas: Canvas) {
         val w = this.width.toFloat()
         val h = this.height.toFloat()
-        val padding = 40
         val start = 140f
         val end = 260f
 
         // This is key of all moving objects.
         currProgress += 1
 
-        val rect = RectF(0f + padding, 0f + padding, w - padding, h - padding)
+        val rect = RectF(0f + outerPadding, 0f + outerPadding, w - outerPadding, h - outerPadding)
         val p = Path().also { it.addArc(rect, currProgress + start, end - currProgress) }
         val pm = PathMeasure(Path().also { it.addArc(rect, start, end) }, false)
         val pp = Path().also { it.addArc(rect, start, currProgress) }
