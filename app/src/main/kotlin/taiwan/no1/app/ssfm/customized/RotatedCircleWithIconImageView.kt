@@ -43,7 +43,8 @@ class RotatedCircleWithIconImageView: ViewGroup {
         }.recycle()
 
         this.rotatedCircleImageView = RotatedCircleImageView(context).apply {
-            this.imageResource = R.drawable.sample_jieyi_icon
+            imageResource = R.drawable.sample_jieyi_icon
+            padding = -40
         }
         this.addView(this.rotatedCircleImageView)
         this.timeControlButton = imageView()
