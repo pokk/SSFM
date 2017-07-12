@@ -1,0 +1,11 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <taiwan.no1.app.ssfm.customized.RotatedCircleWithIconImageView
+        android:id="@+id/btn"
+        android:background="@color/colorDarkKhaki"
+        android:layout_width="200dp"
+        android:layout_height="200dp"/>
+</FrameLayout>
