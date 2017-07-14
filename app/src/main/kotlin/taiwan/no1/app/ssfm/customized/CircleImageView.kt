@@ -9,6 +9,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
 import com.devrapid.kotlinknifer.getResColor
+import org.jetbrains.anko.imageBitmap
 import taiwan.no1.app.ssfm.R
 
 
@@ -22,7 +23,7 @@ open class CircleImageView: ImageView {
     companion object {
         private const val DEFAULT_BORDER_WIDTH = 0f
         private const val DEFAULT_BORDER_COLOR = R.color.colorWhite
-        private const val DEFAULT_SHADOW_RADIUS = 8f
+        private const val DEFAULT_SHADOW_RADIUS = 0f
         private const val DEFAULT_SHADOW_COLOR = R.color.colorWhite
     }
 
@@ -76,14 +77,14 @@ open class CircleImageView: ImageView {
         context.obtainStyledAttributes(attrs, R.styleable.CircleImageView, defStyleAttr, 0).also {
             this.borderWidth = it.getDimension(R.styleable.CircleImageView_border_width, DEFAULT_BORDER_WIDTH)
             this.borderColor = it.getColor(R.styleable.CircleImageView_border_color, getResColor(DEFAULT_BORDER_COLOR))
-            this.shadowRadius = it.getFloat(R.styleable.CircleImageView_shadow_radius, DEFAULT_SHADOW_RADIUS)
-            this.shadowColor = it.getColor(R.styleable.CircleImageView_shadow_color, getResColor(DEFAULT_SHADOW_COLOR))
+//            this.shadowRadius = it.getFloat(R.styleable.CircleImageView_shadow_radius, DEFAULT_SHADOW_RADIUS)
+//            this.shadowColor = it.getColor(R.styleable.CircleImageView_shadow_color, getResColor(DEFAULT_SHADOW_COLOR))
         }.recycle()
 
         this.paintBorder.color = this.borderColor
     }
 
-    override fun getScaleType(): ScaleType = ScaleType.CENTER_CROP
+    override fun getScaleType(): ScaleType = ScaleType.FIT_XY
 
     override fun setScaleType(scaleType: ScaleType) {
         if (ScaleType.CENTER_CROP != scaleType) {
@@ -98,6 +99,7 @@ open class CircleImageView: ImageView {
 
         this.mRadius = size.div(2)
         this.setMeasuredDimension(size, size)
+        this.imageBitmap = Bitmap.createScaledBitmap((drawable as BitmapDrawable).bitmap, size, size, false)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -123,8 +125,8 @@ open class CircleImageView: ImageView {
 
     protected fun setBitmapShader() = BitmapShader(this.mBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP).also {
         it.setLocalMatrix(this.mMatrix.also {
-            this.mScale = mRadius.times(2).div(minOf(this.mBitmap.height, this.mBitmap.width)).toFloat()
-            it.setScale(this.mScale, this.mScale)
+            mScale = mRadius.times(2).div(minOf(this.mBitmap.height, this.mBitmap.width)).toFloat()
+            it.setScale(mScale, mScale)
         })
     }
 
