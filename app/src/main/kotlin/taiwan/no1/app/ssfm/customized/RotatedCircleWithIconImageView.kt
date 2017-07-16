@@ -3,19 +3,14 @@ package taiwan.no1.app.ssfm.customized
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import android.support.annotation.ColorInt
 import android.util.AttributeSet
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.devrapid.kotlinknifer.getResColor
 import com.example.jieyi.test.TimeUtils
 import org.jetbrains.anko.*
-import org.jetbrains.anko.sdk25.coroutines.onClick
 import taiwan.no1.app.ssfm.R
+import java.util.*
 import kotlin.properties.Delegates
 
 /**
@@ -27,26 +22,32 @@ import kotlin.properties.Delegates
 class RotatedCircleWithIconImageView: ViewGroup {
     companion object {
         private const val OUTER_PADDING = 40f
-        private const val INNER_PADDING = OUTER_PADDING.toInt() + 30
+        private const val INNER_PADDING = OUTER_PADDING.toInt() + 50
         private const val TEXT_OFFSET = OUTER_PADDING.toInt() - 10
         private const val START_ANGLE = 140f
         private const val END_ANGLE = 260f
+        private const val START_TIME = 0
     }
 
-    var src = R.drawable.sample_jieyi_icon
-    var foreIcon = R.drawable.ic_play_arrow
+    //region Test variable
+    var temp_endtime = 170
+    //endregion
+
+    var src by Delegates.notNull<Int>()
+    var foreIconInit = R.drawable.ic_play_arrow
+    var foreIconClicked = R.drawable.ic_pause
     var currProgress = 0f
         set(value) {
             field = value
             this.intervalRate = this.currProgress / this.interval
             this.timeLabels[0].text = TimeUtils.number2String(field.toInt())
         }
-    var startTime = 0
+    var startTime = START_TIME
         set(value) {
             field = value
             this.interval = this.endTime - this.startTime
         }
-    var endTime = 0
+    var endTime = START_TIME
         set(value) {
             field = value
             this.interval = this.endTime - this.startTime
@@ -54,6 +55,7 @@ class RotatedCircleWithIconImageView: ViewGroup {
     var interval by Delegates.notNull<Int>()
     var intervalRate by Delegates.notNull<Float>()
 
+    //region Progress bar components.
     lateinit var rotatedCircleImageView: RotatedCircleImageView
         private set
     lateinit var timeLabels: List<TextView>
@@ -62,7 +64,9 @@ class RotatedCircleWithIconImageView: ViewGroup {
         private set
     lateinit var timeControlButton: ImageView
         private set
-    // Progress bar components.
+    //endregion
+
+    //region Progress bar variables.
     private val p1 by lazy {
         Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG).apply {
             color = R.color.colorBlack
@@ -79,12 +83,17 @@ class RotatedCircleWithIconImageView: ViewGroup {
             style = Paint.Style.STROKE
         }
     }
-    private val pm by lazy { PathMeasure(Path().also { it.addArc(this.rectProgress, START_ANGLE, END_ANGLE) }, false) }
+    private val pmProgress by lazy {
+        PathMeasure(Path().also { it.addArc(this.rectProgress, START_ANGLE, END_ANGLE) },
+            false)
+    }
     private val rectProgress by lazy {
         RectF(OUTER_PADDING, OUTER_PADDING, this.width - OUTER_PADDING, this.height - OUTER_PADDING)
     }
     private var pos = floatArrayOf(0f, 0f)
     private var tan = floatArrayOf(0f, 0f)
+    private var timer by Delegates.notNull<Timer>()
+    //endregion
 
     constructor(context: Context): super(context) {
         init(context, null, 0)
@@ -100,18 +109,21 @@ class RotatedCircleWithIconImageView: ViewGroup {
 
     fun init(context: Context, attrs: AttributeSet?, defStyle: Int) {
         context.obtainStyledAttributes(attrs, R.styleable.RotatedCircleWithIconImageView, defStyle, 0).also {
-            this.src = it.getInteger(R.styleable.RotatedCircleWithIconImageView_src, this.src)
-            this.foreIcon = it.getInteger(R.styleable.RotatedCircleWithIconImageView_fore_icon, this.foreIcon)
+            this.src = it.getResourceId(R.styleable.RotatedCircleWithIconImageView_src, 0)
+            this.foreIconInit = it.getInteger(R.styleable.RotatedCircleWithIconImageView_fore_icon, this.foreIconInit)
         }.recycle()
 
         this.startTime = 0
-        this.endTime = 170
+        this.endTime = temp_endtime
         this.rotatedCircleImageView = RotatedCircleImageView(context).apply {
-            imageResource = R.drawable.sample_jieyi_icon
+            imageResource = this@RotatedCircleWithIconImageView.src
+            setShadowRadius(0f)
+            setBorderWidth(0f)
         }
         this.addView(this.rotatedCircleImageView)
+        // TODO(jieyi): 7/16/17 Find a good circle button controller.
         this.timeControlButton = imageView()
-        this.controlButton = imageView(R.drawable.ic_play_arrow)
+        this.controlButton = imageView(this.foreIconInit)
         this.timeLabels = listOf(
             textView(TimeUtils.number2String(this.startTime)).apply {
                 textColor = R.color.colorWhite
@@ -120,12 +132,14 @@ class RotatedCircleWithIconImageView: ViewGroup {
             textView(TimeUtils.number2String(this.endTime)).apply {
                 textColor = R.color.colorDarkGray
                 backgroundColor = R.color.colorGreen
-            })
 
-        this.timeControlButton.onClick {
-            if (currProgress <= interval)
-                invalidate()
+            })
+        this.rotatedCircleImageView.onClickEvent = {
+            this.controlButton.imageResource = if (it.isPauseState) this.foreIconInit else this.foreIconClicked
+            // TODO(jieyi): 7/16/17 timer is not implemented.
         }
+        this.currProgress = 0f
+
     }
 
     @SuppressLint("DrawAllocation")
@@ -172,9 +186,7 @@ class RotatedCircleWithIconImageView: ViewGroup {
 
     @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas) {
-        // This is key of all moving objects.
-        if (currProgress < interval)
-            this.currProgress += 1
+//        this.currProgress += 1
 
         val pathWillProgress = Path().also {
             it.addArc(this.rectProgress,
@@ -185,7 +197,7 @@ class RotatedCircleWithIconImageView: ViewGroup {
             it.addArc(this.rectProgress, START_ANGLE, this.intervalRate * END_ANGLE)
         }
 
-        pm.getPosTan(pm.length * this.intervalRate, this.pos, this.tan)
+        this.pmProgress.getPosTan(pmProgress.length * this.intervalRate, this.pos, this.tan)
 
         canvas.drawPath(pathWillProgress, this.p1)
         canvas.drawPath(pathDoneProgress, this.p2)
