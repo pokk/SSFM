@@ -1,14 +1,10 @@
-package com.example.jieyi.test.ui
+package taiwan.no1.app.ssfm.customized
 
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import com.devrapid.kotlinknifer.logd
-import com.devrapid.kotlinknifer.logv
-import com.devrapid.kotlinknifer.logw
-import com.example.jieyi.test.R
 import org.jetbrains.anko.backgroundColor
 
 /**
@@ -69,19 +65,51 @@ class CircularSeekBar: View {
     var down_x = 0f
     var down_y = 0f
 
+    // (x1, y1) is an old position, (x2, y2) is a new position.
     val distance: (Pair<Double, Double>, Pair<Double, Double>) -> Double = { (x1, y1), (x2, y2) ->
-        Math.sqrt(Math.pow((x1 - x2), 2.0) + Math.pow((y1 - y2), 2.0))
+        // Third quadrant.
+        val isPlus = if (pivotX > x1 && pivotY < y1)
+            if (x1 > x2 || y1 > y2) 1 else -1
+        // Second quadrant.
+        else if (pivotX > x1 && pivotY > y1)
+            if (x1 > x2 || y1 > y2) 1 else -1
+
+        // First quadrant.
+        else if (pivotX < x1 && pivotY > y1)
+            if (x1 > x2 || y1 > y2) 1 else -1
+        // Fourth quadrant.
+        else
+            if (x1 > x2 || y1 > y2) 1 else -1
+
+        Math.sqrt(Math.pow((x1 - x2), 2.0) + Math.pow((y1 - y2), 2.0)) *
     }
 
+    val pm2
+        get() = PathMeasure().apply {
+            setPath(Path().apply { addArc(rectF, start_angle, 0f + progress) }, false)
+        }
+
     override fun onTouchEvent(e: MotionEvent): Boolean {
+        down_x = e.x
+        down_y = e.y
+
         when (e.action) {
             MotionEvent.ACTION_DOWN -> {
-                is_touch_btn = true
-                down_x = e.x
-                down_y = e.y
+                if (e.x in pos[0] - btn_radius..pos[0] + btn_radius && e.y in pos[1] - btn_radius..pos[1] + btn_radius)
+                    is_touch_btn = true
+                p3.color = R.color.colorCadetBlue
             }
             MotionEvent.ACTION_MOVE -> {
-                val d = distance(Pair(e.x.toDouble(), e.y.toDouble()), Pair(down_x.toDouble(), down_y.toDouble()))
+                if (!is_touch_btn)
+                    return true
+
+                if (!(e.x in pos[0] - btn_radius..pos[0] + btn_radius && e.y in pos[1] - btn_radius..pos[1] + btn_radius)) {
+                    is_touch_btn = false
+
+                    return true
+                }
+
+                val d = distance(Pair(down_x.toDouble(), down_y.toDouble()), Pair(e.x.toDouble(), e.y.toDouble()))
                 progress = temp_progress + (d / 10f).toInt()
                 if (temp_progress + (d / 10f).toInt() >= 100)
                     progress = 100
@@ -89,6 +117,7 @@ class CircularSeekBar: View {
             }
             MotionEvent.ACTION_UP -> {
                 temp_progress = progress
+                is_touch_btn = false
             }
         }
 
@@ -105,13 +134,16 @@ class CircularSeekBar: View {
         }
     }
     var pos = floatArrayOf(0f, 0f)
-
+    var btn_radius = 50f
     override fun onDraw(canvas: Canvas) {
         canvas.drawArc(rectF, start_angle + end_angle, -end_angle + progress, false, p1)
         canvas.drawArc(rectF, start_angle, 0f + progress, false, p2)
 
         pm.getPosTan(pm.length / 100 * progress / rate, pos, null)
 
-        canvas.drawCircle(pos[0], pos[1], 50f, p3)
+        var percents = (pm2.length / pm.length) * 100
+        progress = percents.toInt()
+
+        canvas.drawCircle(pos[0], pos[1], btn_radius, p3)
     }
 }
