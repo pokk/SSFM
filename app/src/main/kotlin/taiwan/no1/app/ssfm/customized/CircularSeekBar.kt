@@ -1,11 +1,13 @@
 package taiwan.no1.app.ssfm.customized
 
 import android.content.Context
+
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import org.jetbrains.anko.backgroundColor
+import com.devrapid.kotlinknifer.getResColor
+import taiwan.no1.app.ssfm.R
 
 /**
  *
@@ -13,58 +15,109 @@ import org.jetbrains.anko.backgroundColor
  * @since   7/17/17
  */
 class CircularSeekBar: View {
-    val unplayProgressPaint by lazy {
+    var progressColor = R.color.colorDarkGray
+        set(value) {
+            field = value
+            this.playedProgressPaint.color = getResColor(field)
+            postInv()
+        }
+    var unprogressColor = R.color.colorCoral
+        set(value) {
+            field = value
+            this.unplayProgressPaint.color = getResColor(field)
+            postInv()
+        }
+    var progressWidth = 20f
+        set(value) {
+            field = value
+            this.playedProgressPaint.strokeWidth = field
+            postInv()
+        }
+    var startDegree = 140f
+        set(value) {
+            field = value
+            postInv()
+        }
+    var sweepDegree = 260f
+        set(value) {
+            field = value
+            postInv()
+        }
+    var btnColor = R.color.colorBlue
+        set(value) {
+            field = value
+            this.controllerBtnPaint.color = getResColor(field)
+            postInv()
+        }
+    var pressBtnColor = R.color.colorDarkBlue
+        set(value) {
+            field = value
+            this.controllerBtnPaint.color = getResColor(field)
+            postInv()
+        }
+    var btnRadius = 30f
+        set(value) {
+            field = value
+            postInv()
+        }
+
+    private val unplayProgressPaint by lazy {
         Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = this@CircularSeekBar.progressColor
+            color = getResColor(this@CircularSeekBar.progressColor)
             strokeCap = Paint.Cap.ROUND
             strokeWidth = this@CircularSeekBar.progressWidth
             style = Paint.Style.STROKE
         }
     }
-    val playedProgressPaint by lazy {
+    private val playedProgressPaint by lazy {
         Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = this@CircularSeekBar.unprogressColor
+            color = getResColor(this@CircularSeekBar.unprogressColor)
             strokeCap = Paint.Cap.ROUND
             strokeWidth = this@CircularSeekBar.progressWidth
             style = Paint.Style.STROKE
         }
     }
-    val controllerBtnPaint by lazy {
+    private val controllerBtnPaint by lazy {
         Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = this@CircularSeekBar.btnColor
+            color = getResColor(this@CircularSeekBar.btnColor)
         }
     }
-    val pm by lazy {
+    private val pm by lazy {
         PathMeasure().apply {
             setPath(Path().apply {
-                addArc(RectF(0f, 0f, width.toFloat(), height.toFloat()), startAngle, endAngle)
+                addArc(RectF(0f + this@CircularSeekBar.paddingStart,
+                    0f + this@CircularSeekBar.paddingTop,
+                    width.toFloat() - this@CircularSeekBar.paddingEnd,
+                    height.toFloat() - this@CircularSeekBar.paddingBottom),
+                    this@CircularSeekBar.startDegree,
+                    this@CircularSeekBar.sweepDegree)
             }, false)
         }
     }
-    val rectF by lazy { RectF(0f, 0f, width.toFloat(), height.toFloat()) }
-
-    var progressColor = R.color.colorRed
-    var unprogressColor = R.color.colorWhite
-    var progressWidth = 20f
-    var startAngle = 140f
-    var endAngle = 260f
-    var btnColor = R.color.colorBlack
-    var pressBtnColor = R.color.colorGray
-    var btnRadius = 50f
-
-    var rate = this.endAngle / 100f
+    private val rectF by lazy {
+        RectF(0f + this.paddingStart,
+            0f + this.paddingTop,
+            width.toFloat() - this.paddingEnd,
+            height.toFloat() - this.paddingBottom)
+    }
+    private var rate = this.sweepDegree / 100f
         set(value) {
-            field = this.endAngle / 100f
+            field = this.sweepDegree / 100f
         }
-    var isTouchButton = false
-    var preX = 0f
-    var preY = 0f
-    var isVolumeUp = false
-    var progress = 0
+    private var isTouchButton = false
+    private var preX = 0f
+    private var preY = 0f
+    private var isVolumeUp = false
+    private var progress = 0
         set (value) {
             field = (value * this.rate).toInt()
         }
-    var pos = floatArrayOf(0f, 0f)
+    private var pos = floatArrayOf(0f, 0f)
+    private var isInit = true
+    private val postInv = {
+        if (this.isInit)
+            this.invalidate()
+    }
 
     constructor(context: Context): super(context) {
         this.init(context, null, 0)
@@ -80,8 +133,8 @@ class CircularSeekBar: View {
 
     fun init(context: Context, attrs: AttributeSet?, defStyle: Int) {
         context.obtainStyledAttributes(attrs, R.styleable.CircularSeekBar, defStyle, 0).also {
-            this.startAngle = it.getFloat(R.styleable.CircularSeekBar_start_degree, this.startAngle)
-            this.endAngle = it.getFloat(R.styleable.CircularSeekBar_sweep_degree, this.endAngle)
+            this.startDegree = it.getFloat(R.styleable.CircularSeekBar_start_degree, this.startDegree)
+            this.sweepDegree = it.getFloat(R.styleable.CircularSeekBar_sweep_degree, this.sweepDegree)
             this.progressColor = it.getColor(R.styleable.CircularSeekBar_progress_color, this.progressColor)
             this.unprogressColor = it.getColor(R.styleable.CircularSeekBar_unprogress_color, this.unprogressColor)
             this.progressWidth = it.getFloat(R.styleable.CircularSeekBar_progress_width, this.progressWidth)
@@ -92,20 +145,20 @@ class CircularSeekBar: View {
             this.btnRadius = it.getFloat(R.styleable.CircularSeekBar_controller_radius, this.btnRadius)
         }.recycle()
 
-        this.backgroundColor = R.color.colorChocolate
+        this.isInit = true
     }
 
     private fun calculateTouchDegree(posX: Float, posY: Float): Double {
         val x = posX - pivotX.toDouble()
         val y = posY - pivotY.toDouble()
 
-        var angle = Math.toDegrees(Math.atan2(y, x) - this.startAngle / 180 * Math.PI)
+        var angle = Math.toDegrees(Math.atan2(y, x) - this.startDegree / 180 * Math.PI)
         angle = (angle + 360) % 360
 
-        return if (angle >= this.endAngle) 260.0 else angle
+        return if (angle >= this.sweepDegree) this.sweepDegree.toDouble() else angle
     }
 
-    private fun calculateTouchProgress(angle: Double): Double = angle / this.endAngle * 100
+    private fun calculateTouchProgress(angle: Double): Double = angle / this.sweepDegree * 100
 
     override fun onTouchEvent(e: MotionEvent): Boolean {
         when (e.action) {
@@ -113,7 +166,7 @@ class CircularSeekBar: View {
                 if (e.x in this.pos[0] - this.btnRadius..this.pos[0] + this.btnRadius &&
                     e.y in this.pos[1] - this.btnRadius..this.pos[1] + this.btnRadius)
                     this.isTouchButton = true
-                this.controllerBtnPaint.color = R.color.colorCadetBlue
+                this.controllerBtnPaint.color = getResColor(this.pressBtnColor)
             }
             MotionEvent.ACTION_MOVE -> {
                 if (!this.isTouchButton)
@@ -122,7 +175,7 @@ class CircularSeekBar: View {
                 val down_degree = this.calculateTouchDegree(this.preX, this.preY)
                 val degree = this.calculateTouchDegree(e.x, e.y)
 
-                if (260.0 <= degree)
+                if (this.sweepDegree <= degree)
                     return true
 
                 this.isVolumeUp = down_degree < degree
@@ -130,8 +183,9 @@ class CircularSeekBar: View {
 
                 this.invalidate()
             }
-            MotionEvent.ACTION_UP -> {
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 this.isTouchButton = false
+                this.controllerBtnPaint.color = getResColor(this.btnColor)
             }
         }
         this.preX = e.x
@@ -146,11 +200,11 @@ class CircularSeekBar: View {
 
     override fun onDraw(canvas: Canvas) {
         canvas.drawArc(this.rectF,
-            this.startAngle + this.endAngle,
-            -this.endAngle + this.progress,
+            this.startDegree + this.sweepDegree,
+            -this.sweepDegree + this.progress,
             false,
             this.unplayProgressPaint)
-        canvas.drawArc(this.rectF, this.startAngle, 0f + this.progress, false, this.playedProgressPaint)
+        canvas.drawArc(this.rectF, this.startDegree, 0f + this.progress, false, this.playedProgressPaint)
 
         this.pm.getPosTan(this.pm.length / 100 * this.progress / this.rate, this.pos, null)
 
