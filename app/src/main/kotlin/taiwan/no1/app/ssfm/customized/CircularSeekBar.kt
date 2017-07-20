@@ -5,10 +5,6 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import com.devrapid.kotlinknifer.logd
-import com.devrapid.kotlinknifer.logi
-import com.devrapid.kotlinknifer.logw
-import com.example.jieyi.test.R
 import org.jetbrains.anko.backgroundColor
 
 /**
@@ -17,118 +13,147 @@ import org.jetbrains.anko.backgroundColor
  * @since   7/17/17
  */
 class CircularSeekBar: View {
-    val p1 = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = R.color.colorRed
-        strokeCap = Paint.Cap.ROUND
-        strokeWidth = 20f
-        style = Paint.Style.STROKE
-    }
-    val p2 = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = R.color.colorWhite
-        strokeCap = Paint.Cap.ROUND
-        strokeWidth = 20f
-        style = Paint.Style.STROKE
-    }
-
-    val rectF by lazy { RectF(0f, 0f, width.toFloat(), height.toFloat()) }
-    val start_angle = 140f
-    val end_angle = 260f
-    val rate = end_angle / 100f
-    var progress = 0
-        set (value) {
-            field = (value * rate).toInt()
+    val unplayProgressPaint by lazy {
+        Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = this@CircularSeekBar.progressColor
+            strokeCap = Paint.Cap.ROUND
+            strokeWidth = this@CircularSeekBar.progressWidth
+            style = Paint.Style.STROKE
         }
-    var is_touch_btn = false
-
-    var down_x = 0f
-    var down_y = 0f
-
-
-    val p3 = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = R.color.colorBlack
+    }
+    val playedProgressPaint by lazy {
+        Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = this@CircularSeekBar.unprogressColor
+            strokeCap = Paint.Cap.ROUND
+            strokeWidth = this@CircularSeekBar.progressWidth
+            style = Paint.Style.STROKE
+        }
+    }
+    val controllerBtnPaint by lazy {
+        Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = this@CircularSeekBar.btnColor
+        }
     }
     val pm by lazy {
         PathMeasure().apply {
-            setPath(Path().apply { addArc(RectF(0f, 0f, width.toFloat(), height.toFloat()), start_angle, end_angle) },
-                false)
+            setPath(Path().apply {
+                addArc(RectF(0f, 0f, width.toFloat(), height.toFloat()), startAngle, endAngle)
+            }, false)
         }
     }
+    val rectF by lazy { RectF(0f, 0f, width.toFloat(), height.toFloat()) }
+
+    var progressColor = R.color.colorRed
+    var unprogressColor = R.color.colorWhite
+    var progressWidth = 20f
+    var startAngle = 140f
+    var endAngle = 260f
+    var btnColor = R.color.colorBlack
+    var pressBtnColor = R.color.colorGray
+    var btnRadius = 50f
+
+    var rate = this.endAngle / 100f
+        set(value) {
+            field = this.endAngle / 100f
+        }
+    var isTouchButton = false
+    var preX = 0f
+    var preY = 0f
+    var isVolumeUp = false
+    var progress = 0
+        set (value) {
+            field = (value * this.rate).toInt()
+        }
     var pos = floatArrayOf(0f, 0f)
-    var btn_radius = 50f
 
     constructor(context: Context): super(context) {
-        init(context, null, 0)
+        this.init(context, null, 0)
     }
 
     constructor(context: Context, attrs: AttributeSet): super(context, attrs) {
-        init(context, attrs, 0)
+        this.init(context, attrs, 0)
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyle: Int): super(context, attrs, defStyle) {
-        init(context, attrs, defStyle)
+        this.init(context, attrs, defStyle)
     }
 
     fun init(context: Context, attrs: AttributeSet?, defStyle: Int) {
-//        context.obtainStyledAttributes(attrs, R.styleable.RotatedCircleWithIconImageView, defStyle, 0).also {
-//        }.recycle()
-        backgroundColor = R.color.colorChocolate
+        context.obtainStyledAttributes(attrs, R.styleable.CircularSeekBar, defStyle, 0).also {
+            this.startAngle = it.getFloat(R.styleable.CircularSeekBar_start_degree, this.startAngle)
+            this.endAngle = it.getFloat(R.styleable.CircularSeekBar_sweep_degree, this.endAngle)
+            this.progressColor = it.getColor(R.styleable.CircularSeekBar_progress_color, this.progressColor)
+            this.unprogressColor = it.getColor(R.styleable.CircularSeekBar_unprogress_color, this.unprogressColor)
+            this.progressWidth = it.getFloat(R.styleable.CircularSeekBar_progress_width, this.progressWidth)
+            this.progress = it.getInteger(R.styleable.CircularSeekBar_progress, this.progress)
+            this.btnColor = it.getColor(R.styleable.CircularSeekBar_controller_color, this.btnColor)
+            this.pressBtnColor = it.getColor(R.styleable.CircularSeekBar_unpress_controller_color,
+                this.pressBtnColor)
+            this.btnRadius = it.getFloat(R.styleable.CircularSeekBar_controller_radius, this.btnRadius)
+        }.recycle()
+
+        this.backgroundColor = R.color.colorChocolate
     }
 
     private fun calculateTouchDegree(posX: Float, posY: Float): Double {
         val x = posX - pivotX.toDouble()
         val y = posY - pivotY.toDouble()
 
-        var angle = Math.toDegrees(Math.atan2(y, x) - start_angle / 180 * Math.PI)
+        var angle = Math.toDegrees(Math.atan2(y, x) - this.startAngle / 180 * Math.PI)
         angle = (angle + 360) % 360
 
-        return if (angle >= end_angle) 260.0 else angle
+        return if (angle >= this.endAngle) 260.0 else angle
     }
 
-    private fun calculateTouchProgress(angle: Double, is_volume_up: Boolean): Double = angle / end_angle * 100
+    private fun calculateTouchProgress(angle: Double): Double = angle / this.endAngle * 100
 
     override fun onTouchEvent(e: MotionEvent): Boolean {
         when (e.action) {
             MotionEvent.ACTION_DOWN -> {
-                if (e.x in pos[0] - btn_radius..pos[0] + btn_radius && e.y in pos[1] - btn_radius..pos[1] + btn_radius)
-                    is_touch_btn = true
-                p3.color = R.color.colorCadetBlue
+                if (e.x in this.pos[0] - this.btnRadius..this.pos[0] + this.btnRadius &&
+                    e.y in this.pos[1] - this.btnRadius..this.pos[1] + this.btnRadius)
+                    this.isTouchButton = true
+                this.controllerBtnPaint.color = R.color.colorCadetBlue
             }
             MotionEvent.ACTION_MOVE -> {
-                if (!is_touch_btn)
+                if (!this.isTouchButton)
                     return true
 
-                val down_degree = calculateTouchDegree(down_x, down_y)
-                val degree = calculateTouchDegree(e.x, e.y)
-                val is_volume_up = down_degree < degree
+                val down_degree = this.calculateTouchDegree(this.preX, this.preY)
+                val degree = this.calculateTouchDegree(e.x, e.y)
 
                 if (260.0 <= degree)
                     return true
 
-                progress = calculateTouchProgress(degree, is_volume_up).toInt()
+                this.isVolumeUp = down_degree < degree
+                this.progress = this.calculateTouchProgress(degree).toInt()
 
-                invalidate()
+                this.invalidate()
             }
             MotionEvent.ACTION_UP -> {
-                is_touch_btn = false
+                this.isTouchButton = false
             }
         }
-
-        down_x = e.x
-        down_y = e.y
+        this.preX = e.x
+        this.preY = e.y
 
         return true
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        setMeasuredDimension(widthMeasureSpec, heightMeasureSpec)
+        this.setMeasuredDimension(widthMeasureSpec, heightMeasureSpec)
     }
 
     override fun onDraw(canvas: Canvas) {
-        canvas.drawArc(rectF, start_angle + end_angle, -end_angle + progress, false, p1)
-        canvas.drawArc(rectF, start_angle, 0f + progress, false, p2)
+        canvas.drawArc(this.rectF,
+            this.startAngle + this.endAngle,
+            -this.endAngle + this.progress,
+            false,
+            this.unplayProgressPaint)
+        canvas.drawArc(this.rectF, this.startAngle, 0f + this.progress, false, this.playedProgressPaint)
 
-        pm.getPosTan(pm.length / 100 * progress / rate, pos, null)
+        this.pm.getPosTan(this.pm.length / 100 * this.progress / this.rate, this.pos, null)
 
-        canvas.drawCircle(pos[0], pos[1], btn_radius, p3)
+        canvas.drawCircle(this.pos[0], this.pos[1], this.btnRadius, this.controllerBtnPaint)
     }
 }
