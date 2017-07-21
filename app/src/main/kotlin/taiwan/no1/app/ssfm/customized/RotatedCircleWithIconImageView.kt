@@ -2,14 +2,11 @@ package taiwan.no1.app.ssfm.customized
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.devrapid.kotlinknifer.getResColor
-import com.devrapid.kotlinknifer.logd
 import com.example.jieyi.test.TimeUtils
 import org.jetbrains.anko.*
 import taiwan.no1.app.ssfm.R
@@ -23,9 +20,9 @@ import kotlin.properties.Delegates
  */
 class RotatedCircleWithIconImageView: ViewGroup {
     companion object {
-        private const val OUTER_PADDING = 40f
-        private const val INNER_PADDING = OUTER_PADDING.toInt() + 50
-        private const val TEXT_OFFSET = OUTER_PADDING.toInt() - 10
+        private const val OUTTER_PADDING = 30
+        private const val INNER_PADDING = OUTTER_PADDING + 50
+        private const val TEXT_OFFSET = OUTTER_PADDING - 10
         private const val START_TIME = 0
     }
 
@@ -67,9 +64,6 @@ class RotatedCircleWithIconImageView: ViewGroup {
     //endregion
 
     //region Progress bar variables.
-    private val rectProgress by lazy {
-        RectF(OUTER_PADDING, OUTER_PADDING, this.width - OUTER_PADDING, this.height - OUTER_PADDING)
-    }
     //endregion
 
     constructor(context: Context): super(context) {
@@ -94,14 +88,16 @@ class RotatedCircleWithIconImageView: ViewGroup {
         this.endTime = temp_endtime
         this.rotatedCircleImageView = RotatedCircleImageView(context).apply {
             imageResource = this@RotatedCircleWithIconImageView.src
+            padding = INNER_PADDING
             setShadowRadius(0f)
             setBorderWidth(0f)
         }
         this.circleSeekBar = (attrs?.let { CircularSeekBar(context, attrs, defStyle) } ?:
             CircularSeekBar(context)).apply {
+            padding = OUTTER_PADDING
         }
-        this.addView(this.rotatedCircleImageView)
         this.addView(this.circleSeekBar)
+        this.addView(this.rotatedCircleImageView)
         this.statusIcon = imageView(this.foreIconInit)
         this.timeLabels = listOf(
             textView(TimeUtils.number2String(this.startTime)).apply {
@@ -120,8 +116,6 @@ class RotatedCircleWithIconImageView: ViewGroup {
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         // Measure all of children's width & height.
         this.measureChildren(widthMeasureSpec, heightMeasureSpec)
-        this.getChildAt(0).measure(MeasureSpec.makeMeasureSpec(this.width - 2 * INNER_PADDING, MeasureSpec.EXACTLY),
-            MeasureSpec.makeMeasureSpec(this.height - 2 * INNER_PADDING, MeasureSpec.EXACTLY))
         // Measure width & height of this view_group's layout(layout_width or layout_height will be `match_parent`
         // no matter what we set `wrap_content` or `match_patent` when we're using getDefaultSize).
         // We'll reset this method by another way for achieving `wrap_content`.
@@ -132,22 +126,21 @@ class RotatedCircleWithIconImageView: ViewGroup {
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         val w = this.width
         val h = this.height
-        val size = 100
 
         (0 until this.childCount).forEach {
             val childW = this.getChildAt(it).measuredWidth
             val childH = this.getChildAt(it).measuredHeight
 
-            logd(childW, childH)
-
             when (it) {
-            // Inner image view and Status icon.
-                0, 2 -> this.getChildAt(it).layout(w / 2 - childW / 2,
-                    h / 2 - childH / 2,
-                    w / 2 + childW / 2,
-                    h / 2 + childH / 2)
             // Circular seek bar.
-                1 -> this.getChildAt(it).layout(0, 0, size, size)
+                0 -> this.getChildAt(it).layout(0, 0, childW, childH)
+            // 1: Inner image view and 2: Status icon.
+                1 -> this.getChildAt(it).layout(pivotX.toInt() - childW / 2 + INNER_PADDING,
+                    pivotY.toInt() - childH / 2 + INNER_PADDING,
+                    pivotX.toInt() + childW / 2 - INNER_PADDING,
+                    pivotY.toInt() + childH / 2 - INNER_PADDING)
+                2 -> {
+                }
             // Two text views.
                 3 -> this.getChildAt(it).layout(w / 4 - childW / 2,
                     (h - childH - TEXT_OFFSET),
@@ -159,9 +152,5 @@ class RotatedCircleWithIconImageView: ViewGroup {
                     (h - TEXT_OFFSET))
             }
         }
-    }
-
-    @SuppressLint("DrawAllocation")
-    override fun onDraw(canvas: Canvas) {
     }
 }

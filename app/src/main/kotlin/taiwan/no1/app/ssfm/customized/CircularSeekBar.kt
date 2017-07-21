@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import com.devrapid.kotlinknifer.getResColor
+import com.devrapid.kotlinknifer.logi
 import taiwan.no1.app.ssfm.R
 
 /**
@@ -163,6 +164,7 @@ class CircularSeekBar: View {
     override fun onTouchEvent(e: MotionEvent): Boolean {
         when (e.action) {
             MotionEvent.ACTION_DOWN -> {
+                logi("xxxxxxxxxxxxxxxxxxxxx")
                 if (e.x in this.pos[0] - this.btnRadius..this.pos[0] + this.btnRadius &&
                     e.y in this.pos[1] - this.btnRadius..this.pos[1] + this.btnRadius)
                     this.isTouchButton = true

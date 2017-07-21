@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
+import com.devrapid.kotlinknifer.logw
 import com.mikhaellopez.circularimageview.CircularImageView
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import taiwan.no1.app.ssfm.R
@@ -48,6 +49,7 @@ open class RotatedCircleImageView: CircularImageView {
         }.recycle()
 
         this.onClick {
+            logw("??????????????????????????")
             this@RotatedCircleImageView.rotateAnimator.let {
                 when {
                     !it.isStarted -> {
