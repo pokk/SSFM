@@ -2,15 +2,18 @@ package taiwan.no1.app.ssfm.customized
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
+import com.devrapid.kotlinknifer.getResColor
 import com.example.jieyi.test.TimeUtils
-import org.jetbrains.anko.*
+import org.jetbrains.anko.backgroundColor
+import org.jetbrains.anko.imageResource
+import org.jetbrains.anko.textColor
+import org.jetbrains.anko.textView
 import taiwan.no1.app.ssfm.R
-import java.util.*
 import kotlin.properties.Delegates
 
 /**
@@ -24,8 +27,6 @@ class RotatedCircleWithIconImageView: ViewGroup {
         private const val OUTER_PADDING = 40f
         private const val INNER_PADDING = OUTER_PADDING.toInt() + 50
         private const val TEXT_OFFSET = OUTER_PADDING.toInt() - 10
-        private const val START_ANGLE = 140f
-        private const val END_ANGLE = 260f
         private const val START_TIME = 0
     }
 
@@ -58,41 +59,16 @@ class RotatedCircleWithIconImageView: ViewGroup {
     //region Progress bar components.
     lateinit var rotatedCircleImageView: RotatedCircleImageView
         private set
+    lateinit var circleSeekBar: CircularSeekBar
+        private set
     lateinit var timeLabels: List<TextView>
-        private set
-    lateinit var controlButton: ImageView
-        private set
-    lateinit var timeControlButton: ImageView
         private set
     //endregion
 
     //region Progress bar variables.
-    private val p1 by lazy {
-        Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG).apply {
-            color = R.color.colorBlack
-            strokeCap = Paint.Cap.ROUND
-            strokeWidth = 30f
-            style = Paint.Style.STROKE
-        }
-    }
-    private val p2 by lazy {
-        Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG).apply {
-            color = R.color.colorRed
-            strokeCap = Paint.Cap.ROUND
-            strokeWidth = 30f
-            style = Paint.Style.STROKE
-        }
-    }
-    private val pmProgress by lazy {
-        PathMeasure(Path().also { it.addArc(this.rectProgress, START_ANGLE, END_ANGLE) },
-            false)
-    }
     private val rectProgress by lazy {
         RectF(OUTER_PADDING, OUTER_PADDING, this.width - OUTER_PADDING, this.height - OUTER_PADDING)
     }
-    private var pos = floatArrayOf(0f, 0f)
-    private var tan = floatArrayOf(0f, 0f)
-    private var timer by Delegates.notNull<Timer>()
     //endregion
 
     constructor(context: Context): super(context) {
@@ -120,26 +96,22 @@ class RotatedCircleWithIconImageView: ViewGroup {
             setShadowRadius(0f)
             setBorderWidth(0f)
         }
+        this.circleSeekBar = (attrs?.let { CircularSeekBar(context, attrs, defStyle) } ?:
+            CircularSeekBar(context)).apply {
+        }
         this.addView(this.rotatedCircleImageView)
-        // TODO(jieyi): 7/16/17 Find a good circle button controller.
-        this.timeControlButton = imageView()
-        this.controlButton = imageView(this.foreIconInit)
+        this.addView(this.circleSeekBar)
         this.timeLabels = listOf(
             textView(TimeUtils.number2String(this.startTime)).apply {
-                textColor = R.color.colorWhite
-                backgroundColor = R.color.colorGreen
+                textColor = getResColor(R.color.colorWhite)
+                backgroundColor = getResColor(R.color.colorGreen)
             },
             textView(TimeUtils.number2String(this.endTime)).apply {
-                textColor = R.color.colorDarkGray
-                backgroundColor = R.color.colorGreen
+                textColor = getResColor(R.color.colorDarkGray)
+                backgroundColor = getResColor(R.color.colorGreen)
 
             })
-        this.rotatedCircleImageView.onClickEvent = {
-            this.controlButton.imageResource = if (it.isPauseState) this.foreIconInit else this.foreIconClicked
-            // TODO(jieyi): 7/16/17 timer is not implemented.
-        }
         this.currProgress = 0f
-
     }
 
     @SuppressLint("DrawAllocation")
@@ -166,17 +138,18 @@ class RotatedCircleWithIconImageView: ViewGroup {
 
             when (it) {
             // Inner image view.
-                1 -> this.getChildAt(it).layout(0, 0, size, size)
-                0, 2 -> this.getChildAt(it).layout(w / 2 - childW / 2,
+                0 -> this.getChildAt(it).layout(w / 2 - childW / 2,
                     h / 2 - childH / 2,
                     w / 2 + childW / 2,
                     h / 2 + childH / 2)
+            // Circular seek bar.
+                1 -> this.getChildAt(it).layout(0, 0, size, size)
             // Two text views.
-                3 -> this.getChildAt(it).layout(w / 4 - childW / 2,
+                2 -> this.getChildAt(it).layout(w / 4 - childW / 2,
                     (h - childH - TEXT_OFFSET),
                     w / 4 + childW / 2,
                     (h - TEXT_OFFSET))
-                4 -> this.getChildAt(it).layout(w / 4 * 3 - childW / 2,
+                3 -> this.getChildAt(it).layout(w / 4 * 3 - childW / 2,
                     (h - childH - TEXT_OFFSET),
                     w / 4 * 3 + childW / 2,
                     (h - TEXT_OFFSET))
@@ -186,22 +159,5 @@ class RotatedCircleWithIconImageView: ViewGroup {
 
     @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas) {
-//        this.currProgress += 1
-
-        val pathWillProgress = Path().also {
-            it.addArc(this.rectProgress,
-                START_ANGLE + END_ANGLE,
-                -((this.interval - this.currProgress) / this.interval * END_ANGLE))
-        }
-        val pathDoneProgress = Path().also {
-            it.addArc(this.rectProgress, START_ANGLE, this.intervalRate * END_ANGLE)
-        }
-
-        this.pmProgress.getPosTan(pmProgress.length * this.intervalRate, this.pos, this.tan)
-
-        canvas.drawPath(pathWillProgress, this.p1)
-        canvas.drawPath(pathDoneProgress, this.p2)
-        this.timeControlButton.x = pos[0] - this.timeControlButton.width / 2
-        this.timeControlButton.y = pos[1] - this.timeControlButton.height / 2
     }
 }
