@@ -6,13 +6,12 @@ import android.graphics.Canvas
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.devrapid.kotlinknifer.getResColor
+import com.devrapid.kotlinknifer.logd
 import com.example.jieyi.test.TimeUtils
-import org.jetbrains.anko.backgroundColor
-import org.jetbrains.anko.imageResource
-import org.jetbrains.anko.textColor
-import org.jetbrains.anko.textView
+import org.jetbrains.anko.*
 import taiwan.no1.app.ssfm.R
 import kotlin.properties.Delegates
 
@@ -61,6 +60,8 @@ class RotatedCircleWithIconImageView: ViewGroup {
         private set
     lateinit var circleSeekBar: CircularSeekBar
         private set
+    lateinit var statusIcon: ImageView
+        private set
     lateinit var timeLabels: List<TextView>
         private set
     //endregion
@@ -101,6 +102,7 @@ class RotatedCircleWithIconImageView: ViewGroup {
         }
         this.addView(this.rotatedCircleImageView)
         this.addView(this.circleSeekBar)
+        this.statusIcon = imageView(this.foreIconInit)
         this.timeLabels = listOf(
             textView(TimeUtils.number2String(this.startTime)).apply {
                 textColor = getResColor(R.color.colorWhite)
@@ -136,20 +138,22 @@ class RotatedCircleWithIconImageView: ViewGroup {
             val childW = this.getChildAt(it).measuredWidth
             val childH = this.getChildAt(it).measuredHeight
 
+            logd(childW, childH)
+
             when (it) {
-            // Inner image view.
-                0 -> this.getChildAt(it).layout(w / 2 - childW / 2,
+            // Inner image view and Status icon.
+                0, 2 -> this.getChildAt(it).layout(w / 2 - childW / 2,
                     h / 2 - childH / 2,
                     w / 2 + childW / 2,
                     h / 2 + childH / 2)
             // Circular seek bar.
                 1 -> this.getChildAt(it).layout(0, 0, size, size)
             // Two text views.
-                2 -> this.getChildAt(it).layout(w / 4 - childW / 2,
+                3 -> this.getChildAt(it).layout(w / 4 - childW / 2,
                     (h - childH - TEXT_OFFSET),
                     w / 4 + childW / 2,
                     (h - TEXT_OFFSET))
-                3 -> this.getChildAt(it).layout(w / 4 * 3 - childW / 2,
+                4 -> this.getChildAt(it).layout(w / 4 * 3 - childW / 2,
                     (h - childH - TEXT_OFFSET),
                     w / 4 * 3 + childW / 2,
                     (h - TEXT_OFFSET))
