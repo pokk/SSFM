@@ -3,9 +3,9 @@ package taiwan.no1.app.ssfm.customized
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
-import com.devrapid.kotlinknifer.logw
 import com.mikhaellopez.circularimageview.CircularImageView
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import taiwan.no1.app.ssfm.R
@@ -49,7 +49,6 @@ open class RotatedCircleImageView: CircularImageView {
         }.recycle()
 
         this.onClick {
-            logw("??????????????????????????")
             this@RotatedCircleImageView.rotateAnimator.let {
                 when {
                     !it.isStarted -> {
@@ -69,4 +68,26 @@ open class RotatedCircleImageView: CircularImageView {
             this@RotatedCircleImageView.onClickEvent?.let { it(this@RotatedCircleImageView) }
         }
     }
+
+    override fun onTouchEvent(e: MotionEvent): Boolean {
+        when (e.action) {
+            MotionEvent.ACTION_DOWN -> {
+                if (this.width / 2 > distance(e.x, e.y, pivotX, pivotY)) {
+                    return true
+                }
+            }
+            MotionEvent.ACTION_UP -> {
+                if (this.width / 2 > distance(e.x, e.y, pivotX, pivotY)) {
+                    this.performClick()
+
+                    return true
+                }
+            }
+        }
+
+        return false
+    }
+
+    private fun distance(sX: Float, sY: Float, eX: Float, eY: Float): Double =
+        Math.sqrt(Math.pow((sX - eX).toDouble(), 2.0) + Math.pow((sY - eY).toDouble(), 2.0))
 }

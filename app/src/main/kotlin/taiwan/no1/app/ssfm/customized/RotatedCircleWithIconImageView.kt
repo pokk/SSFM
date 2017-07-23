@@ -20,9 +20,9 @@ import kotlin.properties.Delegates
  */
 class RotatedCircleWithIconImageView: ViewGroup {
     companion object {
-        private const val OUTTER_PADDING = 30
-        private const val INNER_PADDING = OUTTER_PADDING + 50
-        private const val TEXT_OFFSET = OUTTER_PADDING - 10
+        private const val OUTER_PADDING = 30
+        private const val INNER_PADDING = OUTER_PADDING + 30
+        private const val TEXT_OFFSET = OUTER_PADDING - 10
         private const val START_TIME = 0
     }
 
@@ -94,7 +94,7 @@ class RotatedCircleWithIconImageView: ViewGroup {
         }
         this.circleSeekBar = (attrs?.let { CircularSeekBar(context, attrs, defStyle) } ?:
             CircularSeekBar(context)).apply {
-            padding = OUTTER_PADDING
+            padding = OUTER_PADDING
         }
         this.addView(this.circleSeekBar)
         this.addView(this.rotatedCircleImageView)
@@ -102,11 +102,9 @@ class RotatedCircleWithIconImageView: ViewGroup {
         this.timeLabels = listOf(
             textView(TimeUtils.number2String(this.startTime)).apply {
                 textColor = getResColor(R.color.colorWhite)
-                backgroundColor = getResColor(R.color.colorGreen)
             },
             textView(TimeUtils.number2String(this.endTime)).apply {
                 textColor = getResColor(R.color.colorDarkGray)
-                backgroundColor = getResColor(R.color.colorGreen)
 
             })
         this.currProgress = 0f
@@ -139,8 +137,10 @@ class RotatedCircleWithIconImageView: ViewGroup {
                     pivotY.toInt() - childH / 2 + INNER_PADDING,
                     pivotX.toInt() + childW / 2 - INNER_PADDING,
                     pivotY.toInt() + childH / 2 - INNER_PADDING)
-                2 -> {
-                }
+                2 -> this.getChildAt(it).layout(pivotX.toInt() - childW / 2,
+                    pivotY.toInt() - childH / 2,
+                    pivotX.toInt() + childW / 2,
+                    pivotY.toInt() + childH / 2)
             // Two text views.
                 3 -> this.getChildAt(it).layout(w / 4 - childW / 2,
                     (h - childH - TEXT_OFFSET),

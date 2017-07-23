@@ -7,7 +7,6 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import com.devrapid.kotlinknifer.getResColor
-import com.devrapid.kotlinknifer.logi
 import taiwan.no1.app.ssfm.R
 
 /**
@@ -16,19 +15,19 @@ import taiwan.no1.app.ssfm.R
  * @since   7/17/17
  */
 class CircularSeekBar: View {
-    var progressColor = R.color.colorDarkGray
+    var progressColor = R.color.colorCoral
         set(value) {
             field = value
             this.playedProgressPaint.color = getResColor(field)
             postInv()
         }
-    var unprogressColor = R.color.colorCoral
+    var unprogressColor = R.color.colorDarkGray
         set(value) {
             field = value
             this.unplayProgressPaint.color = getResColor(field)
             postInv()
         }
-    var progressWidth = 20f
+    var progressWidth = 13f
         set(value) {
             field = value
             this.playedProgressPaint.strokeWidth = field
@@ -56,7 +55,7 @@ class CircularSeekBar: View {
             this.controllerBtnPaint.color = getResColor(field)
             postInv()
         }
-    var btnRadius = 30f
+    var btnRadius = 25f
         set(value) {
             field = value
             postInv()
@@ -164,21 +163,25 @@ class CircularSeekBar: View {
     override fun onTouchEvent(e: MotionEvent): Boolean {
         when (e.action) {
             MotionEvent.ACTION_DOWN -> {
-                logi("xxxxxxxxxxxxxxxxxxxxx")
                 if (e.x in this.pos[0] - this.btnRadius..this.pos[0] + this.btnRadius &&
-                    e.y in this.pos[1] - this.btnRadius..this.pos[1] + this.btnRadius)
+                    e.y in this.pos[1] - this.btnRadius..this.pos[1] + this.btnRadius) {
                     this.isTouchButton = true
-                this.controllerBtnPaint.color = getResColor(this.pressBtnColor)
+                    this.controllerBtnPaint.color = getResColor(this.pressBtnColor)
+
+                    return true
+                }
             }
             MotionEvent.ACTION_MOVE -> {
-                if (!this.isTouchButton)
-                    return true
+                if (!this.isTouchButton) {
+                    return false
+                }
 
                 val down_degree = this.calculateTouchDegree(this.preX, this.preY)
                 val degree = this.calculateTouchDegree(e.x, e.y)
 
-                if (this.sweepDegree <= degree)
-                    return true
+                if (this.sweepDegree <= degree) {
+                    return false
+                }
 
                 this.isVolumeUp = down_degree < degree
                 this.progress = this.calculateTouchProgress(degree).toInt()
@@ -193,7 +196,7 @@ class CircularSeekBar: View {
         this.preX = e.x
         this.preY = e.y
 
-        return true
+        return false
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
