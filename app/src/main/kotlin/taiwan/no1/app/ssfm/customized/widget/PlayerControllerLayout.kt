@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.customized
+package taiwan.no1.app.ssfm.customized.widget
 
 import android.annotation.SuppressLint
 import android.content.Context

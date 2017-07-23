@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.customized
+package taiwan.no1.app.ssfm.customized.widget
 
 import android.content.Context
 import android.support.v4.view.PagerAdapter

@@ -2,7 +2,7 @@ package taiwan.no1.app.ssfm.pattern.state
 
 import org.jetbrains.anko.imageResource
 import taiwan.no1.app.ssfm.R
-import taiwan.no1.app.ssfm.customized.PlayerControllerLayout
+import taiwan.no1.app.ssfm.customized.widget.PlayerControllerLayout
 
 /**
  * Play state in controller panel.

@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.customized
+package taiwan.no1.app.ssfm.customized.widget
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator

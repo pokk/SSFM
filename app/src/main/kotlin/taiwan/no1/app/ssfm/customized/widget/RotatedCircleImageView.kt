@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.customized
+package taiwan.no1.app.ssfm.customized.widget
 
 import android.animation.ObjectAnimator
 import android.content.Context
@@ -45,7 +45,8 @@ open class RotatedCircleImageView: CircularImageView {
 
     fun init(context: Context, attrs: AttributeSet?, defStyleAttr: Int) {
         context.obtainStyledAttributes(attrs, R.styleable.RotatedCircleImageView, defStyleAttr, 0).also {
-            this.rotateTime = it.getInteger(R.styleable.RotatedCircleImageView_rotate_sec, ROTATE_TIME) * 1000L
+            this.rotateTime = it.getInteger(R.styleable.RotatedCircleImageView_rotate_sec,
+                ROTATE_TIME) * 1000L
         }.recycle()
 
         this.onClick {

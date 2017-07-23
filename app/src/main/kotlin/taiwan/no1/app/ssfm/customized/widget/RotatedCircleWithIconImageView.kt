@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.customized
+package taiwan.no1.app.ssfm.customized.widget
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.devrapid.kotlinknifer.getResColor
+import com.devrapid.kotlinknifer.logd
+import com.devrapid.kotlinknifer.logw
 import com.example.jieyi.test.TimeUtils
 import org.jetbrains.anko.*
 import taiwan.no1.app.ssfm.R
+import taiwan.no1.app.ssfm.customized.tool.PausableTimer
 import kotlin.properties.Delegates
 
 /**
@@ -63,9 +66,6 @@ class RotatedCircleWithIconImageView: ViewGroup {
         private set
     //endregion
 
-    //region Progress bar variables.
-    //endregion
-
     constructor(context: Context): super(context) {
         init(context, null, 0)
     }
@@ -78,12 +78,18 @@ class RotatedCircleWithIconImageView: ViewGroup {
         init(context, attrs, defStyle)
     }
 
+    val timer = PausableTimer(5000).apply {
+        onTick { t -> logd(t) }
+        onFinish { this@RotatedCircleWithIconImageView.rotatedCircleImageView.performClick() }
+    }
+
     fun init(context: Context, attrs: AttributeSet?, defStyle: Int) {
         context.obtainStyledAttributes(attrs, R.styleable.RotatedCircleWithIconImageView, defStyle, 0).also {
             this.src = it.getResourceId(R.styleable.RotatedCircleWithIconImageView_src, 0)
             this.foreIconInit = it.getInteger(R.styleable.RotatedCircleWithIconImageView_fore_icon, this.foreIconInit)
         }.recycle()
 
+        // Setting variables.
         this.startTime = 0
         this.endTime = temp_endtime
         this.rotatedCircleImageView = RotatedCircleImageView(context).apply {
@@ -91,17 +97,32 @@ class RotatedCircleWithIconImageView: ViewGroup {
             padding = INNER_PADDING
             setShadowRadius(0f)
             setBorderWidth(0f)
+            onClickEvent = {
+                this@RotatedCircleWithIconImageView.statusIcon.setImageResource(
+                    if (isPauseState) foreIconInit else foreIconClicked)
+
+                logw(isPauseState)
+                if (!isPauseState)
+                    timer.start()
+                else
+                    logd(timer.pause())
+            }
         }
-        this.circleSeekBar = (attrs?.let { CircularSeekBar(context, attrs, defStyle) } ?:
+        this.circleSeekBar = (attrs?.let {
+            CircularSeekBar(context,
+                attrs,
+                defStyle)
+        } ?:
             CircularSeekBar(context)).apply {
             padding = OUTER_PADDING
         }
+        // Add children view into this group.
         this.addView(this.circleSeekBar)
         this.addView(this.rotatedCircleImageView)
         this.statusIcon = imageView(this.foreIconInit)
         this.timeLabels = listOf(
             textView(TimeUtils.number2String(this.startTime)).apply {
-                textColor = getResColor(R.color.colorWhite)
+                textColor = getResColor(R.color.colorDarkGray)
             },
             textView(TimeUtils.number2String(this.endTime)).apply {
                 textColor = getResColor(R.color.colorDarkGray)
@@ -110,7 +131,6 @@ class RotatedCircleWithIconImageView: ViewGroup {
         this.currProgress = 0f
     }
 
-    @SuppressLint("DrawAllocation")
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         // Measure all of children's width & height.
         this.measureChildren(widthMeasureSpec, heightMeasureSpec)
@@ -121,6 +141,7 @@ class RotatedCircleWithIconImageView: ViewGroup {
             getDefaultSize(suggestedMinimumHeight, heightMeasureSpec))
     }
 
+    @SuppressLint("DrawAllocation")
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         val w = this.width
         val h = this.height
@@ -128,29 +149,36 @@ class RotatedCircleWithIconImageView: ViewGroup {
         (0 until this.childCount).forEach {
             val childW = this.getChildAt(it).measuredWidth
             val childH = this.getChildAt(it).measuredHeight
+            val px = pivotX.toInt()
+            val py = pivotX.toInt()
 
-            when (it) {
+            val (l, t, r, b) = when (it) {
             // Circular seek bar.
-                0 -> this.getChildAt(it).layout(0, 0, childW, childH)
+                0 -> Rect(0, 0, childW, childH)
             // 1: Inner image view and 2: Status icon.
-                1 -> this.getChildAt(it).layout(pivotX.toInt() - childW / 2 + INNER_PADDING,
-                    pivotY.toInt() - childH / 2 + INNER_PADDING,
-                    pivotX.toInt() + childW / 2 - INNER_PADDING,
-                    pivotY.toInt() + childH / 2 - INNER_PADDING)
-                2 -> this.getChildAt(it).layout(pivotX.toInt() - childW / 2,
-                    pivotY.toInt() - childH / 2,
-                    pivotX.toInt() + childW / 2,
-                    pivotY.toInt() + childH / 2)
+                1 -> Rect(px - childW / 2 + INNER_PADDING,
+                    py - childH / 2 + INNER_PADDING,
+                    px + childW / 2 - INNER_PADDING,
+                    py + childH / 2 - INNER_PADDING)
+                2 -> Rect(px - childW / 2,
+                    py - childH / 2,
+                    px + childW / 2,
+                    py + childH / 2)
             // Two text views.
-                3 -> this.getChildAt(it).layout(w / 4 - childW / 2,
+                3 -> Rect(w / 4 - childW / 2,
                     (h - childH - TEXT_OFFSET),
                     w / 4 + childW / 2,
                     (h - TEXT_OFFSET))
-                4 -> this.getChildAt(it).layout(w / 4 * 3 - childW / 2,
+                4 -> Rect(w / 4 * 3 - childW / 2,
                     (h - childH - TEXT_OFFSET),
                     w / 4 * 3 + childW / 2,
                     (h - TEXT_OFFSET))
+                else -> Rect(0, 0, 0, 0)
             }
+
+            this.getChildAt(it).layout(l, t, r, b)
         }
     }
+
+    data class Rect(val l: Int, val t: Int, val r: Int, val b: Int)
 }
