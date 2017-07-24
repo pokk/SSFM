@@ -1,7 +1,6 @@
 package taiwan.no1.app.ssfm.misc.utilies
 
 import android.os.CountDownTimer
-import com.devrapid.kotlinknifer.loge
 
 /**
  *
@@ -72,7 +71,6 @@ class PausableTimer(val millisInFuture: Long, val countDownInterval: Long = 1000
             override fun onTick(millisUntilFinished: Long) {
                 this@PausableTimer.curTime = millisUntilFinished
                 this@PausableTimer.ontick(millisUntilFinished)
-                loge(millisUntilFinished)
             }
 
             override fun onFinish() {

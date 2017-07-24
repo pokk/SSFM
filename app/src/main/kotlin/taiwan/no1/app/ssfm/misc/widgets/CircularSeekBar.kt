@@ -1,7 +1,6 @@
 package taiwan.no1.app.ssfm.misc.widgets
 
 import android.content.Context
-
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -15,6 +14,12 @@ import taiwan.no1.app.ssfm.R
  * @since   7/17/17
  */
 class CircularSeekBar: View {
+    var progress = 0
+        set (value) {
+            field = (value * this.rate).toInt()
+            this@CircularSeekBar.onProgressChanged?.let { it.invoke((field / this.rate).toInt()) }
+            invalidate()
+        }
     var progressColor = R.color.colorCoral
         set(value) {
             field = value
@@ -60,6 +65,7 @@ class CircularSeekBar: View {
             field = value
             postInv()
         }
+    var onProgressChanged: ((progress: Int) -> Unit)? = null
 
     private val unplayProgressPaint by lazy {
         Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -108,10 +114,6 @@ class CircularSeekBar: View {
     private var preX = 0f
     private var preY = 0f
     private var isVolumeUp = false
-    private var progress = 0
-        set (value) {
-            field = (value * this.rate).toInt()
-        }
     private var pos = floatArrayOf(0f, 0f)
     private var isInit = true
     private val postInv = {
@@ -147,18 +149,6 @@ class CircularSeekBar: View {
 
         this.isInit = true
     }
-
-    private fun calculateTouchDegree(posX: Float, posY: Float): Double {
-        val x = posX - pivotX.toDouble()
-        val y = posY - pivotY.toDouble()
-
-        var angle = Math.toDegrees(Math.atan2(y, x) - this.startDegree / 180 * Math.PI)
-        angle = (angle + 360) % 360
-
-        return if (angle >= this.sweepDegree) this.sweepDegree.toDouble() else angle
-    }
-
-    private fun calculateTouchProgress(angle: Double): Double = angle / this.sweepDegree * 100
 
     override fun onTouchEvent(e: MotionEvent): Boolean {
         when (e.action) {
@@ -215,4 +205,22 @@ class CircularSeekBar: View {
 
         canvas.drawCircle(this.pos[0], this.pos[1], this.btnRadius, this.controllerBtnPaint)
     }
+
+    override fun onDetachedFromWindow() {
+        this.onProgressChanged = null
+
+        super.onDetachedFromWindow()
+    }
+
+    private fun calculateTouchDegree(posX: Float, posY: Float): Double {
+        val x = posX - pivotX.toDouble()
+        val y = posY - pivotY.toDouble()
+
+        var angle = Math.toDegrees(Math.atan2(y, x) - this.startDegree / 180 * Math.PI)
+        angle = (angle + 360) % 360
+
+        return if (angle >= this.sweepDegree) this.sweepDegree.toDouble() else angle
+    }
+
+    private fun calculateTouchProgress(angle: Double): Double = angle / this.sweepDegree * 100
 }

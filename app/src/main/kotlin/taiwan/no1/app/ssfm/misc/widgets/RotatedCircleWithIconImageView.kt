@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.devrapid.kotlinknifer.getResColor
-import com.devrapid.kotlinknifer.logd
-import com.devrapid.kotlinknifer.logw
+import com.devrapid.kotlinknifer.logv
 import com.example.jieyi.test.TimeUtils
 import org.jetbrains.anko.*
 import taiwan.no1.app.ssfm.R
@@ -30,7 +29,7 @@ class RotatedCircleWithIconImageView: ViewGroup {
     }
 
     //region Test variable
-    var temp_endtime = 170
+    var temp_endtime = 20
     //endregion
 
     var src by Delegates.notNull<Int>()
@@ -40,7 +39,7 @@ class RotatedCircleWithIconImageView: ViewGroup {
         set(value) {
             field = value
             this.intervalRate = this.currProgress / this.interval
-            this.timeLabels[0].text = TimeUtils.number2String(field.toInt())
+            this.circleSeekBar.progress = field.toInt()
         }
     var startTime = START_TIME
         set(value) {
@@ -52,6 +51,21 @@ class RotatedCircleWithIconImageView: ViewGroup {
             field = value
             this.interval = this.endTime - this.startTime
         }
+    val timer by lazy {
+        PausableTimer(this.interval * 1000L).apply {
+            onTick { t ->
+                val time = (interval * 1000 - t)
+
+                this@RotatedCircleWithIconImageView.currProgress = time / (interval * 10).toFloat()
+                this@RotatedCircleWithIconImageView.timeLabels[0].text = TimeUtils.number2String((time / 1000).toInt())
+            }
+            onFinish {
+                this@RotatedCircleWithIconImageView.currProgress = 100F
+                this@RotatedCircleWithIconImageView.timeLabels[0].text = TimeUtils.number2String(this@RotatedCircleWithIconImageView.endTime)
+                this@RotatedCircleWithIconImageView.rotatedCircleImageView.performClick()
+            }
+        }
+    }
     var interval by Delegates.notNull<Int>()
     var intervalRate by Delegates.notNull<Float>()
 
@@ -78,11 +92,6 @@ class RotatedCircleWithIconImageView: ViewGroup {
         init(context, attrs, defStyle)
     }
 
-    val timer = PausableTimer(5000).apply {
-        onTick { t -> logd(t) }
-        onFinish { this@RotatedCircleWithIconImageView.rotatedCircleImageView.performClick() }
-    }
-
     fun init(context: Context, attrs: AttributeSet?, defStyle: Int) {
         context.obtainStyledAttributes(attrs, R.styleable.RotatedCircleWithIconImageView, defStyle, 0).also {
             this.src = it.getResourceId(R.styleable.RotatedCircleWithIconImageView_src, 0)
@@ -101,20 +110,18 @@ class RotatedCircleWithIconImageView: ViewGroup {
                 this@RotatedCircleWithIconImageView.statusIcon.setImageResource(
                     if (isPauseState) foreIconInit else foreIconClicked)
 
-                logw(isPauseState)
                 if (!isPauseState)
                     timer.start()
                 else
-                    logd(timer.pause())
+                    timer.pause()
             }
         }
-        this.circleSeekBar = (attrs?.let {
-            CircularSeekBar(context,
-                attrs,
-                defStyle)
-        } ?:
+        this.circleSeekBar = (attrs?.let { CircularSeekBar(context, attrs, defStyle) } ?:
             CircularSeekBar(context)).apply {
             padding = OUTER_PADDING
+            onProgressChanged = {
+                logv(it)
+            }
         }
         // Add children view into this group.
         this.addView(this.circleSeekBar)
