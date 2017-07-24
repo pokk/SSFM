@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.customized.widget
+package taiwan.no1.app.ssfm.misc.widgets
 
 import android.content.Context
 import android.support.annotation.DrawableRes

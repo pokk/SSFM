@@ -1,6 +1,6 @@
 package taiwan.no1.app.ssfm.pattern.state
 
-import taiwan.no1.app.ssfm.customized.widget.PlayerControllerLayout
+import taiwan.no1.app.ssfm.misc.widgets.PlayerControllerLayout
 
 /**
  *

@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.customized.widget
+package taiwan.no1.app.ssfm.misc.widgets
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -12,7 +12,7 @@ import com.devrapid.kotlinknifer.logw
 import com.example.jieyi.test.TimeUtils
 import org.jetbrains.anko.*
 import taiwan.no1.app.ssfm.R
-import taiwan.no1.app.ssfm.customized.tool.PausableTimer
+import taiwan.no1.app.ssfm.misc.utilies.PausableTimer
 import kotlin.properties.Delegates
 
 /**

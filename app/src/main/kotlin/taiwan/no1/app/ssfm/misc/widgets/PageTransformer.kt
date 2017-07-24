@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.customized.widget
+package taiwan.no1.app.ssfm.misc.widgets
 
 import android.support.v4.view.ViewPager
 import android.view.View
