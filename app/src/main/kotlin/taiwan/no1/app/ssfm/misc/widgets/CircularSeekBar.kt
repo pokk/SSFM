@@ -66,6 +66,8 @@ class CircularSeekBar: View {
             postInv()
         }
     var onProgressChanged: ((progress: Int) -> Unit)? = null
+    var isTouchButton = false
+        private set
 
     private val unplayProgressPaint by lazy {
         Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -110,7 +112,6 @@ class CircularSeekBar: View {
         set(value) {
             field = this.sweepDegree / 100f
         }
-    private var isTouchButton = false
     private var preX = 0f
     private var preY = 0f
     private var isVolumeUp = false

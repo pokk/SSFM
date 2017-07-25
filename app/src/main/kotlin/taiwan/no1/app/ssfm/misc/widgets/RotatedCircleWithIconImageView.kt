@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.devrapid.kotlinknifer.getResColor
-import com.devrapid.kotlinknifer.logv
 import com.example.jieyi.test.TimeUtils
 import org.jetbrains.anko.*
 import taiwan.no1.app.ssfm.R
@@ -28,8 +27,6 @@ class RotatedCircleWithIconImageView: ViewGroup {
         private const val START_TIME = 0
     }
 
-    // TODO(jieyi): 7/25/17 要同步移動bar 跟 start的時後要確定現在的progress 跟 bar沒辦法到100%
-
     //region Test variable
     var temp_endtime = 20
     //endregion
@@ -41,7 +38,7 @@ class RotatedCircleWithIconImageView: ViewGroup {
         set(value) {
             field = value
             this.intervalRate = this.currProgress / this.interval
-            this.circleSeekBar.progress = field.toInt()
+//            this.circleSeekBar.progress = field.toInt()
         }
     var startTime = START_TIME
         set(value) {
@@ -58,7 +55,9 @@ class RotatedCircleWithIconImageView: ViewGroup {
             onTick { t ->
                 val time = (interval * 1000 - t)
 
+//                this@RotatedCircleWithIconImageView.circleSeekBar.progress = (time / (interval * 10)).toInt()
                 this@RotatedCircleWithIconImageView.currProgress = time / (interval * 10).toFloat()
+                this@RotatedCircleWithIconImageView.circleSeekBar.progress = currProgress.toInt()
                 this@RotatedCircleWithIconImageView.timeLabels[0].text = TimeUtils.number2String((time / 1000).toInt())
             }
             onFinish {
@@ -122,7 +121,10 @@ class RotatedCircleWithIconImageView: ViewGroup {
             CircularSeekBar(context)).apply {
             padding = OUTER_PADDING
             onProgressChanged = {
-                logv(it)
+                this@RotatedCircleWithIconImageView.currProgress = (it * this@RotatedCircleWithIconImageView.interval).toFloat()
+                if (this@RotatedCircleWithIconImageView.circleSeekBar.isTouchButton) {
+                    this@RotatedCircleWithIconImageView.circleSeekBar.progress = currProgress.toInt()
+                }
                 this@RotatedCircleWithIconImageView.timeLabels[0].text = TimeUtils.number2String(it * endTime / 100)
             }
         }
@@ -136,7 +138,6 @@ class RotatedCircleWithIconImageView: ViewGroup {
             },
             textView(TimeUtils.number2String(this.endTime)).apply {
                 textColor = getResColor(R.color.colorDarkGray)
-
             })
         this.currProgress = 0f
     }
