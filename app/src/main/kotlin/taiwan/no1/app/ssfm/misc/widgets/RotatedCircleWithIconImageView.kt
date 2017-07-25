@@ -28,6 +28,8 @@ class RotatedCircleWithIconImageView: ViewGroup {
         private const val START_TIME = 0
     }
 
+    // TODO(jieyi): 7/25/17 要同步移動bar 跟 start的時後要確定現在的progress 跟 bar沒辦法到100%
+
     //region Test variable
     var temp_endtime = 20
     //endregion
@@ -121,6 +123,7 @@ class RotatedCircleWithIconImageView: ViewGroup {
             padding = OUTER_PADDING
             onProgressChanged = {
                 logv(it)
+                this@RotatedCircleWithIconImageView.timeLabels[0].text = TimeUtils.number2String(it * endTime / 100)
             }
         }
         // Add children view into this group.
