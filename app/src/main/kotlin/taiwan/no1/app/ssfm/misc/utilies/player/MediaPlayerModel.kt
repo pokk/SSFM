@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.models
+package taiwan.no1.app.ssfm.misc.utilies.player
 
 import android.media.MediaPlayer
 import com.devrapid.kotlinknifer.logd
@@ -10,10 +10,9 @@ import com.devrapid.kotlinknifer.logi
  * Created by weian on 2017/6/18.
  */
 
-class MediaPlayerModel: IMultiMediaPlayer,
-        MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener {
+class MediaPlayerModel: IMultiMediaPlayer, MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener {
 
-    private var mMediaPlayer: MediaPlayer ?= null
+    private var mMediaPlayer: MediaPlayer? = null
     private var mState: IPlayerHandler.EPlayerState = IPlayerHandler.EPlayerState.EPlayerState_Stop
 
     init {
@@ -75,28 +74,22 @@ class MediaPlayerModel: IMultiMediaPlayer,
 
     override fun duration(): Int {
         logd("get duration of media")
-        return this.mMediaPlayer?.let {
-            it.duration.div(1000)
-        } ?: -1
+        return this.mMediaPlayer?.let { it.duration.div(1000) } ?: -1
     }
 
     override fun isReplay(): Boolean {
-        logd("is replay: " + if (this.mMediaPlayer?.isLooping ?: false)
-            "true" else "false")
+        logd("is replay: " + if (this.mMediaPlayer?.isLooping ?: false) "true" else "false")
         return this.mMediaPlayer?.isLooping ?: false
     }
 
     override fun isPlaying(): Boolean {
-        logd("is playing: " + if (this.mMediaPlayer?.isPlaying ?: false)
-            " true" else " false")
+        logd("is playing: " + if (this.mMediaPlayer?.isPlaying ?: false) " true" else " false")
         return this.mMediaPlayer?.isPlaying ?: false
     }
 
     override fun current(): Int {
         logi("current time")
-        return this.mMediaPlayer?.let {
-            it.currentPosition.div(1000)
-        } ?: 0
+        return this.mMediaPlayer?.let { it.currentPosition.div(1000) } ?: 0
     }
 
     override fun getState(): IPlayerHandler.EPlayerState {

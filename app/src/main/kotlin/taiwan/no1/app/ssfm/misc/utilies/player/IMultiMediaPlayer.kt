@@ -1,4 +1,6 @@
-package taiwan.no1.app.ssfm.mvvm.models
+package taiwan.no1.app.ssfm.misc.utilies.player
+
+import taiwan.no1.app.ssfm.misc.utilies.player.IPlayerHandler.EPlayerState
 
 /**
  * For controlling multi-media player
@@ -16,5 +18,5 @@ interface IMultiMediaPlayer {
     fun duration(): Int
     fun isReplay(): Boolean
     fun isPlaying(): Boolean
-    fun getState(): IPlayerHandler.EPlayerState
+    fun getState(): EPlayerState
 }

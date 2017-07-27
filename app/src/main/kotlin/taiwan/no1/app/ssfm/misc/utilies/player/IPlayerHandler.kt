@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.models
+package taiwan.no1.app.ssfm.misc.utilies.player
 
 /**
  * For controlling multi-media player and playlist.

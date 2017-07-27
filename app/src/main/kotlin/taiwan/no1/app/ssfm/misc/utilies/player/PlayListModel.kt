@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.models
+package taiwan.no1.app.ssfm.misc.utilies.player
 
 import java.util.*
 
@@ -9,7 +9,6 @@ import java.util.*
  */
 
 class PlayListModel: IPlayList {
-
     private var mTotal: Int = 0
     private var mCurrentIndex: Int = -1
     private var mPrevious: Stack<Int> = Stack()
@@ -18,15 +17,17 @@ class PlayListModel: IPlayList {
     private var misLoopAll: Boolean = false
 
     private fun getNextIndex(): Int {
-        var index: Int = -1
+        val maps = mapOf(
+            Pair({ this.misRandom }, (Math.random() * this.mTotal).toInt()),
+            Pair({ this.misLoopOne }, this.mCurrentIndex),
+            Pair({ this.misLoopAll }, (this.mCurrentIndex + 1).rem(this.mTotal)))
+        var index = -1
 
-        // FIXME: too ugly
-        if (this.misRandom) {
-            index = (Math.random() * this.mTotal).toInt()
-        } else if (this.misLoopOne) {
-            index = mCurrentIndex
-        } else if (this.misLoopAll) {
-            index = (mCurrentIndex + 1).rem(this.mTotal)
+        maps.forEach { (c, r) ->
+            if (c()) {
+                index = r
+                return@forEach
+            }
         }
 
         return index
@@ -38,14 +39,16 @@ class PlayListModel: IPlayList {
 
     override fun nowPlaying(): Int = mCurrentIndex
 
-    override fun previous():Int {
-        this.mCurrentIndex  = this.mPrevious.pop()
+    override fun previous(): Int {
+        this.mCurrentIndex = this.mPrevious.pop()
+
         return this.mCurrentIndex
     }
 
     override fun next(): Int {
         this.mPrevious.push(this.mCurrentIndex)
         this.mCurrentIndex = this.getNextIndex()
+
         return this.mCurrentIndex
     }
 

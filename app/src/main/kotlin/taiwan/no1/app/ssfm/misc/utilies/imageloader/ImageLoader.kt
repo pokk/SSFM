@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.misc.utilies.ImageLoader
+package taiwan.no1.app.ssfm.misc.utilies.imageloader
 
 /**
  * Third-party image loader utils.
