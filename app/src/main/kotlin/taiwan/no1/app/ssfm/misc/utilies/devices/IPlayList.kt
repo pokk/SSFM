@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.misc.utilies.player
+package taiwan.no1.app.ssfm.misc.utilies.devices
 
 /**
  * for handling music list.

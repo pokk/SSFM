@@ -1,6 +1,6 @@
-package taiwan.no1.app.ssfm.misc.utilies.player
+package taiwan.no1.app.ssfm.misc.utilies.devices
 
-import taiwan.no1.app.ssfm.misc.utilies.player.IPlayerHandler.EPlayerState
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPlayerState
 
 /**
  * For controlling multi-media player

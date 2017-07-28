@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.misc.utilies.player
+package taiwan.no1.app.ssfm.misc.utilies.devices
 
 import android.media.MediaPlayer
 import com.devrapid.kotlinknifer.logd
@@ -10,8 +10,7 @@ import com.devrapid.kotlinknifer.logi
  * Created by weian on 2017/6/18.
  */
 
-class MediaPlayerModel: IMultiMediaPlayer, MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener {
-
+class MediaPlayerProxy: IMultiMediaPlayer, MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener {
     private var mMediaPlayer: MediaPlayer? = null
     private var mState: IPlayerHandler.EPlayerState = IPlayerHandler.EPlayerState.EPlayerState_Stop
 
@@ -20,7 +19,6 @@ class MediaPlayerModel: IMultiMediaPlayer, MediaPlayer.OnPreparedListener, Media
         this.mMediaPlayer?.setOnPreparedListener(this)
         this.mMediaPlayer?.setOnErrorListener(this)
     }
-
 
     override fun onPrepared(mp: MediaPlayer?) {
         logd("start playing")
@@ -35,7 +33,6 @@ class MediaPlayerModel: IMultiMediaPlayer, MediaPlayer.OnPreparedListener, Media
     /**
      * API
      */
-
     override fun play(uri: String) {
         this.mMediaPlayer?.let {
             logd("prepare asynchronous thread")

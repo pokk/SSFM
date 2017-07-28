@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.misc.utilies.player
+package taiwan.no1.app.ssfm.misc.utilies.devices
 
 import java.util.*
 
@@ -21,16 +21,12 @@ class PlayListModel: IPlayList {
             Pair({ this.misRandom }, (Math.random() * this.mTotal).toInt()),
             Pair({ this.misLoopOne }, this.mCurrentIndex),
             Pair({ this.misLoopAll }, (this.mCurrentIndex + 1).rem(this.mTotal)))
-        var index = -1
 
-        maps.forEach { (c, r) ->
-            if (c()) {
-                index = r
-                return@forEach
-            }
+        return run {
+            maps.forEach { (c, r) -> if (c()) return@run r }
+            // else
+            -1
         }
-
-        return index
     }
 
     override fun setList(total: Int) {

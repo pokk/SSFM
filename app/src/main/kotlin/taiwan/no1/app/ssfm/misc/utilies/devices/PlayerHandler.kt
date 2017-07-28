@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.misc.utilies.player
+package taiwan.no1.app.ssfm.misc.utilies.devices
 
 /**
  * for controlling media player
@@ -8,7 +8,7 @@ package taiwan.no1.app.ssfm.misc.utilies.player
 
 class PlayerHandler: IPlayerHandler {
     private var mPlayIndex: IPlayList = PlayListModel()
-    private var mPlayer: IMultiMediaPlayer = MediaPlayerModel()
+    private var mPlayer: IMultiMediaPlayer = MediaPlayerProxy()
     private var mPlayList: Array<String> = arrayOf()
 
     override fun play() {

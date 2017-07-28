@@ -64,7 +64,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // My own tool library
-    compile "com.devrapid.jieyi:kotlinknifer:1.0.8"
+    compile "com.devrapid.jieyi:kotlinknifer:1.0.9"
     /* For language */
     // Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
