@@ -7,7 +7,7 @@ import android.os.CountDownTimer
  * @author  jieyi
  * @since   7/23/17
  */
-class PausableTimer(val millisInFuture: Long, val countDownInterval: Long = 1000) {
+class PausableTimer(val millisInFuture: Long = -1, val countDownInterval: Long = 1000) {
     var isPause = false
     var isStart = false
     var curTime = 0L
@@ -16,7 +16,8 @@ class PausableTimer(val millisInFuture: Long, val countDownInterval: Long = 1000
     var onfinish: () -> Unit = {}
 
     init {
-        this.init(this.millisInFuture, this.countDownInterval)
+        val millisTime = if (-1L == this.millisInFuture) Long.MAX_VALUE else this.millisInFuture
+        this.init(millisTime, this.countDownInterval)
     }
 
     fun onTick(block: (millisUntilFinished: Long) -> Unit) {

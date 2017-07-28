@@ -1,5 +1,7 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices
 
+import taiwan.no1.app.ssfm.misc.utilies.PausableTimer
+
 /**
  * for controlling media player
  *
@@ -10,9 +12,15 @@ class PlayerHandler: IPlayerHandler {
     private var mPlayIndex: IPlayList = PlayListModel()
     private var mPlayer: IMultiMediaPlayer = MediaPlayerProxy()
     private var mPlayList: Array<String> = arrayOf()
+    private val timer by lazy { PausableTimer() }
 
     override fun play() {
-        this.mPlayer.takeIf { it.isPlaying() }?.play(this.mPlayList[this.mPlayIndex.nowPlaying()])
+        // TODO(jieyi): 7/28/17 Let callback function run by using timer.
+        if (this.mPlayer.isPlaying()) {
+            this.timer.start()
+            this.mPlayer.play(this.mPlayList[this.mPlayIndex.nowPlaying()])
+        }
+//        this.mPlayer.takeIf { it.isPlaying() }?.play(this.mPlayList[this.mPlayIndex.nowPlaying()])
     }
 
     override fun stop() {
