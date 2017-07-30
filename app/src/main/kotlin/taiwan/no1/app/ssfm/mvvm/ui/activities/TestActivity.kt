@@ -3,9 +3,9 @@ package taiwan.no1.app.ssfm.mvvm.ui.activities
 //import android.app.Activity
 import android.os.Bundle
 import com.devrapid.kotlinknifer.logw
+import kotlinx.android.synthetic.main.sample_button.*
+import org.jetbrains.anko.sdk25.coroutines.onClick
 import taiwan.no1.app.ssfm.R
-import taiwan.no1.app.ssfm.misc.utilies.PausableTimer
-import taiwan.no1.app.ssfm.misc.utilies.devices.MediaPlayerProxy
 import taiwan.no1.app.ssfm.mvvm.ui.BaseActivity
 
 
@@ -23,16 +23,8 @@ class TestActivity: BaseActivity() {
     override fun onResume() {
         super.onResume()
 
-//        btn.rotatedCircleImageView.imageResource = R.drawable.sample_jieyi_icon
-        val mediaplayer = MediaPlayerProxy().apply {
-            play("http://fs.web.kugou.com/510fd09bac3950bc0905ea074627d3eb/597b16e5/G007/M06/1B/18/p4YBAFS7O62AMdAgAD1iMghMan8590.mp3")
-        }
-
-        val timer = PausableTimer(100000, 1000).apply {
-            onTick {
-                logw(mediaplayer.current(), mediaplayer.duration())
-                logw(mediaplayer.isPlaying())
-            }
-        }.start()
+        ttt.onClick { logw("let's go!!!") }
+        btn.onClick { ttt.playAnimator(5) }
+        btns.onClick { ttt.stopAnimator() }
     }
 }

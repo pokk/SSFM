@@ -57,7 +57,7 @@ class RotatedCircleWithIconImageView: ViewGroup {
 
 //                this@RotatedCircleWithIconImageView.circleSeekBar.progress = (time / (interval * 10)).toInt()
                 this@RotatedCircleWithIconImageView.currProgress = time / (interval * 10).toFloat()
-                this@RotatedCircleWithIconImageView.circleSeekBar.progress = currProgress.toInt()
+                this@RotatedCircleWithIconImageView.circleSeekBar.progress = currProgress.toDouble()
                 this@RotatedCircleWithIconImageView.timeLabels[0].text = TimeUtils.number2String((time / 1000).toInt())
             }
             onFinish {
@@ -123,7 +123,7 @@ class RotatedCircleWithIconImageView: ViewGroup {
             onProgressChanged = {
                 this@RotatedCircleWithIconImageView.currProgress = (it * this@RotatedCircleWithIconImageView.interval).toFloat()
                 if (this@RotatedCircleWithIconImageView.circleSeekBar.isTouchButton) {
-                    this@RotatedCircleWithIconImageView.circleSeekBar.progress = currProgress.toInt()
+                    this@RotatedCircleWithIconImageView.circleSeekBar.progress = currProgress.toDouble()
                 }
                 this@RotatedCircleWithIconImageView.timeLabels[0].text = TimeUtils.number2String(it * endTime / 100)
             }

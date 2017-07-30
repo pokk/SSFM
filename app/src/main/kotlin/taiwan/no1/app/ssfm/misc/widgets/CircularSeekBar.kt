@@ -1,10 +1,12 @@
 package taiwan.no1.app.ssfm.misc.widgets
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import android.view.animation.LinearInterpolator
 import com.devrapid.kotlinknifer.getResColor
 import taiwan.no1.app.ssfm.R
 
@@ -14,9 +16,9 @@ import taiwan.no1.app.ssfm.R
  * @since   7/17/17
  */
 class CircularSeekBar: View {
-    var progress = 0
+    var progress = .0
         set (value) {
-            field = (value * this.rate).toInt()
+            field = value * this.rate
             this@CircularSeekBar.onProgressChanged?.let { it.invoke((field / this.rate).toInt()) }
             invalidate()
         }
@@ -117,10 +119,13 @@ class CircularSeekBar: View {
     private var isVolumeUp = false
     private var pos = floatArrayOf(0f, 0f)
     private var isInit = true
+    private var isAnimationRunning = false
     private val postInv = {
-        if (this.isInit)
+        if (this.isInit) {
             this.invalidate()
+        }
     }
+    lateinit private var animatorPlay: ValueAnimator
 
     constructor(context: Context): super(context) {
         this.init(context, null, 0)
@@ -141,7 +146,7 @@ class CircularSeekBar: View {
             this.progressColor = it.getColor(R.styleable.CircularSeekBar_progress_color, this.progressColor)
             this.unprogressColor = it.getColor(R.styleable.CircularSeekBar_unprogress_color, this.unprogressColor)
             this.progressWidth = it.getFloat(R.styleable.CircularSeekBar_progress_width, this.progressWidth)
-            this.progress = it.getInteger(R.styleable.CircularSeekBar_progress, this.progress)
+            this.progress = it.getInteger(R.styleable.CircularSeekBar_progress, this.progress.toInt()).toDouble()
             this.btnColor = it.getColor(R.styleable.CircularSeekBar_controller_color, this.btnColor)
             this.pressBtnColor = it.getColor(R.styleable.CircularSeekBar_unpress_controller_color,
                 this.pressBtnColor)
@@ -174,14 +179,24 @@ class CircularSeekBar: View {
                     return false
                 }
 
+                if (this.animatorPlay.isRunning) {
+                    this.isAnimationRunning = true
+                    this.stopAnimator()
+                }
+
                 this.isVolumeUp = down_degree < degree
-                this.progress = this.calculateTouchProgress(degree).toInt()
+                this.progress = this.calculateTouchProgress(degree)
 
                 this.invalidate()
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 this.isTouchButton = false
                 this.controllerBtnPaint.color = getResColor(this.btnColor)
+                if (this.isAnimationRunning) {
+                    // TODO(jieyi): 7/30/17 Here would be duration according to current progress.
+                    this.playAnimator(5)
+                    this.isAnimationRunning = false
+                }
             }
         }
         this.preX = e.x
@@ -197,12 +212,12 @@ class CircularSeekBar: View {
     override fun onDraw(canvas: Canvas) {
         canvas.drawArc(this.rectF,
             this.startDegree + this.sweepDegree,
-            -this.sweepDegree + this.progress,
+            (-this.sweepDegree + this.progress).toFloat(),
             false,
             this.unplayProgressPaint)
-        canvas.drawArc(this.rectF, this.startDegree, 0f + this.progress, false, this.playedProgressPaint)
+        canvas.drawArc(this.rectF, this.startDegree, (0f + this.progress).toFloat(), false, this.playedProgressPaint)
 
-        this.pm.getPosTan(this.pm.length / 100 * this.progress / this.rate, this.pos, null)
+        this.pm.getPosTan((this.pm.length / 100 * this.progress / this.rate).toFloat(), this.pos, null)
 
         canvas.drawCircle(this.pos[0], this.pos[1], this.btnRadius, this.controllerBtnPaint)
     }
@@ -212,6 +227,21 @@ class CircularSeekBar: View {
 
         super.onDetachedFromWindow()
     }
+
+    fun playAnimator(secondDuration: Long) {
+        this.animatorPlay = ValueAnimator.ofFloat(
+            (this@CircularSeekBar.progress / this@CircularSeekBar.rate).toFloat(), 100f).apply {
+            duration = secondDuration * 1000
+            interpolator = LinearInterpolator()
+            addUpdateListener {
+                val value = it.animatedValue as Float
+                this@CircularSeekBar.progress = value.toDouble()
+            }
+            start()
+        }
+    }
+
+    fun stopAnimator() = this.animatorPlay.cancel()
 
     private fun calculateTouchDegree(posX: Float, posY: Float): Double {
         val x = posX - pivotX.toDouble()
