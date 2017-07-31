@@ -8,6 +8,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.LinearInterpolator
 import com.devrapid.kotlinknifer.getResColor
+import com.devrapid.kotlinknifer.iff
 import taiwan.no1.app.ssfm.R
 
 /**
@@ -19,7 +20,14 @@ class CircularSeekBar: View {
     var progress = .0
         set (value) {
             field = value * this.rate
-            this@CircularSeekBar.onProgressChanged?.let { it.invoke((field / this.rate).toInt()) }
+            val rawValue = (field / this.rate).toInt()
+            this@CircularSeekBar.onProgressChanged?.let {
+                {
+                    it.invoke(rawValue,
+                        this@CircularSeekBar.remainedTime.toInt())
+                } iff (rawValue != this@CircularSeekBar.tempProgress)
+            }
+            this@CircularSeekBar.tempProgress = rawValue
             invalidate()
         }
     var progressColor = R.color.colorCoral
@@ -67,7 +75,7 @@ class CircularSeekBar: View {
             field = value
             postInv()
         }
-    var onProgressChanged: ((progress: Int) -> Unit)? = null
+    var onProgressChanged: ((progress: Int, remainedTime: Int) -> Unit)? = null
     var isTouchButton = false
         private set
 
@@ -120,11 +128,9 @@ class CircularSeekBar: View {
     private var pos = floatArrayOf(0f, 0f)
     private var isInit = true
     private var isAnimationRunning = false
-    private val postInv = {
-        if (this.isInit) {
-            this.invalidate()
-        }
-    }
+    private var tempProgress = -1
+    private var remainedTime = 0L
+    private val postInv = { { this.invalidate() } iff this.isInit }
     lateinit private var animatorPlay: ValueAnimator
 
     constructor(context: Context): super(context) {
@@ -235,6 +241,7 @@ class CircularSeekBar: View {
             interpolator = LinearInterpolator()
             addUpdateListener {
                 val value = it.animatedValue as Float
+                this@CircularSeekBar.remainedTime = secondDuration - it.currentPlayTime / 1000
                 this@CircularSeekBar.progress = value.toDouble()
             }
             start()

@@ -2,7 +2,6 @@ package taiwan.no1.app.ssfm.mvvm.ui.activities
 
 //import android.app.Activity
 import android.os.Bundle
-import com.devrapid.kotlinknifer.logw
 import kotlinx.android.synthetic.main.sample_button.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import taiwan.no1.app.ssfm.R
@@ -23,8 +22,12 @@ class TestActivity: BaseActivity() {
     override fun onResume() {
         super.onResume()
 
-        ttt.onClick { logw("let's go!!!") }
-        btn.onClick { ttt.playAnimator(5) }
-        btns.onClick { ttt.stopAnimator() }
+//        ttt.onClick { logw("let's go!!!") }
+        btn.onClick { }
+        btns.onClick { }
+//
+//        ttt.onProgressChanged = {
+//            logw(it)
+//        }
     }
 }

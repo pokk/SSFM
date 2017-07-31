@@ -10,7 +10,6 @@ import com.devrapid.kotlinknifer.getResColor
 import com.example.jieyi.test.TimeUtils
 import org.jetbrains.anko.*
 import taiwan.no1.app.ssfm.R
-import taiwan.no1.app.ssfm.misc.utilies.PausableTimer
 import kotlin.properties.Delegates
 
 /**
@@ -50,23 +49,7 @@ class RotatedCircleWithIconImageView: ViewGroup {
             field = value
             this.interval = this.endTime - this.startTime
         }
-    val timer by lazy {
-        PausableTimer(this.interval * 1000L).apply {
-            onTick { t ->
-                val time = (interval * 1000 - t)
-
-//                this@RotatedCircleWithIconImageView.circleSeekBar.progress = (time / (interval * 10)).toInt()
-                this@RotatedCircleWithIconImageView.currProgress = time / (interval * 10).toFloat()
-                this@RotatedCircleWithIconImageView.circleSeekBar.progress = currProgress.toDouble()
-                this@RotatedCircleWithIconImageView.timeLabels[0].text = TimeUtils.number2String((time / 1000).toInt())
-            }
-            onFinish {
-                this@RotatedCircleWithIconImageView.currProgress = 100F
-                this@RotatedCircleWithIconImageView.timeLabels[0].text = TimeUtils.number2String(this@RotatedCircleWithIconImageView.endTime)
-                this@RotatedCircleWithIconImageView.rotatedCircleImageView.performClick()
-            }
-        }
-    }
+    var remainedTime = temp_endtime
     var interval by Delegates.notNull<Int>()
     var intervalRate by Delegates.notNull<Float>()
 
@@ -112,20 +95,23 @@ class RotatedCircleWithIconImageView: ViewGroup {
                     if (isPauseState) foreIconInit else foreIconClicked)
 
                 if (!isPauseState)
-                    timer.start()
+                    this@RotatedCircleWithIconImageView.circleSeekBar.playAnimator(this@RotatedCircleWithIconImageView.remainedTime.toLong())
                 else
-                    timer.pause()
+                    this@RotatedCircleWithIconImageView.circleSeekBar.stopAnimator()
+                isPauseState.not()
             }
         }
         this.circleSeekBar = (attrs?.let { CircularSeekBar(context, attrs, defStyle) } ?:
             CircularSeekBar(context)).apply {
             padding = OUTER_PADDING
-            onProgressChanged = {
-                this@RotatedCircleWithIconImageView.currProgress = (it * this@RotatedCircleWithIconImageView.interval).toFloat()
-                if (this@RotatedCircleWithIconImageView.circleSeekBar.isTouchButton) {
-                    this@RotatedCircleWithIconImageView.circleSeekBar.progress = currProgress.toDouble()
-                }
-                this@RotatedCircleWithIconImageView.timeLabels[0].text = TimeUtils.number2String(it * endTime / 100)
+            onProgressChanged = { progress, time ->
+                // FIXME(jieyi): 8/1/17 防止連按的時候，時間都不會更變
+                this@RotatedCircleWithIconImageView.remainedTime = time
+//                this@RotatedCircleWithIconImageView.currProgress = (it * this@RotatedCircleWithIconImageView.interval).toFloat()
+//                if (this@RotatedCircleWithIconImageView.circleSeekBar.isTouchButton) {
+//                    this@RotatedCircleWithIconImageView.circleSeekBar.progress = currProgress.toDouble()
+//                }
+//                this@RotatedCircleWithIconImageView.timeLabels[0].text = TimeUtils.number2String(it * endTime / 100)
             }
         }
         // Add children view into this group.
