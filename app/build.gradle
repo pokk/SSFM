@@ -18,13 +18,14 @@ android {
         renderscriptTargetApi 19
         renderscriptSupportModeEnabled true    // Enable RS support
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField "long", "BUILD_TIMESTAMP", project.hasProperty("devBuild") ? "000000000" : System.currentTimeMillis() + "L"
     }
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
+            signingConfig signingConfigs.debug
             ext.alwaysUpdateBuildId = false
         }
     }
@@ -58,13 +59,24 @@ android {
         splits.abi.enable = false
         splits.density.enable = false
     }
+    flavorDimensions "default"
+    productFlavors {
+        development {
+            minSdkVersion 21
+            dimension "default"
+            resConfigs("en", "xxhdpi")
+        }
+        production {
+            dimension "default"
+        }
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // My own tool library
-    compile "com.devrapid.jieyi:kotlinknifer:1.0.8"
+    compile "com.devrapid.jieyi:kotlinknifer:1.0.12"
     /* For language */
     // Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
