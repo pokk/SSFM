@@ -104,16 +104,15 @@ class RotatedCircleWithIconImageView: ViewGroup {
         }
         this.circleSeekBar = (attrs?.let { CircularSeekBar(context, attrs, defStyle) } ?:
             CircularSeekBar(context)).apply {
+            totalTime = this@RotatedCircleWithIconImageView.endTime
             padding = OUTER_PADDING
             onProgressChanged = { progress, remainedTime ->
-                val accordingProcessTime = endTime - progress * endTime / 100
+                val passedTime = this@RotatedCircleWithIconImageView.endTime - remainedTime
+                val accordingProcessTime = endTime - progress * this@RotatedCircleWithIconImageView.endTime / 100
+
                 this@RotatedCircleWithIconImageView.remainedTime = remainedTime
                 { this@RotatedCircleWithIconImageView.remainedTime = accordingProcessTime } iff (accordingProcessTime != remainedTime)
-//                this@RotatedCircleWithIconImageView.currProgress = (it * this@RotatedCircleWithIconImageView.interval).toFloat()
-//                if (this@RotatedCircleWithIconImageView.circleSeekBar.isTouchButton) {
-//                    this@RotatedCircleWithIconImageView.circleSeekBar.progress = currProgress.toDouble()
-//                }
-//                this@RotatedCircleWithIconImageView.timeLabels[0].text = TimeUtils.number2String(it * endTime / 100)
+                this@RotatedCircleWithIconImageView.timeLabels[0].text = TimeUtils.number2String(passedTime)
             }
         }
         // Add children view into this group.

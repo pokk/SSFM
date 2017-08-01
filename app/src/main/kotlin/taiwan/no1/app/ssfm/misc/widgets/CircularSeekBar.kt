@@ -17,17 +17,26 @@ import taiwan.no1.app.ssfm.R
  * @since   7/17/17
  */
 class CircularSeekBar: View {
+    companion object {
+        private const val MAX_VALUE = 100f
+    }
+
+    //region Variables for setting from the user
     var progress = .0
         set (value) {
             field = value * this.rate
             val rawValue = (field / this.rate).toInt()
-            this@CircularSeekBar.onProgressChanged?.let {
-                {
-                    it.invoke(rawValue,
-                        this@CircularSeekBar.remainedTime.toInt())
-                } iff (rawValue != this@CircularSeekBar.tempProgress)
+
+            if (this@CircularSeekBar.isTouchButton) {
+                this@CircularSeekBar.remainedTime = (this@CircularSeekBar.totalTime - rawValue * this@CircularSeekBar.totalTime / 100).toLong()
             }
-            this@CircularSeekBar.tempProgress = rawValue
+            onProgressChanged?.let {
+                if (rawValue != this@CircularSeekBar.tempProgress) {
+                    it.invoke(rawValue, this@CircularSeekBar.remainedTime.toInt())
+                }
+            }
+            if (MAX_VALUE.toInt() == rawValue)
+                tempProgress = rawValue
             invalidate()
         }
     var progressColor = R.color.colorCoral
@@ -75,10 +84,14 @@ class CircularSeekBar: View {
             field = value
             postInv()
         }
+    var totalTime = 0
     var onProgressChanged: ((progress: Int, remainedTime: Int) -> Unit)? = null
+    var onProgressFinished: () -> Unit = {}
     var isTouchButton = false
         private set
+    //endregion
 
+    //region Private variables
     private val unplayProgressPaint by lazy {
         Paint(Paint.ANTI_ALIAS_FLAG).apply {
             color = getResColor(this@CircularSeekBar.progressColor)
@@ -118,9 +131,9 @@ class CircularSeekBar: View {
             width.toFloat() - this.paddingEnd,
             height.toFloat() - this.paddingBottom)
     }
-    private var rate = this.sweepDegree / 100f
+    private var rate = this.sweepDegree / MAX_VALUE
         set(value) {
-            field = this.sweepDegree / 100f
+            field = this.sweepDegree / MAX_VALUE
         }
     private var preX = 0f
     private var preY = 0f
@@ -131,7 +144,8 @@ class CircularSeekBar: View {
     private var tempProgress = -1
     private var remainedTime = 0L
     private val postInv = { { this.invalidate() } iff this.isInit }
-    lateinit private var animatorPlay: ValueAnimator
+    private var animatorPlay = ValueAnimator.ofFloat(0f, MAX_VALUE)
+    //endregion
 
     constructor(context: Context): super(context) {
         this.init(context, null, 0)
@@ -199,8 +213,7 @@ class CircularSeekBar: View {
                 this.isTouchButton = false
                 this.controllerBtnPaint.color = getResColor(this.btnColor)
                 if (this.isAnimationRunning) {
-                    // TODO(jieyi): 7/30/17 Here would be duration according to current progress.
-                    this.playAnimator(5)
+                    this.playAnimator(this@CircularSeekBar.remainedTime)
                     this.isAnimationRunning = false
                 }
             }
@@ -236,7 +249,7 @@ class CircularSeekBar: View {
 
     fun playAnimator(secondDuration: Long) {
         this.animatorPlay = ValueAnimator.ofFloat(
-            (this@CircularSeekBar.progress / this@CircularSeekBar.rate).toFloat(), 100f).apply {
+            (this@CircularSeekBar.progress / this@CircularSeekBar.rate).toFloat(), MAX_VALUE).apply {
             duration = secondDuration * 1000
             interpolator = LinearInterpolator()
             addUpdateListener {
