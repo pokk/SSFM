@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.devrapid.kotlinknifer.getResColor
+import com.devrapid.kotlinknifer.iff
 import com.example.jieyi.test.TimeUtils
 import org.jetbrains.anko.*
 import taiwan.no1.app.ssfm.R
@@ -104,9 +105,10 @@ class RotatedCircleWithIconImageView: ViewGroup {
         this.circleSeekBar = (attrs?.let { CircularSeekBar(context, attrs, defStyle) } ?:
             CircularSeekBar(context)).apply {
             padding = OUTER_PADDING
-            onProgressChanged = { progress, time ->
-                // FIXME(jieyi): 8/1/17 防止連按的時候，時間都不會更變
-                this@RotatedCircleWithIconImageView.remainedTime = time
+            onProgressChanged = { progress, remainedTime ->
+                val accordingProcessTime = endTime - progress * endTime / 100
+                this@RotatedCircleWithIconImageView.remainedTime = remainedTime
+                { this@RotatedCircleWithIconImageView.remainedTime = accordingProcessTime } iff (accordingProcessTime != remainedTime)
 //                this@RotatedCircleWithIconImageView.currProgress = (it * this@RotatedCircleWithIconImageView.interval).toFloat()
 //                if (this@RotatedCircleWithIconImageView.circleSeekBar.isTouchButton) {
 //                    this@RotatedCircleWithIconImageView.circleSeekBar.progress = currProgress.toDouble()
