@@ -2,7 +2,6 @@ package taiwan.no1.app.ssfm.misc.widgets
 
 import android.support.v4.view.ViewPager
 import android.view.View
-import com.devrapid.kotlinknifer.logw
 
 /**
  *
@@ -14,8 +13,6 @@ class PageTransformer: ViewPager.PageTransformer {
 
     override fun transformPage(view: View, position: Float) {
         val pageWidth = view.width
-
-        logw(position, view)
 
         when {
         // [-Infinity,-1)

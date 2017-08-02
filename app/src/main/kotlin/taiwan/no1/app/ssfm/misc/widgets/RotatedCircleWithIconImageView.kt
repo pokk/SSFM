@@ -63,6 +63,7 @@ class RotatedCircleWithIconImageView: ViewGroup {
         private set
     //endregion
 
+    //region Constructors
     constructor(context: Context): super(context) {
         init(context, null, 0)
     }
@@ -74,6 +75,7 @@ class RotatedCircleWithIconImageView: ViewGroup {
     constructor(context: Context, attrs: AttributeSet, defStyle: Int): super(context, attrs, defStyle) {
         init(context, attrs, defStyle)
     }
+    //endregion
 
     fun init(context: Context, attrs: AttributeSet?, defStyle: Int) {
         context.obtainStyledAttributes(attrs, R.styleable.RotatedCircleWithIconImageView, defStyle, 0).also {

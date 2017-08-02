@@ -19,9 +19,13 @@ import taiwan.no1.app.ssfm.R
 class CircularSeekBar: View {
     companion object {
         private const val MAX_VALUE = 100f
+        private const val WIDTH_OF_PROGRESS = 13f
+        private const val DEFAULT_START_DEGREE = 140f
+        private const val DEFAULT_SWEEP_DEGREE = 260f
+        private const val BUTTON_RADIUS = 25f
     }
 
-    //region Variables for setting from the user
+    //region Variables of setting
     var progress = .0
         set (value) {
             field = value * this.rate
@@ -51,18 +55,19 @@ class CircularSeekBar: View {
             this.unplayProgressPaint.color = getResColor(field)
             postInv()
         }
-    var progressWidth = 13f
+    var progressWidth = WIDTH_OF_PROGRESS
         set(value) {
             field = value
             this.playedProgressPaint.strokeWidth = field
             postInv()
         }
-    var startDegree = 140f
+    var startDegree = DEFAULT_START_DEGREE
         set(value) {
             field = value
             postInv()
         }
-    var sweepDegree = 260f
+    // The degree swept, that is total degree.
+    var sweepDegree = DEFAULT_SWEEP_DEGREE
         set(value) {
             field = value
             postInv()
@@ -84,12 +89,13 @@ class CircularSeekBar: View {
             field = value
             postInv()
         }
-    var totalTime = 0
     var onProgressChanged: ((progress: Int, remainedTime: Int) -> Unit)? = null
-    var onProgressFinished: () -> Unit = {}
+    var onProgressFinished: (() -> Unit)? = null
     var isTouchButton = false
         private set
     //endregion
+
+    private val totalTime = 0
 
     //region Private variables
     private val unplayProgressPaint by lazy {
@@ -147,6 +153,7 @@ class CircularSeekBar: View {
     private var animatorPlay = ValueAnimator.ofFloat(0f, MAX_VALUE)
     //endregion
 
+    //region Constructors
     constructor(context: Context): super(context) {
         this.init(context, null, 0)
     }
@@ -158,6 +165,7 @@ class CircularSeekBar: View {
     constructor(context: Context, attrs: AttributeSet, defStyle: Int): super(context, attrs, defStyle) {
         this.init(context, attrs, defStyle)
     }
+    //endregion
 
     fun init(context: Context, attrs: AttributeSet?, defStyle: Int) {
         context.obtainStyledAttributes(attrs, R.styleable.CircularSeekBar, defStyle, 0).also {
@@ -259,7 +267,7 @@ class CircularSeekBar: View {
                 this@CircularSeekBar.progress = value.toDouble()
                 // When the value reaches the max, the process is finished.
                 if (MAX_VALUE == value) {
-                    this@CircularSeekBar.onProgressFinished()
+                    this@CircularSeekBar.onProgressFinished?.invoke()
                 }
             }
             start()
@@ -268,6 +276,13 @@ class CircularSeekBar: View {
 
     fun stopAnimator() = this.animatorPlay.cancel()
 
+    /**
+     * Calculating the degree which is from touching position to leaving from the screen.
+     * @param posX x_coordination.
+     * @param posY y_coordination.
+     *
+     * @return the degree. ex: 45°
+     */
     private fun calculateTouchDegree(posX: Float, posY: Float): Double {
         val x = posX - pivotX.toDouble()
         val y = posY - pivotY.toDouble()
@@ -278,5 +293,12 @@ class CircularSeekBar: View {
         return if (angle >= this.sweepDegree) this.sweepDegree.toDouble() else angle
     }
 
-    private fun calculateTouchProgress(angle: Double): Double = angle / this.sweepDegree * 100
+    /**
+     * According to angle, calculating to progress.
+     *
+     * @param angle angle.
+     *
+     * @return progress.
+     */
+    private fun calculateTouchProgress(angle: Double): Double = angle / this.sweepDegree * 100  // As like passed percent process.
 }

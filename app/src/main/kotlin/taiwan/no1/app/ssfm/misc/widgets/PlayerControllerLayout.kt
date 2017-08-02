@@ -58,6 +58,7 @@ class PlayerControllerLayout: ViewGroup {
         }
     lateinit var listDecoratedButtons: List<PlayerButtonDecorator>
 
+    //region Constructors
     constructor(context: Context): super(context) {
         this.init()
     }
@@ -69,6 +70,7 @@ class PlayerControllerLayout: ViewGroup {
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int): super(context, attrs, defStyleAttr) {
         this.init()
     }
+    //endregion
 
     fun init() {
     }

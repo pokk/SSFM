@@ -13,6 +13,7 @@ import taiwan.no1.app.ssfm.R
  * @since   6/14/17
  */
 class FontTextView: TextView {
+    //region Constructors
     constructor(context: Context): super(context) {
         this.init(context, null, 0)
     }
@@ -24,7 +25,7 @@ class FontTextView: TextView {
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int): super(context, attrs, defStyleAttr) {
         this.init(context, attrs, defStyleAttr)
     }
-
+    //endregion
 
     private fun init(context: Context, attrs: AttributeSet?, defStyleAttr: Int) {
         context.obtainStyledAttributes(attrs, R.styleable.FontTextView, defStyleAttr, 0).also {

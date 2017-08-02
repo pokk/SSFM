@@ -18,18 +18,31 @@ import taiwan.no1.app.ssfm.R
  */
 open class RotatedCircleImageView: CircularImageView {
     companion object {
-        private const val ROTATE_TIME = 10
+        private const val ONE_ROUND_ROTATE_TIME = 10
+        private const val TIME_MILLION = 1000L
+        private const val A_CIRCLE_ANGEL = 360f
     }
 
+    //region Variables of setting
     var onClickEvent: ((RotatedCircleImageView) -> Unit)? = null
-    var rotateTime = ROTATE_TIME * 1000L
-    val rotateAnimator = ObjectAnimator.ofFloat(this, "rotation", 0f, 360f)!!.also {
-        it.interpolator = LinearInterpolator()
-        it.duration = this.rotateTime
-        it.repeatCount = Animation.INFINITE
-    }
+    // Basically this's that controlling the rotating speed.
+    var oneRoundTime = ONE_ROUND_ROTATE_TIME.toLong()
+        private set(value) {
+            field = value * TIME_MILLION
+        }
     var isPauseState = false
+        private set
+    //endregion
 
+    private val rotateAnimator by lazy {
+        ObjectAnimator.ofFloat(this, "rotation", 0f, A_CIRCLE_ANGEL).apply {
+            interpolator = LinearInterpolator()
+            duration = this@RotatedCircleImageView.oneRoundTime
+            repeatCount = Animation.INFINITE
+        }
+    }
+
+    //region Constructors
     constructor(context: Context): super(context) {
         init(context, null, 0)
     }
@@ -42,28 +55,30 @@ open class RotatedCircleImageView: CircularImageView {
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int): super(context, attrs, defStyleAttr) {
         init(context, attrs, defStyleAttr)
     }
+    //endregion
 
     fun init(context: Context, attrs: AttributeSet?, defStyleAttr: Int) {
         context.obtainStyledAttributes(attrs, R.styleable.RotatedCircleImageView, defStyleAttr, 0).also {
-            this.rotateTime = it.getInteger(R.styleable.RotatedCircleImageView_rotate_sec,
-                ROTATE_TIME) * 1000L
+            this.oneRoundTime = it.getInteger(R.styleable.RotatedCircleImageView_rotate_sec,
+                ONE_ROUND_ROTATE_TIME).toLong()
         }.recycle()
 
         this.onClick {
             this@RotatedCircleImageView.rotateAnimator.let {
-                when {
+                this@RotatedCircleImageView.isPauseState = when {
                     !it.isStarted -> {
                         it.start()
-                        this@RotatedCircleImageView.isPauseState = false
+                        false
                     }
                     it.isPaused -> {
                         it.resume()
-                        this@RotatedCircleImageView.isPauseState = false
+                        false
                     }
                     it.isRunning -> {
                         it.pause()
-                        this@RotatedCircleImageView.isPauseState = true
+                        true
                     }
+                    else -> true
                 }
             }
             this@RotatedCircleImageView.onClickEvent?.let { it(this@RotatedCircleImageView) }
@@ -72,13 +87,11 @@ open class RotatedCircleImageView: CircularImageView {
 
     override fun onTouchEvent(e: MotionEvent): Boolean {
         when (e.action) {
-            MotionEvent.ACTION_DOWN -> {
-                if (this.width / 2 > distance(e.x, e.y, pivotX, pivotY)) {
-                    return true
-                }
-            }
+        // Checking the clicking is inside of circle imageview.
+            MotionEvent.ACTION_DOWN -> return this.isInCircleRange(e.x, e.y)
             MotionEvent.ACTION_UP -> {
-                if (this.width / 2 > distance(e.x, e.y, pivotX, pivotY)) {
+                if (this.isInCircleRange(e.x, e.y)) {
+                    // After confirming the clicking is inside of the image.
                     this.performClick()
 
                     return true
@@ -89,7 +102,17 @@ open class RotatedCircleImageView: CircularImageView {
         return false
     }
 
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+
+        this.onClickEvent = null
+    }
+
+    /**
+     * Start the rotating animation of the circle image.
+     */
     fun start() {
+        // According to the state then start the animation.
         if (!this.rotateAnimator.isStarted) {
             this.rotateAnimator.start()
         }
@@ -102,6 +125,9 @@ open class RotatedCircleImageView: CircularImageView {
         this.isPauseState = false
     }
 
+    /**
+     * Stop the rotating animation of the circle image.
+     */
     fun stop() {
         if (this.rotateAnimator.isRunning) {
             this.rotateAnimator.pause()
@@ -109,6 +135,27 @@ open class RotatedCircleImageView: CircularImageView {
         }
     }
 
+    /**
+     * Check the position [x] & [y] is inside the circle.
+     *
+     * @param x x-coordination.
+     * @param y y-coordination.
+     *
+     * @return [true] if the position of clicking is in the circle range ; otherwise [false].
+     */
+    private fun isInCircleRange(x: Float, y: Float): Boolean =
+        this.width / 2 > this.distance(x, y, this.pivotX, this.pivotY)
+
+    /**
+     * Calculating the distance between two positions.
+     *
+     * @param sX a position's x-coordination.
+     * @param sY a position's y-coordination.
+     * @param eX another position's x-coordination.
+     * @param eY another position's y-coordination.
+     *
+     * @return the distance length.
+     */
     private fun distance(sX: Float, sY: Float, eX: Float, eY: Float): Double =
         Math.sqrt(Math.pow((sX - eX).toDouble(), 2.0) + Math.pow((sY - eY).toDouble(), 2.0))
 }
