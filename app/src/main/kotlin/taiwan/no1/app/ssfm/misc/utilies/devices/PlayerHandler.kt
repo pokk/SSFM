@@ -12,12 +12,12 @@ class PlayerHandler: IPlayerHandler {
     private var mPlayIndex: IPlayList = PlayListModel()
     private var mPlayer: IMultiMediaPlayer = MediaPlayerProxy()
     private var mPlayList: Array<String> = arrayOf()
-    private val timer by lazy { PausableTimer() }
+    //private var timer by lazy { PausableTimer() }
+    private lateinit var timer: PausableTimer
 
     override fun play() {
         // TODO(jieyi): 7/28/17 Let callback function run by using timer.
         if (this.mPlayer.isPlaying()) {
-            this.timer.start()
             this.mPlayer.play(this.mPlayList[this.mPlayIndex.nowPlaying()])
         }
 //        this.mPlayer.takeIf { it.isPlaying() }?.play(this.mPlayList[this.mPlayIndex.nowPlaying()])
@@ -25,14 +25,17 @@ class PlayerHandler: IPlayerHandler {
 
     override fun stop() {
         this.mPlayer.takeIf { it.isPlaying() }?.stop()
+        this.timer.stop()
     }
 
     override fun pause() {
         this.mPlayer.takeIf { it.isPlaying() }?.pause()
+        this.timer.pause()
     }
 
     override fun resume() {
         this.mPlayer.takeIf { it.isPlaying() }?.resume()
+        this.timer.resume()
     }
 
     override fun seekTo(sec: Int) {
@@ -41,7 +44,11 @@ class PlayerHandler: IPlayerHandler {
 
     override fun duration(): Int = this.mPlayer.duration()
 
-    override fun current(): Int = this.mPlayer.takeIf { it.isPlaying() }?.current() ?: 0
+    override fun current(callback: (millisUntilFinished: Long) -> Unit) {
+        this.timer = PausableTimer(this.duration().toLong() * 1000, 1 * 1000)
+        this.timer.ontick = callback
+        this.timer.start()
+    }
 
     override fun isLooping(): Boolean = this.mPlayer.isReplay()
 

@@ -21,7 +21,7 @@ interface IPlayerHandler {
     fun resume()
     fun seekTo(sec: Int)
     fun duration(): Int
-    fun current(): Int
+    fun current(callback: (millisUntilFinished: Long) -> Unit)
     fun isLooping(): Boolean
     fun loopOne(is_loop: Boolean)
     fun restTime(): Int
