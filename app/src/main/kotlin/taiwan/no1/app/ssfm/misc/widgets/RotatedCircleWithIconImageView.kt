@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.devrapid.kotlinknifer.getResColor
-import com.devrapid.kotlinknifer.iff
 import com.example.jieyi.test.TimeUtils
 import org.jetbrains.anko.*
 import taiwan.no1.app.ssfm.R
@@ -38,7 +37,6 @@ class RotatedCircleWithIconImageView: ViewGroup {
         set(value) {
             field = value
             this.intervalRate = this.currProgress / this.interval
-//            this.circleSeekBar.progress = field.toInt()
         }
     var startTime = START_TIME
         set(value) {
@@ -92,14 +90,18 @@ class RotatedCircleWithIconImageView: ViewGroup {
             setShadowRadius(0f)
             setBorderWidth(0f)
             onClickEvent = {
-                this@RotatedCircleWithIconImageView.statusIcon.setImageResource(
-                    if (isPauseState) foreIconInit else foreIconClicked)
-
-                if (!isPauseState)
-                    this@RotatedCircleWithIconImageView.circleSeekBar.playAnimator(this@RotatedCircleWithIconImageView.remainedTime.toLong())
-                else
+                val icon = if (this.isPauseState) {
                     this@RotatedCircleWithIconImageView.circleSeekBar.stopAnimator()
-                isPauseState.not()
+                    this@RotatedCircleWithIconImageView.foreIconInit
+                }
+                else {
+                    this@RotatedCircleWithIconImageView.circleSeekBar.playAnimator(this@RotatedCircleWithIconImageView.remainedTime.toLong())
+                    this@RotatedCircleWithIconImageView.foreIconClicked
+                }
+                // Changing the icon by the state.
+                this@RotatedCircleWithIconImageView.statusIcon.setImageResource(icon)
+                // Changing the state dependence state.
+                this.isPauseState.not()
             }
         }
         this.circleSeekBar = (attrs?.let { CircularSeekBar(context, attrs, defStyle) } ?:
@@ -111,8 +113,15 @@ class RotatedCircleWithIconImageView: ViewGroup {
                 val accordingProcessTime = endTime - progress * this@RotatedCircleWithIconImageView.endTime / 100
 
                 this@RotatedCircleWithIconImageView.remainedTime = remainedTime
-                { this@RotatedCircleWithIconImageView.remainedTime = accordingProcessTime } iff (accordingProcessTime != remainedTime)
+                // Fixed the time isn't correct when clicking the non-stop the button of play and stop.
+                if (accordingProcessTime != remainedTime) {
+                    this@RotatedCircleWithIconImageView.remainedTime = accordingProcessTime
+                }
                 this@RotatedCircleWithIconImageView.timeLabels[0].text = TimeUtils.number2String(passedTime)
+            }
+            onProgressFinished = {
+                this@RotatedCircleWithIconImageView.rotatedCircleImageView.stop()
+                this@RotatedCircleWithIconImageView.statusIcon.setImageResource(this@RotatedCircleWithIconImageView.foreIconInit)
             }
         }
         // Add children view into this group.

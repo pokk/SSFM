@@ -89,6 +89,26 @@ open class RotatedCircleImageView: CircularImageView {
         return false
     }
 
+    fun start() {
+        if (!this.rotateAnimator.isStarted) {
+            this.rotateAnimator.start()
+        }
+        else if (this.rotateAnimator.isPaused) {
+            this.rotateAnimator.resume()
+        }
+        else {
+            return
+        }
+        this.isPauseState = false
+    }
+
+    fun stop() {
+        if (this.rotateAnimator.isRunning) {
+            this.rotateAnimator.pause()
+            this.isPauseState = true
+        }
+    }
+
     private fun distance(sX: Float, sY: Float, eX: Float, eY: Float): Double =
         Math.sqrt(Math.pow((sX - eX).toDouble(), 2.0) + Math.pow((sY - eY).toDouble(), 2.0))
 }

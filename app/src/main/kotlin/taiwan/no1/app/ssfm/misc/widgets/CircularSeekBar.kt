@@ -254,8 +254,13 @@ class CircularSeekBar: View {
             interpolator = LinearInterpolator()
             addUpdateListener {
                 val value = it.animatedValue as Float
+
                 this@CircularSeekBar.remainedTime = secondDuration - it.currentPlayTime / 1000
                 this@CircularSeekBar.progress = value.toDouble()
+                // When the value reaches the max, the process is finished.
+                if (MAX_VALUE == value) {
+                    this@CircularSeekBar.onProgressFinished()
+                }
             }
             start()
         }
