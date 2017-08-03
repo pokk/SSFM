@@ -9,7 +9,6 @@
         android:id="@+id/btnc"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:background="@color/colorBeige"
         app:src="@drawable/sample_lady_gaga"/>
 
     <!--<taiwan.no1.app.ssfm.misc.widgets.CircularSeekBar-->
