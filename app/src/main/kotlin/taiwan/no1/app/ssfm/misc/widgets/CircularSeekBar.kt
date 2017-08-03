@@ -19,9 +19,9 @@ import taiwan.no1.app.ssfm.R
 class CircularSeekBar: View {
     companion object {
         private const val MAX_VALUE = 100f
-        private const val WIDTH_OF_PROGRESS = 13f
         private const val DEFAULT_START_DEGREE = 140f
         private const val DEFAULT_SWEEP_DEGREE = 260f
+        private const val WIDTH_OF_PROGRESS = 13f
         private const val BUTTON_RADIUS = 25f
     }
 
@@ -34,68 +34,63 @@ class CircularSeekBar: View {
             if (this@CircularSeekBar.isTouchButton) {
                 this@CircularSeekBar.remainedTime = (this@CircularSeekBar.totalTime - rawValue * this@CircularSeekBar.totalTime / 100).toLong()
             }
-            onProgressChanged?.let {
-                if (rawValue != this@CircularSeekBar.tempProgress) {
-                    it.invoke(rawValue, this@CircularSeekBar.remainedTime.toInt())
-                }
-            }
-            if (MAX_VALUE.toInt() == rawValue)
-                tempProgress = rawValue
-            invalidate()
+            // When change the value, it will invoke callback function.
+            this.onProgressChanged?.invoke(rawValue, this@CircularSeekBar.remainedTime.toInt())
+            this.invalidate()
         }
     var progressColor = R.color.colorCoral
         set(value) {
             field = value
             this.playedProgressPaint.color = getResColor(field)
-            postInv()
+            this.postInv()
         }
     var unprogressColor = R.color.colorDarkGray
         set(value) {
             field = value
             this.unplayProgressPaint.color = getResColor(field)
-            postInv()
+            this.postInv()
         }
     var progressWidth = WIDTH_OF_PROGRESS
         set(value) {
             field = value
             this.playedProgressPaint.strokeWidth = field
-            postInv()
+            this.postInv()
         }
     var startDegree = DEFAULT_START_DEGREE
         set(value) {
             field = value
-            postInv()
+            this.postInv()
         }
     // The degree swept, that is total degree.
     var sweepDegree = DEFAULT_SWEEP_DEGREE
         set(value) {
             field = value
-            postInv()
+            this.postInv()
         }
-    var btnColor = R.color.colorBlue
+    var unpressBtnColor = R.color.colorBlue
         set(value) {
             field = value
             this.controllerBtnPaint.color = getResColor(field)
-            postInv()
+            this.postInv()
         }
     var pressBtnColor = R.color.colorDarkBlue
         set(value) {
             field = value
             this.controllerBtnPaint.color = getResColor(field)
-            postInv()
+            this.postInv()
         }
-    var btnRadius = 25f
+    var btnRadius = BUTTON_RADIUS
         set(value) {
             field = value
-            postInv()
+            this.postInv()
         }
     var onProgressChanged: ((progress: Int, remainedTime: Int) -> Unit)? = null
     var onProgressFinished: (() -> Unit)? = null
+    // Check the press position is inside of the control circle button.
     var isTouchButton = false
         private set
+    var totalTime = 0
     //endregion
-
-    private val totalTime = 0
 
     //region Private variables
     private val unplayProgressPaint by lazy {
@@ -116,7 +111,7 @@ class CircularSeekBar: View {
     }
     private val controllerBtnPaint by lazy {
         Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = getResColor(this@CircularSeekBar.btnColor)
+            color = getResColor(this@CircularSeekBar.unpressBtnColor)
         }
     }
     private val pm by lazy {
@@ -147,7 +142,6 @@ class CircularSeekBar: View {
     private var pos = floatArrayOf(0f, 0f)
     private var isInit = true
     private var isAnimationRunning = false
-    private var tempProgress = -1
     private var remainedTime = 0L
     private val postInv = { { this.invalidate() } iff this.isInit }
     private var animatorPlay = ValueAnimator.ofFloat(0f, MAX_VALUE)
@@ -175,7 +169,7 @@ class CircularSeekBar: View {
             this.unprogressColor = it.getColor(R.styleable.CircularSeekBar_unprogress_color, this.unprogressColor)
             this.progressWidth = it.getFloat(R.styleable.CircularSeekBar_progress_width, this.progressWidth)
             this.progress = it.getInteger(R.styleable.CircularSeekBar_progress, this.progress.toInt()).toDouble()
-            this.btnColor = it.getColor(R.styleable.CircularSeekBar_controller_color, this.btnColor)
+            this.unpressBtnColor = it.getColor(R.styleable.CircularSeekBar_controller_color, this.unpressBtnColor)
             this.pressBtnColor = it.getColor(R.styleable.CircularSeekBar_unpress_controller_color,
                 this.pressBtnColor)
             this.btnRadius = it.getFloat(R.styleable.CircularSeekBar_controller_radius, this.btnRadius)
@@ -187,10 +181,12 @@ class CircularSeekBar: View {
     override fun onTouchEvent(e: MotionEvent): Boolean {
         when (e.action) {
             MotionEvent.ACTION_DOWN -> {
+                // Checking the position is inside of the control button.
                 if (e.x in this.pos[0] - this.btnRadius..this.pos[0] + this.btnRadius &&
                     e.y in this.pos[1] - this.btnRadius..this.pos[1] + this.btnRadius) {
                     this.isTouchButton = true
                     this.controllerBtnPaint.color = getResColor(this.pressBtnColor)
+                    this.invalidate()
 
                     return true
                 }
@@ -219,13 +215,15 @@ class CircularSeekBar: View {
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 this.isTouchButton = false
-                this.controllerBtnPaint.color = getResColor(this.btnColor)
+                this.controllerBtnPaint.color = getResColor(this.unpressBtnColor)
+                this.invalidate()
                 if (this.isAnimationRunning) {
                     this.playAnimator(this@CircularSeekBar.remainedTime)
                     this.isAnimationRunning = false
                 }
             }
         }
+        // Keep the previous position.
         this.preX = e.x
         this.preY = e.y
 
@@ -250,9 +248,10 @@ class CircularSeekBar: View {
     }
 
     override fun onDetachedFromWindow() {
-        this.onProgressChanged = null
-
         super.onDetachedFromWindow()
+
+        this.onProgressChanged = null
+        this.onProgressFinished = null
     }
 
     fun playAnimator(secondDuration: Long) {
