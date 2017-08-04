@@ -65,12 +65,12 @@ class MainViewModel(activity: Activity): BaseViewModel(activity) {
         }
 
         repo.getDetailMusicRes("e2a060761620ff482a272b67b204774d").subscribeBy({
-            logw(it)
-        }, {
             loge(it.message)
             loge(it)
         }, {
             logd()
+        }, {
+            logw(it)
         })
     }
 }

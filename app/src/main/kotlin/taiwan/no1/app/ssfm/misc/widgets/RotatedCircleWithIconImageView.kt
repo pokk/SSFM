@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.devrapid.kotlinknifer.getResColor
+import com.devrapid.kotlinknifer.logw
 import com.example.jieyi.test.TimeUtils
+import io.reactivex.functions.Consumer
 import org.jetbrains.anko.*
 import taiwan.no1.app.ssfm.R
 import kotlin.properties.Delegates
@@ -144,16 +146,19 @@ class RotatedCircleWithIconImageView: ViewGroup {
                 this.rotatedCircleImageView.stop()
                 this.statusIcon.setImageResource(this.iconInactive)
             }
+            it.onpro = Consumer {
+                logw(it.first, it.second)
+            }
         }
         // Add children view into this group.
         this.addView(this.circleSeekBar)
         this.addView(this.rotatedCircleImageView)
         this.statusIcon = imageView(this.iconInactive)
         this.timeLabels = listOf(
-            textView(TimeUtils.number2String(this.startTime)).apply {
+            textView(TimeUtils.number2String(this.startTime)) {
                 textColor = getResColor(R.color.colorDarkGray)
             },
-            textView(TimeUtils.number2String(this.endTime)).apply {
+            textView(TimeUtils.number2String(this.endTime)) {
                 textColor = getResColor(R.color.colorDarkGray)
             })
         this.currProgress = 0f
@@ -174,13 +179,13 @@ class RotatedCircleWithIconImageView: ViewGroup {
         val w = this.width
         val h = this.height
 
-        (0 until this.childCount).forEach {
-            val childW = this.getChildAt(it).measuredWidth
-            val childH = this.getChildAt(it).measuredHeight
+        this.forEachChildWithIndex { index, view ->
+            val childW = view.measuredWidth
+            val childH = view.measuredHeight
             val px = pivotX.toInt()
             val py = pivotX.toInt()
 
-            val (l, t, r, b) = when (it) {
+            val (l, t, r, b) = when (index) {
             // Circular seek bar.
                 0 -> Rect(0, 0, childW, childH)
             // 1: Inner image view and 2: Status icon.
@@ -188,24 +193,16 @@ class RotatedCircleWithIconImageView: ViewGroup {
                     py - childH / 2 + INNER_PADDING,
                     px + childW / 2 - INNER_PADDING,
                     py + childH / 2 - INNER_PADDING)
-                2 -> Rect(px - childW / 2,
-                    py - childH / 2,
-                    px + childW / 2,
-                    py + childH / 2)
+                2 -> Rect(px - childW / 2, py - childH / 2, px + childW / 2, py + childH / 2)
             // Two text views.
-                3 -> Rect(w / 4 - childW / 2,
-                    (h - childH - TEXT_OFFSET),
-                    w / 4 + childW / 2,
-                    (h - TEXT_OFFSET))
-                4 -> Rect(w / 4 * 3 - childW / 2,
-                    (h - childH - TEXT_OFFSET),
-                    w / 4 * 3 + childW / 2,
-                    (h - TEXT_OFFSET))
+                3 -> Rect(w / 4 - childW / 2, (h - childH - TEXT_OFFSET), w / 4 + childW / 2, (h - TEXT_OFFSET))
+                4 -> Rect(w / 4 * 3 - childW / 2, (h - childH - TEXT_OFFSET), w / 4 * 3 + childW / 2, (h - TEXT_OFFSET))
                 else -> Rect(0, 0, 0, 0)
             }
 
-            this.getChildAt(it).layout(l, t, r, b)
+            view.layout(l, t, r, b)
         }
     }
+
     data class Rect(val l: Int, val t: Int, val r: Int, val b: Int)
 }

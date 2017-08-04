@@ -9,7 +9,10 @@ import android.view.View
 import android.view.animation.LinearInterpolator
 import com.devrapid.kotlinknifer.getResColor
 import com.devrapid.kotlinknifer.iff
+import io.reactivex.internal.functions.Functions
+import io.reactivex.internal.observers.LambdaObserver
 import taiwan.no1.app.ssfm.R
+import taiwan.no1.app.ssfm.misc.extension.observable
 
 /**
  *
@@ -26,6 +29,11 @@ class CircularSeekBar: View {
     }
 
     //region Variables of setting
+    var onpro = Functions.emptyConsumer<Pair<Int, Int>>()
+    var onprogresschanged = LambdaObserver(Functions.emptyConsumer(),
+        Functions.emptyConsumer(),
+        Functions.EMPTY_ACTION,
+        Functions.emptyConsumer())
     var progress = .0
         set (value) {
             field = value * this.rate
@@ -35,6 +43,9 @@ class CircularSeekBar: View {
                 this@CircularSeekBar.remainedTime = (this@CircularSeekBar.totalTime - rawValue * this@CircularSeekBar.totalTime / 100).toLong()
             }
             // When change the value, it will invoke callback function.
+            observable<Pair<Int, Int>> {
+                it.onNext(Pair(rawValue, this@CircularSeekBar.remainedTime.toInt()))
+            }.subscribe(onpro)
             this.onProgressChanged?.invoke(rawValue, this@CircularSeekBar.remainedTime.toInt())
             this.invalidate()
         }
