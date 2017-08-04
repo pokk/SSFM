@@ -113,6 +113,8 @@ dependencies {
     compile "com.jakewharton.rxbinding2:rxbinding-leanback-v17-kotlin:2.0.0"
     // RxCommand
     compile "com.shundaojia:rxcommand:1.0.0"
+    // RxLint
+    compile "nl.littlerobots.rxlint:rxlint:1.4"
     /* For internet */
     // Retrofit 2
     compile "com.squareup.retrofit2:retrofit:2.3.0"

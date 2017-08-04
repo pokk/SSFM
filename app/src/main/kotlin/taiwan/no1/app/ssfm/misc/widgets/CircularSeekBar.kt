@@ -9,10 +9,8 @@ import android.view.View
 import android.view.animation.LinearInterpolator
 import com.devrapid.kotlinknifer.getResColor
 import com.devrapid.kotlinknifer.iff
-import io.reactivex.internal.functions.Functions
-import io.reactivex.internal.observers.LambdaObserver
+import io.reactivex.internal.operators.observable.ObservableEmpty
 import taiwan.no1.app.ssfm.R
-import taiwan.no1.app.ssfm.misc.extension.observable
 
 /**
  *
@@ -29,11 +27,6 @@ class CircularSeekBar: View {
     }
 
     //region Variables of setting
-    var onpro = Functions.emptyConsumer<Pair<Int, Int>>()
-    var onprogresschanged = LambdaObserver(Functions.emptyConsumer(),
-        Functions.emptyConsumer(),
-        Functions.EMPTY_ACTION,
-        Functions.emptyConsumer())
     var progress = .0
         set (value) {
             field = value * this.rate
@@ -42,10 +35,8 @@ class CircularSeekBar: View {
             if (this@CircularSeekBar.isTouchButton) {
                 this@CircularSeekBar.remainedTime = (this@CircularSeekBar.totalTime - rawValue * this@CircularSeekBar.totalTime / 100).toLong()
             }
+            ObservableEmpty.INSTANCE
             // When change the value, it will invoke callback function.
-            observable<Pair<Int, Int>> {
-                it.onNext(Pair(rawValue, this@CircularSeekBar.remainedTime.toInt()))
-            }.subscribe(onpro)
             this.onProgressChanged?.invoke(rawValue, this@CircularSeekBar.remainedTime.toInt())
             this.invalidate()
         }
@@ -264,9 +255,13 @@ class CircularSeekBar: View {
         this.onProgressFinished = null
     }
 
+    /**
+     * Start playing the progress animation.
+     *
+     * @param secondDuration Remained time(second).
+     */
     fun playAnimator(secondDuration: Long) {
-        this.animatorPlay = ValueAnimator.ofFloat(
-            (this@CircularSeekBar.progress / this@CircularSeekBar.rate).toFloat(), MAX_VALUE).apply {
+        this.animatorPlay = ValueAnimator.ofFloat((this.progress / this.rate).toFloat(), MAX_VALUE).apply {
             duration = secondDuration * 1000
             interpolator = LinearInterpolator()
             addUpdateListener {
@@ -283,10 +278,14 @@ class CircularSeekBar: View {
         }
     }
 
+    /**
+     * Stop playing the progress animation.
+     */
     fun stopAnimator() = this.animatorPlay.cancel()
 
     /**
      * Calculating the degree which is from touching position to leaving from the screen.
+     *
      * @param posX x_coordination.
      * @param posY y_coordination.
      *
@@ -295,9 +294,8 @@ class CircularSeekBar: View {
     private fun calculateTouchDegree(posX: Float, posY: Float): Double {
         val x = posX - pivotX.toDouble()
         val y = posY - pivotY.toDouble()
-
-        var angle = Math.toDegrees(Math.atan2(y, x) - this.startDegree / 180 * Math.PI)
-        angle = (angle + 360) % 360
+        // Let's angel in 360°
+        val angle = (Math.toDegrees(Math.atan2(y, x) - this.startDegree / 180 * Math.PI) + 360) % 360
 
         return if (angle >= this.sweepDegree) this.sweepDegree.toDouble() else angle
     }
