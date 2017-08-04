@@ -57,8 +57,8 @@ class RotatedCircleWithIconImageView: ViewGroup {
     // The variable is for [CircularSeekBar]
     var progressColor: Int = R.color.colorCoral
     var unprogressColor: Int = R.color.colorDarkGray
-    var unpressBtnColor: Int = R.color.colorYellow
-    var pressBtnColor: Int = R.color.colorDarkBlue
+    var unpressBtnColor: Int = R.color.colorWhite
+    var pressBtnColor: Int = R.color.colorLightGrey
     var progressWidth: Float = WIDTH_OF_PROGRESS
     var btnRadius: Float = BUTTON_RADIUS
     //endregion
@@ -122,9 +122,9 @@ class RotatedCircleWithIconImageView: ViewGroup {
         } ?: CircularSeekBar(context)).also {
             it.progressColor = this.progressColor
             it.unprogressColor = this.unprogressColor
-            it.progressWidth = this.progressWidth
-            it.unpressBtnColor = this.unpressBtnColor
             it.pressBtnColor = this.pressBtnColor
+            it.unpressBtnColor = this.unpressBtnColor
+            it.progressWidth = this.progressWidth
             it.btnRadius = this.btnRadius
 
             it.padding = OUTER_PADDING
@@ -207,6 +207,5 @@ class RotatedCircleWithIconImageView: ViewGroup {
             this.getChildAt(it).layout(l, t, r, b)
         }
     }
-
     data class Rect(val l: Int, val t: Int, val r: Int, val b: Int)
 }

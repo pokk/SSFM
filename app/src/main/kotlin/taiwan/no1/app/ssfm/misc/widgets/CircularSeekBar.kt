@@ -19,8 +19,8 @@ import taiwan.no1.app.ssfm.R
 class CircularSeekBar: View {
     companion object {
         private const val MAX_VALUE = 100f
-        private const val DEFAULT_START_DEGREE = 140f
-        private const val DEFAULT_SWEEP_DEGREE = 260f
+        private const val DEFAULT_START_DEGREE = 135f
+        private const val DEFAULT_SWEEP_DEGREE = 265f
         private const val WIDTH_OF_PROGRESS = 13f
         private const val BUTTON_RADIUS = 25f
     }
@@ -165,14 +165,13 @@ class CircularSeekBar: View {
         context.obtainStyledAttributes(attrs, R.styleable.CircularSeekBar, defStyle, 0).also {
             this.startDegree = it.getFloat(R.styleable.CircularSeekBar_start_degree, this.startDegree)
             this.sweepDegree = it.getFloat(R.styleable.CircularSeekBar_sweep_degree, this.sweepDegree)
-            this.progressColor = it.getColor(R.styleable.CircularSeekBar_progress_color, this.progressColor)
-            this.unprogressColor = it.getColor(R.styleable.CircularSeekBar_unprogress_color, this.unprogressColor)
             this.progressWidth = it.getFloat(R.styleable.CircularSeekBar_progress_width, this.progressWidth)
             this.progress = it.getInteger(R.styleable.CircularSeekBar_progress, this.progress.toInt()).toDouble()
-            this.unpressBtnColor = it.getColor(R.styleable.CircularSeekBar_controller_color, this.unpressBtnColor)
-            this.pressBtnColor = it.getColor(R.styleable.CircularSeekBar_unpress_controller_color,
-                this.pressBtnColor)
             this.btnRadius = it.getFloat(R.styleable.CircularSeekBar_controller_radius, this.btnRadius)
+            this.progressColor = it.getColor(R.styleable.CircularSeekBar_progress_color, this.progressColor)
+            this.unprogressColor = it.getColor(R.styleable.CircularSeekBar_unprogress_color, this.unprogressColor)
+            this.pressBtnColor = it.getColor(R.styleable.CircularSeekBar_unpress_controller_color, this.pressBtnColor)
+            this.unpressBtnColor = it.getColor(R.styleable.CircularSeekBar_controller_color, this.unpressBtnColor)
         }.recycle()
 
         this.isInit = true
@@ -242,7 +241,7 @@ class CircularSeekBar: View {
             this.unplayProgressPaint)
         canvas.drawArc(this.rectF, this.startDegree, (0f + this.progress).toFloat(), false, this.playedProgressPaint)
 
-        this.pm.getPosTan((this.pm.length / 100 * this.progress / this.rate).toFloat(), this.pos, null)
+        this.pm.getPosTan((this.progress / this.rate * this.pm.length / MAX_VALUE).toFloat(), this.pos, null)
 
         canvas.drawCircle(this.pos[0], this.pos[1], this.btnRadius, this.controllerBtnPaint)
     }
