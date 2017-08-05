@@ -4,7 +4,6 @@ import android.content.Context
 import de.umass.lastfm.*
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
-import io.reactivex.ObservableOnSubscribe
 import io.reactivex.schedulers.Schedulers
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.internal.di.components.NetComponent
@@ -131,5 +130,5 @@ class RemoteDataStore @Inject constructor(private val context: Context): IDateSt
      * @return
      */
     private fun <O> threadObservableWrapper(block: (emitter: ObservableEmitter<O>) -> Unit): Observable<O> =
-        Observable.create(ObservableOnSubscribe<O> { block(it); it.onComplete() }).subscribeOn(Schedulers.io())
+        Observable.create<O> { block(it); it.onComplete() }.subscribeOn(Schedulers.io())
 }

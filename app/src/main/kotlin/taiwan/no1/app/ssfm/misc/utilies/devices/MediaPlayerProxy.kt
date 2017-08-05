@@ -5,7 +5,7 @@ import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.logi
 
 /**
- * for handling MediaPlayer.
+ * For handling MediaPlayer.
  *
  * Created by weian on 2017/6/18.
  */

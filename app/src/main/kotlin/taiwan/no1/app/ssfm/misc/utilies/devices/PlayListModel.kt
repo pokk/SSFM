@@ -3,7 +3,7 @@ package taiwan.no1.app.ssfm.misc.utilies.devices
 import java.util.*
 
 /**
- * for controlling play list
+ * Controlling play list.
  *
  * Created by weian on 2017/7/6.
  */

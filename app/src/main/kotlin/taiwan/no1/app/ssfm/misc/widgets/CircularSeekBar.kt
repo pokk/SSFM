@@ -9,10 +9,10 @@ import android.view.View
 import android.view.animation.LinearInterpolator
 import com.devrapid.kotlinknifer.getResColor
 import com.devrapid.kotlinknifer.iff
-import io.reactivex.internal.operators.observable.ObservableEmpty
 import taiwan.no1.app.ssfm.R
 
 /**
+ * Circular seek bar.
  *
  * @author  jieyi
  * @since   7/17/17
@@ -35,7 +35,6 @@ class CircularSeekBar: View {
             if (this@CircularSeekBar.isTouchButton) {
                 this@CircularSeekBar.remainedTime = (this@CircularSeekBar.totalTime - rawValue * this@CircularSeekBar.totalTime / 100).toLong()
             }
-            ObservableEmpty.INSTANCE
             // When change the value, it will invoke callback function.
             this.onProgressChanged?.invoke(rawValue, this@CircularSeekBar.remainedTime.toInt())
             this.invalidate()

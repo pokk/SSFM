@@ -1,7 +1,7 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices
 
 /**
- * for handling music list.
+ * For handling music list.
  *
  * Created by weian on 2017/6/18.
  */

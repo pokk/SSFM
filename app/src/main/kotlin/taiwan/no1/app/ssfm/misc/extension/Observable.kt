@@ -4,6 +4,7 @@ import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 
 /**
+ * RxJava2 extension tool.
  *
  * @author  jieyi
  * @since   8/4/17

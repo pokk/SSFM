@@ -3,29 +3,22 @@ package taiwan.no1.app.ssfm.misc.utilies
 import android.os.CountDownTimer
 
 /**
+ * Countdown timer with the pause function.
  *
  * @author  jieyi
  * @since   7/23/17
  */
 class PausableTimer(val millisInFuture: Long = -1, val countDownInterval: Long = 1000) {
+    var onTick: (millisUntilFinished: Long) -> Unit = {}
+    var onFinish: () -> Unit = {}
     var isPause = false
     var isStart = false
     var curTime = 0L
-    lateinit var timer: CountDownTimer
-    var ontick: (millisUntilFinished: Long) -> Unit = {}
-    var onfinish: () -> Unit = {}
+    lateinit private var timer: CountDownTimer
 
     init {
         val millisTime = if (-1L == this.millisInFuture) Long.MAX_VALUE else this.millisInFuture
         this.init(millisTime, this.countDownInterval)
-    }
-
-    fun onTick(block: (millisUntilFinished: Long) -> Unit) {
-        ontick = block
-    }
-
-    fun onFinish(block: () -> Unit) {
-        this.onfinish = block
     }
 
     fun pause(): Long {
@@ -71,12 +64,12 @@ class PausableTimer(val millisInFuture: Long = -1, val countDownInterval: Long =
         this.timer = object: CountDownTimer(millisInFuture, countDownInterval) {
             override fun onTick(millisUntilFinished: Long) {
                 this@PausableTimer.curTime = millisUntilFinished
-                this@PausableTimer.ontick(millisUntilFinished)
+                this@PausableTimer.onTick(millisUntilFinished)
             }
 
             override fun onFinish() {
                 this@PausableTimer.curTime = 0
-                this@PausableTimer.onfinish()
+                this@PausableTimer.onFinish()
             }
         }
     }

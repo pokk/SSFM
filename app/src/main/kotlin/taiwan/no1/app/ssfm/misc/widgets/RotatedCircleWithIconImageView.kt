@@ -7,11 +7,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.devrapid.kotlinknifer.getResColor
-import com.devrapid.kotlinknifer.logw
-import com.example.jieyi.test.TimeUtils
-import io.reactivex.functions.Consumer
 import org.jetbrains.anko.*
 import taiwan.no1.app.ssfm.R
+import taiwan.no1.app.ssfm.misc.extension.toTimeString
 import kotlin.properties.Delegates
 
 /**
@@ -140,14 +138,11 @@ class RotatedCircleWithIconImageView: ViewGroup {
                 if (accordingProcessTime != remainedTime) {
                     this.remainedTime = accordingProcessTime
                 }
-                this.timeLabels[0].text = TimeUtils.number2String(passedTime)
+                this.timeLabels[0].text = passedTime.toTimeString()
             }
             it.onProgressFinished = {
                 this.rotatedCircleImageView.stop()
                 this.statusIcon.setImageResource(this.iconInactive)
-            }
-            it.onpro = Consumer {
-                logw(it.first, it.second)
             }
         }
         // Add children view into this group.
@@ -155,10 +150,10 @@ class RotatedCircleWithIconImageView: ViewGroup {
         this.addView(this.rotatedCircleImageView)
         this.statusIcon = imageView(this.iconInactive)
         this.timeLabels = listOf(
-            textView(TimeUtils.number2String(this.startTime)) {
+            textView(this.startTime.toTimeString()) {
                 textColor = getResColor(R.color.colorDarkGray)
             },
-            textView(TimeUtils.number2String(this.endTime)) {
+            textView(this.endTime.toTimeString()) {
                 textColor = getResColor(R.color.colorDarkGray)
             })
         this.currProgress = 0f

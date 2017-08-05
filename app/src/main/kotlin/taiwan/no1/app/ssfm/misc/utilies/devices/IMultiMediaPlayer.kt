@@ -3,7 +3,7 @@ package taiwan.no1.app.ssfm.misc.utilies.devices
 import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPlayerState
 
 /**
- * For controlling multi-media player
+ * For controlling multi-media player.
  *
  * Created by weian on 2017/6/18.
  */

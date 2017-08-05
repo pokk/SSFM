@@ -3,7 +3,7 @@ package taiwan.no1.app.ssfm.misc.utilies.devices
 import taiwan.no1.app.ssfm.misc.utilies.PausableTimer
 
 /**
- * for controlling media player
+ * For controlling media player.
  *
  * Created by weian on 2017/7/7.
  */
@@ -46,7 +46,7 @@ class PlayerHandler: IPlayerHandler {
 
     override fun current(callback: (millisUntilFinished: Long) -> Unit) {
         this.timer = PausableTimer(this.duration().toLong() * 1000, 1 * 1000)
-        this.timer.ontick = callback
+        this.timer.onTick = callback
         this.timer.start()
     }
 
