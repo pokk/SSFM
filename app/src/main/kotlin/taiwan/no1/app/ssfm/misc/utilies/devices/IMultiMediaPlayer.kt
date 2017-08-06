@@ -14,7 +14,7 @@ interface IMultiMediaPlayer {
     fun resume()
     fun replay(is_replay: Boolean)
     fun seekTo(sec: Int)
-    fun current(): Int
+    fun current(callback: (time: Int) -> Unit)
     fun duration(): Int
     fun isReplay(): Boolean
     fun isPlaying(): Boolean

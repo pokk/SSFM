@@ -34,6 +34,10 @@ class MediaPlayerProxy: IMultiMediaPlayer,
         return false
     }
 
+    override fun onBufferingUpdate(mp: MediaPlayer?, percent: Int) {
+        this.getStreamingBufferPercentage(percent)
+    }
+
     /**
      * API
      */
@@ -88,16 +92,24 @@ class MediaPlayerProxy: IMultiMediaPlayer,
         return this.mMediaPlayer.isPlaying
     }
 
-    override fun current(): Int {
+    override fun current(callback: (time: Int) -> Unit) {
         logi("current time")
-        return this.mMediaPlayer.currentPosition.div(1000)
-    }
-
-    override fun onBufferingUpdate(mp: MediaPlayer?, percent: Int) {
-        this.getStreamingBufferPercentage(percent)
+        callback(this.mMediaPlayer.currentPosition.div(1000))
     }
 
     override fun getState(): IPlayerHandler.EPlayerState {
         return this.mState
+    }
+
+    class Builder {
+        var getCurrent: (time: Int) -> Unit = {}
+        var getStreamingBufferPercentage: (percentage: Int) -> Unit = {}
+
+        fun build(): MediaPlayerProxy {
+            val proxy = MediaPlayerProxy()
+            proxy.current(getCurrent)
+            proxy.getStreamingBufferPercentage = this@Builder.getStreamingBufferPercentage
+            return proxy
+        }
     }
 }
