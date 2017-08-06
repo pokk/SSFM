@@ -72,8 +72,22 @@ android {
     }
 }
 
+kapt {
+    generateStubs = true
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Google architecture component
+    // For Lifecycles, LiveData, and ViewModel
+    compile "android.arch.lifecycle:runtime:1.0.0-alpha5"
+    compile "android.arch.lifecycle:extensions:1.0.0-alpha5"
+    kapt "android.arch.lifecycle:compiler:1.0.0-alpha5"
+    // For Room
+    compile 'android.arch.persistence.room:runtime:1.0.0-alpha5'
+    compile 'android.arch.persistence.room:rxjava2:1.0.0-alpha5'
+    kapt "android.arch.persistence.room:compiler:1.0.0-alpha5"
 
     // My own tool library
     compile "com.devrapid.jieyi:kotlinknifer:1.0.12"
@@ -92,8 +106,8 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:2.11"
     compile "com.google.dagger:dagger:2.11"
     compile 'com.google.dagger:dagger-android-support:2.11'
-    annotationProcessor "com.google.dagger:dagger-compiler:2.11"
-    annotationProcessor "com.google.dagger:dagger-android-processor:2.11"
+//    annotationProcessor "com.google.dagger:dagger-compiler:2.11"
+//    annotationProcessor "com.google.dagger:dagger-android-processor:2.11"
     // KotterKnife
     compile "com.jakewharton:kotterknife:0.1.0-SNAPSHOT"
     /* For reaction programming */
