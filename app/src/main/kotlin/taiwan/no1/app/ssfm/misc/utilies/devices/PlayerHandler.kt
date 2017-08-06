@@ -8,12 +8,17 @@ import taiwan.no1.app.ssfm.misc.utilies.PausableTimer
  * Created by weian on 2017/7/7.
  */
 
-class PlayerHandler: IPlayerHandler {
-    private var mPlayIndex: IPlayList = PlayListModel()
-    private var mPlayer: IMultiMediaPlayer = MediaPlayerProxy()
+class PlayerHandler(p0: IMultiMediaPlayer, p1: IPlayList): IPlayerHandler {
+    private var mPlayIndex: IPlayList
+    private var mPlayer: IMultiMediaPlayer
     private var mPlayList: Array<String> = arrayOf()
     //private var timer by lazy { PausableTimer() }
     private lateinit var timer: PausableTimer
+
+    init {
+        this.mPlayer = p0
+        this.mPlayIndex = p1
+    }
 
     override fun play() {
         // TODO(jieyi): 7/28/17 Let callback function run by using timer.
