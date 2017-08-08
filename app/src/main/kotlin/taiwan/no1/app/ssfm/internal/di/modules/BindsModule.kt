@@ -3,8 +3,8 @@ package taiwan.no1.app.ssfm.internal.di.modules
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import taiwan.no1.app.ssfm.internal.di.annotations.scope.PerActivity
-import taiwan.no1.app.ssfm.mvvm.ui.activities.MainActivity
-import taiwan.no1.app.ssfm.mvvm.ui.activities.TestActivity
+import taiwan.no1.app.ssfm.mvvm.view.activities.MainActivity
+import taiwan.no1.app.ssfm.mvvm.view.activities.TestActivity
 
 /**
  *

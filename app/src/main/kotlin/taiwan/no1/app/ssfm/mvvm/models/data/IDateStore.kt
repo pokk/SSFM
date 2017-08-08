@@ -5,8 +5,8 @@ import de.umass.lastfm.Artist
 import de.umass.lastfm.Session
 import de.umass.lastfm.Track
 import io.reactivex.Observable
-import taiwan.no1.app.ssfm.mvvm.models.DetailMusicModel
-import taiwan.no1.app.ssfm.mvvm.models.SearchMusicModel
+import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 
 /**
  * Interface that represents a data store from where data is retrieved.
@@ -19,17 +19,17 @@ interface IDateStore {
      * Retrieve the musics or the artists information by the keyword.
      *
      * @param keyword keyword of the music or the artist.
-     * @return the result of [SearchMusicModel]
+     * @return the result of [SearchMusicEntity]
      */
-    fun getSearchMusicRes(keyword: String): Observable<SearchMusicModel>
+    fun getSearchMusicRes(keyword: String): Observable<SearchMusicEntity>
 
     /**
      * Retrieve the detail of a music information.
      *
      * @param hash the hash code of a music.
-     * @return the result of [DetailMusicModel]
+     * @return the result of [DetailMusicEntity]
      */
-    fun getDetailMusicRes(hash: String): Observable<DetailMusicModel>
+    fun getDetailMusicRes(hash: String): Observable<DetailMusicEntity>
 
     /**
      * Retrieve the user session(This session's expired date is no limitation).

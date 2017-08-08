@@ -5,9 +5,9 @@ import de.umass.lastfm.Artist
 import de.umass.lastfm.Session
 import de.umass.lastfm.Track
 import io.reactivex.Observable
-import taiwan.no1.app.ssfm.mvvm.models.DetailMusicModel
-import taiwan.no1.app.ssfm.mvvm.models.SearchMusicModel
 import taiwan.no1.app.ssfm.mvvm.models.data.IDateStore
+import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 
 /**
  *
@@ -15,12 +15,12 @@ import taiwan.no1.app.ssfm.mvvm.models.data.IDateStore
  * @since   5/10/17
  */
 class LocalDataStore: IDateStore {
-    override fun getSearchMusicRes(keyword: String): Observable<SearchMusicModel> {
+    override fun getSearchMusicRes(keyword: String): Observable<SearchMusicEntity> {
         /* no-op */
         TODO("Local database has no session...")
     }
 
-    override fun getDetailMusicRes(hash: String): Observable<DetailMusicModel> {
+    override fun getDetailMusicRes(hash: String): Observable<DetailMusicEntity> {
         /* no-op */
         TODO("Local database has no session...")
     }

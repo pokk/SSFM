@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.ui.activities
+package taiwan.no1.app.ssfm.mvvm.view.activities
 
 import android.app.Activity
 import android.databinding.DataBindingUtil
@@ -13,7 +13,7 @@ import taiwan.no1.app.ssfm.databinding.ActivityMainBinding
 import taiwan.no1.app.ssfm.mvvm.models.data.local.LocalDataStore
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.RemoteDataStore
 import taiwan.no1.app.ssfm.mvvm.models.data.repositories.DataRepository
-import taiwan.no1.app.ssfm.mvvm.ui.AdvancedActivity
+import taiwan.no1.app.ssfm.mvvm.view.AdvancedActivity
 import taiwan.no1.app.ssfm.mvvm.viewmodels.MainViewModel
 
 

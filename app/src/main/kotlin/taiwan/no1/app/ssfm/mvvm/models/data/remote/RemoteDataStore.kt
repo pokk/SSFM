@@ -7,10 +7,10 @@ import io.reactivex.ObservableEmitter
 import io.reactivex.schedulers.Schedulers
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.internal.di.components.NetComponent
-import taiwan.no1.app.ssfm.mvvm.models.DetailMusicModel
-import taiwan.no1.app.ssfm.mvvm.models.SearchMusicModel
 import taiwan.no1.app.ssfm.mvvm.models.data.IDateStore
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.services.MusicServices
+import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
@@ -33,7 +33,7 @@ class RemoteDataStore @Inject constructor(private val context: Context): IDateSt
         NetComponent.Initializer.init().inject(this@RemoteDataStore)
     }
 
-    override fun getSearchMusicRes(keyword: String): Observable<SearchMusicModel> {
+    override fun getSearchMusicRes(keyword: String): Observable<SearchMusicEntity> {
         val query: Map<String, String> = mapOf(
             Pair(this.context.getString(R.string.t_pair1), this.context.getString(R.string.v_pair1)),
             Pair(this.context.getString(R.string.t_pair2), keyword),
@@ -44,7 +44,7 @@ class RemoteDataStore @Inject constructor(private val context: Context): IDateSt
         return this.musicService1.searchMusic(query).subscribeOn(Schedulers.io())
     }
 
-    override fun getDetailMusicRes(hash: String): Observable<DetailMusicModel> {
+    override fun getDetailMusicRes(hash: String): Observable<DetailMusicEntity> {
         val query: Map<String, String> = mapOf(
             Pair(this.context.getString(R.string.t_pair6), this.context.getString(R.string.v_pair6)),
             Pair(this.context.getString(R.string.t_pair7), this.context.getString(R.string.v_pair7)),

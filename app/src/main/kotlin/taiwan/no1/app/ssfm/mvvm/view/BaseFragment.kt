@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.ui
+package taiwan.no1.app.ssfm.mvvm.view
 
 import android.app.Fragment
 import android.content.Context

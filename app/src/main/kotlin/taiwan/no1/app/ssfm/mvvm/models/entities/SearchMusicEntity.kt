@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.models
+package taiwan.no1.app.ssfm.mvvm.models.entities
 
 import com.google.gson.annotations.SerializedName
 
@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName
  * @since 5/20/17
  */
 
-data class SearchMusicModel(
+data class SearchMusicEntity(
     var status: Int = 0,
     var error: String? = null,
     var data: DataBean? = null,

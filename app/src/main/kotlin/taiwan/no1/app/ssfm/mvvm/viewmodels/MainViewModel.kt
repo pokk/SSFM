@@ -9,11 +9,11 @@ import com.devrapid.kotlinknifer.logw
 import de.umass.lastfm.Chart
 import io.reactivex.rxkotlin.subscribeBy
 import taiwan.no1.app.ssfm.R
-import taiwan.no1.app.ssfm.mvvm.models.TestModel
 import taiwan.no1.app.ssfm.mvvm.models.data.IDateStore
 import taiwan.no1.app.ssfm.mvvm.models.data.local.LocalDataStore
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.RemoteDataStore
 import taiwan.no1.app.ssfm.mvvm.models.data.repositories.DataRepository
+import taiwan.no1.app.ssfm.mvvm.models.entities.TestEntity
 import kotlin.concurrent.thread
 
 /**
@@ -22,12 +22,14 @@ import kotlin.concurrent.thread
  * @since   5/8/17
  */
 class MainViewModel(activity: Activity): BaseViewModel(activity) {
-    private val model: TestModel = TestModel("Jieyi", 20)
+    private val entity: TestEntity = TestEntity(
+        "Jieyi",
+        20)
 
-    var test: ObservableField<TestModel> = ObservableField()
+    var test: ObservableField<TestEntity> = ObservableField()
 
     init {
-        this.test.set(this.model)
+        this.test.set(this.entity)
     }
 
     fun itemClick(view: View) {

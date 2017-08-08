@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:background="@drawable/bkg_menu"
-    tools:context=".mvvm.ui.activities.TestActivity">
+    tools:context=".mvvm.view.activities.TestActivity">
 
     <ScrollView
         android:id="@+id/sv_menu"
