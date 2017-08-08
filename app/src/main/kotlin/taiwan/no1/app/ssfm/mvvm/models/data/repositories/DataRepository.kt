@@ -14,11 +14,7 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
  * @author  jieyi
  * @since   5/10/17
  */
-//@Singleton
-//class DataRepository @Inject constructor(@field:[Inject Local] var local: IDataStore,
-//                                         @field:[Inject Remote] var remote: IDataStore): IDataStore {
-class DataRepository constructor(var local: IDataStore,
-                                 var remote: IDataStore): IDataStore {
+class DataRepository(private var local: IDataStore, private var remote: IDataStore): IDataStore {
     override fun obtainSession(user: String, pwd: String): Observable<Session> {
         return this.remote.obtainSession(user, pwd)
     }

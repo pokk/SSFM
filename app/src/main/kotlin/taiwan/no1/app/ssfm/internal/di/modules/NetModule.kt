@@ -63,8 +63,7 @@ class NetModule(val context: Context) {
     @Provides
     @Singleton
     @Music1
-    fun provideRetrofit2_1(baseBuilder: Retrofit.Builder,
-                           restfulApiFactory: RestfulApiFactory): MusicServices =
+    fun provideRetrofit2_1(baseBuilder: Retrofit.Builder, restfulApiFactory: RestfulApiFactory): MusicServices =
         with(baseBuilder) {
             baseUrl(restfulApiFactory.createMusic1Config().getApiBaseUrl())
             build()
@@ -73,8 +72,7 @@ class NetModule(val context: Context) {
     @Provides
     @Singleton
     @Music2
-    fun provideRetrofit2_2(baseBuilder: Retrofit.Builder,
-                           restfulApiFactory: RestfulApiFactory): MusicServices =
+    fun provideRetrofit2_2(baseBuilder: Retrofit.Builder, restfulApiFactory: RestfulApiFactory): MusicServices =
         with(baseBuilder) {
             baseUrl(restfulApiFactory.createMusic2Config().getApiBaseUrl())
             build()
