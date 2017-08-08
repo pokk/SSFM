@@ -14,7 +14,7 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
  * @author  jieyi
  * @since   5/10/17
  */
-interface IDateStore {
+interface IDataStore {
     /**
      * Retrieve the musics or the artists information by the keyword.
      *

@@ -6,25 +6,25 @@ import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import io.reactivex.schedulers.Schedulers
 import taiwan.no1.app.ssfm.R
+import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Music1
+import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Music2
 import taiwan.no1.app.ssfm.internal.di.components.NetComponent
-import taiwan.no1.app.ssfm.mvvm.models.data.IDateStore
+import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.services.MusicServices
 import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import java.util.*
 import javax.inject.Inject
-import javax.inject.Named
 
 /**
  *
  * @author  jieyi
  * @since   5/10/17
  */
-class RemoteDataStore @Inject constructor(private val context: Context): IDateStore {
-    @field:[Inject Named("music1")]
-    lateinit var musicService1: MusicServices
-    @field:[Inject Named("music2")]
-    lateinit var musicService2: MusicServices
+class RemoteDataStore @Inject constructor(private val context: Context): IDataStore {
+    // NOTE(jieyi): 8/9/17 `@field:[Inject Named("music1")]` This is another way.
+    @Music1 lateinit var musicService1: MusicServices
+    @Music2 lateinit var musicService2: MusicServices
 
     private val lastfm_key by lazy { this.context.getString(R.string.lastfm_api_key) }
     private val lastfm_secret by lazy { this.context.getString(R.string.lastfm_secret_key) }

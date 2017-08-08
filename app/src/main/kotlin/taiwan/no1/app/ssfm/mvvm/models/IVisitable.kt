@@ -1,6 +1,6 @@
 package taiwan.no1.app.ssfm.mvvm.models
 
-import taiwan.no1.app.ssfm.mvvm.view.viewholder.IViewTypeFactory
+import taiwan.no1.app.ssfm.mvvm.views.viewholder.IViewTypeFactory
 
 
 /**

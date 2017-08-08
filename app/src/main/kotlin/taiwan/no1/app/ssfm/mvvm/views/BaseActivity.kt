@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.view
+package taiwan.no1.app.ssfm.mvvm.views
 
 import android.os.Bundle
 import android.support.annotation.CallSuper
@@ -19,10 +19,8 @@ import javax.inject.Inject
  */
 abstract class BaseActivity: RxActivity(), HasFragmentInjector, HasSupportFragmentInjector {
     // Copy from [DaggerAppCompatActivity], becz this cant inherit two classes.
-    @Inject
-    lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
-    @Inject
-    lateinit var frameworkFragmentInjector: DispatchingAndroidInjector<android.app.Fragment>
+    @Inject lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
+    @Inject lateinit var frameworkFragmentInjector: DispatchingAndroidInjector<android.app.Fragment>
 
     //region Activity lifecycle
     @CallSuper

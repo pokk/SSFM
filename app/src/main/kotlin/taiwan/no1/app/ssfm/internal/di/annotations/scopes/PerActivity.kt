@@ -1,4 +1,6 @@
-package taiwan.no1.app.ssfm.internal.di.annotations.scope
+package taiwan.no1.app.ssfm.internal.di.annotations.scopes
+
+import javax.inject.Scope
 
 /**
  * A scoping annotation to permit objects whose lifetime should conform to the life of the activity to be
@@ -7,6 +9,5 @@ package taiwan.no1.app.ssfm.internal.di.annotations.scope
  * @author  jieyi
  * @since   6/8/17
  */
-@javax.inject.Scope
-@Retention
+@Scope
 annotation class PerActivity

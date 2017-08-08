@@ -6,6 +6,7 @@ import dagger.android.support.AndroidSupportInjectionModule
 import taiwan.no1.app.ssfm.App
 import taiwan.no1.app.ssfm.internal.di.modules.AppModule
 import taiwan.no1.app.ssfm.internal.di.modules.BindsModule
+import taiwan.no1.app.ssfm.internal.di.modules.RepositoryModule
 import javax.inject.Singleton
 
 /**
@@ -16,9 +17,12 @@ import javax.inject.Singleton
  */
 @Singleton
 @Component(modules = arrayOf(AppModule::class,
+    RepositoryModule::class,
     BindsModule::class,
     AndroidSupportInjectionModule::class))
 interface AppComponent: AndroidInjector<App> {
+//    fun dataRepository(): DataRepository
+
     @Component.Builder
     abstract class Builder: AndroidInjector.Builder<App>()
 }

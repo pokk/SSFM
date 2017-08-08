@@ -2,7 +2,7 @@ package taiwan.no1.app.ssfm.internal.di.modules
 
 import dagger.Module
 import dagger.Provides
-import taiwan.no1.app.ssfm.internal.di.annotations.scope.PerActivity
+import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerActivity
 
 /**
  * A base component upon which fragment's components may depend. Activity-level components should extend this component.

@@ -9,7 +9,7 @@ import com.devrapid.kotlinknifer.logw
 import de.umass.lastfm.Chart
 import io.reactivex.rxkotlin.subscribeBy
 import taiwan.no1.app.ssfm.R
-import taiwan.no1.app.ssfm.mvvm.models.data.IDateStore
+import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
 import taiwan.no1.app.ssfm.mvvm.models.data.local.LocalDataStore
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.RemoteDataStore
 import taiwan.no1.app.ssfm.mvvm.models.data.repositories.DataRepository
@@ -38,8 +38,8 @@ class MainViewModel(activity: Activity): BaseViewModel(activity) {
         val key = this.context.getString(R.string.lastfm_api_key)
         val secret = this.context.getString(R.string.lastfm_secret_key)
 
-        val remote: IDateStore = RemoteDataStore(this.context)
-        val local: IDateStore = LocalDataStore()
+        val remote: IDataStore = RemoteDataStore(this.context)
+        val local: IDataStore = LocalDataStore()
 
         val repo = DataRepository(local, remote)
 

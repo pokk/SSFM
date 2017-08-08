@@ -5,7 +5,7 @@ import de.umass.lastfm.Artist
 import de.umass.lastfm.Session
 import de.umass.lastfm.Track
 import io.reactivex.Observable
-import taiwan.no1.app.ssfm.mvvm.models.data.IDateStore
+import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
 import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 
@@ -14,7 +14,7 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
  * @author  jieyi
  * @since   5/10/17
  */
-class LocalDataStore: IDateStore {
+class LocalDataStore: IDataStore {
     override fun getSearchMusicRes(keyword: String): Observable<SearchMusicEntity> {
         /* no-op */
         TODO("Local database has no session...")

@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.view
+package taiwan.no1.app.ssfm.mvvm.views
 
 import android.app.Activity
 import android.databinding.DataBindingUtil
