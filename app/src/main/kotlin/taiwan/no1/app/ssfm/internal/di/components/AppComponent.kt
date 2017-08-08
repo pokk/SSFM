@@ -21,8 +21,6 @@ import javax.inject.Singleton
     BindsModule::class,
     AndroidSupportInjectionModule::class))
 interface AppComponent: AndroidInjector<App> {
-//    fun dataRepository(): DataRepository
-
     @Component.Builder
     abstract class Builder: AndroidInjector.Builder<App>()
 }

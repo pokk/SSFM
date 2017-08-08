@@ -23,6 +23,8 @@ abstract class AdvancedActivity<out VM: IViewModel, out B: ViewDataBinding>: Bas
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        this.bind()
     }
 
     @CallSuper

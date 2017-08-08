@@ -11,6 +11,7 @@ import taiwan.no1.app.ssfm.mvvm.models.data.remote.RemoteDataStore
 import javax.inject.Singleton
 
 /**
+ * Dagger module that provides the required objects of [taiwan.no1.app.ssfm.mvvm.models.data.repositories.DataRepository].
  *
  * @author  jieyi
  * @since   8/9/17

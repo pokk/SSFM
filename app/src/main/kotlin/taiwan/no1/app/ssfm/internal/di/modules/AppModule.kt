@@ -4,10 +4,11 @@ import android.app.Application
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import taiwan.no1.app.ssfm.App
 import javax.inject.Singleton
 
 /**
- * Dagger module that provides objects which will live during the application lifecycle.
+ * Dagger module that provides [Context] and [Application] which will live during the application lifecycle.
  *
  * @author  jieyi
  * @since   5/9/17
@@ -16,9 +17,9 @@ import javax.inject.Singleton
 class AppModule {
     @Provides
     @Singleton
-    fun provideApplication(app: Application): Application = app
+    fun provideApplication(app: App): Application = app
 
     @Provides
     @Singleton
-    fun provideAppContext(app: Application): Context = app.applicationContext
+    fun provideAppContext(app: App): Context = app.applicationContext
 }

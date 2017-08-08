@@ -7,6 +7,7 @@ import taiwan.no1.app.ssfm.mvvm.models.data.remote.RemoteDataStore
 import javax.inject.Singleton
 
 /**
+ * A component whose lifetime is the same as application for injecting to [RemoteDataStore].
  *
  * @author  Jieyi
  * @since   12/8/16

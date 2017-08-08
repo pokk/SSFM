@@ -10,23 +10,21 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 
 /**
+ * Retrieving the data from local storage. All return objects are [Observable] to viewmodels.
  *
  * @author  jieyi
  * @since   5/10/17
  */
 class LocalDataStore: IDataStore {
     override fun getSearchMusicRes(keyword: String): Observable<SearchMusicEntity> {
-        /* no-op */
         TODO("Local database has no session...")
     }
 
     override fun getDetailMusicRes(hash: String): Observable<DetailMusicEntity> {
-        /* no-op */
         TODO("Local database has no session...")
     }
 
     override fun obtainSession(user: String, pwd: String): Observable<Session> {
-        /* no-op */
         TODO("Local database has no session...")
     }
 

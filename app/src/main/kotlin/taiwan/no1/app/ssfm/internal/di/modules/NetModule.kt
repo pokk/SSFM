@@ -18,11 +18,11 @@ import taiwan.no1.app.ssfm.mvvm.models.data.remote.services.MusicServices
 import javax.inject.Singleton
 
 /**
+ * Dagger module that provides [Retrofit] libraries, including [OkHttpClient] and [Gson].
  *
  * @author  Jieyi
  * @since   12/6/16
  */
-
 @Module
 class NetModule(val context: Context) {
     @Provides
@@ -60,11 +60,11 @@ class NetModule(val context: Context) {
             client(okHttpClient)
         }
 
+    //region TODO: *** We might be able to change base url dynamically. ***
     @Provides
     @Singleton
     @Music1
-    fun provideRetrofit2_1(baseBuilder: Retrofit.Builder,
-                           restfulApiFactory: RestfulApiFactory): MusicServices =
+    fun provideRetrofit2_1(baseBuilder: Retrofit.Builder, restfulApiFactory: RestfulApiFactory): MusicServices =
         with(baseBuilder) {
             baseUrl(restfulApiFactory.createMusic1Config().getApiBaseUrl())
             build()
@@ -73,10 +73,10 @@ class NetModule(val context: Context) {
     @Provides
     @Singleton
     @Music2
-    fun provideRetrofit2_2(baseBuilder: Retrofit.Builder,
-                           restfulApiFactory: RestfulApiFactory): MusicServices =
+    fun provideRetrofit2_2(baseBuilder: Retrofit.Builder, restfulApiFactory: RestfulApiFactory): MusicServices =
         with(baseBuilder) {
             baseUrl(restfulApiFactory.createMusic2Config().getApiBaseUrl())
             build()
         }.create(MusicServices::class.java)
+    //endregion
 }

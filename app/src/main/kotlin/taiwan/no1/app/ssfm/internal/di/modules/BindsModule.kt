@@ -7,6 +7,7 @@ import taiwan.no1.app.ssfm.mvvm.views.activities.MainActivity
 import taiwan.no1.app.ssfm.mvvm.views.activities.TestActivity
 
 /**
+ * Dagger module that provides each of [Activity] in this central module during the activity lifecycle.
  *
  * @author  jieyi
  * @since   6/13/17
@@ -14,7 +15,7 @@ import taiwan.no1.app.ssfm.mvvm.views.activities.TestActivity
 @Module
 abstract class BindsModule {
     @PerActivity
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = arrayOf(ActivityModule::class, MainActivityModule::class))
     abstract fun contributeMainActivityInjector(): MainActivity
 
     @PerActivity

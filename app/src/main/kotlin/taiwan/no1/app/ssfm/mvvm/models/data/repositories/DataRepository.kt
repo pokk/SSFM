@@ -5,20 +5,23 @@ import de.umass.lastfm.Artist
 import de.umass.lastfm.Session
 import de.umass.lastfm.Track
 import io.reactivex.Observable
+import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Local
+import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Remote
 import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
 import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
+ * For retrieving the data from the repository of [local] or [remote].
  *
  * @author  jieyi
  * @since   5/10/17
  */
-//@Singleton
-//class DataRepository @Inject constructor(@field:[Inject Local] var local: IDataStore,
-//                                         @field:[Inject Remote] var remote: IDataStore): IDataStore {
-class DataRepository constructor(var local: IDataStore,
-                                 var remote: IDataStore): IDataStore {
+@Singleton
+class DataRepository @Inject constructor(@Local private var local: IDataStore,
+                                         @Remote private var remote: IDataStore): IDataStore {
     override fun obtainSession(user: String, pwd: String): Observable<Session> {
         return this.remote.obtainSession(user, pwd)
     }

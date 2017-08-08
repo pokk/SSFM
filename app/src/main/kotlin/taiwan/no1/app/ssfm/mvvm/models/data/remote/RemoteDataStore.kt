@@ -17,6 +17,7 @@ import java.util.*
 import javax.inject.Inject
 
 /**
+ * Retrieving the data from remote server with [retrofit2] by http api. All return objects are [Observable] to viewmodels.
  *
  * @author  jieyi
  * @since   5/10/17
