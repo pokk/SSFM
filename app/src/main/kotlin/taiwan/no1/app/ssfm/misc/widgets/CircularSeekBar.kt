@@ -287,7 +287,6 @@ class CircularSeekBar: View {
      *
      * @param posX x_coordination.
      * @param posY y_coordination.
-     *
      * @return the degree. ex: 45°
      */
     private fun calculateTouchDegree(posX: Float, posY: Float): Double {
@@ -303,7 +302,6 @@ class CircularSeekBar: View {
      * According to angle, calculating to progress.
      *
      * @param angle angle.
-     *
      * @return progress.
      */
     private fun calculateTouchProgress(angle: Double): Double = angle / this.sweepDegree * 100  // As like passed percent process.

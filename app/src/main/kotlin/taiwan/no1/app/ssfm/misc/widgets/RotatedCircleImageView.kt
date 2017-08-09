@@ -140,7 +140,6 @@ open class RotatedCircleImageView: CircularImageView {
      *
      * @param x x-coordination.
      * @param y y-coordination.
-     *
      * @return [true] if the position of clicking is in the circle range ; otherwise [false].
      */
     private fun isInCircleRange(x: Float, y: Float): Boolean =
@@ -153,7 +152,6 @@ open class RotatedCircleImageView: CircularImageView {
      * @param sY a position's y-coordination.
      * @param eX another position's x-coordination.
      * @param eY another position's y-coordination.
-     *
      * @return the distance length.
      */
     private fun distance(sX: Float, sY: Float, eX: Float, eY: Float): Double =

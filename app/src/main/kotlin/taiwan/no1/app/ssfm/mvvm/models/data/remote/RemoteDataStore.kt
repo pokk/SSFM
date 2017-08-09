@@ -9,6 +9,7 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Music1
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Music2
 import taiwan.no1.app.ssfm.internal.di.components.NetComponent
+import taiwan.no1.app.ssfm.misc.extension.observable
 import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.services.MusicServices
 import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
@@ -131,5 +132,5 @@ class RemoteDataStore @Inject constructor(private val context: Context): IDataSt
      * @return
      */
     private fun <O> threadObservableWrapper(block: (emitter: ObservableEmitter<O>) -> Unit): Observable<O> =
-        Observable.create<O> { block(it); it.onComplete() }.subscribeOn(Schedulers.io())
+        observable<O> { block(it); it.onComplete() }.subscribeOn(Schedulers.io())
 }
