@@ -10,4 +10,6 @@ import javax.inject.Scope
  * @since   6/8/17
  */
 @Scope
+@Retention
+@MustBeDocumented
 annotation class PerFragment

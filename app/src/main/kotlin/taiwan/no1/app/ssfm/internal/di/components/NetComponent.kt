@@ -18,7 +18,8 @@ import javax.inject.Singleton
 interface NetComponent {
     object Initializer {
         fun init(): NetComponent = DaggerNetComponent.builder()
-            .netModule(NetModule(App.getAppContext()))
+            // XXX(jieyi): 8/9/17 This component should be depended AppComponent & using App() is dangerous.
+            .netModule(NetModule(App()))
             .build()
     }
 

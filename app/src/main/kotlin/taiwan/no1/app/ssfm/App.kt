@@ -1,6 +1,5 @@
 package taiwan.no1.app.ssfm
 
-import android.content.Context
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import taiwan.no1.app.ssfm.internal.di.components.DaggerAppComponent
@@ -12,16 +11,5 @@ import taiwan.no1.app.ssfm.internal.di.components.DaggerAppComponent
  * @since   5/9/17
  */
 class App: DaggerApplication() {
-    companion object {
-        lateinit private var context: Context
-
-        // Provide the global application context.
-        fun getAppContext(): Context = context
-    }
-
-    init {
-        context = this
-    }
-
     override fun applicationInjector(): AndroidInjector<App> = DaggerAppComponent.builder().create(this)
 }

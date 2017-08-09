@@ -11,10 +11,9 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Music1
-import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Music2
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.RestfulApiFactory
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.services.MusicServices
+import javax.inject.Named
 import javax.inject.Singleton
 
 /**
@@ -63,7 +62,7 @@ class NetModule(val context: Context) {
     //region TODO: *** We might be able to change base url dynamically. ***
     @Provides
     @Singleton
-    @Music1
+    @Named("music1")
     fun provideRetrofit2_1(baseBuilder: Retrofit.Builder, restfulApiFactory: RestfulApiFactory): MusicServices =
         with(baseBuilder) {
             baseUrl(restfulApiFactory.createMusic1Config().getApiBaseUrl())
@@ -72,7 +71,7 @@ class NetModule(val context: Context) {
 
     @Provides
     @Singleton
-    @Music2
+    @Named("music2")
     fun provideRetrofit2_2(baseBuilder: Retrofit.Builder, restfulApiFactory: RestfulApiFactory): MusicServices =
         with(baseBuilder) {
             baseUrl(restfulApiFactory.createMusic2Config().getApiBaseUrl())

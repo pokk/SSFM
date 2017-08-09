@@ -8,4 +8,6 @@ import javax.inject.Scope
  * @since   6/15/17
  */
 @Scope
-annotation class ApiRequest
+@Retention
+@MustBeDocumented
+annotation class Network
