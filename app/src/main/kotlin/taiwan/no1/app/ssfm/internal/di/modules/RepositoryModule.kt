@@ -27,9 +27,4 @@ class RepositoryModule {
     @Singleton
     @Local
     fun provideLocalRepository(): IDataStore = LocalDataStore()
-
-//    @Provides
-//    @Singleton
-//    fun provideDataRepository(@Local local: LocalDataStore, @Remote remote: RemoteDataStore): DataRepository =
-//        DataRepository(local, remote)
 }
