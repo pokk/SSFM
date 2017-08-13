@@ -2,11 +2,12 @@ package taiwan.no1.app.ssfm.internal.di.modules
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import taiwan.no1.app.ssfm.internal.di.annotations.scope.PerActivity
-import taiwan.no1.app.ssfm.mvvm.ui.activities.MainActivity
-import taiwan.no1.app.ssfm.mvvm.ui.activities.TestActivity
+import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerActivity
+import taiwan.no1.app.ssfm.mvvm.views.activities.MainActivity
+import taiwan.no1.app.ssfm.mvvm.views.activities.TestActivity
 
 /**
+ * Dagger module that provides each of [Activity] in this central module during the activity lifecycle.
  *
  * @author  jieyi
  * @since   6/13/17
@@ -14,7 +15,7 @@ import taiwan.no1.app.ssfm.mvvm.ui.activities.TestActivity
 @Module
 abstract class BindsModule {
     @PerActivity
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = arrayOf(MainActivityModule::class))
     abstract fun contributeMainActivityInjector(): MainActivity
 
     @PerActivity

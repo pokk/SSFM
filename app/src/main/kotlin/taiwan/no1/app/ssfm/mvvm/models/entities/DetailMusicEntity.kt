@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.models
+package taiwan.no1.app.ssfm.mvvm.models.entities
 
 /**
  * The detail information of a music song.
@@ -7,7 +7,7 @@ package taiwan.no1.app.ssfm.mvvm.models
  * @since 5/22/17
  */
 
-data class DetailMusicModel(
+data class DetailMusicEntity(
     var status: Int = 0,
     var err_code: Int = 0,
     var data: DataBean? = null) {

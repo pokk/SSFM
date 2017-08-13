@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.ui
+package taiwan.no1.app.ssfm.mvvm.views
 
 import android.app.Activity
 import android.databinding.DataBindingUtil
@@ -13,16 +13,19 @@ import taiwan.no1.app.ssfm.mvvm.viewmodels.IViewModel
  * @author  jieyi
  * @since   5/10/17
  */
-abstract class AdvancedActivity<out VM: IViewModel, out B: ViewDataBinding>: BaseActivity() {
+abstract class AdvancedActivity<VM: IViewModel, out B: ViewDataBinding>: BaseActivity() {
+    protected abstract var viewModel: VM
     protected val binding: B by lazy {
         val (activity, layoutId) = this.provideBindingLayoutId()
+        // Databinding process.
         DataBindingUtil.setContentView<B>(activity, layoutId)
     }
-    protected val viewModel: VM by lazy { this.provideViewModel() }
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        this.bind()
     }
 
     @CallSuper
@@ -36,6 +39,4 @@ abstract class AdvancedActivity<out VM: IViewModel, out B: ViewDataBinding>: Bas
     abstract protected fun unbind(): Unit
 
     abstract protected fun provideBindingLayoutId(): Pair<Activity, Int>
-
-    abstract protected fun provideViewModel(): VM
 }

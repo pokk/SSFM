@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.internal.di.annotations.scope
+package taiwan.no1.app.ssfm.internal.di.annotations.scopes
 
 import javax.inject.Scope
 
@@ -11,4 +11,5 @@ import javax.inject.Scope
  */
 @Scope
 @Retention
+@MustBeDocumented
 annotation class PerFragment

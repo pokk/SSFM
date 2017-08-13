@@ -9,11 +9,8 @@ import com.devrapid.kotlinknifer.logw
 import de.umass.lastfm.Chart
 import io.reactivex.rxkotlin.subscribeBy
 import taiwan.no1.app.ssfm.R
-import taiwan.no1.app.ssfm.mvvm.models.TestModel
-import taiwan.no1.app.ssfm.mvvm.models.data.IDateStore
-import taiwan.no1.app.ssfm.mvvm.models.data.local.LocalDataStore
-import taiwan.no1.app.ssfm.mvvm.models.data.remote.RemoteDataStore
 import taiwan.no1.app.ssfm.mvvm.models.data.repositories.DataRepository
+import taiwan.no1.app.ssfm.mvvm.models.entities.TestEntity
 import kotlin.concurrent.thread
 
 /**
@@ -21,13 +18,15 @@ import kotlin.concurrent.thread
  * @author  jieyi
  * @since   5/8/17
  */
-class MainViewModel(activity: Activity): BaseViewModel(activity) {
-    private val model: TestModel = TestModel("Jieyi", 20)
+class MainViewModel(activity: Activity, val repository: DataRepository): BaseViewModel(activity) {
+    private val entity: TestEntity = TestEntity(
+        "Jieyi",
+        20)
 
-    var test: ObservableField<TestModel> = ObservableField()
+    var test: ObservableField<TestEntity> = ObservableField()
 
     init {
-        this.test.set(this.model)
+        this.test.set(this.entity)
     }
 
     fun itemClick(view: View) {
@@ -35,12 +34,6 @@ class MainViewModel(activity: Activity): BaseViewModel(activity) {
         val password = this.context.getString(R.string.lastfm_password)
         val key = this.context.getString(R.string.lastfm_api_key)
         val secret = this.context.getString(R.string.lastfm_secret_key)
-
-        val remote: IDateStore = RemoteDataStore(this.context)
-        val local: IDateStore = LocalDataStore()
-
-        val repo = DataRepository(local, remote)
-
         //        repo.obtainSession(user, password, key, secret).
         //                // TODO: 5/12/17 Consider a good way to import this life cycle.
         //                //                compose(RxLifecycleAndroid.bindActivity((this.context as MainActivity).lifecycle())).
@@ -64,7 +57,7 @@ class MainViewModel(activity: Activity): BaseViewModel(activity) {
             val chart = Chart.getTopTracks(key).pageResults.forEach { it }
         }
 
-        repo.getDetailMusicRes("e2a060761620ff482a272b67b204774d").subscribeBy({
+        this.repository.getDetailMusicRes("e2a060761620ff482a272b67b204774d").subscribeBy({
             loge(it.message)
             loge(it)
         }, {

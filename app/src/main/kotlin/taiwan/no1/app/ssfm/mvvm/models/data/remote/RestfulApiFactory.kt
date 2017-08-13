@@ -1,10 +1,10 @@
 package taiwan.no1.app.ssfm.mvvm.models.data.remote
 
+import taiwan.no1.app.ssfm.internal.di.annotations.scopes.Network
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.config.IApiConfig
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.config.Music1Config
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.config.Music2Config
 import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Factory that creates different implementations of [IApiConfig].
@@ -12,7 +12,7 @@ import javax.inject.Singleton
  * @author  jieyi
  * @since   5/10/17
  */
-@Singleton
+@Network
 class RestfulApiFactory @Inject constructor() {
     /**
      * Create a new http service configuration.

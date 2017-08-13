@@ -1,7 +1,6 @@
-package taiwan.no1.app.ssfm.mvvm.ui.activities
+package taiwan.no1.app.ssfm.mvvm.views.activities
 
 import android.app.Activity
-import android.databinding.DataBindingUtil
 import android.os.Bundle
 import com.devrapid.kotlinknifer.SharedPrefs
 import com.devrapid.kotlinknifer.logd
@@ -13,17 +12,18 @@ import taiwan.no1.app.ssfm.databinding.ActivityMainBinding
 import taiwan.no1.app.ssfm.mvvm.models.data.local.LocalDataStore
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.RemoteDataStore
 import taiwan.no1.app.ssfm.mvvm.models.data.repositories.DataRepository
-import taiwan.no1.app.ssfm.mvvm.ui.AdvancedActivity
 import taiwan.no1.app.ssfm.mvvm.viewmodels.MainViewModel
+import taiwan.no1.app.ssfm.mvvm.views.AdvancedActivity
+import javax.inject.Inject
 
 
 class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>() {
+    @Inject
+    override lateinit var viewModel: MainViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivityMainBinding = DataBindingUtil.setContentView<ActivityMainBinding>(this,
-            R.layout.activity_main)
         //        binding.setVariable(BR.viewmodel, MainViewModel(this.applicationContext))
-        binding.viewmodel = MainViewModel(this)
         SharedPrefs.setPrefSettings(getSharedPreferences("Test", MODE_PRIVATE))
     }
 
@@ -67,8 +67,6 @@ class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>() {
     }
 
     override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_main)
-
-    override fun provideViewModel(): MainViewModel = MainViewModel(this)
 
 //    override fun getFragmentComponent(): FragmentComponent = super.provideFragmentComponent()
 }

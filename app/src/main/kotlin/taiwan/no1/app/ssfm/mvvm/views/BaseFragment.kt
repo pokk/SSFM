@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.ui
+package taiwan.no1.app.ssfm.mvvm.views
 
 import android.app.Fragment
 import android.content.Context
@@ -22,8 +22,7 @@ import javax.inject.Inject
  * @since   5/9/17
  */
 abstract class BaseFragment: RxFragment(), HasFragmentInjector {
-    @Inject
-    lateinit var childFragmentInjector: DispatchingAndroidInjector<Fragment>
+    @Inject lateinit var childFragmentInjector: DispatchingAndroidInjector<Fragment>
 
     protected var rootView: View? = null
 

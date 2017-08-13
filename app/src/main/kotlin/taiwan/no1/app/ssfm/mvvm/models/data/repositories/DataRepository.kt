@@ -5,62 +5,68 @@ import de.umass.lastfm.Artist
 import de.umass.lastfm.Session
 import de.umass.lastfm.Track
 import io.reactivex.Observable
-import taiwan.no1.app.ssfm.mvvm.models.DetailMusicModel
-import taiwan.no1.app.ssfm.mvvm.models.SearchMusicModel
-import taiwan.no1.app.ssfm.mvvm.models.data.IDateStore
+import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Local
+import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Remote
+import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
+import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
+ * For retrieving the data from the repository of [local] or [remote].
  *
  * @author  jieyi
  * @since   5/10/17
  */
-class DataRepository(private val localDataStore: IDateStore,
-                     private val remoteDataStore: IDateStore): IDateStore {
+@Singleton
+class DataRepository @Inject constructor(@Local private var local: IDataStore,
+                                         @Remote private var remote: IDataStore): IDataStore {
     override fun obtainSession(user: String, pwd: String): Observable<Session> {
-        return this.remoteDataStore.obtainSession(user, pwd)
+        return this.remote.obtainSession(user, pwd)
     }
 
-    override fun getSearchMusicRes(keyword: String): Observable<SearchMusicModel> {
-        return this.remoteDataStore.getSearchMusicRes(keyword)
+    override fun getSearchMusicRes(keyword: String): Observable<SearchMusicEntity> {
+        return this.remote.getSearchMusicRes(keyword)
     }
 
-    override fun getDetailMusicRes(hash: String): Observable<DetailMusicModel> {
-        return this.remoteDataStore.getDetailMusicRes(hash)
+    override fun getDetailMusicRes(hash: String): Observable<DetailMusicEntity> {
+        return this.remote.getDetailMusicRes(hash)
     }
 
     override fun getChartTopArtist(page: Int): Observable<Collection<Artist>> {
-        return this.remoteDataStore.getChartTopArtist(page)
+        return this.remote.getChartTopArtist(page)
     }
 
     override fun getChartTopTracks(page: Int): Observable<Collection<Track>> {
-        return this.remoteDataStore.getChartTopTracks(page)
+        return this.remote.getChartTopTracks(page)
     }
 
     override fun getSimilarArtist(artist: String): Observable<Collection<Artist>> {
-        return this.remoteDataStore.getSimilarArtist(artist)
+        return this.remote.getSimilarArtist(artist)
     }
 
     override fun getArtistTopAlbum(artist: String): Observable<Collection<Album>> {
-        return this.remoteDataStore.getArtistTopAlbum(artist)
+        return this.remote.getArtistTopAlbum(artist)
     }
 
     override fun getArtistTags(artist: String, session: Session): Observable<Collection<String>> {
-        return this.remoteDataStore.getArtistTags(artist, session)
+        return this.remote.getArtistTags(artist, session)
     }
 
     override fun getSimilarTracks(artist: String, mbid: String): Observable<Collection<Track>> {
-        return this.remoteDataStore.getSimilarTracks(artist, mbid)
+        return this.remote.getSimilarTracks(artist, mbid)
     }
 
     override fun getLovedTracks(user: String, page: Int): Observable<Collection<Track>> {
-        return this.remoteDataStore.getLovedTracks(user, page)
+        return this.remote.getLovedTracks(user, page)
     }
 
     override fun loveTrack(artist: String, track: String, session: Session): Observable<Track> {
-        return this.remoteDataStore.loveTrack(artist, track, session)
+        return this.remote.loveTrack(artist, track, session)
     }
 
     override fun unloveTrack(artist: String, track: String, session: Session): Observable<Track> {
-        return this.remoteDataStore.unloveTrack(artist, track, session)
+        return this.remote.unloveTrack(artist, track, session)
     }
 }

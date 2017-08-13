@@ -11,29 +11,29 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import taiwan.no1.app.ssfm.internal.di.annotations.scopes.Network
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.RestfulApiFactory
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.services.MusicServices
 import javax.inject.Named
-import javax.inject.Singleton
 
 /**
+ * Dagger module that provides [Retrofit] libraries, including [OkHttpClient] and [Gson].
  *
  * @author  Jieyi
  * @since   12/6/16
  */
-
 @Module
-class NetModule(val context: Context) {
+class NetModule {
     @Provides
-    @Singleton
+    @Network
     fun provideConverterGson(gson: Gson): GsonConverterFactory = GsonConverterFactory.create(gson)
 
     @Provides
-    @Singleton
+    @Network
     fun provideRxJavaCallAdapter(): RxJava2CallAdapterFactory = RxJava2CallAdapterFactory.create()
 
     @Provides
-    @Singleton
+    @Network
     fun provideGson(): Gson = with(GsonBuilder()) {
         setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         setLenient()
@@ -41,15 +41,15 @@ class NetModule(val context: Context) {
     }
 
     @Provides
-    @Singleton
-    fun provideOkHttpCache(): Cache = Cache(context.cacheDir, 10 * 1024 * 1024 /* 10 MiB */)
+    @Network
+    fun provideOkHttpCache(context: Context): Cache = Cache(context.cacheDir, 10 * 1024 * 1024 /* 10 MiB */)
 
     @Provides
-    @Singleton
+    @Network
     fun provideOkHttpClient(cache: Cache): OkHttpClient = OkHttpClient.Builder().cache(cache).build()
 
     @Provides
-    @Singleton
+    @Network
     fun provideBaseRetrofitBuilder(converter: GsonConverterFactory,
                                    callAdapter: RxJava2CallAdapterFactory,
                                    okHttpClient: OkHttpClient): Retrofit.Builder =
@@ -59,23 +59,23 @@ class NetModule(val context: Context) {
             client(okHttpClient)
         }
 
+    //region TODO: *** We might be able to change base url dynamically. ***
     @Provides
-    @Singleton
+    @Network
     @Named("music1")
-    fun provideRetrofit2_1(baseBuilder: Retrofit.Builder,
-                           restfulApiFactory: RestfulApiFactory): MusicServices =
+    fun provideRetrofit2_1(baseBuilder: Retrofit.Builder, restfulApiFactory: RestfulApiFactory): MusicServices =
         with(baseBuilder) {
             baseUrl(restfulApiFactory.createMusic1Config().getApiBaseUrl())
             build()
         }.create(MusicServices::class.java)
 
     @Provides
-    @Singleton
+    @Network
     @Named("music2")
-    fun provideRetrofit2_2(baseBuilder: Retrofit.Builder,
-                           restfulApiFactory: RestfulApiFactory): MusicServices =
+    fun provideRetrofit2_2(baseBuilder: Retrofit.Builder, restfulApiFactory: RestfulApiFactory): MusicServices =
         with(baseBuilder) {
             baseUrl(restfulApiFactory.createMusic2Config().getApiBaseUrl())
             build()
         }.create(MusicServices::class.java)
+    //endregion
 }

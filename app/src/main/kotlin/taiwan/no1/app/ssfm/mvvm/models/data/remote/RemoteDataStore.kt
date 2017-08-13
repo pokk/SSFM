@@ -1,39 +1,44 @@
 package taiwan.no1.app.ssfm.mvvm.models.data.remote
 
 import android.content.Context
+import dagger.Lazy
 import de.umass.lastfm.*
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import io.reactivex.schedulers.Schedulers
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.internal.di.components.NetComponent
-import taiwan.no1.app.ssfm.mvvm.models.DetailMusicModel
-import taiwan.no1.app.ssfm.mvvm.models.SearchMusicModel
-import taiwan.no1.app.ssfm.mvvm.models.data.IDateStore
+import taiwan.no1.app.ssfm.misc.extension.observable
+import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.services.MusicServices
+import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
+import javax.inject.Singleton
 
 /**
+ * Retrieving the data from remote server with [retrofit2] by http api. All return objects are [Observable] to viewmodels.
  *
  * @author  jieyi
  * @since   5/10/17
  */
-class RemoteDataStore @Inject constructor(private val context: Context): IDateStore {
+@Singleton
+class RemoteDataStore @Inject constructor(private val context: Context): IDataStore {
     @field:[Inject Named("music1")]
-    lateinit var musicService1: MusicServices
+    lateinit var musicService1: Lazy<MusicServices>
     @field:[Inject Named("music2")]
-    lateinit var musicService2: MusicServices
+    lateinit var musicService2: Lazy<MusicServices>
 
     private val lastfm_key by lazy { this.context.getString(R.string.lastfm_api_key) }
     private val lastfm_secret by lazy { this.context.getString(R.string.lastfm_secret_key) }
 
     init {
-        NetComponent.Initializer.init().inject(this@RemoteDataStore)
+        NetComponent.Initializer.init().inject(this)
     }
 
-    override fun getSearchMusicRes(keyword: String): Observable<SearchMusicModel> {
+    override fun getSearchMusicRes(keyword: String): Observable<SearchMusicEntity> {
         val query: Map<String, String> = mapOf(
             Pair(this.context.getString(R.string.t_pair1), this.context.getString(R.string.v_pair1)),
             Pair(this.context.getString(R.string.t_pair2), keyword),
@@ -41,16 +46,16 @@ class RemoteDataStore @Inject constructor(private val context: Context): IDateSt
             Pair(this.context.getString(R.string.t_pair4), this.context.getString(R.string.v_pair4)),
             Pair(this.context.getString(R.string.t_pair5), this.context.getString(R.string.v_pair5)))
 
-        return this.musicService1.searchMusic(query).subscribeOn(Schedulers.io())
+        return this.musicService1.get().searchMusic(query).subscribeOn(Schedulers.io())
     }
 
-    override fun getDetailMusicRes(hash: String): Observable<DetailMusicModel> {
+    override fun getDetailMusicRes(hash: String): Observable<DetailMusicEntity> {
         val query: Map<String, String> = mapOf(
             Pair(this.context.getString(R.string.t_pair6), this.context.getString(R.string.v_pair6)),
             Pair(this.context.getString(R.string.t_pair7), this.context.getString(R.string.v_pair7)),
             Pair(this.context.getString(R.string.t_pair8), hash))
 
-        return this.musicService2.getMusic(query).subscribeOn(Schedulers.io())
+        return this.musicService2.get().getMusic(query).subscribeOn(Schedulers.io())
     }
 
     override fun obtainSession(user: String, pwd: String): Observable<Session> =
@@ -130,5 +135,5 @@ class RemoteDataStore @Inject constructor(private val context: Context): IDateSt
      * @return
      */
     private fun <O> threadObservableWrapper(block: (emitter: ObservableEmitter<O>) -> Unit): Observable<O> =
-        Observable.create<O> { block(it); it.onComplete() }.subscribeOn(Schedulers.io())
+        observable<O> { block(it); it.onComplete() }.subscribeOn(Schedulers.io())
 }
