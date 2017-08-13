@@ -62,7 +62,9 @@ class PlayerHandler(p0: IMultiMediaPlayer, p1: IPlayList): IPlayerHandler {
     }
 
     override fun restTime(): Int = this.mPlayer.takeIf { it.isPlaying() }.let {
-        it?.duration()?.minus(it.current()) ?: 0
+        // FIXME(jieyi): 8/14/17 Temporally set default value. Vivian, please fix it.
+//        it?.duration()?.minus(it.current()) ?: 0
+        0
     }
 
     override fun previous() {
