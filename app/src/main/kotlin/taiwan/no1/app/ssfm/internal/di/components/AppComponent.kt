@@ -1,5 +1,6 @@
 package taiwan.no1.app.ssfm.internal.di.components
 
+import android.content.Context
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
@@ -23,4 +24,7 @@ import javax.inject.Singleton
 interface AppComponent: AndroidInjector<App> {
     @Component.Builder
     abstract class Builder: AndroidInjector.Builder<App>()
+
+    // Providing to dependence components.
+    fun context(): Context
 }

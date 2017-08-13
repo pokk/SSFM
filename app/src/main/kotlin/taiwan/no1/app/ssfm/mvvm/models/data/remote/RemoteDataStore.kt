@@ -16,6 +16,7 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
+import javax.inject.Singleton
 
 /**
  * Retrieving the data from remote server with [retrofit2] by http api. All return objects are [Observable] to viewmodels.
@@ -23,6 +24,7 @@ import javax.inject.Named
  * @author  jieyi
  * @since   5/10/17
  */
+@Singleton
 class RemoteDataStore @Inject constructor(private val context: Context): IDataStore {
     @field:[Inject Named("music1")]
     lateinit var musicService1: Lazy<MusicServices>
@@ -33,7 +35,7 @@ class RemoteDataStore @Inject constructor(private val context: Context): IDataSt
     private val lastfm_secret by lazy { this.context.getString(R.string.lastfm_secret_key) }
 
     init {
-        NetComponent.Initializer.init().inject(this@RemoteDataStore)
+        NetComponent.Initializer.init().inject(this)
     }
 
     override fun getSearchMusicRes(keyword: String): Observable<SearchMusicEntity> {
