@@ -12,21 +12,22 @@ import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase.RequestValues
  * @author  jieyi
  * @since   8/14/17
  */
-abstract class BaseUsecase<R: RequestValues>(protected val repository: IDataStore) {
+abstract class BaseUsecase<T, R: RequestValues>(protected val repository: IDataStore) {
     lateinit protected var parameters: R
 
-    fun <T> execute(observer: Observer<T>): Observable<T> {
-        return this.fetchUsecase().
-            subscribeOn(this.obtainSubscribeScheduler()).
-            observeOn(this.obtainObserverScheduler()).
-            subscribe(observer)
-    }
+    fun execute(observer: Observer<T>) = this.buildUsecase().subscribe(observer)
 
-    abstract protected fun <T> fetchUsecase(): Observable<T>
+//    fun execute(observer: Observer<T>, int: Int) = this.buildUsecase()
+
+    abstract protected fun fetchUsecase(): Observable<T>
 
     open protected fun obtainSubscribeScheduler() = Schedulers.io()
 
     open protected fun obtainObserverScheduler() = AndroidSchedulers.mainThread()
+
+    private fun buildUsecase(): Observable<T> = this.fetchUsecase().
+        subscribeOn(this.obtainSubscribeScheduler()).
+        observeOn(this.obtainObserverScheduler())
 
     interface RequestValues
 }
