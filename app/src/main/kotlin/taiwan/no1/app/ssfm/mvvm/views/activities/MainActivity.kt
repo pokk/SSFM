@@ -3,15 +3,8 @@ package taiwan.no1.app.ssfm.mvvm.views.activities
 import android.app.Activity
 import android.os.Bundle
 import com.devrapid.kotlinknifer.SharedPrefs
-import com.devrapid.kotlinknifer.logd
-import com.devrapid.kotlinknifer.logw
-import de.umass.lastfm.Radio
-import de.umass.lastfm.Track
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityMainBinding
-import taiwan.no1.app.ssfm.mvvm.models.data.local.LocalDataStore
-import taiwan.no1.app.ssfm.mvvm.models.data.remote.RemoteDataStore
-import taiwan.no1.app.ssfm.mvvm.models.data.repositories.DataRepository
 import taiwan.no1.app.ssfm.mvvm.viewmodels.MainViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedActivity
 import javax.inject.Inject
@@ -40,7 +33,7 @@ class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>() {
         val key = this.getString(R.string.lastfm_api_key)
         val secret = this.getString(R.string.lastfm_secret_key)
 
-        val repo = DataRepository(LocalDataStore(), RemoteDataStore(this.applicationContext))
+//        val repo = DataRepository(LocalDataStore(), RemoteDataStore(this.applicationContext))
 
         //        repo.getDetailMusicRes("e2a060761620ff482a272b67b204774d").
         //            subscribeBy({
@@ -51,11 +44,11 @@ class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>() {
         //            }, {
         //                logd()
         //            })
-        repo.obtainSession(user, password).subscribe {
-            logd(it)
-            logw(Track.unlove("cher", "believe", it))
-            Radio.tune(Radio.RadioStation("test"), it)
-        }
+//        repo.obtainSession(user, password).subscribe {
+//            logd(it)
+//            logw(Track.unlove("cher", "believe", it))
+//            Radio.tune(Radio.RadioStation("test"), it)
+//        }
     }
 
     override fun bind() {

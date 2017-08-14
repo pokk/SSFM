@@ -20,7 +20,8 @@ import javax.inject.Named
 import javax.inject.Singleton
 
 /**
- * Retrieving the data from remote server with [retrofit2] by http api. All return objects are [Observable] to viewmodels.
+ * Retrieving the data from remote server with [retrofit2] by http api. All return objects are [Observable]
+ * to viewmodels.
  *
  * @author  jieyi
  * @since   5/10/17

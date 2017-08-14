@@ -7,10 +7,13 @@ import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import de.umass.lastfm.Chart
-import io.reactivex.rxkotlin.subscribeBy
 import taiwan.no1.app.ssfm.R
-import taiwan.no1.app.ssfm.mvvm.models.data.repositories.DataRepository
+import taiwan.no1.app.ssfm.misc.extension.observer
+import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.TestEntity
+import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
+import taiwan.no1.app.ssfm.mvvm.models.usecases.DetailMusicCase
+import taiwan.no1.app.ssfm.mvvm.models.usecases.DetailMusicCase.RequestValue
 import kotlin.concurrent.thread
 
 /**
@@ -18,7 +21,8 @@ import kotlin.concurrent.thread
  * @author  jieyi
  * @since   5/8/17
  */
-class MainViewModel(activity: Activity, val repository: DataRepository): BaseViewModel(activity) {
+class MainViewModel(activity: Activity, val usecase: BaseUsecase<DetailMusicEntity, RequestValue>):
+    BaseViewModel(activity) {
     private val entity: TestEntity = TestEntity("Jieyi", 20)
 
     var test: ObservableField<TestEntity> = ObservableField()
@@ -55,13 +59,13 @@ class MainViewModel(activity: Activity, val repository: DataRepository): BaseVie
             val chart = Chart.getTopTracks(key).pageResults.forEach { it }
         }
 
-        this.repository.getDetailMusicRes("e2a060761620ff482a272b67b204774d").subscribeBy({
-            loge(it.message)
-            loge(it)
-        }, {
-            logd()
-        }, {
+        this.usecase.parameters = DetailMusicCase.RequestValue("e2a060761620ff482a272b67b204774d")
+        this.usecase.execute(observer<DetailMusicEntity>().onNext {
             logw(it)
+        }.onComplete {
+            logd()
+        }.onError {
+            loge(it)
         })
     }
 }

@@ -3,6 +3,8 @@ package taiwan.no1.app.ssfm.internal.di.annotations.scopes
 import javax.inject.Scope
 
 /**
+ * A scoping annotation to permit objects whose lifetime should depend to the life of the application to be
+ * memorized in the correct component.
  *
  * @author  jieyi
  * @since   6/15/17

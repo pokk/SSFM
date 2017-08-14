@@ -40,7 +40,13 @@ abstract class BaseActivity: RxActivity(), HasFragmentInjector, HasSupportFragme
     }
     //endregion
 
+    /**
+     * Providing the fragment injector([Fragment]) for the activities.
+     */
     override fun supportFragmentInjector(): AndroidInjector<Fragment> = this.supportFragmentInjector
 
+    /**
+     * Providing the fragment injector([android.app.Fragment]) for the activities.
+     */
     override fun fragmentInjector(): AndroidInjector<android.app.Fragment> = this.frameworkFragmentInjector
 }
