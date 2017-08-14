@@ -5,6 +5,7 @@ import dagger.Lazy
 import de.umass.lastfm.*
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
+import io.reactivex.internal.operators.observable.ObservableJust
 import io.reactivex.schedulers.Schedulers
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.internal.di.components.NetComponent
@@ -59,81 +60,58 @@ class RemoteDataStore @Inject constructor(private val context: Context): IDataSt
     }
 
     override fun obtainSession(user: String, pwd: String): Observable<Session> =
-        this.threadObservableWrapper {
-            val session = Authenticator.getMobileSession(user, pwd, this.lastfm_key, this.lastfm_secret)
-
-            it.onNext(session)
-        }
+        this.observableJustWrapper(Authenticator.getMobileSession(user, pwd, this.lastfm_key, this.lastfm_secret))
 
     override fun getChartTopArtist(page: Int): Observable<Collection<Artist>> =
-        this.threadObservableWrapper {
-            val artists = Chart.getTopArtists(page, this.lastfm_key)
 
-            it.onNext(artists.pageResults)
-        }
+        this.observableJustWrapper(Chart.getTopArtists(page, this.lastfm_key).pageResults)
 
     override fun getChartTopTracks(page: Int): Observable<Collection<Track>> =
-        this.threadObservableWrapper {
-            val tracks = de.umass.lastfm.Chart.getTopTracks(page, this.lastfm_key)
-
-            it.onNext(tracks.pageResults)
-        }
+        this.observableJustWrapper(Chart.getTopTracks(page, this.lastfm_key).pageResults)
 
     override fun getSimilarArtist(artist: String): Observable<Collection<Artist>> =
-        this.threadObservableWrapper {
-            val artists = Artist.getSimilar(artist, 10, this.lastfm_key)
-
-            it.onNext(artists)
-        }
+        this.observableJustWrapper(Artist.getSimilar(artist, 10, this.lastfm_key))
 
     override fun getArtistTopAlbum(artist: String): Observable<Collection<Album>> =
-        this.threadObservableWrapper {
-            val tracks = Artist.getTopAlbums(artist, this.lastfm_key)
-
-            it.onNext(tracks)
-        }
+        this.observableJustWrapper(Artist.getTopAlbums(artist, this.lastfm_key))
 
     override fun getArtistTags(artist: String, session: Session): Observable<Collection<String>> =
-        this.threadObservableWrapper {
-            val tags = de.umass.lastfm.Artist.getTags(artist, session)
-
-            it.onNext(tags)
-        }
+        this.observableJustWrapper(Artist.getTags(artist, session))
 
     override fun getSimilarTracks(artist: String, mbid: String): Observable<Collection<Track>> =
-        this.threadObservableWrapper {
-            val tracks = Track.getSimilar(artist, mbid, this.lastfm_key)
-
-            it.onNext(tracks)
-        }
+        this.observableJustWrapper(Track.getSimilar(artist, mbid, this.lastfm_key))
 
     override fun getLovedTracks(user: String, page: Int): Observable<Collection<Track>> =
-        this.threadObservableWrapper {
-            val tracks = User.getLovedTracks(user, page, this.lastfm_key)
-
-            it.onNext(tracks.pageResults)
-        }
+        this.observableJustWrapper(User.getLovedTracks(user, page, this.lastfm_key).pageResults)
 
     override fun loveTrack(artist: String, track: String, session: Session): Observable<Track> =
-        this.threadObservableWrapper {
+        this.observableCreateWrapper {
             val res = Track.love(artist, track, session)
 
             // TODO: 6/4/17 Add that return next, error, or complete which depend on result's status.
         }
 
     override fun unloveTrack(artist: String, track: String, session: Session): Observable<Track> =
-        this.threadObservableWrapper {
+        this.observableCreateWrapper {
             val res = Track.unlove(artist, track, session)
 
             // TODO: 6/4/17 Add that return next, error, or complete which depend on result's status.
         }
 
     /**
-     * Wrapping the [Observable] with [Schedulers.io].
+     * Wrapping the [Observable.create] with [Schedulers.IO].
      *
-     * @param
-     * @return
+     * @param block for processing program.
+     * @return an [Observable] reference.
      */
-    private fun <O> threadObservableWrapper(block: (emitter: ObservableEmitter<O>) -> Unit): Observable<O> =
+    private fun <O> observableCreateWrapper(block: (emitter: ObservableEmitter<O>) -> Unit): Observable<O> =
         observable<O> { block(it); it.onComplete() }.subscribeOn(Schedulers.io())
+
+    /**
+     * Wrapping the [Observable.just] with [Schedulers.IO]
+     *
+     * @param data Omit data.
+     * @return an [Observable] reference.
+     */
+    private fun <O> observableJustWrapper(data: O): Observable<O> = ObservableJust<O>(data).subscribeOn(Schedulers.io())
 }

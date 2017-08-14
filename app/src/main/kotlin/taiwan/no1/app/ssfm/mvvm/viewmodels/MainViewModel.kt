@@ -19,9 +19,7 @@ import kotlin.concurrent.thread
  * @since   5/8/17
  */
 class MainViewModel(activity: Activity, val repository: DataRepository): BaseViewModel(activity) {
-    private val entity: TestEntity = TestEntity(
-        "Jieyi",
-        20)
+    private val entity: TestEntity = TestEntity("Jieyi", 20)
 
     var test: ObservableField<TestEntity> = ObservableField()
 
