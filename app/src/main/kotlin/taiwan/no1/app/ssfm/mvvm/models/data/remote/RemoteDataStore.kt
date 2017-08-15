@@ -61,29 +61,29 @@ class RemoteDataStore @Inject constructor(private val context: Context): IDataSt
     }
 
     override fun obtainSession(user: String, pwd: String): Observable<Session> =
-        this.observableJustWrapper(Authenticator.getMobileSession(user, pwd, this.lastfm_key, this.lastfm_secret))
+        ObservableJust(Authenticator.getMobileSession(user, pwd, this.lastfm_key, this.lastfm_secret))
 
     override fun getChartTopArtist(page: Int): Observable<Collection<Artist>> =
 
-        this.observableJustWrapper(Chart.getTopArtists(page, this.lastfm_key).pageResults)
+        ObservableJust(Chart.getTopArtists(page, this.lastfm_key).pageResults)
 
     override fun getChartTopTracks(page: Int): Observable<Collection<Track>> =
-        this.observableJustWrapper(Chart.getTopTracks(page, this.lastfm_key).pageResults)
+        ObservableJust(Chart.getTopTracks(page, this.lastfm_key).pageResults)
 
     override fun getSimilarArtist(artist: String): Observable<Collection<Artist>> =
-        this.observableJustWrapper(Artist.getSimilar(artist, 10, this.lastfm_key))
+        ObservableJust(Artist.getSimilar(artist, 10, this.lastfm_key))
 
     override fun getArtistTopAlbum(artist: String): Observable<Collection<Album>> =
-        this.observableJustWrapper(Artist.getTopAlbums(artist, this.lastfm_key))
+        ObservableJust(Artist.getTopAlbums(artist, this.lastfm_key))
 
     override fun getArtistTags(artist: String, session: Session): Observable<Collection<String>> =
-        this.observableJustWrapper(Artist.getTags(artist, session))
+        ObservableJust(Artist.getTags(artist, session))
 
     override fun getSimilarTracks(artist: String, mbid: String): Observable<Collection<Track>> =
-        this.observableJustWrapper(Track.getSimilar(artist, mbid, this.lastfm_key))
+        ObservableJust(Track.getSimilar(artist, mbid, this.lastfm_key))
 
     override fun getLovedTracks(user: String, page: Int): Observable<Collection<Track>> =
-        this.observableJustWrapper(User.getLovedTracks(user, page, this.lastfm_key).pageResults)
+        ObservableJust(User.getLovedTracks(user, page, this.lastfm_key).pageResults)
 
     override fun loveTrack(artist: String, track: String, session: Session): Observable<Track> =
         this.observableCreateWrapper {
@@ -106,7 +106,7 @@ class RemoteDataStore @Inject constructor(private val context: Context): IDataSt
      * @return an [Observable] reference.
      */
     private fun <O> observableCreateWrapper(block: (emitter: ObservableEmitter<O>) -> Unit): Observable<O> =
-        observable<O> { block(it); it.onComplete() }.subscribeOn(Schedulers.io())
+        observable { block(it); it.onComplete() }
 
     /**
      * Wrapping the [Observable.just] with [Schedulers.IO]
@@ -114,5 +114,5 @@ class RemoteDataStore @Inject constructor(private val context: Context): IDataSt
      * @param data Omit data.
      * @return an [Observable] reference.
      */
-    private fun <O> observableJustWrapper(data: O): Observable<O> = ObservableJust<O>(data).subscribeOn(Schedulers.io())
+    private fun <O> observableJustWrapper(data: O): Observable<O> = ObservableJust(data)
 }
