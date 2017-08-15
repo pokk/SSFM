@@ -21,9 +21,7 @@ android {
         buildConfigField "long", "BUILD_TIMESTAMP", project.hasProperty("devBuild") ? "000000000" : System.currentTimeMillis() + "L"
     }
     buildTypes {
-        release {
-            minifyEnabled false
-        }
+        release { minifyEnabled false }
         debug {
             signingConfig signingConfigs.debug
             ext.alwaysUpdateBuildId = false
@@ -35,18 +33,10 @@ android {
             assets.srcDirs += 'assets'
         }
     }
-    packagingOptions {
-        exclude 'META-INF/rxjava.properties'
-    }
-    configurations.all {
-        resolutionStrategy.force "com.google.code.findbugs:jsr305:3.0.1"
-    }
-    dataBinding {
-        enabled = true
-    }
-    dexOptions {
-        javaMaxHeapSize = '4g'
-    }
+    packagingOptions { exclude 'META-INF/rxjava.properties' }
+    configurations.all { resolutionStrategy.force "com.google.code.findbugs:jsr305:3.0.1" }
+    dataBinding { enabled = true }
+    dexOptions { javaMaxHeapSize "4g" }
     drawableOptimizer {
         optimizer = 'zopfli'
         compressionLevel = 9
@@ -66,15 +56,11 @@ android {
             dimension "default"
             resConfigs("en", "xxhdpi")
         }
-        production {
-            dimension "default"
-        }
+        production { dimension "default" }
     }
 }
 
-kapt {
-    generateStubs = true
-}
+kapt { generateStubs = true }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])

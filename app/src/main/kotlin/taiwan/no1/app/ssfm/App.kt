@@ -3,7 +3,6 @@ package taiwan.no1.app.ssfm
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import taiwan.no1.app.ssfm.internal.di.components.AppComponent
-import taiwan.no1.app.ssfm.internal.di.components.DaggerAppComponent
 
 /**
  * Android Main Application.
@@ -19,6 +18,16 @@ class App: DaggerApplication() {
 
     init {
         injector = DaggerAppComponent.builder().create(this)
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+
+//        val db = Room.databaseBuilder(this.applicationContext, TestDatabase::class.java, "TestDatabase").
+//            allowMainThreadQueries().
+//            build()
+//
+//        logw(db.getTestDao().findAll())
     }
 
     override fun applicationInjector(): AndroidInjector<App> = injector
