@@ -1,6 +1,5 @@
 package taiwan.no1.app.ssfm.mvvm.models.data.local.room
 
-import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
 
 
@@ -12,10 +11,10 @@ import android.arch.persistence.room.*
 @Dao
 interface NoteDao {
     @Query("SELECT * FROM note")
-    fun allNotes(): LiveData<List<Note>>
+    fun allNotes(): List<Note>
 
     @Query("SELECT * FROM note WHERE id = :id")
-    fun note(id: String): LiveData<Note>
+    fun note(id: String): Note
 
     @Insert
     fun insertAll(vararg notes: Note)
