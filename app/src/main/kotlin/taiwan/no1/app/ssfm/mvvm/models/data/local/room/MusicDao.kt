@@ -10,11 +10,11 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity.DataBean
  */
 @Dao
 interface MusicDao {
-    @Query("SELECT * FROM note")
-    fun allNotes(): List<DataBean>
+    @Query("SELECT * FROM music_table")
+    fun allMusic(): List<DataBean>
 
     @Query("SELECT * FROM music_table WHERE id = :id")
-    fun note(id: String): DataBean
+    fun music(id: String): DataBean
 
     @Insert
     fun insertAll(vararg notes: DataBean)

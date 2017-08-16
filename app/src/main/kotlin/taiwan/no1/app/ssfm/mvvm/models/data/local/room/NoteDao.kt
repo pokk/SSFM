@@ -8,18 +8,18 @@ package taiwan.no1.app.ssfm.mvvm.models.data.local.room
  */
 //@Dao
 //interface NoteDao {
-//    @Query("SELECT * FROM note")
-//    fun allNotes(): List<Note>
+//    @Query("SELECT * FROM tag")
+//    fun allTags(): List<Note>
 //
-//    @Query("SELECT * FROM note WHERE id = :id")
-//    fun note(id: String): Note
+//    @Query("SELECT * FROM tag WHERE id = :id")
+//    fun tag(id: String): Note
 //
 //    @Insert
 //    fun insertAll(vararg notes: Note)
 //
 //    @Update
-//    fun update(vararg note: Note)
+//    fun update(vararg tag: Note)
 //
 //    @Delete
-//    fun delete(note: Note)
+//    fun delete(tag: Note)
 //}

@@ -5,6 +5,7 @@ import android.support.multidex.MultiDex
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import taiwan.no1.app.ssfm.internal.di.components.AppComponent
+import taiwan.no1.app.ssfm.internal.di.components.DaggerAppComponent
 
 /**
  * Android Main Application.

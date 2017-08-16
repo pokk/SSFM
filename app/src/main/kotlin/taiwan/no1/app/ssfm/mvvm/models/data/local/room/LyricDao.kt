@@ -11,10 +11,10 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.LyricEntity
 @Dao
 interface LyricDao {
     @Query("SELECT * FROM lyric_table")
-    fun allNotes(): List<LyricEntity>
+    fun allLyric(): List<LyricEntity>
 
     @Query("SELECT * FROM lyric_table WHERE id = :id")
-    fun note(id: String): LyricEntity
+    fun lyric(id: String): LyricEntity
 
     @Insert
     fun insertAll(vararg notes: LyricEntity)
