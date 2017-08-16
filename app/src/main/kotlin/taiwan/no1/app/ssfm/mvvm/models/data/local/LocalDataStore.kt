@@ -7,7 +7,7 @@ import de.umass.lastfm.Track
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.internal.di.components.DatabaseComponent
 import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
-import taiwan.no1.app.ssfm.mvvm.models.data.local.room.NoteDatabase
+import taiwan.no1.app.ssfm.mvvm.models.data.local.room.MusicDatabase
 import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import javax.inject.Inject
@@ -20,7 +20,7 @@ import javax.inject.Inject
  */
 class LocalDataStore: IDataStore {
     @Inject
-    lateinit var roomDb: NoteDatabase
+    lateinit var roomDb: MusicDatabase
 
     init {
         DatabaseComponent.Initializer.init().inject(this)

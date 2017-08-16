@@ -5,7 +5,7 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.LocalData
-import taiwan.no1.app.ssfm.mvvm.models.data.local.room.NoteDatabase
+import taiwan.no1.app.ssfm.mvvm.models.data.local.room.MusicDatabase
 
 /**
  *
@@ -16,8 +16,8 @@ import taiwan.no1.app.ssfm.mvvm.models.data.local.room.NoteDatabase
 class RoomModule {
     @Provides
     @LocalData
-    fun providesXXDatabase(context: Context): NoteDatabase =
-        Room.databaseBuilder(context, NoteDatabase::class.java, "NoteDatabase").
+    fun providesXXDatabase(context: Context): MusicDatabase =
+        Room.databaseBuilder(context, MusicDatabase::class.java, "MusicDatabase").
             allowMainThreadQueries().
             build()
 }
