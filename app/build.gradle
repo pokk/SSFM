@@ -136,9 +136,6 @@ dependencies {
     compile "com.android.support:recyclerview-v7:25.4.0"
     compile 'com.android.support.constraint:constraint-layout:1.1.0-beta1'
 
-    // FIXED: https://stackoverflow.com/questions/27438145/out-of-memory-error-java-heap-memory-on-android-studio
-    compile "com.google.android.gms:play-services-base:11.0.4"
-
     // Database debug
     debugCompile 'com.amitshekhar.android:debug-db:1.0.1'
 
