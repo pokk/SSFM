@@ -19,35 +19,27 @@ data class DetailMusicEntity(
 @Entity(tableName = "music_table")
 @TypeConverters(IntConverter::class)
 data class DataBean constructor(
-    @PrimaryKey(autoGenerate = true)
-    var id: Int,
-    var hash: String? = null,
-    var timelength: Int = 0,
-    var filesize: Int = 0,
-    var audio_name: String? = null,
-    var have_album: Int = 0,
-    @ColumnInfo(name = "album_name")
+    @PrimaryKey(autoGenerate = true) var id: Int,
+    @Ignore var hash: String?,
+    @Ignore var timelength: Int,
+    @Ignore var filesize: Int,
+    @Ignore var audio_name: String?,
+    @Ignore var have_album: Int,
     var album_name: String?,
-    var album_id: Int = 0,
-    var img: String? = null,
-    var have_mv: Int = 0,
-    var video_id: String? = null,
-    var author_name: String? = null,
-    @ColumnInfo(name = "song_name")
+    @Ignore var album_id: Int,
+    @Ignore var img: String?,
+    @Ignore var have_mv: Int,
+    @Ignore var video_id: String?,
+    @Ignore var author_name: String?,
     var song_name: String?,
-    var lyrics: String? = null,
-    @ColumnInfo(name = "singer_name")
-    var author_id: String?,
-    var play_url: String? = null,
-    var bitrate: Int = 0,
-    @Ignore
-    var authors: List<AuthorsBean>? = null,
-    @ColumnInfo(name = "last_play_time")
+    @Ignore var lyrics: String?,
+    @ColumnInfo(name = "singer_name") var author_id: String?,
+    @Ignore var play_url: String?,
+    @Ignore var bitrate: Int = 0,
+    @Ignore var authors: List<AuthorsBean>?,
     var last_play_time: Date,
-    @ColumnInfo(name = "offline")
-    var is_offline: Boolean,
-    @ColumnInfo(name = "tag")
-    var tag: List<Int>?)
+    @ColumnInfo(name = "offline") var is_offline: Boolean,
+    @ColumnInfo(name = "tag") var tag: List<Int>?)
 
 data class AuthorsBean(
     var is_publish: String? = null,

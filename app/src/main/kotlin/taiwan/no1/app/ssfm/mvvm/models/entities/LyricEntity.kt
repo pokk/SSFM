@@ -1,6 +1,5 @@
 package taiwan.no1.app.ssfm.mvvm.models.entities
 
-import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 
@@ -11,4 +10,4 @@ import android.arch.persistence.room.PrimaryKey
  */
 @Entity(tableName = "lyric_table")
 data class LyricEntity constructor(@PrimaryKey(autoGenerate = true) var id: Int,
-                                   @ColumnInfo(name = "lyric") var lyric: String)
+                                   var lyric: String)

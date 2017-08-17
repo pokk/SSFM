@@ -1,6 +1,5 @@
 package taiwan.no1.app.ssfm.mvvm.models.entities
 
-import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 
@@ -11,6 +10,4 @@ import android.arch.persistence.room.PrimaryKey
  */
 @Entity(tableName = "tag_table")
 data class TagEntity constructor(@PrimaryKey(autoGenerate = true) var id: Int,
-                                 @ColumnInfo(name = "name") var name: String,
-                                 var ttt: String,
-                                 var test_col: String)
+                                 var name: String)
