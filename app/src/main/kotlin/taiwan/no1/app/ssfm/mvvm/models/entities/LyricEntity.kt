@@ -10,8 +10,5 @@ import android.arch.persistence.room.PrimaryKey
  * @since   8/16/17
  */
 @Entity(tableName = "lyric_table")
-data class LyricEntity constructor(
-    @PrimaryKey(autoGenerate = true)
-    var id: Int,
-    @ColumnInfo(name = "lyric")
-    var lyric: String)
+data class LyricEntity constructor(@PrimaryKey(autoGenerate = true) var id: Int,
+                                   @ColumnInfo(name = "lyric") var lyric: String)

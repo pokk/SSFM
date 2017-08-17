@@ -25,6 +25,7 @@ android {
         debug {
             signingConfig signingConfigs.debug
             ext.alwaysUpdateBuildId = false
+            resValue("string", "PORT_NUMBER", "8081")
         }
     }
     sourceSets {
@@ -36,7 +37,10 @@ android {
     packagingOptions { exclude 'META-INF/rxjava.properties' }
     configurations.all { resolutionStrategy.force "com.google.code.findbugs:jsr305:3.0.1" }
     dataBinding { enabled = true }
-    dexOptions { javaMaxHeapSize "4g" }
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "4g"
+    }
     drawableOptimizer {
         optimizer = 'zopfli'
         compressionLevel = 9
@@ -132,6 +136,10 @@ dependencies {
     compile "com.android.support:recyclerview-v7:25.4.0"
     compile 'com.android.support.constraint:constraint-layout:1.1.0-beta1'
 
+    // FIXED: https://stackoverflow.com/questions/27438145/out-of-memory-error-java-heap-memory-on-android-studio
+    compile "com.google.android.gms:play-services-base:11.0.4"
+
+    // Database debug
     debugCompile 'com.amitshekhar.android:debug-db:1.0.1'
 
     testCompile "junit:junit:4.12"

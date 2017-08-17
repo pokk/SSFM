@@ -1,7 +1,7 @@
-package taiwan.no1.app.ssfm.mvvm.models.data.local.room
+package taiwan.no1.app.ssfm.mvvm.models.data.local.room.dao
 
 import android.arch.persistence.room.*
-import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity.DataBean
+import taiwan.no1.app.ssfm.mvvm.models.entities.DataBean
 
 /**
  *

@@ -10,5 +10,7 @@ import android.arch.persistence.room.PrimaryKey
  * @since   8/17/17
  */
 @Entity(tableName = "tag_table")
-data class TagEntity constructor(@PrimaryKey(autoGenerate = true) var id: Int = 0,
-                                 @ColumnInfo(name = "name") var name: String = "")
+data class TagEntity constructor(@PrimaryKey(autoGenerate = true) var id: Int,
+                                 @ColumnInfo(name = "name") var name: String,
+                                 var ttt: String,
+                                 var test_col: String)
