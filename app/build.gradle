@@ -8,11 +8,12 @@ def buildDateTime = project.hasProperty('devBuild') ? 100 : new Date().format('y
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "taiwan.no1.app"
         minSdkVersion 21
         targetSdkVersion 25
+        multiDexEnabled true
         versionCode buildDateTime
         versionName "1.0"
         renderscriptTargetApi 19
@@ -37,10 +38,7 @@ android {
     packagingOptions { exclude 'META-INF/rxjava.properties' }
     configurations.all { resolutionStrategy.force "com.google.code.findbugs:jsr305:3.0.1" }
     dataBinding { enabled = true }
-    dexOptions {
-        incremental true
-        javaMaxHeapSize "4g"
-    }
+    dexOptions { javaMaxHeapSize "4g" }
     drawableOptimizer {
         optimizer = 'zopfli'
         compressionLevel = 9
