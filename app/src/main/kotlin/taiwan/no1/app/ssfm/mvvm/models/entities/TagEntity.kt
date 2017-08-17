@@ -1,13 +1,13 @@
 package taiwan.no1.app.ssfm.mvvm.models.entities
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
+import org.greenrobot.greendao.annotation.Entity
+import org.greenrobot.greendao.annotation.Id
 
 /**
  *
  * @author  jieyi
  * @since   8/17/17
  */
-@Entity(tableName = "tag_table")
-data class TagEntity constructor(@PrimaryKey(autoGenerate = true) var id: Int,
+@Entity
+data class TagEntity constructor(@Id(autoincrement = true) var id: Long,
                                  var name: String)
