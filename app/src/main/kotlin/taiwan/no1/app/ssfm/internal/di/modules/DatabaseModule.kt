@@ -11,5 +11,5 @@ import dagger.Module
 class DatabaseModule {
 //    @Provides
 //    @LocalData
-//    fun providesXXDatabase(context: Context): MusicDatabase =
+//    fun provideMusicDatabase(context: Context) = FlowManager.init(FlowConfig.Builder(context).build())
 }

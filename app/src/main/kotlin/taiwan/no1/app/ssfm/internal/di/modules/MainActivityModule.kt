@@ -20,11 +20,11 @@ import taiwan.no1.app.ssfm.mvvm.views.activities.MainActivity
 class MainActivityModule {
     @Provides
     @PerActivity
-    fun usecase(dataRepository: DataRepository): BaseUsecase<DetailMusicEntity, RequestValue> =
+    fun provideUsecase(dataRepository: DataRepository): BaseUsecase<DetailMusicEntity, RequestValue> =
         DetailMusicCase(dataRepository)
 
     @Provides
     @PerActivity
-    fun vm(activity: MainActivity, usecase: BaseUsecase<DetailMusicEntity, RequestValue>): MainViewModel =
+    fun provideViewModel(activity: MainActivity, usecase: BaseUsecase<DetailMusicEntity, RequestValue>): MainViewModel =
         MainViewModel(activity, usecase)
 }

@@ -2,6 +2,8 @@ package taiwan.no1.app.ssfm
 
 import android.content.Context
 import android.support.multidex.MultiDex
+import com.raizlabs.android.dbflow.config.FlowConfig
+import com.raizlabs.android.dbflow.config.FlowManager
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import taiwan.no1.app.ssfm.internal.di.components.AppComponent
@@ -20,6 +22,9 @@ class App: DaggerApplication() {
     }
 
     init {
+        // Initial the database.
+        FlowManager.init(FlowConfig.Builder(this).build())
+        // Create an application component injector.
         injector = DaggerAppComponent.builder().create(this)
     }
 

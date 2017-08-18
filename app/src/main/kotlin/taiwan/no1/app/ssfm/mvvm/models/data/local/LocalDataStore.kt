@@ -5,12 +5,9 @@ import de.umass.lastfm.Artist
 import de.umass.lastfm.Session
 import de.umass.lastfm.Track
 import io.reactivex.Observable
-import taiwan.no1.app.ssfm.internal.di.components.DatabaseComponent
 import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
-import taiwan.no1.app.ssfm.mvvm.models.data.local.room.MusicDatabase
 import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
-import javax.inject.Inject
 
 /**
  * Retrieving the data from local storage. All return objects are [Observable] to viewmodels.
@@ -19,11 +16,11 @@ import javax.inject.Inject
  * @since   5/10/17
  */
 class LocalDataStore: IDataStore {
-    @Inject
-    lateinit var roomDb: MusicDatabase
+//    @Inject
+//    lateinit var roomDb: MusicDatabase
 
     init {
-        DatabaseComponent.Initializer.init().inject(this)
+//        DatabaseComponent.Initializer.init().inject(this)
     }
 
     override fun getSearchMusicRes(keyword: String): Observable<SearchMusicEntity> {

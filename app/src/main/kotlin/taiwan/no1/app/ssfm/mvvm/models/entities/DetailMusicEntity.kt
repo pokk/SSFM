@@ -1,8 +1,5 @@
 package taiwan.no1.app.ssfm.mvvm.models.entities
 
-import org.greenrobot.greendao.annotation.Entity
-import org.greenrobot.greendao.annotation.Id
-import org.greenrobot.greendao.annotation.Property
 import java.util.*
 
 /**
@@ -17,9 +14,8 @@ data class DetailMusicEntity(
     var err_code: Int = 0,
     var data: DataBean? = null) {
 
-    @Entity
     data class DataBean constructor(
-        @Id(autoincrement = true) var id: Long,
+        var id: Long,
         var hash: String?,
         var timelength: Int,
         var filesize: Int,
@@ -33,13 +29,13 @@ data class DetailMusicEntity(
         var author_name: String?,
         var song_name: String?,
         var lyrics: String?,
-        @Property(nameInDb = "singer_name") var author_id: String?,
+        var author_id: String?,
         var play_url: String?,
         var bitrate: Int = 0,
         var authors: List<AuthorsBean>?,
         var last_play_time: Date,
-        @Property(nameInDb = "offline") var is_offline: Boolean,
-        @Property(nameInDb = "tag") var tag: List<Int>?)
+        var is_offline: Boolean,
+        var tag: List<Int>?)
 
     data class AuthorsBean(
         var is_publish: String? = null,

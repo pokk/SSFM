@@ -106,7 +106,15 @@ dependencies {
     // RxLint
     compile "nl.littlerobots.rxlint:rxlint:1.4"
     /* For Database */
-    compile "org.greenrobot:greendao:3.2.2"
+    kapt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
+    compile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
+    compile "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
+    compile "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:${dbflow_version}"
+    compile "com.github.Raizlabs.DBFlow:dbflow-rx2:${dbflow_version}"
+    compile "com.github.Raizlabs.DBFlow:dbflow-rx2-kotlinextensions:${dbflow_version}"
+    // sql-cipher database encryption (optional)
+//    compile "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:${dbflow_version}"
+//    compile "net.zetetic:android-database-sqlcipher:${sqlcipher_version}@aar"
     /* For internet */
     // Retrofit 2
     compile "com.squareup.retrofit2:retrofit:2.3.0"
