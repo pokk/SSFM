@@ -80,6 +80,6 @@ class MediaDownloadModel: MediaDataSource {
     }
 
     interface DownloadListener {
-        fun onDownloadFinish()
+        fun onDownloadFinish(): Unit
     }
 }
