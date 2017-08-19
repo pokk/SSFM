@@ -42,6 +42,7 @@ data class DetailMusicEntity(
         var authors: List<AuthorsBean> = emptyList(),
         @Column var last_play_time: Date = Date(0),
         @Column var is_offline: Boolean = false,
+        // TODO(jieyi): 8/19/17 DBFlow might change to MutableList data type. Instead of MutableList, We use IntArray temporally.
         @Column(typeConverter = ListIntConverter::class) var tag: IntArray = intArrayOf()): BaseRXModel()
 
     data class AuthorsBean(
