@@ -2,7 +2,8 @@ package taiwan.no1.app.ssfm.mvvm.views.activities
 
 //import android.app.Activity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.sample_button.*
+import kotlinx.android.synthetic.main.sample_button.btn
+import kotlinx.android.synthetic.main.sample_button.btns
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.mvvm.views.BaseActivity

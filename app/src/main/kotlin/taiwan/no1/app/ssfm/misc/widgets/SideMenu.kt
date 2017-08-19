@@ -17,8 +17,10 @@ import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import com.devrapid.kotlinknifer.WeakRef
 import com.devrapid.kotlinknifer.animatorListener
-import kotlinx.android.synthetic.main.custom_menu_scroll_view.view.*
-import kotlinx.android.synthetic.main.custom_menu_view_container.view.*
+import kotlinx.android.synthetic.main.custom_menu_scroll_view.view.ll_menu
+import kotlinx.android.synthetic.main.custom_menu_view_container.view.iv_background
+import kotlinx.android.synthetic.main.custom_menu_view_container.view.iv_shadow
+import kotlinx.android.synthetic.main.custom_menu_view_container.view.rl_menu_holder
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import taiwan.no1.app.ssfm.R
 import java.lang.ref.WeakReference

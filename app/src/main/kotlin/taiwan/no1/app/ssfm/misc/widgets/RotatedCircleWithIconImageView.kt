@@ -7,7 +7,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.devrapid.kotlinknifer.getResColor
-import org.jetbrains.anko.*
+import org.jetbrains.anko.forEachChildWithIndex
+import org.jetbrains.anko.imageResource
+import org.jetbrains.anko.imageView
+import org.jetbrains.anko.padding
+import org.jetbrains.anko.textColor
+import org.jetbrains.anko.textView
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.misc.extension.toTimeString
 import kotlin.properties.Delegates
