@@ -6,7 +6,7 @@ import android.support.annotation.StringRes
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.TextView
-import kotlinx.android.synthetic.main.item_custom_menu.view.*
+import kotlinx.android.synthetic.main.item_custom_menu.view.tv_title
 import taiwan.no1.app.ssfm.R
 
 /**

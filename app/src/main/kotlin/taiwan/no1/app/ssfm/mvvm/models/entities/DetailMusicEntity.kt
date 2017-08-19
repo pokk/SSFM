@@ -1,8 +1,12 @@
 package taiwan.no1.app.ssfm.mvvm.models.entities
 
-import android.arch.persistence.room.*
-import taiwan.no1.app.ssfm.mvvm.models.data.local.room.converter.IntConverter
-import java.util.*
+import com.raizlabs.android.dbflow.annotation.Column
+import com.raizlabs.android.dbflow.annotation.PrimaryKey
+import com.raizlabs.android.dbflow.annotation.Table
+import com.raizlabs.android.dbflow.rx2.structure.BaseRXModel
+import taiwan.no1.app.ssfm.mvvm.models.data.database.ListIntConverter
+import taiwan.no1.app.ssfm.mvvm.models.data.database.MusicDatabase
+import java.sql.Date
 
 /**
  * The detail information of a music song.
@@ -10,39 +14,39 @@ import java.util.*
  * @author jieyi
  * @since 5/22/17
  */
-
 data class DetailMusicEntity(
     var status: Int = 0,
     var err_code: Int = 0,
-    var data: DataBean? = null)
+    var data: DataBean? = null) {
 
-@Entity(tableName = "music_table")
-@TypeConverters(IntConverter::class)
-data class DataBean constructor(
-    @PrimaryKey(autoGenerate = true) var id: Int,
-    @Ignore var hash: String?,
-    @Ignore var timelength: Int,
-    @Ignore var filesize: Int,
-    @Ignore var audio_name: String?,
-    @Ignore var have_album: Int,
-    var album_name: String?,
-    @Ignore var album_id: Int,
-    @Ignore var img: String?,
-    @Ignore var have_mv: Int,
-    @Ignore var video_id: String?,
-    @Ignore var author_name: String?,
-    var song_name: String?,
-    @Ignore var lyrics: String?,
-    @ColumnInfo(name = "singer_name") var author_id: String?,
-    @Ignore var play_url: String?,
-    @Ignore var bitrate: Int = 0,
-    @Ignore var authors: List<AuthorsBean>?,
-    var last_play_time: Date,
-    @ColumnInfo(name = "offline") var is_offline: Boolean,
-    @ColumnInfo(name = "tag") var tag: List<Int>?)
+    @Table(database = MusicDatabase::class)
+    data class DataBean(
+        @PrimaryKey(autoincrement = true) var id: Long = 0,
+        @Column var uri: String = "",
+        var hash: String = "",
+        var timelength: Int = 0,
+        var filesize: Int = 0,
+        var audio_name: String = "",
+        var have_album: Int = 0,
+        @Column var album_name: String = "",
+        var album_id: Int = 0,
+        var img: String = "",
+        var have_mv: Int = 0,
+        var video_id: String = "",
+        @Column(name = "singer_name") var author_name: String = "",
+        @Column var song_name: String = "",
+        var lyrics: String = "",
+        var author_id: String = "",
+        var play_url: String = "",
+        var bitrate: Int = 0,
+        var authors: List<AuthorsBean> = emptyList(),
+        @Column var last_play_time: Date = Date(0),
+        @Column var is_offline: Boolean = false,
+        @Column(typeConverter = ListIntConverter::class) var tag: IntArray = intArrayOf()): BaseRXModel()
 
-data class AuthorsBean(
-    var is_publish: String? = null,
-    var author_id: String? = null,
-    var avatar: String? = null,
-    var author_name: String? = null)
+    data class AuthorsBean(
+        var is_publish: String = "",
+        var author_id: String = "",
+        var avatar: String = "",
+        var author_name: String = "")
+}

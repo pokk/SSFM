@@ -10,7 +10,7 @@ import de.umass.lastfm.Chart
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.misc.extension.observer
 import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.TestEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.TagEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.DetailMusicCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.DetailMusicCase.RequestValue
@@ -23,9 +23,9 @@ import kotlin.concurrent.thread
  */
 class MainViewModel(activity: Activity, val usecase: BaseUsecase<DetailMusicEntity, RequestValue>):
     BaseViewModel(activity) {
-    private val entity: TestEntity = TestEntity("Jieyi", 20)
+    private val entity: TagEntity = TagEntity(20, "Jieyi")
 
-    var test: ObservableField<TestEntity> = ObservableField()
+    var test: ObservableField<TagEntity> = ObservableField()
 
     init {
         this.test.set(this.entity)

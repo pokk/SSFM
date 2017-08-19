@@ -1,6 +1,6 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices
 
-import java.util.*
+import java.util.Stack
 
 /**
  * Controlling play list.
