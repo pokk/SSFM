@@ -16,13 +16,6 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
  * @since   5/10/17
  */
 class LocalDataStore: IDataStore {
-//    @Inject
-//    lateinit var roomDb: MusicDatabase
-
-    init {
-//        DatabaseComponent.Initializer.init().inject(this)
-    }
-
     override fun getSearchMusicRes(keyword: String): Observable<SearchMusicEntity> {
         TODO("Local database has no session...")
     }

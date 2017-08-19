@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.models.data.database
+package taiwan.no1.app.ssfm.mvvm.models.data.local.database
 
 import com.raizlabs.android.dbflow.converter.TypeConverter
 
