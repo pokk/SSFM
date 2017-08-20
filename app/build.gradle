@@ -7,6 +7,10 @@ apply plugin: 'kotlin-kapt'
 
 def buildDateTime = project.hasProperty('devBuild') ? 100 : new Date().format('yyMMddHHmm').toInteger()
 
+// From Kotlin 1.1.4, we don't have to use findByView in viewHolder or customize view.
+androidExtensions { experimental = true }
+kapt { generateStubs = true }
+
 android {
     compileSdkVersion 25
     buildToolsVersion "26.0.1"
@@ -63,8 +67,6 @@ android {
     }
 }
 
-kapt { generateStubs = true }
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -101,8 +103,6 @@ dependencies {
     compile "com.jakewharton.rxbinding2:rxbinding-design-kotlin:2.0.0"
     compile "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7-kotlin:2.0.0"
     compile "com.jakewharton.rxbinding2:rxbinding-leanback-v17-kotlin:2.0.0"
-    // RxCommand
-    compile "com.shundaojia:rxcommand:1.1.3"
     // RxLint
     compile "nl.littlerobots.rxlint:rxlint:1.4"
     /* For Database */

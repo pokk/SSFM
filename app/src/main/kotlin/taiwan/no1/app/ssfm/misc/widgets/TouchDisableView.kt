@@ -7,8 +7,9 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 
-internal class TouchDisableView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null):
-    ViewGroup(context, attrs) {
+internal class TouchDisableView
+@JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0):
+    ViewGroup(context, attrs, defStyleAttr) {
     var content: View? = null
         set(v) {
             this.removeView(field)

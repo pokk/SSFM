@@ -17,7 +17,7 @@ abstract class AdvancedActivity<VM: IViewModel, out B: ViewDataBinding>: BaseAct
     protected abstract var viewModel: VM
     protected val binding: B by lazy {
         val (activity, layoutId) = this.provideBindingLayoutId()
-        // Databinding process.
+        // DataBinding process.
         DataBindingUtil.setContentView<B>(activity, layoutId)
     }
 

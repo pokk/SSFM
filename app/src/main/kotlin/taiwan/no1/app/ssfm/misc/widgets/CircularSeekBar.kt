@@ -21,7 +21,8 @@ import taiwan.no1.app.ssfm.R
  * @author  jieyi
  * @since   7/17/17
  */
-class CircularSeekBar: View {
+class CircularSeekBar @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0):
+    View(context, attrs, defStyleAttr) {
     companion object {
         private const val MAX_VALUE = 100f
         private const val DEFAULT_START_DEGREE = 135f
@@ -152,22 +153,8 @@ class CircularSeekBar: View {
     private var animatorPlay = ValueAnimator.ofFloat(0f, MAX_VALUE)
     //endregion
 
-    //region Constructors
-    constructor(context: Context): super(context) {
-        this.init(context, null, 0)
-    }
-
-    constructor(context: Context, attrs: AttributeSet): super(context, attrs) {
-        this.init(context, attrs, 0)
-    }
-
-    constructor(context: Context, attrs: AttributeSet, defStyle: Int): super(context, attrs, defStyle) {
-        this.init(context, attrs, defStyle)
-    }
-    //endregion
-
-    fun init(context: Context, attrs: AttributeSet?, defStyle: Int) {
-        context.obtainStyledAttributes(attrs, R.styleable.CircularSeekBar, defStyle, 0).also {
+    init {
+        context.obtainStyledAttributes(attrs, R.styleable.CircularSeekBar, defStyleAttr, 0).also {
             this.startDegree = it.getFloat(R.styleable.CircularSeekBar_start_degree, this.startDegree)
             this.sweepDegree = it.getFloat(R.styleable.CircularSeekBar_sweep_degree, this.sweepDegree)
             this.progressWidth = it.getFloat(R.styleable.CircularSeekBar_progress_width, this.progressWidth)

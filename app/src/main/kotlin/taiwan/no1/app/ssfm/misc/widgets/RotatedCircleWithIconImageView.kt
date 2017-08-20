@@ -23,7 +23,9 @@ import kotlin.properties.Delegates
  * @author  jieyi
  * @since   6/19/17
  */
-class RotatedCircleWithIconImageView: ViewGroup {
+class RotatedCircleWithIconImageView
+@JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0):
+    ViewGroup(context, attrs, defStyleAttr) {
     companion object {
         private const val OUTER_PADDING = 30
         private const val INNER_PADDING = OUTER_PADDING + 30
@@ -79,22 +81,8 @@ class RotatedCircleWithIconImageView: ViewGroup {
         private set
     //endregion
 
-    //region Constructors
-    constructor(context: Context): super(context) {
-        init(context, null, 0)
-    }
-
-    constructor(context: Context, attrs: AttributeSet): super(context, attrs) {
-        init(context, attrs, 0)
-    }
-
-    constructor(context: Context, attrs: AttributeSet, defStyle: Int): super(context, attrs, defStyle) {
-        init(context, attrs, defStyle)
-    }
-    //endregion
-
-    fun init(context: Context, attrs: AttributeSet?, defStyle: Int) {
-        context.obtainStyledAttributes(attrs, R.styleable.RotatedCircleWithIconImageView, defStyle, 0).also {
+    init {
+        context.obtainStyledAttributes(attrs, R.styleable.RotatedCircleWithIconImageView, defStyleAttr, 0).also {
             this.src = it.getResourceId(R.styleable.RotatedCircleWithIconImageView_src, 0)
             this.iconInactive = it.getInteger(R.styleable.RotatedCircleWithIconImageView_fore_icon, this.iconInactive)
         }.recycle()
@@ -123,7 +111,7 @@ class RotatedCircleWithIconImageView: ViewGroup {
             }
         }
         this.circleSeekBar = (attrs?.let {
-            CircularSeekBar(context, attrs, defStyle)
+            CircularSeekBar(context, attrs, defStyleAttr)
         } ?: CircularSeekBar(context)).also {
             it.progressColor = this.progressColor
             it.unprogressColor = this.unprogressColor

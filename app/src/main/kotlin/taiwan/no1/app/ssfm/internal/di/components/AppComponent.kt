@@ -25,6 +25,6 @@ interface AppComponent: AndroidInjector<App> {
     @Component.Builder
     abstract class Builder: AndroidInjector.Builder<App>()
 
-    // Providing to dependence components.
+    /** Providing to dependence components. */
     fun context(): Context
 }

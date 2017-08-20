@@ -2,7 +2,6 @@ package taiwan.no1.app.ssfm.mvvm.views.activities
 
 import android.app.Activity
 import android.os.Bundle
-import com.devrapid.kotlinknifer.SharedPrefs
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityMainBinding
 import taiwan.no1.app.ssfm.mvvm.viewmodels.MainViewModel
@@ -11,22 +10,21 @@ import javax.inject.Inject
 
 
 class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>() {
-    @Inject
-    override lateinit var viewModel: MainViewModel
+    @Inject override lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //        binding.setVariable(BR.viewmodel, MainViewModel(this.applicationContext))
-        SharedPrefs.setPrefSettings(getSharedPreferences("Test", MODE_PRIVATE))
+//        binding.setVariable(viewmodel, MainViewModel(this.applicationContext))
     }
 
     override fun onResume() {
         super.onResume()
 
+
         // NOTE: 5/11/17 We can use the cache as like this way.
-        //        Caller.getInstance().cache = FileSystemCache(File("${Environment.getExternalStorageDirectory()}/.lastfm"))
-        //        Caller.getInstance().cache = null
-        //        Caller.getInstance().userAgent = "tst"
+//        Caller.getInstance().cache = FileSystemCache(File("${Environment.getExternalStorageDirectory()}/.lastfm"))
+//        Caller.getInstance().cache = null
+//        Caller.getInstance().userAgent = "tst"
 
         val user = this.getString(R.string.lastfm_name)
         val password = this.getString(R.string.lastfm_password)
@@ -34,16 +32,16 @@ class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>() {
         val secret = this.getString(R.string.lastfm_secret_key)
 
 //        val repo = DataRepository(LocalDataStore(), RemoteDataStore(this.applicationContext))
-
-        //        repo.getDetailMusicRes("e2a060761620ff482a272b67b204774d").
-        //            subscribeBy({
-        //                logw(it)
-        //            }, {
-        //                loge(it.message)
-        //                loge(it)
-        //            }, {
-        //                logd()
-        //            })
+//
+//        repo.getDetailMusicRes("e2a060761620ff482a272b67b204774d").
+//            subscribeBy({
+//                            logw(it)
+//                        }, {
+//                            loge(it.message)
+//                            loge(it)
+//                        }, {
+//                            logd()
+//                        })
 //        repo.obtainSession(user, password).subscribe {
 //            logd(it)
 //            logw(Track.unlove("cher", "believe", it))

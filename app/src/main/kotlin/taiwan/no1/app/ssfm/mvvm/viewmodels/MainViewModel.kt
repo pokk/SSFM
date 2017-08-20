@@ -23,9 +23,9 @@ import kotlin.concurrent.thread
  */
 class MainViewModel(activity: Activity, val usecase: BaseUsecase<DetailMusicEntity, RequestValue>):
     BaseViewModel(activity) {
-    private val entity: TagEntity = TagEntity(20, "Jieyi")
+    private val entity = TagEntity(20, "Jieyi")
 
-    var test: ObservableField<TagEntity> = ObservableField()
+    var test = ObservableField<TagEntity>()
 
     init {
         this.test.set(this.entity)

@@ -26,7 +26,9 @@ import taiwan.no1.app.ssfm.pattern.state.RepeatState
  * @author  jieyi
  * @since   6/28/17
  */
-class PlayerControllerLayout: ViewGroup {
+class PlayerControllerLayout
+@JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0):
+    ViewGroup(context, attrs, defStyleAttr) {
     val properties: ImageButton.() -> Unit = {
         this.backgroundColor = Color.BLACK
         this.scaleType = ImageView.ScaleType.FIT_CENTER
@@ -58,23 +60,6 @@ class PlayerControllerLayout: ViewGroup {
         }
     lateinit var listDecoratedButtons: List<PlayerButtonDecorator>
 
-    //region Constructors
-    constructor(context: Context): super(context) {
-        this.init()
-    }
-
-    constructor(context: Context, attrs: AttributeSet): super(context, attrs) {
-        this.init()
-    }
-
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int): super(context, attrs, defStyleAttr) {
-        this.init()
-    }
-    //endregion
-
-    fun init() {
-    }
-
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         // Separate 6 blocks, center is occupied 2 blocks.
         val unitWidth = (MeasureSpec.getSize(widthMeasureSpec) - this.paddingStart - this.paddingEnd) / 6
@@ -83,11 +68,12 @@ class PlayerControllerLayout: ViewGroup {
         this.listImageButtons.forEachWithIndex { index, _ ->
             val childWidth = if (2 == index) unitWidth.times(2) else unitWidth
             this.getChildAt(index).measure(MeasureSpec.makeMeasureSpec(childWidth, MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(childWidth - this.paddingTop - this.paddingBottom, MeasureSpec.EXACTLY))
+                MeasureSpec.makeMeasureSpec(childWidth - this.paddingTop - this.paddingBottom,
+                    MeasureSpec.EXACTLY))
         }
         // Pick the highest component's height and plus left & right margin.
         val maxHeight = this.listImageButtons.map { it.height }.max()?.plus(this.paddingTop)?.plus(this.paddingBottom) ?:
-            MeasureSpec.getSize(heightMeasureSpec)
+                        MeasureSpec.getSize(heightMeasureSpec)
         // Set this layout size.
         this.setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), maxHeight)
     }
