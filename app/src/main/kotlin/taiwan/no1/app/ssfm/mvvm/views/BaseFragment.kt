@@ -1,7 +1,9 @@
 package taiwan.no1.app.ssfm.mvvm.views
 
+import android.app.Activity
 import android.app.Fragment
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.annotation.LayoutRes
@@ -24,28 +26,39 @@ import javax.inject.Inject
 abstract class BaseFragment: RxFragment(), HasFragmentInjector {
     @Inject lateinit var childFragmentInjector: DispatchingAndroidInjector<Fragment>
 
-    protected var rootView: View? = null
+//    protected var rootView: View? = null
 
     //region Fragment cycle
+    @SuppressWarnings("deprecation")
+    override fun onAttach(activity: Activity) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            // Perform injection here before M, L (API 22) and below because onAttach(Context)
+            // is not yet available at L.
+            AndroidInjection.inject(this)
+        }
+        super.onAttach(activity)
+    }
+
     override fun onAttach(context: Context) {
-        AndroidInjection.inject(this)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Perform injection here for M (API 23) due to deprecation of onAttach(Activity).
+            AndroidInjection.inject(this)
+        }
         super.onAttach(context)
     }
 
     override final fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                                     savedInstanceState: Bundle?): View? {
-        // Keep the instance data.
-        this.retainInstance = true
-
-        // FIXED: https://www.zybuluo.com/kimo/note/255244
-        rootView ?: let { rootView = inflater.inflate(this.inflateView(), null) }
-        val parent: ViewGroup? = rootView?.parent as ViewGroup?
-        parent?.removeView(rootView)
-
-        // Init the presenter.
-        this.initPresenter()
-
-        return rootView
+        // XXX(jieyi): 8/20/17 Temporally comment.
+//        // Keep the instance data.
+//        this.retainInstance = true
+//        // FIXED: https://www.zybuluo.com/kimo/note/255244
+//        rootView ?: let { rootView = inflater.inflate(this.inflateView(), null) }
+//        val parent: ViewGroup? = rootView?.parent as ViewGroup?
+//        parent?.removeView(rootView)
+//
+//        return rootView
+        return inflater.inflate(this@BaseFragment.inflateView(), null)
     }
 
     override final fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -87,10 +100,5 @@ abstract class BaseFragment: RxFragment(), HasFragmentInjector {
      */
     @LayoutRes
     abstract protected fun inflateView(): Int
-
-    /**
-     * Initialize the presenter in [onCreateView].
-     */
-    abstract protected fun initPresenter()
     //endregion
 }

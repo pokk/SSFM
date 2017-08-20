@@ -4,10 +4,11 @@ import android.app.Activity
 import android.os.Bundle
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityMainBinding
+import taiwan.no1.app.ssfm.misc.extension.addFragment
 import taiwan.no1.app.ssfm.mvvm.viewmodels.MainViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedActivity
+import taiwan.no1.app.ssfm.mvvm.views.fragments.MainFragment
 import javax.inject.Inject
-
 
 class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>() {
     @Inject override lateinit var viewModel: MainViewModel
@@ -15,6 +16,7 @@ class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        binding.setVariable(viewmodel, MainViewModel(this.applicationContext))
+        fragmentManager.addFragment(R.id.rl_fragment, MainFragment())
     }
 
     override fun onResume() {

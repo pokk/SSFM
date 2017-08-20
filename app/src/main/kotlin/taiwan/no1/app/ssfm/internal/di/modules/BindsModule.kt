@@ -15,7 +15,7 @@ import taiwan.no1.app.ssfm.mvvm.views.activities.TestActivity
 @Module
 abstract class BindsModule {
     @PerActivity
-    @ContributesAndroidInjector(modules = arrayOf(MainActivityModule::class))
+    @ContributesAndroidInjector(modules = arrayOf(MainActivityModule::class, FragmentModule::class))
     abstract fun contributeMainActivityInjector(): MainActivity
 
     @PerActivity

@@ -45,21 +45,38 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_test"
-            app:layout_constraintVertical_bias="0.808"/>
+            app:layout_constraintVertical_bias="0.0"/>
 
         <EditText
             android:id="@+id/et_test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="63dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="62dp"
+            android:layout_marginTop="145dp"
             android:ems="10"
             android:inputType="textPersonName"
+            app:layout_constraintBottom_toTopOf="@+id/rl_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_test"/>
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_fragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/btn_test">
+
+        </RelativeLayout>
 
     </android.support.constraint.ConstraintLayout>
 </layout>
