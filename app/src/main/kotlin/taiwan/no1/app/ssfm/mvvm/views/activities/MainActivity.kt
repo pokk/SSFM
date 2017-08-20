@@ -22,7 +22,6 @@ class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>() {
     override fun onResume() {
         super.onResume()
 
-
         // NOTE: 5/11/17 We can use the cache as like this way.
 //        Caller.getInstance().cache = FileSystemCache(File("${Environment.getExternalStorageDirectory()}/.lastfm"))
 //        Caller.getInstance().cache = null
@@ -49,14 +48,6 @@ class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>() {
 //            logw(Track.unlove("cher", "believe", it))
 //            Radio.tune(Radio.RadioStation("test"), it)
 //        }
-    }
-
-    override fun bind() {
-        this.binding.viewmodel = this.viewModel
-    }
-
-    override fun unbind() {
-        this.binding.viewmodel = null
     }
 
     override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_main)

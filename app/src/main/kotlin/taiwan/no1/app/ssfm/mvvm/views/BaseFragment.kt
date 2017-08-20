@@ -27,7 +27,7 @@ abstract class BaseFragment: RxFragment(), HasFragmentInjector {
     /** From an activity for providing to children fragments. */
     @Inject lateinit var childFragmentInjector: DispatchingAndroidInjector<Fragment>
 
-//    protected var rootView: View? = null
+    protected open var rootView: View? = null
 
     //region Fragment cycle
     /** Perform injection here before M, L (API 22) and below because this is not yet available at L. */
@@ -47,18 +47,16 @@ abstract class BaseFragment: RxFragment(), HasFragmentInjector {
         super.onAttach(context)
     }
 
-    override final fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                                    savedInstanceState: Bundle?): View? {
-        // XXX(jieyi): 8/20/17 Temporally comment.
-//        // Keep the instance data.
-//        this.retainInstance = true
-//        // FIXED: https://www.zybuluo.com/kimo/note/255244
-//        rootView ?: let { rootView = inflater.inflate(this.inflateView(), null) }
-//        val parent: ViewGroup? = rootView?.parent as ViewGroup?
-//        parent?.removeView(rootView)
-//
-//        return rootView
-        return inflater.inflate(this@BaseFragment.inflateView(), null)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        // Keep the instance data.
+        this.retainInstance = true
+        // FIXED: https://www.zybuluo.com/kimo/note/255244
+        rootView ?: let { rootView = inflater.inflate(this.provideInflateView(), null) }
+        val parent: ViewGroup? = rootView?.parent as ViewGroup?
+        parent?.removeView(rootView)
+
+        return rootView
     }
 
     override final fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -97,7 +95,7 @@ abstract class BaseFragment: RxFragment(), HasFragmentInjector {
      * @return [LayoutRes] layout xml.
      */
     @LayoutRes
-    abstract protected fun inflateView(): Int
+    abstract protected fun provideInflateView(): Int
     //endregion
 
     /**

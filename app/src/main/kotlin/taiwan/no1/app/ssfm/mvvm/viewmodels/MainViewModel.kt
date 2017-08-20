@@ -21,7 +21,7 @@ import kotlin.concurrent.thread
  * @author  jieyi
  * @since   5/8/17
  */
-class MainViewModel(activity: Activity, val usecase: BaseUsecase<DetailMusicEntity, RequestValue>):
+class MainViewModel(activity: Activity, private val usecase: BaseUsecase<DetailMusicEntity, RequestValue>):
     BaseViewModel(activity) {
     private val entity = TagEntity(20, "Jieyi")
 

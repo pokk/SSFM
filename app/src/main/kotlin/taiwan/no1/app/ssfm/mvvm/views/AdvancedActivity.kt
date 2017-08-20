@@ -8,7 +8,7 @@ import android.support.annotation.CallSuper
 import taiwan.no1.app.ssfm.mvvm.viewmodels.IViewModel
 
 /**
- * Advanced [BaseActivity] with [IViewModel] and [ViewDataBinding] for basic setting in advance.
+ * Advanced [BaseActivity] with [IViewModel] and [ViewDataBinding] for basic data binding setting in advance.
  *
  * @author  jieyi
  * @since   5/10/17
@@ -24,19 +24,12 @@ abstract class AdvancedActivity<VM: IViewModel, out B: ViewDataBinding>: BaseAct
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        this.bind()
     }
 
     @CallSuper
     override fun onDestroy() {
         super.onDestroy()
     }
-
-    // TODO: 5/11/17 It might be using reflection to do onBind().
-    abstract protected fun bind()
-
-    abstract protected fun unbind()
 
     abstract protected fun provideBindingLayoutId(): Pair<Activity, Int>
 }
