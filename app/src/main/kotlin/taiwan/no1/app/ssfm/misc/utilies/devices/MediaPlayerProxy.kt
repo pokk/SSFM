@@ -17,6 +17,7 @@ class MediaPlayerProxy: IMultiMediaPlayer,
     private var mMediaPlayer = MediaPlayer()
     private var mState: IPlayerHandler.EPlayerState = IPlayerHandler.EPlayerState.EPlayerState_Stop
     private var getStreamingBufferPercentage: (percentage: Int) -> Unit = {}
+    private lateinit var downloadModel: MediaDownloadModel
 
     init {
         this.mMediaPlayer = MediaPlayer()
@@ -44,8 +45,12 @@ class MediaPlayerProxy: IMultiMediaPlayer,
     override fun play(uri: String) {
         this.mMediaPlayer.let {
             logd("prepare asynchronous thread")
-            it.setDataSource(uri)
-            it.prepareAsync()
+            downloadModel = MediaDownloadModel(uri, object: MediaDownloadModel.DownloadListener {
+                override fun onDownloadFinish() {
+                    this@MediaPlayerProxy.mMediaPlayer.prepareAsync()
+                }
+            })
+            it.setDataSource(downloadModel)
         }
     }
 
@@ -99,6 +104,11 @@ class MediaPlayerProxy: IMultiMediaPlayer,
 
     override fun getState(): IPlayerHandler.EPlayerState {
         return this.mState
+    }
+
+    override fun writeToFile(path: String) {
+        if (!this.mMediaPlayer.isPlaying) return
+        this.downloadModel.writeToFile(path)
     }
 
     class Builder {

@@ -19,4 +19,5 @@ interface IMultiMediaPlayer {
     fun isReplay(): Boolean
     fun isPlaying(): Boolean
     fun getState(): EPlayerState
+    fun writeToFile(path: String)
 }
