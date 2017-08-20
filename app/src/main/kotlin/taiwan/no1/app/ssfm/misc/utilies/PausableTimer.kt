@@ -8,7 +8,8 @@ import android.os.CountDownTimer
  * @author  jieyi
  * @since   7/23/17
  */
-class PausableTimer(val millisInFuture: Long = -1, val countDownInterval: Long = 1000) {
+class PausableTimer(private val millisInFuture: Long = -1, private val countDownInterval: Long = 1000) {
+    
     var onTick: (millisUntilFinished: Long) -> Unit = {}
     var onFinish: () -> Unit = {}
     var isPause = false

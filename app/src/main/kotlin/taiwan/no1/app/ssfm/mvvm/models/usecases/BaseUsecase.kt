@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.mvvm.models.usecases
 
 import io.reactivex.Observable
 import io.reactivex.Observer
+import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
@@ -22,6 +23,7 @@ import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase.RequestValues
  * @since   8/14/17
  */
 abstract class BaseUsecase<T, R: RequestValues>(protected val repository: IDataStore) {
+    /** Provide a common parameter variable for the children class. */
     var parameters: R? = null
 
     /**
@@ -62,7 +64,7 @@ abstract class BaseUsecase<T, R: RequestValues>(protected val repository: IDataS
      *
      * @return [Scheduler] implement from.
      */
-    open protected fun obtainObserverScheduler() = AndroidSchedulers.mainThread()
+    open protected fun obtainObserverScheduler(): Scheduler = AndroidSchedulers.mainThread()
 
     /**
      * Builds an [Observable] which will be used when executing the current [BaseUsecase].
@@ -73,8 +75,6 @@ abstract class BaseUsecase<T, R: RequestValues>(protected val repository: IDataS
         subscribeOn(this.obtainSubscribeScheduler()).
         observeOn(this.obtainObserverScheduler())
 
-    /**
-     * Interface for wrap a data for passing to a request.
-     */
+    /** Interface for wrap a data for passing to a request.*/
     interface RequestValues
 }

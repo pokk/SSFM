@@ -19,7 +19,9 @@ import javax.inject.Inject
  */
 abstract class BaseActivity: RxActivity(), HasFragmentInjector, HasSupportFragmentInjector {
     // Copy from [DaggerAppCompatActivity], becz this cant inherit two classes.
+    /** For providing to support fragments. */
     @Inject lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
+    /** For providing to fragments. */
     @Inject lateinit var fragmentInjector: DispatchingAndroidInjector<android.app.Fragment>
 
     //region Activity lifecycle
@@ -41,12 +43,16 @@ abstract class BaseActivity: RxActivity(), HasFragmentInjector, HasSupportFragme
     //endregion
 
     /**
-     * Providing the fragment injector([Fragment]) for the activities.
+     * Providing the fragment injector([Fragment]) for the fragments.
+     *
+     * @return a [supportFragmentInjector] for children of this fragment.
      */
     override fun supportFragmentInjector(): AndroidInjector<Fragment> = this.supportFragmentInjector
 
     /**
-     * Providing the fragment injector([android.app.Fragment]) for the activities.
+     * Providing the fragment injector([android.app.Fragment]) for the fragments.
+     *
+     * @return a [fragmentInjector] for children of this fragment.
      */
     override fun fragmentInjector(): AndroidInjector<android.app.Fragment> = this.fragmentInjector
 }

@@ -24,24 +24,24 @@ import javax.inject.Inject
  * @since   5/9/17
  */
 abstract class BaseFragment: RxFragment(), HasFragmentInjector {
+    /** From an activity for providing to children fragments. */
     @Inject lateinit var childFragmentInjector: DispatchingAndroidInjector<Fragment>
 
 //    protected var rootView: View? = null
 
     //region Fragment cycle
+    /** Perform injection here before M, L (API 22) and below because this is not yet available at L. */
     @SuppressWarnings("deprecation")
     override fun onAttach(activity: Activity) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            // Perform injection here before M, L (API 22) and below because onAttach(Context)
-            // is not yet available at L.
             AndroidInjection.inject(this)
         }
         super.onAttach(activity)
     }
 
+    /** Perform injection here for M (API 23) due to deprecation of onAttach(Activity). */
     override fun onAttach(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // Perform injection here for M (API 23) due to deprecation of onAttach(Activity).
             AndroidInjection.inject(this)
         }
         super.onAttach(context)
@@ -83,8 +83,6 @@ abstract class BaseFragment: RxFragment(), HasFragmentInjector {
     }
     //endregion
 
-    override fun fragmentInjector(): AndroidInjector<Fragment> = this.childFragmentInjector
-
     //region Initialization's order
     /**
      * Initialize the fragment method.
@@ -101,4 +99,11 @@ abstract class BaseFragment: RxFragment(), HasFragmentInjector {
     @LayoutRes
     abstract protected fun inflateView(): Int
     //endregion
+
+    /**
+     * Providing the fragment injector([Fragment]) for this children of fragments.
+     *
+     * @return a [fragmentInjector] for children of this fragment.
+     */
+    override fun fragmentInjector(): AndroidInjector<Fragment> = this.childFragmentInjector
 }

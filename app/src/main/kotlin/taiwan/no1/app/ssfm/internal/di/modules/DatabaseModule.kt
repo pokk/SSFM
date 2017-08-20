@@ -8,8 +8,4 @@ import dagger.Module
  * @since   8/16/17
  */
 @Module
-class DatabaseModule {
-//    @Provides
-//    @LocalData
-//    fun provideMusicDatabase(context: Context) = FlowManager.init(FlowConfig.Builder(context).build())
-}
+class DatabaseModule

@@ -12,7 +12,6 @@ import taiwan.no1.app.ssfm.mvvm.models.data.remote.RemoteDataStore
  * @author  Jieyi
  * @since   12/8/16
  */
-
 @Network
 @Component(dependencies = arrayOf(AppComponent::class), modules = arrayOf(NetModule::class))
 interface NetComponent {

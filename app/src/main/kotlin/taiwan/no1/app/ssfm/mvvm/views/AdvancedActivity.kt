@@ -34,9 +34,9 @@ abstract class AdvancedActivity<VM: IViewModel, out B: ViewDataBinding>: BaseAct
     }
 
     // TODO: 5/11/17 It might be using reflection to do onBind().
-    abstract protected fun bind(): Unit
+    abstract protected fun bind()
 
-    abstract protected fun unbind(): Unit
+    abstract protected fun unbind()
 
     abstract protected fun provideBindingLayoutId(): Pair<Activity, Int>
 }
