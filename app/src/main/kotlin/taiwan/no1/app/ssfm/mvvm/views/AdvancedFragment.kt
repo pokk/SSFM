@@ -21,15 +21,7 @@ abstract class AdvancedFragment<VM: IViewModel, B: ViewDataBinding>: BaseFragmen
     override final fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                                     savedInstanceState: Bundle?): View? {
         this.binding = DataBindingUtil.inflate(inflater, this.provideInflateView(), container, false)
-        this.bindViewModel()
 
         return this.binding.root
     }
-
-    /**
-     * For binding the fragment and viewmodel method.
-     *
-     * @sample binding 'binding.viewmodel = viewModel', just this code is okay for here.
-     */
-    abstract protected fun bindViewModel()
 }

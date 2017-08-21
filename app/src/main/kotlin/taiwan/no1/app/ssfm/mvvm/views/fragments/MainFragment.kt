@@ -1,7 +1,7 @@
 package taiwan.no1.app.ssfm.mvvm.views.fragments
 
 import android.os.Bundle
-import kotlinx.android.synthetic.main.fragment_main.tv_no1
+import kotlinx.android.synthetic.main.fragment_main.*
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.mvvm.views.BaseFragment
 import javax.inject.Inject
@@ -12,20 +12,15 @@ import javax.inject.Inject
  * @since   8/20/17
  */
 //class MainFragment: AdvancedFragment<FragmentViewModel, FragmentMainBinding>() {
+//    @Inject lateinit var ttt: String
+//
 //    override var viewModel: FragmentViewModel = FragmentViewModel()
 //
 //    override fun init(savedInstanceState: Bundle?) {
-//        // TODO(jieyi): 8/21/17 This might be common into parent class.
-//        this.binding.viewmodel = this.viewModel
 //    }
 //
 //    override fun provideInflateView(): Int = R.layout.fragment_main
-//
-//    @Inject lateinit var ttt: String
-//
-//    fun init() {
-//
-//    }
+//}
 
 class MainFragment: BaseFragment() {
     @Inject lateinit var ttt: String
