@@ -6,6 +6,7 @@ import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import taiwan.no1.app.ssfm.mvvm.viewmodels.IViewModel
+import java.lang.reflect.ParameterizedType
 
 /**
  * Advanced [BaseActivity] with [IViewModel] and [ViewDataBinding] for basic data binding setting in advance.
@@ -20,14 +21,21 @@ abstract class AdvancedActivity<VM: IViewModel, out B: ViewDataBinding>: BaseAct
         // DataBinding process.
         DataBindingUtil.setContentView<B>(activity, layoutId)
     }
+    // Data type of the parameters.
+    private val genericVMClass: Class<*>
+        get() = (this::class.java.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<*>
+
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // HACK(jieyi): 8/21/17 Using reflection here, the performance might become lower. Maybe there are some better ways to do.
+        this.binding.javaClass.getMethod("setViewmodel", genericVMClass).invoke(this.binding, this.viewModel)
     }
 
     @CallSuper
     override fun onDestroy() {
+        this.binding.javaClass.getMethod("setViewmodel", genericVMClass).invoke(this.binding, null)
         super.onDestroy()
     }
 
