@@ -6,9 +6,9 @@
 
         <import type="android.view.View"/>
 
-        <variable
-            name="viewmodel"
-            type="taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentViewModel"/>
+        <!--<variable-->
+        <!--name="viewmodel"-->
+        <!--type="taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentViewModel"/>-->
     </data>
 
     <RelativeLayout

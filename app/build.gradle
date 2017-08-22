@@ -104,8 +104,6 @@ dependencies {
     compile "com.jakewharton.rxbinding2:rxbinding-design-kotlin:2.0.0"
     compile "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7-kotlin:2.0.0"
     compile "com.jakewharton.rxbinding2:rxbinding-leanback-v17-kotlin:2.0.0"
-    // RxLint
-    compile "nl.littlerobots.rxlint:rxlint:1.4"
     /* For Database */
     kapt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
     compile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
