@@ -88,8 +88,8 @@ class MediaPlayerProxy: IMultiMediaPlayer,
     }
 
     override fun isReplay(): Boolean {
-        logd("is replay: " + if (this.mMediaPlayer.isLooping ?: false) "true" else "false")
-        return this.mMediaPlayer.isLooping ?: false
+        logd("is replay: " + if (this.mMediaPlayer.isLooping) "true" else "false")
+        return this.mMediaPlayer.isLooping
     }
 
     override fun isPlaying(): Boolean {

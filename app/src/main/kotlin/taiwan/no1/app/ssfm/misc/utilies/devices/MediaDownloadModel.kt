@@ -24,13 +24,13 @@ class MediaDownloadModel: MediaDataSource {
         this.listener = listener
 
         val downloadThread = Thread(Runnable {
-            val url = URL(this@MediaDownloadModel.url)
-            val url2 = URL(this@MediaDownloadModel.url)
+            val conn = URL(this@MediaDownloadModel.url)
+            val stream_url = URL(this@MediaDownloadModel.url)
 
-            val connect = url.openConnection()
+            val connect = conn.openConnection()
             val total_size: Double = connect.contentLength.toDouble()
 
-            val inputStream: InputStream = url2.openStream()
+            val inputStream: InputStream = stream_url.openStream()
             val b: ByteArrayOutputStream = ByteArrayOutputStream()
             var read: Int = 0
 
