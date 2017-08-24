@@ -8,7 +8,6 @@ import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Remote
 import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
 import taiwan.no1.app.ssfm.mvvm.models.data.local.LocalDataStore
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.RemoteDataStore
-import javax.inject.Singleton
 
 /**
  * Dagger module that provides the required objects of [taiwan.no1.app.ssfm.mvvm.models.data.repositories.DataRepository].
@@ -19,12 +18,10 @@ import javax.inject.Singleton
 @Module
 class RepositoryModule {
     @Provides
-    @Singleton
     @Remote
     fun provideRemoteRepository(context: Context): IDataStore = RemoteDataStore(context)
 
     @Provides
-    @Singleton
     @Local
     fun provideLocalRepository(): IDataStore = LocalDataStore()
 }
