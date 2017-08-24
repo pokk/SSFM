@@ -22,7 +22,6 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import javax.inject.Inject
 import javax.inject.Named
-import javax.inject.Singleton
 
 /**
  * Retrieving the data from remote server with [retrofit2] by http api. All return objects are [Observable]
@@ -31,8 +30,7 @@ import javax.inject.Singleton
  * @author  jieyi
  * @since   5/10/17
  */
-@Singleton
-class RemoteDataStore @Inject constructor(private val context: Context): IDataStore {
+class RemoteDataStore constructor(private val context: Context): IDataStore {
     @field:[Inject Named("music1")]
     lateinit var musicService1: Lazy<MusicServices>
     @field:[Inject Named("music2")]
