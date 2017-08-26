@@ -68,78 +68,78 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile "com.android.support:multidex:1.0.2"
+    implementation "com.android.support:multidex:1.0.2"
     // My own tool library
-    compile "com.devrapid.jieyi:kotlinknifer:1.0.12"
+    implementation "com.devrapid.jieyi:kotlinknifer:1.0.12"
     /* For language */
     // Kotlin
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
-//    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+//    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     // Kotlin Anko
-    compile "org.jetbrains.anko:anko-commons:$anko_version"
-    compile "org.jetbrains.anko:anko-sdk25:$anko_version" // sdk15, sdk19, sdk21, sdk23 are also available
-    compile "org.jetbrains.anko:anko-sdk25-coroutines:$anko_version"
+    implementation "org.jetbrains.anko:anko-commons:$anko_version"
+    implementation "org.jetbrains.anko:anko-sdk25:$anko_version" // sdk15, sdk19, sdk21, sdk23 are also available
+    implementation "org.jetbrains.anko:anko-sdk25-coroutines:$anko_version"
     // Kotlin DataBinding
     kapt "com.android.databinding:compiler:2.3.3"
     /* For architecture */
     // Dagger 2
     kapt "com.google.dagger:dagger-compiler:2.11"
     kapt "com.google.dagger:dagger-android-processor:2.11"
-    compile "com.google.dagger:dagger:2.11"
-    compile "com.google.dagger:dagger-android-support:2.11"
+    implementation "com.google.dagger:dagger:2.11"
+    implementation "com.google.dagger:dagger-android-support:2.11"
     /* For reaction programming */
     // RxKotlin
-    compile "io.reactivex.rxjava2:rxkotlin:2.1.0"
+    implementation "io.reactivex.rxjava2:rxkotlin:2.1.0"
     // RxBus
-    compile "com.hwangjr.rxbus:rxbus:2.0.0"
+    implementation "com.hwangjr.rxbus:rxbus:2.0.0"
     // RxLifecycle
-    compile "com.trello.rxlifecycle2:rxlifecycle-components:2.1.0"
-    compile "com.trello.rxlifecycle2:rxlifecycle-kotlin:2.1.0"
+    implementation "com.trello.rxlifecycle2:rxlifecycle-components:2.1.0"
+    implementation "com.trello.rxlifecycle2:rxlifecycle-kotlin:2.1.0"
     // RxBinding
-    compile "com.jakewharton.rxbinding2:rxbinding-kotlin:2.0.0"
-    compile "com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:2.0.0"
-    compile "com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:2.0.0"
-    compile "com.jakewharton.rxbinding2:rxbinding-design-kotlin:2.0.0"
-    compile "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7-kotlin:2.0.0"
-    compile "com.jakewharton.rxbinding2:rxbinding-leanback-v17-kotlin:2.0.0"
+    implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:2.0.0"
+    implementation "com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:2.0.0"
+    implementation "com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:2.0.0"
+    implementation "com.jakewharton.rxbinding2:rxbinding-design-kotlin:2.0.0"
+    implementation "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7-kotlin:2.0.0"
+    implementation "com.jakewharton.rxbinding2:rxbinding-leanback-v17-kotlin:2.0.0"
     /* For Database */
     kapt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
-    compile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
-    compile "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
-    compile "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:${dbflow_version}"
-    compile "com.github.Raizlabs.DBFlow:dbflow-rx2:${dbflow_version}"
-    compile "com.github.Raizlabs.DBFlow:dbflow-rx2-kotlinextensions:${dbflow_version}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:${dbflow_version}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow-rx2:${dbflow_version}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow-rx2-kotlinextensions:${dbflow_version}"
     // sql-cipher database encryption (optional)
-//    compile "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:${dbflow_version}"
-//    compile "net.zetetic:android-database-sqlcipher:${sqlcipher_version}@aar"
+//    implementation "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:${dbflow_version}"
+//    implementation "net.zetetic:android-database-sqlcipher:${sqlcipher_version}@aar"
     /* For internet */
     // Retrofit 2
-    compile "com.squareup.retrofit2:retrofit:2.3.0"
-    compile "com.squareup.retrofit2:converter-gson:2.3.0"
-    compile "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
+    implementation "com.squareup.retrofit2:retrofit:2.3.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.3.0"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
     // Glide
-    compile "com.github.bumptech.glide:glide:4.0.0"
+    implementation "com.github.bumptech.glide:glide:4.0.0"
     // LastFM api
-    compile "de.u-mass:lastfm-java:0.1.2"
+    implementation "de.u-mass:lastfm-java:0.1.2"
     /* UI */
     // Blur View
-    compile "com.github.mmin18:realtimeblurview:1.1.0"
-    compile "com.mikhaellopez:circularimageview:3.0.2"
+    implementation "com.github.mmin18:realtimeblurview:1.1.0"
+    implementation "com.mikhaellopez:circularimageview:3.0.2"
 
     //noinspection GradleCompatible
-    compile "com.android.support:appcompat-v7:25.4.0"
-    compile "com.android.support:cardview-v7:25.4.0"
-    compile "com.android.support:recyclerview-v7:25.4.0"
-    compile "com.android.support.constraint:constraint-layout:1.1.0-beta1"
+    implementation "com.android.support:appcompat-v7:25.4.0"
+    implementation "com.android.support:cardview-v7:25.4.0"
+    implementation "com.android.support:recyclerview-v7:25.4.0"
+    implementation "com.android.support.constraint:constraint-layout:1.1.0-beta1"
 
     // Database debug
-    debugCompile 'com.amitshekhar.android:debug-db:1.0.1'
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.1'
 
-    testCompile "junit:junit:4.12"
+    testImplementation "junit:junit:4.12"
 
-    androidTestCompile("com.android.support.test.espresso:espresso-core:2.2.2", {
+    androidTestImplementation("com.android.support.test.espresso:espresso-core:2.2.2", {
         exclude group: "com.android.support", module: "support-annotations"
     })
 }
