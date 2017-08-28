@@ -3,32 +3,4 @@
     <declare-styleable name="FontTextView">
         <attr name="font" format="string"/>
     </declare-styleable>
-
-    <declare-styleable name="CircleImageView">
-        <attr name="border_width" format="dimension"/>
-        <attr name="border_color" format="color"/>
-        <attr name="shadow_radius" format="float"/>
-        <attr name="shadow_color" format="color"/>
-    </declare-styleable>
-
-    <declare-styleable name="RotatedCircleImageView">
-        <attr name="rotate_sec" format="integer"/>
-    </declare-styleable>
-
-    <declare-styleable name="RotatedCircleWithIconImageView">
-        <attr name="src" format="integer"/>
-        <attr name="fore_icon" format="integer"/>
-    </declare-styleable>
-
-    <declare-styleable name="CircularSeekBar">
-        <attr name="start_degree" format="float"/>
-        <attr name="sweep_degree" format="float"/>
-        <attr name="progress_color" format="color"/>
-        <attr name="unprogress_color" format="color"/>
-        <attr name="progress_width" format="float"/>
-        <attr name="progress" format="integer"/>
-        <attr name="controller_radius" format="integer"/>
-        <attr name="controller_color" format="color"/>
-        <attr name="unpress_controller_color" format="color"/>
-    </declare-styleable>
 </resources>

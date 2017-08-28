@@ -31,21 +31,18 @@
         </LinearLayout>
     </ScrollView>
 
-    <taiwan.no1.app.ssfm.customized.CircleImageView
+    <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/civ_icon"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="70dp"
         android:src="@drawable/sample_jieyi_icon"
-        app:border_color="#DDFDF5E6"
-        app:border_width="2dp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/linearLayout"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shadow_radius="0"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <LinearLayout
         android:id="@+id/linearLayout"

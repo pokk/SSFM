@@ -18,7 +18,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <taiwan.no1.app.ssfm.misc.widgets.RotatedCircleWithIconImageView
+        <com.devrapid.musicdiskplayer.RotatedCircleWithIconImageView
             android:id="@+id/rcii_album"
             android:layout_width="200dp"
             android:layout_height="200dp"
