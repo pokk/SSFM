@@ -73,6 +73,7 @@ dependencies {
     implementation "com.android.support:multidex:1.0.2"
     // My own tool library
     implementation "com.devrapid.jieyi:kotlinknifer:1.0.12"
+    implementation "com.devrapid.jieyi:musicdiskplayer:0.0.2"
     /* For language */
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
