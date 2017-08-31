@@ -7,6 +7,7 @@
     <color name="colorAccent">#DEC05C</color>
     <color name="colorThick">#C1DAD6</color>
     <color name="colorThickDark">#547D7C</color>
+    <color name="colorMainThemeBackground">#1A1A1C</color>
 
     <!-- Basic color -->
     <color name="colorWhite">#FFFFFF</color>
