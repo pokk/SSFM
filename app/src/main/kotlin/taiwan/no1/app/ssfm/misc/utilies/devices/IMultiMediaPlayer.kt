@@ -8,7 +8,8 @@ import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPlayerState
  * Created by weian on 2017/6/18.
  */
 interface IMultiMediaPlayer {
-    fun play(uri: String)
+    fun playURL(url: String)
+    fun playLocal(path: String)
     fun stop()
     fun pause()
     fun resume()

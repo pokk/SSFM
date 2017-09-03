@@ -15,7 +15,7 @@ interface IPlayerHandler {
     /**
      * real media player
      */
-    fun play()
+    fun play(index: Int = 0)
     fun stop()
     fun pause()
     fun resume()
