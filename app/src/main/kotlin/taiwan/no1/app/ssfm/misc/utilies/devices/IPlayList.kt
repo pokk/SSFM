@@ -14,4 +14,7 @@ interface IPlayList {
     fun loopAll(is_loop: Boolean)
     fun random(is_random: Boolean)
     fun isRandom(): Boolean
+    fun isLoopOne(): Boolean
+    fun isLoopAll(): Boolean
+    fun isNormal(): Boolean
 }

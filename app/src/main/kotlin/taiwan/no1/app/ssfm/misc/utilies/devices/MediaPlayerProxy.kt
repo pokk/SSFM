@@ -1,5 +1,6 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices
 
+import android.annotation.TargetApi
 import android.media.MediaPlayer
 import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.logi
@@ -42,10 +43,11 @@ class MediaPlayerProxy: IMultiMediaPlayer,
     /**
      * API
      */
-    override fun play(uri: String) {
+    @TargetApi(23)
+    override fun playURL(url: String) {
         this.mMediaPlayer.let {
             logd("prepare asynchronous thread")
-            downloadModel = MediaDownloadModel(uri, object: MediaDownloadModel.DownloadListener {
+            downloadModel = MediaDownloadModel(url, object: MediaDownloadModel.DownloadListener {
                 override fun onDownloadFinish() {
                     this@MediaPlayerProxy.mMediaPlayer.prepareAsync()
                 }
@@ -54,9 +56,15 @@ class MediaPlayerProxy: IMultiMediaPlayer,
         }
     }
 
+    override fun playLocal(path: String) {
+        this.mMediaPlayer.setDataSource(path)
+        this.mMediaPlayer.prepareAsync()
+    }
+
     override fun stop() {
         logd("stop player")
         this.mMediaPlayer.stop()
+        this.mMediaPlayer.reset()
         this.mState = IPlayerHandler.EPlayerState.EPlayerState_Stop
     }
 

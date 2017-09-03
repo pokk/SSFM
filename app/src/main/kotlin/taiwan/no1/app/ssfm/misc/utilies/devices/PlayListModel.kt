@@ -10,17 +10,22 @@ import java.util.Stack
 
 class PlayListModel: IPlayList {
     private var mTotal: Int = 0
-    private var mCurrentIndex: Int = -1
+    var mCurrentIndex: Int = -1
     private var mPrevious: Stack<Int> = Stack()
     private var misRandom: Boolean = false
     private var misLoopOne: Boolean = false
     private var misLoopAll: Boolean = false
+    private var misNormal: Boolean = false
 
     private fun getNextIndex(): Int {
         val maps = mapOf(
             Pair({ this.misRandom }, (Math.random() * this.mTotal).toInt()),
             Pair({ this.misLoopOne }, this.mCurrentIndex),
-            Pair({ this.misLoopAll }, (this.mCurrentIndex + 1).rem(this.mTotal)))
+            Pair({ this.misLoopAll }, (this.mCurrentIndex + 1).rem(this.mTotal)),
+            Pair({ this.misNormal }, if (
+                    this.mCurrentIndex.inc().equals(this.mTotal)
+                    || this.mCurrentIndex.equals(-1))
+                    -1 else this.mCurrentIndex.inc()))
 
         return run {
             maps.forEach { (c, r) -> if (c()) return@run r }
@@ -50,6 +55,7 @@ class PlayListModel: IPlayList {
 
     override fun random(is_random: Boolean) {
         this.misRandom = is_random
+        this.misNormal = !is_random
     }
 
     override fun loopOne(is_loop: Boolean) {
@@ -61,4 +67,10 @@ class PlayListModel: IPlayList {
     }
 
     override fun isRandom(): Boolean = this.misRandom
+
+    override fun isLoopOne(): Boolean = this.misLoopOne
+
+    override fun isLoopAll(): Boolean = this.misLoopAll
+
+    override fun isNormal(): Boolean = this.misNormal
 }

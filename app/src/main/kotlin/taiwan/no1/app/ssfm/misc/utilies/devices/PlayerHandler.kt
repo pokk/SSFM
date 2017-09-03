@@ -20,12 +20,16 @@ class PlayerHandler(p0: IMultiMediaPlayer, p1: IPlayList): IPlayerHandler {
         this.mPlayIndex = p1
     }
 
-    override fun play() {
+    override fun play(index: Int) {
         // TODO(jieyi): 7/28/17 Let callback function run by using timer.
         if (this.mPlayer.isPlaying()) {
             this.mPlayer.play(this.mPlayList[this.mPlayIndex.nowPlaying()])
         }
 //        this.mPlayer.takeIf { it.isPlaying() }?.play(this.mPlayList[this.mPlayIndex.nowPlaying()])
+
+        if (this.mPlayer.isPlaying()) {
+            this.mPlayer.stop()
+        }
     }
 
     override fun stop() {
@@ -55,11 +59,9 @@ class PlayerHandler(p0: IMultiMediaPlayer, p1: IPlayList): IPlayerHandler {
         this.timer.start()
     }
 
-    override fun isLooping(): Boolean = this.mPlayer.isReplay()
+    override fun isLooping(): Boolean = this.mPlayIndex.isLoopOne()
 
-    override fun loopOne(is_loop: Boolean) {
-        this.mPlayer.replay(is_loop)
-    }
+    override fun loopOne(is_loop: Boolean) { this.mPlayIndex.loopOne(is_loop) }
 
     override fun restTime(): Int = this.mPlayer.takeIf { it.isPlaying() }.let {
         // FIXME(jieyi): 8/14/17 Temporally set default value. Vivian, please fix it.
