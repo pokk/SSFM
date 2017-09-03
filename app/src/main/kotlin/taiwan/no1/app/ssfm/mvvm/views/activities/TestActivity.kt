@@ -1,15 +1,16 @@
 package taiwan.no1.app.ssfm.mvvm.views.activities
 
-//import android.app.Activity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.sample_button.btn
-import kotlinx.android.synthetic.main.sample_button.btns
-import org.jetbrains.anko.sdk25.coroutines.onClick
+import android.support.v7.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_preference.rv_preference
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.mvvm.views.BaseActivity
-
+import taiwan.no1.app.ssfm.mvvm.views.recyclerview.BaseAdapter
+import taiwan.no1.app.ssfm.mvvm.views.recyclerview.Company
+import taiwan.no1.app.ssfm.mvvm.views.recyclerview.Department
 
 /**
+ * Just for testing the custom view.
  *
  * @author  jieyi
  * @since   6/8/17
@@ -17,18 +18,19 @@ import taiwan.no1.app.ssfm.mvvm.views.BaseActivity
 class TestActivity: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.sample_button)
+        setContentView(R.layout.activity_preference)
+
+        val itemList = listOf(Company("Google", listOf<Department>(), false),
+            Company("Facebook", listOf<Department>(), false),
+            Company("Apple", listOf<Department>(), false),
+            Company("Airbnb", listOf<Department>(), false),
+            Company("Jieyi", listOf<Department>(), false))
+
+        rv_preference.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rv_preference.adapter = object: BaseAdapter(itemList) {}
     }
 
     override fun onResume() {
         super.onResume()
-
-//        ttt.onClick { logw("let's go!!!") }
-        btn.onClick { }
-        btns.onClick { }
-//
-//        ttt.onProgressChanged = {
-//            logw(it)
-//        }
     }
 }
