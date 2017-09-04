@@ -65,6 +65,11 @@ android {
         }
         production { dimension "default" }
     }
+    // This is for JreBel simulator. If we just use build-in run, this could be deleted.
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
