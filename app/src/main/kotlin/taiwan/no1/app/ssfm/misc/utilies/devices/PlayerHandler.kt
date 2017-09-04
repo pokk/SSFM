@@ -23,7 +23,8 @@ class PlayerHandler(p0: IMultiMediaPlayer, p1: IPlayList): IPlayerHandler {
     override fun play(index: Int) {
         // TODO(jieyi): 7/28/17 Let callback function run by using timer.
         if (this.mPlayer.isPlaying()) {
-            this.mPlayer.play(this.mPlayList[this.mPlayIndex.nowPlaying()])
+            // FIXME(jieyi): 9/4/17 play() is not exist.
+//            this.mPlayer.play(this.mPlayList[this.mPlayIndex.nowPlaying()])
         }
 //        this.mPlayer.takeIf { it.isPlaying() }?.play(this.mPlayList[this.mPlayIndex.nowPlaying()])
 
@@ -70,11 +71,13 @@ class PlayerHandler(p0: IMultiMediaPlayer, p1: IPlayList): IPlayerHandler {
     }
 
     override fun previous() {
-        this.mPlayer.play(this.mPlayList[this.mPlayIndex.previous()])
+        // FIXME(jieyi): 9/4/17 play() is not exist.
+//        this.mPlayer.play(this.mPlayList[this.mPlayIndex.previous()])
     }
 
     override fun next() {
-        this.mPlayer.play(this.mPlayList[this.mPlayIndex.next()])
+        // FIXME(jieyi): 9/4/17 play() is not exist.
+//        this.mPlayer.play(this.mPlayList[this.mPlayIndex.next()])
     }
 
     override fun downloadProcess() {
