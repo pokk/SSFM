@@ -10,7 +10,7 @@ import java.util.Stack
 
 class PlayListModel: IPlayList {
     private var mTotal: Int = 0
-    var mCurrentIndex: Int = -1
+    private var mCurrentIndex: Int = -1
     private var mPrevious: Stack<Int> = Stack()
     private var misRandom: Boolean = false
     private var misLoopOne: Boolean = false
@@ -39,6 +39,11 @@ class PlayListModel: IPlayList {
     }
 
     override fun nowPlaying(): Int = mCurrentIndex
+
+    override fun play(index: Int) {
+        this.mPrevious.push(this.mCurrentIndex)
+        this.mCurrentIndex = index
+    }
 
     override fun previous(): Int {
         this.mCurrentIndex = this.mPrevious.pop()

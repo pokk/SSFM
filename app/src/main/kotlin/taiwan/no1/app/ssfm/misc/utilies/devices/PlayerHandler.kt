@@ -21,16 +21,17 @@ class PlayerHandler(p0: IMultiMediaPlayer, p1: IPlayList): IPlayerHandler {
     }
 
     override fun play(index: Int) {
-        // TODO(jieyi): 7/28/17 Let callback function run by using timer.
-        if (this.mPlayer.isPlaying()) {
-            // FIXME(jieyi): 9/4/17 play() is not exist.
-//            this.mPlayer.play(this.mPlayList[this.mPlayIndex.nowPlaying()])
-        }
-//        this.mPlayer.takeIf { it.isPlaying() }?.play(this.mPlayList[this.mPlayIndex.nowPlaying()])
+        this.mPlayer.takeIf { it.isPlaying() }?.stop()
 
-        if (this.mPlayer.isPlaying()) {
-            this.mPlayer.stop()
+        if (this.mPlayList[index].startsWith("http://") ||
+            this.mPlayList[index].startsWith("https://")) {
+            // web address
+            this.mPlayer.playURL(this.mPlayList[index])
+        } else {
+            // local path
+            this.mPlayer.playLocal(this.mPlayList[index])
         }
+        this.mPlayIndex.play(index)
     }
 
     override fun stop() {
@@ -71,13 +72,11 @@ class PlayerHandler(p0: IMultiMediaPlayer, p1: IPlayList): IPlayerHandler {
     }
 
     override fun previous() {
-        // FIXME(jieyi): 9/4/17 play() is not exist.
-//        this.mPlayer.play(this.mPlayList[this.mPlayIndex.previous()])
+        play(this.mPlayIndex.previous())
     }
 
     override fun next() {
-        // FIXME(jieyi): 9/4/17 play() is not exist.
-//        this.mPlayer.play(this.mPlayList[this.mPlayIndex.next()])
+        play(this.mPlayIndex.next())
     }
 
     override fun downloadProcess() {
