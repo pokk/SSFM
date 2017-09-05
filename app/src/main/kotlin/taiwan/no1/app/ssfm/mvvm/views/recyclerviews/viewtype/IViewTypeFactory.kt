@@ -1,7 +1,9 @@
-package taiwan.no1.app.ssfm.mvvm.views.viewholder
+package taiwan.no1.app.ssfm.mvvm.views.recyclerviews.viewtype
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.Company
+import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.Department
 
 /**
  * A factory interface of the view type.
@@ -10,6 +12,10 @@ import android.view.View
  * @since   6/27/17
  */
 interface IViewTypeFactory {
+    // XXX(jieyi): 9/5/17 Add the new type here.
+    fun type(company: Company): Int
+
+    fun type(department: Department): Int
 
     /**
      * Creating a view holder.

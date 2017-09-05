@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_preference.rv_preference
 import taiwan.no1.app.ssfm.R
+import taiwan.no1.app.ssfm.mvvm.models.IVisitable
 import taiwan.no1.app.ssfm.mvvm.views.BaseActivity
-import taiwan.no1.app.ssfm.mvvm.views.recyclerview.BaseAdapter
-import taiwan.no1.app.ssfm.mvvm.views.recyclerview.Company
-import taiwan.no1.app.ssfm.mvvm.views.recyclerview.Department
-import taiwan.no1.app.ssfm.mvvm.views.recyclerview.ExpandableItem
+import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.BaseAdapter
+import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.Company
+import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.Department
 
 /**
  * Just for testing the custom view.
@@ -21,7 +21,7 @@ class TestActivity: BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_preference)
 
-        val itemList: MutableList<ExpandableItem> = mutableListOf(Company("Google", listOf<Department>(), true),
+        val itemList: MutableList<IVisitable> = mutableListOf(Company("Google", listOf<Department>(), true),
             Company("Facebook", mutableListOf(
                 Department("CEO", mutableListOf<Department>(), true),
                 Department("CTO", mutableListOf<Department>(), true),

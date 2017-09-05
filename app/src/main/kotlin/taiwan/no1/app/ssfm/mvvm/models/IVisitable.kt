@@ -1,6 +1,6 @@
 package taiwan.no1.app.ssfm.mvvm.models
 
-import taiwan.no1.app.ssfm.mvvm.views.viewholder.IViewTypeFactory
+import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.viewtype.IViewTypeFactory
 
 
 /**
@@ -9,5 +9,8 @@ import taiwan.no1.app.ssfm.mvvm.views.viewholder.IViewTypeFactory
  */
 
 interface IVisitable {
+    var childItemList: List<*>
+    var isExpandable: Boolean
+
     fun type(typeFactory: IViewTypeFactory): Int
 }
