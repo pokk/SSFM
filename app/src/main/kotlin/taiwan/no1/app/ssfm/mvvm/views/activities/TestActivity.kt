@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_preference.rv_preference
 import taiwan.no1.app.ssfm.R
-import taiwan.no1.app.ssfm.mvvm.models.IVisitable
+import taiwan.no1.app.ssfm.mvvm.models.IExpandVisitable
 import taiwan.no1.app.ssfm.mvvm.views.BaseActivity
-import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.BaseAdapter
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.Company
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.Department
+import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.ExpandAdapter
 
 /**
  * Just for testing the custom view.
@@ -21,7 +21,7 @@ class TestActivity: BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_preference)
 
-        val itemList: MutableList<IVisitable> = mutableListOf(Company("Google", listOf<Department>(), true),
+        val itemList: MutableList<IExpandVisitable> = mutableListOf(Company("Google", listOf<Department>(), true),
             Company("Facebook", mutableListOf(
                 Department("CEO", mutableListOf<Department>(), false),
                 Department("CTO", mutableListOf<Department>(), false),
@@ -38,7 +38,7 @@ class TestActivity: BaseActivity() {
             Company("Jieyi", mutableListOf<Department>(), false))
 
         rv_preference.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        rv_preference.adapter = object: BaseAdapter(itemList) {}
+        rv_preference.adapter = ExpandAdapter(itemList)
     }
 
     override fun onResume() {

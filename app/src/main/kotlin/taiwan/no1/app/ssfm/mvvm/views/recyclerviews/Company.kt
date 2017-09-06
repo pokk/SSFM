@@ -1,7 +1,7 @@
 package taiwan.no1.app.ssfm.mvvm.views.recyclerviews
 
-import taiwan.no1.app.ssfm.mvvm.models.IVisitable
-import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.viewtype.IViewTypeFactory
+import taiwan.no1.app.ssfm.mvvm.models.IExpandVisitable
+import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.viewtype.ExpandableViewTypeFactory
 
 /**
  * TEST
@@ -11,6 +11,6 @@ import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.viewtype.IViewTypeFactory
  */
 data class Company(val name: String,
                    override var childItemList: List<*>,
-                   override var isExpandable: Boolean = true): IVisitable {
-    override fun type(typeFactory: IViewTypeFactory): Int = typeFactory.type(this)
+                   override var isExpandable: Boolean = true): IExpandVisitable {
+    override fun type(typeFactory: ExpandableViewTypeFactory): Int = typeFactory.type(this)
 }
