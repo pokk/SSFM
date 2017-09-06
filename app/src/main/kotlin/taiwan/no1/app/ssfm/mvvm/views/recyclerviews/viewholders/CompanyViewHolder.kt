@@ -1,7 +1,6 @@
 package taiwan.no1.app.ssfm.mvvm.views.recyclerviews.viewholders
 
 import android.view.View
-import com.devrapid.kotlinknifer.logd
 import kotlinx.android.synthetic.main.item_preference_first_layer_title.view.tv_title
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.BaseAdapter
@@ -19,7 +18,14 @@ class CompanyViewHolder(view: View): BaseViewHolder<Company>(view) {
         super.initView(model, position, adapter)
 
         this.itemView.tv_title.text = "position: $position"
-        this.itemView.onClick { adapter.expand(position) }
-        logd("Again", position)
+        this.itemView.onClick {
+            val newPosition = adapter.calculateIndex(position)
+            if (adapter.isCollapsed(newPosition)) {
+                adapter.expand(newPosition)
+            }
+            else {
+                adapter.collapse(newPosition)
+            }
+        }
     }
 }

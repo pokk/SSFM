@@ -23,16 +23,16 @@ class TestActivity: BaseActivity() {
 
         val itemList: MutableList<IVisitable> = mutableListOf(Company("Google", listOf<Department>(), true),
             Company("Facebook", mutableListOf(
-                Department("CEO", mutableListOf<Department>(), true),
-                Department("CTO", mutableListOf<Department>(), true),
-                Department("CDO", mutableListOf<Department>(), true),
-                Department("CAO", mutableListOf<Department>(), true),
-                Department("COO", mutableListOf<Department>(), true)
+                Department("CEO", mutableListOf<Department>(), false),
+                Department("CTO", mutableListOf<Department>(), false),
+                Department("CDO", mutableListOf<Department>(), false),
+                Department("CAO", mutableListOf<Department>(), false),
+                Department("COO", mutableListOf<Department>(), false)
             ), true),
             Company("Apple", mutableListOf(
-                Department("AEO", mutableListOf<Department>(), true),
-                Department("ATO", mutableListOf<Department>(), true),
-                Department("ADO", mutableListOf<Department>(), true)
+                Department("AEO", mutableListOf<Department>(), false),
+                Department("ATO", mutableListOf<Department>(), false),
+                Department("ADO", mutableListOf<Department>(), false)
             ), true),
             Company("Airbnb", mutableListOf<Department>(), false),
             Company("Jieyi", mutableListOf<Department>(), false))
