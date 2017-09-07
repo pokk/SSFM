@@ -1,6 +1,7 @@
 package taiwan.no1.app.ssfm.mvvm.models.data.remote
 
 import android.content.Context
+import com.devrapid.kotlinknifer.observable
 import dagger.Lazy
 import de.umass.lastfm.Album
 import de.umass.lastfm.Artist
@@ -15,7 +16,6 @@ import io.reactivex.internal.operators.observable.ObservableJust
 import io.reactivex.schedulers.Schedulers
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.internal.di.components.NetComponent
-import taiwan.no1.app.ssfm.misc.extension.observable
 import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.services.MusicServices
 import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity

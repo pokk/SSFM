@@ -6,9 +6,9 @@ import android.view.View
 import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
+import com.devrapid.kotlinknifer.observer
 import de.umass.lastfm.Chart
 import taiwan.no1.app.ssfm.R
-import taiwan.no1.app.ssfm.misc.extension.observer
 import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.TagEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
