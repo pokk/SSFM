@@ -4,6 +4,8 @@ import android.annotation.TargetApi
 import android.media.MediaPlayer
 import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.logi
+import io.reactivex.Observable
+import io.reactivex.Observer
 
 /**
  * For handling MediaPlayer.
@@ -14,16 +16,19 @@ import com.devrapid.kotlinknifer.logi
 class MediaPlayerProxy: IMultiMediaPlayer,
         MediaPlayer.OnPreparedListener,
         MediaPlayer.OnErrorListener,
-        MediaPlayer.OnBufferingUpdateListener {
+        MediaPlayer.OnBufferingUpdateListener,
+        MediaPlayer.OnCompletionListener {
     private var mMediaPlayer = MediaPlayer()
     private var mState: IPlayerHandler.EPlayerState = IPlayerHandler.EPlayerState.EPlayerState_Stop
     private var getStreamingBufferPercentage: (percentage: Int) -> Unit = {}
     private lateinit var downloadModel: MediaDownloadModel
+    private var mObserver: Observer<Unit> ?= null
 
     init {
         this.mMediaPlayer = MediaPlayer()
         this.mMediaPlayer.setOnPreparedListener(this)
         this.mMediaPlayer.setOnErrorListener(this)
+        this.mMediaPlayer.setOnCompletionListener(this)
     }
 
     override fun onPrepared(mp: MediaPlayer?) {
@@ -40,11 +45,25 @@ class MediaPlayerProxy: IMultiMediaPlayer,
         this.getStreamingBufferPercentage(percent)
     }
 
+    override fun onCompletion(mp: MediaPlayer?) {
+        val observable: Observable<Unit> = Observable.create({
+            subscriber ->
+            subscriber.onNext(Unit)
+            subscriber.onComplete()
+        })
+
+        mObserver?.let {
+            observable.subscribe(it)
+        }
+
+        mObserver = null
+    }
+
     /**
      * API
      */
     @TargetApi(23)
-    override fun playURL(url: String) {
+    override fun playURL(url: String, observer: Observer<Unit>) {
         this.mMediaPlayer.let {
             logd("prepare asynchronous thread")
             downloadModel = MediaDownloadModel(url, object: MediaDownloadModel.DownloadListener {
@@ -53,12 +72,14 @@ class MediaPlayerProxy: IMultiMediaPlayer,
                 }
             })
             it.setDataSource(downloadModel)
+            this.mObserver = observer
         }
     }
 
-    override fun playLocal(path: String) {
+    override fun playLocal(path: String, observer: Observer<Unit>) {
         this.mMediaPlayer.setDataSource(path)
         this.mMediaPlayer.prepareAsync()
+        this.mObserver = observer
     }
 
     override fun stop() {

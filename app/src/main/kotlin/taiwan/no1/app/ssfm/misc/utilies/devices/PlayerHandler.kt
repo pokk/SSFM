@@ -1,5 +1,8 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices
 
+import android.util.Log
+import io.reactivex.Observer
+import io.reactivex.disposables.Disposable
 import taiwan.no1.app.ssfm.misc.utilies.PausableTimer
 
 /**
@@ -14,6 +17,7 @@ class PlayerHandler(p0: IMultiMediaPlayer, p1: IPlayList): IPlayerHandler {
     private var mPlayList: Array<String> = arrayOf()
     //private var timer by lazy { PausableTimer() }
     private lateinit var timer: PausableTimer
+    private val TAG = "PlayerHandler"
 
     init {
         this.mPlayer = p0
@@ -23,13 +27,32 @@ class PlayerHandler(p0: IMultiMediaPlayer, p1: IPlayList): IPlayerHandler {
     override fun play(index: Int) {
         this.mPlayer.takeIf { it.isPlaying() }?.stop()
 
+        val observer = object: Observer<Unit> {
+            override fun onSubscribe(d: Disposable) {
+                Log.i(TAG, "observer onSubscribe")
+            }
+
+            override fun onError(e: Throwable) {
+                Log.e(TAG, "observer onError: " + e.message)
+            }
+
+            override fun onNext(t: Unit) {
+                Log.i(TAG, "observer onNext")
+                this@PlayerHandler.next()
+            }
+
+            override fun onComplete() {
+                Log.i(TAG, "observer onComplete")
+            }
+        }
+
         if (this.mPlayList[index].startsWith("http://") ||
             this.mPlayList[index].startsWith("https://")) {
             // web address
-            this.mPlayer.playURL(this.mPlayList[index])
+            this.mPlayer.playURL(this.mPlayList[index], observer)
         } else {
             // local path
-            this.mPlayer.playLocal(this.mPlayList[index])
+            this.mPlayer.playLocal(this.mPlayList[index], observer)
         }
         this.mPlayIndex.play(index)
     }
