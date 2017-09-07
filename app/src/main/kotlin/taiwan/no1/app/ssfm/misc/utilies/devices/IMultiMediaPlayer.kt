@@ -1,5 +1,6 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices
 
+import io.reactivex.Observer
 import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPlayerState
 
 /**
@@ -8,8 +9,8 @@ import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPlayerState
  * Created by weian on 2017/6/18.
  */
 interface IMultiMediaPlayer {
-    fun playURL(url: String)
-    fun playLocal(path: String)
+    fun playURL(url: String, observer: Observer<Unit>)
+    fun playLocal(path: String, observer: Observer<Unit>)
     fun stop()
     fun pause()
     fun resume()
