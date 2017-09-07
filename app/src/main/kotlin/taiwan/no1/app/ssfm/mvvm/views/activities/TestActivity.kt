@@ -8,7 +8,7 @@ import taiwan.no1.app.ssfm.mvvm.models.IExpandVisitable
 import taiwan.no1.app.ssfm.mvvm.views.BaseActivity
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.Company
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.Department
-import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.ExpandAdapter
+import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.ExpandRecyclerViewAdapter
 
 /**
  * Just for testing the custom view.
@@ -38,7 +38,7 @@ class TestActivity: BaseActivity() {
             Company("Jieyi", mutableListOf<Department>(), false))
 
         rv_preference.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        rv_preference.adapter = ExpandAdapter(itemList)
+        rv_preference.adapter = ExpandRecyclerViewAdapter(itemList)
     }
 
     override fun onResume() {

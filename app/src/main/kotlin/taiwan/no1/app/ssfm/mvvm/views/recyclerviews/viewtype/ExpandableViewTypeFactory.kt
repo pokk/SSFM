@@ -16,9 +16,9 @@ import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.viewholders.DepartmentViewHo
  * @since   9/6/17
  */
 class ExpandableViewTypeFactory: ViewTypeFactory() {
-    override var transformMap: MutableMap<Int, Pair<Int, (View) -> ViewHolder>> =
-        mutableMapOf(1 to Pair(R.layout.item_preference_first_layer_title, { view -> CompanyViewHolder(view) }),
-            2 to Pair(R.layout.item_preference_first_layer_title, { view -> DepartmentViewHolder(view) }))
+    override var transformMap: MutableMap<Int, Pair<Int, (View) -> ViewHolder>> = mutableMapOf(
+        1 to Pair(R.layout.item_preference_first_layer_title, { view -> CompanyViewHolder(view) }),
+        2 to Pair(R.layout.item_preference_second_layer_title, { view -> DepartmentViewHolder(view) }))
 
     // XXX(jieyi): 9/5/17 Add the new type here.
     fun type(company: Company): Int = 1

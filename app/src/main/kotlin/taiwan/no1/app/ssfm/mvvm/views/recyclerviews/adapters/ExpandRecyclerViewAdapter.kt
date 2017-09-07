@@ -2,18 +2,18 @@ package taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters
 
 import android.support.v7.util.DiffUtil
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
-import com.devrapid.kotlinknifer.logd
+import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
 import taiwan.no1.app.ssfm.mvvm.models.IExpandVisitable
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.viewtype.ExpandableViewTypeFactory
 
 /**
- *
+ * An adapter for expandable recycler view .
  *
  * @author  jieyi
  * @since   9/6/17
  */
-class ExpandAdapter(private var dataList: MutableList<IExpandVisitable>):
-    AdaptiveAdapter<ExpandableViewTypeFactory, IExpandVisitable>(dataList) {
+class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisitable>):
+    AdaptiveAdapter<ExpandableViewTypeFactory, IExpandVisitable, AdaptiveViewHolder<ExpandableViewTypeFactory, IExpandVisitable>>() {
     override var typeFactory: ExpandableViewTypeFactory = ExpandableViewTypeFactory()
     private val originalParentPosition: MutableList<Int> = MutableList(this.dataList.size, { 0 })
 
@@ -30,16 +30,13 @@ class ExpandAdapter(private var dataList: MutableList<IExpandVisitable>):
     }
 
     fun expand(position: Int, newIndex: Int) {
-        logd(position, newIndex)
         this.updateList {
             val subList = this.dataList[newIndex].let {
                 this.changeVisibleChildNumber(position, it.childItemList.size)
                 it.isExpandable = false
                 it.childItemList
             }
-            ArrayList(dataList).toMutableList().apply {
-                addAll(newIndex + 1, subList as Collection<IExpandVisitable>)
-            }
+            ArrayList(dataList).toMutableList().apply { addAll(newIndex + 1, subList as Collection<IExpandVisitable>) }
         }
     }
 
@@ -61,7 +58,6 @@ class ExpandAdapter(private var dataList: MutableList<IExpandVisitable>):
     private fun updateList(getNewListBlock: () -> MutableList<IExpandVisitable>) {
         val newList = getNewListBlock()
         DiffUtil.calculateDiff(ExpandDiffUtil(this.dataList, newList)).dispatchUpdatesTo(this)
-        // FIXME(jieyi): 9/6/17 Updated the new version, here will crash.
         this.dataList = newList
     }
 
