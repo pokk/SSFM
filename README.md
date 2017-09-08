@@ -1,45 +1,37 @@
-## Welcome to GitHub Pages
+# SSFM
 
-You can use the [editor on GitHub](https://github.com/pokk/SSFM/edit/master/README.md) to maintain
-and preview the content for your website in Markdown files.
+[![GitHub release](https://img.shields.io/github/release/pokk/KotlinKnifer.svg?style=flat-square)](https://github.com/pokk/KotlinKnifer)
+[![license](https://img.shields.io/github/license/pokk/KotlinKnifer.svg?style=flat-square)](https://github.com/pokk/KotlinKnifer)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to
-rebuild the pages in your site, from the content in your Markdown files.
+![kotlinKnifer](https://img.shields.io/badge/kotlinKnifer-1.0.13-green.svg?style=flat-square)
+![Kotlin](https://img.shields.io/badge/Kotlin-1.1.4-green.svg?style=flat-square)
+![Anko](https://img.shields.io/badge/Anko-0.10.1-green.svg?style=flat-square)
+![Dagger2](https://img.shields.io/badge/Dagger2-2.11-green.svg?style=flat-square)
+![Gson](https://img.shields.io/badge/Gson-2.8.1-green.svg?style=flat-square)
+![RxJava](https://img.shields.io/badge/RxJava-2.1.3-green.svg?style=flat-square)
+![RxKotlin](https://img.shields.io/badge/RxKotlin-2.1.0-green.svg?style=flat-square)
+![RxBus](https://img.shields.io/badge/RxBus-2.0.0-green.svg?style=flat-square)
+![RxLifecycle](https://img.shields.io/badge/RxLifecycle-2.1.0-green.svg?style=flat-square)
+![RxBinding](https://img.shields.io/badge/RxBinding-2.0.0-green.svg?style=flat-square)
+![DBFlow](https://img.shields.io/badge/DBFlow-4.0.5-green.svg?style=flat-square)
+![Retrofit2](https://img.shields.io/badge/Retrofit2-2.3.0-green.svg?style=flat-square)
+![Glide](https://img.shields.io/badge/Glide-4.0.0-green.svg?style=flat-square)
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions
-for
+# License
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
 ```
+Copyright (C) 2017 Jieyi Wu
 
-For more details see
-[GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-### Jekyll Themes
+   http://www.apache.org/licenses/LICENSE-2.0
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your
-[repository settings](https://github.com/pokk/SSFM/settings). The name of this theme is saved in the
-Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our
-[documentation](https://help.github.com/categories/github-pages-basics/) or
-[contact support](https://github.com/contact) and we’ll help you sort it out.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
