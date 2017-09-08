@@ -1,9 +1,9 @@
 # SSFM
 
-[![GitHub release](https://img.shields.io/github/release/pokk/KotlinKnifer.svg?style=flat-square)](https://github.com/pokk/KotlinKnifer)
-[![license](https://img.shields.io/github/license/pokk/KotlinKnifer.svg?style=flat-square)](https://github.com/pokk/KotlinKnifer)
+[![GitHub release](https://img.shields.io/github/release/pokk/SSFM.svg?style=flat-square)](https://github.com/pokk/SSFM)
+[![license](https://img.shields.io/github/license/pokk/SSFM.svg?style=flat-square)](https://github.com/pokk/SSFM)
 
-![kotlinKnifer](https://img.shields.io/badge/kotlinKnifer-1.0.13-green.svg?style=flat-square)
+[![KotlinKnifer](https://img.shields.io/badge/kotlinKnifer-1.0.13-green.svg?style=flat-square)](https://github.com/pokk/KotlinKnifer)
 ![Kotlin](https://img.shields.io/badge/Kotlin-1.1.4-green.svg?style=flat-square)
 ![Anko](https://img.shields.io/badge/Anko-0.10.1-green.svg?style=flat-square)
 ![Dagger2](https://img.shields.io/badge/Dagger2-2.11-green.svg?style=flat-square)
