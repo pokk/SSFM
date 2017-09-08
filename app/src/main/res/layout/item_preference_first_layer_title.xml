@@ -2,50 +2,59 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorMainThemeBackground">
+    android:background="#a0a0a0"
+    tools:background="@color/colorMainThemeBackground">
 
     <ImageView
         android:id="@+id/iv_title_icon"
-        android:layout_width="wrap_content"
+        android:layout_width="126dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="0dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:contentDescription="@string/todo"
         android:src="@drawable/ic_mail"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tv_title"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5"
+        tools:layout_editor_absoluteX="8dp"/>
 
     <TextView
         android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="58dp"
-        android:layout_marginStart="0dp"
+        android:layout_width="126dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginStart="9dp"
         android:text="Theme Setting"
         android:textColor="@color/colorWhite"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_title_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tv_selected"
         app:layout_constraintStart_toEndOf="@+id/iv_title_icon"
-        app:layout_constraintTop_toTopOf="@+id/iv_title_icon"/>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="117dp"
+        tools:layout_editor_absoluteY="7dp"/>
 
     <TextView
         android:id="@+id/tv_selected"
-        android:layout_width="wrap_content"
+        android:layout_width="127dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="0dp"
-        android:layout_marginStart="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="8dp"
         android:text="Dark Theme"
         android:textColor="@color/colorWhiteSmoke"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_title"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_title"
-        app:layout_constraintTop_toTopOf="@+id/tv_title"
-        app:layout_constraintVertical_bias="0.5"/>
-
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="253dp"/>
 </android.support.constraint.ConstraintLayout>
