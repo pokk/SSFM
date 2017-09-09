@@ -24,7 +24,6 @@ interface IPlayerHandler {
     fun current(callback: (millisUntilFinished: Long) -> Unit)
     fun isLooping(): Boolean
     fun loopOne(is_loop: Boolean)
-    fun restTime(): Int
 
     /**
      * playlist
