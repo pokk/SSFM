@@ -4,6 +4,9 @@ import android.util.Log
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import taiwan.no1.app.ssfm.misc.utilies.PausableTimer
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.EMusicState_LoopOne
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.EMusicState_Random
 
 /**
  * For controlling media player.
@@ -11,17 +14,16 @@ import taiwan.no1.app.ssfm.misc.utilies.PausableTimer
  * Created by weian on 2017/7/7.
  */
 
-class PlayerHandler(p0: IMultiMediaPlayer, p1: IPlayList): IPlayerHandler {
+class PlayerHandler: IPlayerHandler {
     private var mPlayIndex: IPlayList
     private var mPlayer: IMultiMediaPlayer
     private var mPlayList: Array<String> = arrayOf()
-    //private var timer by lazy { PausableTimer() }
     private lateinit var timer: PausableTimer
     private val TAG = "PlayerHandler"
 
-    init {
-        this.mPlayer = p0
-        this.mPlayIndex = p1
+    constructor(player: IMultiMediaPlayer, playList: IPlayList) {
+        this.mPlayer = player
+        this.mPlayIndex = playList
     }
 
     override fun play(index: Int) {
@@ -84,15 +86,10 @@ class PlayerHandler(p0: IMultiMediaPlayer, p1: IPlayList): IPlayerHandler {
         this.timer.start()
     }
 
-    override fun isLooping(): Boolean = this.mPlayIndex.isLoopOne()
+    override fun isLooping(): Boolean =
+            this.mPlayIndex.getState() == EMusicState_LoopOne
 
     override fun loopOne(is_loop: Boolean) { this.mPlayIndex.loopOne(is_loop) }
-
-    override fun restTime(): Int = this.mPlayer.takeIf { it.isPlaying() }.let {
-        // FIXME(jieyi): 8/14/17 Temporally set default value. Vivian, please fix it.
-//        it?.duration()?.minus(it.current()) ?: 0
-        0
-    }
 
     override fun previous() {
         play(this.mPlayIndex.previous())
@@ -114,13 +111,12 @@ class PlayerHandler(p0: IMultiMediaPlayer, p1: IPlayList): IPlayerHandler {
         this.mPlayIndex.random(is_random)
     }
 
-    override fun playerStatus() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun playerStatus(): EMusicState = this.mPlayIndex.getState()
 
     override fun nowPlaying(): Int = this.mPlayIndex.nowPlaying()
 
-    override fun isRandom(): Boolean = this.mPlayIndex.isRandom()
+    override fun isRandom(): Boolean =
+            this.mPlayIndex.getState() == EMusicState_Random
 
     override fun setPlayList(list: Array<String>) {
         this.mPlayList = list
