@@ -16,19 +16,20 @@ class PlayListModel: IPlayList {
     private var misLoopOne: Boolean = false
     private var misLoopAll: Boolean = false
     private var misNormal: Boolean = false
+    private var mState: IPlayList.EMusicState = IPlayList.EMusicState.EMusicState_Normal
 
     private fun getNextIndex(): Int {
         val maps = mapOf(
-            Pair({ this.misRandom }, (Math.random() * this.mTotal).toInt()),
-            Pair({ this.misLoopOne }, this.mCurrentIndex),
-            Pair({ this.misLoopAll }, (this.mCurrentIndex + 1).rem(this.mTotal)),
-            Pair({ this.misNormal }, if (
+            Pair({ IPlayList.EMusicState.EMusicState_Random }, (Math.random() * this.mTotal).toInt()),
+            Pair({ IPlayList.EMusicState.EMusicState_LoopOne }, this.mCurrentIndex),
+            Pair({ IPlayList.EMusicState.EMusicState_LoopAll }, (this.mCurrentIndex + 1).rem(this.mTotal)),
+            Pair({ IPlayList.EMusicState.EMusicState_Normal }, if (
                     this.mCurrentIndex.inc().equals(this.mTotal)
                     || this.mCurrentIndex.equals(-1))
                     -1 else this.mCurrentIndex.inc()))
 
         return run {
-            maps.forEach { (c, r) -> if (c()) return@run r }
+            maps.forEach { (c, r) -> if (c() == this.mState) return@run r }
             // else
             -1
         }
@@ -61,21 +62,27 @@ class PlayListModel: IPlayList {
     override fun random(is_random: Boolean) {
         this.misRandom = is_random
         this.misNormal = !is_random
+        if (is_random)
+            this.mState = IPlayList.EMusicState.EMusicState_Random
+        else
+            this.mState = IPlayList.EMusicState.EMusicState_Normal
     }
 
     override fun loopOne(is_loop: Boolean) {
         this.misLoopOne = is_loop
+        if (is_loop)
+            this.mState = IPlayList.EMusicState.EMusicState_LoopOne
+        else
+            this.mState = IPlayList.EMusicState.EMusicState_Normal
     }
 
     override fun loopAll(is_loop: Boolean) {
         this.misLoopAll = is_loop
+        if (is_loop)
+            this.mState = IPlayList.EMusicState.EMusicState_LoopAll
+        else
+            this.mState = IPlayList.EMusicState.EMusicState_Normal
     }
 
-    override fun isRandom(): Boolean = this.misRandom
-
-    override fun isLoopOne(): Boolean = this.misLoopOne
-
-    override fun isLoopAll(): Boolean = this.misLoopAll
-
-    override fun isNormal(): Boolean = this.misNormal
+    override fun getState(): IPlayList.EMusicState = this.mState
 }
