@@ -29,8 +29,6 @@ class PlayerHandler: IPlayerHandler {
     override fun play(index: Int) {
         this.mPlayer.takeIf { it.isPlaying() }?.stop()
 
-        // TODO(jieyi): 9/9/17 Obtain an observable and connect the observer with the observable.
-
         val observer = object: Observer<Unit> {
             override fun onSubscribe(d: Disposable) {
                 Log.i(TAG, "observer onSubscribe")

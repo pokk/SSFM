@@ -4,7 +4,7 @@ import android.annotation.TargetApi
 import android.media.MediaPlayer
 import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.logi
-import com.devrapid.kotlinknifer.observable
+import io.reactivex.Observable
 import io.reactivex.Observer
 
 /**
@@ -23,12 +23,6 @@ class MediaPlayerProxy: IMultiMediaPlayer,
     private var getStreamingBufferPercentage: (percentage: Int) -> Unit = {}
     private lateinit var downloadModel: MediaDownloadModel
     private var mObserver: Observer<Unit>? = null
-
-    val observableListener = observable<Unit> { emit ->
-        this.mMediaPlayer.setOnCompletionListener {
-            emit.onNext(Unit)
-        }
-    }
 
     init {
         this.mMediaPlayer = MediaPlayer()
@@ -52,17 +46,14 @@ class MediaPlayerProxy: IMultiMediaPlayer,
     }
 
     override fun onCompletion(mp: MediaPlayer?) {
-//        Observable.create({
-//            it.onNext(Unit)
-//            it.onComplete()
-//        })
-        observable<Unit> {
-            it.onNext(Unit)
-        }.subscribe(this.mObserver!!)
+        val observable: Observable<Unit> = Observable.create({ subscriber ->
+            subscriber.onNext(Unit)
+            subscriber.onComplete()
+        })
 
-//        mObserver?.let {
-//            observable.subscribe(it)
-//        }
+        mObserver?.let {
+            observable.subscribe(it)
+        }
 
         mObserver = null
     }
