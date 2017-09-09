@@ -1,6 +1,11 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices
 
 import java.util.Stack
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.EMusicState_Random
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.EMusicState_Normal
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.EMusicState_LoopOne
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.EMusicState_LoopAll
 
 /**
  * Controlling play list.
@@ -16,16 +21,16 @@ class PlayListModel: IPlayList {
     private var misLoopOne: Boolean = false
     private var misLoopAll: Boolean = false
     private var misNormal: Boolean = false
-    private var mState: IPlayList.EMusicState = IPlayList.EMusicState.EMusicState_Normal
+    private var mState: EMusicState = EMusicState_Normal
 
     private fun getNextIndex(): Int {
         val maps = mapOf(
-            Pair({ IPlayList.EMusicState.EMusicState_Random }, (Math.random() * this.mTotal).toInt()),
-            Pair({ IPlayList.EMusicState.EMusicState_LoopOne }, this.mCurrentIndex),
-            Pair({ IPlayList.EMusicState.EMusicState_LoopAll }, (this.mCurrentIndex + 1).rem(this.mTotal)),
-            Pair({ IPlayList.EMusicState.EMusicState_Normal }, if (
-                    this.mCurrentIndex.inc().equals(this.mTotal)
-                    || this.mCurrentIndex.equals(-1))
+            Pair({ EMusicState_Random }, (Math.random() * this.mTotal).toInt()),
+            Pair({ EMusicState_LoopOne }, this.mCurrentIndex),
+            Pair({ EMusicState_LoopAll }, (this.mCurrentIndex + 1).rem(this.mTotal)),
+            Pair({ EMusicState_Normal }, if (
+                    this.mCurrentIndex.inc()== this.mTotal
+                    || this.mCurrentIndex == -1)
                     -1 else this.mCurrentIndex.inc()))
 
         return run {
@@ -63,26 +68,26 @@ class PlayListModel: IPlayList {
         this.misRandom = is_random
         this.misNormal = !is_random
         if (is_random)
-            this.mState = IPlayList.EMusicState.EMusicState_Random
+            this.mState = EMusicState_Random
         else
-            this.mState = IPlayList.EMusicState.EMusicState_Normal
+            this.mState = EMusicState_Normal
     }
 
     override fun loopOne(is_loop: Boolean) {
         this.misLoopOne = is_loop
         if (is_loop)
-            this.mState = IPlayList.EMusicState.EMusicState_LoopOne
+            this.mState = EMusicState_LoopOne
         else
-            this.mState = IPlayList.EMusicState.EMusicState_Normal
+            this.mState = EMusicState_Normal
     }
 
     override fun loopAll(is_loop: Boolean) {
         this.misLoopAll = is_loop
         if (is_loop)
-            this.mState = IPlayList.EMusicState.EMusicState_LoopAll
+            this.mState = EMusicState_LoopAll
         else
-            this.mState = IPlayList.EMusicState.EMusicState_Normal
+            this.mState = EMusicState_Normal
     }
 
-    override fun getState(): IPlayList.EMusicState = this.mState
+    override fun getState(): EMusicState = this.mState
 }
