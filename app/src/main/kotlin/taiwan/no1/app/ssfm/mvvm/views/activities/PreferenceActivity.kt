@@ -23,14 +23,17 @@ class PreferenceActivity: Activity() {
 
         // HACK(jieyi): 9/8/17 Temporally create here.
         val preferenceList: MutableList<IExpandVisitable> =
-            mutableListOf(PreferenceToggleEntity("Auto Play", true),
-                PreferenceToggleEntity("Auto Download", false),
-                PreferenceToggleEntity("Lock Screen Lyrics Display", true),
-                PreferenceToggleEntity("Last Selected Channel", false),
+            mutableListOf(
                 PreferenceEntity("Theme", "Dark", childItemList = mutableListOf(
                     PreferenceOptionEntity("Dark"),
-                    PreferenceOptionEntity("Light")))
-            )
+                    PreferenceOptionEntity("Light"))),
+                PreferenceToggleEntity("Auto Play", true),
+                PreferenceToggleEntity("Auto Download", false, R.drawable.ic_download),
+                PreferenceToggleEntity("Download Only Wifi", false),
+                PreferenceToggleEntity("Lock Screen Lyrics Display", true, R.drawable.ic_queue_music),
+                PreferenceToggleEntity("Last Selected Channel", false),
+                PreferenceEntity("About Us", "", R.drawable.ic_info_outline),
+                PreferenceEntity("Feedback", "", R.drawable.ic_feedback))
 
         rv_preference.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rv_preference.adapter = ExpandRecyclerViewAdapter(preferenceList)

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,41 +10,31 @@
         android:id="@+id/iv_title_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:contentDescription="@string/todo"
-        android:src="@drawable/ic_mail"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tv_title"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:src="@drawable/ic_mail"/>
 
     <TextView
         android:id="@+id/tv_title"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="0dp"
-        android:layout_marginStart="0dp"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_toEndOf="@id/iv_title_icon"
+        android:layout_toStartOf="@+id/st_switch"
         android:textColor="@color/colorWhite"
-        android:background="#ffffff"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_title_icon"
-        app:layout_constraintEnd_toStartOf="@+id/st_switch"
-        app:layout_constraintStart_toEndOf="@+id/iv_title_icon"
-        app:layout_constraintTop_toTopOf="@+id/iv_title_icon"
         tools:text="Theme Setting"/>
 
     <Switch
         android:id="@+id/st_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tv_title"
-        app:layout_constraintTop_toTopOf="@+id/tv_title"/>
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="24dp"/>
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
