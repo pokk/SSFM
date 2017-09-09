@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.mvvm.views.recyclerviews.viewholders
 
 import android.view.View
 import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
+import kotlinx.android.synthetic.main.item_preference_first_layer_title.view.iv_title_icon
 import kotlinx.android.synthetic.main.item_preference_first_layer_title.view.tv_selected
 import kotlinx.android.synthetic.main.item_preference_first_layer_title.view.tv_title
 import org.jetbrains.anko.sdk25.coroutines.onClick
@@ -17,6 +18,9 @@ import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.viewtype.ExpandableViewTypeF
 class PreferenceViewHolder(view: View): AdaptiveViewHolder<ExpandableViewTypeFactory, PreferenceEntity>(view) {
     override fun initView(model: PreferenceEntity, position: Int, adapter: Any) {
         adapter as ExpandRecyclerViewAdapter
+        if (model.icon > 0) {
+            this.itemView.iv_title_icon.setImageDrawable(this.mContext.getDrawable(model.icon))
+        }
         this.itemView.tv_title.text = model.title
         this.itemView.tv_selected.text = model.attributes
         this.itemView.onClick {

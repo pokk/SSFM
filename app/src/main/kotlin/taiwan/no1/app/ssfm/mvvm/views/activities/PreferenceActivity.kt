@@ -27,9 +27,9 @@ class PreferenceActivity: Activity() {
                 PreferenceEntity("Theme", "Dark", childItemList = mutableListOf(
                     PreferenceOptionEntity("Dark"),
                     PreferenceOptionEntity("Light"))),
-                PreferenceToggleEntity("Auto Play", true),
+                PreferenceToggleEntity("Auto Play", true, R.drawable.ic_music_disk),
                 PreferenceToggleEntity("Auto Download", false, R.drawable.ic_download),
-                PreferenceToggleEntity("Download Only Wifi", false),
+                PreferenceToggleEntity("Download Only Wifi", false, R.drawable.ic_wifi),
                 PreferenceToggleEntity("Lock Screen Lyrics Display", true, R.drawable.ic_queue_music),
                 PreferenceToggleEntity("Last Selected Channel", false),
                 PreferenceEntity("About Us", "", R.drawable.ic_info_outline),

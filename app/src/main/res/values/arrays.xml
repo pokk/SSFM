@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer-array name="ic_side_menu">
-        <item>@drawable/ic_download</item>
+        <item>@drawable/ic_mail</item>
         <item>@drawable/ic_music</item>
         <item>@drawable/ic_favorite</item>
         <item>@drawable/ic_search</item>
