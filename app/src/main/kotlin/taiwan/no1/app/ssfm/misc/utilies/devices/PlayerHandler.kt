@@ -11,17 +11,16 @@ import taiwan.no1.app.ssfm.misc.utilies.PausableTimer
  * Created by weian on 2017/7/7.
  */
 
-class PlayerHandler(p0: IMultiMediaPlayer, p1: IPlayList): IPlayerHandler {
+class PlayerHandler: IPlayerHandler {
     private var mPlayIndex: IPlayList
     private var mPlayer: IMultiMediaPlayer
     private var mPlayList: Array<String> = arrayOf()
-    //private var timer by lazy { PausableTimer() }
     private lateinit var timer: PausableTimer
     private val TAG = "PlayerHandler"
 
-    init {
-        this.mPlayer = p0
-        this.mPlayIndex = p1
+    constructor(player: IMultiMediaPlayer, playList: IPlayList) {
+        this.mPlayer = player
+        this.mPlayIndex = playList
     }
 
     override fun play(index: Int) {
