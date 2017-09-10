@@ -18,7 +18,9 @@ class PreferenceOptionViewHolder(view: View): AdaptiveViewHolder<ExpandableViewT
     override fun initView(model: PreferenceOptionEntity, position: Int, adapter: Any) {
         adapter as ExpandRecyclerViewAdapter
 
+        // Initial the items.
         this.itemView.tv_selection.text = model.title
+        // Connect the click event to the parent.
         adapter.connectParentItem(adapter.findParentIndex(position),
             this.itemView.clicks().flatMap { ObservableJust<String>(model.title) })
     }

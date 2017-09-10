@@ -39,7 +39,7 @@ class PreferenceViewHolder(view: View): AdaptiveViewHolder<ExpandableViewTypeFac
             }
         }
 
-        // Init the items.
+        // Initial the items.
         if (model.icon > 0) {
             this.itemView.iv_title_icon.setImageDrawable(this.mContext.getDrawable(model.icon))
         }

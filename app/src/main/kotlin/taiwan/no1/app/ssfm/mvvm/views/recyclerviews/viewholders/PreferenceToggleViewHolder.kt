@@ -18,7 +18,8 @@ import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.viewtype.ExpandableViewTypeF
 class PreferenceToggleViewHolder(view: View): AdaptiveViewHolder<ExpandableViewTypeFactory, PreferenceToggleEntity>(view) {
     override fun initView(model: PreferenceToggleEntity, position: Int, adapter: Any) {
         adapter as ExpandRecyclerViewAdapter
-        // Inital
+
+        // Initial the items.
         if (model.icon > 0) {
             this.itemView.iv_title_icon.setImageDrawable(this.mContext.getDrawable(model.icon))
         }
