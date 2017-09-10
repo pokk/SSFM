@@ -3,9 +3,11 @@ package taiwan.no1.app.ssfm.internal.di.modules
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerActivity
+import taiwan.no1.app.ssfm.internal.di.modules.activity.dependency.MainActivityModule
+import taiwan.no1.app.ssfm.internal.di.modules.activity.dependency.PlayMainActivityModule
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.ActivityModule
-import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.MainActivityModule
 import taiwan.no1.app.ssfm.mvvm.views.activities.MainActivity
+import taiwan.no1.app.ssfm.mvvm.views.activities.PlayMainActivity
 import taiwan.no1.app.ssfm.mvvm.views.activities.TestActivity
 
 /**
@@ -23,6 +25,10 @@ abstract class BindingActivityModule {
     @PerActivity
     @ContributesAndroidInjector(modules = arrayOf(MainActivityModule::class, BindingFragmentModule::class))
     abstract fun contributeMainActivityInjector(): MainActivity
+
+    @PerActivity
+    @ContributesAndroidInjector(modules = arrayOf(PlayMainActivityModule::class))
+    abstract fun contributePlayMainActivityInjector(): PlayMainActivity
 
     @PerActivity
     @ContributesAndroidInjector(modules = arrayOf(ActivityModule::class))

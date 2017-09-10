@@ -18,8 +18,8 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:largeHeap="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -31,6 +31,8 @@
             <!--</intent-filter>-->
         </activity>
         <activity android:name=".mvvm.views.activities.MainActivity">
+        </activity>
+        <activity android:name=".mvvm.views.activities.PlayMainActivity">
         </activity>
         <activity android:name=".mvvm.views.activities.PreferenceActivity">
             <intent-filter>

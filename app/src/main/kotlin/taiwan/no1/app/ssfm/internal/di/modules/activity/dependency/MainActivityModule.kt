@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency
+package taiwan.no1.app.ssfm.internal.di.modules.activity.dependency
 
 import dagger.Module
 import dagger.Provides
