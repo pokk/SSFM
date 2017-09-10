@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.mvvm.views.recyclerviews.viewholders
 
 import android.view.View
 import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
+import com.devrapid.kotlinknifer.observer
 import kotlinx.android.synthetic.main.item_preference_first_layer_title.view.iv_title_icon
 import kotlinx.android.synthetic.main.item_preference_first_layer_title.view.tv_selected
 import kotlinx.android.synthetic.main.item_preference_first_layer_title.view.tv_title
@@ -18,13 +19,18 @@ import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.viewtype.ExpandableViewTypeF
 class PreferenceViewHolder(view: View): AdaptiveViewHolder<ExpandableViewTypeFactory, PreferenceEntity>(view) {
     override fun initView(model: PreferenceEntity, position: Int, adapter: Any) {
         adapter as ExpandRecyclerViewAdapter
-        if (model.icon > 0) {
-            this.itemView.iv_title_icon.setImageDrawable(this.mContext.getDrawable(model.icon))
+        val newPosition = adapter.calculateIndex(position)
+
+        // Create an observer for the click event of children.
+        if (null == model.observer) {
+            model.observer = observer {
+                this.itemView.tv_selected.text = it
+                adapter.collapse(position, newPosition)
+                // TODO(jieyi): 9/10/17 Changing app theme processing.
+            }
         }
-        this.itemView.tv_title.text = model.title
-        this.itemView.tv_selected.text = model.attributes
+
         this.itemView.onClick {
-            val newPosition = adapter.calculateIndex(position)
             if (adapter.isCollapsed(newPosition)) {
                 adapter.expand(position, newPosition)
             }
@@ -32,5 +38,12 @@ class PreferenceViewHolder(view: View): AdaptiveViewHolder<ExpandableViewTypeFac
                 adapter.collapse(position, newPosition)
             }
         }
+
+        // Init the items.
+        if (model.icon > 0) {
+            this.itemView.iv_title_icon.setImageDrawable(this.mContext.getDrawable(model.icon))
+        }
+        this.itemView.tv_title.text = model.title
+        this.itemView.tv_selected.text = model.attributes
     }
 }

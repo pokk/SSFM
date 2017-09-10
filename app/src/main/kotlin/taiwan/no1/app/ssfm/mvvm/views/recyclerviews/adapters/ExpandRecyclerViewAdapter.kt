@@ -3,7 +3,9 @@ package taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters
 import android.support.v7.util.DiffUtil
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
 import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
+import io.reactivex.Observable
 import taiwan.no1.app.ssfm.mvvm.models.IExpandVisitable
+import taiwan.no1.app.ssfm.mvvm.models.entities.PreferenceEntity
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.viewtype.ExpandableViewTypeFactory
 
 /**
@@ -54,6 +56,17 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
     fun calculateIndex(oldPos: Int): Int = (0..(oldPos - 1)).sumBy { this.originalParentPosition[it] } + oldPos
 
     fun isCollapsed(position: Int): Boolean = this.dataList[position].isExpandable
+
+    fun findParentIndex(childIndex: Int): Int {
+        (childIndex downTo 0).filter { this.dataList[it] is PreferenceEntity }.forEach { return it }
+
+        // This is fail situation.
+        return -1
+    }
+
+    fun connectParentItem(parentIndex: Int, getChildObservable: Observable<String>) {
+        getChildObservable.subscribe((this.dataList[parentIndex] as PreferenceEntity).observer!!)
+    }
 
     private fun updateList(getNewListBlock: () -> MutableList<IExpandVisitable>) {
         val newList = getNewListBlock()

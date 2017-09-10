@@ -24,7 +24,7 @@ class PreferenceActivity: Activity() {
         // HACK(jieyi): 9/8/17 Temporally create here.
         val preferenceList: MutableList<IExpandVisitable> =
             mutableListOf(
-                PreferenceEntity("Theme", "Dark", childItemList = mutableListOf(
+                PreferenceEntity("Theme", "Dark", R.drawable.ic_theme, childItemList = mutableListOf(
                     PreferenceOptionEntity("Dark"),
                     PreferenceOptionEntity("Light"))),
                 PreferenceToggleEntity("Auto Play", true, R.drawable.ic_music_disk),
