@@ -26,7 +26,6 @@ class ExpandableViewTypeFactory: ViewTypeFactory() {
 
     // NOTE(jieyi): 9/5/17 Add the new type here.
     fun type(entity: PreferenceEntity): Int = 3
-
     fun type(entity: PreferenceToggleEntity): Int = 4
     fun type(entity: PreferenceOptionEntity): Int = 5
 }

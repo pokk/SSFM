@@ -11,6 +11,5 @@ import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.viewtype.ExpandableViewTypeF
  */
 interface IExpandVisitable: IVisitable<ExpandableViewTypeFactory> {
     var childItemList: List<IExpandVisitable>
-    var isExpandable: Boolean
     var isExpanded: Boolean
 }

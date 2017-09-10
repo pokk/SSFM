@@ -12,6 +12,7 @@ import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.ExpandRecyclerViewA
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.viewtype.ExpandableViewTypeFactory
 
 /**
+ * A [AdaptiveViewHolder] for controlling the main preference items with an option selection.
  *
  * @author  jieyi
  * @since   9/8/17

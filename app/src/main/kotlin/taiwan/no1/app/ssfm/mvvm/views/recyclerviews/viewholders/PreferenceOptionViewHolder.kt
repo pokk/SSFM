@@ -10,6 +10,7 @@ import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.ExpandRecyclerViewA
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.viewtype.ExpandableViewTypeFactory
 
 /**
+ * A [AdaptiveViewHolder] for controlling the sub-layout of a main preference item.
  *
  * @author  jieyi
  * @since   9/8/17
@@ -22,6 +23,9 @@ class PreferenceOptionViewHolder(view: View): AdaptiveViewHolder<ExpandableViewT
         this.itemView.tv_selection.text = model.title
         // Connect the click event to the parent.
         adapter.connectParentItem(adapter.findParentIndex(position),
+            // If clicks transmits the view object, it'll cause memory leak. Second, we
+            // don't use the view object at all but we need to transmit the title back
+            // to the parent. The parameter is modified to `String` data type.
             this.itemView.clicks().flatMap { ObservableJust<String>(model.title) })
     }
 }
