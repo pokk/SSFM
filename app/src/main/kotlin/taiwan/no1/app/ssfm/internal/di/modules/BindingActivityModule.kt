@@ -8,6 +8,7 @@ import taiwan.no1.app.ssfm.internal.di.modules.activity.dependency.PlayMainActiv
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.ActivityModule
 import taiwan.no1.app.ssfm.mvvm.views.activities.MainActivity
 import taiwan.no1.app.ssfm.mvvm.views.activities.PlayMainActivity
+import taiwan.no1.app.ssfm.mvvm.views.activities.PreferenceActivity
 import taiwan.no1.app.ssfm.mvvm.views.activities.TestActivity
 
 /**
@@ -29,6 +30,10 @@ abstract class BindingActivityModule {
     @PerActivity
     @ContributesAndroidInjector(modules = arrayOf(PlayMainActivityModule::class))
     abstract fun contributePlayMainActivityInjector(): PlayMainActivity
+
+    @PerActivity
+    @ContributesAndroidInjector
+    abstract fun contributePreferencesActivityInjector(): PreferenceActivity
 
     @PerActivity
     @ContributesAndroidInjector(modules = arrayOf(ActivityModule::class))

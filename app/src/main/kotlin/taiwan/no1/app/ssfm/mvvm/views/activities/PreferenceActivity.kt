@@ -1,6 +1,5 @@
 package taiwan.no1.app.ssfm.mvvm.views.activities
 
-import android.app.Activity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_preference.rv_preference
@@ -9,14 +8,16 @@ import taiwan.no1.app.ssfm.mvvm.models.IExpandVisitable
 import taiwan.no1.app.ssfm.mvvm.models.entities.PreferenceEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.PreferenceOptionEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.PreferenceToggleEntity
+import taiwan.no1.app.ssfm.mvvm.views.BaseActivity
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.ExpandRecyclerViewAdapter
 
 /**
+ * An activity for preference setting.
  *
  * @author  jieyi
  * @since   9/8/17
  */
-class PreferenceActivity: Activity() {
+class PreferenceActivity: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_preference)

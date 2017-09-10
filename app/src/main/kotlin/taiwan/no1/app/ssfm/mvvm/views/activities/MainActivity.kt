@@ -15,7 +15,7 @@ class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        binding.setVariable(viewmodel, MainViewModel(this.applicationContext))
+
         fragmentManager.addFragment(R.id.rl_fragment, MainFragment())
     }
 

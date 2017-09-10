@@ -33,12 +33,12 @@
         <activity android:name=".mvvm.views.activities.MainActivity">
         </activity>
         <activity android:name=".mvvm.views.activities.PlayMainActivity">
-        </activity>
-        <activity android:name=".mvvm.views.activities.PreferenceActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".mvvm.views.activities.PreferenceActivity">
         </activity>
         <activity android:name=".mvvm.views.activities.TestActivity">
         </activity>
