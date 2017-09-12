@@ -19,7 +19,6 @@ class PlayMainActivityModule {
      * Providing a [MainViewModel] to the [MainActivity].
      *
      * @param activity  originally from activity module.
-     * @param usecase   receive from [provideUsecase] method.
      * @return a important [MainViewModel] for binding view and viewmodel by activity.
      */
     @Provides
