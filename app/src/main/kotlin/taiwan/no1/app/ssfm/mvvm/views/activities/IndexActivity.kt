@@ -16,23 +16,22 @@ import javax.inject.Inject
  */
 class IndexActivity: AdvancedActivity<IndexViewModel, ActivityIndexBinding>() {
     @Inject override lateinit var viewModel: IndexViewModel
+    private val menuItems by lazy {
+        // create menu items;
+        val titles = this.resources.getStringArray(R.array.side_menu)
+        val icons = this.resources.obtainTypedArray(R.array.ic_side_menu)
+
+        List(titles.size) { MenuItem(this, icons.getResourceId(it, -1), titles[it]) }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val menu = SideMenu(this).apply {
-            background = getDrawable(R.drawable.bkg_menu)
-            attachActivity(this@IndexActivity)
+        val menu = SideMenu(this).also {
+            it.background = getDrawable(R.drawable.bkg_menu)
+            it.attachActivity(this)
+            this.menuItems.forEach(it::addMenuItem)
         }
-        // create menu items;
-        val titles = this.resources.getStringArray(R.array.side_menu)
-        val icons = this.resources.getIntArray(R.array.ic_side_menu)
-
-        for (i in titles.indices) {
-            val item = MenuItem(this, icons[i], titles[i])
-            menu.addMenuItem(item)
-        }
-
         menu.openMenu()
     }
 
