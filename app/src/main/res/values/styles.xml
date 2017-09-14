@@ -21,7 +21,7 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:background">@color/colorMainThemeBackground</item>
     </style>
-
+    <!-- Menu -->
     <style name="Menu"/>
 
     <style name="Menu.Items">
@@ -46,4 +46,26 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+    <!-- Login -->
+    <style name="Login">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Login.Input">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:drawablePadding">20dp</item>
+        <item name="android:ems">10</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textColorHint">@color/colorWhiteSmoke</item>
+    </style>
+
+    <style name="Login.Button">
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginLeft">52dp</item>
+        <item name="android:layout_marginRight">52dp</item>
+        <item name="android:layout_marginTop">40dp</item>
+    </style>
+
 </resources>

@@ -2,12 +2,6 @@ package taiwan.no1.app.ssfm.mvvm.views.activities
 
 import android.app.Activity
 import android.os.Bundle
-import android.view.LayoutInflater
-import com.yalantis.guillotine.animation.GuillotineAnimation
-import kotlinx.android.synthetic.main.activity_index.root
-import kotlinx.android.synthetic.main.part_toolbar_menu.iv_content_hamburger
-import kotlinx.android.synthetic.main.part_toolbar_menu.tb_toolbar
-import kotlinx.android.synthetic.main.part_toolbar_menu.view.iv_content_hamburger
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityIndexBinding
 import taiwan.no1.app.ssfm.misc.widgets.MenuItem
@@ -31,16 +25,7 @@ class IndexActivity: AdvancedActivity<IndexViewModel, ActivityIndexBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val guillotineMenu = LayoutInflater.from(this).inflate(R.layout.page_menu, null)
-        root.addView(guillotineMenu)
-
-        GuillotineAnimation.GuillotineBuilder(guillotineMenu,
-            guillotineMenu.iv_content_hamburger, iv_content_hamburger)
-            .setStartDelay(250)
-            .setActionBarViewForAnimation(tb_toolbar)
-            .setClosedOnStart(true)
-            .build()
+        this.attachMenuView()
     }
 
     override fun onResume() {
