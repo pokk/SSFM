@@ -41,7 +41,7 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <include
-            layout="@layout/activity_login"
+            layout="@layout/activity_part_login"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -6,9 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bkg_login"
-    tools:context=".mvvm.views.activities.TestActivity"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="25dp">
+    tools:context=".mvvm.views.activities.TestActivity">
 
     <ImageView
         android:id="@+id/iv_bkg_fog"
@@ -61,8 +59,8 @@
 
     <ImageView
         android:id="@+id/iv_logo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="50dp"
         android:src="@drawable/ic_login_logo"
@@ -78,7 +76,8 @@
         android:gravity="center"
         android:text="Let's Music"
         android:textColor="@color/colorWhite"
-        android:textSize="35sp"
+        android:textSize="30sp"
+        android:singleLine="true"
         android:textStyle="bold|italic"
         app:font="streetwear.otf"
         app:layout_constraintBottom_toBottomOf="@+id/iv_logo"

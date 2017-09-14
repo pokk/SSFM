@@ -25,7 +25,9 @@ class IndexActivity: AdvancedActivity<IndexViewModel, ActivityIndexBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         this.attachMenuView()
+        navigator.activity
     }
 
     override fun onResume() {

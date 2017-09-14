@@ -29,8 +29,9 @@ abstract class BaseActivity: RxActivity(), HasFragmentInjector, HasSupportFragme
     @Inject lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
     /** For providing to fragments. */
     @Inject lateinit var fragmentInjector: DispatchingAndroidInjector<android.app.Fragment>
-    protected val rootView by lazy { findViewById(R.id.root) as? ViewGroup }
-    protected val menu by lazy { layoutInflater.inflate(R.layout.page_menu, null) }
+    val menu by lazy { layoutInflater.inflate(R.layout.page_menu, null) }
+    protected val navigator by lazy { Navigator(this) }
+    private val rootView by lazy { findViewById(R.id.root) as? ViewGroup }
 
     //region Activity lifecycle
     @CallSuper
