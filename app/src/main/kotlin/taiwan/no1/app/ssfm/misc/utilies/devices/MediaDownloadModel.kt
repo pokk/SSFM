@@ -31,8 +31,8 @@ class MediaDownloadModel: MediaDataSource {
             val total_size: Double = connect.contentLength.toDouble()
 
             val inputStream: InputStream = stream_url.openStream()
-            val b: ByteArrayOutputStream = ByteArrayOutputStream()
-            var read: Int = 0
+            val b = ByteArrayOutputStream()
+            var read = 0
 
             while (read != -1) {
                 read = inputStream.read()

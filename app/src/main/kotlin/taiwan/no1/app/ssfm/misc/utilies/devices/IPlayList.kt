@@ -6,11 +6,11 @@ package taiwan.no1.app.ssfm.misc.utilies.devices
  * Created by weian on 2017/6/18.
  */
 interface IPlayList {
-    enum class EMusicState {
-        EMusicState_Normal,
-        EMusicState_Random,
-        EMusicState_LoopOne,
-        EMusicState_LoopAll
+    enum class EMUSICSTATE {
+        NORMAL,
+        RANDOM,
+        LOOPONE,
+        LOOPALL
     }
 
     fun setList(total: Int)
@@ -21,5 +21,5 @@ interface IPlayList {
     fun loopOne(is_loop: Boolean)
     fun loopAll(is_loop: Boolean)
     fun random(is_random: Boolean)
-    fun getState(): EMusicState
+    fun getState(): EMUSICSTATE
 }

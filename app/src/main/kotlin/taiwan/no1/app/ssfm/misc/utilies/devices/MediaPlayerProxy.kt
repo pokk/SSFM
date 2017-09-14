@@ -6,6 +6,10 @@ import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.logi
 import io.reactivex.Observable
 import io.reactivex.Observer
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPLAYERSTATE
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPLAYERSTATE.PLAYING
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPLAYERSTATE.STOP
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPLAYERSTATE.PAUSE
 
 /**
  * For handling MediaPlayer.
@@ -19,7 +23,7 @@ class MediaPlayerProxy: IMultiMediaPlayer,
     MediaPlayer.OnBufferingUpdateListener,
     MediaPlayer.OnCompletionListener {
     private var mMediaPlayer = MediaPlayer()
-    private var mState: IPlayerHandler.EPlayerState = IPlayerHandler.EPlayerState.EPlayerState_Stop
+    private var mState: EPLAYERSTATE = STOP
     private var getStreamingBufferPercentage: (percentage: Int) -> Unit = {}
     private lateinit var downloadModel: MediaDownloadModel
     private var mObserver: Observer<Unit>? = null
@@ -34,7 +38,7 @@ class MediaPlayerProxy: IMultiMediaPlayer,
     override fun onPrepared(mp: MediaPlayer?) {
         logd("start playing")
         this.mMediaPlayer.start()
-        this.mState = IPlayerHandler.EPlayerState.EPlayerState_Playing
+        this.mState = PLAYING
     }
 
     override fun onError(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
@@ -85,19 +89,19 @@ class MediaPlayerProxy: IMultiMediaPlayer,
         logd("stop player")
         this.mMediaPlayer.stop()
         this.mMediaPlayer.reset()
-        this.mState = IPlayerHandler.EPlayerState.EPlayerState_Stop
+        this.mState = STOP
     }
 
     override fun pause() {
         logd("pause player")
         this.mMediaPlayer.pause()
-        this.mState = IPlayerHandler.EPlayerState.EPLayerState_Pause
+        this.mState = PAUSE
     }
 
     override fun resume() {
         logd("resume player")
         this.mMediaPlayer.start()
-        this.mState = IPlayerHandler.EPlayerState.EPlayerState_Playing
+        this.mState = PLAYING
     }
 
     override fun replay(is_replay: Boolean) {
@@ -130,7 +134,7 @@ class MediaPlayerProxy: IMultiMediaPlayer,
         callback(this.mMediaPlayer.currentPosition.div(1000))
     }
 
-    override fun getState(): IPlayerHandler.EPlayerState {
+    override fun getState(): EPLAYERSTATE {
         return this.mState
     }
 
