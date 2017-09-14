@@ -18,8 +18,6 @@ class PlayMainActivity: AdvancedActivity<PlayMainViewModel, ActivityPlayMusicBin
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.attachMenuView()
-        navigator.activity
     }
 
     // TODO(jieyi): 9/10/17 This layout is wrong, I just set fragment temporally.

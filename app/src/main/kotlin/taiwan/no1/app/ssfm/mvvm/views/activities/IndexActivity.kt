@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.mvvm.views.activities
 
 import android.app.Activity
 import android.os.Bundle
+import android.support.annotation.CallSuper
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityIndexBinding
 import taiwan.no1.app.ssfm.misc.widgets.MenuItem
@@ -23,15 +24,19 @@ class IndexActivity: AdvancedActivity<IndexViewModel, ActivityIndexBinding>() {
         List(titles.size) { MenuItem(this, icons.getResourceId(it, -1), titles[it]) }
     }
 
+    @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        this.attachMenuView()
-        navigator.activity
     }
 
+    @CallSuper
     override fun onResume() {
         super.onResume()
+    }
+
+    @CallSuper
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
     override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_index)

@@ -43,6 +43,8 @@ abstract class BaseActivity: RxActivity(), HasFragmentInjector, HasSupportFragme
     @CallSuper
     override fun onResume() {
         super.onResume()
+        this.navigator.activity
+        this.attachMenuView()
     }
 
     @CallSuper

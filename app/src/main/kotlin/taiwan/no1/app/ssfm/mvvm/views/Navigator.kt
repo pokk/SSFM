@@ -26,6 +26,7 @@ class Navigator(val activity: Activity) {
 
     private fun setMenuListener() {
         this.menu.tv_menu_home.onClick {
+            // TODO(jieyi): 9/15/17 delay 250 ms then perform click.
             this@Navigator.menu.iv_content_hamburger.performClick()
             this@Navigator.activity.startActivity<PlayMainActivity>()
         }
