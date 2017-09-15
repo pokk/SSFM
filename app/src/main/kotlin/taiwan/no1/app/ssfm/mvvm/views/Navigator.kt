@@ -1,6 +1,7 @@
 package taiwan.no1.app.ssfm.mvvm.views
 
 import android.app.Activity
+import android.view.View
 import kotlinx.android.synthetic.main.page_menu.view.tv_menu_chart
 import kotlinx.android.synthetic.main.page_menu.view.tv_menu_favorite
 import kotlinx.android.synthetic.main.page_menu.view.tv_menu_home
@@ -25,22 +26,33 @@ class Navigator(val activity: Activity) {
     }
 
     private fun setMenuListener() {
-        this.menu.tv_menu_home.onClick {
+        this.menu.tv_menu_home.wrapperOnClick {
             // TODO(jieyi): 9/15/17 delay 250 ms then perform click.
-            this@Navigator.menu.iv_content_hamburger.performClick()
             this@Navigator.activity.startActivity<PlayMainActivity>()
         }
-        this.menu.tv_menu_playlist.onClick {
-            this@Navigator.menu.iv_content_hamburger.performClick()
+        this.menu.tv_menu_playlist.wrapperOnClick {
             this@Navigator.activity.startActivity<IndexActivity>()
         }
-        this.menu.tv_menu_favorite.onClick {
+        this.menu.tv_menu_favorite.wrapperOnClick {
         }
-        this.menu.tv_menu_search.onClick {
+        this.menu.tv_menu_search.wrapperOnClick {
         }
-        this.menu.tv_menu_chart.onClick {
+        this.menu.tv_menu_chart.wrapperOnClick {
         }
-        this.menu.tv_menu_setting.onClick {
+        this.menu.tv_menu_setting.wrapperOnClick {
+        }
+    }
+
+    /**
+     * Decorate the click event for adding the closing menu function.
+     *
+     * @param block On click block.
+     */
+    private fun View.wrapperOnClick(block: (View?) -> Unit) {
+        this.onClick {
+            // Close the menu first.
+            this@Navigator.menu.iv_content_hamburger.performClick()
+            block(it)
         }
     }
 }
