@@ -2,8 +2,9 @@ package taiwan.no1.app.ssfm.mvvm.views.activities
 
 import android.app.Activity
 import android.os.Bundle
+import kotlinx.android.synthetic.main.part_toolbar_view.tv_menu_title
 import taiwan.no1.app.ssfm.R
-import taiwan.no1.app.ssfm.databinding.ActivityPlayMusicBinding
+import taiwan.no1.app.ssfm.databinding.ActivityMusicBinding
 import taiwan.no1.app.ssfm.mvvm.viewmodels.PlayMainViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedActivity
 import javax.inject.Inject
@@ -13,13 +14,14 @@ import javax.inject.Inject
  * @author  jieyi
  * @since   9/10/17
  */
-class PlayMainActivity: AdvancedActivity<PlayMainViewModel, ActivityPlayMusicBinding>() {
+class PlayMainActivity: AdvancedActivity<PlayMainViewModel, ActivityMusicBinding>() {
     @Inject override lateinit var viewModel: PlayMainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        this.tv_menu_title.text = "Play"
     }
 
     // TODO(jieyi): 9/10/17 This layout is wrong, I just set fragment temporally.
-    override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_play_music)
+    override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_music)
 }

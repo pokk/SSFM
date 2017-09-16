@@ -6,17 +6,17 @@
     android:orientation="vertical">
 
     <Button
-        android:text="PREVIOUS"
         android:id="@+id/btn_previous"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:text="PREVIOUS"/>
 
     <Button
-        android:text="NEXT"
         android:id="@+id/btn_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"/>
+        android:layout_alignParentEnd="true"
+        android:text="NEXT"/>
 
 </RelativeLayout>

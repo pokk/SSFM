@@ -2,16 +2,23 @@
 <android.support.v7.widget.Toolbar
     android:id="@+id/tb_toolbar"
     style="@style/Toolbar"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
         android:id="@+id/iv_content_hamburger"
         style="@style/Menu.Hamburger"
         android:contentDescription="@string/menu_switch_button"
-        android:src="@drawable/ic_menu"/>
+        android:src="@drawable/ic_menu_90"/>
 
     <TextView
         android:id="@+id/tv_menu_title"
         style="@style/Menu.Title"
-        android:text="activity"/>
+        tools:text="ACTIVITY TITLE"/>
+
+    <ImageView
+        android:id="@+id/iv_search"
+        style="@style/Menu.Search"
+        android:contentDescription=""
+        android:src="@drawable/ic_search"/>
 </android.support.v7.widget.Toolbar>

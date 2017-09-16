@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".mvvm.views.activities.PlayMainActivity">
+    tools:context=".mvvm.views.activities.">
 
     <data>
 
@@ -11,37 +12,24 @@
 
         <variable
             name="viewmodel"
-            type="taiwan.no1.app.ssfm.mvvm.viewmodels.PlayMainViewModel"/>
+            type="taiwan.no1.app.ssfm.mvvm.viewmodels.IndexViewModel"/>
     </data>
-
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/root"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/cardview_dark_background"
-        android:orientation="vertical">
+        style="@style/Template.Mainview">
 
         <View
             android:id="@+id/view"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_gravity="top"
-            android:background="@color/cardview_dark_background"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            style="Template.Toolbar"/>
 
         <!-- Menu ToolBar -->
         <include
             android:id="@+id/include_toolbar"
-            layout="@layout/part_toolbar_menu"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            style="@style/Template.TopBar.Toolbar"
+            layout="@layout/part_toolbar_view"/>
 
         <include
-            layout="@layout/activity_part_play_music"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"

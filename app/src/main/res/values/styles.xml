@@ -3,12 +3,12 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlNormal">@color/colorWhite</item>
         <item name="colorControlActivated">@color/colorAccent</item>
         <item name="colorControlHighlight">@color/colorBrown</item>
+        <item name="colorControlNormal">@color/colorWhite</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
 
     <style name="AppTheme.Splash">
@@ -29,12 +29,12 @@
     </style>
 
     <style name="Login.Input">
-        <item name="android:layout_marginTop">10dp</item>
         <item name="android:drawablePadding">20dp</item>
         <item name="android:ems">10</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:layout_marginTop">10dp</item>
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:textColorHint">@color/colorWhiteSmoke</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <!-- Menu -->
@@ -46,29 +46,62 @@
     </style>
 
     <style name="Menu.Items">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingStart">50dp</item>
-        <item name="android:paddingEnd">16dp</item>
-        <item name="android:gravity">center_vertical</item>
         <item name="android:drawablePadding">16dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingStart">50dp</item>
         <item name="android:paddingTop">8dp</item>
+    </style>
+
+    <style name="Menu.Search" parent="Widget.AppCompat.ActionButton">
+        <item name="android:layout_gravity">end</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:visibility">gone</item>
     </style>
 
     <style name="Menu.Title">
         <item name="android:layout_gravity">center</item>
-        <item name="android:textSize">24sp</item>
-        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <!-- Template -->
+    <style name="Template"/>
+
+    <style name="Template.Mainview">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/cardview_dark_background</item>
+    </style>
+
+    <style name="Template.TopBar">
+        <item name="app:layout_constraintEnd_toEndOf">parent</item>
+        <item name="app:layout_constraintStart_toStartOf">parent</item>
+        <item name="app:layout_constraintTop_toTopOf">parent</item>
+    </style>
+
+    <style name="Template.TopBar.Toolbar">
+    </style>
+
+    <style name="Template.TopBar.HideView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:layout_gravity">top</item>
+        <item name="android:background">@color/cardview_dark_background</item>
     </style>
 
     <!-- Toolbar -->
     <style name="Toolbar">
+        <item name="android:background">@color/colorMainThemeBackground</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:minHeight">?attr/actionBarSize</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:background">@color/colorMainThemeBackground</item>
     </style>
 </resources>

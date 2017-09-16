@@ -2,6 +2,9 @@ package taiwan.no1.app.ssfm.mvvm.views
 
 import android.app.Activity
 import android.view.View
+import com.devrapid.kotlinknifer.observer
+import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.page_menu.view.tv_menu_chart
 import kotlinx.android.synthetic.main.page_menu.view.tv_menu_favorite
 import kotlinx.android.synthetic.main.page_menu.view.tv_menu_home
@@ -13,6 +16,8 @@ import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.startActivity
 import taiwan.no1.app.ssfm.mvvm.views.activities.IndexActivity
 import taiwan.no1.app.ssfm.mvvm.views.activities.PlayMainActivity
+import taiwan.no1.app.ssfm.mvvm.views.activities.PreferenceActivity
+import java.util.concurrent.TimeUnit.MILLISECONDS
 
 /**
  * @author  jieyi
@@ -27,11 +32,22 @@ class Navigator(val activity: Activity) {
 
     private fun setMenuListener() {
         this.menu.tv_menu_home.wrapperOnClick {
-            // TODO(jieyi): 9/15/17 delay 250 ms then perform click.
-            this@Navigator.activity.startActivity<PlayMainActivity>()
+            Observable.timer(500, MILLISECONDS).
+                subscribeOn(Schedulers.io()).
+                subscribe(observer<Long>().onNext {
+                    this@Navigator.activity.startActivity<IndexActivity>()
+                }.onComplete {
+                    this@Navigator.activity.finish()
+                })
         }
         this.menu.tv_menu_playlist.wrapperOnClick {
-            this@Navigator.activity.startActivity<IndexActivity>()
+            Observable.timer(500, MILLISECONDS).
+                subscribeOn(Schedulers.io()).
+                subscribe(observer<Long>().onNext {
+                    this@Navigator.activity.startActivity<PlayMainActivity>()
+                }.onComplete {
+                    this@Navigator.activity.finish()
+                })
         }
         this.menu.tv_menu_favorite.wrapperOnClick {
         }
@@ -40,6 +56,13 @@ class Navigator(val activity: Activity) {
         this.menu.tv_menu_chart.wrapperOnClick {
         }
         this.menu.tv_menu_setting.wrapperOnClick {
+            Observable.timer(500, MILLISECONDS).
+                subscribeOn(Schedulers.io()).
+                subscribe(observer<Long>().onNext {
+                    this@Navigator.activity.startActivity<PreferenceActivity>()
+                }.onComplete {
+                    this@Navigator.activity.finish()
+                })
         }
     }
 

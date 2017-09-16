@@ -13,7 +13,7 @@ import taiwan.no1.app.ssfm.mvvm.views.BaseActivity
 class TestActivity: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_preference)
+        setContentView(R.layout.activity_part_preference)
     }
 
     override fun onResume() {

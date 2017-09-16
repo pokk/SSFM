@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".mvvm.views.activities.IndexActivity">
+    tools:context=".mvvm.views.activities.PlayMainActivity">
 
     <data>
 
@@ -12,8 +11,9 @@
 
         <variable
             name="viewmodel"
-            type="taiwan.no1.app.ssfm.mvvm.viewmodels.IndexViewModel"/>
+            type="taiwan.no1.app.ssfm.mvvm.viewmodels.PlayMainViewModel"/>
     </data>
+
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/root"
@@ -21,7 +21,7 @@
 
         <View
             android:id="@+id/view"
-            style="Template.Toolbar"/>
+            style="@style/Template.TopBar.HideView"/>
 
         <!-- Menu ToolBar -->
         <include
@@ -30,7 +30,7 @@
             layout="@layout/part_toolbar_view"/>
 
         <include
-            layout="@layout/activity_part_login"
+            layout="@layout/activity_part_play_music"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"

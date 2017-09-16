@@ -32,11 +32,11 @@ class PreferenceViewHolder(view: View): AdaptiveViewHolder<ExpandableViewTypeFac
         }
 
         this.itemView.onClick {
-            if (adapter.isCollapsed(newPosition)) {
-                adapter.expand(position, newPosition)
+            if (adapter.isExpanded(newPosition)) {
+                adapter.collapse(position, newPosition)
             }
             else {
-                adapter.collapse(position, newPosition)
+                adapter.expand(position, newPosition)
             }
         }
 

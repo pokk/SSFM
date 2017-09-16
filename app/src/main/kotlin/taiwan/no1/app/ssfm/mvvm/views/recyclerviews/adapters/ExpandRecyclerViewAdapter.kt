@@ -56,7 +56,7 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
         this.updateList {
             val subList = this.dataList[newIndex].let {
                 this.changeVisibleChildNumber(position, it.childItemList.size)
-                it.isExpanded = false
+                it.isExpanded = true
                 it.childItemList
             }
             ArrayList(dataList).toMutableList().apply { addAll(newIndex + 1, subList as Collection<IExpandVisitable>) }
@@ -73,7 +73,7 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
         this.updateList {
             val subList = this.dataList[newIndex].let {
                 this.changeVisibleChildNumber(position, 0)
-                it.isExpanded = true
+                it.isExpanded = false
                 it.childItemList
             }
             ArrayList(dataList).toMutableList().apply { subList(newIndex + 1, newIndex + 1 + subList.size).clear() }
@@ -93,9 +93,9 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
      * the value of the [dataList] is non-zero, that means the item is expanded.
      *
      * @param position The index in [dataList] of an item.
-     * @return value is true → collapsed; otherwise, expanded.
+     * @return value is true → expanded; otherwise, collapsed.
      */
-    fun isCollapsed(position: Int): Boolean = this.dataList[position].isExpanded
+    fun isExpanded(position: Int): Boolean = this.dataList[position].isExpanded
 
     /**
      * Get the parent index of an expanded child item.
