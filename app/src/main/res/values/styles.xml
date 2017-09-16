@@ -74,19 +74,25 @@
     <!-- Template -->
     <style name="Template"/>
 
-    <style name="Template.Mainview">
+    <style name="Template.Activity">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="layout_constraintBottom_toBottomOf">parent</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="layout_constraintTop_toBottomOf">@+id/include_toolbar</item>
+    </style>
+
+    <style name="Template.MainView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/cardview_dark_background</item>
     </style>
 
     <style name="Template.TopBar">
-        <item name="app:layout_constraintEnd_toEndOf">parent</item>
-        <item name="app:layout_constraintStart_toStartOf">parent</item>
-        <item name="app:layout_constraintTop_toTopOf">parent</item>
-    </style>
-
-    <style name="Template.TopBar.Toolbar">
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="layout_constraintTop_toTopOf">parent</item>
     </style>
 
     <style name="Template.TopBar.HideView">
@@ -95,6 +101,8 @@
         <item name="android:layout_gravity">top</item>
         <item name="android:background">@color/cardview_dark_background</item>
     </style>
+
+    <style name="Template.TopBar.Toolbar"/>
 
     <!-- Toolbar -->
     <style name="Toolbar">

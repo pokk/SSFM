@@ -2,7 +2,6 @@
 
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".mvvm.views.activities.IndexActivity">
 
@@ -17,11 +16,11 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/root"
-        style="@style/Template.Mainview">
+        style="@style/Template.MainView">
 
         <View
             android:id="@+id/view"
-            style="Template.Toolbar"/>
+            style="@style/Template.TopBar.HideView"/>
 
         <!-- Menu ToolBar -->
         <include
@@ -30,12 +29,7 @@
             layout="@layout/part_toolbar_view"/>
 
         <include
-            layout="@layout/activity_part_login"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include_toolbar"/>
+            style="@style/Template.Activity"
+            layout="@layout/activity_part_login"/>
     </android.support.constraint.ConstraintLayout>
 </layout>
