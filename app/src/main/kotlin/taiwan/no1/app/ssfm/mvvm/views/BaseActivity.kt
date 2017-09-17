@@ -43,6 +43,7 @@ abstract class BaseActivity: RxActivity(), HasFragmentInjector, HasSupportFragme
     @CallSuper
     override fun onResume() {
         super.onResume()
+        // HACK(jieyi): 9/17/17 (jieyi): Navigator shouldn't be active by call a variable.
         this.navigator.activity
         this.attachMenuView()
     }

@@ -38,7 +38,13 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".mvvm.views.activities.PlaylistActivity">
+        </activity>
         <activity android:name=".mvvm.views.activities.PlayMainActivity">
+        </activity>
+        <activity android:name=".mvvm.views.activities.ChartActivity">
+        </activity>
+        <activity android:name=".mvvm.views.activities.SearchActivity">
         </activity>
         <activity android:name=".mvvm.views.activities.PreferenceActivity">
         </activity>

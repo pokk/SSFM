@@ -12,4 +12,14 @@ import android.databinding.BaseObservable
  */
 abstract class BaseViewModel(private val activity: Activity): BaseObservable(), IViewModel {
     protected val context: Context by lazy { this.activity.applicationContext }
+
+    override fun onCreate() {}
+
+    override fun onResume() {}
+
+    override fun onSetView() {}
+
+    override fun onStop() {}
+
+    override fun onDestory() {}
 }

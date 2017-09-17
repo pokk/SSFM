@@ -1,4 +1,4 @@
-package layout
+package taiwan.no1.app.ssfm.mvvm.views.activities
 
 import android.os.Bundle
 import taiwan.no1.app.ssfm.R

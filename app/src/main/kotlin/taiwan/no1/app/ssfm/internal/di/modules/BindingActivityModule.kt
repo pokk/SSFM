@@ -7,10 +7,13 @@ import taiwan.no1.app.ssfm.internal.di.modules.activity.dependency.IndexActivity
 import taiwan.no1.app.ssfm.internal.di.modules.activity.dependency.MainActivityModule
 import taiwan.no1.app.ssfm.internal.di.modules.activity.dependency.PlayMainActivityModule
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.ActivityModule
+import taiwan.no1.app.ssfm.mvvm.views.activities.ChartActivity
 import taiwan.no1.app.ssfm.mvvm.views.activities.IndexActivity
 import taiwan.no1.app.ssfm.mvvm.views.activities.MainActivity
 import taiwan.no1.app.ssfm.mvvm.views.activities.PlayMainActivity
+import taiwan.no1.app.ssfm.mvvm.views.activities.PlaylistActivity
 import taiwan.no1.app.ssfm.mvvm.views.activities.PreferenceActivity
+import taiwan.no1.app.ssfm.mvvm.views.activities.SearchActivity
 import taiwan.no1.app.ssfm.mvvm.views.activities.TestActivity
 
 /**
@@ -36,6 +39,18 @@ abstract class BindingActivityModule {
     @PerActivity
     @ContributesAndroidInjector(modules = arrayOf(PlayMainActivityModule::class))
     abstract fun contributePlayMainActivityInjector(): PlayMainActivity
+
+    @PerActivity
+    @ContributesAndroidInjector
+    abstract fun contributePlaylistActivityInjector(): PlaylistActivity
+
+    @PerActivity
+    @ContributesAndroidInjector
+    abstract fun contributeChartActivityInjector(): ChartActivity
+
+    @PerActivity
+    @ContributesAndroidInjector
+    abstract fun contributeSearchActivityInjector(): SearchActivity
 
     @PerActivity
     @ContributesAndroidInjector
