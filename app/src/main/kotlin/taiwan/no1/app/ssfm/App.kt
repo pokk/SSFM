@@ -33,6 +33,7 @@ class App: DaggerApplication() {
     override fun onCreate() {
         super.onCreate()
 
+        // Initial necessary lib by intent service.
         InitializeService.start(this)
     }
 
