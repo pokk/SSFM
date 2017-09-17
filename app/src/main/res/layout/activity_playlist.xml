@@ -3,7 +3,7 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".mvvm.views.activities.">
+    tools:context=".mvvm.views.activities.PlaylistActivity">
 
     <data>
 
@@ -20,7 +20,7 @@
 
         <View
             android:id="@+id/view"
-            style="Template.Toolbar"/>
+            style="@style/Template.TopBar.HideView"/>
 
         <!-- Menu ToolBar -->
         <include

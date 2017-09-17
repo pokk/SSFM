@@ -2,7 +2,6 @@ package taiwan.no1.app.ssfm
 
 import android.content.Context
 import android.support.multidex.MultiDex
-import com.raizlabs.android.dbflow.config.FlowManager
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import taiwan.no1.app.ssfm.internal.di.components.AppComponent
@@ -34,8 +33,7 @@ class App: DaggerApplication() {
     override fun onCreate() {
         super.onCreate()
 
-        // Initial the database.
-        FlowManager.init(this)
+        InitializeService.start(this)
     }
 
     override fun applicationInjector(): AndroidInjector<App> = injector
