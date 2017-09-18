@@ -76,7 +76,7 @@ dependencies {
     implementation "com.android.support:multidex:1.0.2"
     // My own tool library
     implementation "com.devrapid.jieyi:adaptiverecyclerview:0.0.6"
-    implementation "com.devrapid.jieyi:musicdiskplayer:0.1.0"
+    implementation "com.devrapid.jieyi:musicdiskplayer:0.1.1"
     // Library is including Gson, RxKotlin, RxJava.
     implementation "com.devrapid.jieyi:kotlinknifer:1.0.13"
     /* For language */

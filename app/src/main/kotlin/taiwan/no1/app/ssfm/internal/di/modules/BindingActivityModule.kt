@@ -3,9 +3,13 @@ package taiwan.no1.app.ssfm.internal.di.modules
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerActivity
+import taiwan.no1.app.ssfm.internal.di.modules.activity.dependency.ChartActivityModule
 import taiwan.no1.app.ssfm.internal.di.modules.activity.dependency.IndexActivityModule
 import taiwan.no1.app.ssfm.internal.di.modules.activity.dependency.MainActivityModule
 import taiwan.no1.app.ssfm.internal.di.modules.activity.dependency.PlayMainActivityModule
+import taiwan.no1.app.ssfm.internal.di.modules.activity.dependency.PlaylistActivityModule
+import taiwan.no1.app.ssfm.internal.di.modules.activity.dependency.PreferenceActivityModule
+import taiwan.no1.app.ssfm.internal.di.modules.activity.dependency.SearchActivityModule
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.ActivityModule
 import taiwan.no1.app.ssfm.mvvm.views.activities.ChartActivity
 import taiwan.no1.app.ssfm.mvvm.views.activities.IndexActivity
@@ -41,19 +45,19 @@ abstract class BindingActivityModule {
     abstract fun contributePlayMainActivityInjector(): PlayMainActivity
 
     @PerActivity
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = arrayOf(PlaylistActivityModule::class))
     abstract fun contributePlaylistActivityInjector(): PlaylistActivity
 
     @PerActivity
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = arrayOf(ChartActivityModule::class))
     abstract fun contributeChartActivityInjector(): ChartActivity
 
     @PerActivity
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = arrayOf(SearchActivityModule::class))
     abstract fun contributeSearchActivityInjector(): SearchActivity
 
     @PerActivity
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = arrayOf(PreferenceActivityModule::class))
     abstract fun contributePreferencesActivityInjector(): PreferenceActivity
 
     @PerActivity

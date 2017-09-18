@@ -47,7 +47,7 @@
         <activity android:name=".mvvm.views.activities.TestActivity">
         </activity>
 
-        <service android:name=".InitializeService"/>
+        <service android:name=".controllers.services.InitializeService"/>
     </application>
 
 </manifest>

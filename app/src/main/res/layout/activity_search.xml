@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    android:id="@+id/root"
-    style="@style/Template.MainView"
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".mvvm.views.activities.SearchActivity">
+    tools:context=".mvvm.views.activities.SearchViewModel">
 
-    <View
-        android:id="@+id/view"
-        style="@style/Template.TopBar.HideView"/>
+    <data>
 
-    <!-- Menu ToolBar -->
-    <include
-        android:id="@+id/include_toolbar"
-        style="@style/Template.TopBar.Toolbar"
-        layout="@layout/part_toolbar_view"/>
+        <import type="android.view.View"/>
 
-    <include
-        style="@style/Template.Activity"
-        layout="@layout/activity_part_preference"/>
-</android.support.constraint.ConstraintLayout>
+        <variable
+            name="viewmodel"
+            type="taiwan.no1.app.ssfm.mvvm.viewmodels.SearchViewModel"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/root"
+        style="@style/Template.MainView">
+
+        <View
+            android:id="@+id/view"
+            style="@style/Template.TopBar.HideView"/>
+
+        <!-- Menu ToolBar -->
+        <include
+            android:id="@+id/include_toolbar"
+            style="@style/Template.TopBar.Toolbar"
+            layout="@layout/part_toolbar_view"/>
+    </android.support.constraint.ConstraintLayout>
+</layout>

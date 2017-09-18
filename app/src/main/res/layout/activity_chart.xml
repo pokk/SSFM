@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    android:id="@+id/root"
-    style="@style/Template.MainView"
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".mvvm.views.activities.ChartActivity">
 
-    <View
-        android:id="@+id/view"
-        style="@style/Template.TopBar.HideView"/>
+    <data>
 
-    <!-- Menu ToolBar -->
-    <include
-        android:id="@+id/include_toolbar"
-        style="@style/Template.TopBar.Toolbar"
-        layout="@layout/part_toolbar_view"/>
+        <import type="android.view.View"/>
 
-    <include
-        layout="@layout/activity_part_preference"
-        android:layout_width="0dp"
-        android:layout_height="0dp"/>
-</android.support.constraint.ConstraintLayout>
+        <variable
+            name="viewmodel"
+            type="taiwan.no1.app.ssfm.mvvm.viewmodels.ChartViewModel"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/root"
+        style="@style/Template.MainView">
+
+        <View
+            android:id="@+id/view"
+            style="@style/Template.TopBar.HideView"/>
+
+        <!-- Menu ToolBar -->
+        <include
+            android:id="@+id/include_toolbar"
+            style="@style/Template.TopBar.Toolbar"
+            layout="@layout/part_toolbar_view"/>
+
+        <include
+            layout="@layout/activity_part_preference"
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
+    </android.support.constraint.ConstraintLayout>
+</layout>

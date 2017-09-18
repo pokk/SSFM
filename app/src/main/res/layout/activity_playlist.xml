@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,7 +10,7 @@
 
         <variable
             name="viewmodel"
-            type="taiwan.no1.app.ssfm.mvvm.viewmodels.IndexViewModel"/>
+            type="taiwan.no1.app.ssfm.mvvm.viewmodels.PlaylistViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
