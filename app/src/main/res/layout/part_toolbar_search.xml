@@ -28,6 +28,7 @@
             android:src="@drawable/ic_menu_90"/>
 
         <TextView
+            android:id="@+id/tv_menu_title"
             style="@style/Menu.Title"
             android:text="@={viewmodel.title}"
             tools:text="ACTIVITY TITLE"/>
@@ -35,7 +36,8 @@
         <SearchView
             android:id="@+id/sv_search"
             style="@style/Menu.Search"
-            android:onClick="@{viewmodel.closeSearchView}"
-            android:queryHint="Input the singer/song name."/>
+            android:closeIcon="@drawable/ic_close"
+            android:queryHint="Input the singer/song name."
+            android:searchIcon="@drawable/ic_search"/>
     </android.support.v7.widget.Toolbar>
 </layout>

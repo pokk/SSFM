@@ -31,7 +31,7 @@ abstract class BaseActivity: RxActivity(), HasFragmentInjector, HasSupportFragme
     @Inject lateinit var fragmentInjector: DispatchingAndroidInjector<android.app.Fragment>
     val menu by lazy { layoutInflater.inflate(R.layout.page_menu_preference, null) }
     protected val navigator by lazy { Navigator(this) }
-    private val rootView by lazy { findViewById(R.id.root) as? ViewGroup }
+    private val rootView by lazy { findViewById<ViewGroup>(R.id.root) }
 
     //region Activity lifecycle
     @CallSuper
