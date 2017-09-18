@@ -18,51 +18,51 @@ class PausableTimer(private val millisInFuture: Long = -1, private val countDown
     lateinit private var timer: CountDownTimer
 
     init {
-        val millisTime = if (-1L == this.millisInFuture) Long.MAX_VALUE else this.millisInFuture
-        this.init(millisTime, this.countDownInterval)
+        val millisTime = if (-1L == millisInFuture) Long.MAX_VALUE else millisInFuture
+        init(millisTime, countDownInterval)
     }
 
     fun pause(): Long {
-        this.isPause = true
-        this.stop()
+        isPause = true
+        stop()
 
-        return this.curTime
+        return curTime
     }
 
     fun resume() {
-        val time = if (this.isPause && 0 <= this.curTime) {
-            this.isPause = false
-            this.curTime
+        val time = if (isPause && 0 <= curTime) {
+            isPause = false
+            curTime
         }
         else {
-            this.millisInFuture
+            millisInFuture
         }
 
-        this.stop()
-        this.init(time, this.countDownInterval)
-        this.start()
+        stop()
+        init(time, countDownInterval)
+        start()
     }
 
     fun start() {
-        if (!this.isStart && !this.isPause) {
-            if (0L == this.curTime) {
-                this.init(this.millisInFuture, this.countDownInterval)
+        if (!isStart && !isPause) {
+            if (0L == curTime) {
+                init(millisInFuture, countDownInterval)
             }
-            this.timer.start()
-            this.isStart = true
+            timer.start()
+            isStart = true
         }
-        else if (this.isPause) {
-            this.resume()
+        else if (isPause) {
+            resume()
         }
     }
 
     fun stop() {
-        this.timer.cancel()
-        this.isStart = false
+        timer.cancel()
+        isStart = false
     }
 
     private fun init(millisInFuture: Long, countDownInterval: Long) {
-        this.timer = object: CountDownTimer(millisInFuture, countDownInterval) {
+        timer = object: CountDownTimer(millisInFuture, countDownInterval) {
             override fun onTick(millisUntilFinished: Long) {
                 this@PausableTimer.curTime = millisUntilFinished
                 this@PausableTimer.onTick(millisUntilFinished)

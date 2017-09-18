@@ -3,6 +3,7 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".mvvm.views.activities.IndexActivity">
 
     <data>
@@ -28,8 +29,96 @@
             style="@style/Template.TopBar.Toolbar"
             layout="@layout/part_toolbar_view"/>
 
-        <include
-            style="@style/Template.Activity"
-            layout="@layout/activity_part_login"/>
+        <ImageView
+            android:id="@+id/iv_bkg_fog"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bkg_login_fog"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription"/>
+
+        <EditText
+            android:id="@+id/et_email"
+            style="@style/Login.Input"
+            android:layout_marginTop="70dp"
+            android:drawableStart="@drawable/ic_user"
+            android:hint="Name or Email"
+            android:inputType="textPersonName"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintLeft_toLeftOf="@+id/et_pwd"
+            app:layout_constraintRight_toRightOf="@+id/et_pwd"
+            app:layout_constraintTop_toBottomOf="@+id/tv_subtitle"
+            tools:ignore="TextFields"
+            tools:text="pokkbaby@gmail.com"/>
+
+        <EditText
+            android:id="@+id/et_pwd"
+            style="@style/Login.Input"
+            android:drawableStart="@drawable/ic_password"
+            android:inputType="textPassword"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintLeft_toLeftOf="@+id/btn_login"
+            app:layout_constraintRight_toRightOf="@+id/btn_login"
+            app:layout_constraintTop_toBottomOf="@+id/et_email"
+            tools:text="my password"/>
+
+        <Button
+            android:id="@+id/btn_login"
+            style="@style/Login.Button"
+            android:background="@drawable/sel_btn_login"
+            android:text="Login"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_pwd"
+            app:layout_constraintVertical_bias="0"/>
+
+
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/ic_login_logo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include_toolbar"/>
+
+        <taiwan.no1.app.ssfm.misc.widgets.FontTextView
+            android:id="@+id/fontTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="Let's Music"
+            android:textColor="@color/colorWhite"
+            android:textSize="30sp"
+            android:textStyle="bold|italic"
+            app:font="streetwear.otf"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_logo"
+            app:layout_constraintTop_toTopOf="@+id/iv_logo"/>
+
+        <TextView
+            android:id="@+id/tv_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Let's rock our life"
+            android:textColor="#DDFFFFFF"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_logo"/>
+
     </android.support.constraint.ConstraintLayout>
 </layout>

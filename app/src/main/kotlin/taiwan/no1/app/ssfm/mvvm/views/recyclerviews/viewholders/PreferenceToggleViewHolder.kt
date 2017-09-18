@@ -22,11 +22,11 @@ class PreferenceToggleViewHolder(view: View): AdaptiveViewHolder<ExpandableViewT
 
         // Initial the items.
         if (model.icon > 0) {
-            this.itemView.iv_title_icon.setImageDrawable(this.mContext.getDrawable(model.icon))
+            itemView.iv_title_icon.setImageDrawable(mContext.getDrawable(model.icon))
         }
-        this.itemView.tv_title.text = model.title
-        this.itemView.st_switch.isChecked = model.isToggle
-        this.itemView.st_switch.onCheckedChange { btn, isChecked ->
+        itemView.tv_title.text = model.title
+        itemView.st_switch.isChecked = model.isToggle
+        itemView.st_switch.onCheckedChange { btn, isChecked ->
             // TODO(jieyi): 9/10/17 Do something about this toggle's reaction.
         }
     }

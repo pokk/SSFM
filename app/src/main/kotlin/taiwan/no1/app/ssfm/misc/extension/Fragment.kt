@@ -25,7 +25,7 @@ import android.view.View
 fun FragmentManager.addFragment(containerViewId: Int,
                                 fragment: Fragment,
                                 needBack: Boolean = false,
-                                sharedElements: HashMap<View, String> = hashMapOf()): Int = this.beginTransaction().apply {
+                                sharedElements: HashMap<View, String> = hashMapOf()): Int = beginTransaction().apply {
     replace(containerViewId, fragment, fragment.javaClass.name)
     sharedElements.forEach { value -> addSharedElement(value.key, value.value) }
     if (needBack)
@@ -37,8 +37,8 @@ fun FragmentManager.addFragment(containerViewId: Int,
  *
  * @return is success to pop a [Fragment].
  */
-inline fun FragmentManager.popFragment(): Boolean = if (0 < this.backStackEntryCount) {
-    this.popBackStackImmediate()
+inline fun FragmentManager.popFragment(): Boolean = if (0 < backStackEntryCount) {
+    popBackStackImmediate()
     true
 }
 else
@@ -49,8 +49,8 @@ else
  */
 inline fun FragmentManager.popAllFragment() {
     // Optimized by Kotlin.
-    for (i in 0..this.backStackEntryCount - 1) {
-        this.popFragment()
+    for (i in 0..backStackEntryCount - 1) {
+        popFragment()
     }
 }
 
@@ -60,13 +60,13 @@ inline fun FragmentManager.popAllFragment() {
  * @param fragment Specific assigned [Fragment].
  */
 @RequiresApi(VERSION_CODES.N)
-inline fun FragmentManager.removeFragment(fragment: Fragment) = this.beginTransaction().remove(fragment).commitNow()
+inline fun FragmentManager.removeFragment(fragment: Fragment) = beginTransaction().remove(fragment).commitNow()
 
 // TODO(jieyi): 8/19/17 Cannot get fragments from FragmentManager.
 /**
  * Remove all [Fragment] from [FragmentManager] stack.
  */
-//fun FragmentManager.removeRecursiveFragment() = this.fragments?.forEach {
+//fun FragmentManager.removeRecursiveFragment() = fragments?.forEach {
 //    it?.let { f ->
 //        it.childFragmentManager?.fragments?.forEach {
 //            it?.let { f.childFragmentManager.removeFragment(it) }
@@ -77,7 +77,7 @@ inline fun FragmentManager.removeFragment(fragment: Fragment) = this.beginTransa
 /**
  * Testing code. For showing all fragments and children fragments.
  */
-//fun FragmentManager.showAllFragment() = this.fragments?.forEach {
+//fun FragmentManager.showAllFragment() = fragments?.forEach {
 //    it?.let {
 //        Logs.v("parent : $it")
 //        it.childFragmentManager?.fragments?.forEach { Logs.d("child!!!! : $it") }

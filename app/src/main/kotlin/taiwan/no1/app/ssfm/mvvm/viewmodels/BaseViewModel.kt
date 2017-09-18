@@ -11,5 +11,5 @@ import android.databinding.BaseObservable
  * @since   5/8/17
  */
 abstract class BaseViewModel(private val activity: Activity): BaseObservable(), IViewModel {
-    protected val context: Context by lazy { this.activity.applicationContext }
+    protected val context: Context by lazy { activity.applicationContext }
 }

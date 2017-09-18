@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.mvvm.views.activities
 
 import android.app.Activity
 import android.os.Bundle
+import kotlinx.android.synthetic.main.part_toolbar_view.tv_menu_title
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivitySearchBinding
 import taiwan.no1.app.ssfm.mvvm.viewmodels.SearchViewModel
@@ -18,6 +19,7 @@ class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        tv_menu_title.text = getString(R.string.search_menu_title)
     }
 
     override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_search)

@@ -36,8 +36,8 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
     @field:[Inject Named("music2")]
     lateinit var musicService2: Lazy<MusicServices>
 
-    private val lastfm_key by lazy { this.context.getString(R.string.lastfm_api_key) }
-    private val lastfm_secret by lazy { this.context.getString(R.string.lastfm_secret_key) }
+    private val lastfm_key by lazy { context.getString(R.string.lastfm_api_key) }
+    private val lastfm_secret by lazy { context.getString(R.string.lastfm_secret_key) }
 
     init {
         NetComponent.Initializer.init().inject(this)
@@ -45,58 +45,58 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
 
     override fun getSearchMusicRes(keyword: String): Observable<SearchMusicEntity> {
         val query: Map<String, String> = mapOf(
-            Pair(this.context.getString(R.string.t_pair1), this.context.getString(R.string.v_pair1)),
-            Pair(this.context.getString(R.string.t_pair2), keyword),
-            Pair(this.context.getString(R.string.t_pair3), this.context.getString(R.string.v_pair3)),
-            Pair(this.context.getString(R.string.t_pair4), this.context.getString(R.string.v_pair4)),
-            Pair(this.context.getString(R.string.t_pair5), this.context.getString(R.string.v_pair5)))
+            Pair(context.getString(R.string.t_pair1), context.getString(R.string.v_pair1)),
+            Pair(context.getString(R.string.t_pair2), keyword),
+            Pair(context.getString(R.string.t_pair3), context.getString(R.string.v_pair3)),
+            Pair(context.getString(R.string.t_pair4), context.getString(R.string.v_pair4)),
+            Pair(context.getString(R.string.t_pair5), context.getString(R.string.v_pair5)))
 
-        return this.musicService1.get().searchMusic(query).subscribeOn(Schedulers.io())
+        return musicService1.get().searchMusic(query).subscribeOn(Schedulers.io())
     }
 
     override fun getDetailMusicRes(hash: String): Observable<DetailMusicEntity> {
         val query: Map<String, String> = mapOf(
-            Pair(this.context.getString(R.string.t_pair6), this.context.getString(R.string.v_pair6)),
-            Pair(this.context.getString(R.string.t_pair7), this.context.getString(R.string.v_pair7)),
-            Pair(this.context.getString(R.string.t_pair8), hash))
+            Pair(context.getString(R.string.t_pair6), context.getString(R.string.v_pair6)),
+            Pair(context.getString(R.string.t_pair7), context.getString(R.string.v_pair7)),
+            Pair(context.getString(R.string.t_pair8), hash))
 
-        return this.musicService2.get().getMusic(query).subscribeOn(Schedulers.io())
+        return musicService2.get().getMusic(query).subscribeOn(Schedulers.io())
     }
 
     override fun obtainSession(user: String, pwd: String): Observable<Session> =
-        ObservableJust(Authenticator.getMobileSession(user, pwd, this.lastfm_key, this.lastfm_secret))
+        ObservableJust(Authenticator.getMobileSession(user, pwd, lastfm_key, lastfm_secret))
 
     override fun getChartTopArtist(page: Int): Observable<Collection<Artist>> =
 
-        ObservableJust(Chart.getTopArtists(page, this.lastfm_key).pageResults)
+        ObservableJust(Chart.getTopArtists(page, lastfm_key).pageResults)
 
     override fun getChartTopTracks(page: Int): Observable<Collection<Track>> =
-        ObservableJust(Chart.getTopTracks(page, this.lastfm_key).pageResults)
+        ObservableJust(Chart.getTopTracks(page, lastfm_key).pageResults)
 
     override fun getSimilarArtist(artist: String): Observable<Collection<Artist>> =
-        ObservableJust(Artist.getSimilar(artist, 10, this.lastfm_key))
+        ObservableJust(Artist.getSimilar(artist, 10, lastfm_key))
 
     override fun getArtistTopAlbum(artist: String): Observable<Collection<Album>> =
-        ObservableJust(Artist.getTopAlbums(artist, this.lastfm_key))
+        ObservableJust(Artist.getTopAlbums(artist, lastfm_key))
 
     override fun getArtistTags(artist: String, session: Session): Observable<Collection<String>> =
         ObservableJust(Artist.getTags(artist, session))
 
     override fun getSimilarTracks(artist: String, mbid: String): Observable<Collection<Track>> =
-        ObservableJust(Track.getSimilar(artist, mbid, this.lastfm_key))
+        ObservableJust(Track.getSimilar(artist, mbid, lastfm_key))
 
     override fun getLovedTracks(user: String, page: Int): Observable<Collection<Track>> =
-        ObservableJust(User.getLovedTracks(user, page, this.lastfm_key).pageResults)
+        ObservableJust(User.getLovedTracks(user, page, lastfm_key).pageResults)
 
     override fun loveTrack(artist: String, track: String, session: Session): Observable<Track> =
-        this.observableCreateWrapper {
+        observableCreateWrapper {
             val res = Track.love(artist, track, session)
 
             // TODO: 6/4/17 Add that return next, error, or complete which depend on result's status.
         }
 
     override fun unloveTrack(artist: String, track: String, session: Session): Observable<Track> =
-        this.observableCreateWrapper {
+        observableCreateWrapper {
             val res = Track.unlove(artist, track, session)
 
             // TODO: 6/4/17 Add that return next, error, or complete which depend on result's status.

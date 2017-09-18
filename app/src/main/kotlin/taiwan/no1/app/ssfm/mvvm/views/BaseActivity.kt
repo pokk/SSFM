@@ -44,8 +44,8 @@ abstract class BaseActivity: RxActivity(), HasFragmentInjector, HasSupportFragme
     override fun onResume() {
         super.onResume()
         // HACK(jieyi): 9/17/17 (jieyi): Navigator shouldn't be active by call a variable.
-        this.navigator.activity
-        this.attachMenuView()
+        navigator.activity
+        attachMenuView()
     }
 
     @CallSuper
@@ -59,19 +59,19 @@ abstract class BaseActivity: RxActivity(), HasFragmentInjector, HasSupportFragme
      *
      * @return a [supportFragmentInjector] for children of this fragment.
      */
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> = this.supportFragmentInjector
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> = supportFragmentInjector
 
     /**
      * Providing the fragment injector([android.app.Fragment]) for the fragments.
      *
      * @return a [fragmentInjector] for children of this fragment.
      */
-    override fun fragmentInjector(): AndroidInjector<android.app.Fragment> = this.fragmentInjector
+    override fun fragmentInjector(): AndroidInjector<android.app.Fragment> = fragmentInjector
 
     protected fun attachMenuView() {
-        this.rootView?.also {
-            it.addView(this.menu)
-            GuillotineAnimation.GuillotineBuilder(this.menu, this.menu.iv_content_hamburger, iv_content_hamburger)
+        rootView?.also {
+            it.addView(menu)
+            GuillotineAnimation.GuillotineBuilder(menu, menu.iv_content_hamburger, iv_content_hamburger)
                 .setStartDelay(250)
                 .setActionBarViewForAnimation(tb_toolbar)
                 .setClosedOnStart(true)

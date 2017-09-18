@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".mvvm.views.activities.PreferenceActivity">
 
@@ -27,8 +28,17 @@
             style="@style/Template.TopBar.Toolbar"
             layout="@layout/part_toolbar_view"/>
 
-        <include
-            style="@style/Template.Activity"
-            layout="@layout/activity_part_preference"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_preference"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include_toolbar"
+            tools:listitem="@layout/item_preference_first_layer_title"/>
     </android.support.constraint.ConstraintLayout>
 </layout>

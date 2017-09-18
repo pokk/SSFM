@@ -28,7 +28,7 @@
             layout="@layout/part_toolbar_view"/>
 
         <include
-            layout="@layout/activity_part_preference"
+            layout="@layout/z_deprecated_part_preference"
             android:layout_width="0dp"
             android:layout_height="0dp"/>
     </android.support.constraint.ConstraintLayout>

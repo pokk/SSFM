@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".mvvm.views.activities.PlayMainActivity">
 
@@ -12,7 +13,6 @@
             name="viewmodel"
             type="taiwan.no1.app.ssfm.mvvm.viewmodels.PlayMainViewModel"/>
     </data>
-
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/root"
@@ -28,8 +28,55 @@
             style="@style/Template.TopBar.Toolbar"
             layout="@layout/part_toolbar_view"/>
 
+        <TextView
+            android:id="@+id/tv_song_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rcii_album"
+            tools:text="The Cure"/>
+
+        <TextView
+            android:id="@+id/tv_singer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_song_name"
+            tools:text="Lady Gaga"/>
+
         <include
-            layout="@layout/activity_part_play_music"
-            style="@style/Template.Activity"/>
+            android:id="@+id/include"
+            layout="@layout/part_music_controller_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <com.devrapid.musicdiskplayer.RotatedCircleWithIconImageView
+            android:id="@+id/rcii_album"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="64dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="70dp"
+            app:end_time="120"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/include"
+            app:layout_constraintHorizontal_bias="0.148"
+            app:layout_constraintStart_toStartOf="@+id/include"
+            app:layout_constraintTop_toBottomOf="@+id/include_toolbar"
+            app:layout_constraintVertical_bias="0.0"
+            app:src="@drawable/sample_lady_gaga"/>
+
     </android.support.constraint.ConstraintLayout>
 </layout>

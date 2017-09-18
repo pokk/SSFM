@@ -22,12 +22,12 @@ class PlayerHandler: IPlayerHandler {
     private val TAG = "PlayerHandler"
 
     constructor(player: IMultiMediaPlayer, playList: IPlayList) {
-        this.mPlayer = player
-        this.mPlayIndex = playList
+        mPlayer = player
+        mPlayIndex = playList
     }
 
     override fun play(index: Int) {
-        this.mPlayer.takeIf { it.isPlaying() }?.stop()
+        mPlayer.takeIf { it.isPlaying() }?.stop()
 
         val observer = object: Observer<Unit> {
             override fun onSubscribe(d: Disposable) {
@@ -48,55 +48,57 @@ class PlayerHandler: IPlayerHandler {
             }
         }
 
-        if (this.mPlayList[index].startsWith("http://") ||
-            this.mPlayList[index].startsWith("https://")) {
+        if (mPlayList[index].startsWith("http://") ||
+            mPlayList[index].startsWith("https://")) {
             // web address
-            this.mPlayer.playURL(this.mPlayList[index], observer)
+            mPlayer.playURL(mPlayList[index], observer)
         } else {
             // local path
-            this.mPlayer.playLocal(this.mPlayList[index], observer)
+            mPlayer.playLocal(mPlayList[index], observer)
         }
-        this.mPlayIndex.play(index)
+        mPlayIndex.play(index)
     }
 
     override fun stop() {
-        this.mPlayer.takeIf { it.isPlaying() }?.stop()
-        this.timer.stop()
+        mPlayer.takeIf { it.isPlaying() }?.stop()
+        timer.stop()
     }
 
     override fun pause() {
-        this.mPlayer.takeIf { it.isPlaying() }?.pause()
-        this.timer.pause()
+        mPlayer.takeIf { it.isPlaying() }?.pause()
+        timer.pause()
     }
 
     override fun resume() {
-        this.mPlayer.takeIf { it.isPlaying() }?.resume()
-        this.timer.resume()
+        mPlayer.takeIf { it.isPlaying() }?.resume()
+        timer.resume()
     }
 
     override fun seekTo(sec: Int) {
-        this.mPlayer.seekTo(sec)
+        mPlayer.seekTo(sec)
     }
 
-    override fun duration(): Int = this.mPlayer.duration()
+    override fun duration(): Int = mPlayer.duration()
 
     override fun current(callback: (millisUntilFinished: Long) -> Unit) {
-        this.timer = PausableTimer(this.duration().toLong() * 1000, 1 * 1000)
-        this.timer.onTick = callback
-        this.timer.start()
+        timer = PausableTimer(duration().toLong() * 1000, 1 * 1000)
+        timer.onTick = callback
+        timer.start()
     }
 
     override fun isLooping(): Boolean =
-            this.mPlayIndex.getState() == LOOPONE
+        mPlayIndex.getState() == LOOPONE
 
-    override fun loopOne(is_loop: Boolean) { this.mPlayIndex.loopOne(is_loop) }
+    override fun loopOne(is_loop: Boolean) {
+        mPlayIndex.loopOne(is_loop)
+    }
 
     override fun previous() {
-        play(this.mPlayIndex.previous())
+        play(mPlayIndex.previous())
     }
 
     override fun next() {
-        play(this.mPlayIndex.next())
+        play(mPlayIndex.next())
     }
 
     override fun downloadProcess() {
@@ -104,21 +106,21 @@ class PlayerHandler: IPlayerHandler {
     }
 
     override fun loopAll(is_loop: Boolean) {
-        this.mPlayIndex.loopAll(is_loop)
+        mPlayIndex.loopAll(is_loop)
     }
 
     override fun random(is_random: Boolean) {
-        this.mPlayIndex.random(is_random)
+        mPlayIndex.random(is_random)
     }
 
-    override fun playerStatus(): EMUSICSTATE = this.mPlayIndex.getState()
+    override fun playerStatus(): EMUSICSTATE = mPlayIndex.getState()
 
-    override fun nowPlaying(): Int = this.mPlayIndex.nowPlaying()
+    override fun nowPlaying(): Int = mPlayIndex.nowPlaying()
 
     override fun isRandom(): Boolean =
-            this.mPlayIndex.getState() == RANDOM
+        mPlayIndex.getState() == RANDOM
 
     override fun setPlayList(list: Array<String>) {
-        this.mPlayList = list
+        mPlayList = list
     }
 }

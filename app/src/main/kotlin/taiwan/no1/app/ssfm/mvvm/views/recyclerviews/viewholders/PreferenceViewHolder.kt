@@ -25,13 +25,13 @@ class PreferenceViewHolder(view: View): AdaptiveViewHolder<ExpandableViewTypeFac
         // Create an observer for the click event of children.
         if (null == model.observer) {
             model.observer = observer {
-                this.itemView.tv_selected.text = it
+                itemView.tv_selected.text = it
                 adapter.collapse(position, newPosition)
                 // TODO(jieyi): 9/10/17 Changing app theme processing.
             }
         }
 
-        this.itemView.onClick {
+        itemView.onClick {
             if (adapter.isExpanded(newPosition)) {
                 adapter.collapse(position, newPosition)
             }
@@ -42,9 +42,9 @@ class PreferenceViewHolder(view: View): AdaptiveViewHolder<ExpandableViewTypeFac
 
         // Initial the items.
         if (model.icon > 0) {
-            this.itemView.iv_title_icon.setImageDrawable(this.mContext.getDrawable(model.icon))
+            itemView.iv_title_icon.setImageDrawable(mContext.getDrawable(model.icon))
         }
-        this.itemView.tv_title.text = model.title
-        this.itemView.tv_selected.text = model.attributes
+        itemView.tv_title.text = model.title
+        itemView.tv_selected.text = model.attributes
     }
 }

@@ -31,7 +31,7 @@ abstract class BaseUsecase<T, R: RequestValues>(protected val repository: IDataS
      *
      * @param observer a reaction of [Observer] from viewmodel, the data are omitted from database or remote.
      */
-    fun execute(observer: Observer<T>) = this.buildUsecase().subscribe(observer)
+    fun execute(observer: Observer<T>) = buildUsecase().subscribe(observer)
 
     /**
      * Executes the current use case with request parameters.
@@ -40,8 +40,8 @@ abstract class BaseUsecase<T, R: RequestValues>(protected val repository: IDataS
      * @param observer  a reaction of [Observer] from viewmodel, the data are omitted from database or remote.
      */
     fun execute(parameter: R, observer: Observer<T>) {
-        this.parameters = parameter
-        this.buildUsecase().subscribe(observer)
+        parameters = parameter
+        buildUsecase().subscribe(observer)
     }
 
     /**
@@ -71,9 +71,9 @@ abstract class BaseUsecase<T, R: RequestValues>(protected val repository: IDataS
      *
      * @return [Observable] for connecting with a [Observer].
      */
-    private fun buildUsecase(): Observable<T> = this.fetchUsecase().
-        subscribeOn(this.obtainSubscribeScheduler()).
-        observeOn(this.obtainObserverScheduler())
+    private fun buildUsecase(): Observable<T> = fetchUsecase().
+        subscribeOn(obtainSubscribeScheduler()).
+        observeOn(obtainObserverScheduler())
 
     /** Interface for wrap a data for passing to a request.*/
     interface RequestValues

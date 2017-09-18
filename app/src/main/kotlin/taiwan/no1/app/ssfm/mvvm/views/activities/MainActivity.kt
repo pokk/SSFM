@@ -27,12 +27,12 @@ class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>() {
 //        Caller.getInstance().cache = null
 //        Caller.getInstance().userAgent = "tst"
 
-        val user = this.getString(R.string.lastfm_name)
-        val password = this.getString(R.string.lastfm_password)
-        val key = this.getString(R.string.lastfm_api_key)
-        val secret = this.getString(R.string.lastfm_secret_key)
+        val user = getString(R.string.lastfm_name)
+        val password = getString(R.string.lastfm_password)
+        val key = getString(R.string.lastfm_api_key)
+        val secret = getString(R.string.lastfm_secret_key)
 
-//        val repo = DataRepository(LocalDataStore(), RemoteDataStore(this.applicationContext))
+//        val repo = DataRepository(LocalDataStore(), RemoteDataStore(applicationContext))
 //
 //        repo.getDetailMusicRes("e2a060761620ff482a272b67b204774d").
 //            subscribeBy({

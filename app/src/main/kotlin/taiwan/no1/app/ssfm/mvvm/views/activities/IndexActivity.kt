@@ -19,8 +19,8 @@ class IndexActivity: AdvancedActivity<IndexViewModel, ActivityIndexBinding>() {
     @Inject override lateinit var viewModel: IndexViewModel
     private val menuItems by lazy {
         // create menu items;
-        val titles = this.resources.getStringArray(R.array.side_menu)
-        val icons = this.resources.obtainTypedArray(R.array.ic_side_menu)
+        val titles = resources.getStringArray(R.array.side_menu)
+        val icons = resources.obtainTypedArray(R.array.ic_side_menu)
 
         List(titles.size) { MenuItem(this, icons.getResourceId(it, -1), titles[it]) }
     }
@@ -28,7 +28,7 @@ class IndexActivity: AdvancedActivity<IndexViewModel, ActivityIndexBinding>() {
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.tv_menu_title.text = "Login"
+        tv_menu_title.text = getString(R.string.menu_login)
     }
 
     @CallSuper

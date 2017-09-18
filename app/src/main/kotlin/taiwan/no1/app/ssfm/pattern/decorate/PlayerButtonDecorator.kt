@@ -18,7 +18,7 @@ abstract class PlayerButtonDecorator(protected val imageButton: ImageButton): IP
     open var state: Int = 0
 
     init {
-        this.imageButton.also {
+        imageButton.also {
             it.backgroundColor = Color.TRANSPARENT
             it.scaleType = ImageView.ScaleType.FIT_CENTER
             it.padding = 20
@@ -30,7 +30,7 @@ abstract class PlayerButtonDecorator(protected val imageButton: ImageButton): IP
     }
 
     override fun detach() {
-        this.imageButton.setOnClickListener(null)
+        imageButton.setOnClickListener(null)
     }
 
     override abstract fun changeNextState(imageBtn: ImageButton)

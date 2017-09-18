@@ -32,16 +32,16 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
      *  The item with index 4 of new index will be `7`.
      *  The item with index 5 of new index will be `11`.
      */
-    private val originalParentPosition: MutableList<Int> = MutableList(this.dataList.size, { 0 })
+    private val originalParentPosition: MutableList<Int> = MutableList(dataList.size, { 0 })
 
     class ExpandDiffUtil(private var oldList: MutableList<IExpandVisitable>,
                          private var newList: MutableList<IExpandVisitable>): DiffUtil.Callback() {
-        override fun getOldListSize(): Int = this.oldList.size
+        override fun getOldListSize(): Int = oldList.size
 
         override fun getNewListSize(): Int = newList.size
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-            this.oldList[oldItemPosition].hashCode() == this.newList[newItemPosition].hashCode()
+            oldList[oldItemPosition].hashCode() == newList[newItemPosition].hashCode()
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean = true
     }
@@ -53,9 +53,9 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
      * @param newIndex The index of the item which is clicked will be.
      */
     fun expand(position: Int, newIndex: Int) {
-        this.updateList {
-            val subList = this.dataList[newIndex].let {
-                this.changeVisibleChildNumber(position, it.childItemList.size)
+        updateList {
+            val subList = dataList[newIndex].let {
+                changeVisibleChildNumber(position, it.childItemList.size)
                 it.isExpanded = true
                 it.childItemList
             }
@@ -70,9 +70,9 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
      * @param newIndex The index of the original item position.
      */
     fun collapse(position: Int, newIndex: Int) {
-        this.updateList {
-            val subList = this.dataList[newIndex].let {
-                this.changeVisibleChildNumber(position, 0)
+        updateList {
+            val subList = dataList[newIndex].let {
+                changeVisibleChildNumber(position, 0)
                 it.isExpanded = false
                 it.childItemList
             }
@@ -86,7 +86,7 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
      * @param oldPos The original position of an item is clicked.
      * @return A new index after an item is clicked.
      */
-    fun calculateIndex(oldPos: Int): Int = (0..(oldPos - 1)).sumBy { this.originalParentPosition[it] } + oldPos
+    fun calculateIndex(oldPos: Int): Int = (0..(oldPos - 1)).sumBy { originalParentPosition[it] } + oldPos
 
     /**
      * Checking whether an item state is collapsed or not by checking the [originalParentPosition]. If
@@ -95,7 +95,7 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
      * @param position The index in [dataList] of an item.
      * @return value is true → expanded; otherwise, collapsed.
      */
-    fun isExpanded(position: Int): Boolean = this.dataList[position].isExpanded
+    fun isExpanded(position: Int): Boolean = dataList[position].isExpanded
 
     /**
      * Get the parent index of an expanded child item.
@@ -104,7 +104,7 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
      * @return The index of the parent.
      */
     fun findParentIndex(childIndex: Int): Int {
-        (childIndex downTo 0).filter { this.dataList[it] is PreferenceEntity }.forEach { return it }
+        (childIndex downTo 0).filter { dataList[it] is PreferenceEntity }.forEach { return it }
 
         // This is fail situation.
         return -1
@@ -118,7 +118,7 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
      * @param getChildObservable The click observable in a child item.
      */
     fun connectParentItem(parentIndex: Int, getChildObservable: Observable<String>) {
-        getChildObservable.subscribe((this.dataList[parentIndex] as PreferenceEntity).observer!!)
+        getChildObservable.subscribe((dataList[parentIndex] as PreferenceEntity).observer!!)
     }
 
     /**
@@ -128,8 +128,8 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
      */
     private fun updateList(getNewListBlock: () -> MutableList<IExpandVisitable>) {
         val newList = getNewListBlock()
-        DiffUtil.calculateDiff(ExpandDiffUtil(this.dataList, newList)).dispatchUpdatesTo(this)
-        this.dataList = newList
+        DiffUtil.calculateDiff(ExpandDiffUtil(dataList, newList)).dispatchUpdatesTo(this)
+        dataList = newList
     }
 
     /**
@@ -139,6 +139,6 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
      * @param size The main item's children quantity.
      */
     private fun changeVisibleChildNumber(index: Int, size: Int) {
-        this.originalParentPosition[index] = size
+        originalParentPosition[index] = size
     }
 }

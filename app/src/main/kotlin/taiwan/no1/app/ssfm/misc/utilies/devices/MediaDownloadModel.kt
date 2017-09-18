@@ -65,11 +65,11 @@ class MediaDownloadModel: MediaDataSource {
         }
     }
 
-    override fun getSize(): Long = this.mediaBuffer.size.toLong()
+    override fun getSize(): Long = mediaBuffer.size.toLong()
 
     override fun close() {}
 
-    fun getDownloadPercentage(): Double = this.percentage
+    fun getDownloadPercentage(): Double = percentage
 
     fun writeToFile(path: String) {
         Thread(Runnable {

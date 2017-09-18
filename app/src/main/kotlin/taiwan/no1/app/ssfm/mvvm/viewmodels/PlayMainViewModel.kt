@@ -13,6 +13,6 @@ class PlayMainViewModel(activity: Activity): BaseViewModel(activity) {
     var music = ObservableField<DetailMusicEntity>()
 
     init {
-        this.music.set(DetailMusicEntity())
+        music.set(DetailMusicEntity())
     }
 }

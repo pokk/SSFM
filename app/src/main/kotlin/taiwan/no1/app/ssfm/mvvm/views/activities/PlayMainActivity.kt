@@ -19,9 +19,8 @@ class PlayMainActivity: AdvancedActivity<PlayMainViewModel, ActivityMusicBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.tv_menu_title.text = "Play"
+        tv_menu_title.text = "Play"
     }
 
-    // TODO(jieyi): 9/10/17 This layout is wrong, I just set fragment temporally.
     override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_music)
 }

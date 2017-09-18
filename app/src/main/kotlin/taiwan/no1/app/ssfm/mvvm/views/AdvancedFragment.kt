@@ -24,15 +24,15 @@ abstract class AdvancedFragment<VM: IViewModel, B: ViewDataBinding>: BaseFragmen
 
     override final fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                                     savedInstanceState: Bundle?): View? {
-        this.binding = DataBindingUtil.inflate(inflater, this.provideInflateView(), container, false)
+        binding = DataBindingUtil.inflate(inflater, provideInflateView(), container, false)
         // HACK(jieyi): 8/21/17 Using reflection here, the performance might become lower. Maybe there are some better ways to do.
-        this.binding.javaClass.getMethod("setViewmodel", genericVMClass).invoke(this.binding, this.viewModel)
+        binding.javaClass.getMethod("setViewmodel", genericVMClass).invoke(binding, viewModel)
 
-        return this.binding.root
+        return binding.root
     }
 
     override fun onDestroy() {
-        this.binding.javaClass.getMethod("setViewmodel", genericVMClass).invoke(this.binding, null)
+        binding.javaClass.getMethod("setViewmodel", genericVMClass).invoke(binding, null)
         super.onDestroy()
     }
 }

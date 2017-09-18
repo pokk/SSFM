@@ -14,7 +14,7 @@ import taiwan.no1.app.ssfm.R
  */
 class AdapterPager(val context: Context, val listView: List<Int>): PagerAdapter() {
     override fun instantiateItem(container: ViewGroup, position: Int): View {
-        return this.context.layoutInflater.inflate(R.layout.sample_button, null).also {
+        return context.layoutInflater.inflate(R.layout.sample_button, null).also {
             //            it.iv_ppp.imageResource = listView[position]
             container.addView(it)
         }
@@ -22,7 +22,7 @@ class AdapterPager(val context: Context, val listView: List<Int>): PagerAdapter(
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean = view == `object`
 
-    override fun getCount(): Int = this.listView.size
+    override fun getCount(): Int = listView.size
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) =
         container.removeView(`object` as View)

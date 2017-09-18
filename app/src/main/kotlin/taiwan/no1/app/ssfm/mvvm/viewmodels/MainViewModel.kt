@@ -28,21 +28,21 @@ class MainViewModel(activity: Activity, private val usecase: BaseUsecase<DetailM
     var test = ObservableField<TagEntity>()
 
     init {
-        this.test.set(this.entity)
+        test.set(entity)
     }
 
     fun itemClick(view: View) {
-        val user = this.context.getString(R.string.lastfm_name)
-        val password = this.context.getString(R.string.lastfm_password)
-        val key = this.context.getString(R.string.lastfm_api_key)
-        val secret = this.context.getString(R.string.lastfm_secret_key)
+        val user = context.getString(R.string.lastfm_name)
+        val password = context.getString(R.string.lastfm_password)
+        val key = context.getString(R.string.lastfm_api_key)
+        val secret = context.getString(R.string.lastfm_secret_key)
         //        repo.obtainSession(user, password, key, secret).
         //                // TODO: 5/12/17 Consider a good way to import this life cycle.
-        //                //                compose(RxLifecycleAndroid.bindActivity((this.context as MainActivity).lifecycle())).
+        //                //                compose(RxLifecycleAndroid.bindActivity((context as MainActivity).lifecycle())).
         //                subscribeBy({
         //                    logw(it)
         //                    // NOTE: 5/12/17 Just one place hold kind of the operation.
-        //                    this.context.getSharedPreferences("Test", MODE_PRIVATE).edit().putString("session",
+        //                    context.getSharedPreferences("Test", MODE_PRIVATE).edit().putString("session",
         //                            Gson().toJson(it)).
         //                            apply()
         //                }, {
@@ -59,8 +59,8 @@ class MainViewModel(activity: Activity, private val usecase: BaseUsecase<DetailM
             val chart = Chart.getTopTracks(key).pageResults.forEach { it }
         }
 
-        this.usecase.parameters = DetailMusicCase.RequestValue("e2a060761620ff482a272b67b204774d")
-        this.usecase.execute(observer<DetailMusicEntity>().onNext {
+        usecase.parameters = DetailMusicCase.RequestValue("e2a060761620ff482a272b67b204774d")
+        usecase.execute(observer<DetailMusicEntity>().onNext {
             logw(it)
         }.onComplete {
             logd()

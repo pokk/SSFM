@@ -24,7 +24,7 @@ class SplashActivity: Activity() {
             // Transfer to your main activity after delay 0.5 second.
             startActivity<PlayMainActivity>()
             finish()
-            this.cancel()
+            cancel()
         }
     }
 }

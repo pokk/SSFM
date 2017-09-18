@@ -14,8 +14,8 @@ class NormalPlayerButtonDecorator(val btn: ImageButton, setting: (Wrapper.() -> 
     init {
         val wrapper = setting?.let(Wrapper()::also)
 
-        wrapper?.imageResource?.let(this.btn::setImageResource)
-        wrapper?.padding?.let { this.btn.setPadding(it, it, it, it) }
+        wrapper?.imageResource?.let(btn::setImageResource)
+        wrapper?.padding?.let { btn.setPadding(it, it, it, it) }
     }
 
     override fun changeNextState(imageBtn: ImageButton) {}

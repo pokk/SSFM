@@ -50,9 +50,9 @@ abstract class BaseFragment: RxFragment(), HasFragmentInjector {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Keep the instance data.
-        this.retainInstance = true
+        retainInstance = true
         // FIXED: https://www.zybuluo.com/kimo/note/255244
-        rootView ?: let { rootView = inflater.inflate(this.provideInflateView(), null) }
+        rootView ?: let { rootView = inflater.inflate(provideInflateView(), null) }
         val parent: ViewGroup? = rootView?.parent as ViewGroup?
         parent?.removeView(rootView)
 
@@ -62,7 +62,7 @@ abstract class BaseFragment: RxFragment(), HasFragmentInjector {
     override final fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        this.init(savedInstanceState)
+        init(savedInstanceState)
     }
 
     @CallSuper
@@ -103,5 +103,5 @@ abstract class BaseFragment: RxFragment(), HasFragmentInjector {
      *
      * @return a [fragmentInjector] for children of this fragment.
      */
-    override fun fragmentInjector(): AndroidInjector<Fragment> = this.childFragmentInjector
+    override fun fragmentInjector(): AndroidInjector<Fragment> = childFragmentInjector
 }

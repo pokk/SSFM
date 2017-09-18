@@ -13,7 +13,7 @@ import taiwan.no1.app.ssfm.mvvm.models.usecases.DetailMusicCase.RequestValue
  */
 class DetailMusicCase(repository: IDataStore): BaseUsecase<DetailMusicEntity, RequestValue>(repository) {
     override fun fetchUsecase(): Observable<DetailMusicEntity> =
-        this.repository.getDetailMusicRes(this.parameters?.hashCode ?: "")
+        repository.getDetailMusicRes(parameters?.hashCode ?: "")
 
     data class RequestValue(val hashCode: String): BaseUsecase.RequestValues
 }

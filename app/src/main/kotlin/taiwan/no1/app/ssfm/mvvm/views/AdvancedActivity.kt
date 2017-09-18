@@ -17,7 +17,7 @@ import java.lang.reflect.ParameterizedType
 abstract class AdvancedActivity<VM: IViewModel, out B: ViewDataBinding>: BaseActivity() {
     protected abstract var viewModel: VM
     protected val binding: B by lazy {
-        val (activity, layoutId) = this.provideBindingLayoutId()
+        val (activity, layoutId) = provideBindingLayoutId()
         // DataBinding process.
         DataBindingUtil.setContentView<B>(activity, layoutId)
     }
@@ -30,12 +30,12 @@ abstract class AdvancedActivity<VM: IViewModel, out B: ViewDataBinding>: BaseAct
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // HACK(jieyi): 8/21/17 Using reflection here, the performance might become lower. Maybe there are some better ways to do.
-        this.binding.javaClass.getMethod("setViewmodel", genericVMClass).invoke(this.binding, this.viewModel)
+        binding.javaClass.getMethod("setViewmodel", genericVMClass).invoke(binding, viewModel)
     }
 
     @CallSuper
     override fun onDestroy() {
-        this.binding.javaClass.getMethod("setViewmodel", genericVMClass).invoke(this.binding, null)
+        binding.javaClass.getMethod("setViewmodel", genericVMClass).invoke(binding, null)
         super.onDestroy()
     }
 

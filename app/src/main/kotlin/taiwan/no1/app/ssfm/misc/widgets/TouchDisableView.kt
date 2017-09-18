@@ -12,9 +12,9 @@ internal class TouchDisableView
     ViewGroup(context, attrs, defStyleAttr) {
     var content: View? = null
         set(v) {
-            this.removeView(field)
+            removeView(field)
             field = v
-            this.addView(content)
+            addView(content)
         }
 
     //	private int mMode;
@@ -24,20 +24,20 @@ internal class TouchDisableView
         val width = View.getDefaultSize(0, widthMeasureSpec)
         val height = View.getDefaultSize(0, heightMeasureSpec)
 
-        this.setMeasuredDimension(width, height)
+        setMeasuredDimension(width, height)
 
         val contentWidth = ViewGroup.getChildMeasureSpec(widthMeasureSpec, 0, width)
         val contentHeight = ViewGroup.getChildMeasureSpec(heightMeasureSpec, 0, height)
 
-        this.content!!.measure(contentWidth, contentHeight)
+        content!!.measure(contentWidth, contentHeight)
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         val width = r - l
         val height = b - t
 
-        this.content!!.layout(0, 0, width, height)
+        content!!.layout(0, 0, width, height)
     }
 
-    override fun onInterceptTouchEvent(ev: MotionEvent): Boolean = this.touchDisabled
+    override fun onInterceptTouchEvent(ev: MotionEvent): Boolean = touchDisabled
 }
