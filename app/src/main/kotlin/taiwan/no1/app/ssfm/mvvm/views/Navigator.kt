@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.page_menu.view.tv_menu_setting
 import kotlinx.android.synthetic.main.part_toolbar_menu.view.iv_content_hamburger
 import org.jetbrains.anko.startActivity
 import taiwan.no1.app.ssfm.mvvm.views.activities.ChartActivity
-import taiwan.no1.app.ssfm.mvvm.views.activities.IndexActivity
+import taiwan.no1.app.ssfm.mvvm.views.activities.LoginActivity
 import taiwan.no1.app.ssfm.mvvm.views.activities.PlayMainActivity
 import taiwan.no1.app.ssfm.mvvm.views.activities.PlaylistActivity
 import taiwan.no1.app.ssfm.mvvm.views.activities.PreferenceActivity
@@ -44,7 +44,7 @@ class Navigator(val activity: RxActivity) {
         menu.tv_menu_search.wrapClick().subscribe(transferClick { activity.startActivity<SearchActivity>() })
         menu.tv_menu_chart.wrapClick().subscribe(transferClick { activity.startActivity<ChartActivity>() })
         menu.tv_menu_setting.wrapClick().subscribe(transferClick { activity.startActivity<PreferenceActivity>() })
-        menu.tv_menu_login.wrapClick().subscribe(transferClick { activity.startActivity<IndexActivity>() })
+        menu.tv_menu_login.wrapClick().subscribe(transferClick { activity.startActivity<LoginActivity>() })
     }
 
     /**

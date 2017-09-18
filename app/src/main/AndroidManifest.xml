@@ -32,7 +32,7 @@
         </activity>
         <activity android:name=".mvvm.views.activities.MainActivity">
         </activity>
-        <activity android:name=".mvvm.views.activities.IndexActivity">
+        <activity android:name=".mvvm.views.activities.LoginActivity">
         </activity>
         <activity android:name=".mvvm.views.activities.PlaylistActivity">
         </activity>

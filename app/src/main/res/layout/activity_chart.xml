@@ -2,6 +2,7 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".mvvm.views.activities.ChartActivity">
 
     <data>
@@ -25,10 +26,11 @@
         <include
             android:id="@+id/include_toolbar"
             style="@style/Template.TopBar.Toolbar"
-            layout="@layout/part_toolbar_view"/>
+            layout="@layout/part_toolbar_view"
+            app:title="@{viewmodel.title}"/>
 
         <include
-            layout="@layout/z_deprecated_part_preference"
+            layout="@layout/part_main_preference"
             android:layout_width="0dp"
             android:layout_height="0dp"/>
     </android.support.constraint.ConstraintLayout>

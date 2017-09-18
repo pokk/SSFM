@@ -26,19 +26,11 @@
         <include
             android:id="@+id/include_toolbar"
             style="@style/Template.TopBar.Toolbar"
-            layout="@layout/part_toolbar_view"/>
+            layout="@layout/part_toolbar_view"
+            app:title="@{viewmodel.title}"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_music_list"
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tool="http://schemas.android.com/tools"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include_toolbar"
-            tool:listitem="@layout/item_music_type_1">
-        </android.support.v7.widget.RecyclerView>
+        <include
+            style="@style/Template.Activity"
+            layout="@layout/part_main_playlist"/>
     </android.support.constraint.ConstraintLayout>
 </layout>

@@ -2,7 +2,7 @@ package taiwan.no1.app.ssfm.mvvm.views.activities
 
 import android.app.Activity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.part_toolbar_view.tv_menu_title
+import kotlinx.android.synthetic.main.activity_search.tv_menu_title
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivitySearchBinding
 import taiwan.no1.app.ssfm.mvvm.viewmodels.SearchViewModel

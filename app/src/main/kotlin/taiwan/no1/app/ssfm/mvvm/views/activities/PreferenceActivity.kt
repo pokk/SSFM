@@ -3,8 +3,7 @@ package taiwan.no1.app.ssfm.mvvm.views.activities
 import android.app.Activity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.part_toolbar_view.tv_menu_title
-import kotlinx.android.synthetic.main.z_deprecated_part_preference.rv_preference
+import kotlinx.android.synthetic.main.part_main_preference.rv_preference
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityPreferenceBinding
 import taiwan.no1.app.ssfm.mvvm.models.IExpandVisitable
@@ -44,8 +43,6 @@ class PreferenceActivity: AdvancedActivity<PreferenceViewModel, ActivityPreferen
         // Initial the recycler view.
         rv_preference.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rv_preference.adapter = ExpandRecyclerViewAdapter(preferenceList)
-        // Initial the view settings.
-        tv_menu_title.text = getString(R.string.menu_settings)
     }
 
     override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_preference)

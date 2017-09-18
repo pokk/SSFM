@@ -7,7 +7,7 @@ import kotlinx.android.synthetic.main.part_toolbar_view.tv_menu_title
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityIndexBinding
 import taiwan.no1.app.ssfm.misc.widgets.MenuItem
-import taiwan.no1.app.ssfm.mvvm.viewmodels.IndexViewModel
+import taiwan.no1.app.ssfm.mvvm.viewmodels.LoginViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedActivity
 import javax.inject.Inject
 
@@ -15,8 +15,8 @@ import javax.inject.Inject
  * @author  jieyi
  * @since   9/13/17
  */
-class IndexActivity: AdvancedActivity<IndexViewModel, ActivityIndexBinding>() {
-    @Inject override lateinit var viewModel: IndexViewModel
+class LoginActivity: AdvancedActivity<LoginViewModel, ActivityIndexBinding>() {
+    @Inject override lateinit var viewModel: LoginViewModel
     private val menuItems by lazy {
         // create menu items;
         val titles = resources.getStringArray(R.array.side_menu)
@@ -41,5 +41,5 @@ class IndexActivity: AdvancedActivity<IndexViewModel, ActivityIndexBinding>() {
         super.onDestroy()
     }
 
-    override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_index)
+    override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_login)
 }
