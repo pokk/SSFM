@@ -39,6 +39,8 @@
             android:onClose="@{viewmodel.closeSearchView}"
             android:onSearchClick="@{viewmodel.openSearchView}"
             android:queryHint="Input the singer/song name."
+            android:onQueryTextSubmit="@{viewmodel.querySubmit}"
+            android:onQueryTextChange="@{viewmodel.textChanged}"
             android:searchHintIcon="@null"
             android:searchIcon="@drawable/ic_search"/>
     </android.support.v7.widget.Toolbar>
