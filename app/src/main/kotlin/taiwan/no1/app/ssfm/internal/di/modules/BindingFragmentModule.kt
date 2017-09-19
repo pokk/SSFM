@@ -5,6 +5,8 @@ import dagger.android.ContributesAndroidInjector
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerFragment
 import taiwan.no1.app.ssfm.internal.di.modules.activity.dependency.CheckModule
 import taiwan.no1.app.ssfm.mvvm.views.fragments.MainFragment
+import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchIndexFragment
+import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchResultFragment
 
 /**
  * A base component upon which [Fragment] components may depend. Fragment-level components should extend this component.
@@ -18,4 +20,12 @@ abstract class BindingFragmentModule {
     @PerFragment
     @ContributesAndroidInjector(modules = arrayOf(CheckModule::class))
     abstract fun contributeMainFragmentInjector(): MainFragment
+
+    @PerFragment
+    @ContributesAndroidInjector
+    abstract fun contributeSearchIndexFragmentInjector(): SearchIndexFragment
+
+    @PerFragment
+    @ContributesAndroidInjector
+    abstract fun contributeSearchResuletFragmentInjector(): SearchResultFragment
 }

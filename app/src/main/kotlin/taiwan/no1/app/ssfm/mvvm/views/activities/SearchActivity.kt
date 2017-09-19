@@ -4,8 +4,10 @@ import android.app.Activity
 import android.os.Bundle
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivitySearchBinding
+import taiwan.no1.app.ssfm.misc.extension.addFragment
 import taiwan.no1.app.ssfm.mvvm.viewmodels.SearchViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedActivity
+import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchIndexFragment
 import javax.inject.Inject
 
 
@@ -18,6 +20,8 @@ class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        fragmentManager.addFragment(R.id.fl_container, SearchIndexFragment())
     }
 
     override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_search)

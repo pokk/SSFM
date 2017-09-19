@@ -53,7 +53,7 @@ abstract class BindingActivityModule {
     abstract fun contributeChartActivityInjector(): ChartActivity
 
     @PerActivity
-    @ContributesAndroidInjector(modules = arrayOf(SearchActivityModule::class))
+    @ContributesAndroidInjector(modules = arrayOf(SearchActivityModule::class, BindingFragmentModule::class))
     abstract fun contributeSearchActivityInjector(): SearchActivity
 
     @PerActivity
