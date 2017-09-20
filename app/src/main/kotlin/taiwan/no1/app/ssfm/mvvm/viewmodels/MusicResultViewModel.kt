@@ -4,6 +4,7 @@ import android.content.Context
 import android.databinding.BaseObservable
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
+import android.view.View
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity.InfoBean
 
 /**
@@ -15,4 +16,10 @@ class MusicResultViewModel(val res: InfoBean, context: Context): BaseObservable(
     val songName = ObservableField<String>(res.songname ?: "")
     val singerName = ObservableField<String>(res.singername ?: "")
     val duration = ObservableInt(res.duration)
+
+    fun playOrStopMusicClick(view: View) {
+    }
+
+    fun optionClick(view: View) {
+    }
 }
