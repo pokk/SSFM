@@ -13,6 +13,7 @@
     </data>
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_music_result"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/item_search_music_type_1"/>

@@ -1,60 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tool="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="8dp"
-    tool:background="@color/colorPrimary">
+    xmlns:tool="http://schemas.android.com/tools">
 
-    <ImageButton
-        android:id="@+id/iv_action"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:background="@null"
-        android:src="@drawable/ic_play_circle"/>
+    <data>
 
-    <TextView
-        android:id="@+id/tv_track_name"
+        <variable
+            name="avm"
+            type="taiwan.no1.app.ssfm.mvvm.viewmodels.MusicResultViewModel"/>
+    </data>
+
+    <RelativeLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_toEndOf="@+id/iv_action"
-        android:layout_toStartOf="@+id/tv_total_time"
-        android:textColor="@color/colorWhite"
-        tool:text="The Cure"/>
+        android:padding="8dp"
+        tool:background="@color/colorPrimary">
 
-    <TextView
-        android:id="@+id/tv_album_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/tv_track_name"
-        android:layout_alignStart="@+id/tv_track_name"
-        android:layout_below="@+id/tv_track_name"
-        android:layout_gravity="center"
-        android:textColor="@color/colorGray"
-        tool:text="New album"/>
+        <ImageButton
+            android:id="@+id/iv_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:src="@drawable/ic_play_circle"/>
+
+        <TextView
+            android:id="@+id/tv_track_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@+id/iv_action"
+            android:layout_toStartOf="@+id/tv_total_time"
+            android:text="@={avm.singerName}"
+            android:textColor="@color/colorWhite"
+            tool:text="The Cure"/>
+
+        <TextView
+            android:id="@+id/tv_album_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/tv_track_name"
+            android:layout_alignStart="@+id/tv_track_name"
+            android:layout_below="@+id/tv_track_name"
+            android:layout_gravity="center"
+            android:text="@={avm.songName}"
+            android:textColor="@color/colorGray"
+            tool:text="New album"/>
 
 
-    <TextView
-        android:id="@+id/tv_total_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="16dp"
-        android:layout_toStartOf="@+id/ib_options"
-        android:textColor="@color/colorWhite"
-        tool:text="4:14"/>
+        <TextView
+            android:id="@+id/tv_total_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:layout_toStartOf="@+id/ib_options"
+            android:textColor="@color/colorWhite"
+            tool:text="4:14"/>
+        <!-- android:text="@={avm.duration.toString()}" -->
 
-    <ImageButton
-        android:id="@+id/ib_options"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:background="@null"
-        android:src="@drawable/ic_more_vert"/>
-</RelativeLayout>
+        <ImageButton
+            android:id="@+id/ib_options"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:src="@drawable/ic_more_vert"/>
+    </RelativeLayout>
+</layout>

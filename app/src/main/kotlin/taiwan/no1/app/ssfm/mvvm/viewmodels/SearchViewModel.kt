@@ -2,16 +2,12 @@ package taiwan.no1.app.ssfm.mvvm.viewmodels
 
 import android.app.Activity
 import android.databinding.ObservableBoolean
+import android.databinding.ObservableField
 import android.view.View
-import com.devrapid.kotlinknifer.logd
-import com.devrapid.kotlinknifer.logw
-import com.devrapid.kotlinknifer.observer
 import taiwan.no1.app.ssfm.R
-import taiwan.no1.app.ssfm.misc.extension.ObservableString
 import taiwan.no1.app.ssfm.misc.extension.hideSoftKeyboard
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.SearchMusicCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.SearchMusicCase.RequestValue
 
 /**
@@ -22,9 +18,9 @@ import taiwan.no1.app.ssfm.mvvm.models.usecases.SearchMusicCase.RequestValue
 class SearchViewModel(activity: Activity, private val usecase: BaseUsecase<SearchMusicEntity, RequestValue>):
     BaseViewModel(activity) {
     /** Menu Title */
-    val title = ObservableString()
+    var title = ObservableField<String>()
     /** Check search view is clicked or un-clicked */
-    val isSearching = ObservableBoolean()
+    var isSearching = ObservableBoolean()
 
     init {
         title.set(activity.getString(R.string.menu_search))
@@ -55,9 +51,12 @@ class SearchViewModel(activity: Activity, private val usecase: BaseUsecase<Searc
      */
     fun querySubmit(query: String): Boolean {
         context.hideSoftKeyboard()
-        usecase.apply { parameters = SearchMusicCase.RequestValue(query) }.
-            execute(observer<SearchMusicEntity>().onNext { logw(it) }.onComplete { logd() })
-
+//        usecase.apply { parameters = SearchMusicCase.RequestValue(query) }.
+//            execute(observer<SearchMusicEntity>().onNext {
+//
+//            }.onComplete {
+//
+//            })
         return true
     }
 
