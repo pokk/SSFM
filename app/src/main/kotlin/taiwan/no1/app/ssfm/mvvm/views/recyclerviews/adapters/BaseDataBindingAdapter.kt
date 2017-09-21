@@ -35,7 +35,7 @@ class BaseDataBindingAdapter<BH: ViewDataBinding, D>(@LayoutRes val layout: Int,
 
     fun refresh(oldData: List<D>,
                 newData: List<D>,
-                areContentsTheSame: (D, D) -> Boolean = { _, _ -> false }): List<D> {
+                areContentsTheSame: (old: D, new: D) -> Boolean = { _, _ -> false }): List<D> {
         DiffUtil.calculateDiff(object: DiffUtil.Callback() {
             override fun getOldListSize(): Int = oldData.size
             override fun getNewListSize(): Int = newData.size

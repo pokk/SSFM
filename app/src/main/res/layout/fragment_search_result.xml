@@ -1,20 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/rv_music_result"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-
-        <import type="android.view.View"/>
-
-        <variable
-            name="vm"
-            type="taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentSearchResultViewModel"/>
-    </data>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_music_result"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/item_search_music_type_1"/>
-</layout>
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:listitem="@layout/item_search_music_type_1"/>

@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_search_result.rv_music_result
 import taiwan.no1.app.ssfm.R
-import taiwan.no1.app.ssfm.databinding.FragmentSearchResultBinding
 import taiwan.no1.app.ssfm.databinding.ItemSearchMusicType1Binding
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity.InfoBean
-import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentSearchResultViewModel
 import taiwan.no1.app.ssfm.mvvm.viewmodels.MusicResultViewModel
-import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
+import taiwan.no1.app.ssfm.mvvm.views.BaseFragment
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
 import kotlin.properties.Delegates
 
@@ -18,8 +16,7 @@ import kotlin.properties.Delegates
  * @author  jieyi
  * @since   8/20/17
  */
-class SearchResultFragment: AdvancedFragment<FragmentSearchResultViewModel, FragmentSearchResultBinding>() {
-    override var viewModel: FragmentSearchResultViewModel = FragmentSearchResultViewModel()
+class SearchResultFragment: BaseFragment() {
     private var adapter by Delegates.notNull<BaseDataBindingAdapter<ItemSearchMusicType1Binding, InfoBean>>()
 
     override fun init(savedInstanceState: Bundle?) {
@@ -40,14 +37,22 @@ class SearchResultFragment: AdvancedFragment<FragmentSearchResultViewModel, Frag
             adapter = this@SearchResultFragment.adapter
         }
 
-//        timer(initialDelay = 2, period = 1) {
-//            adapter.refresh(res, res.apply {
-//                add(InfoBean(singername = "1321", songname = "fdafds", duration = 3213))
-//                add(InfoBean(singername = "321", songname = "fdafds", duration = 33))
-//                add(InfoBean(singername = "fdafds", songname = "fdasfasd", duration = 321))
-//                add(InfoBean(singername = "fdafd", songname = "fdsaf", duration = 111))
-//                add(InfoBean(singername = "fdafdsa", songname = "fdafads", duration = 33))
-//            })
+        // XXX(jieyi): 9/21/17 Here is update operation.
+//        ObservableTimer(2, SECONDS, Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe {
+//            logw("????????????????")
+//            adapter.refresh(res,
+//                mutableListOf(InfoBean(singername = "321312 1321", songname = "Thefdsfs cure", duration = 200),
+//                    InfoBean(singername = "321321fdfds", songname = "Last Christmas", duration = 231),
+//                    InfoBean(singername = "fdsafdsfasd fdsafds", songname = "What did you make me do", duration = 421),
+//                    InfoBean(singername = "fdasfdsaf Wu", songname = "Taiwan NO1", duration = 321),
+//                    InfoBean(singername = "fdasfdsaf Wu", songname = "Taiwan NO1", duration = 321),
+//                    InfoBean(singername = "fdasfdsaf Wu", songname = "Taiwan NO1", duration = 321),
+//                    InfoBean(singername = "fdasfdsaf Wu", songname = "Taiwan NO1", duration = 321),
+//                    InfoBean(singername = "fdafd fdafds", songname = "What do I dsfdsf to do", duration = 113),
+//                    InfoBean(singername = "fdsfsd fdaf", songname = "Bass", duration = 352),
+//                    InfoBean(singername = "fdsfad", songname = "?????", duration = 211))) { new, old ->
+//                new.singername == old.singername
+//            }
 //        }
     }
 
