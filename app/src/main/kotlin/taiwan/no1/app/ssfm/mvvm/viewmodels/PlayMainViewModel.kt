@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.mvvm.viewmodels
 
 import android.app.Activity
 import android.databinding.ObservableField
+import android.view.View
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
 
@@ -17,5 +18,13 @@ class PlayMainViewModel(activity: Activity): BaseViewModel(activity) {
     init {
         title.set(activity.getString(R.string.menu_home))
         music.set(DetailMusicEntity())
+    }
+
+    fun prevClick(view: View) {
+
+    }
+
+    fun nextClick(view: View) {
+
     }
 }

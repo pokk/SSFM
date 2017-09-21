@@ -79,11 +79,11 @@
         android:textColor="@color/colorWhite"
         android:textSize="30sp"
         android:textStyle="bold|italic"
-        app:textFont="streetwear.otf"
         app:layout_constraintBottom_toBottomOf="@+id/iv_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_logo"
-        app:layout_constraintTop_toTopOf="@+id/iv_logo"/>
+        app:layout_constraintTop_toTopOf="@+id/iv_logo"
+        app:textFont="streetwear.otf"/>
 
     <TextView
         android:id="@+id/tv_subtitle"

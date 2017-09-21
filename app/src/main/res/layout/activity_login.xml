@@ -2,8 +2,8 @@
 
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".mvvm.views.activities.LoginActivity">
 
     <data>
@@ -11,7 +11,7 @@
         <import type="android.view.View"/>
 
         <variable
-            name="viewmodel"
+            name="vm"
             type="taiwan.no1.app.ssfm.mvvm.viewmodels.LoginViewModel"/>
     </data>
 
@@ -28,7 +28,7 @@
             android:id="@+id/include_toolbar"
             style="@style/Template.TopBar.Toolbar"
             layout="@layout/part_toolbar_view"
-            app:title="@{viewmodel.title}"/>
+            app:title="@{vm.title}"/>
 
         <include
             style="@style/Template.Activity"

@@ -7,10 +7,8 @@
 
     <data>
 
-        <import type="android.view.View"/>
-
         <variable
-            name="viewmodel"
+            name="vm"
             type="taiwan.no1.app.ssfm.mvvm.viewmodels.SearchViewModel"/>
     </data>
 
@@ -27,7 +25,7 @@
             android:id="@+id/include_toolbar"
             style="@style/Template.TopBar.Toolbar"
             layout="@layout/part_toolbar_search"
-            app:viewmodel="@{viewmodel}"/>
+            app:svm="@{vm}"/>
 
         <FrameLayout
             android:id="@+id/fl_container"

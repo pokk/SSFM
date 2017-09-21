@@ -7,10 +7,8 @@
 
     <data>
 
-        <import type="android.view.View"/>
-
         <variable
-            name="viewmodel"
+            name="vm"
             type="taiwan.no1.app.ssfm.mvvm.viewmodels.MainViewModel"/>
     </data>
 
@@ -23,7 +21,6 @@
             android:id="@+id/tv_test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@={viewmodel.test.name}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.48"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -39,7 +36,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:onClickListener="@{viewmodel.itemClick}"
+            android:onClickListener="@{vm::itemClick}"
             android:text="Button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

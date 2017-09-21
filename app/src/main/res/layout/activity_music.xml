@@ -7,10 +7,8 @@
 
     <data>
 
-        <import type="android.view.View"/>
-
         <variable
-            name="viewmodel"
+            name="vm"
             type="taiwan.no1.app.ssfm.mvvm.viewmodels.PlayMainViewModel"/>
     </data>
 
@@ -27,10 +25,11 @@
             android:id="@+id/include_toolbar"
             style="@style/Template.TopBar.Toolbar"
             layout="@layout/part_toolbar_view"
-            app:title="@{viewmodel.title}"/>
+            app:title="@{vm.title}"/>
 
         <include
             style="@style/Template.Activity"
-            layout="@layout/part_main_play_music"/>
+            layout="@layout/part_main_play_music"
+            app:pmvm="@{vm}"/>
     </android.support.constraint.ConstraintLayout>
 </layout>

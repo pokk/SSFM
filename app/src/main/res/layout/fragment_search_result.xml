@@ -8,7 +8,7 @@
         <import type="android.view.View"/>
 
         <variable
-            name="viewmodel"
+            name="vm"
             type="taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentSearchResultViewModel"/>
     </data>
 

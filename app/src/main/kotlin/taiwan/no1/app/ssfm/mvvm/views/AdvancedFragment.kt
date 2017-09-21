@@ -26,13 +26,13 @@ abstract class AdvancedFragment<VM: IViewModel, B: ViewDataBinding>: BaseFragmen
                                     savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, provideInflateView(), container, false)
         // HACK(jieyi): 8/21/17 Using reflection here, the performance might become lower. Maybe there are some better ways to do.
-        binding.javaClass.getMethod("setViewmodel", genericVMClass).invoke(binding, viewModel)
+        binding.javaClass.getMethod("setVm", genericVMClass).invoke(binding, viewModel)
 
         return binding.root
     }
 
     override fun onDestroy() {
-        binding.javaClass.getMethod("setViewmodel", genericVMClass).invoke(binding, null)
+        binding.javaClass.getMethod("setVm", genericVMClass).invoke(binding, null)
         super.onDestroy()
     }
 }

@@ -166,11 +166,12 @@ dependencies {
 
     // Database debug
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.1'
+
     testImplementation 'junit:junit:4.12'
+
     androidTestImplementation("com.android.support.test.espresso:espresso-core:2.2.2", {
         exclude group: "com.android.support", module: "support-annotations"
     })
-    compile 'com.github.stfalcon:androidmvvmhelper:0.4'
 }
 
 repositories {

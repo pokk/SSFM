@@ -5,8 +5,10 @@ import android.support.v7.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_search_result.rv_music_result
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchResultBinding
+import taiwan.no1.app.ssfm.databinding.ItemSearchMusicType1Binding
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity.InfoBean
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentSearchResultViewModel
+import taiwan.no1.app.ssfm.mvvm.viewmodels.MusicResultViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.MusicResultAdapter
 
@@ -28,9 +30,11 @@ class SearchResultFragment: AdvancedFragment<FragmentSearchResultViewModel, Frag
             InfoBean(singername = "XXXXX", songname = "?????", duration = 211))
 
         val layoutManager = LinearLayoutManager(this.activity)
-        val adapter = MusicResultAdapter(res, this.activity)
+//        val adapter = MusicResultAdapter(res, this.activity)
         rv_music_result.layoutManager = layoutManager
-        rv_music_result.adapter = adapter
+        rv_music_result.adapter = MusicResultAdapter<ItemSearchMusicType1Binding>(R.layout.item_search_music_type_1) { holder, position ->
+            holder.binding.avm = MusicResultViewModel(res[position], this.activity)
+        }
     }
 
     override fun provideInflateView(): Int = R.layout.fragment_search_result

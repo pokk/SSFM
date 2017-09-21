@@ -9,7 +9,7 @@
         <import type="android.view.View"/>
 
         <variable
-            name="viewmodel"
+            name="pmvm"
             type="taiwan.no1.app.ssfm.mvvm.viewmodels.PlayMainViewModel"/>
     </data>
 
@@ -67,7 +67,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:pmvm="@{pmvm}"/>
 
     </android.support.constraint.ConstraintLayout>
 </layout>
