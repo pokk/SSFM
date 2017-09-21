@@ -2,7 +2,9 @@ package taiwan.no1.app.ssfm.mvvm.views.fragments
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.fragment_search_result.btn_ttt
 import kotlinx.android.synthetic.main.fragment_search_result.rv_music_result
+import org.jetbrains.anko.sdk25.coroutines.onClick
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ItemSearchMusicType1Binding
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity.InfoBean
@@ -37,23 +39,22 @@ class SearchResultFragment: BaseFragment() {
             adapter = this@SearchResultFragment.adapter
         }
 
-        // XXX(jieyi): 9/21/17 Here is update operation.
-//        ObservableTimer(2, SECONDS, Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe {
-//            logw("????????????????")
-//            adapter.refresh(res,
-//                mutableListOf(InfoBean(singername = "321312 1321", songname = "Thefdsfs cure", duration = 200),
-//                    InfoBean(singername = "321321fdfds", songname = "Last Christmas", duration = 231),
-//                    InfoBean(singername = "fdsafdsfasd fdsafds", songname = "What did you make me do", duration = 421),
-//                    InfoBean(singername = "fdasfdsaf Wu", songname = "Taiwan NO1", duration = 321),
-//                    InfoBean(singername = "fdasfdsaf Wu", songname = "Taiwan NO1", duration = 321),
-//                    InfoBean(singername = "fdasfdsaf Wu", songname = "Taiwan NO1", duration = 321),
-//                    InfoBean(singername = "fdasfdsaf Wu", songname = "Taiwan NO1", duration = 321),
-//                    InfoBean(singername = "fdafd fdafds", songname = "What do I dsfdsf to do", duration = 113),
-//                    InfoBean(singername = "fdsfsd fdaf", songname = "Bass", duration = 352),
-//                    InfoBean(singername = "fdsfad", songname = "?????", duration = 211))) { new, old ->
-//                new.singername == old.singername
-//            }
-//        }
+        btn_ttt.onClick {
+            val extra = mutableListOf(InfoBean(singername = "321312 1321", songname = "Thefdsfs cure", duration = 200),
+                InfoBean(singername = "321321fdfds", songname = "Last Christmas", duration = 231),
+                InfoBean(singername = "fdsafdsfasd fdsafds", songname = "What did you make me do", duration = 421),
+                InfoBean(singername = "fdasfdsaf Wu", songname = "Taiwan NO1", duration = 321),
+                InfoBean(singername = "fdasfdsaf Wu", songname = "Taiwan NO1", duration = 321),
+                InfoBean(singername = "fdasfdsaf Wu", songname = "Taiwan NO1", duration = 321),
+                InfoBean(singername = "fdasfdsaf Wu", songname = "Taiwan NO1", duration = 321),
+                InfoBean(singername = "fdafd fdafds", songname = "What do I dsfdsf to do", duration = 113),
+                InfoBean(singername = "fdsfsd fdaf", songname = "Bass", duration = 352),
+                InfoBean(singername = "fdsfad", songname = "?????", duration = 211))
+
+            adapter.refresh(res, res.apply { addAll(extra) }) { new, old ->
+                new.singername != old.singername
+            }
+        }
     }
 
     override fun provideInflateView(): Int = R.layout.fragment_search_result

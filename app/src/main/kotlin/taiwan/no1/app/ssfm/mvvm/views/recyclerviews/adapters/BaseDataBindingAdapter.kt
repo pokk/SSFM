@@ -7,7 +7,6 @@ import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.viewholders.BindingHolder
 
 /**
@@ -15,19 +14,14 @@ import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.viewholders.BindingHolder
  * @author  jieyi
  * @since   9/20/17
  */
-class BaseDataBindingAdapter<BH: ViewDataBinding, D>(@LayoutRes val layout: Int,
+class BaseDataBindingAdapter<BH: ViewDataBinding, D>(@LayoutRes private val layoutId: Int,
                                                      private val bindVHBlock: (holder: BindingHolder<BH>, position: Int) -> Unit):
     RecyclerView.Adapter<BindingHolder<BH>>() {
-
     var dataSize = 0
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingHolder<BH> =
-        DataBindingUtil.inflate<BH>(LayoutInflater.from(parent.context),
-            R.layout.item_search_music_type_1, parent, false).let { BindingHolder(it) }
+        DataBindingUtil.inflate<BH>(LayoutInflater.from(parent.context), layoutId, parent, false).
+            let { BindingHolder(it) }
 
     override fun onBindViewHolder(holder: BindingHolder<BH>, position: Int) = bindVHBlock(holder, position)
 
@@ -40,7 +34,7 @@ class BaseDataBindingAdapter<BH: ViewDataBinding, D>(@LayoutRes val layout: Int,
             override fun getOldListSize(): Int = oldData.size
             override fun getNewListSize(): Int = newData.size
             override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-                oldData[oldItemPosition] == newData[newItemPosition]
+                oldData[oldItemPosition]?.hashCode() == newData[newItemPosition]?.hashCode()
 
             override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
                 areContentsTheSame(oldData[oldItemPosition], newData[newItemPosition])
@@ -48,7 +42,6 @@ class BaseDataBindingAdapter<BH: ViewDataBinding, D>(@LayoutRes val layout: Int,
 
         // We need to bind DiffUtil and adapter then notify the data change.
         dataSize = newData.size
-
         return newData
     }
 }
