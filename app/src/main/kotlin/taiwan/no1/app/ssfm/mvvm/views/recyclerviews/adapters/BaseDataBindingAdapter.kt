@@ -15,17 +15,16 @@ import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.viewholders.BindingHolder
  * @since   9/20/17
  */
 class BaseDataBindingAdapter<BH: ViewDataBinding, D>(@LayoutRes private val layoutId: Int,
-                                                     private val bindVHBlock: (holder: BindingHolder<BH>, position: Int) -> Unit):
+                                                     private var dataList: MutableList<D>,
+                                                     private val bindVHBlock: (holder: BindingHolder<BH>, item: D) -> Unit):
     RecyclerView.Adapter<BindingHolder<BH>>() {
-    var dataSize = 0
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingHolder<BH> =
         DataBindingUtil.inflate<BH>(LayoutInflater.from(parent.context), layoutId, parent, false).
             let { BindingHolder(it) }
 
-    override fun onBindViewHolder(holder: BindingHolder<BH>, position: Int) = bindVHBlock(holder, position)
+    override fun onBindViewHolder(holder: BindingHolder<BH>, position: Int) = bindVHBlock(holder, dataList[position])
 
-    override fun getItemCount(): Int = dataSize
+    override fun getItemCount(): Int = dataList.size
 
     fun refresh(oldData: List<D>,
                 newData: List<D>,
@@ -41,7 +40,7 @@ class BaseDataBindingAdapter<BH: ViewDataBinding, D>(@LayoutRes private val layo
         }).dispatchUpdatesTo(this)
 
         // We need to bind DiffUtil and adapter then notify the data change.
-        dataSize = newData.size
+        dataList = newData.toMutableList()
         return newData
     }
 }

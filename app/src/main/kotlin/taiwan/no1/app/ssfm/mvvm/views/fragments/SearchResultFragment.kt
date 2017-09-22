@@ -30,9 +30,9 @@ class SearchResultFragment: BaseFragment() {
             InfoBean(singername = "Nikical Minaji", songname = "Bass", duration = 352),
             InfoBean(singername = "XXXXX", songname = "?????", duration = 211))
 
-        adapter = BaseDataBindingAdapter<ItemSearchMusicType1Binding, InfoBean>(R.layout.item_search_music_type_1) { block, position ->
-            block.binding.avm = MusicResultViewModel(res[position], activity)
-        }.apply { dataSize = res.size }
+        adapter = BaseDataBindingAdapter(R.layout.item_search_music_type_1, res) { block, item ->
+            block.binding.avm = MusicResultViewModel(item, activity)
+        }
 
         rv_music_result.apply {
             layoutManager = LinearLayoutManager(activity)
