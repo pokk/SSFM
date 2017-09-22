@@ -5,6 +5,8 @@ import android.support.annotation.CallSuper
 import android.support.v4.app.Fragment
 import android.view.ViewGroup
 import com.hwangjr.rxbus.RxBus
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.annotation.Tag
 import com.trello.rxlifecycle2.components.RxActivity
 import com.yalantis.guillotine.animation.GuillotineAnimation
 import dagger.android.AndroidInjection
@@ -32,6 +34,12 @@ abstract class BaseActivity: RxActivity(), HasFragmentInjector, HasSupportFragme
     @Inject lateinit var fragmentInjector: DispatchingAndroidInjector<android.app.Fragment>
     val menu by lazy { layoutInflater.inflate(R.layout.page_menu_preference, null) }
     protected val navigator by lazy { Navigator(this) }
+    // FIXED(jieyi): 9/23/17 Register it in the parent class that it will be not reflected.
+    protected var busEvent = object {
+        @Subscribe(tags = arrayOf(Tag("testTag")))
+        fun testMethod(str: String) {
+        }
+    }
     private val rootView by lazy { findViewById<ViewGroup>(R.id.root) }
 
     //region Activity lifecycle
@@ -39,7 +47,7 @@ abstract class BaseActivity: RxActivity(), HasFragmentInjector, HasSupportFragme
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        RxBus.get().register(this)
+        RxBus.get().register(busEvent)
     }
 
     @CallSuper
@@ -52,7 +60,7 @@ abstract class BaseActivity: RxActivity(), HasFragmentInjector, HasSupportFragme
 
     @CallSuper
     override fun onDestroy() {
-        RxBus.get().unregister(this)
+        RxBus.get().unregister(busEvent)
         super.onDestroy()
     }
     //endregion

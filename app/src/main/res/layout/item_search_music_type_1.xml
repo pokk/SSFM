@@ -35,19 +35,18 @@
             android:layout_marginStart="8dp"
             android:layout_toEndOf="@+id/iv_action"
             android:layout_toStartOf="@+id/tv_total_time"
-            android:text="@={avm.singerName}"
+            android:text="@={avm.songName}"
             android:textColor="@color/colorWhite"
             tool:text="The Cure"/>
 
         <TextView
-            android:id="@+id/tv_album_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/tv_track_name"
             android:layout_alignStart="@+id/tv_track_name"
             android:layout_below="@+id/tv_track_name"
             android:layout_gravity="center"
-            android:text="@={avm.songName}"
+            android:text="@={avm.singerName}"
             android:textColor="@color/colorGray"
             tool:text="New album"/>
 

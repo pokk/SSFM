@@ -4,10 +4,14 @@ import android.app.Activity
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.view.View
+import com.devrapid.kotlinknifer.observer
+import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.R
+import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
 import taiwan.no1.app.ssfm.misc.extension.hideSoftKeyboard
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
+import taiwan.no1.app.ssfm.mvvm.models.usecases.SearchMusicCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.SearchMusicCase.RequestValue
 
 /**
@@ -51,12 +55,8 @@ class SearchViewModel(activity: Activity, private val usecase: BaseUsecase<Searc
      */
     fun querySubmit(query: String): Boolean {
         context.hideSoftKeyboard()
-//        usecase.apply { parameters = SearchMusicCase.RequestValue(query) }.
-//            execute(observer<SearchMusicEntity>().onNext {
-//
-//            }.onComplete {
-//
-//            })
+        usecase.apply { parameters = SearchMusicCase.RequestValue(query) }.
+            execute(observer { RxBus.get().post(RxBusConstant.SEARCH_RESULT, it) })
         return true
     }
 
