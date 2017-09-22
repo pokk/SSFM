@@ -110,7 +110,9 @@ dependencies {
     /* For reaction programming */
 
     // RxBus
-    implementation 'com.hwangjr.rxbus:rxbus:2.0.0'
+    implementation('com.hwangjr.rxbus:rxbus:2.0.0', {
+        exclude group: 'com.jakewharton.timber', module: 'timber'
+    })
 
     // RxLifecycle
     implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.1.0'
@@ -133,10 +135,8 @@ dependencies {
     implementation "com.github.Raizlabs.DBFlow:dbflow-rx2-kotlinextensions:$dbflow_version"
 
     // sql-cipher database encryption (optional)
-
-    //    implementation "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:$dbflow_version"
-
-    //    implementation "net.zetetic:android-database-sqlcipher:${sqlcipher_version}@aar"
+//    implementation "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:$dbflow_version"
+//    implementation "net.zetetic:android-database-sqlcipher:${sqlcipher_version}@aar"
 
     /* For internet */
 

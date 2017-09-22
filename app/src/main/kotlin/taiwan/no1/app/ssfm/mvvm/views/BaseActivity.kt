@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.v4.app.Fragment
 import android.view.ViewGroup
+import com.hwangjr.rxbus.RxBus
 import com.trello.rxlifecycle2.components.RxActivity
 import com.yalantis.guillotine.animation.GuillotineAnimation
 import dagger.android.AndroidInjection
@@ -11,9 +12,9 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasFragmentInjector
 import dagger.android.support.HasSupportFragmentInjector
-import kotlinx.android.synthetic.main.part_toolbar_menu.iv_content_hamburger
 import kotlinx.android.synthetic.main.part_toolbar_menu.tb_toolbar
 import kotlinx.android.synthetic.main.part_toolbar_menu.view.iv_content_hamburger
+import kotlinx.android.synthetic.main.part_toolbar_view.iv_content_hamburger
 import taiwan.no1.app.ssfm.R
 import javax.inject.Inject
 
@@ -38,6 +39,7 @@ abstract class BaseActivity: RxActivity(), HasFragmentInjector, HasSupportFragme
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+        RxBus.get().register(this)
     }
 
     @CallSuper
@@ -50,6 +52,7 @@ abstract class BaseActivity: RxActivity(), HasFragmentInjector, HasSupportFragme
 
     @CallSuper
     override fun onDestroy() {
+        RxBus.get().unregister(this)
         super.onDestroy()
     }
     //endregion
