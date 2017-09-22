@@ -4,9 +4,9 @@ import android.util.Log
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import taiwan.no1.app.ssfm.misc.utilies.PausableTimer
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMUSICSTATE
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMUSICSTATE.LOOPONE
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMUSICSTATE.RANDOM
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.LOOPONE
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.RANDOM
 
 /**
  * For controlling media player.
@@ -113,7 +113,7 @@ class PlayerHandler: IPlayerHandler {
         mPlayIndex.random(is_random)
     }
 
-    override fun playerStatus(): EMUSICSTATE = mPlayIndex.getState()
+    override fun playerState(): EMusicState = mPlayIndex.getState()
 
     override fun nowPlaying(): Int = mPlayIndex.nowPlaying()
 

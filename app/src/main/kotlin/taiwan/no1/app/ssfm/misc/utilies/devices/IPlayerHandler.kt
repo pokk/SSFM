@@ -6,7 +6,7 @@ package taiwan.no1.app.ssfm.misc.utilies.devices
  * Created by weian on 2017/6/18.
  */
 interface IPlayerHandler {
-    enum class EPLAYERSTATE {
+    enum class EPlayerState {
         PLAYING,
         STOP,
         PAUSE
@@ -33,7 +33,7 @@ interface IPlayerHandler {
     fun downloadProcess()
     fun loopAll(is_loop: Boolean)
     fun random(is_random: Boolean)
-    fun playerStatus(): IPlayList.EMUSICSTATE
+    fun playerState(): IPlayList.EMusicState
     fun nowPlaying(): Int
     fun isRandom(): Boolean
     fun setPlayList(list: Array<String>)

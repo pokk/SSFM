@@ -1,10 +1,10 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices
 
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMUSICSTATE
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMUSICSTATE.LOOPALL
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMUSICSTATE.LOOPONE
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMUSICSTATE.NORMAL
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMUSICSTATE.RANDOM
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.LOOPALL
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.LOOPONE
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.NORMAL
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.RANDOM
 import java.util.*
 
 /**
@@ -17,11 +17,11 @@ class PlayListModel: IPlayList {
     private var mTotal: Int = 0
     private var mCurrentIndex: Int = -1
     private var mPrevious: Stack<Int> = Stack()
-    private var misRandom: Boolean = false
-    private var misLoopOne: Boolean = false
-    private var misLoopAll: Boolean = false
-    private var misNormal: Boolean = false
-    private var mState: EMUSICSTATE = NORMAL
+    private var mIsRandom: Boolean = false
+    private var mIsLoopOne: Boolean = false
+    private var mIsLoopAll: Boolean = false
+    private var mIsNormal: Boolean = false
+    private var mState: EMusicState = NORMAL
 
     private fun getNextIndex(): Int {
         val maps = mapOf(
@@ -66,8 +66,8 @@ class PlayListModel: IPlayList {
     }
 
     override fun random(is_random: Boolean) {
-        misRandom = is_random
-        misNormal = !is_random
+        mIsRandom = is_random
+        mIsNormal = !is_random
         if (is_random)
             mState = RANDOM
         else
@@ -75,7 +75,7 @@ class PlayListModel: IPlayList {
     }
 
     override fun loopOne(is_loop: Boolean) {
-        misLoopOne = is_loop
+        mIsLoopOne = is_loop
         if (is_loop)
             mState = LOOPONE
         else
@@ -83,12 +83,12 @@ class PlayListModel: IPlayList {
     }
 
     override fun loopAll(is_loop: Boolean) {
-        misLoopAll = is_loop
+        mIsLoopAll = is_loop
         if (is_loop)
             mState = LOOPALL
         else
             mState = NORMAL
     }
 
-    override fun getState(): EMUSICSTATE = mState
+    override fun getState(): EMusicState = mState
 }

@@ -6,10 +6,10 @@ import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.logi
 import io.reactivex.Observable
 import io.reactivex.Observer
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPLAYERSTATE
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPLAYERSTATE.PAUSE
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPLAYERSTATE.PLAYING
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPLAYERSTATE.STOP
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPlayerState
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPlayerState.PAUSE
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPlayerState.PLAYING
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPlayerState.STOP
 
 /**
  * For handling MediaPlayer.
@@ -23,7 +23,7 @@ class MediaPlayerProxy: IMultiMediaPlayer,
     MediaPlayer.OnBufferingUpdateListener,
     MediaPlayer.OnCompletionListener {
     private var mMediaPlayer = MediaPlayer()
-    private var mState: EPLAYERSTATE = STOP
+    private var mState: EPlayerState = STOP
     private var getStreamingBufferPercentage: (percentage: Int) -> Unit = {}
     private lateinit var downloadModel: MediaDownloadModel
     private var mObserver: Observer<Unit>? = null
@@ -134,7 +134,7 @@ class MediaPlayerProxy: IMultiMediaPlayer,
         callback(mMediaPlayer.currentPosition.div(1000))
     }
 
-    override fun getState(): EPLAYERSTATE {
+    override fun getState(): EPlayerState {
         return mState
     }
 

@@ -1,7 +1,7 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices
 
 import io.reactivex.Observer
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPLAYERSTATE
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPlayerState
 
 /**
  * For controlling multi-media player.
@@ -20,6 +20,6 @@ interface IMultiMediaPlayer {
     fun duration(): Int
     fun isReplay(): Boolean
     fun isPlaying(): Boolean
-    fun getState(): EPLAYERSTATE
+    fun getState(): EPlayerState
     fun writeToFile(path: String)
 }

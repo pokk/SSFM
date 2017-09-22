@@ -4,8 +4,8 @@ import android.media.MediaDataSource
 import java.io.ByteArrayOutputStream
 import java.io.FileOutputStream
 import java.io.IOException
-import java.io.InputStream
 import java.net.URL
+import kotlin.concurrent.thread
 
 /**
  * For downloading and saving file to storage.
@@ -19,33 +19,34 @@ class MediaDownloadModel: MediaDataSource {
     var percentage: Double = 0.toDouble()
     var listener: DownloadListener
 
-    constructor(url: String, listener: DownloadListener) : super() {
+    constructor(url: String, listener: DownloadListener) {
         this.url = url
         this.listener = listener
 
-        val downloadThread = Thread(Runnable {
+        val downloadThread = thread {
             val conn = URL(this@MediaDownloadModel.url)
             val stream_url = URL(this@MediaDownloadModel.url)
 
             val connect = conn.openConnection()
-            val total_size: Double = connect.contentLength.toDouble()
+            val total_size = connect.contentLength.toDouble()
 
-            val inputStream: InputStream = stream_url.openStream()
-            val b = ByteArrayOutputStream()
-            var read = 0
+            stream_url.openStream().use {
+                val stream = it
+                ByteArrayOutputStream().use {
+                    var read = 0
+                    while (read != -1) {
+                        read = stream.read()
+                        it.write(read)
+                        percentage = it.size().toDouble().div(total_size).times(100)
+                    }
+                    it.flush()
+                    mediaBuffer = it.toByteArray()
+                }
 
-            while (read != -1) {
-                read = inputStream.read()
-                b.write(read)
-                percentage = b.size().toDouble().div(total_size).times(100)
             }
-            inputStream.close()
 
-            b.flush()
-            mediaBuffer = b.toByteArray()
-            b.close()
             this@MediaDownloadModel.listener.onDownloadFinish()
-        })
+        }
         downloadThread.start()
     }
 
@@ -72,11 +73,11 @@ class MediaDownloadModel: MediaDataSource {
     fun getDownloadPercentage(): Double = percentage
 
     fun writeToFile(path: String) {
-        Thread(Runnable {
+        thread {
             val stream = FileOutputStream(path)
             stream.write(mediaBuffer)
             stream.close()
-        }).start()
+        }.start()
     }
 
     interface DownloadListener {
