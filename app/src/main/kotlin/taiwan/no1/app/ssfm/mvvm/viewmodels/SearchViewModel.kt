@@ -57,6 +57,7 @@ class SearchViewModel(activity: Activity, private val usecase: BaseUsecase<Searc
         context.hideSoftKeyboard()
         usecase.apply { parameters = SearchMusicCase.RequestValue(query) }.
             execute(observer { RxBus.get().post(RxBusConstant.SEARCH_RESULT, it) })
+
         return true
     }
 

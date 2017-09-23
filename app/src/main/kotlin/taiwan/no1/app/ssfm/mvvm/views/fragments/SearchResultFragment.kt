@@ -1,8 +1,6 @@
 package taiwan.no1.app.ssfm.mvvm.views.fragments
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import com.devrapid.kotlinknifer.logd
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
@@ -13,6 +11,7 @@ import kotlinx.android.synthetic.main.fragment_search_result.rv_music_result
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ItemSearchMusicType1Binding
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
+import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity.InfoBean
 import taiwan.no1.app.ssfm.mvvm.viewmodels.MusicResultViewModel
@@ -40,7 +39,7 @@ class SearchResultFragment: BaseFragment() {
             block.binding.avm = MusicResultViewModel(item, activity)
         }
         rv_music_result.apply {
-            layoutManager = LinearLayoutManager(activity)
+            layoutManager = WrapContentLinearLayoutManager(activity)
             adapter = this@SearchResultFragment.adapter
         }
     }
@@ -53,15 +52,14 @@ class SearchResultFragment: BaseFragment() {
     override fun provideInflateView(): Int = R.layout.fragment_search_result
 
     @Subscribe(tags = arrayOf(Tag(RxBusConstant.SEARCH_RESULT)))
-    fun test(entity: SearchMusicEntity) {
-        res.clear()
-        // FIXME(jieyi): 9/23/17 If input 'five bob', the app must crash.
-        logd(entity.data?.info)
+    fun recevie(entity: SearchMusicEntity) {
         entity.data?.info?.toObservable()?.
             filter { (it.singername?.isNotEmpty() == true) && (it.songname?.isNotEmpty() == true) }?.
             subscribeOn(Schedulers.io())?.
-            observeOn(AndroidSchedulers.mainThread())?.toList()?.
-            subscribe { list, throwable ->
+            toList()?.
+            doOnSuccess { res.clear() }?.
+            observeOn(AndroidSchedulers.mainThread())?.
+            subscribe { list, _ ->
                 adapter.refresh(res, res.apply { addAll(list) })
             }
     }
