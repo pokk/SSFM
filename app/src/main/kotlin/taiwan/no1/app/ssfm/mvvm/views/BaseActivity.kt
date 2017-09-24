@@ -28,9 +28,9 @@ import javax.inject.Inject
  */
 abstract class BaseActivity: RxActivity(), HasFragmentInjector, HasSupportFragmentInjector {
     // Copy from [DaggerAppCompatActivity], becz this cant inherit two classes.
-    /** For providing to support fragments. */
+    /** For providing to support searchFragments. */
     @Inject lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
-    /** For providing to fragments. */
+    /** For providing to searchFragments. */
     @Inject lateinit var fragmentInjector: DispatchingAndroidInjector<android.app.Fragment>
     val menu by lazy { layoutInflater.inflate(R.layout.page_menu_preference, null) }
     protected val navigator by lazy { Navigator(this) }
@@ -66,14 +66,14 @@ abstract class BaseActivity: RxActivity(), HasFragmentInjector, HasSupportFragme
     //endregion
 
     /**
-     * Providing the fragment injector([Fragment]) for the fragments.
+     * Providing the fragment injector([Fragment]) for the searchFragments.
      *
      * @return a [supportFragmentInjector] for children of this fragment.
      */
     override fun supportFragmentInjector(): AndroidInjector<Fragment> = supportFragmentInjector
 
     /**
-     * Providing the fragment injector([android.app.Fragment]) for the fragments.
+     * Providing the fragment injector([android.app.Fragment]) for the searchFragments.
      *
      * @return a [fragmentInjector] for children of this fragment.
      */

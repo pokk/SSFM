@@ -1,25 +1,23 @@
 package taiwan.no1.app.ssfm.mvvm.viewmodels
 
-import android.app.Activity
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.view.View
-import com.devrapid.kotlinknifer.observer
-import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
 import taiwan.no1.app.ssfm.misc.extension.hideSoftKeyboard
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.SearchMusicCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.SearchMusicCase.RequestValue
+import taiwan.no1.app.ssfm.mvvm.views.activities.SearchActivity
 
 /**
  *
  * @author  jieyi
  * @since   9/13/17
  */
-class SearchViewModel(activity: Activity, private val usecase: BaseUsecase<SearchMusicEntity, RequestValue>):
+class SearchViewModel(private val activity: SearchActivity,
+                      private val usecase: BaseUsecase<SearchMusicEntity, RequestValue>):
     BaseViewModel(activity) {
     /** Menu Title */
     var title = ObservableField<String>()
@@ -35,7 +33,7 @@ class SearchViewModel(activity: Activity, private val usecase: BaseUsecase<Searc
      */
     fun closeSearchView(): Boolean {
         isSearching.set(false)
-
+        activity.navigate<String>(RxBusConstant.FRAGMENT_SEARCH_INDEX)
         return false
     }
 
@@ -46,6 +44,7 @@ class SearchViewModel(activity: Activity, private val usecase: BaseUsecase<Searc
      */
     fun openSearchView(view: View) {
         isSearching.set(true)
+        activity.navigate<String>(RxBusConstant.FRAGMENT_SEARCH_HISTORY)
     }
 
     /**
@@ -55,8 +54,9 @@ class SearchViewModel(activity: Activity, private val usecase: BaseUsecase<Searc
      */
     fun querySubmit(query: String): Boolean {
         context.hideSoftKeyboard()
-        usecase.apply { parameters = SearchMusicCase.RequestValue(query) }.
-            execute(observer { RxBus.get().post(RxBusConstant.SEARCH_RESULT, it) })
+        activity.navigate<String>(RxBusConstant.FRAGMENT_SEARCH_RESULT)
+//        usecase.apply { parameters = SearchMusicCase.RequestValue(query) }.
+//            execute(observer { RxBus.get().post(RxBusConstant.FRAGMENT_SEARCH_RESULT, it) })
 
         return true
     }

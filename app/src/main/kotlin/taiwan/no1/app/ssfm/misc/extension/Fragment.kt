@@ -62,24 +62,24 @@ inline fun FragmentManager.popAllFragment() {
 @RequiresApi(VERSION_CODES.N)
 inline fun FragmentManager.removeFragment(fragment: Fragment) = beginTransaction().remove(fragment).commitNow()
 
-// TODO(jieyi): 8/19/17 Cannot get fragments from FragmentManager.
+// TODO(jieyi): 8/19/17 Cannot get searchFragments from FragmentManager.
 /**
  * Remove all [Fragment] from [FragmentManager] stack.
  */
-//fun FragmentManager.removeRecursiveFragment() = fragments?.forEach {
+//fun FragmentManager.removeRecursiveFragment() = searchFragments?.forEach {
 //    it?.let { f ->
-//        it.childFragmentManager?.fragments?.forEach {
+//        it.childFragmentManager?.searchFragments?.forEach {
 //            it?.let { f.childFragmentManager.removeFragment(it) }
 //        }
 //    }
 //}
 
 /**
- * Testing code. For showing all fragments and children fragments.
+ * Testing code. For showing all searchFragments and children searchFragments.
  */
-//fun FragmentManager.showAllFragment() = fragments?.forEach {
+//fun FragmentManager.showAllFragment() = searchFragments?.forEach {
 //    it?.let {
 //        Logs.v("parent : $it")
-//        it.childFragmentManager?.fragments?.forEach { Logs.d("child!!!! : $it") }
+//        it.childFragmentManager?.searchFragments?.forEach { Logs.d("child!!!! : $it") }
 //    }
 //}

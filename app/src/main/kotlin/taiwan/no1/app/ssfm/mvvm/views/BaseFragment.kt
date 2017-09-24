@@ -24,7 +24,7 @@ import javax.inject.Inject
  * @since   5/9/17
  */
 abstract class BaseFragment: RxFragment(), HasFragmentInjector {
-    /** From an activity for providing to children fragments. */
+    /** From an activity for providing to children searchFragments. */
     @Inject lateinit var childFragmentInjector: DispatchingAndroidInjector<Fragment>
 
     protected open var rootView: View? = null
@@ -99,7 +99,7 @@ abstract class BaseFragment: RxFragment(), HasFragmentInjector {
     //endregion
 
     /**
-     * Providing the fragment injector([Fragment]) for this children of fragments.
+     * Providing the fragment injector([Fragment]) for this children of searchFragments.
      *
      * @return a [fragmentInjector] for children of this fragment.
      */

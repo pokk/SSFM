@@ -2,15 +2,12 @@ package taiwan.no1.app.ssfm.mvvm.views.fragments
 
 import android.os.Bundle
 import com.hwangjr.rxbus.RxBus
-import com.hwangjr.rxbus.annotation.Subscribe
-import com.hwangjr.rxbus.annotation.Tag
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.toObservable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_search_result.rv_music_result
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ItemSearchMusicType1Binding
-import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity.InfoBean
@@ -51,8 +48,8 @@ class SearchResultFragment: BaseFragment() {
 
     override fun provideInflateView(): Int = R.layout.fragment_search_result
 
-    @Subscribe(tags = arrayOf(Tag(RxBusConstant.SEARCH_RESULT)))
-    fun recevie(entity: SearchMusicEntity) {
+    //    @Subscribe(tags = arrayOf(Tag(RxBusConstant.FRAGMENT_SEARCH_RESULT)))
+    fun recevieMusicRes(entity: SearchMusicEntity) {
         entity.data?.info?.toObservable()?.
             filter { (it.singername?.isNotEmpty() == true) && (it.songname?.isNotEmpty() == true) }?.
             subscribeOn(Schedulers.io())?.
