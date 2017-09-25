@@ -21,7 +21,7 @@ interface IDataStore {
      * @param keyword   keyword of the music or the artist.
      * @return          the result of [SearchMusicEntity]
      */
-    fun getSearchMusicRes(keyword: String): Observable<SearchMusicEntity>
+    fun getSearchMusicRes(keyword: String, page: Int = 1, pageSize: Int = 20): Observable<SearchMusicEntity>
 
     /**
      * Retrieve the detail of a music information.

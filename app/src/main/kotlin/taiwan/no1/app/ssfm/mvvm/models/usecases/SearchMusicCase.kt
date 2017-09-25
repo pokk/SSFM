@@ -15,5 +15,7 @@ class SearchMusicCase(repository: IDataStore): BaseUsecase<SearchMusicEntity, Re
     override fun fetchUsecase(): Observable<SearchMusicEntity> =
         repository.getSearchMusicRes(parameters?.singerOrSongName ?: "")
 
-    data class RequestValue(val singerOrSongName: String): RequestValues
+    data class RequestValue(val singerOrSongName: String,
+                            val page: Int = 1,
+                            val pageSize: Int = 20): RequestValues
 }

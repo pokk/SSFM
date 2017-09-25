@@ -16,7 +16,7 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
  * @since   5/10/17
  */
 class LocalDataStore: IDataStore {
-    override fun getSearchMusicRes(keyword: String): Observable<SearchMusicEntity> {
+    override fun getSearchMusicRes(keyword: String, page: Int, pageSize: Int): Observable<SearchMusicEntity> {
         TODO("Local database has no session...")
     }
 

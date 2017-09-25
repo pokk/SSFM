@@ -24,7 +24,8 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
                                          @Remote private var remote: IDataStore): IDataStore {
     override fun obtainSession(user: String, pwd: String): Observable<Session> = remote.obtainSession(user, pwd)
 
-    override fun getSearchMusicRes(keyword: String): Observable<SearchMusicEntity> = remote.getSearchMusicRes(keyword)
+    override fun getSearchMusicRes(keyword: String, page: Int, pageSize: Int): Observable<SearchMusicEntity> =
+        remote.getSearchMusicRes(keyword, page, pageSize)
 
     override fun getDetailMusicRes(hash: String): Observable<DetailMusicEntity> = remote.getDetailMusicRes(hash)
 

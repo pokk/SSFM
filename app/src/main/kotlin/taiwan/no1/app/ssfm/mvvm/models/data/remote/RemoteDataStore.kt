@@ -43,22 +43,22 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
         NetComponent.Initializer.init().inject(this)
     }
 
-    override fun getSearchMusicRes(keyword: String): Observable<SearchMusicEntity> {
+    override fun getSearchMusicRes(keyword: String, page: Int, pageSize: Int): Observable<SearchMusicEntity> {
         val query: Map<String, String> = mapOf(
-            Pair(context.getString(R.string.t_pair1), context.getString(R.string.v_pair1)),
-            Pair(context.getString(R.string.t_pair2), keyword),
-            Pair(context.getString(R.string.t_pair3), context.getString(R.string.v_pair3)),
-            Pair(context.getString(R.string.t_pair4), context.getString(R.string.v_pair4)),
-            Pair(context.getString(R.string.t_pair5), context.getString(R.string.v_pair5)))
+            context.getString(R.string.t_pair1) to context.getString(R.string.v_pair1),
+            context.getString(R.string.t_pair2) to keyword,
+            context.getString(R.string.t_pair3) to page.toString(),
+            context.getString(R.string.t_pair4) to pageSize.toString(),
+            context.getString(R.string.t_pair5) to context.getString(R.string.v_pair5))
 
         return musicService1.get().searchMusic(query).subscribeOn(Schedulers.io())
     }
 
     override fun getDetailMusicRes(hash: String): Observable<DetailMusicEntity> {
         val query: Map<String, String> = mapOf(
-            Pair(context.getString(R.string.t_pair6), context.getString(R.string.v_pair6)),
-            Pair(context.getString(R.string.t_pair7), context.getString(R.string.v_pair7)),
-            Pair(context.getString(R.string.t_pair8), hash))
+            context.getString(R.string.t_pair6) to context.getString(R.string.v_pair6),
+            context.getString(R.string.t_pair7) to context.getString(R.string.v_pair7),
+            context.getString(R.string.t_pair8) to hash)
 
         return musicService2.get().getMusic(query).subscribeOn(Schedulers.io())
     }
