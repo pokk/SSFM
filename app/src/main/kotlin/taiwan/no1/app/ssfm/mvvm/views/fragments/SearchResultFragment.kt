@@ -1,7 +1,6 @@
 package taiwan.no1.app.ssfm.mvvm.views.fragments
 
 import android.os.Bundle
-import com.devrapid.kotlinknifer.logd
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
@@ -28,6 +27,15 @@ import kotlin.properties.Delegates
 class SearchResultFragment: BaseFragment() {
     private var adapter by Delegates.notNull<BaseDataBindingAdapter<ItemSearchMusicType1Binding, InfoBean>>()
     private var res = mutableListOf<InfoBean>()
+    private var isLoading = false
+    /** @to [taiwan.no1.app.ssfm.mvvm.viewmodels.SearchViewModel.loadMoreResult] */
+    private val recyclerViewScrollListener = BaseDataBindingAdapter.OnScrollListener { total ->
+        isLoading.takeUnless { isLoading }?.let {
+            RxBus.get().post(RxBusConstant.QUERY_LOAD_MORE, total)
+            // TODO(jieyi): 9/28/17 Show the loading item or view.
+            isLoading = true
+        }
+    }
 
     //region Fragment lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,26 +59,40 @@ class SearchResultFragment: BaseFragment() {
         rv_music_result.apply {
             layoutManager = WrapContentLinearLayoutManager(activity)
             adapter = this@SearchResultFragment.adapter
-            addOnScrollListener(BaseDataBindingAdapter.OnScrollListener {
-                logd(it)
-                RxBus.get().post(RxBusConstant.QUERY_LOAD_MORE, it)
-            })
+            addOnScrollListener(recyclerViewScrollListener)
         }
     }
 
     override fun provideInflateView(): Int = R.layout.fragment_search_result
 
+    /**
+     * Receiving the new music data from the remote database.
+     *
+     * @param hashMap [RxBusConstant.HASH_MORE_DATA_INIT] is [Boolean] type for checking list whether the list
+     *                needs to clear or not.
+     *                [RxBusConstant.HASH_MORE_DATA_ENTITY] is [SearchMusicEntity] type for the music list which
+     *                retrieved from the remote database.
+     *
+     * @from [taiwan.no1.app.ssfm.mvvm.viewmodels.SearchViewModel.queryMoreResult]
+     */
     @Subscribe(tags = arrayOf(Tag(RxBusConstant.FRAGMENT_SEARCH_RESULT)))
-    fun recevieMusicRes(entity: SearchMusicEntity) {
+    fun receiveMusicRes(hashMap: java.util.AbstractMap<String, Any>) {
+        val entity = hashMap[RxBusConstant.HASH_MORE_DATA_ENTITY] as SearchMusicEntity
+        // OPTIMIZE(jieyi): 9/28/17 (hashMap[RxBusConstant.HASH_MORE_DATA_INIT] as Boolean).takeUnless { it } ?: res.clear()
+        if (hashMap[RxBusConstant.HASH_MORE_DATA_INIT] as Boolean) {
+            res.clear()
+        }
+
         // NOTE(jieyi): 9/27/17 This function should be in the view model normally. I just reduced it.
         entity.data?.info?.toObservable()?.
             filter { (it.singername?.isNotEmpty() == true) && (it.songname?.isNotEmpty() == true) }?.
             subscribeOn(Schedulers.io())?.
             toList()?.
-            doOnSuccess { res.clear() }?.
             observeOn(AndroidSchedulers.mainThread())?.
             subscribe { list, _ ->
-                adapter.refresh(res, res.apply { addAll(list) })
+                res = adapter.refresh(res, ArrayList(res).apply { addAll(list) }).toMutableList()
+                // TODO(jieyi): 9/28/17 Close the loading item or view.
+                isLoading = false
             }
     }
 }

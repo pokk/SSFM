@@ -16,7 +16,4 @@ class TestActivity: BaseActivity() {
         setContentView(R.layout.part_main_preference)
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
 }

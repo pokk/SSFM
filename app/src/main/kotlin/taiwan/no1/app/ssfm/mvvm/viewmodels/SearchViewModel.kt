@@ -3,7 +3,6 @@ package taiwan.no1.app.ssfm.mvvm.viewmodels
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.view.View
-import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.observer
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
@@ -29,6 +28,7 @@ class SearchViewModel(private val activity: SearchActivity,
     var title = ObservableField<String>()
     /** Check search view is clicked or un-clicked */
     var isSearching = ObservableBoolean()
+    private var keyword = ""
 
     init {
         title.set(activity.getString(R.string.menu_search))
@@ -69,6 +69,7 @@ class SearchViewModel(private val activity: SearchActivity,
     fun querySubmit(query: String): Boolean {
         context.hideSoftKeyboard()
         activity.navigate<String>(RxBusConstant.FRAGMENT_SEARCH_RESULT)
+        keyword = query
         // HACK(jieyi): 9/25/17 debounce the continue click.
         queryMoreResult(query)
 
@@ -87,6 +88,9 @@ class SearchViewModel(private val activity: SearchActivity,
         }
         else {
             // TODO(jieyi): 9/25/17 `debounce` the suggestion list.
+            if (keyword != newText) {
+                activity.navigate<String>(RxBusConstant.FRAGMENT_SEARCH_HISTORY)
+            }
         }
 
         return true
@@ -98,14 +102,25 @@ class SearchViewModel(private val activity: SearchActivity,
      * @param query the query of song's or singer's name for searching a music.
      * @param page the page number of the total result.
      * @param pageSize the result quantity of each of the queries.
+     *
+     * @to [taiwan.no1.app.ssfm.mvvm.views.fragments.SearchResultFragment.receiveMusicRes]
      */
     fun queryMoreResult(query: String, page: Int = 1, pageSize: Int = Constant.QUERY_PAGE_SIZE) =
         usecase.execute(SearchMusicCase.RequestValue(query, page, pageSize),
-            observer { RxBus.get().post(RxBusConstant.FRAGMENT_SEARCH_RESULT, it) })
+            observer {
+                RxBus.get().post(RxBusConstant.FRAGMENT_SEARCH_RESULT,
+                    hashMapOf(RxBusConstant.HASH_MORE_DATA_INIT to (1 == page),
+                        RxBusConstant.HASH_MORE_DATA_ENTITY to it))
+            })
 
+    /**
+     * For retrieving more music data.
+     *
+     * @param total the number of the current total items.
+     *
+     * @from [taiwan.no1.app.ssfm.mvvm.views.fragments.SearchResultFragment.recyclerViewScrollListener]
+     */
     @Subscribe(tags = arrayOf(Tag(RxBusConstant.QUERY_LOAD_MORE)))
-    fun loadMoreResult(total: Number) {
-        logw(total)
-        queryMoreResult("test", ((total as Int) + 1) / Constant.QUERY_PAGE_SIZE)
-    }
+    fun loadMoreResult(total: Number) =
+        queryMoreResult(keyword, Math.ceil((total as Int) / Constant.QUERY_PAGE_SIZE.toDouble()).toInt() + 1)
 }

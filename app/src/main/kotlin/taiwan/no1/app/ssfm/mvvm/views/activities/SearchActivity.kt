@@ -36,6 +36,12 @@ class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>()
     override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_search)
 
     fun <D> navigate(fragmentTag: String, params: SparseArray<D> = SparseArray()) {
-        fragmentManager.addFragment(R.id.fl_container, searchFragments[fragmentTag] as Fragment)
+        searchFragments[fragmentTag]?.let {
+            fragmentManager.findFragmentByTag(it.javaClass.name).let { showingFragment ->
+                if (it != showingFragment) {
+                    fragmentManager.addFragment(R.id.fl_container, it)
+                }
+            }
+        }
     }
 }

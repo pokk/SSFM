@@ -14,7 +14,9 @@ import taiwan.no1.app.ssfm.mvvm.models.usecases.SearchMusicCase.RequestValue
  */
 class SearchMusicCase(repository: IDataStore): BaseUsecase<SearchMusicEntity, RequestValue>(repository) {
     override fun fetchUsecase(): Observable<SearchMusicEntity> =
-        repository.getSearchMusicRes(parameters?.singerOrSongName ?: "")
+        parameters?.let {
+            repository.getSearchMusicRes(it.singerOrSongName, it.page, it.pageSize)
+        } ?: repository.getSearchMusicRes("")
 
     data class RequestValue(val singerOrSongName: String,
                             val page: Int = 1,
