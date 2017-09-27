@@ -35,7 +35,7 @@
             android:layout_marginStart="8dp"
             android:layout_toEndOf="@+id/iv_action"
             android:layout_toStartOf="@+id/tv_total_time"
-            android:text="@={avm.songName}"
+            android:text="@{avm.songName}"
             android:textColor="@color/colorWhite"
             tool:text="The Cure"/>
 
@@ -46,7 +46,7 @@
             android:layout_alignStart="@+id/tv_track_name"
             android:layout_below="@+id/tv_track_name"
             android:layout_gravity="center"
-            android:text="@={avm.singerName}"
+            android:text="@{avm.singerName}"
             android:textColor="@color/colorGray"
             tool:text="New album"/>
 
@@ -58,7 +58,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="16dp"
             android:layout_toStartOf="@+id/ib_options"
-            android:text="@{String.valueOf(avm.duration)}"
+            android:text="@{avm.duration}"
             android:textColor="@color/colorWhite"
             tool:text="4:14"/>
 

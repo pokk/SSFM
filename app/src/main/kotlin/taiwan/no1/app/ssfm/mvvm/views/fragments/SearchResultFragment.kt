@@ -10,6 +10,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_search_result.rv_music_result
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ItemSearchMusicType1Binding
+import taiwan.no1.app.ssfm.misc.constants.Constant
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
@@ -28,9 +29,10 @@ class SearchResultFragment: BaseFragment() {
     private var adapter by Delegates.notNull<BaseDataBindingAdapter<ItemSearchMusicType1Binding, InfoBean>>()
     private var res = mutableListOf<InfoBean>()
     private var isLoading = false
+    private var canLoadMoreFlag = true
     /** @to [taiwan.no1.app.ssfm.mvvm.viewmodels.SearchViewModel.loadMoreResult] */
     private val recyclerViewScrollListener = BaseDataBindingAdapter.OnScrollListener { total ->
-        isLoading.takeUnless { isLoading }?.let {
+        if (canLoadMoreFlag && !isLoading) {
             RxBus.get().post(RxBusConstant.QUERY_LOAD_MORE, total)
             // TODO(jieyi): 9/28/17 Show the loading item or view.
             isLoading = true
@@ -94,5 +96,7 @@ class SearchResultFragment: BaseFragment() {
                 // TODO(jieyi): 9/28/17 Close the loading item or view.
                 isLoading = false
             }
+        // Raise the stop loading more data flag.
+        canLoadMoreFlag = Constant.QUERY_PAGE_SIZE <= (entity.data?.info?.size ?: 0)
     }
 }

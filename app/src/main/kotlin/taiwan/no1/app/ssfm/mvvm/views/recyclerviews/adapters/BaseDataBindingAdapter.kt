@@ -27,6 +27,8 @@ class BaseDataBindingAdapter<BH: ViewDataBinding, D>(@LayoutRes private val layo
 
     override fun getItemCount(): Int = dataList.size
 
+    // TODO(jieyi): 9/28/17 Add footer layout!
+
     fun refresh(oldData: List<D>,
                 newData: List<D>,
                 areContentsTheSame: (old: D, new: D) -> Boolean = { _, _ -> false }): List<D> {

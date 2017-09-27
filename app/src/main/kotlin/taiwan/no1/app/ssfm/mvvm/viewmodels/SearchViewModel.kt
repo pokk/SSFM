@@ -69,6 +69,7 @@ class SearchViewModel(private val activity: SearchActivity,
     fun querySubmit(query: String): Boolean {
         context.hideSoftKeyboard()
         activity.navigate<String>(RxBusConstant.FRAGMENT_SEARCH_RESULT)
+        // TODO(jieyi): 9/28/17 Added keyword history.
         keyword = query
         // HACK(jieyi): 9/25/17 debounce the continue click.
         queryMoreResult(query)
