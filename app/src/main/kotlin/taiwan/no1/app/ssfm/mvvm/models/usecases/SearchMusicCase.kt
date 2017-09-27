@@ -1,6 +1,7 @@
 package taiwan.no1.app.ssfm.mvvm.models.usecases
 
 import io.reactivex.Observable
+import taiwan.no1.app.ssfm.misc.constants.Constant
 import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.SearchMusicCase.RequestValue
@@ -17,5 +18,5 @@ class SearchMusicCase(repository: IDataStore): BaseUsecase<SearchMusicEntity, Re
 
     data class RequestValue(val singerOrSongName: String,
                             val page: Int = 1,
-                            val pageSize: Int = 20): RequestValues
+                            val pageSize: Int = Constant.QUERY_PAGE_SIZE): RequestValues
 }

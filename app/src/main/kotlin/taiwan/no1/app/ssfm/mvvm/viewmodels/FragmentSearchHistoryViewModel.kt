@@ -7,4 +7,10 @@ import android.databinding.BaseObservable
  * @author  jieyi
  * @since   8/20/17
  */
-class FragmentSearchHistoryViewModel: BaseObservable(), IViewModel
+class FragmentSearchHistoryViewModel: BaseObservable(), IViewModel {
+    override fun onAttach() {
+    }
+
+    override fun onDetach() {
+    }
+}

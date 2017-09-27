@@ -5,6 +5,7 @@ import de.umass.lastfm.Artist
 import de.umass.lastfm.Session
 import de.umass.lastfm.Track
 import io.reactivex.Observable
+import taiwan.no1.app.ssfm.misc.constants.Constant
 import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 
@@ -21,7 +22,9 @@ interface IDataStore {
      * @param keyword   keyword of the music or the artist.
      * @return          the result of [SearchMusicEntity]
      */
-    fun getSearchMusicRes(keyword: String, page: Int = 1, pageSize: Int = 20): Observable<SearchMusicEntity>
+    fun getSearchMusicRes(keyword: String,
+                          page: Int = 1,
+                          pageSize: Int = Constant.QUERY_PAGE_SIZE): Observable<SearchMusicEntity>
 
     /**
      * Retrieve the detail of a music information.

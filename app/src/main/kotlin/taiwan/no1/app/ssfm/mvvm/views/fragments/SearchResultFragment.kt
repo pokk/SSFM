@@ -28,6 +28,7 @@ class SearchResultFragment: BaseFragment() {
     private var adapter by Delegates.notNull<BaseDataBindingAdapter<ItemSearchMusicType1Binding, InfoBean>>()
     private var res = mutableListOf<InfoBean>()
 
+    //region Fragment lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -36,6 +37,12 @@ class SearchResultFragment: BaseFragment() {
         res.clear()
     }
 
+    override fun onDestroy() {
+        RxBus.get().unregister(this)
+        super.onDestroy()
+    }
+    //endregion
+
     override fun init(savedInstanceState: Bundle?) {
         adapter = BaseDataBindingAdapter(R.layout.item_search_music_type_1, res) { block, item ->
             block.binding.avm = MusicResultViewModel(item, activity)
@@ -43,18 +50,17 @@ class SearchResultFragment: BaseFragment() {
         rv_music_result.apply {
             layoutManager = WrapContentLinearLayoutManager(activity)
             adapter = this@SearchResultFragment.adapter
+            addOnScrollListener(BaseDataBindingAdapter.OnScrollListener {
+                RxBus.get().post(RxBusConstant.QUERY_LOAD_MORE, it)
+            })
         }
-    }
-
-    override fun onDestroy() {
-        RxBus.get().unregister(this)
-        super.onDestroy()
     }
 
     override fun provideInflateView(): Int = R.layout.fragment_search_result
 
     @Subscribe(tags = arrayOf(Tag(RxBusConstant.FRAGMENT_SEARCH_RESULT)))
     fun recevieMusicRes(entity: SearchMusicEntity) {
+        // NOTE(jieyi): 9/27/17 This function should be in the view model normally. I just reduced it.
         entity.data?.info?.toObservable()?.
             filter { (it.singername?.isNotEmpty() == true) && (it.songname?.isNotEmpty() == true) }?.
             subscribeOn(Schedulers.io())?.

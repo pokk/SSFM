@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.support.annotation.LayoutRes
 import android.support.v7.util.DiffUtil
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -42,5 +43,24 @@ class BaseDataBindingAdapter<BH: ViewDataBinding, D>(@LayoutRes private val layo
         // We need to bind DiffUtil and adapter then notify the data change.
         dataList = newData.toMutableList()
         return newData
+    }
+
+    class OnScrollListener(private val onLoadMore: (total: Int) -> Unit = {}): RecyclerView.OnScrollListener() {
+        private var isLoading = false
+        private val threshold by lazy { 3 }
+
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            (recyclerView.layoutManager as LinearLayoutManager).let {
+                val visibleItems = it.childCount
+                val totalItems = it.itemCount
+                val pastVisibleItems = it.findFirstVisibleItemPosition()
+                if (
+//                !isLoading &&
+                visibleItems + pastVisibleItems >= totalItems - threshold) {
+                    onLoadMore(totalItems)
+                    isLoading = true
+                }
+            }
+        }
     }
 }

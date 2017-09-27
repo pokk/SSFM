@@ -29,12 +29,14 @@ abstract class AdvancedActivity<VM: IViewModel, out B: ViewDataBinding>: BaseAct
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.onAttach()
         // HACK(jieyi): 8/21/17 Using reflection here, the performance might become lower. Maybe there are some better ways to do.
         binding.javaClass.getMethod("setVm", genericVMClass).invoke(binding, viewModel)
     }
 
     @CallSuper
     override fun onDestroy() {
+        viewModel.onDetach()
         binding.javaClass.getMethod("setVm", genericVMClass).invoke(binding, null)
         super.onDestroy()
     }

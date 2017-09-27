@@ -4,9 +4,13 @@ import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.view.View
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.observer
 import com.hwangjr.rxbus.RxBus
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.annotation.Tag
 import taiwan.no1.app.ssfm.R
+import taiwan.no1.app.ssfm.misc.constants.Constant
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
 import taiwan.no1.app.ssfm.misc.extension.hideSoftKeyboard
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
@@ -21,8 +25,7 @@ import taiwan.no1.app.ssfm.mvvm.views.activities.SearchActivity
  * @since   9/13/17
  */
 class SearchViewModel(private val activity: SearchActivity,
-                      private val usecase: BaseUsecase<SearchMusicEntity, RequestValue>):
-    BaseViewModel(activity) {
+                      private val usecase: BaseUsecase<SearchMusicEntity, RequestValue>): BaseViewModel(activity) {
     /** Menu Title */
     var title = ObservableField<String>()
     /** Check search view is clicked or un-clicked */
@@ -30,6 +33,14 @@ class SearchViewModel(private val activity: SearchActivity,
 
     init {
         title.set(activity.getString(R.string.menu_search))
+    }
+
+    override fun onAttach() {
+        RxBus.get().register(this)
+    }
+
+    override fun onDetach() {
+        RxBus.get().unregister(this)
     }
 
     /**
@@ -89,9 +100,15 @@ class SearchViewModel(private val activity: SearchActivity,
      * @param page the page number of the total result.
      * @param pageSize the result quantity of each of the queries.
      */
-    fun queryMoreResult(query: String, page: Int = 1, pageSize: Int = 20) =
+    fun queryMoreResult(query: String, page: Int = 1, pageSize: Int = Constant.QUERY_PAGE_SIZE) =
         usecase.execute(SearchMusicCase.RequestValue(query, page, pageSize),
             observer<SearchMusicEntity>().
                 onNext { RxBus.get().post(RxBusConstant.FRAGMENT_SEARCH_RESULT, it) }.
                 onError { loge(it) })
+
+    @Subscribe(tags = arrayOf(Tag(RxBusConstant.QUERY_LOAD_MORE)))
+    fun loadMoreResult(total: Int) {
+        logw("hello world")
+        queryMoreResult("test", total / Constant.QUERY_PAGE_SIZE)
+    }
 }

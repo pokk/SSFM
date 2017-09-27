@@ -6,4 +6,6 @@ package taiwan.no1.app.ssfm.misc.constants
  * @author  jieyi
  * @since   5/9/17
  */
-object Constant
+object Constant {
+    const val QUERY_PAGE_SIZE = 20
+}

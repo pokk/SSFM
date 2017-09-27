@@ -22,6 +22,11 @@ abstract class AdvancedFragment<VM: IViewModel, B: ViewDataBinding>: BaseFragmen
     private val genericVMClass: Class<*>
         get() = (this::class.java.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<*>
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.onAttach()
+    }
+
     override final fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                                     savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, provideInflateView(), container, false)
@@ -32,6 +37,7 @@ abstract class AdvancedFragment<VM: IViewModel, B: ViewDataBinding>: BaseFragmen
     }
 
     override fun onDestroy() {
+        viewModel.onDetach()
         binding.javaClass.getMethod("setVm", genericVMClass).invoke(binding, null)
         super.onDestroy()
     }

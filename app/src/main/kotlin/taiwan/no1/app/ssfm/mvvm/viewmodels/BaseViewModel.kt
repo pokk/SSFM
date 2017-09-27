@@ -12,4 +12,8 @@ import android.databinding.BaseObservable
  */
 abstract class BaseViewModel(private val activity: Activity): BaseObservable(), IViewModel {
     protected val context: Context by lazy { activity.applicationContext }
+
+    override fun onAttach() {}
+
+    override fun onDetach() {}
 }
