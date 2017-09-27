@@ -1,6 +1,7 @@
 package taiwan.no1.app.ssfm.mvvm.views.fragments
 
 import android.os.Bundle
+import com.devrapid.kotlinknifer.logd
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
@@ -51,6 +52,7 @@ class SearchResultFragment: BaseFragment() {
             layoutManager = WrapContentLinearLayoutManager(activity)
             adapter = this@SearchResultFragment.adapter
             addOnScrollListener(BaseDataBindingAdapter.OnScrollListener {
+                logd(it)
                 RxBus.get().post(RxBusConstant.QUERY_LOAD_MORE, it)
             })
         }

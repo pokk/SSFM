@@ -3,7 +3,6 @@ package taiwan.no1.app.ssfm.mvvm.viewmodels
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.view.View
-import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.observer
 import com.hwangjr.rxbus.RxBus
@@ -102,13 +101,11 @@ class SearchViewModel(private val activity: SearchActivity,
      */
     fun queryMoreResult(query: String, page: Int = 1, pageSize: Int = Constant.QUERY_PAGE_SIZE) =
         usecase.execute(SearchMusicCase.RequestValue(query, page, pageSize),
-            observer<SearchMusicEntity>().
-                onNext { RxBus.get().post(RxBusConstant.FRAGMENT_SEARCH_RESULT, it) }.
-                onError { loge(it) })
+            observer { RxBus.get().post(RxBusConstant.FRAGMENT_SEARCH_RESULT, it) })
 
     @Subscribe(tags = arrayOf(Tag(RxBusConstant.QUERY_LOAD_MORE)))
-    fun loadMoreResult(total: Int) {
-        logw("hello world")
-        queryMoreResult("test", total / Constant.QUERY_PAGE_SIZE)
+    fun loadMoreResult(total: Number) {
+        logw(total)
+        queryMoreResult("test", ((total as Int) + 1) / Constant.QUERY_PAGE_SIZE)
     }
 }

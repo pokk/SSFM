@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.viewholders.BindingHolder
 
 /**
@@ -47,13 +48,14 @@ class BaseDataBindingAdapter<BH: ViewDataBinding, D>(@LayoutRes private val layo
 
     class OnScrollListener(private val onLoadMore: (total: Int) -> Unit = {}): RecyclerView.OnScrollListener() {
         private var isLoading = false
-        private val threshold by lazy { 3 }
+        private val threshold by lazy { 0 }
 
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             (recyclerView.layoutManager as LinearLayoutManager).let {
                 val visibleItems = it.childCount
                 val totalItems = it.itemCount
                 val pastVisibleItems = it.findFirstVisibleItemPosition()
+                logw(visibleItems, totalItems, pastVisibleItems)
                 if (
 //                !isLoading &&
                 visibleItems + pastVisibleItems >= totalItems - threshold) {
