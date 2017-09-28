@@ -25,6 +25,11 @@ import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase.RequestValues
 abstract class BaseUsecase<T, R: RequestValues>(protected val repository: IDataStore) {
     /** Provide a common parameter variable for the children class. */
     var parameters: R? = null
+    // TODO(jieyi): 8/14/17 This two functions could be a interface.
+    /** Obtain a thread for while [Observable] is doing their tasks.*/
+    open protected var obtainSubscribeScheduler = Schedulers.io()
+    /** Obtain a thread for while [Observable] is doing their tasks.*/
+    open protected var obtainObserverScheduler: Scheduler = AndroidSchedulers.mainThread()
 
     /**
      * Executes the current use case.
@@ -51,29 +56,14 @@ abstract class BaseUsecase<T, R: RequestValues>(protected val repository: IDataS
      */
     abstract protected fun fetchUsecase(): Observable<T>
 
-    // TODO(jieyi): 8/14/17 This two functions could be a interface.
-    /**
-     * Obtain a thread for while [Observable] is doing their tasks.
-     *
-     * @return [Scheduler] implement from.
-     */
-    open protected fun obtainSubscribeScheduler() = Schedulers.io()
-
-    /**
-     * Obtain a thread for while [Observable] is doing their tasks.
-     *
-     * @return [Scheduler] implement from.
-     */
-    open protected fun obtainObserverScheduler(): Scheduler = AndroidSchedulers.mainThread()
-
     /**
      * Builds an [Observable] which will be used when executing the current [BaseUsecase].
      *
      * @return [Observable] for connecting with a [Observer].
      */
     private fun buildUsecase(): Observable<T> = fetchUsecase().
-        subscribeOn(obtainSubscribeScheduler()).
-        observeOn(obtainObserverScheduler())
+        subscribeOn(obtainSubscribeScheduler).
+        observeOn(obtainObserverScheduler)
 
     /** Interface for wrap a data for passing to a request.*/
     interface RequestValues
