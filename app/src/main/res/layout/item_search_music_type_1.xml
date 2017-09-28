@@ -7,7 +7,7 @@
 
         <variable
             name="avm"
-            type="taiwan.no1.app.ssfm.mvvm.viewmodels.MusicResultViewModel"/>
+            type="taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewMusicResultViewModel"/>
     </data>
 
     <RelativeLayout

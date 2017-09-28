@@ -7,6 +7,7 @@ import de.umass.lastfm.Track
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.misc.constants.Constant
 import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 
 /**
@@ -61,4 +62,12 @@ interface IDataStore {
     fun loveTrack(artist: String, track: String, session: Session): Observable<Track>
 
     fun unloveTrack(artist: String, track: String, session: Session): Observable<Track>
+
+    fun saveKeyword(keyword: String): Observable<Boolean>
+
+    fun updateKeyword(keyword: String): Observable<Boolean>
+
+    fun getKeywords(): Observable<List<KeywordEntity>>
+
+    fun removeKeywords(): Observable<Boolean>
 }

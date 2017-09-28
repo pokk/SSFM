@@ -1,5 +1,8 @@
 package taiwan.no1.app.ssfm.mvvm.models.data.local
 
+import com.raizlabs.android.dbflow.kotlinextensions.from
+import com.raizlabs.android.dbflow.kotlinextensions.select
+import com.raizlabs.android.dbflow.rx2.kotlinextensions.rx
 import de.umass.lastfm.Album
 import de.umass.lastfm.Artist
 import de.umass.lastfm.Session
@@ -7,6 +10,7 @@ import de.umass.lastfm.Track
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
 import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 
 /**
@@ -62,5 +66,19 @@ class LocalDataStore: IDataStore {
 
     override fun unloveTrack(artist: String, track: String, session: Session): Observable<Track> {
         TODO()
+    }
+
+    override fun saveKeyword(keyword: String): Observable<Boolean> {
+        TODO()
+    }
+
+    override fun updateKeyword(keyword: String): Observable<Boolean> {
+        TODO()
+    }
+
+    override fun getKeywords() = (select from KeywordEntity::class).rx().queryList().toObservable()
+
+    override fun removeKeywords(): Observable<Boolean> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

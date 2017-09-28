@@ -15,7 +15,7 @@ import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity.InfoBean
-import taiwan.no1.app.ssfm.mvvm.viewmodels.MusicResultViewModel
+import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewMusicResultViewModel
 import taiwan.no1.app.ssfm.mvvm.views.BaseFragment
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
 import kotlin.properties.Delegates
@@ -56,7 +56,7 @@ class SearchResultFragment: BaseFragment() {
 
     override fun init(savedInstanceState: Bundle?) {
         adapter = BaseDataBindingAdapter(R.layout.item_search_music_type_1, res) { block, item ->
-            block.binding.avm = MusicResultViewModel(item, activity)
+            block.binding.avm = RecyclerViewMusicResultViewModel(item, activity)
         }
         rv_music_result.apply {
             layoutManager = WrapContentLinearLayoutManager(activity)
@@ -80,7 +80,6 @@ class SearchResultFragment: BaseFragment() {
     @Subscribe(tags = arrayOf(Tag(RxBusConstant.FRAGMENT_SEARCH_RESULT)))
     fun receiveMusicRes(hashMap: java.util.AbstractMap<String, Any>) {
         val entity = hashMap[RxBusConstant.HASH_MORE_DATA_ENTITY] as SearchMusicEntity
-        // OPTIMIZE(jieyi): 9/28/17 (hashMap[RxBusConstant.HASH_MORE_DATA_INIT] as Boolean).takeUnless { it } ?: res.clear()
         if (hashMap[RxBusConstant.HASH_MORE_DATA_INIT] as Boolean) {
             res.clear()
         }

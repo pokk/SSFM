@@ -1,15 +1,10 @@
 package taiwan.no1.app.ssfm.mvvm.models.data.repositories
 
-import de.umass.lastfm.Album
-import de.umass.lastfm.Artist
 import de.umass.lastfm.Session
-import de.umass.lastfm.Track
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Local
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Remote
 import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
-import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -22,33 +17,43 @@ import javax.inject.Singleton
 @Singleton
 class DataRepository @Inject constructor(@Local private var local: IDataStore,
                                          @Remote private var remote: IDataStore): IDataStore {
-    override fun obtainSession(user: String, pwd: String): Observable<Session> = remote.obtainSession(user, pwd)
+    override fun obtainSession(user: String, pwd: String) = remote.obtainSession(user, pwd)
 
-    override fun getSearchMusicRes(keyword: String, page: Int, pageSize: Int): Observable<SearchMusicEntity> =
+    override fun getSearchMusicRes(keyword: String, page: Int, pageSize: Int) =
         remote.getSearchMusicRes(keyword, page, pageSize)
 
-    override fun getDetailMusicRes(hash: String): Observable<DetailMusicEntity> = remote.getDetailMusicRes(hash)
+    override fun getDetailMusicRes(hash: String) = remote.getDetailMusicRes(hash)
 
-    override fun getChartTopArtist(page: Int): Observable<Collection<Artist>> = remote.getChartTopArtist(page)
+    override fun getChartTopArtist(page: Int) = remote.getChartTopArtist(page)
 
-    override fun getChartTopTracks(page: Int): Observable<Collection<Track>> = remote.getChartTopTracks(page)
+    override fun getChartTopTracks(page: Int) = remote.getChartTopTracks(page)
 
-    override fun getSimilarArtist(artist: String): Observable<Collection<Artist>> = remote.getSimilarArtist(artist)
+    override fun getSimilarArtist(artist: String) = remote.getSimilarArtist(artist)
 
-    override fun getArtistTopAlbum(artist: String): Observable<Collection<Album>> = remote.getArtistTopAlbum(artist)
+    override fun getArtistTopAlbum(artist: String) = remote.getArtistTopAlbum(artist)
 
-    override fun getArtistTags(artist: String, session: Session): Observable<Collection<String>> =
+    override fun getArtistTags(artist: String, session: Session) =
         remote.getArtistTags(artist, session)
 
-    override fun getSimilarTracks(artist: String, mbid: String): Observable<Collection<Track>> =
+    override fun getSimilarTracks(artist: String, mbid: String) =
         remote.getSimilarTracks(artist, mbid)
 
-    override fun getLovedTracks(user: String, page: Int): Observable<Collection<Track>> =
+    override fun getLovedTracks(user: String, page: Int) =
         remote.getLovedTracks(user, page)
 
-    override fun loveTrack(artist: String, track: String, session: Session): Observable<Track> =
+    override fun loveTrack(artist: String, track: String, session: Session) =
         remote.loveTrack(artist, track, session)
 
-    override fun unloveTrack(artist: String, track: String, session: Session): Observable<Track> =
+    override fun unloveTrack(artist: String, track: String, session: Session) =
         remote.unloveTrack(artist, track, session)
+
+    override fun saveKeyword(keyword: String) = local.saveKeyword(keyword)
+
+    override fun updateKeyword(keyword: String) = local.updateKeyword(keyword)
+
+    override fun getKeywords() = local.getKeywords()
+
+    override fun removeKeywords(): Observable<Boolean> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }

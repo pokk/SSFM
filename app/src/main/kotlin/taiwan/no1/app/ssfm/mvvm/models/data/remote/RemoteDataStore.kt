@@ -19,6 +19,7 @@ import taiwan.no1.app.ssfm.internal.di.components.NetComponent
 import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.services.MusicServices
 import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import javax.inject.Inject
 import javax.inject.Named
@@ -118,4 +119,20 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
      * @return an [Observable] reference.
      */
     private fun <O> observableJustWrapper(data: O): Observable<O> = ObservableJust(data)
+
+    override fun saveKeyword(keyword: String): Observable<Boolean> {
+        TODO()
+    }
+
+    override fun updateKeyword(keyword: String): Observable<Boolean> {
+        TODO()
+    }
+
+    override fun getKeywords(): Observable<List<KeywordEntity>> {
+        TODO()
+    }
+
+    override fun removeKeywords(): Observable<Boolean> {
+        TODO()
+    }
 }
