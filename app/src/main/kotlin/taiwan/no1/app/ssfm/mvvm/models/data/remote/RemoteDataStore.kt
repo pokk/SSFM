@@ -120,15 +120,11 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
      */
     private fun <O> observableJustWrapper(data: O): Observable<O> = ObservableJust(data)
 
-    override fun saveKeyword(keyword: String): Observable<Boolean> {
+    override fun insertKeyword(keyword: String): Observable<Boolean> {
         TODO()
     }
 
-    override fun updateKeyword(keyword: String): Observable<Boolean> {
-        TODO()
-    }
-
-    override fun getKeywords(): Observable<List<KeywordEntity>> {
+    override fun getKeywords(quantity: Int): Observable<List<KeywordEntity>> {
         TODO()
     }
 

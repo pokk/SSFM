@@ -3,6 +3,7 @@ package taiwan.no1.app.ssfm.mvvm.viewmodels
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.view.View
+import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.observer
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
@@ -11,10 +12,13 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.misc.constants.Constant
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
 import taiwan.no1.app.ssfm.misc.extension.hideSoftKeyboard
+import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
+import taiwan.no1.app.ssfm.mvvm.models.usecases.GetKeywordHistoriesCase
+import taiwan.no1.app.ssfm.mvvm.models.usecases.RemoveKeywordHistoriesCase
+import taiwan.no1.app.ssfm.mvvm.models.usecases.SaveKeywordHistoryCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.SearchMusicCase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.SearchMusicCase.RequestValue
 import taiwan.no1.app.ssfm.mvvm.views.activities.SearchActivity
 
 /**
@@ -23,7 +27,11 @@ import taiwan.no1.app.ssfm.mvvm.views.activities.SearchActivity
  * @since   9/13/17
  */
 class SearchViewModel(private val activity: SearchActivity,
-                      private val usecase: BaseUsecase<SearchMusicEntity, RequestValue>): BaseViewModel(activity) {
+                      private val searchUsecase: BaseUsecase<SearchMusicEntity, SearchMusicCase.RequestValue>,
+                      private val addHistoryUsecase: BaseUsecase<Boolean, SaveKeywordHistoryCase.RequestValue>,
+                      private val getHistoriesUsecase: BaseUsecase<List<KeywordEntity>, GetKeywordHistoriesCase.RequestValue>,
+                      private val deleteHistoriesUsecase: BaseUsecase<Boolean, RemoveKeywordHistoriesCase.RequestValue>):
+    BaseViewModel(activity) {
     /** Menu Title */
     var title = ObservableField<String>()
     /** Check search view is clicked or un-clicked */
@@ -56,8 +64,10 @@ class SearchViewModel(private val activity: SearchActivity,
      *
      * @param view
      */
-    fun openSearchView(view: View) {
+    fun openSearchView(view: View?) {
         isSearching.set(true)
+        // TODO(jieyi): 9/29/17 Added the limitation.
+        getHistoriesUsecase.execute(observer { })
         activity.navigate<String>(RxBusConstant.FRAGMENT_SEARCH_HISTORY)
     }
 
@@ -69,9 +79,9 @@ class SearchViewModel(private val activity: SearchActivity,
     fun querySubmit(query: String): Boolean {
         context.hideSoftKeyboard()
         activity.navigate<String>(RxBusConstant.FRAGMENT_SEARCH_RESULT)
-        // TODO(jieyi): 9/28/17 Added keyword history.
         keyword = query
-        // HACK(jieyi): 9/25/17 debounce the continue click.
+        addHistoryUsecase.execute(SaveKeywordHistoryCase.RequestValue(keyword),
+            observer { logd("insert success: $it") })
         queryMoreResult(query)
 
         return true
@@ -85,7 +95,7 @@ class SearchViewModel(private val activity: SearchActivity,
     fun textChanged(newText: String): Boolean {
         // When clearing the text in the search view.
         if (newText.isBlank()) {
-            activity.navigate<String>(RxBusConstant.FRAGMENT_SEARCH_HISTORY)
+            openSearchView(null)
         }
         else {
             // TODO(jieyi): 9/25/17 `debounce` the suggestion list.
@@ -107,7 +117,7 @@ class SearchViewModel(private val activity: SearchActivity,
      * @to [taiwan.no1.app.ssfm.mvvm.views.fragments.SearchResultFragment.receiveMusicRes]
      */
     fun queryMoreResult(query: String, page: Int = 1, pageSize: Int = Constant.QUERY_PAGE_SIZE) =
-        usecase.execute(SearchMusicCase.RequestValue(query, page, pageSize),
+        searchUsecase.execute(SearchMusicCase.RequestValue(query, page, pageSize),
             observer {
                 RxBus.get().post(RxBusConstant.FRAGMENT_SEARCH_RESULT,
                     hashMapOf(RxBusConstant.HASH_MORE_DATA_INIT to (1 == page),

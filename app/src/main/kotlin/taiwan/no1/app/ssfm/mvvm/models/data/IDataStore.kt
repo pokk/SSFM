@@ -63,11 +63,9 @@ interface IDataStore {
 
     fun unloveTrack(artist: String, track: String, session: Session): Observable<Track>
 
-    fun saveKeyword(keyword: String): Observable<Boolean>
+    fun insertKeyword(keyword: String): Observable<Boolean>
 
-    fun updateKeyword(keyword: String): Observable<Boolean>
-
-    fun getKeywords(): Observable<List<KeywordEntity>>
+    fun getKeywords(quantity: Int = -1): Observable<List<KeywordEntity>>
 
     fun removeKeywords(): Observable<Boolean>
 }

@@ -47,11 +47,9 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
     override fun unloveTrack(artist: String, track: String, session: Session) =
         remote.unloveTrack(artist, track, session)
 
-    override fun saveKeyword(keyword: String) = local.saveKeyword(keyword)
+    override fun insertKeyword(keyword: String) = local.insertKeyword(keyword)
 
-    override fun updateKeyword(keyword: String) = local.updateKeyword(keyword)
-
-    override fun getKeywords() = local.getKeywords()
+    override fun getKeywords(quantity: Int) = local.getKeywords(quantity)
 
     override fun removeKeywords(): Observable<Boolean> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

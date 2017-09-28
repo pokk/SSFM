@@ -13,4 +13,4 @@ import taiwan.no1.app.ssfm.mvvm.models.data.local.database.MusicDatabase
 @Table(database = MusicDatabase::class, allFields = true)
 data class KeywordEntity(@PrimaryKey(autoincrement = true) var id: Long = 0,
                          var keyword: String = "",
-                         var searchTimes: Long = 0): BaseRXModel()
+                         var searchTimes: Long = 1): BaseRXModel()
