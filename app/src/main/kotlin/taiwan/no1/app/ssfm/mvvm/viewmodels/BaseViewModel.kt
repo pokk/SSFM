@@ -9,6 +9,8 @@ import android.databinding.BaseObservable
  * @since   5/8/17
  */
 abstract class BaseViewModel: BaseObservable(), IViewModel {
+    // OPTIMIZE(jieyi): 9/29/17 We might make a general callback listener object!?
+    // Ex: callbackListener: HashMap<String, (parameters) -> Unit>
     override fun onAttach() {}
 
     override fun onDetach() {}
