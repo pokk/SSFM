@@ -1,7 +1,6 @@
 package taiwan.no1.app.ssfm.mvvm.models.data.repositories
 
 import de.umass.lastfm.Session
-import io.reactivex.Observable
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Local
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Remote
 import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
@@ -51,7 +50,5 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
 
     override fun getKeywords(quantity: Int) = local.getKeywords(quantity)
 
-    override fun removeKeywords(): Observable<Boolean> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun removeKeywords() = local.removeKeywords()
 }

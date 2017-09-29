@@ -17,9 +17,11 @@ class RecyclerViewMusicResultViewModel(val res: InfoBean, context: Context): Bas
     val singerName = ObservableField<String>(res.singername ?: "")
     val duration = ObservableField<String>(res.duration.toTimeString())
 
+    //region Action from View
     fun playOrStopMusicClick(view: View) {
     }
 
     fun optionClick(view: View) {
     }
+    //endregion
 }

@@ -3,7 +3,8 @@ package taiwan.no1.app.ssfm.internal.di.modules
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerFragment
-import taiwan.no1.app.ssfm.internal.di.modules.activity.dependency.CheckModule
+import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.CheckModule
+import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.HistoriesFragmentModule
 import taiwan.no1.app.ssfm.mvvm.views.fragments.MainFragment
 import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchHistoryFragment
 import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchIndexFragment
@@ -27,7 +28,7 @@ abstract class BindingFragmentModule {
     abstract fun contributeSearchIndexFragmentInjector(): SearchIndexFragment
 
     @PerFragment
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = arrayOf(HistoriesFragmentModule::class))
     abstract fun contributeSearchHistoryFragmentInjector(): SearchHistoryFragment
 
     @PerFragment

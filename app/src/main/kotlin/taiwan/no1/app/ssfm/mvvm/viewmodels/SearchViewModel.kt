@@ -12,11 +12,8 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.misc.constants.Constant
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
 import taiwan.no1.app.ssfm.misc.extension.hideSoftKeyboard
-import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.GetKeywordHistoriesCase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.RemoveKeywordHistoriesCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.SaveKeywordHistoryCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.SearchMusicCase
 import taiwan.no1.app.ssfm.mvvm.views.activities.SearchActivity
@@ -28,9 +25,7 @@ import taiwan.no1.app.ssfm.mvvm.views.activities.SearchActivity
  */
 class SearchViewModel(private val activity: SearchActivity,
                       private val searchUsecase: BaseUsecase<SearchMusicEntity, SearchMusicCase.RequestValue>,
-                      private val addHistoryUsecase: BaseUsecase<Boolean, SaveKeywordHistoryCase.RequestValue>,
-                      private val getHistoriesUsecase: BaseUsecase<List<KeywordEntity>, GetKeywordHistoriesCase.RequestValue>,
-                      private val deleteHistoriesUsecase: BaseUsecase<Boolean, RemoveKeywordHistoriesCase.RequestValue>):
+                      private val addHistoryUsecase: BaseUsecase<Boolean, SaveKeywordHistoryCase.RequestValue>):
     BaseViewModel(activity) {
     /** Menu Title */
     var title = ObservableField<String>()
@@ -42,6 +37,7 @@ class SearchViewModel(private val activity: SearchActivity,
         title.set(activity.getString(R.string.menu_search))
     }
 
+    //region Lifecycle
     override fun onAttach() {
         RxBus.get().register(this)
     }
@@ -49,7 +45,9 @@ class SearchViewModel(private val activity: SearchActivity,
     override fun onDetach() {
         RxBus.get().unregister(this)
     }
+    //endregion
 
+    //region Action from View
     /**
      * The action of closing the search view.
      */
@@ -66,8 +64,6 @@ class SearchViewModel(private val activity: SearchActivity,
      */
     fun openSearchView(view: View?) {
         isSearching.set(true)
-        // TODO(jieyi): 9/29/17 Added the limitation.
-        getHistoriesUsecase.execute(observer { })
         activity.navigate<String>(RxBusConstant.FRAGMENT_SEARCH_HISTORY)
     }
 
@@ -106,6 +102,7 @@ class SearchViewModel(private val activity: SearchActivity,
 
         return true
     }
+    //endregion
 
     /**
      * Retrieve the data more by querying to the remote.

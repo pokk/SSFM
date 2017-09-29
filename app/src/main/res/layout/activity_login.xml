@@ -8,8 +8,6 @@
 
     <data>
 
-        <import type="android.view.View"/>
-
         <variable
             name="vm"
             type="taiwan.no1.app.ssfm.mvvm.viewmodels.LoginViewModel"/>

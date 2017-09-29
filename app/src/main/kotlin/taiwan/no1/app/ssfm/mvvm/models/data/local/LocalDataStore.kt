@@ -1,7 +1,6 @@
 package taiwan.no1.app.ssfm.mvvm.models.data.local
 
 import com.raizlabs.android.dbflow.kotlinextensions.`is`
-import com.raizlabs.android.dbflow.kotlinextensions.delete
 import com.raizlabs.android.dbflow.kotlinextensions.from
 import com.raizlabs.android.dbflow.kotlinextensions.limit
 import com.raizlabs.android.dbflow.kotlinextensions.orderBy
@@ -89,5 +88,6 @@ class LocalDataStore: IDataStore {
         return (select from KeywordEntity::class orderBy KeywordEntity_Table.searchTimes.desc() limit maxLimit).rx().list.toObservable()
     }
 
-    override fun removeKeywords(): Observable<Boolean> = delete(KeywordEntity::class).rx().execute().toObservable()
+    override fun removeKeywords(): Observable<Boolean> = TODO()
+//        delete(KeywordEntity::class).rx().execute().toObservable()
 }

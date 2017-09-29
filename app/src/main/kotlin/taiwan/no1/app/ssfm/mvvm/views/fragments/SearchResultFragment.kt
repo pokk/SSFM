@@ -54,6 +54,7 @@ class SearchResultFragment: BaseFragment() {
     }
     //endregion
 
+    //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
         adapter = BaseDataBindingAdapter(R.layout.item_search_music_type_1, res) { block, item ->
             block.binding.avm = RecyclerViewMusicResultViewModel(item, activity)
@@ -66,6 +67,7 @@ class SearchResultFragment: BaseFragment() {
     }
 
     override fun provideInflateView(): Int = R.layout.fragment_search_result
+    //endregion
 
     /**
      * Receiving the new music data from the remote database.
