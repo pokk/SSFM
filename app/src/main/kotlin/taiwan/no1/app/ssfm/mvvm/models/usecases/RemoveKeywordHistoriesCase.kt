@@ -11,7 +11,7 @@ import taiwan.no1.app.ssfm.mvvm.models.usecases.RemoveKeywordHistoriesCase.Reque
  * @since   8/14/17
  */
 class RemoveKeywordHistoriesCase(repository: IDataStore): BaseUsecase<Boolean, RequestValue>(repository) {
-    override fun fetchUsecase(): Observable<Boolean> = repository.removeKeywords()
+    override fun fetchUsecase(): Observable<Boolean> = repository.removeKeywords(parameters?.keyword)
 
-    class RequestValue: RequestValues
+    data class RequestValue(val keyword: String? = null): RequestValues
 }

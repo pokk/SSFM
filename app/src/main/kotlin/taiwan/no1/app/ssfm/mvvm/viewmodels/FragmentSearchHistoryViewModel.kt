@@ -5,7 +5,6 @@ import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetKeywordHistoriesCase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.RemoveKeywordHistoriesCase
 import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchHistoryFragment
 
 /**
@@ -14,8 +13,7 @@ import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchHistoryFragment
  * @since   8/20/17
  */
 class FragmentSearchHistoryViewModel(private val fragment: SearchHistoryFragment,
-                                     private val getHistoriesUsecase: BaseUsecase<List<KeywordEntity>, GetKeywordHistoriesCase.RequestValue>,
-                                     private val deleteHistoriesUsecase: BaseUsecase<Boolean, RemoveKeywordHistoriesCase.RequestValue>):
+                                     private val getHistoriesUsecase: BaseUsecase<List<KeywordEntity>, GetKeywordHistoriesCase.RequestValue>):
     BaseViewModel(fragment.activity) {
     //region Lifecycle
     override fun onAttach() {

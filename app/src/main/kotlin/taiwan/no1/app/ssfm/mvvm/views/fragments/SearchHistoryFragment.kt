@@ -7,6 +7,8 @@ import taiwan.no1.app.ssfm.databinding.FragmentSearchHistoryBinding
 import taiwan.no1.app.ssfm.databinding.ItemSearchHistoryType1Binding
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
+import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
+import taiwan.no1.app.ssfm.mvvm.models.usecases.RemoveKeywordHistoriesCase
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentSearchHistoryViewModel
 import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewSearchHistoryViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
@@ -21,12 +23,13 @@ import kotlin.properties.Delegates
  */
 class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, FragmentSearchHistoryBinding>() {
     @Inject override lateinit var viewModel: FragmentSearchHistoryViewModel
+    @Inject lateinit var deleteUsecase: BaseUsecase<Boolean, RemoveKeywordHistoriesCase.RequestValue>
     private var adapter by Delegates.notNull<BaseDataBindingAdapter<ItemSearchHistoryType1Binding, KeywordEntity>>()
     private var res = mutableListOf<KeywordEntity>()
 
     override fun init(savedInstanceState: Bundle?) {
         adapter = BaseDataBindingAdapter(R.layout.item_search_history_type_1, res) { block, item ->
-            block.binding.avm = RecyclerViewSearchHistoryViewModel(item, activity)
+            block.binding.avm = RecyclerViewSearchHistoryViewModel(item, activity, deleteUsecase)
         }
         rv_search_history.apply {
             layoutManager = WrapContentLinearLayoutManager(activity)

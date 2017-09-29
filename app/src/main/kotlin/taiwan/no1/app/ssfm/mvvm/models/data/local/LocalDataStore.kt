@@ -1,6 +1,8 @@
 package taiwan.no1.app.ssfm.mvvm.models.data.local
 
+import com.devrapid.kotlinknifer.logw
 import com.raizlabs.android.dbflow.kotlinextensions.`is`
+import com.raizlabs.android.dbflow.kotlinextensions.delete
 import com.raizlabs.android.dbflow.kotlinextensions.from
 import com.raizlabs.android.dbflow.kotlinextensions.limit
 import com.raizlabs.android.dbflow.kotlinextensions.orderBy
@@ -78,16 +80,21 @@ class LocalDataStore: IDataStore {
     override fun insertKeyword(keyword: String) =
         (select from KeywordEntity::class where (KeywordEntity_Table.keyword `is` keyword)).rx().list.
             flatMapObservable {
-                (if (0 == it.size) KeywordEntity(keyword = keyword) else it.first().apply { searchTimes += 1 }).
-                    save().
-                    toObservable()
+                (if (0 == it.size) KeywordEntity(keyword = keyword) else it.first().apply { searchTimes += 1 }).save().toObservable()
             }
 
-    override fun getKeywords(quantity: Int): Observable<List<KeywordEntity>> {
-        val maxLimit = quantity.takeIf { 0 < it } ?: Int.MAX_VALUE
-        return (select from KeywordEntity::class orderBy KeywordEntity_Table.searchTimes.desc() limit maxLimit).rx().list.toObservable()
+    override fun getKeywords(quantity: Int) = (quantity.takeIf { 0 < it } ?: Int.MAX_VALUE).let {
+        (select from KeywordEntity::class orderBy KeywordEntity_Table.searchTimes.asc() limit it).rx().list.toObservable()
     }
 
-    override fun removeKeywords(): Observable<Boolean> = TODO()
-//        delete(KeywordEntity::class).rx().execute().toObservable()
+    override fun removeKeywords(keyword: String?): Observable<Boolean> {
+        logw("-----------------", keyword, "----------------------")
+        return (keyword?.let {
+            logw(it)
+            (delete(KeywordEntity::class) where (KeywordEntity_Table.keyword `is` keyword)).rx()
+        } ?:
+            delete(KeywordEntity::class).rx()).
+            // The return value of `executeUpdateDelete` is the number of the deleted or updated items.
+            executeUpdateDelete().map { 0 < it }.toObservable()
+    }
 }

@@ -34,7 +34,7 @@
             android:layout_marginStart="8dp"
             android:layout_toEndOf="@+id/iv_action"
             android:layout_toStartOf="@+id/ib_clear"
-            android:text="@{avm.keyword}"
+            android:text="@={avm.keyword}"
             android:textColor="@color/colorWhite"
             tool:text="The Cure"/>
 

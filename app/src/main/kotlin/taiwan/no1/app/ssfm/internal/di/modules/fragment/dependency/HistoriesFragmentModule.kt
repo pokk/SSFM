@@ -2,7 +2,6 @@ package taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency
 
 import dagger.Module
 import dagger.Provides
-import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerActivity
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerFragment
 import taiwan.no1.app.ssfm.mvvm.models.data.repositories.DataRepository
 import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
@@ -26,16 +25,13 @@ class HistoriesFragmentModule {
         GetKeywordHistoriesCase(dataRepository)
 
     @Provides
-    @PerActivity
+    @PerFragment
     fun provideDeleteUsecase(dataRepository: DataRepository): BaseUsecase<Boolean, RemoveKeywordHistoriesCase.RequestValue> =
         RemoveKeywordHistoriesCase(dataRepository)
 
     @Provides
     @PerFragment
     fun provideViewModel(fragment: SearchHistoryFragment,
-                         getHistoriesUsecase: BaseUsecase<List<KeywordEntity>, GetKeywordHistoriesCase.RequestValue>,
-                         deleteHistoriesUsecase: BaseUsecase<Boolean, RemoveKeywordHistoriesCase.RequestValue>):
-        FragmentSearchHistoryViewModel = FragmentSearchHistoryViewModel(fragment,
-        getHistoriesUsecase,
-        deleteHistoriesUsecase)
+                         getHistoriesUsecase: BaseUsecase<List<KeywordEntity>, GetKeywordHistoriesCase.RequestValue>):
+        FragmentSearchHistoryViewModel = FragmentSearchHistoryViewModel(fragment, getHistoriesUsecase)
 }

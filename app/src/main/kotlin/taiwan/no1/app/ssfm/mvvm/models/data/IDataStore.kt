@@ -67,5 +67,5 @@ interface IDataStore {
 
     fun getKeywords(quantity: Int = -1): Observable<List<KeywordEntity>>
 
-    fun removeKeywords(): Observable<Boolean>
+    fun removeKeywords(keyword: String? = null): Observable<Boolean>
 }

@@ -128,7 +128,7 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
         TODO()
     }
 
-    override fun removeKeywords(): Observable<Boolean> {
+    override fun removeKeywords(keyword: String?): Observable<Boolean> {
         TODO()
     }
 }

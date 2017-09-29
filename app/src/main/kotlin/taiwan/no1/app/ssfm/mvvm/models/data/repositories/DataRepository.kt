@@ -50,5 +50,5 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
 
     override fun getKeywords(quantity: Int) = local.getKeywords(quantity)
 
-    override fun removeKeywords() = local.removeKeywords()
+    override fun removeKeywords(keyword: String?) = local.removeKeywords(keyword)
 }
