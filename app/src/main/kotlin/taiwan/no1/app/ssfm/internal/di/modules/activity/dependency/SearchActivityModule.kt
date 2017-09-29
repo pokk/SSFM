@@ -1,5 +1,6 @@
 package taiwan.no1.app.ssfm.internal.di.modules.activity.dependency
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerActivity
@@ -45,13 +46,13 @@ class SearchActivityModule {
     /**
      * Providing a [SearchViewModel] to the [SearchActivity].
      *
-     * @param activity originally from activity module.
+     * @param context originally from activity module.
      * @return a important [SearchViewModel] for binding view and viewmodel by activity.
      */
     @Provides
     @PerActivity
-    fun provideViewModel(activity: SearchActivity,
+    fun provideViewModel(context: Context,
                          searchUsecase: BaseUsecase<SearchMusicEntity, SearchMusicCase.RequestValue>,
                          addHistoryUsecase: BaseUsecase<Boolean, SaveKeywordHistoryCase.RequestValue>): SearchViewModel =
-        SearchViewModel(activity, searchUsecase, addHistoryUsecase)
+        SearchViewModel(context, searchUsecase, addHistoryUsecase)
 }

@@ -1,5 +1,6 @@
 package taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerFragment
@@ -9,7 +10,6 @@ import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetKeywordHistoriesCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.RemoveKeywordHistoriesCase
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentSearchHistoryViewModel
-import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchHistoryFragment
 
 /**
  * A base component upon which fragment's components may depend. Activity-level components should extend this component.
@@ -31,7 +31,7 @@ class HistoriesFragmentModule {
 
     @Provides
     @PerFragment
-    fun provideViewModel(fragment: SearchHistoryFragment,
+    fun provideViewModel(context: Context,
                          getHistoriesUsecase: BaseUsecase<List<KeywordEntity>, GetKeywordHistoriesCase.RequestValue>):
-        FragmentSearchHistoryViewModel = FragmentSearchHistoryViewModel(fragment, getHistoriesUsecase)
+        FragmentSearchHistoryViewModel = FragmentSearchHistoryViewModel(context, getHistoriesUsecase)
 }

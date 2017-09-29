@@ -1,7 +1,9 @@
 package taiwan.no1.app.ssfm.mvvm.viewmodels
 
+import android.content.Context
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
+import android.util.SparseArray
 import android.view.View
 import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.observer
@@ -16,25 +18,26 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.SaveKeywordHistoryCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.SearchMusicCase
-import taiwan.no1.app.ssfm.mvvm.views.activities.SearchActivity
 
 /**
  *
  * @author  jieyi
  * @since   9/13/17
  */
-class SearchViewModel(private val activity: SearchActivity,
+class SearchViewModel(private val context: Context,
                       private val searchUsecase: BaseUsecase<SearchMusicEntity, SearchMusicCase.RequestValue>,
                       private val addHistoryUsecase: BaseUsecase<Boolean, SaveKeywordHistoryCase.RequestValue>):
-    BaseViewModel(activity) {
+    BaseViewModel() {
     /** Menu Title */
     var title = ObservableField<String>()
     /** Check search view is clicked or un-clicked */
     var isSearching = ObservableBoolean()
+    /** For navigating to other fragments from the parent activity */
+    lateinit var navigateListener: (fragmentTag: String, params: SparseArray<Any>?) -> Unit
     private var keyword = ""
 
     init {
-        title.set(activity.getString(R.string.menu_search))
+        title.set(context.getString(R.string.menu_search))
     }
 
     //region Lifecycle
@@ -53,7 +56,7 @@ class SearchViewModel(private val activity: SearchActivity,
      */
     fun closeSearchView(): Boolean {
         isSearching.set(false)
-        activity.navigate<String>(RxBusConstant.FRAGMENT_SEARCH_INDEX)
+        navigateListener(RxBusConstant.FRAGMENT_SEARCH_INDEX, null)
         return false
     }
 
@@ -64,7 +67,7 @@ class SearchViewModel(private val activity: SearchActivity,
      */
     fun openSearchView(view: View?) {
         isSearching.set(true)
-        activity.navigate<String>(RxBusConstant.FRAGMENT_SEARCH_HISTORY)
+        navigateListener(RxBusConstant.FRAGMENT_SEARCH_HISTORY, null)
     }
 
     /**
@@ -74,7 +77,7 @@ class SearchViewModel(private val activity: SearchActivity,
      */
     fun querySubmit(query: String): Boolean {
         context.hideSoftKeyboard()
-        activity.navigate<String>(RxBusConstant.FRAGMENT_SEARCH_RESULT)
+        navigateListener(RxBusConstant.FRAGMENT_SEARCH_RESULT, null)
         keyword = query
         addHistoryUsecase.execute(SaveKeywordHistoryCase.RequestValue(keyword),
             observer { logd("insert success: $it") })
@@ -96,7 +99,7 @@ class SearchViewModel(private val activity: SearchActivity,
         else {
             // TODO(jieyi): 9/25/17 `debounce` the suggestion list.
             if (keyword != newText) {
-                activity.navigate<String>(RxBusConstant.FRAGMENT_SEARCH_HISTORY)
+                navigateListener(RxBusConstant.FRAGMENT_SEARCH_HISTORY, null)
             }
         }
 

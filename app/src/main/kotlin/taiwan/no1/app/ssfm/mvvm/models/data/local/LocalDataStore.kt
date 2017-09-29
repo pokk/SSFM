@@ -1,6 +1,5 @@
 package taiwan.no1.app.ssfm.mvvm.models.data.local
 
-import com.devrapid.kotlinknifer.logw
 import com.raizlabs.android.dbflow.kotlinextensions.`is`
 import com.raizlabs.android.dbflow.kotlinextensions.delete
 import com.raizlabs.android.dbflow.kotlinextensions.from
@@ -88,11 +87,7 @@ class LocalDataStore: IDataStore {
     }
 
     override fun removeKeywords(keyword: String?): Observable<Boolean> {
-        logw("-----------------", keyword, "----------------------")
-        return (keyword?.let {
-            logw(it)
-            (delete(KeywordEntity::class) where (KeywordEntity_Table.keyword `is` keyword)).rx()
-        } ?:
+        return (keyword?.let { (delete(KeywordEntity::class) where (KeywordEntity_Table.keyword `is` keyword)).rx() } ?:
             delete(KeywordEntity::class).rx()).
             // The return value of `executeUpdateDelete` is the number of the deleted or updated items.
             executeUpdateDelete().map { 0 < it }.toObservable()

@@ -27,6 +27,11 @@ class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, Fr
     private var adapter by Delegates.notNull<BaseDataBindingAdapter<ItemSearchHistoryType1Binding, KeywordEntity>>()
     private var res = mutableListOf<KeywordEntity>()
 
+    override fun onResume() {
+        super.onResume()
+        res.clear()
+    }
+
     override fun init(savedInstanceState: Bundle?) {
         adapter = BaseDataBindingAdapter(R.layout.item_search_history_type_1, res) { block, item ->
             block.binding.avm = RecyclerViewSearchHistoryViewModel(item, activity, deleteUsecase)
@@ -36,11 +41,8 @@ class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, Fr
             adapter = this@SearchHistoryFragment.adapter
         }
 
-        viewModel.fetchHistoryList { histories ->
-            res = res.let {
-                it.clear()
-                adapter.refresh(it, ArrayList(it).apply { addAll(histories) }).toMutableList()
-            }
+        viewModel.fetchHistoryList {
+            res = adapter.refresh(res, ArrayList(res).apply { addAll(it) }).toMutableList()
         }
     }
 

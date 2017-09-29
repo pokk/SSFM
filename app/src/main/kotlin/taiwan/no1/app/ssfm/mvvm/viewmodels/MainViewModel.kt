@@ -1,6 +1,6 @@
 package taiwan.no1.app.ssfm.mvvm.viewmodels
 
-import android.app.Activity
+import android.content.Context
 import android.databinding.ObservableField
 import android.view.View
 import com.devrapid.kotlinknifer.logd
@@ -21,8 +21,8 @@ import kotlin.concurrent.thread
  * @author  jieyi
  * @since   5/8/17
  */
-class MainViewModel(activity: Activity, private val usecase: BaseUsecase<DetailMusicEntity, RequestValue>):
-    BaseViewModel(activity) {
+class MainViewModel(private val context: Context, private val usecase: BaseUsecase<DetailMusicEntity, RequestValue>):
+    BaseViewModel() {
     private val entity = TagEntity(20, "Jieyi")
 
     var test = ObservableField<TagEntity>()
