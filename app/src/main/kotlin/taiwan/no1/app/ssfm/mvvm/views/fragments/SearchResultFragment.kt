@@ -1,7 +1,6 @@
 package taiwan.no1.app.ssfm.mvvm.views.fragments
 
 import android.os.Bundle
-import com.hwangjr.rxbus.RxBus
 import kotlinx.android.synthetic.main.fragment_search_result.rv_music_result
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchResultBinding
@@ -28,46 +27,14 @@ class SearchResultFragment: AdvancedFragment<FragmentSearchResultViewModel, Frag
     private var res = mutableListOf<InfoBean>()
     private var isLoading = false
     private var canLoadMoreFlag = true
-    private val recyclerViewScrollListener = BaseDataBindingAdapter.OnScrollListener {
-        if (canLoadMoreFlag && !isLoading) {
-            isLoading = true
-            val requestPage = Math.ceil(it / Constant.QUERY_PAGE_SIZE.toDouble()).toInt() + 1
-            viewModel.sendSearchRequest(keyword, requestPage) { keyword, musics, canLoadMore ->
-                // TODO(jieyi): 9/28/17 Show the loading item or view.
-                this.keyword = keyword
-                res = adapter.refresh(res, ArrayList(res).apply { addAll(musics) }).toMutableList()
-                isLoading = false
-                // Raise the stop loading more data flag.
-                canLoadMoreFlag = canLoadMore
-            }
-        }
-    }
 
     //region Fragment lifecycle
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        RxBus.get().register(this)
-        // Due to this object is kept by `SearchActivity`, this list need to be cleared every time.
-        res.clear()
-    }
-
     override fun onResume() {
         super.onResume()
+        // Due to this object is kept by `SearchActivity`, this list need to be cleared every time.
         res.clear()
-        viewModel.sendSearchRequest(keyword) { keyword, musics, canLoadMore ->
-            this.keyword = keyword
-            res = adapter.refresh(res, ArrayList(res).apply { addAll(musics) }).toMutableList()
-            // TODO(jieyi): 9/28/17 Close the loading item or view.
-            isLoading = false
-            // Raise the stop loading more data flag.
-            canLoadMoreFlag = canLoadMore
-        }
-    }
-
-    override fun onDestroy() {
-        RxBus.get().unregister(this)
-        super.onDestroy()
+        isLoading = true
+        viewModel.sendSearchRequest(keyword, resultCallback = updateListInfo)
     }
     //endregion
 
@@ -85,4 +52,21 @@ class SearchResultFragment: AdvancedFragment<FragmentSearchResultViewModel, Frag
 
     override fun provideInflateView(): Int = R.layout.fragment_search_result
     //endregion
+
+    private val updateListInfo = { keyword: String, musics: MutableList<InfoBean>, canLoadMore: Boolean ->
+        this.keyword = keyword
+        res = adapter.refresh(res, ArrayList(res).apply { addAll(musics) }).toMutableList()
+        // TODO(jieyi): 9/28/17 Close the loading item or view.
+        isLoading = false
+        // Raise the stop loading more data flag.
+        canLoadMoreFlag = canLoadMore
+    }
+
+    private val recyclerViewScrollListener = BaseDataBindingAdapter.OnScrollListener {
+        if (canLoadMoreFlag && !isLoading) {
+            isLoading = true
+            val requestPage = Math.ceil(it / Constant.QUERY_PAGE_SIZE.toDouble()).toInt() + 1
+            viewModel.sendSearchRequest(keyword, requestPage, resultCallback = updateListInfo)
+        }
+    }
 }
