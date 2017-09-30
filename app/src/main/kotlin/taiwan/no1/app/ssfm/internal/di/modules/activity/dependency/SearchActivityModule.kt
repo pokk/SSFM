@@ -5,7 +5,6 @@ import dagger.Module
 import dagger.Provides
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerActivity
 import taiwan.no1.app.ssfm.mvvm.models.data.repositories.DataRepository
-import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.SaveKeywordHistoryCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.SearchMusicCase
@@ -28,18 +27,6 @@ class SearchActivityModule {
      */
     @Provides
     @PerActivity
-    fun provideSearchUsecase(dataRepository: DataRepository): BaseUsecase<SearchMusicEntity, SearchMusicCase.RequestValue> =
-        SearchMusicCase(dataRepository)
-
-    /**
-     * Providing a [BaseUsecase] to the [SearchViewModel].
-     *
-     * @param dataRepository get a repository object by dagger 2.
-     * @return a [SearchMusicCase] but the data type is abstract class, we'd like to developer
-     * to use the abstract method directly.
-     */
-    @Provides
-    @PerActivity
     fun provideSaveUsecase(dataRepository: DataRepository): BaseUsecase<Boolean, SaveKeywordHistoryCase.RequestValue> =
         SaveKeywordHistoryCase(dataRepository)
 
@@ -52,7 +39,6 @@ class SearchActivityModule {
     @Provides
     @PerActivity
     fun provideViewModel(context: Context,
-                         searchUsecase: BaseUsecase<SearchMusicEntity, SearchMusicCase.RequestValue>,
                          addHistoryUsecase: BaseUsecase<Boolean, SaveKeywordHistoryCase.RequestValue>): SearchViewModel =
-        SearchViewModel(context, searchUsecase, addHistoryUsecase)
+        SearchViewModel(context, addHistoryUsecase)
 }

@@ -32,19 +32,28 @@ class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>()
         super.onCreate(savedInstanceState)
         fragmentManager.addFragment(R.id.fl_container, searchFragments[RxBusConstant.FRAGMENT_SEARCH_INDEX] as Fragment)
         viewModel.navigateListener = { fragmentTag, params ->
-            params?.let { navigate(fragmentTag, params) } ?: navigate<Any>(fragmentTag)
+            params?.let { navigate(fragmentTag, params) } ?: navigate(fragmentTag)
         }
     }
 
     override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_search)
 
-    fun <D> navigate(fragmentTag: String, params: SparseArray<D> = SparseArray()) {
-        searchFragments[fragmentTag]?.let {
+    private fun navigate(fragmentTag: String, params: SparseArray<Any> = SparseArray()) {
+        setFragmentParameters(fragmentTag, params)?.let {
             fragmentManager.findFragmentByTag(it.javaClass.name).let { showingFragment ->
                 if (it != showingFragment) {
                     fragmentManager.addFragment(R.id.fl_container, it)
                 }
             }
+        }
+    }
+
+    private fun setFragmentParameters(tag: String, params: SparseArray<Any>) = searchFragments[tag].also {
+        when (tag) {
+            RxBusConstant.FRAGMENT_SEARCH_RESULT -> (it as SearchResultFragment).keyword = params[0] as? String ?: ""
+            RxBusConstant.FRAGMENT_SEARCH_HISTORY -> Unit
+            RxBusConstant.FRAGMENT_SEARCH_INDEX -> Unit
+            else -> Unit
         }
     }
 }
