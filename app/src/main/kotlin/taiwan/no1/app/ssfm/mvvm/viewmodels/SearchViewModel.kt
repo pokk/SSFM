@@ -7,6 +7,9 @@ import android.util.SparseArray
 import android.view.View
 import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.observer
+import com.hwangjr.rxbus.RxBus
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.annotation.Tag
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
 import taiwan.no1.app.ssfm.misc.extension.hideSoftKeyboard
@@ -23,15 +26,26 @@ class SearchViewModel(private val context: Context,
     BaseViewModel() {
     /** Menu Title */
     var title = ObservableField<String>()
+    var keyword = ObservableField<String>("")
     /** Check search view is clicked or un-clicked */
     var isSearching = ObservableBoolean()
     /** For navigating to other fragments from the parent activity */
     lateinit var navigateListener: (fragmentTag: String, params: SparseArray<Any>?) -> Unit
-    private var keyword = ""
+//    private var keyword = ""
 
     init {
         title.set(context.getString(R.string.menu_search))
     }
+
+    //region Lifecycle
+    override fun onAttach() {
+        RxBus.get().register(this)
+    }
+
+    override fun onDetach() {
+        RxBus.get().unregister(this)
+    }
+    //endregion
 
     //region Action from View
     /**
@@ -61,8 +75,9 @@ class SearchViewModel(private val context: Context,
     fun querySubmit(query: String): Boolean {
         context.hideSoftKeyboard()
         navigateListener(RxBusConstant.FRAGMENT_SEARCH_RESULT, SparseArray<Any>().apply { put(0, query) })
-        keyword = query
-        addHistoryUsecase.execute(SaveKeywordHistoryCase.RequestValue(keyword),
+        // TODO(jieyi): 10/1/17 Set the xml search text.
+        keyword.set(query)
+        addHistoryUsecase.execute(SaveKeywordHistoryCase.RequestValue(keyword.get()),
             observer { logd("insert success: $it") })
 
         return true
@@ -80,7 +95,7 @@ class SearchViewModel(private val context: Context,
         }
         else {
             // TODO(jieyi): 9/25/17 `debounce` the suggestion list.
-            if (keyword != newText) {
+            if (keyword.get() != newText) {
                 navigateListener(RxBusConstant.FRAGMENT_SEARCH_HISTORY, null)
             }
         }
@@ -88,4 +103,9 @@ class SearchViewModel(private val context: Context,
         return true
     }
     //endregion
+
+    @Subscribe(tags = arrayOf(Tag(RxBusConstant.VIEWMODEL_CLICK_HISTORY)))
+    fun receiveClickHistoryEvent(keyword: String) {
+        querySubmit(keyword)
+    }
 }

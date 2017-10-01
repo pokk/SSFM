@@ -5,6 +5,8 @@ import android.databinding.BaseObservable
 import android.databinding.ObservableField
 import android.view.View
 import com.devrapid.kotlinknifer.observer
+import com.hwangjr.rxbus.RxBus
+import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
 import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.RemoveKeywordHistoriesCase
@@ -24,5 +26,9 @@ class RecyclerViewSearchHistoryViewModel(private val entity: KeywordEntity,
 
     fun deleteHistoryClick(view: View) {
         deleteHistoriesUsecase.execute(RequestValue(keyword.get()), observer { deleteItemListener(entity, it) })
+    }
+
+    fun selectHistoryItem(view: View) {
+        RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_HISTORY, entity.keyword)
     }
 }
