@@ -1,7 +1,8 @@
 package taiwan.no1.app.ssfm.mvvm.views.fragments
 
 import android.os.Bundle
-import kotlinx.android.synthetic.main.fragment_search_result.rv_music_result
+import android.support.v7.widget.RecyclerView
+import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchResultBinding
 import taiwan.no1.app.ssfm.databinding.ItemSearchMusicType1Binding
@@ -43,11 +44,23 @@ class SearchResultFragment: AdvancedFragment<FragmentSearchResultViewModel, Frag
         adapter = BaseDataBindingAdapter(R.layout.item_search_music_type_1, res) { block, item ->
             block.binding.avm = RecyclerViewMusicResultViewModel(item, activity)
         }
-        rv_music_result.apply {
-            layoutManager = WrapContentLinearLayoutManager(activity)
-            adapter = this@SearchResultFragment.adapter
-            addOnScrollListener(recyclerViewScrollListener)
+        binding.adapter = adapter
+        binding.layoutManager = WrapContentLinearLayoutManager(activity)
+        binding.loadmore = { recycler: Any?, total: Any? ->
+            recycler as RecyclerView
+            total as Int
+
+            logw("hello!!!!")
+
+            if (canLoadMoreFlag && !isLoading) {
+                isLoading = true
+                val requestPage = Math.ceil(total / Constant.QUERY_PAGE_SIZE.toDouble()).toInt() + 1
+                viewModel.sendSearchRequest(keyword, requestPage, resultCallback = updateListInfo)
+            }
         }
+//        rv_music_result.apply {
+//            addOnScrollListener(recyclerViewScrollListener)
+//        }
     }
 
     override fun provideInflateView(): Int = R.layout.fragment_search_result

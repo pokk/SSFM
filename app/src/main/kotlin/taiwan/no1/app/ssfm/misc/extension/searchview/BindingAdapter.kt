@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.misc.extension
+package taiwan.no1.app.ssfm.misc.extension.searchview
 
 import android.databinding.BindingAdapter
 import android.widget.SearchView
