@@ -10,9 +10,5 @@ import taiwan.no1.app.ssfm.R
  * @since   9/13/17
  */
 class PreferenceViewModel(private val context: Context): BaseViewModel() {
-    val title = ObservableField<String>()
-
-    init {
-        title.set(context.getString(R.string.menu_settings))
-    }
+    val title by lazy { ObservableField<String>(context.getString(R.string.menu_settings)) }
 }

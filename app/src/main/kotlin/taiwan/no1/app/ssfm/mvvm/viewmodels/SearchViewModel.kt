@@ -24,18 +24,16 @@ import taiwan.no1.app.ssfm.mvvm.models.usecases.SaveKeywordHistoryCase
 class SearchViewModel(private val context: Context,
                       private val addHistoryUsecase: BaseUsecase<Boolean, SaveKeywordHistoryCase.RequestValue>):
     BaseViewModel() {
-    /** Menu Title */
-    var title = ObservableField<String>()
-    var keyword = ObservableField<String>("")
-    /** Check search view is clicked or un-clicked */
-    var isSearching = ObservableBoolean()
-    /** For navigating to other fragments from the parent activity */
     lateinit var navigateListener: (fragmentTag: String, params: SparseArray<Any>?) -> Unit
-//    private var keyword = ""
+    /** Menu Title */
+    val title by lazy { ObservableField<String>(context.getString(R.string.menu_search)) }
+    /** The keyword of a song or singer's name */
+    val keyword by lazy { ObservableField<String>("") }
+    /** Check search view is clicked or un-clicked */
+    val isSearching by lazy { ObservableBoolean() }
 
-    init {
-        title.set(context.getString(R.string.menu_search))
-    }
+    /** For navigating to other fragments from the parent activity */
+
 
     //region Lifecycle
     override fun onAttach() {
@@ -75,7 +73,6 @@ class SearchViewModel(private val context: Context,
     fun querySubmit(query: String): Boolean {
         context.hideSoftKeyboard()
         navigateListener(RxBusConstant.FRAGMENT_SEARCH_RESULT, SparseArray<Any>().apply { put(0, query) })
-        // TODO(jieyi): 10/1/17 Set the xml search text.
         keyword.set(query)
         addHistoryUsecase.execute(SaveKeywordHistoryCase.RequestValue(keyword.get()),
             observer { logd("insert success: $it") })

@@ -20,7 +20,7 @@ import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.viewtype.ExpandableViewTypeF
 class PreferenceViewHolder(view: View): AdaptiveViewHolder<ExpandableViewTypeFactory, PreferenceEntity>(view) {
     override fun initView(model: PreferenceEntity, position: Int, adapter: Any) {
         adapter as ExpandRecyclerViewAdapter
-        val newPosition = adapter.calculateIndex(position)
+        val newPosition by lazy { adapter.calculateIndex(position) }
 
         // Create an observer for the click event of children.
         if (null == model.observer) {

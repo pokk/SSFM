@@ -21,8 +21,8 @@ class RecyclerViewSearchHistoryViewModel(private val entity: KeywordEntity,
                                          private val context: Context,
                                          private val deleteHistoriesUsecase: BaseUsecase<Boolean, RemoveKeywordHistoriesCase.RequestValue>):
     BaseObservable() {
-    val keyword = ObservableField<String>(entity.keyword)
     lateinit var deleteItemListener: (entity: KeywordEntity, isSuccess: Boolean) -> Unit
+    val keyword by lazy { ObservableField<String>(entity.keyword) }
 
     fun deleteHistoryClick(view: View) {
         deleteHistoriesUsecase.execute(RequestValue(keyword.get()), observer { deleteItemListener(entity, it) })

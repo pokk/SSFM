@@ -43,6 +43,7 @@
             android:onSearchClick="@{svm::openSearchView}"
             android:queryHint="Input the singer/song name."
             android:searchHintIcon="@null"
-            android:searchIcon="@drawable/ic_search"/>
+            android:searchIcon="@drawable/ic_search"
+            android:searchText="@{svm.keyword}"/>
     </android.support.v7.widget.Toolbar>
 </layout>

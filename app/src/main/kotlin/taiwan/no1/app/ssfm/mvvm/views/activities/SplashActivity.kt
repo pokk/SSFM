@@ -13,7 +13,7 @@ import kotlin.concurrent.timer
  */
 class SplashActivity: Activity() {
     companion object {
-        private val SPLASH_DELAY_TIME: Long = 100
+        private val SPLASH_DELAY_TIME by lazy { 100L }
     }
 
     //region Activity lifecycle

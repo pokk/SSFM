@@ -25,11 +25,7 @@ class MainViewModel(private val context: Context, private val usecase: BaseUseca
     BaseViewModel() {
     private val entity = TagEntity(20, "Jieyi")
 
-    var test = ObservableField<TagEntity>()
-
-    init {
-        test.set(entity)
-    }
+    var test = ObservableField<TagEntity>(entity)
 
     fun itemClick(view: View) {
         val user = context.getString(R.string.lastfm_name)

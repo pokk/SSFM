@@ -12,13 +12,8 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
  * @since   9/10/17
  */
 class PlayMainViewModel(private val context: Context): BaseViewModel() {
-    var music = ObservableField<DetailMusicEntity>()
-    val title = ObservableField<String>()
-
-    init {
-        title.set(context.getString(R.string.menu_home))
-        music.set(DetailMusicEntity())
-    }
+    var music = ObservableField<DetailMusicEntity>(DetailMusicEntity())
+    val title by lazy { ObservableField<String>(context.getString(R.string.menu_home)) }
 
     fun prevClick(view: View) {
 
