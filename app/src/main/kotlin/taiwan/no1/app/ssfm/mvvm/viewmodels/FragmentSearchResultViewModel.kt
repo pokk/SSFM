@@ -36,6 +36,7 @@ class FragmentSearchResultViewModel(private val searchUsecase: BaseUsecase<Searc
                 })
         }
         else {
+            // This situation is the first click `search view` or keyword is blank.
             resultCallback(keyword, mutableListOf(), false)
         }
 }

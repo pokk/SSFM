@@ -14,8 +14,10 @@ import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
 class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, FragmentSearchIndexBinding>() {
     override var viewModel: FragmentSearchIndexViewModel = FragmentSearchIndexViewModel()
 
+    //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
     }
 
     override fun provideInflateView(): Int = R.layout.fragment_search_index
+    //endregion
 }

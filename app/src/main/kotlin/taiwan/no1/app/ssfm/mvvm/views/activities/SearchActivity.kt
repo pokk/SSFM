@@ -28,6 +28,7 @@ class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>()
             RxBusConstant.FRAGMENT_SEARCH_INDEX to SearchIndexFragment())
     }
 
+    //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fragmentManager.addFragment(R.id.fl_container, searchFragments[RxBusConstant.FRAGMENT_SEARCH_INDEX] as Fragment)
@@ -35,8 +36,11 @@ class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>()
             params?.let { navigate(fragmentTag, params) } ?: navigate(fragmentTag)
         }
     }
+    //endregion
 
+    //region Base activity implement
     override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_search)
+    //endregion
 
     private fun navigate(fragmentTag: String, params: SparseArray<Any> = SparseArray()) {
         setFragmentParameters(fragmentTag, params)?.let {

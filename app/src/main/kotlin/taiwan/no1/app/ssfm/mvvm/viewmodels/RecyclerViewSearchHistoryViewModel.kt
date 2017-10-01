@@ -17,7 +17,7 @@ import taiwan.no1.app.ssfm.mvvm.models.usecases.RemoveKeywordHistoriesCase.Reque
  * @since   9/20/17
  */
 class RecyclerViewSearchHistoryViewModel(val res: KeywordEntity,
-                                         context: Context,
+                                         private val context: Context,
                                          private val deleteHistoriesUsecase: BaseUsecase<Boolean, RemoveKeywordHistoriesCase.RequestValue>):
     BaseObservable() {
     val keyword = ObservableField<String>(res.keyword)

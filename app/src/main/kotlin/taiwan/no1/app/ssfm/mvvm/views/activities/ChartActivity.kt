@@ -15,5 +15,7 @@ import javax.inject.Inject
 class ChartActivity: AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     @Inject override lateinit var viewModel: ChartViewModel
 
+    //region Base activity implement
     override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_chart)
+    //endregion
 }

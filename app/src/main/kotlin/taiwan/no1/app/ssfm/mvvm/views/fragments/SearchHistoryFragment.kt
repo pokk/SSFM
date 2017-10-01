@@ -23,15 +23,19 @@ import kotlin.properties.Delegates
  */
 class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, FragmentSearchHistoryBinding>() {
     @Inject override lateinit var viewModel: FragmentSearchHistoryViewModel
+    // This usecase is for each items of the recyclerview.
     @Inject lateinit var deleteUsecase: BaseUsecase<Boolean, RemoveKeywordHistoriesCase.RequestValue>
     private var adapter by Delegates.notNull<BaseDataBindingAdapter<ItemSearchHistoryType1Binding, KeywordEntity>>()
     private var res = mutableListOf<KeywordEntity>()
 
+    //region Fragment lifecycle
     override fun onResume() {
         super.onResume()
         res.clear()
     }
+    //endregion
 
+    //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
         adapter = BaseDataBindingAdapter(R.layout.item_search_history_type_1, res) { block, item ->
             block.binding.avm = RecyclerViewSearchHistoryViewModel(item, activity, deleteUsecase)
@@ -47,4 +51,7 @@ class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, Fr
     }
 
     override fun provideInflateView(): Int = R.layout.fragment_search_history
+    //endregion
+
+
 }

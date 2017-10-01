@@ -81,7 +81,7 @@ abstract class BaseFragment: RxFragment(), HasFragmentInjector {
     }
     //endregion
 
-    //region Initialization's order
+    //region Base activity implement
     /**
      * Initialize the fragment method.
      *

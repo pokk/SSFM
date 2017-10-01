@@ -37,6 +37,7 @@ class PreferenceActivity: AdvancedActivity<PreferenceViewModel, ActivityPreferen
             PreferenceEntity("About Us", "", R.drawable.ic_info_outline),
             PreferenceEntity("Feedback", "", R.drawable.ic_feedback))
 
+    //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -44,6 +45,9 @@ class PreferenceActivity: AdvancedActivity<PreferenceViewModel, ActivityPreferen
         rv_preference.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rv_preference.adapter = ExpandRecyclerViewAdapter(preferenceList)
     }
+    //endregion
 
+    //region Base activity implement
     override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_preference)
+    //endregion
 }

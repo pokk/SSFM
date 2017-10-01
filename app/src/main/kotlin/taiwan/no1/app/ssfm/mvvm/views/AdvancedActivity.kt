@@ -26,6 +26,7 @@ abstract class AdvancedActivity<VM: IViewModel, out B: ViewDataBinding>: BaseAct
         get() = (this::class.java.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<*>
 
 
+    //region Activity lifecycle
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +41,7 @@ abstract class AdvancedActivity<VM: IViewModel, out B: ViewDataBinding>: BaseAct
         binding.javaClass.getMethod("setVm", genericVMClass).invoke(binding, null)
         super.onDestroy()
     }
+    //endregion
 
     abstract protected fun provideBindingLayoutId(): Pair<Activity, Int>
 }

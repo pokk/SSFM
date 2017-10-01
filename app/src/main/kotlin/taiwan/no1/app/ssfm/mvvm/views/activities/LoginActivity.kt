@@ -1,8 +1,6 @@
 package taiwan.no1.app.ssfm.mvvm.views.activities
 
 import android.app.Activity
-import android.os.Bundle
-import android.support.annotation.CallSuper
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityLoginBinding
 import taiwan.no1.app.ssfm.misc.widgets.MenuItem
@@ -24,20 +22,7 @@ class LoginActivity: AdvancedActivity<LoginViewModel, ActivityLoginBinding>() {
         List(titles.size) { MenuItem(this, icons.getResourceId(it, -1), titles[it]) }
     }
 
-    @CallSuper
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    @CallSuper
-    override fun onResume() {
-        super.onResume()
-    }
-
-    @CallSuper
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
+    //region Base activity implement
     override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_login)
+    //endregion
 }

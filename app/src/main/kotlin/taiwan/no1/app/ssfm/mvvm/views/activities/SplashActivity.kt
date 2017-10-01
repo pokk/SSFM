@@ -16,6 +16,7 @@ class SplashActivity: Activity() {
         private val SPLASH_DELAY_TIME: Long = 100
     }
 
+    //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -27,4 +28,5 @@ class SplashActivity: Activity() {
             cancel()
         }
     }
+    //endregion
 }

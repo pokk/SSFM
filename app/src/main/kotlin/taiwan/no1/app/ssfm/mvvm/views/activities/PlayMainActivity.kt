@@ -15,5 +15,7 @@ import javax.inject.Inject
 class PlayMainActivity: AdvancedActivity<PlayMainViewModel, ActivityMusicBinding>() {
     @Inject override lateinit var viewModel: PlayMainViewModel
 
+    //region Base activity implement
     override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_music)
+    //endregion
 }
