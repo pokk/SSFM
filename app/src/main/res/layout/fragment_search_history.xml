@@ -20,6 +20,7 @@
             android:id="@+id/rv_search_history"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scrollbars="vertical"
             tools:listitem="@layout/item_search_history_type_1"/>
     </android.support.constraint.ConstraintLayout>
 </layout>

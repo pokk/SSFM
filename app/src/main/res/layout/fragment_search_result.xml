@@ -13,6 +13,7 @@
         android:id="@+id/rv_music_result"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scrollbars="vertical"
         tools:context=".mvvm.views.activities.SearchActivity"
         tools:listitem="@layout/item_search_music_type_1"/>
 </layout>

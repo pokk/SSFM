@@ -5,5 +5,6 @@
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scrollbars="vertical"
     tool:listitem="@layout/item_music_type_1">
 </android.support.v7.widget.RecyclerView>
