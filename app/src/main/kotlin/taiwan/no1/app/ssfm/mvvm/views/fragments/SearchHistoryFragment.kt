@@ -38,7 +38,9 @@ class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, Fr
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
         adapter = BaseDataBindingAdapter(R.layout.item_search_history_type_1, res) { block, item ->
-            block.binding.avm = RecyclerViewSearchHistoryViewModel(item, activity, deleteUsecase)
+            block.binding.avm = RecyclerViewSearchHistoryViewModel(item, activity, deleteUsecase).apply {
+                deleteItemListener = deleteItem
+            }
         }
         rv_search_history.apply {
             layoutManager = WrapContentLinearLayoutManager(activity)
@@ -53,5 +55,10 @@ class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, Fr
     override fun provideInflateView(): Int = R.layout.fragment_search_history
     //endregion
 
-
+    private val deleteItem = { entity: KeywordEntity, isSuccess: Boolean ->
+        // TODO(jieyi): 10/1/17 Delete all items.
+        if (isSuccess) {
+            res = adapter.refresh(res, ArrayList(res).apply { remove(entity) }).toMutableList()
+        }
+    }
 }
