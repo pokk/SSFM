@@ -19,7 +19,6 @@ import taiwan.no1.app.ssfm.mvvm.models.usecases.SaveKeywordHistoryCase
  * @since   9/13/17
  */
 class SearchViewModel(private val context: Context,
-//                      private val searchUsecase: BaseUsecase<SearchMusicEntity, SearchMusicCase.RequestValue>,
                       private val addHistoryUsecase: BaseUsecase<Boolean, SaveKeywordHistoryCase.RequestValue>):
     BaseViewModel() {
     /** Menu Title */
