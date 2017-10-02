@@ -14,9 +14,13 @@ fun RecyclerView.setAdapter(layoutManager: RecyclerView.LayoutManager, adapter: 
     this.adapter = adapter
 }
 
-@BindingAdapter("android:loadMore", "android:onScrollState")
-fun RecyclerView.setOnScrollListener(loadMore: (recyclerview: RecyclerView, total: Int) -> Unit,
-                                     onScrollStateChangedEvent: (recyclerview: RecyclerView, newState: Int) -> Unit) =
+// HACK(jieyi): 10/2/17 Help want! I might instead an anonymous variable method for loading more.
+interface RecyclerViewScrollCallback {
+    fun loadMoreEvent(recyclerView: RecyclerView, total: Int)
+}
+
+@BindingAdapter("android:callback")
+fun RecyclerView.setOnScrollListener(callback: RecyclerViewScrollCallback?) =
     addOnScrollListener(object: RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             (recyclerView.layoutManager as LinearLayoutManager).let {
@@ -24,12 +28,11 @@ fun RecyclerView.setOnScrollListener(loadMore: (recyclerview: RecyclerView, tota
                 val totalItems = it.itemCount
                 val pastVisibleItems = it.findFirstVisibleItemPosition()
                 if (visibleItems + pastVisibleItems >= totalItems) {
-                    loadMore(recyclerView, totalItems)
+                    callback?.loadMoreEvent(recyclerView, totalItems)
                 }
             }
         }
 
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-            onScrollStateChangedEvent(recyclerView, newState)
         }
     })

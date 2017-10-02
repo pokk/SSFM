@@ -16,10 +16,10 @@
         <variable
             name="adapter"
             type="android.support.v7.widget.RecyclerView.Adapter"/>
-        <!-- Add a function into here. The type is !? -->
+
         <variable
             name="loadmore"
-            type="kotlin.jvm.functions.Function2"/>
+            type="taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback"/>
     </data>
 
     <android.support.v7.widget.RecyclerView
@@ -28,6 +28,7 @@
         android:layout_height="match_parent"
         android:adapter="@{adapter}"
         android:layoutManager="@{layoutManager}"
+        android:loadMore="@{loadmore}"
         android:scrollbars="vertical"
         tools:listitem="@layout/item_search_music_type_1"/>
 </layout>
