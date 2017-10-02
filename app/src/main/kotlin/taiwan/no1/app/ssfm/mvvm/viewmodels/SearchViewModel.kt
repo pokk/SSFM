@@ -101,6 +101,13 @@ class SearchViewModel(private val context: Context,
     }
     //endregion
 
+    /**
+     * The click event when clicking a item to the history list.
+     *
+     * @param keyword of the song or singer's name.
+     *
+     * @event_from [taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewSearchHistoryViewModel.selectHistoryItem]
+     */
     @Subscribe(tags = arrayOf(Tag(RxBusConstant.VIEWMODEL_CLICK_HISTORY)))
     fun receiveClickHistoryEvent(keyword: String) {
         querySubmit(keyword)

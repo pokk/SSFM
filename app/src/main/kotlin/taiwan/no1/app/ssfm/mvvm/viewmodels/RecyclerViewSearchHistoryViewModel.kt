@@ -28,6 +28,13 @@ class RecyclerViewSearchHistoryViewModel(private val entity: KeywordEntity,
         deleteHistoriesUsecase.execute(RequestValue(keyword.get()), observer { deleteItemListener(entity, it) })
     }
 
+    /**
+     * A callback event for clicking a item to list item.
+     *
+     * @param view [android.widget.RelativeLayout]
+     *
+     * @event_to [taiwan.no1.app.ssfm.mvvm.viewmodels.SearchViewModel.receiveClickHistoryEvent]
+     */
     fun selectHistoryItem(view: View) {
         RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_HISTORY, entity.keyword)
     }
