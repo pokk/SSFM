@@ -44,6 +44,7 @@ class BaseDataBindingAdapter<BH: ViewDataBinding, D>(@LayoutRes private val layo
 
         // We need to bind DiffUtil and adapter then notify the data change.
         dataList = newData.toMutableList()
+
         return newData
     }
 

@@ -8,18 +8,19 @@ import android.support.v7.widget.RecyclerView
  * @author  jieyi
  * @since   10/1/17
  */
+
 @BindingAdapter("android:layoutManager", "android:adapter")
 fun RecyclerView.setAdapter(layoutManager: RecyclerView.LayoutManager, adapter: RecyclerView.Adapter<*>) {
     this.layoutManager = layoutManager
     this.adapter = adapter
 }
 
-// HACK(jieyi): 10/2/17 Help want! I might instead an anonymous variable method for loading more.
+// OPTIMIZE(jieyi): 10/2/17 Help want! I might instead an anonymous variable method for loading more.
 interface RecyclerViewScrollCallback {
     fun loadMoreEvent(recyclerView: RecyclerView, total: Int)
 }
 
-@BindingAdapter("android:callback")
+@BindingAdapter("android:loadMore")
 fun RecyclerView.setOnScrollListener(callback: RecyclerViewScrollCallback?) =
     addOnScrollListener(object: RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

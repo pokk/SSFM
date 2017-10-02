@@ -1,7 +1,6 @@
 package taiwan.no1.app.ssfm.mvvm.views.fragments
 
 import android.os.Bundle
-import kotlinx.android.synthetic.main.fragment_search_history.rv_search_history
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchHistoryBinding
 import taiwan.no1.app.ssfm.databinding.ItemSearchHistoryType1Binding
@@ -14,7 +13,6 @@ import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewSearchHistoryViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
 import javax.inject.Inject
-import kotlin.properties.Delegates
 
 /**
  *
@@ -25,7 +23,6 @@ class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, Fr
     @Inject override lateinit var viewModel: FragmentSearchHistoryViewModel
     // This usecase is for each items of the recyclerview.
     @Inject lateinit var deleteUsecase: BaseUsecase<Boolean, RemoveKeywordHistoriesCase.RequestValue>
-    private var adapter by Delegates.notNull<BaseDataBindingAdapter<ItemSearchHistoryType1Binding, KeywordEntity>>()
     private var res = mutableListOf<KeywordEntity>()
 
     //region Fragment lifecycle
@@ -37,28 +34,37 @@ class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, Fr
 
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
-        adapter = BaseDataBindingAdapter(R.layout.item_search_history_type_1, res) { block, item ->
-            block.binding.avm = RecyclerViewSearchHistoryViewModel(item, activity, deleteUsecase).apply {
-                deleteItemListener = deleteItem
+        binding.apply {
+            adapter = BaseDataBindingAdapter<ItemSearchHistoryType1Binding, KeywordEntity>(R.layout.item_search_history_type_1,
+                res) { holder, item ->
+                holder.binding.avm = RecyclerViewSearchHistoryViewModel(item, activity, deleteUsecase).
+                    apply { deleteItemListener = deleteItem }
             }
-        }
-        rv_search_history.apply {
             layoutManager = WrapContentLinearLayoutManager(activity)
-            adapter = this@SearchHistoryFragment.adapter
         }
 
-        viewModel.fetchHistoryList {
-            res = adapter.refresh(res, ArrayList(res).apply { addAll(it) }).toMutableList()
-        }
+        viewModel.fetchHistoryList { res.refreshRecyclerView { addAll(it) } }
     }
 
     override fun provideInflateView(): Int = R.layout.fragment_search_history
     //endregion
 
+    /** An anonymous callback function for a delete event from the viewholder. */
     private val deleteItem = { entity: KeywordEntity, isSuccess: Boolean ->
         // TODO(jieyi): 10/1/17 Delete all items.
         if (isSuccess) {
-            res = adapter.refresh(res, ArrayList(res).apply { remove(entity) }).toMutableList()
+            res = res.refreshRecyclerView { remove(entity) }
         }
     }
+
+    /**
+     * The operation for updating the list result by the adapter. Including updating the original list
+     * and the showing list on the recycler view.
+     *
+     * @param block the block operation for new data list.
+     * @return a new updated list.
+     */
+    private fun MutableList<KeywordEntity>.refreshRecyclerView(block: ArrayList<KeywordEntity>.() -> Unit): MutableList<KeywordEntity> =
+        (binding.adapter as BaseDataBindingAdapter<ItemSearchHistoryType1Binding, KeywordEntity>).
+            refresh(this, ArrayList(this).apply(block)).toMutableList()
 }

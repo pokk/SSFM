@@ -41,8 +41,8 @@ class SearchResultFragment: AdvancedFragment<FragmentSearchResultViewModel, Frag
     override fun init(savedInstanceState: Bundle?) {
         binding.apply {
             adapter = BaseDataBindingAdapter<ItemSearchMusicType1Binding, InfoBean>(R.layout.item_search_music_type_1,
-                res) { block, item ->
-                block.binding.avm = RecyclerViewMusicResultViewModel(item, activity)
+                res) { holder, item ->
+                holder.binding.avm = RecyclerViewMusicResultViewModel(item, activity)
             }
             layoutManager = WrapContentLinearLayoutManager(activity)
             loadmore = object: RecyclerViewScrollCallback {
@@ -60,13 +60,17 @@ class SearchResultFragment: AdvancedFragment<FragmentSearchResultViewModel, Frag
     override fun provideInflateView(): Int = R.layout.fragment_search_result
     //endregion
 
+    /**
+     * An anonymous callback function for updating the recyclerview list and the item lists from the
+     * viewholder of the loading more event.
+     */
     private val updateListInfo = { keyword: String, musics: MutableList<InfoBean>, canLoadMore: Boolean ->
         this.keyword = keyword
         res = (binding.adapter as BaseDataBindingAdapter<ItemSearchMusicType1Binding, InfoBean>).
             refresh(res, ArrayList(res).apply { addAll(musics) }).toMutableList()
         // TODO(jieyi): 9/28/17 Close the loading item or view.
         isLoading = false
-        // Raise the stop loading more data flag.
+        // Raise the stopping loading more data flag for avoiding to load again.
         canLoadMoreFlag = canLoadMore
     }
 }
