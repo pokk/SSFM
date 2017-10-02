@@ -51,6 +51,8 @@ class SearchViewModel(private val context: Context,
      */
     fun closeSearchView(): Boolean {
         isSearching.set(false)
+        addHistoryUsecase.execute {
+        }
         navigateListener(RxBusConstant.FRAGMENT_SEARCH_INDEX, null)
         return false
     }
