@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView
  * @author  jieyi
  * @since   10/1/17
  */
-
 @BindingAdapter("android:layoutManager", "android:adapter")
 fun RecyclerView.setAdapter(layoutManager: RecyclerView.LayoutManager, adapter: RecyclerView.Adapter<*>) {
     this.layoutManager = layoutManager
