@@ -15,6 +15,7 @@ import taiwan.no1.app.ssfm.mvvm.views.AdvancedActivity
 import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchHistoryFragment
 import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchIndexFragment
 import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchResultFragment
+import java.util.*
 import javax.inject.Inject
 
 
@@ -24,6 +25,7 @@ import javax.inject.Inject
  */
 class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>() {
     @Inject override lateinit var viewModel: SearchViewModel
+    private val fragmentStack by lazy { ArrayDeque<Fragment>() }
     private val searchFragments by lazy {
         hashMapOf<String, Fragment>(FRAGMENT_SEARCH_RESULT to SearchResultFragment(),
             FRAGMENT_SEARCH_HISTORY to SearchHistoryFragment(),
@@ -33,12 +35,12 @@ class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>()
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fragmentManager.addFragment(R.id.fl_container, searchFragments[FRAGMENT_SEARCH_INDEX] as Fragment)
+        addFragment(searchFragments[FRAGMENT_SEARCH_INDEX] as Fragment)
         viewModel.apply {
             navigateListener = { fragmentTag, params ->
                 params?.let { navigate(fragmentTag, params) } ?: navigate(fragmentTag)
             }
-            popFragment = { fragmentManager.popBackStackImmediate() }
+            popFragment = { toFragmentTag -> this@SearchActivity.popFragment(toFragmentTag) }
         }
     }
     //endregion
@@ -49,18 +51,26 @@ class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>()
 
     private fun navigate(fragmentTag: String, params: SparseArray<Any> = SparseArray()) {
         // FIXME(jieyi): 10/3/17 Here has some problem between changing fragment.
-        setFragmentParameters(fragmentTag, params)?.let outer@ { targetFragment ->
-            (fragmentManager.backStackEntryCount - 1).takeIf { 0 < it }?.
-                let { fragmentManager.getBackStackEntryAt(it).name }?.let {
-                if (targetFragment.javaClass.name == SearchHistoryFragment::class.java.name &&
-                    it == SearchResultFragment::class.java.name) {
-                    fragmentManager.popBackStackImmediate()
-                }
-                return@outer
+        setFragmentParameters(fragmentTag, params)?.let { targetFragment ->
+            if (isSpecificTargetAction(fragmentTag)) {
+                return@let
             }
 
-            fragmentManager.addFragment(R.id.fl_container, targetFragment, true)
+            addFragment(targetFragment, true)
         }
+    }
+
+    private fun isSpecificTargetAction(fragmentTag: String): Boolean {
+        if (FRAGMENT_SEARCH_HISTORY == fragmentTag) {
+            when (fragmentStack.peek()) {
+                is SearchHistoryFragment -> return true
+                is SearchResultFragment -> {
+                    popFragment(FRAGMENT_SEARCH_HISTORY)
+                    return true
+                }
+            }
+        }
+        return false
     }
 
     private fun setFragmentParameters(tag: String, params: SparseArray<Any>) = searchFragments[tag].also {
@@ -70,5 +80,18 @@ class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>()
             FRAGMENT_SEARCH_INDEX -> Unit
             else -> Unit
         }
+    }
+
+    private fun addFragment(fragment: Fragment, needBack: Boolean = false) {
+        fragmentManager.addFragment(R.id.fl_container, fragment, needBack)
+        fragmentStack.push(fragment)
+    }
+
+    private fun popFragment(toFragmentTag: String) {
+        if (FRAGMENT_SEARCH_HISTORY == toFragmentTag && fragmentStack.peek() is SearchHistoryFragment)
+            return
+
+        fragmentManager.popBackStackImmediate()
+        fragmentStack.pop()
     }
 }
