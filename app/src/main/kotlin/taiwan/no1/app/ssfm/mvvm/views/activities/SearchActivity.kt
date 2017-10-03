@@ -49,6 +49,14 @@ class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>()
     override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_search)
     //endregion
 
+    override fun onBackPressed() {
+        if (fragmentStack.peek() is SearchHistoryFragment) {
+            viewModel.collapsedView.set(true)
+            viewModel.isSearching.set(false)
+        }
+        super.onBackPressed()
+    }
+
     private fun navigate(fragmentTag: String, params: SparseArray<Any> = SparseArray()) {
         // FIXME(jieyi): 10/3/17 Here has some problem between changing fragment.
         setFragmentParameters(fragmentTag, params)?.let { targetFragment ->

@@ -37,6 +37,7 @@
         <SearchView
             style="@style/Menu.Search"
             android:closeIcon="@drawable/ic_close"
+            android:collapsed="@{svm.collapsedView}"
             android:onClose="@{svm::closeSearchView}"
             android:onQueryTextChange="@{svm::textChanged}"
             android:onQueryTextSubmit="@{svm::querySubmit}"

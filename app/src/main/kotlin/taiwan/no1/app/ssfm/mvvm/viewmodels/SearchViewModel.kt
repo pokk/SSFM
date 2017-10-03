@@ -36,6 +36,7 @@ class SearchViewModel(private val context: Context,
     val keyword by lazy { ObservableField<String>("") }
     /** Check search view is clicked or un-clicked */
     val isSearching by lazy { ObservableBoolean() }
+    val collapsedView by lazy { ObservableBoolean(false) }
 
     /** For navigating to other fragments from the parent activity */
 
