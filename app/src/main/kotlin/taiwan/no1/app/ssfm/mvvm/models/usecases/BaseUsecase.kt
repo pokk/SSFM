@@ -1,6 +1,7 @@
 package taiwan.no1.app.ssfm.mvvm.models.usecases
 
-import android.view.View
+import com.devrapid.kotlinknifer.ObserverPlugin
+import com.trello.rxlifecycle2.LifecycleProvider
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import io.reactivex.Observable
 import io.reactivex.Observer
@@ -38,7 +39,8 @@ abstract class BaseUsecase<T, R: RequestValues>(protected val repository: IDataS
      *
      * @param observer a reaction of [Observer] from viewmodel, the data are omitted from database or remote.
      */
-    fun execute(observer: Observer<T>) = buildUsecase().subscribe(observer)
+    fun execute(lifecycleProvider: LifecycleProvider<*>, observer: Observer<T>) =
+        buildUsecase().bindToLifecycle(lifecycleProvider).subscribe(observer)
 
     /**
      * Executes the current use case with request parameters.
@@ -46,30 +48,25 @@ abstract class BaseUsecase<T, R: RequestValues>(protected val repository: IDataS
      * @param parameter the parameter for retrieving data.
      * @param observer  a reaction of [Observer] from viewmodel, the data are omitted from database or remote.
      */
-    fun execute(parameter: R, observer: Observer<T>) {
+    fun execute(parameter: R, lifecycleProvider: LifecycleProvider<*>, observer: Observer<T>) {
         parameters = parameter
-        execute(observer)
+        execute(lifecycleProvider, observer)
     }
 
-    fun execute(observable: Observable<T>.() -> Unit) = buildUsecase().apply(observable)
+    fun execute(lifecycleProvider: LifecycleProvider<*>) =
+        buildUsecase().bindToLifecycle(lifecycleProvider)
 
-    fun execute(parameter: R, observable: Observable<T>.() -> Unit) {
+    fun execute(parameter: R, lifecycleProvider: LifecycleProvider<*>): Observable<T> {
         parameters = parameter
-        execute(observable)
+        return execute(lifecycleProvider)
     }
 
-    fun View.execute(observer: Observer<T>) = buildUsecase().bindToLifecycle(this).subscribe(observer)
+    fun execute(lifecycleProvider: LifecycleProvider<*>, observer: ObserverPlugin<T>.() -> Unit) =
+        buildUsecase().bindToLifecycle(lifecycleProvider).subscribe(ObserverPlugin<T>().apply(observer))
 
-    fun View.execute(parameter: R? = null, observer: Observer<T>) {
+    fun execute(parameter: R, lifecycleProvider: LifecycleProvider<*>, observer: ObserverPlugin<T>.() -> Unit) {
         parameters = parameter
-        execute(observer)
-    }
-
-    fun View.execute(observable: Observable<T>.() -> Unit) = buildUsecase().bindToLifecycle(this).apply(observable)
-
-    fun View.execute(parameter: R, observable: Observable<T>.() -> Unit) {
-        parameters = parameter
-        execute(observable)
+        execute(lifecycleProvider, observer)
     }
 
     /**

@@ -25,7 +25,7 @@ abstract class AdvancedFragment<VM: IViewModel, B: ViewDataBinding>: BaseFragmen
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.onAttach()
+        viewModel.onAttach(this)
     }
 
     override final fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

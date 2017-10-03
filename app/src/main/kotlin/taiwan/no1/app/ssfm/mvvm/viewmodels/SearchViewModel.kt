@@ -6,12 +6,13 @@ import android.databinding.ObservableField
 import android.util.SparseArray
 import android.view.View
 import com.devrapid.kotlinknifer.logd
-import com.devrapid.kotlinknifer.observer
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
+import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
+import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.misc.extension.hideSoftKeyboard
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.SaveKeywordHistoryCase
@@ -36,7 +37,8 @@ class SearchViewModel(private val context: Context,
 
 
     //region Lifecycle
-    override fun onAttach() {
+    override fun <E> onAttach(lifecycleProvider: LifecycleProvider<E>) {
+        super.onAttach(lifecycleProvider)
         RxBus.get().register(this)
     }
 
@@ -51,8 +53,6 @@ class SearchViewModel(private val context: Context,
      */
     fun closeSearchView(): Boolean {
         isSearching.set(false)
-        addHistoryUsecase.execute {
-        }
         navigateListener(RxBusConstant.FRAGMENT_SEARCH_INDEX, null)
         return false
     }
@@ -77,8 +77,9 @@ class SearchViewModel(private val context: Context,
         context.hideSoftKeyboard()
         navigateListener(RxBusConstant.FRAGMENT_SEARCH_RESULT, SparseArray<Any>().apply { put(0, query) })
         keyword.set(query)
-        addHistoryUsecase.execute(SaveKeywordHistoryCase.RequestValue(keyword.get()),
-            observer { logd("insert success: $it") })
+        lifecycleProvider.execute(addHistoryUsecase, SaveKeywordHistoryCase.RequestValue(keyword.get())) {
+            onNext { logd(it) }
+        }
 
         return true
     }
