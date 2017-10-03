@@ -34,8 +34,11 @@ class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fragmentManager.addFragment(R.id.fl_container, searchFragments[FRAGMENT_SEARCH_INDEX] as Fragment)
-        viewModel.navigateListener = { fragmentTag, params ->
-            params?.let { navigate(fragmentTag, params) } ?: navigate(fragmentTag)
+        viewModel.apply {
+            navigateListener = { fragmentTag, params ->
+                params?.let { navigate(fragmentTag, params) } ?: navigate(fragmentTag)
+            }
+            popFragment = { fragmentManager.popBackStackImmediate() }
         }
     }
     //endregion
@@ -45,12 +48,18 @@ class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>()
     //endregion
 
     private fun navigate(fragmentTag: String, params: SparseArray<Any> = SparseArray()) {
-        setFragmentParameters(fragmentTag, params)?.let {
-            fragmentManager.findFragmentByTag(it.javaClass.name).let { showingFragment ->
-                if (it != showingFragment) {
-                    fragmentManager.addFragment(R.id.fl_container, it)
+        // FIXME(jieyi): 10/3/17 Here has some problem between changing fragment.
+        setFragmentParameters(fragmentTag, params)?.let outer@ { targetFragment ->
+            (fragmentManager.backStackEntryCount - 1).takeIf { 0 < it }?.
+                let { fragmentManager.getBackStackEntryAt(it).name }?.let {
+                if (targetFragment.javaClass.name == SearchHistoryFragment::class.java.name &&
+                    it == SearchResultFragment::class.java.name) {
+                    fragmentManager.popBackStackImmediate()
                 }
+                return@outer
             }
+
+            fragmentManager.addFragment(R.id.fl_container, targetFragment, true)
         }
     }
 

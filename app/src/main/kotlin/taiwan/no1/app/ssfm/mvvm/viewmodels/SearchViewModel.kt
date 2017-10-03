@@ -12,7 +12,6 @@ import com.hwangjr.rxbus.annotation.Tag
 import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.FRAGMENT_SEARCH_HISTORY
-import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.FRAGMENT_SEARCH_INDEX
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.FRAGMENT_SEARCH_RESULT
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.VIEWMODEL_CLICK_HISTORY
 import taiwan.no1.app.ssfm.misc.extension.execute
@@ -29,6 +28,7 @@ class SearchViewModel(private val context: Context,
                       private val addHistoryUsecase: BaseUsecase<Boolean, RequestValue>):
     BaseViewModel() {
     lateinit var navigateListener: (fragmentTag: String, params: SparseArray<Any>?) -> Unit
+    lateinit var popFragment: () -> Unit
     /** Menu Title */
     val title by lazy { ObservableField<String>(context.getString(R.string.menu_search)) }
     /** The keyword of a song or singer's name */
@@ -56,7 +56,7 @@ class SearchViewModel(private val context: Context,
      */
     fun closeSearchView(): Boolean {
         isSearching.set(false)
-        navigateListener(FRAGMENT_SEARCH_INDEX, null)
+        popFragment()
         return false
     }
 
@@ -80,9 +80,7 @@ class SearchViewModel(private val context: Context,
         context.hideSoftKeyboard()
         navigateListener(FRAGMENT_SEARCH_RESULT, SparseArray<Any>().apply { put(0, query) })
         keyword.set(query)
-        lifecycleProvider.execute(addHistoryUsecase, RequestValue(keyword.get())) {
-            onNext { logd(it) }
-        }
+        lifecycleProvider.execute(addHistoryUsecase, RequestValue(keyword.get())) { onNext { logd(it) } }
 
         return true
     }
@@ -95,7 +93,7 @@ class SearchViewModel(private val context: Context,
     fun textChanged(newText: String): Boolean {
         // When clearing the text in the search view.
         if (newText.isBlank()) {
-            openSearchView(null)
+            popFragment()
         }
         else {
             // TODO(jieyi): 9/25/17 `debounce` the suggestion list.
