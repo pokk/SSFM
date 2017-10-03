@@ -11,11 +11,14 @@ import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.R
-import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
+import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.FRAGMENT_SEARCH_HISTORY
+import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.FRAGMENT_SEARCH_INDEX
+import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.FRAGMENT_SEARCH_RESULT
+import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.VIEWMODEL_CLICK_HISTORY
 import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.misc.extension.hideSoftKeyboard
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.SaveKeywordHistoryCase
+import taiwan.no1.app.ssfm.mvvm.models.usecases.SaveKeywordHistoryCase.RequestValue
 
 /**
  *
@@ -23,7 +26,7 @@ import taiwan.no1.app.ssfm.mvvm.models.usecases.SaveKeywordHistoryCase
  * @since   9/13/17
  */
 class SearchViewModel(private val context: Context,
-                      private val addHistoryUsecase: BaseUsecase<Boolean, SaveKeywordHistoryCase.RequestValue>):
+                      private val addHistoryUsecase: BaseUsecase<Boolean, RequestValue>):
     BaseViewModel() {
     lateinit var navigateListener: (fragmentTag: String, params: SparseArray<Any>?) -> Unit
     /** Menu Title */
@@ -53,7 +56,7 @@ class SearchViewModel(private val context: Context,
      */
     fun closeSearchView(): Boolean {
         isSearching.set(false)
-        navigateListener(RxBusConstant.FRAGMENT_SEARCH_INDEX, null)
+        navigateListener(FRAGMENT_SEARCH_INDEX, null)
         return false
     }
 
@@ -64,7 +67,7 @@ class SearchViewModel(private val context: Context,
      */
     fun openSearchView(view: View?) {
         isSearching.set(true)
-        navigateListener(RxBusConstant.FRAGMENT_SEARCH_HISTORY, null)
+        navigateListener(FRAGMENT_SEARCH_HISTORY, null)
     }
 
     /**
@@ -75,9 +78,9 @@ class SearchViewModel(private val context: Context,
     fun querySubmit(query: String): Boolean {
         // FIXME(jieyi): 10/2/17 When `search` music, here will be called twice. From `history`, it won't.
         context.hideSoftKeyboard()
-        navigateListener(RxBusConstant.FRAGMENT_SEARCH_RESULT, SparseArray<Any>().apply { put(0, query) })
+        navigateListener(FRAGMENT_SEARCH_RESULT, SparseArray<Any>().apply { put(0, query) })
         keyword.set(query)
-        lifecycleProvider.execute(addHistoryUsecase, SaveKeywordHistoryCase.RequestValue(keyword.get())) {
+        lifecycleProvider.execute(addHistoryUsecase, RequestValue(keyword.get())) {
             onNext { logd(it) }
         }
 
@@ -97,7 +100,7 @@ class SearchViewModel(private val context: Context,
         else {
             // TODO(jieyi): 9/25/17 `debounce` the suggestion list.
             if (keyword.get() != newText) {
-                navigateListener(RxBusConstant.FRAGMENT_SEARCH_HISTORY, null)
+                navigateListener(FRAGMENT_SEARCH_HISTORY, null)
             }
         }
 
@@ -112,7 +115,7 @@ class SearchViewModel(private val context: Context,
      *
      * @event_from [taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewSearchHistoryViewModel.selectHistoryItem]
      */
-    @Subscribe(tags = arrayOf(Tag(RxBusConstant.VIEWMODEL_CLICK_HISTORY)))
+    @Subscribe(tags = arrayOf(Tag(VIEWMODEL_CLICK_HISTORY)))
     fun receiveClickHistoryEvent(keyword: String) {
         querySubmit(keyword)
     }

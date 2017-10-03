@@ -25,7 +25,8 @@ class RecyclerViewSearchHistoryViewModel(private val entity: KeywordEntity,
     val keyword by lazy { ObservableField<String>(entity.keyword) }
 
     fun deleteHistoryClick(view: View) {
-        deleteHistoriesUsecase.execute(RequestValue(keyword.get()), observer { deleteItemListener(entity, it) })
+        deleteHistoriesUsecase.execute(RequestValue(keyword.get()),
+            observer = observer { deleteItemListener(entity, it) })
     }
 
     /**
@@ -36,6 +37,9 @@ class RecyclerViewSearchHistoryViewModel(private val entity: KeywordEntity,
      * @event_to [taiwan.no1.app.ssfm.mvvm.viewmodels.SearchViewModel.receiveClickHistoryEvent]
      */
     fun selectHistoryItem(view: View) {
-        RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_HISTORY, entity.keyword)
+        RxBus.get().post(
+            RxBusConstant.VIEWMODEL_CLICK_HISTORY,
+            entity.keyword
+        )
     }
 }

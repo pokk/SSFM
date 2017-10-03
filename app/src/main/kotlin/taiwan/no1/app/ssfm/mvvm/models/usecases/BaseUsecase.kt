@@ -39,8 +39,9 @@ abstract class BaseUsecase<T, R: RequestValues>(protected val repository: IDataS
      *
      * @param observer a reaction of [Observer] from viewmodel, the data are omitted from database or remote.
      */
-    fun execute(lifecycleProvider: LifecycleProvider<*>, observer: Observer<T>) =
-        buildUsecase().bindToLifecycle(lifecycleProvider).subscribe(observer)
+    fun execute(lifecycleProvider: LifecycleProvider<*>? = null, observer: Observer<T>) = lifecycleProvider?.let {
+        buildUsecase().bindToLifecycle(it).subscribe(observer)
+    } ?: buildUsecase().subscribe(observer)
 
     /**
      * Executes the current use case with request parameters.
@@ -48,23 +49,26 @@ abstract class BaseUsecase<T, R: RequestValues>(protected val repository: IDataS
      * @param parameter the parameter for retrieving data.
      * @param observer  a reaction of [Observer] from viewmodel, the data are omitted from database or remote.
      */
-    fun execute(parameter: R, lifecycleProvider: LifecycleProvider<*>, observer: Observer<T>) {
+    fun execute(parameter: R, lifecycleProvider: LifecycleProvider<*>? = null, observer: Observer<T>) {
         parameters = parameter
         execute(lifecycleProvider, observer)
     }
 
-    fun execute(lifecycleProvider: LifecycleProvider<*>) =
-        buildUsecase().bindToLifecycle(lifecycleProvider)
+    fun execute(lifecycleProvider: LifecycleProvider<*>? = null) = lifecycleProvider?.let {
+        buildUsecase().bindToLifecycle(it)
+    } ?: buildUsecase()
 
-    fun execute(parameter: R, lifecycleProvider: LifecycleProvider<*>): Observable<T> {
+    fun execute(parameter: R, lifecycleProvider: LifecycleProvider<*>? = null): Observable<T> {
         parameters = parameter
         return execute(lifecycleProvider)
     }
 
-    fun execute(lifecycleProvider: LifecycleProvider<*>, observer: ObserverPlugin<T>.() -> Unit) =
-        buildUsecase().bindToLifecycle(lifecycleProvider).subscribe(ObserverPlugin<T>().apply(observer))
+    fun execute(lifecycleProvider: LifecycleProvider<*>? = null, observer: ObserverPlugin<T>.() -> Unit) =
+        lifecycleProvider?.let {
+            buildUsecase().bindToLifecycle(it).subscribe(ObserverPlugin<T>().apply(observer))
+        } ?: buildUsecase().subscribe(ObserverPlugin<T>().apply(observer))
 
-    fun execute(parameter: R, lifecycleProvider: LifecycleProvider<*>, observer: ObserverPlugin<T>.() -> Unit) {
+    fun execute(parameter: R, lifecycleProvider: LifecycleProvider<*>? = null, observer: ObserverPlugin<T>.() -> Unit) {
         parameters = parameter
         execute(lifecycleProvider, observer)
     }

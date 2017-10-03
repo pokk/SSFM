@@ -6,9 +6,9 @@ import android.view.View
 import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
-import com.devrapid.kotlinknifer.observer
 import de.umass.lastfm.Chart
 import taiwan.no1.app.ssfm.R
+import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.TagEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
@@ -56,12 +56,16 @@ class MainViewModel(private val context: Context, private val usecase: BaseUseca
         }
 
         usecase.parameters = DetailMusicCase.RequestValue("e2a060761620ff482a272b67b204774d")
-        usecase.execute(observer<DetailMusicEntity>().onNext {
-            logw(it)
-        }.onComplete {
-            logd()
-        }.onError {
-            loge(it)
-        })
+        lifecycleProvider.execute(usecase) {
+            onNext {
+                logw(it)
+            }
+            onComplete {
+                logd()
+            }
+            onError {
+                loge(it)
+            }
+        }
     }
 }

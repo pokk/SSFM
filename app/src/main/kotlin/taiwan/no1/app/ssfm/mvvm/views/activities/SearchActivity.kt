@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.util.SparseArray
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivitySearchBinding
-import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
+import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.FRAGMENT_SEARCH_HISTORY
+import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.FRAGMENT_SEARCH_INDEX
+import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.FRAGMENT_SEARCH_RESULT
 import taiwan.no1.app.ssfm.misc.extension.addFragment
 import taiwan.no1.app.ssfm.mvvm.viewmodels.SearchViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedActivity
@@ -23,15 +25,15 @@ import javax.inject.Inject
 class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>() {
     @Inject override lateinit var viewModel: SearchViewModel
     private val searchFragments by lazy {
-        hashMapOf<String, Fragment>(RxBusConstant.FRAGMENT_SEARCH_RESULT to SearchResultFragment(),
-            RxBusConstant.FRAGMENT_SEARCH_HISTORY to SearchHistoryFragment(),
-            RxBusConstant.FRAGMENT_SEARCH_INDEX to SearchIndexFragment())
+        hashMapOf<String, Fragment>(FRAGMENT_SEARCH_RESULT to SearchResultFragment(),
+            FRAGMENT_SEARCH_HISTORY to SearchHistoryFragment(),
+            FRAGMENT_SEARCH_INDEX to SearchIndexFragment())
     }
 
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fragmentManager.addFragment(R.id.fl_container, searchFragments[RxBusConstant.FRAGMENT_SEARCH_INDEX] as Fragment)
+        fragmentManager.addFragment(R.id.fl_container, searchFragments[FRAGMENT_SEARCH_INDEX] as Fragment)
         viewModel.navigateListener = { fragmentTag, params ->
             params?.let { navigate(fragmentTag, params) } ?: navigate(fragmentTag)
         }
@@ -54,9 +56,9 @@ class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>()
 
     private fun setFragmentParameters(tag: String, params: SparseArray<Any>) = searchFragments[tag].also {
         when (tag) {
-            RxBusConstant.FRAGMENT_SEARCH_RESULT -> (it as SearchResultFragment).keyword = params[0] as? String ?: ""
-            RxBusConstant.FRAGMENT_SEARCH_HISTORY -> Unit
-            RxBusConstant.FRAGMENT_SEARCH_INDEX -> Unit
+            FRAGMENT_SEARCH_RESULT -> (it as SearchResultFragment).keyword = params[0] as? String ?: ""
+            FRAGMENT_SEARCH_HISTORY -> Unit
+            FRAGMENT_SEARCH_INDEX -> Unit
             else -> Unit
         }
     }
