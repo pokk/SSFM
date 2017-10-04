@@ -15,7 +15,7 @@ import taiwan.no1.app.ssfm.mvvm.views.AdvancedActivity
 import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchHistoryFragment
 import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchIndexFragment
 import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchResultFragment
-import java.util.*
+import java.util.Stack
 import javax.inject.Inject
 
 
@@ -25,7 +25,7 @@ import javax.inject.Inject
  */
 class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>() {
     @Inject override lateinit var viewModel: SearchViewModel
-    private val fragmentStack by lazy { ArrayDeque<Fragment>() }
+    private val fragmentStack by lazy { Stack<Fragment>() }
     private val searchFragments by lazy {
         hashMapOf<String, Fragment>(FRAGMENT_SEARCH_RESULT to SearchResultFragment(),
             FRAGMENT_SEARCH_HISTORY to SearchHistoryFragment(),
@@ -50,15 +50,18 @@ class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>()
     //endregion
 
     override fun onBackPressed() {
-        if (fragmentStack.peek() is SearchHistoryFragment) {
-            viewModel.collapsedView.set(true)
-            viewModel.isSearching.set(false)
-        }
         super.onBackPressed()
+        when (fragmentStack.safePeek()) {
+            is SearchHistoryFragment -> viewModel.collapseSearchView()
+        // OPTIMIZE(jieyi): 10/4/17 Just workaround. Clear the focus, only from result view to history view.
+            is SearchResultFragment -> {
+                binding.includeToolbar.svMusicSearch.clearFocus()
+            }
+        }
+        fragmentStack.safePop()
     }
 
     private fun navigate(fragmentTag: String, params: SparseArray<Any> = SparseArray()) {
-        // FIXME(jieyi): 10/3/17 Here has some problem between changing fragment.
         setFragmentParameters(fragmentTag, params)?.let { targetFragment ->
             if (isSpecificTargetAction(fragmentTag)) {
                 return@let
@@ -70,7 +73,7 @@ class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>()
 
     private fun isSpecificTargetAction(fragmentTag: String): Boolean {
         if (FRAGMENT_SEARCH_HISTORY == fragmentTag) {
-            when (fragmentStack.peek()) {
+            when (fragmentStack.safePeek()) {
                 is SearchHistoryFragment -> return true
                 is SearchResultFragment -> {
                     popFragment(FRAGMENT_SEARCH_HISTORY)
@@ -96,10 +99,14 @@ class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>()
     }
 
     private fun popFragment(toFragmentTag: String) {
-        if (FRAGMENT_SEARCH_HISTORY == toFragmentTag && fragmentStack.peek() is SearchHistoryFragment)
+        if (FRAGMENT_SEARCH_HISTORY == toFragmentTag && fragmentStack.safePeek() is SearchHistoryFragment)
             return
 
         fragmentManager.popBackStackImmediate()
-        fragmentStack.pop()
+        fragmentStack.safePop()
     }
+
+    private fun <E> Stack<E>.safePop() = lastOrNull()?.let { pop() }
+
+    private fun <E> Stack<E>.safePeek() = lastOrNull()?.let { peek() }
 }

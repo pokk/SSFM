@@ -5,7 +5,7 @@ import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.LOOPALL
 import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.LOOPONE
 import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.NORMAL
 import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.RANDOM
-import java.util.*
+import java.util.Stack
 
 /**
  * Controlling play list.

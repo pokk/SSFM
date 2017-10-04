@@ -16,7 +16,6 @@ import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.FRAGMENT_SEARCH_INDEX
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.FRAGMENT_SEARCH_RESULT
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.VIEWMODEL_CLICK_HISTORY
 import taiwan.no1.app.ssfm.misc.extension.execute
-import taiwan.no1.app.ssfm.misc.extension.hideSoftKeyboard
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.SaveKeywordHistoryCase.RequestValue
 
@@ -28,7 +27,9 @@ import taiwan.no1.app.ssfm.mvvm.models.usecases.SaveKeywordHistoryCase.RequestVa
 class SearchViewModel(private val context: Context,
                       private val addHistoryUsecase: BaseUsecase<Boolean, RequestValue>):
     BaseViewModel() {
+    /** For navigating to other fragments from the parent activity */
     lateinit var navigateListener: (fragmentTag: String, params: SparseArray<Any>?) -> Unit
+    /** For pop the current fragment listener */
     lateinit var popFragment: (popToFragmentTag: String) -> Unit
     /** Menu Title */
     val title by lazy { ObservableField<String>(context.getString(R.string.menu_search)) }
@@ -36,10 +37,7 @@ class SearchViewModel(private val context: Context,
     val keyword by lazy { ObservableField<String>("") }
     /** Check search view is clicked or un-clicked */
     val isSearching by lazy { ObservableBoolean() }
-    val collapsedView by lazy { ObservableBoolean(false) }
-
-    /** For navigating to other fragments from the parent activity */
-
+    val collapseView by lazy { ObservableBoolean(false) }
 
     //region Lifecycle
     override fun <E> onAttach(lifecycleProvider: LifecycleProvider<E>) {
@@ -57,7 +55,7 @@ class SearchViewModel(private val context: Context,
      * The action of closing the search view.
      */
     fun closeSearchView(): Boolean {
-        isSearching.set(false)
+        collapseSearchView()
         popFragment(FRAGMENT_SEARCH_INDEX)
         return false
     }
@@ -68,7 +66,7 @@ class SearchViewModel(private val context: Context,
      * @param view
      */
     fun openSearchView(view: View?) {
-        isSearching.set(true)
+        collapseSearchView(false)
         navigateListener(FRAGMENT_SEARCH_HISTORY, null)
     }
 
@@ -79,10 +77,9 @@ class SearchViewModel(private val context: Context,
      */
     fun querySubmit(query: String): Boolean {
         // FIXME(jieyi): 10/2/17 When `search` music, here will be called twice. From `history`, it won't.
-        context.hideSoftKeyboard()
         navigateListener(FRAGMENT_SEARCH_RESULT, SparseArray<Any>().apply { put(0, query) })
-        keyword.set(query)
         lifecycleProvider.execute(addHistoryUsecase, RequestValue(keyword.get())) { onNext { logd(it) } }
+        keyword.set(query)
 
         return true
     }
@@ -107,6 +104,11 @@ class SearchViewModel(private val context: Context,
         return true
     }
     //endregion
+
+    fun collapseSearchView(collapse: Boolean = true) {
+        isSearching.set(!collapse)
+        collapseView.set(collapse)
+    }
 
     /**
      * The click event when clicking a item to the history list.

@@ -35,9 +35,10 @@
             tools:text="ACTIVITY TITLE"/>
 
         <SearchView
+            android:id="@+id/sv_music_search"
             style="@style/Menu.Search"
             android:closeIcon="@drawable/ic_close"
-            android:collapsed="@{svm.collapsedView}"
+            android:collapseView="@{svm.collapseView}"
             android:onClose="@{svm::closeSearchView}"
             android:onQueryTextChange="@{svm::textChanged}"
             android:onQueryTextSubmit="@{svm::querySubmit}"

@@ -9,11 +9,11 @@ import android.widget.SearchView
  */
 @BindingAdapter("android:searchText")
 fun SearchView.setSearchViewText(keyword: String) =
-    keyword.takeIf { it.isNotBlank() }?.let { this.setQuery(it, false) }
+    keyword.takeIf { it.isNotBlank() }?.let {
+        setQuery(it, false)
+        clearFocus()
+    }
 
-@BindingAdapter("android:collapsed")
-fun SearchView.collapsedView(setCollapsed: Boolean) {
-    if (setCollapsed)
-    // FIXME(jieyi): 10/4/17 Couldn't find again.
-        this.onActionViewCollapsed()
-}
+@BindingAdapter("android:collapseView")
+fun SearchView.collapsedSearchView(collapse: Boolean) =
+    if (collapse) onActionViewCollapsed() else Unit
