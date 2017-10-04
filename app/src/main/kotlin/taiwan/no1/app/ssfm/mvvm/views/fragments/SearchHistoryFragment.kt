@@ -1,6 +1,7 @@
 package taiwan.no1.app.ssfm.mvvm.views.fragments
 
 import android.os.Bundle
+import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchHistoryBinding
 import taiwan.no1.app.ssfm.databinding.ItemSearchHistoryType1Binding
@@ -55,6 +56,11 @@ class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, Fr
         if (isSuccess) {
             res = res.refreshRecyclerView { remove(entity) }
         }
+    }
+
+    override fun onDestroy() {
+        logw()
+        super.onDestroy()
     }
 
     /**

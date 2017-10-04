@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.mvvm.viewmodels.IViewModel
 import java.lang.reflect.ParameterizedType
 
@@ -39,6 +40,7 @@ abstract class AdvancedFragment<VM: IViewModel, B: ViewDataBinding>: BaseFragmen
 
     override fun onDestroy() {
         viewModel.onDetach()
+        logw(binding)
         binding.javaClass.getMethod("setVm", genericVMClass).invoke(binding, null)
         super.onDestroy()
     }

@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.mvvm.views.fragments
 
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
+import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchResultBinding
 import taiwan.no1.app.ssfm.databinding.ItemSearchMusicType1Binding
@@ -34,6 +35,11 @@ class SearchResultFragment: AdvancedFragment<FragmentSearchResultViewModel, Frag
         res.clear()
         isLoading = true
         viewModel.sendSearchRequest(keyword, resultCallback = updateListInfo)
+    }
+
+    override fun onDestroy() {
+        logw()
+        super.onDestroy()
     }
     //endregion
 
