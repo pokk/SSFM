@@ -5,7 +5,6 @@ import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.util.SparseArray
 import android.view.View
-import com.devrapid.kotlinknifer.logd
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
@@ -77,9 +76,13 @@ class SearchViewModel(private val context: Context,
      */
     fun querySubmit(query: String): Boolean {
         // FIXME(jieyi): 10/2/17 When `search` music, here will be called twice. From `history`, it won't.
-        navigateListener(FRAGMENT_SEARCH_RESULT, SparseArray<Any>().apply { put(0, query) })
-        lifecycleProvider.execute(addHistoryUsecase, RequestValue(keyword.get())) { onNext { logd(it) } }
-        keyword.set(query)
+        query.takeIf { it.isNotBlank() }?.let {
+            navigateListener(FRAGMENT_SEARCH_RESULT, SparseArray<Any>().apply { put(0, it) })
+            lifecycleProvider.execute(addHistoryUsecase, RequestValue(it)) {
+                // For ensuring that the search view focus is canceled.
+                onComplete { keyword.set(it) }
+            }
+        }
 
         return true
     }
