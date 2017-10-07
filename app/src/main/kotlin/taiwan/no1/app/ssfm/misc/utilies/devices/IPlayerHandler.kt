@@ -33,7 +33,8 @@ interface IPlayerHandler {
     fun downloadProcess()
     fun loopAll(is_loop: Boolean)
     fun random(is_random: Boolean)
-    fun playerState(): IPlayList.EMusicState
+    fun playerState(): EPlayerState
+    fun musicState(): IPlayList.EMusicState
     fun nowPlaying(): Int
     fun isRandom(): Boolean
     fun setPlayList(list: Array<String>)

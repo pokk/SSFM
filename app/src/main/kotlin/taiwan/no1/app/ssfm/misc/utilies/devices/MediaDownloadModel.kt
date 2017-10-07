@@ -23,7 +23,7 @@ class MediaDownloadModel: MediaDataSource {
         this.url = url
         this.listener = listener
 
-        val downloadThread = thread {
+        thread {
             val conn = URL(this@MediaDownloadModel.url)
             val stream_url = URL(this@MediaDownloadModel.url)
 
@@ -47,7 +47,6 @@ class MediaDownloadModel: MediaDataSource {
 
             this@MediaDownloadModel.listener.onDownloadFinish()
         }
-        downloadThread.start()
     }
 
     @Synchronized @Throws(IOException::class)
@@ -61,7 +60,7 @@ class MediaDownloadModel: MediaDataSource {
             if (position + read_size > length) {
                 read_size -= (position + read_size - length).toInt()
             }
-            System.arraycopy(mediaBuffer, position.toInt(), buffer, offset, size)
+            System.arraycopy(mediaBuffer, position.toInt(), buffer, offset, read_size)
             return size
         }
     }

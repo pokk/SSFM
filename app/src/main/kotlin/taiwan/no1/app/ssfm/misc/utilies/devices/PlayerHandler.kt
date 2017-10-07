@@ -4,7 +4,6 @@ import android.util.Log
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import taiwan.no1.app.ssfm.misc.utilies.PausableTimer
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState
 import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.LOOPONE
 import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.RANDOM
 
@@ -18,7 +17,7 @@ class PlayerHandler: IPlayerHandler {
     private var mPlayIndex: IPlayList
     private var mPlayer: IMultiMediaPlayer
     private var mPlayList: Array<String> = arrayOf()
-    private lateinit var timer: PausableTimer
+    private var timer: PausableTimer ?= null
     private val TAG = "PlayerHandler"
 
     constructor(player: IMultiMediaPlayer, playList: IPlayList) {
@@ -61,17 +60,17 @@ class PlayerHandler: IPlayerHandler {
 
     override fun stop() {
         mPlayer.takeIf { it.isPlaying() }?.stop()
-        timer.stop()
+        timer?.stop()
     }
 
     override fun pause() {
         mPlayer.takeIf { it.isPlaying() }?.pause()
-        timer.pause()
+        timer?.pause()
     }
 
     override fun resume() {
         mPlayer.takeIf { it.isPlaying() }?.resume()
-        timer.resume()
+        timer?.resume()
     }
 
     override fun seekTo(sec: Int) {
@@ -82,8 +81,8 @@ class PlayerHandler: IPlayerHandler {
 
     override fun current(callback: (millisUntilFinished: Long) -> Unit) {
         timer = PausableTimer(duration().toLong() * 1000, 1 * 1000)
-        timer.onTick = callback
-        timer.start()
+        timer?.onTick = callback
+        timer?.start()
     }
 
     override fun isLooping(): Boolean =
@@ -113,7 +112,9 @@ class PlayerHandler: IPlayerHandler {
         mPlayIndex.random(is_random)
     }
 
-    override fun playerState(): EMusicState = mPlayIndex.getState()
+    override fun musicState() = mPlayIndex.getState()
+
+    override fun playerState() = mPlayer.getState()
 
     override fun nowPlaying(): Int = mPlayIndex.nowPlaying()
 
