@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.misc.utilies.devices
 
 import android.annotation.TargetApi
 import android.media.MediaPlayer
+import android.webkit.URLUtil
 import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logi
@@ -70,6 +71,11 @@ class MediaPlayerProxy: IMultiMediaPlayer,
      */
     @TargetApi(23)
     override fun playURL(url: String, observer: Observer<Unit>) {
+        if (URLUtil.isValidUrl(url)) {
+            loge("URL is invalid: $url")
+            return
+        }
+
         mMediaPlayer.let {
             logd("prepare asynchronous thread")
             downloadModel = MediaDownloadModel(url, object: MediaDownloadModel.DownloadListener {
