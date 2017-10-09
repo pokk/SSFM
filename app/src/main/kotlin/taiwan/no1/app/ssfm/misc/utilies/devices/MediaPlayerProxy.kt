@@ -2,10 +2,10 @@ package taiwan.no1.app.ssfm.misc.utilies.devices
 
 import android.annotation.TargetApi
 import android.media.MediaPlayer
-import android.util.Log
 import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logi
+import com.devrapid.musicdiskplayer.RotatedCircleWithIconImageView
 import io.reactivex.Observable
 import io.reactivex.Observer
 import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPlayerState
@@ -15,6 +15,7 @@ import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPlayerState.STOP
 import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
+import kotlin.concurrent.thread
 
 /**
  * For handling MediaPlayer.
@@ -27,6 +28,7 @@ class MediaPlayerProxy: IMultiMediaPlayer,
     MediaPlayer.OnErrorListener,
     MediaPlayer.OnBufferingUpdateListener,
     MediaPlayer.OnCompletionListener {
+    private var mImageView: RotatedCircleWithIconImageView
     private var mMediaPlayer = MediaPlayer()
     private var mState: EPlayerState = STOP
     private var getStreamingBufferPercentage: (percentage: Int) -> Unit = {}
@@ -34,7 +36,8 @@ class MediaPlayerProxy: IMultiMediaPlayer,
     private var mObserver: Observer<Unit>? = null
     private var pauseTime: Int = 0
 
-    init {
+    constructor(imageView: RotatedCircleWithIconImageView) {
+        mImageView = imageView
         mMediaPlayer = MediaPlayer()
         mMediaPlayer.setOnPreparedListener(this)
         mMediaPlayer.setOnErrorListener(this)
@@ -43,6 +46,7 @@ class MediaPlayerProxy: IMultiMediaPlayer,
 
     override fun onPrepared(mp: MediaPlayer?) {
         logd("start playing")
+        mImageView.endTime = mMediaPlayer.duration
         mMediaPlayer.start()
         mState = PLAYING
     }
@@ -73,31 +77,30 @@ class MediaPlayerProxy: IMultiMediaPlayer,
      */
     @TargetApi(23)
     override fun playURL(url: String, observer: Observer<Unit>) {
-        try {
-            val conn: HttpURLConnection = URL(url).openConnection() as HttpURLConnection
-            HttpURLConnection.setFollowRedirects(false)
-            conn.requestMethod = "HEAD"
-            if (conn.responseCode == HttpURLConnection.HTTP_OK) {
-                Log.i("Weian", "http ok")
-            } else {
-                Log.i("Weian", "http not ok")
-            }
-        } catch (e: Exception) {
-            Log.e("Weian", e.toString())
-            Log.e("Weian", "URL is not valid: $url")
-            return
-        }
-
-
-        mMediaPlayer.let {
-            logd("prepare asynchronous thread")
-            downloadModel = MediaDownloadModel(url, object: MediaDownloadModel.DownloadListener {
-                override fun onDownloadFinish() {
-                    this@MediaPlayerProxy.mMediaPlayer.prepareAsync()
+        thread {
+            try {
+                val conn: HttpURLConnection = URL(url).openConnection() as HttpURLConnection
+                HttpURLConnection.setFollowRedirects(false)
+                conn.requestMethod = "HEAD"
+                if (conn.responseCode == HttpURLConnection.HTTP_OK) {
+                    logi("URL is valid")
                 }
-            })
-            it.setDataSource(downloadModel)
-            mObserver = observer
+
+                mMediaPlayer.let {
+                    logd("prepare asynchronous thread")
+                    downloadModel = MediaDownloadModel(url, object: MediaDownloadModel.DownloadListener {
+                        override fun onDownloadFinish() {
+                            this@MediaPlayerProxy.mMediaPlayer.prepareAsync()
+                        }
+                    })
+                    it.setDataSource(downloadModel)
+                    mObserver = observer
+                }
+            } catch (e: Exception) {
+                loge(e.toString())
+                loge("URL is not valid: $url")
+
+            }
         }
     }
 
@@ -170,7 +173,7 @@ class MediaPlayerProxy: IMultiMediaPlayer,
         downloadModel.writeToFile(path)
     }
 
-    class Builder {
+    /*class Builder {
         var getCurrent: (time: Int) -> Unit = {}
         var getStreamingBufferPercentage: (percentage: Int) -> Unit = {}
 
@@ -180,5 +183,5 @@ class MediaPlayerProxy: IMultiMediaPlayer,
             proxy.getStreamingBufferPercentage = this@Builder.getStreamingBufferPercentage
             return proxy
         }
-    }
+    }*/
 }

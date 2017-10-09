@@ -5,10 +5,12 @@ import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
-import android.util.Log
+import com.devrapid.kotlinknifer.logi
 import kotlinx.android.synthetic.main.part_main_play_music.rcii_album
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityMusicBinding
+import taiwan.no1.app.ssfm.misc.utilies.devices.IMultiMediaPlayer
+import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList
 import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler
 import taiwan.no1.app.ssfm.misc.utilies.devices.MediaPlayerProxy
 import taiwan.no1.app.ssfm.misc.utilies.devices.PlayListModel
@@ -24,23 +26,49 @@ import javax.inject.Inject
  */
 class PlayMainActivity: AdvancedActivity<PlayMainViewModel, ActivityMusicBinding>() {
     @Inject override lateinit var viewModel: PlayMainViewModel
-    private val mediaPlayerProxy = MediaPlayerProxy()
-    private val playList = PlayListModel()
-    private val player = PlayerHandler(mediaPlayerProxy, playList)
+    private lateinit var mediaPlayerProxy: IMultiMediaPlayer
+    private lateinit var playList: IPlayList
+    private lateinit var player: IPlayerHandler
     private val permissionsStorage: Array<String> = arrayOf(WRITE_EXTERNAL_STORAGE)
-
+    private val path: Array<String> = arrayOf("http://fs.w.kugou.com/201710090907/283f0884f31f87ccf3ba32506e65b07e/G100/M02/1F/03/pA0DAFjzVJyAAhJ0ADOhTT8_t00044.mp3", "/storage/emulated/0/Download/test.mp3")
+    private val permissionsRequestCode = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        mediaPlayerProxy = MediaPlayerProxy(rcii_album)
+        playList = PlayListModel()
+        player = PlayerHandler(mediaPlayerProxy, playList)
+
         requirePermission()
+
+        playList.setList(path.size)
+        player.setPlayList(path)
+
+        rcii_album.onClickEvent = {
+            view, isPaused ->
+            if (isPaused) {
+                logi("pause")
+                player.pause()
+            } else {
+                if (player.playerState() == IPlayerHandler.EPlayerState.STOP) {
+                    logi("play")
+                    player.random(true)
+                    player.play(0)
+                } else if (player.playerState() == IPlayerHandler.EPlayerState.PAUSE) {
+                    logi("resume")
+                    player.resume()
+                }
+            }
+        }
     }
 
     private fun requirePermission() {
         ActivityCompat.checkSelfPermission(this, WRITE_EXTERNAL_STORAGE).takeIf {
             it == PackageManager.PERMISSION_DENIED
         }?.let {
-            ActivityCompat.requestPermissions(this, permissionsStorage, 1)
+            ActivityCompat.requestPermissions(this,
+                    permissionsStorage, permissionsRequestCode)
         }
     }
 
