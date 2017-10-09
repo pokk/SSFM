@@ -2,7 +2,7 @@ package taiwan.no1.app.ssfm.misc.utilies.devices
 
 import android.annotation.TargetApi
 import android.media.MediaPlayer
-import android.webkit.URLUtil
+import android.util.Log
 import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logi
@@ -13,6 +13,8 @@ import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPlayerState.PAUS
 import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPlayerState.PLAYING
 import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPlayerState.STOP
 import java.io.File
+import java.net.HttpURLConnection
+import java.net.URL
 
 /**
  * For handling MediaPlayer.
@@ -71,10 +73,21 @@ class MediaPlayerProxy: IMultiMediaPlayer,
      */
     @TargetApi(23)
     override fun playURL(url: String, observer: Observer<Unit>) {
-        if (URLUtil.isValidUrl(url)) {
-            loge("URL is invalid: $url")
+        try {
+            val conn: HttpURLConnection = URL(url).openConnection() as HttpURLConnection
+            HttpURLConnection.setFollowRedirects(false)
+            conn.requestMethod = "HEAD"
+            if (conn.responseCode == HttpURLConnection.HTTP_OK) {
+                Log.i("Weian", "http ok")
+            } else {
+                Log.i("Weian", "http not ok")
+            }
+        } catch (e: Exception) {
+            Log.e("Weian", e.toString())
+            Log.e("Weian", "URL is not valid: $url")
             return
         }
+
 
         mMediaPlayer.let {
             logd("prepare asynchronous thread")
