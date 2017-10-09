@@ -69,7 +69,7 @@ class PlayerHandler: IPlayerHandler {
     }
 
     override fun resume() {
-        mPlayer.takeIf { it.isPlaying() }?.resume()
+        mPlayer.takeUnless { it.isPlaying() }?.resume()
         timer?.resume()
     }
 

@@ -3,6 +3,7 @@ package taiwan.no1.app.ssfm.misc.utilies.devices
 import android.annotation.TargetApi
 import android.media.MediaPlayer
 import com.devrapid.kotlinknifer.logd
+import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logi
 import io.reactivex.Observable
 import io.reactivex.Observer
@@ -10,6 +11,7 @@ import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPlayerState
 import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPlayerState.PAUSE
 import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPlayerState.PLAYING
 import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPlayerState.STOP
+import java.io.File
 
 /**
  * For handling MediaPlayer.
@@ -27,6 +29,7 @@ class MediaPlayerProxy: IMultiMediaPlayer,
     private var getStreamingBufferPercentage: (percentage: Int) -> Unit = {}
     private lateinit var downloadModel: MediaDownloadModel
     private var mObserver: Observer<Unit>? = null
+    private var pauseTime: Int = 0
 
     init {
         mMediaPlayer = MediaPlayer()
@@ -80,6 +83,11 @@ class MediaPlayerProxy: IMultiMediaPlayer,
     }
 
     override fun playLocal(path: String, observer: Observer<Unit>) {
+        File(path).takeUnless { it.exists() }?.let {
+            loge("File is not exist: $path")
+            return
+        }
+
         mMediaPlayer.setDataSource(path)
         mMediaPlayer.prepareAsync()
         mObserver = observer
