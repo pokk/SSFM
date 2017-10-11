@@ -25,7 +25,6 @@ abstract class AdvancedActivity<VM: IViewModel, out B: ViewDataBinding>: BaseAct
     private val genericVMClass: Class<*>
         get() = (this::class.java.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<*>
 
-
     //region Activity lifecycle
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {

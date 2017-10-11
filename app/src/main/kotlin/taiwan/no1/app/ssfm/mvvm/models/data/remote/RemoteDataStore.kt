@@ -52,7 +52,7 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
             context.getString(R.string.t_pair4) to pageSize.toString(),
             context.getString(R.string.t_pair5) to context.getString(R.string.v_pair5))
 
-        return musicService1.get().searchMusic(query).subscribeOn(Schedulers.io())
+        return musicService1.get().searchMusic(query)
     }
 
     override fun getDetailMusicRes(hash: String): Observable<DetailMusicEntity> {
@@ -61,14 +61,13 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
             context.getString(R.string.t_pair7) to context.getString(R.string.v_pair7),
             context.getString(R.string.t_pair8) to hash)
 
-        return musicService2.get().getMusic(query).subscribeOn(Schedulers.io())
+        return musicService2.get().getMusic(query)
     }
 
     override fun obtainSession(user: String, pwd: String): Observable<Session> =
         ObservableJust(Authenticator.getMobileSession(user, pwd, lastfm_key, lastfm_secret))
 
     override fun getChartTopArtist(page: Int): Observable<Collection<Artist>> =
-
         ObservableJust(Chart.getTopArtists(page, lastfm_key).pageResults)
 
     override fun getChartTopTracks(page: Int): Observable<Collection<Track>> =
@@ -103,6 +102,18 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
             // TODO: 6/4/17 Add that return next, error, or complete which depend on result's status.
         }
 
+    override fun insertKeyword(keyword: String): Observable<Boolean> {
+        TODO()
+    }
+
+    override fun getKeywords(quantity: Int): Observable<List<KeywordEntity>> {
+        TODO()
+    }
+
+    override fun removeKeywords(keyword: String?): Observable<Boolean> {
+        TODO()
+    }
+
     /**
      * Wrapping the [Observable.create] with [Schedulers.IO].
      *
@@ -119,16 +130,4 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
      * @return an [Observable] reference.
      */
     private fun <O> observableJustWrapper(data: O): Observable<O> = ObservableJust(data)
-
-    override fun insertKeyword(keyword: String): Observable<Boolean> {
-        TODO()
-    }
-
-    override fun getKeywords(quantity: Int): Observable<List<KeywordEntity>> {
-        TODO()
-    }
-
-    override fun removeKeywords(keyword: String?): Observable<Boolean> {
-        TODO()
-    }
 }

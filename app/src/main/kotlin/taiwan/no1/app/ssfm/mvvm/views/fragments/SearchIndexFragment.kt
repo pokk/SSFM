@@ -5,6 +5,7 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchIndexBinding
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentSearchIndexViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
+import javax.inject.Inject
 
 /**
  *
@@ -12,10 +13,11 @@ import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
  * @since   8/20/17
  */
 class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, FragmentSearchIndexBinding>() {
-    override var viewModel: FragmentSearchIndexViewModel = FragmentSearchIndexViewModel()
+    @Inject override lateinit var viewModel: FragmentSearchIndexViewModel
 
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
+        viewModel.test()
     }
 
     override fun provideInflateView(): Int = R.layout.fragment_search_index

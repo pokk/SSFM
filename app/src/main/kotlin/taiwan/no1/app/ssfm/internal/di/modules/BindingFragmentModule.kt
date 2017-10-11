@@ -5,6 +5,7 @@ import dagger.android.ContributesAndroidInjector
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerFragment
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.CheckModule
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.HistoriesFragmentModule
+import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.SearchIndexFragmentModule
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.SearchMusicFragmentModule
 import taiwan.no1.app.ssfm.mvvm.views.fragments.MainFragment
 import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchHistoryFragment
@@ -25,7 +26,7 @@ abstract class BindingFragmentModule {
     abstract fun contributeMainFragmentInjector(): MainFragment
 
     @PerFragment
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = arrayOf(SearchIndexFragmentModule::class))
     abstract fun contributeSearchIndexFragmentInjector(): SearchIndexFragment
 
     @PerFragment
