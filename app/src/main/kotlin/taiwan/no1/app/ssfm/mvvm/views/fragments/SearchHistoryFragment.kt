@@ -51,9 +51,8 @@ class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, Fr
 
     /** An anonymous callback function for a delete event from the viewholder. */
     private val deleteItem = { entity: KeywordEntity, isSuccess: Boolean ->
-        // TODO(jieyi): 10/1/17 Delete all items.
         if (isSuccess) {
-            res = res.refreshRecyclerView { remove(entity) }
+            res.refreshRecyclerView { remove(entity) }
         }
     }
 
@@ -64,7 +63,8 @@ class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, Fr
      * @param block the block operation for new data list.
      * @return a new updated list.
      */
-    private fun MutableList<KeywordEntity>.refreshRecyclerView(block: ArrayList<KeywordEntity>.() -> Unit): MutableList<KeywordEntity> =
-        (binding?.adapter as BaseDataBindingAdapter<ItemSearchHistoryType1Binding, KeywordEntity>).
+    private fun MutableList<KeywordEntity>.refreshRecyclerView(block: ArrayList<KeywordEntity>.() -> Unit) {
+        res = (binding?.adapter as BaseDataBindingAdapter<ItemSearchHistoryType1Binding, KeywordEntity>).
             refresh(this, ArrayList(this).apply(block)).toMutableList()
+    }
 }
