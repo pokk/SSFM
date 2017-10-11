@@ -21,6 +21,7 @@ class FragmentSearchIndexViewModel(private val topArtistsUsecase: BaseUsecase<Co
                                    private val topAlbumsUsecase: BaseUsecase<Collection<Album>, GetTopAlbumsCase.RequestValue>):
     BaseViewModel() {
     fun test() {
+        // HACK(jieyi): 10/11/17 Observable should use onsubscribe(io()).
         thread {
             lifecycleProvider.execute(topArtistsUsecase, GetTopArtistsCase.RequestValue(1)) {
                 onNext {
