@@ -54,9 +54,7 @@ class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>()
         when (fragmentStack.safePeek()) {
             is SearchHistoryFragment -> viewModel.collapseSearchView()
         // OPTIMIZE(jieyi): 10/4/17 Just workaround. Clear the focus, only from result view to history view.
-            is SearchResultFragment -> {
-                binding.includeToolbar.svMusicSearch.clearFocus()
-            }
+            is SearchResultFragment -> binding.includeToolbar.svMusicSearch.clearFocus()
         }
         fragmentStack.safePop()
     }

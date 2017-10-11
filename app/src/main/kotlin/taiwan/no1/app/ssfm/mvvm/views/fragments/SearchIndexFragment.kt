@@ -1,7 +1,6 @@
 package taiwan.no1.app.ssfm.mvvm.views.fragments
 
 import android.os.Bundle
-import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchIndexBinding
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentSearchIndexViewModel
@@ -21,9 +20,4 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
 
     override fun provideInflateView(): Int = R.layout.fragment_search_index
     //endregion
-
-    override fun onDestroy() {
-        logw()
-        super.onDestroy()
-    }
 }

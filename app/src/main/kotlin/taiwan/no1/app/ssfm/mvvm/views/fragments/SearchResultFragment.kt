@@ -2,7 +2,6 @@ package taiwan.no1.app.ssfm.mvvm.views.fragments
 
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
-import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchResultBinding
 import taiwan.no1.app.ssfm.databinding.ItemSearchMusicType1Binding
@@ -36,16 +35,11 @@ class SearchResultFragment: AdvancedFragment<FragmentSearchResultViewModel, Frag
         isLoading = true
         viewModel.sendSearchRequest(keyword, resultCallback = updateListInfo)
     }
-
-    override fun onDestroy() {
-        logw()
-        super.onDestroy()
-    }
     //endregion
 
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
-        binding.apply {
+        binding?.apply {
             adapter = BaseDataBindingAdapter<ItemSearchMusicType1Binding, InfoBean>(R.layout.item_search_music_type_1,
                 res) { holder, item ->
                 holder.binding.avm = RecyclerViewMusicResultViewModel(item, activity)
@@ -72,7 +66,7 @@ class SearchResultFragment: AdvancedFragment<FragmentSearchResultViewModel, Frag
      */
     private val updateListInfo = { keyword: String, musics: MutableList<InfoBean>, canLoadMore: Boolean ->
         this.keyword = keyword
-        res = (binding.adapter as BaseDataBindingAdapter<ItemSearchMusicType1Binding, InfoBean>).
+        res = (binding?.adapter as BaseDataBindingAdapter<ItemSearchMusicType1Binding, InfoBean>).
             refresh(res, ArrayList(res).apply { addAll(musics) }).toMutableList()
         // TODO(jieyi): 9/28/17 Close the loading item or view.
         isLoading = false

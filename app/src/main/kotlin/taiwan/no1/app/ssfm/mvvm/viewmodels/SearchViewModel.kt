@@ -75,7 +75,6 @@ class SearchViewModel(private val context: Context,
      * @param query the query of song's or singer's name for searching a music.
      */
     fun querySubmit(query: String): Boolean {
-        // FIXME(jieyi): 10/2/17 When `search` music, here will be called twice. From `history`, it won't.
         query.takeIf { it.isNotBlank() }?.let {
             navigateListener(FRAGMENT_SEARCH_RESULT, SparseArray<Any>().apply { put(0, it) })
             lifecycleProvider.execute(addHistoryUsecase, RequestValue(it)) {

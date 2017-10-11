@@ -1,7 +1,6 @@
 package taiwan.no1.app.ssfm.mvvm.views.fragments
 
 import android.os.Bundle
-import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchHistoryBinding
 import taiwan.no1.app.ssfm.databinding.ItemSearchHistoryType1Binding
@@ -35,7 +34,7 @@ class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, Fr
 
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
-        binding.apply {
+        binding?.apply {
             adapter = BaseDataBindingAdapter<ItemSearchHistoryType1Binding, KeywordEntity>(R.layout.item_search_history_type_1,
                 res) { holder, item ->
                 holder.binding.avm = RecyclerViewSearchHistoryViewModel(item, activity, deleteUsecase).
@@ -58,11 +57,6 @@ class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, Fr
         }
     }
 
-    override fun onDestroy() {
-        logw()
-        super.onDestroy()
-    }
-
     /**
      * The operation for updating the list result by the adapter. Including updating the original list
      * and the showing list on the recycler view.
@@ -71,6 +65,6 @@ class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, Fr
      * @return a new updated list.
      */
     private fun MutableList<KeywordEntity>.refreshRecyclerView(block: ArrayList<KeywordEntity>.() -> Unit): MutableList<KeywordEntity> =
-        (binding.adapter as BaseDataBindingAdapter<ItemSearchHistoryType1Binding, KeywordEntity>).
+        (binding?.adapter as BaseDataBindingAdapter<ItemSearchHistoryType1Binding, KeywordEntity>).
             refresh(this, ArrayList(this).apply(block)).toMutableList()
 }
