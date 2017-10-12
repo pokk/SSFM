@@ -48,6 +48,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_toEndOf="@+id/tv_number"
                 android:layout_toStartOf="@+id/iv_action"
+                android:text="@{avm.trackName}"
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold"
                 tool:text="The Cure"/>
@@ -59,6 +60,7 @@
                 android:layout_alignEnd="@+id/tv_album_name"
                 android:layout_alignStart="@+id/tv_album_name"
                 android:layout_below="@+id/tv_album_name"
+                android:text="@{avm.artistName}"
                 android:textColor="@color/colorWhite"
                 tool:text="Lady Gaga"/>
 
@@ -68,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="40dp"
+                android:layout_marginStart="50dp"
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"
                 tool:text="2"/>

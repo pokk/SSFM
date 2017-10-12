@@ -22,7 +22,15 @@ import javax.inject.Inject
 class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, FragmentSearchIndexBinding>() {
     @Inject override lateinit var viewModel: FragmentSearchIndexViewModel
     private var trackRes = mutableListOf<Track>()
-    private var ArtistRes = mutableListOf<Artist>()
+    private var artistRes = mutableListOf<Artist>()
+
+    //region Fragment lifecycle
+    override fun onResume() {
+        super.onResume()
+        trackRes.clear()
+        artistRes.clear()
+    }
+    //endregion
 
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
@@ -30,7 +38,7 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
             artistLayoutManager = WrapContentLinearLayoutManager(activity)
             trackLayoutManager = WrapContentLinearLayoutManager(activity)
             artistAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, Artist>(R.layout.item_music_type_1,
-                ArtistRes) { holder, item ->
+                artistRes) { holder, item ->
                 //                holder.binding.avm = RecyclerViewTrackChartViewModel(item, activity)
             }
             trackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, Track>(R.layout.item_music_type_1,
@@ -39,6 +47,7 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
             }
         }
 
+        viewModel.fetchArtistList { }
         viewModel.fetchTrackList { trackRes.refreshRecyclerView { addAll(it) } }
     }
 
