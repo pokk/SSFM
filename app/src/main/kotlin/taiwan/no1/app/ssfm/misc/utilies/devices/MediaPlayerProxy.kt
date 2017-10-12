@@ -46,8 +46,9 @@ class MediaPlayerProxy: IMultiMediaPlayer,
 
     override fun onPrepared(mp: MediaPlayer?) {
         logd("start playing")
-        mImageView.endTime = mMediaPlayer.duration
+        mImageView.endTime = mMediaPlayer.duration / 1000
         mMediaPlayer.start()
+        mImageView.start()
         mState = PLAYING
     }
 
@@ -118,6 +119,7 @@ class MediaPlayerProxy: IMultiMediaPlayer,
     override fun stop() {
         logd("stop player")
         mMediaPlayer.stop()
+        mImageView.stop()
         mMediaPlayer.reset()
         mState = STOP
     }
@@ -125,12 +127,14 @@ class MediaPlayerProxy: IMultiMediaPlayer,
     override fun pause() {
         logd("pause player")
         mMediaPlayer.pause()
+        mImageView.stop()
         mState = PAUSE
     }
 
     override fun resume() {
         logd("resume player")
         mMediaPlayer.start()
+        mImageView.start()
         mState = PLAYING
     }
 
