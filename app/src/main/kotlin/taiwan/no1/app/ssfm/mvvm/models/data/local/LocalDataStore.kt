@@ -11,6 +11,8 @@ import com.raizlabs.android.dbflow.rx2.kotlinextensions.list
 import com.raizlabs.android.dbflow.rx2.kotlinextensions.rx
 import de.umass.lastfm.Album
 import de.umass.lastfm.Artist
+import de.umass.lastfm.Image
+import de.umass.lastfm.PaginatedResult
 import de.umass.lastfm.Session
 import de.umass.lastfm.Track
 import io.reactivex.Observable
@@ -57,6 +59,10 @@ class LocalDataStore: IDataStore {
     }
 
     override fun getArtistTags(artist: String, session: Session): Observable<Collection<String>> {
+        TODO()
+    }
+
+    override fun getArtistImages(mbid: String): Observable<PaginatedResult<Image>> {
         TODO()
     }
 

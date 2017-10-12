@@ -7,6 +7,8 @@ import de.umass.lastfm.Album
 import de.umass.lastfm.Artist
 import de.umass.lastfm.Authenticator
 import de.umass.lastfm.Chart
+import de.umass.lastfm.Image
+import de.umass.lastfm.PaginatedResult
 import de.umass.lastfm.Session
 import de.umass.lastfm.Track
 import de.umass.lastfm.User
@@ -81,6 +83,9 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
 
     override fun getArtistTags(artist: String, session: Session): Observable<Collection<String>> =
         ObservableJust(Artist.getTags(artist, session))
+
+    override fun getArtistImages(mbid: String): Observable<PaginatedResult<Image>> =
+        ObservableJust(Artist.getImages(mbid, lastfm_key))
 
     override fun getSimilarTracks(artist: String, mbid: String): Observable<Collection<Track>> =
         ObservableJust(Track.getSimilar(artist, mbid, lastfm_key))

@@ -2,6 +2,8 @@ package taiwan.no1.app.ssfm.mvvm.models.data
 
 import de.umass.lastfm.Album
 import de.umass.lastfm.Artist
+import de.umass.lastfm.Image
+import de.umass.lastfm.PaginatedResult
 import de.umass.lastfm.Session
 import de.umass.lastfm.Track
 import io.reactivex.Observable
@@ -54,6 +56,8 @@ interface IDataStore {
     fun getArtistTopAlbum(artist: String): Observable<Collection<Album>>
 
     fun getArtistTags(artist: String, session: Session): Observable<Collection<String>>
+
+    fun getArtistImages(mbid: String): Observable<PaginatedResult<Image>>
 
     fun getSimilarTracks(artist: String, mbid: String): Observable<Collection<Track>>
 

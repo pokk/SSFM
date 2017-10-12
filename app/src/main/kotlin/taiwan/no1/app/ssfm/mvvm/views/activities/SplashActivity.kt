@@ -23,7 +23,8 @@ class SplashActivity: Activity() {
         // Delay 0.5 second for showing the splash view.
         timer(initialDelay = SPLASH_DELAY_TIME, period = 1) {
             // Transfer to your main activity after delay 0.5 second.
-            startActivity<PlayMainActivity>()
+            startActivity<SearchActivity>()
+//            startActivity<PlayMainActivity>()
             finish()
             cancel()
         }
