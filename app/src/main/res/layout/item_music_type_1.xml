@@ -1,83 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tool="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="5dp"
-    tool:background="@color/colorPrimary">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tool="http://schemas.android.com/tools">
 
-    <RelativeLayout
-        android:id="@+id/rl_content"
-        android:layout_width="0dp"
+    <data>
+
+        <variable
+            name="avm"
+            type="taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewTrackChartViewModel"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorPrimaryDark"
-        android:orientation="vertical"
-        android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tool:layout_editor_absoluteX="23dp">
+        android:padding="5dp"
+        tool:background="@color/colorPrimary">
 
+        <RelativeLayout
+            android:id="@+id/rl_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimaryDark"
+            android:orientation="vertical"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tool:layout_editor_absoluteX="23dp">
+
+            <ImageView
+                android:id="@+id/iv_action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                tool:src="@drawable/selector_controller_play"/>
+
+            <TextView
+                android:id="@+id/tv_album_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@+id/tv_number"
+                android:layout_toStartOf="@+id/iv_action"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                tool:text="The Cure"/>
+
+            <TextView
+                android:id="@+id/tv_singer_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/tv_album_name"
+                android:layout_alignStart="@+id/tv_album_name"
+                android:layout_below="@+id/tv_album_name"
+                android:textColor="@color/colorWhite"
+                tool:text="Lady Gaga"/>
+
+            <TextView
+                android:id="@+id/tv_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="40dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                tool:text="2"/>
+        </RelativeLayout>
+
+        <!-- TODO: Change shadow color. -->
         <ImageView
-            android:id="@+id/iv_action"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            tool:src="@drawable/selector_controller_play"/>
-
-        <TextView
-            android:id="@+id/tv_album_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_toEndOf="@+id/tv_number"
-            android:layout_toStartOf="@+id/iv_action"
-            android:textColor="@color/colorWhite"
-            android:textStyle="bold"
-            tool:text="The Cure"/>
-
-        <TextView
-            android:id="@+id/tv_singer_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/tv_album_name"
-            android:layout_alignStart="@+id/tv_album_name"
-            android:layout_below="@+id/tv_album_name"
-            android:textColor="@color/colorWhite"
-            tool:text="Lady Gaga"/>
-
-        <TextView
-            android:id="@+id/tv_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="40dp"
-            android:textColor="@color/colorWhite"
-            android:textSize="20sp"
-            tool:text="2"/>
-    </RelativeLayout>
-
-    <!-- TODO: Change shadow color. -->
-    <ImageView
-        android:id="@+id/iv_music_icon"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/shadow"
-        android:paddingBottom="5dp"
-        android:paddingEnd="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tool:layout_editor_absoluteX="0dp"
-        tool:src="@drawable/sample_lady_gaga"/>
-</android.support.constraint.ConstraintLayout>
+            android:id="@+id/iv_music_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/shadow"
+            android:paddingBottom="5dp"
+            android:paddingEnd="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tool:layout_editor_absoluteX="0dp"
+            tool:src="@drawable/sample_lady_gaga"/>
+    </android.support.constraint.ConstraintLayout>
+</layout>

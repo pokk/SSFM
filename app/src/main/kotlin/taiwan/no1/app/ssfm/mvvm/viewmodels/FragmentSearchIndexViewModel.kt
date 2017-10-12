@@ -1,6 +1,5 @@
 package taiwan.no1.app.ssfm.mvvm.viewmodels
 
-import com.devrapid.kotlinknifer.logv
 import de.umass.lastfm.Album
 import de.umass.lastfm.Artist
 import de.umass.lastfm.Image
@@ -23,14 +22,15 @@ class FragmentSearchIndexViewModel(private val topArtistsUsecase: BaseUsecase<Co
                                    private val topAlbumsUsecase: BaseUsecase<Collection<Album>, GetTopAlbumsCase.RequestValue>,
                                    private val artistImagesUsecase: BaseUsecase<PaginatedResult<Image>, GetArtistImagesCase.RequestValue>):
     BaseViewModel() {
-    fun test() {
+    fun fetchArtistList(callback: (List<Artist>) -> Unit) {
         thread {
-            lifecycleProvider.execute(topTracksUsecase) {
-                onNext { logv(it) }
-            }
-            lifecycleProvider.execute(topArtistsUsecase) {
-                onNext { logv(it) }
-            }
+            lifecycleProvider.execute(topArtistsUsecase) { onNext { callback.invoke(it.toList()) } }
+        }
+    }
+
+    fun fetchTrackList(callback: (List<Track>) -> Unit) {
+        thread {
+            lifecycleProvider.execute(topTracksUsecase) { onNext { callback.invoke(it.toList()) } }
         }
     }
 }
