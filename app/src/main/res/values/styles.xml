@@ -111,4 +111,27 @@
         <item name="android:minHeight">?attr/actionBarSize</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+
+    <!-- Title -->
+    <style name="Title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="RecyclerView"/>
+
+    <style name="RecyclerView.Basic">
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="app:layout_constraintBottom_toBottomOf">parent</item>
+        <item name="app:layout_constraintEnd_toEndOf">parent</item>
+        <item name="app:layout_constraintHorizontal_bias">0.5</item>
+        <item name="app:layout_constraintStart_toStartOf">parent</item>
+    </style>
+
+
 </resources>
