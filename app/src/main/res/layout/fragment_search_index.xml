@@ -29,59 +29,40 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="25dp">
+        android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_top_artists"
-            android:layout_width="0dp"
+            style="@style/RecyclerView.Basic"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
             android:adapter="@{artistAdapter}"
             android:layoutManager="@{artistLayoutManager}"
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/tv_new_song"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_popular"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_top_tracks"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            style="@style/RecyclerView.Basic"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
             android:adapter="@{trackAdapter}"
             android:layoutManager="@{trackLayoutManager}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_new_song"
             tools:listitem="@layout/item_music_type_1"/>
 
         <TextView
             android:id="@+id/tv_popular"
-            style="@style/Title"
+            style="@style/RecyclerView.Title"
             android:text="Popular"
             app:layout_constraintBottom_toTopOf="@+id/rv_top_artists"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/tv_new_song"
-            style="@style/Title"
+            style="@style/RecyclerView.Title"
             android:text="New Songs"
             app:layout_constraintBottom_toTopOf="@+id/rv_top_tracks"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rv_top_artists"/>
     </android.support.constraint.ConstraintLayout>
 </layout>
