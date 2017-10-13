@@ -2,7 +2,6 @@ package taiwan.no1.app.ssfm.mvvm.views.fragments
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import com.devrapid.kotlinknifer.logw
 import de.umass.lastfm.Artist
 import de.umass.lastfm.Track
 import taiwan.no1.app.ssfm.R
@@ -48,14 +47,13 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
             }
             trackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, Track>(R.layout.item_music_type_1,
                 trackRes) { holder, item ->
-                holder.binding.avm = RecyclerViewTrackChartViewModel(item, activity)
+                holder.binding.avm = RecyclerViewTrackChartViewModel(item)
             }
             artistDecoration = HorizontalItemDecorator(20)
         }
         viewModel.fetchArtistList {
             artistRes = (artistRes to binding?.artistAdapter as BaseDataBindingAdapter<ItemArtistType1Binding, Artist>).
                 refreshRecyclerView { addAll(it) }
-            logw(artistRes[0])
         }
         viewModel.fetchTrackList { trackRes.refreshRecyclerView { addAll(it) } }
     }

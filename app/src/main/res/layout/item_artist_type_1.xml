@@ -19,6 +19,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="fill"
+            android:error="@{@drawable/sample_jieyi_icon}"
+            android:imageUrl="@{avm.thumbnail}"
+            android:placeHolder="@{@drawable/sample_lady_gaga}"
             android:scaleType="fitXY"
             android:src="@drawable/sample_lady_gaga"
             tools:src="@drawable/sample_lady_gaga"/>
@@ -26,16 +29,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{avm.artistName}"
             android:layout_gravity="bottom|center_horizontal"
             android:layout_marginBottom="25dp"
+            android:text="@{avm.artistName}"
             tools:text="Lady Gaga"/>
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_marginBottom="3dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="3dp"
             tools:text="The Cure"/>
     </android.support.v7.widget.CardView>
 </layout>

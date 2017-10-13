@@ -39,6 +39,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:error="@{@drawable/sample_jieyi_icon}"
+                android:imageUrl="@{avm.thumbnail}"
+                android:placeHolder="@{@drawable/sample_lady_gaga}"
                 tools:src="@drawable/selector_controller_play"/>
 
             <TextView

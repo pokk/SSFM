@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.devrapid.kotlinknifer.logw
 
 /**
  * @author  jieyi
@@ -20,11 +21,15 @@ fun ImageView.setSrc(bitmap: Bitmap) = setImageBitmap(bitmap)
 fun ImageView.setSrc(resId: Int) = setImageResource(resId)
 
 @BindingAdapter("android:imageUrl", "android:placeHolder", "android:error")
-fun ImageView.loadImage(url: String, holderDrawable: Drawable, errorDrawable: Drawable) =
-    Glide.with(context).load(url).apply(RequestOptions().apply {
-        centerCrop()
-        placeholder(holderDrawable)
-        error(errorDrawable)
-        priority(Priority.HIGH)
-        diskCacheStrategy(DiskCacheStrategy.NONE)
-    }).into(this)
+fun ImageView.loadImage(url: String?, holderDrawable: Drawable?, errorDrawable: Drawable?) {
+    if (!url.isNullOrBlank()) {
+        logw(url)
+        Glide.with(context).load(url).apply(RequestOptions().apply {
+            centerCrop()
+            holderDrawable?.let { placeholder(it) }
+            errorDrawable?.let { error(it) }
+            priority(Priority.HIGH)
+            diskCacheStrategy(DiskCacheStrategy.NONE)
+        }).into(this)
+    }
+}
