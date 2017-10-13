@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".mvvm.views.activities.SearchActivity">
 
     <data>
 
@@ -24,12 +26,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{avm.artistName}"
             android:layout_gravity="bottom|center_horizontal"
             android:layout_marginBottom="25dp"
             tools:text="Lady Gaga"/>
 
         <TextView
             android:layout_width="wrap_content"
+            android:layout_marginBottom="3dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
             tools:text="The Cure"/>

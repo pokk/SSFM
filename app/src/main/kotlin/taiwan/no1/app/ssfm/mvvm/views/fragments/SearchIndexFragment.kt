@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.mvvm.views.fragments
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import com.devrapid.kotlinknifer.logw
 import de.umass.lastfm.Artist
 import de.umass.lastfm.Track
 import taiwan.no1.app.ssfm.R
@@ -54,6 +55,7 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
         viewModel.fetchArtistList {
             artistRes = (artistRes to binding?.artistAdapter as BaseDataBindingAdapter<ItemArtistType1Binding, Artist>).
                 refreshRecyclerView { addAll(it) }
+            logw(artistRes[0])
         }
         viewModel.fetchTrackList { trackRes.refreshRecyclerView { addAll(it) } }
     }
@@ -68,6 +70,7 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
      * @param block the block operation for new data list.
      * @return a new updated list.
      */
+    // HACK(jieyi): 10/13/17 Here should be a general function.
     private fun MutableList<Track>.refreshRecyclerView(block: ArrayList<Track>.() -> Unit) {
         trackRes = (this to binding?.trackAdapter as BaseDataBindingAdapter<ItemMusicType1Binding, Track>).
             refreshRecyclerView(block)

@@ -11,6 +11,5 @@ import de.umass.lastfm.Artist
  * @since   9/20/17
  */
 class RecyclerViewArtistChartViewModel(val item: Artist, context: Context): BaseObservable() {
-    val trackName by lazy { ObservableField<String>(item.name) }
-    val artistName by lazy { ObservableField<String>(item.userPlaycount.toString()) }
+    val artistName by lazy { ObservableField<String>(item.name) }
 }

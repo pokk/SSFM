@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tool="http://schemas.android.com/tools">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".mvvm.views.activities.SearchActivity">
 
     <data>
 
@@ -14,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        tool:background="@color/colorPrimary">
+        tools:background="@color/colorPrimary">
 
         <RelativeLayout
             android:id="@+id/rl_content"
@@ -29,7 +31,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tool:layout_editor_absoluteX="23dp">
+            tools:layout_editor_absoluteX="23dp">
 
             <ImageView
                 android:id="@+id/iv_action"
@@ -37,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                tool:src="@drawable/selector_controller_play"/>
+                tools:src="@drawable/selector_controller_play"/>
 
             <TextView
                 android:id="@+id/tv_album_name"
@@ -51,7 +53,7 @@
                 android:text="@{avm.trackName}"
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold"
-                tool:text="The Cure"/>
+                tools:text="The Cure"/>
 
             <TextView
                 android:id="@+id/tv_singer_name"
@@ -62,7 +64,7 @@
                 android:layout_below="@+id/tv_album_name"
                 android:text="@{avm.artistName}"
                 android:textColor="@color/colorWhite"
-                tool:text="Lady Gaga"/>
+                tools:text="Lady Gaga"/>
 
             <TextView
                 android:id="@+id/tv_number"
@@ -73,7 +75,7 @@
                 android:layout_marginStart="50dp"
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"
-                tool:text="2"/>
+                tools:text="2"/>
         </RelativeLayout>
 
         <!-- TODO: Change shadow color. -->
@@ -88,7 +90,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tool:layout_editor_absoluteX="0dp"
-            tool:src="@drawable/sample_lady_gaga"/>
+            tools:layout_editor_absoluteX="0dp"
+            tools:src="@drawable/sample_lady_gaga"/>
     </android.support.constraint.ConstraintLayout>
 </layout>

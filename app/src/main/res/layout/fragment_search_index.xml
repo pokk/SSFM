@@ -2,7 +2,8 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".mvvm.views.activities.SearchActivity">
 
     <data>
 
@@ -40,11 +41,11 @@
             style="@style/RecyclerView.Basic"
             android:layout_height="wrap_content"
             android:adapter="@{artistAdapter}"
-            android:layoutManager="@{artistLayoutManager}"
             android:itemDecoration="@{artistDecoration}"
-            tools:listitem="@layout/item_artist_type_1"
+            android:layoutManager="@{artistLayoutManager}"
             app:layout_constraintBottom_toTopOf="@+id/tv_new_song"
-            app:layout_constraintTop_toBottomOf="@+id/tv_popular"/>
+            app:layout_constraintTop_toBottomOf="@+id/tv_popular"
+            tools:listitem="@layout/item_artist_type_1"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_top_tracks"
