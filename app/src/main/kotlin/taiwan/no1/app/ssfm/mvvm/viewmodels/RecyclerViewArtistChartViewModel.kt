@@ -22,10 +22,11 @@ class RecyclerViewArtistChartViewModel(val item: Artist, context: Context): Base
     }
 
     private fun retrieveThumbnail(url: String) {
+        // FIXME(jieyi): 10/13/17 When item appear again, it will retrieve again and again.
         launch(CommonPool) {
             val document = Jsoup.connect(url).get()
             val classes = document.getElementsByClass("avatar")
-            if (classes.isNotEmpty())
+            if (classes.isNotEmpty() && classes[0].attr("src") != thumbnail.get())
                 thumbnail.set(classes[0].attr("src"))
         }
     }
