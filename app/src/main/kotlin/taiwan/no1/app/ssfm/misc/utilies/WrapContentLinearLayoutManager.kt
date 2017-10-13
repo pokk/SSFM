@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView.Recycler
 import android.support.v7.widget.RecyclerView.State
 import android.util.AttributeSet
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.logw
 
 /**
  * Wrapper the linear layout manager for catching the exceptions and don't make app crash.
@@ -25,6 +26,7 @@ class WrapContentLinearLayoutManager: LinearLayoutManager {
             super.onLayoutChildren(recycler, state)
         }
         catch (e: Exception) {
+            logw(e.message)
             loge(e)
         }
     }

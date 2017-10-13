@@ -135,5 +135,4 @@
         <item name="layout_constraintHorizontal_bias">0.5</item>
         <item name="layout_constraintStart_toStartOf">parent</item>
     </style>
-
 </resources>

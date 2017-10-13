@@ -13,6 +13,7 @@ import taiwan.no1.app.ssfm.mvvm.models.usecases.GetTopArtistsCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetTopTracksCase
 import kotlin.concurrent.thread
 
+
 /**
  * @author  jieyi
  * @since   8/20/17
