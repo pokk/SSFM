@@ -21,6 +21,7 @@
         <RelativeLayout
             android:id="@+id/rl_content"
             android:layout_width="0dp"
+            android:layout_marginStart="5dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@color/colorPrimaryDark"
@@ -39,9 +40,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:error="@{@drawable/sample_jieyi_icon}"
-                android:imageUrl="@{avm.thumbnail}"
-                android:placeHolder="@{@drawable/sample_lady_gaga}"
                 tools:src="@drawable/selector_controller_play"/>
 
             <TextView
@@ -88,8 +86,11 @@
             android:layout_height="60dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/shadow"
+            android:error="@{@drawable/sample_jieyi_icon}"
+            android:imageUrl="@{avm.thumbnail}"
             android:paddingBottom="5dp"
             android:paddingEnd="5dp"
+            android:placeHolder="@{@drawable/sample_lady_gaga}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
