@@ -13,4 +13,7 @@
     <string name="menu_switch_button">Menu Button</string>
 
     <string name="todo">TODO</string>
+
+    <string name="rv_title_popular">POPULAR</string>
+    <string name="rv_title_new_tracks">New Songs</string>
 </resources>

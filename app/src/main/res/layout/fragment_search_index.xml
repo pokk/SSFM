@@ -61,14 +61,16 @@
         <TextView
             android:id="@+id/tv_popular"
             style="@style/RecyclerView.Title"
-            android:text="Popular"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="@string/rv_title_popular"
             app:layout_constraintBottom_toTopOf="@+id/rv_top_artists"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/tv_new_song"
             style="@style/RecyclerView.Title"
-            android:text="New Songs"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="@string/rv_title_new_tracks"
             app:layout_constraintBottom_toTopOf="@+id/rv_top_tracks"
             app:layout_constraintTop_toBottomOf="@+id/rv_top_artists"/>
     </android.support.constraint.ConstraintLayout>
