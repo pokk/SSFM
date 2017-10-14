@@ -2,7 +2,6 @@ package taiwan.no1.app.ssfm.mvvm.views.fragments
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import de.umass.lastfm.Track
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchIndexBinding
 import taiwan.no1.app.ssfm.databinding.ItemArtistType1Binding
@@ -10,6 +9,7 @@ import taiwan.no1.app.ssfm.databinding.ItemMusicType1Binding
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshRecyclerView
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.ExtArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.ExtTrackEntity
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentSearchIndexViewModel
 import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewArtistChartViewModel
 import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewTrackChartViewModel
@@ -25,7 +25,7 @@ import javax.inject.Inject
  */
 class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, FragmentSearchIndexBinding>() {
     @Inject override lateinit var viewModel: FragmentSearchIndexViewModel
-    private var trackRes = mutableListOf<Track>()
+    private var trackRes = mutableListOf<ExtTrackEntity>()
     private var artistRes = mutableListOf<ExtArtistEntity>()
 
     //region Fragment lifecycle
@@ -45,7 +45,7 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
                 artistRes) { holder, item ->
                 holder.binding.avm = RecyclerViewArtistChartViewModel(item)
             }
-            trackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, Track>(R.layout.item_music_type_1,
+            trackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, ExtTrackEntity>(R.layout.item_music_type_1,
                 trackRes) { holder, item ->
                 holder.binding.avm = RecyclerViewTrackChartViewModel(item)
             }
@@ -69,8 +69,8 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
      * @return a new updated list.
      */
     // HACK(jieyi): 10/13/17 Here should be a general function.
-    private fun MutableList<Track>.refreshRecyclerView(block: ArrayList<Track>.() -> Unit) {
-        trackRes = (this to binding?.trackAdapter as BaseDataBindingAdapter<ItemMusicType1Binding, Track>).
+    private fun MutableList<ExtTrackEntity>.refreshRecyclerView(block: ArrayList<ExtTrackEntity>.() -> Unit) {
+        trackRes = (this to binding?.trackAdapter as BaseDataBindingAdapter<ItemMusicType1Binding, ExtTrackEntity>).
             refreshRecyclerView(block)
     }
 }

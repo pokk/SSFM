@@ -7,6 +7,7 @@ import de.umass.lastfm.PaginatedResult
 import de.umass.lastfm.Track
 import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.mvvm.models.entities.ExtArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.ExtTrackEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistImagesCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetTopAlbumsCase
@@ -31,9 +32,9 @@ class FragmentSearchIndexViewModel(private val topArtistsUsecase: BaseUsecase<Co
         }
     }
 
-    fun fetchTrackList(callback: (List<Track>) -> Unit) {
+    fun fetchTrackList(callback: (List<ExtTrackEntity>) -> Unit) {
         thread {
-            lifecycleProvider.execute(topTracksUsecase) { onNext { callback.invoke(it.toList()) } }
+            lifecycleProvider.execute(topTracksUsecase) { onNext { callback.invoke(it.map { ExtTrackEntity(it) }) } }
         }
     }
 }
