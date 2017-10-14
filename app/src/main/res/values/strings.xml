@@ -14,6 +14,6 @@
 
     <string name="todo">TODO</string>
 
-    <string name="rv_title_popular">POPULAR</string>
+    <string name="rv_title_popular">Popular</string>
     <string name="rv_title_new_tracks">New Songs</string>
 </resources>

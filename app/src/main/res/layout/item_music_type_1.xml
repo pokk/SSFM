@@ -15,14 +15,15 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{avm::trackOnClick}"
         android:padding="5dp"
         tools:background="@color/colorPrimary">
 
         <RelativeLayout
             android:id="@+id/rl_content"
             android:layout_width="0dp"
-            android:layout_marginStart="5dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="10dp"
             android:background="@color/colorPrimaryDark"
             android:orientation="vertical"

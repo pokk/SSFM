@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.mvvm.viewmodels
 
 import android.databinding.BaseObservable
 import android.databinding.ObservableField
+import android.view.View
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logi
 import kotlinx.coroutines.experimental.CommonPool
@@ -21,6 +22,9 @@ class RecyclerViewTrackChartViewModel(val item: ExtTrackEntity): BaseObservable(
 
     init {
         if (item.imageUrl.isBlank()) retrieveThumbnail(item.track.url) else thumbnail.set(item.imageUrl)
+    }
+
+    fun trackOnClick(view: View) {
     }
 
     private fun retrieveThumbnail(url: String) {

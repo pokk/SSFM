@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.mvvm.viewmodels
 
 import android.databinding.BaseObservable
 import android.databinding.ObservableField
+import android.view.View
 import com.devrapid.kotlinknifer.observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -19,6 +20,9 @@ class RecyclerViewArtistChartViewModel(val item: ExtArtistEntity): BaseObservabl
 
     init {
         if (item.imageUrl.isBlank()) retrieveThumbnail(item.artist.url) else thumbnail.set(item.imageUrl)
+    }
+
+    fun artistOnClick(view: View) {
     }
 
     private fun retrieveThumbnail(url: String) {
