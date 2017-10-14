@@ -2,6 +2,8 @@ package taiwan.no1.app.ssfm.mvvm.viewmodels
 
 import android.databinding.BaseObservable
 import android.databinding.ObservableField
+import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.logi
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.launch
 import org.jsoup.Jsoup
@@ -22,13 +24,20 @@ class RecyclerViewTrackChartViewModel(val item: ExtTrackEntity): BaseObservable(
     }
 
     private fun retrieveThumbnail(url: String) {
-        launch(CommonPool) {
-            val document = Jsoup.connect(url).get()
-            val classes = document.getElementsByClass("cover-art")
-            if (classes.isNotEmpty()) {
-                item.imageUrl = classes[0].attr("src")
-                thumbnail.set(item.imageUrl)
+        try {
+            launch(CommonPool) {
+                val document = Jsoup.connect(url).get()
+                val classes = document.getElementsByClass("cover-art")
+                if (classes.isNotEmpty()) {
+                    item.imageUrl = classes[0].attr("src")
+                    thumbnail.set(item.imageUrl)
+                }
             }
+        }
+        catch (e: Exception) {
+            loge(e)
+            logi("Retrieve again!")
+            retrieveThumbnail(url)
         }
     }
 }
