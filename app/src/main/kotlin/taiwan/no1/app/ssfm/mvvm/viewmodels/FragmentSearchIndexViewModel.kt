@@ -6,6 +6,7 @@ import de.umass.lastfm.Image
 import de.umass.lastfm.PaginatedResult
 import de.umass.lastfm.Track
 import taiwan.no1.app.ssfm.misc.extension.execute
+import taiwan.no1.app.ssfm.mvvm.models.entities.ExtArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistImagesCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetTopAlbumsCase
@@ -23,9 +24,10 @@ class FragmentSearchIndexViewModel(private val topArtistsUsecase: BaseUsecase<Co
                                    private val topAlbumsUsecase: BaseUsecase<Collection<Album>, GetTopAlbumsCase.RequestValue>,
                                    private val artistImagesUsecase: BaseUsecase<PaginatedResult<Image>, GetArtistImagesCase.RequestValue>):
     BaseViewModel() {
-    fun fetchArtistList(callback: (List<Artist>) -> Unit) {
+    fun fetchArtistList(callback: (List<ExtArtistEntity>) -> Unit) {
         thread {
-            lifecycleProvider.execute(topArtistsUsecase) { onNext { callback.invoke(it.toList()) } }
+            // Wrap the [Artist] to [ExtArtist] entity for keeping image url.
+            lifecycleProvider.execute(topArtistsUsecase) { onNext { callback.invoke(it.map { ExtArtistEntity(it) }) } }
         }
     }
 

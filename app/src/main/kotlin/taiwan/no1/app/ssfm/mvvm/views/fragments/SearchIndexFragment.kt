@@ -2,7 +2,6 @@ package taiwan.no1.app.ssfm.mvvm.views.fragments
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import de.umass.lastfm.Artist
 import de.umass.lastfm.Track
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchIndexBinding
@@ -10,6 +9,7 @@ import taiwan.no1.app.ssfm.databinding.ItemArtistType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType1Binding
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshRecyclerView
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
+import taiwan.no1.app.ssfm.mvvm.models.entities.ExtArtistEntity
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentSearchIndexViewModel
 import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewArtistChartViewModel
 import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewTrackChartViewModel
@@ -26,7 +26,7 @@ import javax.inject.Inject
 class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, FragmentSearchIndexBinding>() {
     @Inject override lateinit var viewModel: FragmentSearchIndexViewModel
     private var trackRes = mutableListOf<Track>()
-    private var artistRes = mutableListOf<Artist>()
+    private var artistRes = mutableListOf<ExtArtistEntity>()
 
     //region Fragment lifecycle
     override fun onResume() {
@@ -41,9 +41,9 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
         binding?.apply {
             artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             trackLayoutManager = WrapContentLinearLayoutManager(activity)
-            artistAdapter = BaseDataBindingAdapter<ItemArtistType1Binding, Artist>(R.layout.item_artist_type_1,
+            artistAdapter = BaseDataBindingAdapter<ItemArtistType1Binding, ExtArtistEntity>(R.layout.item_artist_type_1,
                 artistRes) { holder, item ->
-                holder.binding.avm = RecyclerViewArtistChartViewModel(item, activity)
+                holder.binding.avm = RecyclerViewArtistChartViewModel(item)
             }
             trackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, Track>(R.layout.item_music_type_1,
                 trackRes) { holder, item ->
@@ -52,7 +52,7 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
             artistDecoration = HorizontalItemDecorator(20)
         }
         viewModel.fetchArtistList {
-            artistRes = (artistRes to binding?.artistAdapter as BaseDataBindingAdapter<ItemArtistType1Binding, Artist>).
+            artistRes = (artistRes to binding?.artistAdapter as BaseDataBindingAdapter<ItemArtistType1Binding, ExtArtistEntity>).
                 refreshRecyclerView { addAll(it) }
         }
         viewModel.fetchTrackList { trackRes.refreshRecyclerView { addAll(it) } }
