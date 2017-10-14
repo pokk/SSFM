@@ -43,11 +43,17 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
             trackLayoutManager = WrapContentLinearLayoutManager(activity)
             artistAdapter = BaseDataBindingAdapter<ItemArtistType1Binding, ExtArtistEntity>(R.layout.item_artist_type_1,
                 artistRes) { holder, item ->
-                holder.binding.avm = RecyclerViewArtistChartViewModel(item)
+                holder.binding.avm = RecyclerViewArtistChartViewModel(item).apply {
+                    onAttach(this@SearchIndexFragment)
+                    retrieveThumbnail()
+                }
             }
             trackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, ExtTrackEntity>(R.layout.item_music_type_1,
                 trackRes) { holder, item ->
-                holder.binding.avm = RecyclerViewTrackChartViewModel(item)
+                holder.binding.avm = RecyclerViewTrackChartViewModel(item).apply {
+                    onAttach(this@SearchIndexFragment)
+                    retrieveThumbnail()
+                }
             }
             artistDecoration = HorizontalItemDecorator(20)
         }
