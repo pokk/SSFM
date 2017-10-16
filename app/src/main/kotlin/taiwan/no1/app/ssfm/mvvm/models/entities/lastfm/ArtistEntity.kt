@@ -19,9 +19,6 @@ data class ArtistEntity(var artist: Artist?) {
                       var tags: Tags?,
                       var bio: Bio?)
 
-    data class Image(@SerializedName("#text") var text: String?,
-                     var size: String?)
-
     data class Bio(var links: Links?,
                    var published: String?,
                    var summary: String?,

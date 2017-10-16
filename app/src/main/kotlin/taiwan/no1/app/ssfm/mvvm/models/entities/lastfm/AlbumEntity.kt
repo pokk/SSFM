@@ -20,13 +20,6 @@ data class AlbumEntity(var album: Album?) {
                      var tags: Tags?,
                      var wiki: Wiki?)
 
-    data class Image(@SerializedName("#text") var text: String?,
-                     var size: String?)
-
-    data class Wiki(var published: String?,
-                    var summary: String?,
-                    var content: String?)
-
     data class Tags(var tag: List<Tag?>?)
 
     data class Tag(var name: String?,
@@ -40,11 +33,6 @@ data class AlbumEntity(var album: Album?) {
                      @SerializedName("@attr") var attr: Attr?,
                      var streamable: Streamable?,
                      var artist: Artist?)
-
-    data class Attr(var rank: String)
-
-    data class Streamable(@SerializedName("#text") var text: String?,
-                          var fulltrack: String?)
 
     data class Artist(var name: String?,
                       var mbid: String?,
