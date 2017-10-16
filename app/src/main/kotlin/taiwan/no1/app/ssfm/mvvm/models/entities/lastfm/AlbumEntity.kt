@@ -9,15 +9,17 @@ import com.google.gson.annotations.SerializedName
  */
 
 data class AlbumEntity(var album: Album?) {
-    data class Album(var name: String?,
+    data class Album(@SerializedName("@attr") var attr: Attr?,
                      var artist: String?,
-                     var mbid: String?,
-                     var url: String?,
-                     var image: List<Image?>?,
+                     @SerializedName("image") var images: List<Image?>?,
                      var listeners: String?,
-                     var playcount: String?,
-                     var tracks: Tracks?,
+                     var mbid: String?,
+                     var name: String?,
+                     @SerializedName("playcount") var playCount: String?,
                      var tags: Tags?,
+                     var title: String?,
+                     @SerializedName("tracks") var track: Tracks?,
+                     var url: String?,
                      var wiki: Wiki?)
 
     data class Tags(var tag: List<Tag?>?)
@@ -25,16 +27,5 @@ data class AlbumEntity(var album: Album?) {
     data class Tag(var name: String?,
                    var url: String?)
 
-    data class Tracks(var track: List<Track?>?)
-
-    data class Track(var name: String?,
-                     var url: String?,
-                     var duration: String?,
-                     @SerializedName("@attr") var attr: Attr?,
-                     var streamable: Streamable?,
-                     var artist: Artist?)
-
-    data class Artist(var name: String?,
-                      var mbid: String?,
-                      var url: String?)
+    data class Tracks(@SerializedName("track") var tracks: List<TrackEntity.Track?>?)
 }

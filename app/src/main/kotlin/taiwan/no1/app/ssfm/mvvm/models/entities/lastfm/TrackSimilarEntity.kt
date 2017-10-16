@@ -7,17 +7,7 @@ import com.google.gson.annotations.SerializedName
  * @since   10/16/17
  */
 
-data class TrackSimilarEntity(var similartracks: Similartracks?) {
-    data class Similartracks(var track: List<Track?>?,
+data class TrackSimilarEntity(@SerializedName("similartracks") var similartrack: Similartracks?) {
+    data class Similartracks(@SerializedName("track") var tracks: List<TrackEntity.Track?>?,
                              @SerializedName("@attr") var attr: Attr?)
-
-    data class Track(var name: String?,
-                     var playcount: Int?,
-                     var mbid: String?,
-                     var match: Double?,
-                     var url: String?,
-                     var streamable: Streamable?,
-                     var duration: Int?,
-                     var artist: Artist?,
-                     var image: List<Image?>?)
 }

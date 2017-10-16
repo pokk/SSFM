@@ -8,14 +8,6 @@ import com.google.gson.annotations.SerializedName
  */
 
 data class ChartTopArtistEntity(var artists: Artists?) {
-    data class Artists(var artist: List<Artist?>?,
+    data class Artists(@SerializedName("artist") var artists: List<ArtistEntity.Artist?>?,
                        @SerializedName("@attr") var attr: Attr?)
-
-    data class Artist(var name: String?,
-                      var playcount: String?,
-                      var listeners: String?,
-                      var mbid: String?,
-                      var url: String?,
-                      var streamable: String?,
-                      var image: List<Image?>?)
 }

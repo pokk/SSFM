@@ -10,10 +10,13 @@ import com.google.gson.annotations.SerializedName
 data class ArtistEntity(var artist: Artist?) {
     data class Artist(var name: String?,
                       var mbid: String?,
+                      var match: String?,
                       var url: String?,
-                      var image: List<Image?>?,
+                      @SerializedName("image") var images: List<Image?>?,
                       var streamable: String?,
-                      var ontour: String?,
+                      var listeners: String?,
+                      @SerializedName("ontour") var onTour: String?,
+                      @SerializedName("playcount") var playCount: String?,
                       var stats: Stats?,
                       var similar: Similar?,
                       var tags: Tags?,
@@ -31,9 +34,9 @@ data class ArtistEntity(var artist: Artist?) {
                     var href: String?)
 
     data class Stats(var listeners: String?,
-                     var playcount: String?)
+                     @SerializedName("playcount") var playCount: String?)
 
-    data class Similar(var artist: List<Artist?>?)
+    data class Similar(@SerializedName("artist") var artists: List<Artist?>?)
 
     data class Tags(var tag: List<Tag?>?)
 

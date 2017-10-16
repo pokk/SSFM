@@ -25,6 +25,3 @@ data class Attr(var artist: String?,
                 var perPage: String?,
                 var page: String?)
 
-data class Artist(var name: String?,
-                  var mbid: String?,
-                  var url: String?)
