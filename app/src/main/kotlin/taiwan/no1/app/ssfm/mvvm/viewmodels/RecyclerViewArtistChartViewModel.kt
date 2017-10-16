@@ -2,7 +2,6 @@ package taiwan.no1.app.ssfm.mvvm.viewmodels
 
 import android.databinding.ObservableField
 import android.view.View
-import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.observable
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
@@ -30,7 +29,6 @@ class RecyclerViewArtistChartViewModel(val item: ExtArtistEntity,
         lifecycleProvider.execute(usecase,
             GetAlbumInfoCase.RequestValue(item.artist.name, "63b3a8ca-26f2-4e2b-b867-647a6ec2bebd")) {
             onNext { logw(it) }
-            onError { loge(it) }
         }
     }
 

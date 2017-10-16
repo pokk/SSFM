@@ -1,8 +1,6 @@
 package taiwan.no1.app.ssfm.mvvm.models.data.remote
 
 import android.content.Context
-import com.devrapid.kotlinknifer.logi
-import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.observable
 import dagger.Lazy
 import de.umass.lastfm.Album
@@ -46,6 +44,7 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
 
     private val lastfm_key by lazy { context.getString(R.string.lastfm_api_key) }
     private val lastfm_secret by lazy { context.getString(R.string.lastfm_secret_key) }
+    private val restQuery = mapOf("api_key" to lastfm_key, "format" to "json")
 
     init {
         NetComponent.Initializer.init().inject(this)
@@ -87,16 +86,10 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
         ObservableJust(Artist.getTopAlbums(artist, lastfm_key))
 
     override fun getAlbumInfo(artist: String, albumOrMbid: String): Observable<AlbumEntity> {
-        val query = mapOf(
-            "method" to "album.getInfo",
-            "api_key" to lastfm_key,
-            "mbid" to albumOrMbid)
-        logi(albumOrMbid, "!!!!!!!!!!!!!!!!!!!!!!!!")
+        val query = mutableMapOf("mbid" to albumOrMbid,
+            "method" to "album.getInfo").baseLastFmParams()
 
-        return musicService3.get().getAlbumInfo(query).flatMap {
-            logw(it)
-            observable<AlbumEntity> { AlbumEntity(null) }
-        }
+        return musicService3.get().getAlbumInfo(query)
     }
 
     override fun getArtistTags(artist: String, session: Session): Observable<Collection<String>> =
@@ -153,4 +146,7 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
      * @return an [Observable] reference.
      */
     private fun <O> observableJustWrapper(data: O): Observable<O> = ObservableJust(data)
+
+    private fun MutableMap<String, String>.baseLastFmParams() =
+        apply { putAll(mapOf("api_key" to lastfm_key, "format" to "json")) }
 }
