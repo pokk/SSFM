@@ -6,9 +6,9 @@ import retrofit2.http.QueryMap
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.config.Music1Config
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.config.Music2Config
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.config.Music3Config
-import taiwan.no1.app.ssfm.mvvm.models.entities.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
 
 /**
  * Http api request interface set by using [retrofit2.Retrofit].
