@@ -8,8 +8,11 @@ import taiwan.no1.app.ssfm.databinding.ItemArtistType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType1Binding
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshRecyclerView
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
+import taiwan.no1.app.ssfm.mvvm.models.entities.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.ExtArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.ExtTrackEntity
+import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
+import taiwan.no1.app.ssfm.mvvm.models.usecases.GetAlbumInfoCase
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentSearchIndexViewModel
 import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewArtistChartViewModel
 import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewTrackChartViewModel
@@ -25,6 +28,7 @@ import javax.inject.Inject
  */
 class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, FragmentSearchIndexBinding>() {
     @Inject override lateinit var viewModel: FragmentSearchIndexViewModel
+    @Inject lateinit var albumInfoUsecase: BaseUsecase<AlbumEntity, GetAlbumInfoCase.RequestValue>
     private var trackRes = mutableListOf<ExtTrackEntity>()
     private var artistRes = mutableListOf<ExtArtistEntity>()
 
@@ -43,14 +47,14 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
             trackLayoutManager = WrapContentLinearLayoutManager(activity)
             artistAdapter = BaseDataBindingAdapter<ItemArtistType1Binding, ExtArtistEntity>(R.layout.item_artist_type_1,
                 artistRes) { holder, item ->
-                holder.binding.avm = RecyclerViewArtistChartViewModel(item).apply {
+                holder.binding.avm = RecyclerViewArtistChartViewModel(item, albumInfoUsecase).apply {
                     onAttach(this@SearchIndexFragment)
                     retrieveThumbnail()
                 }
             }
             trackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, ExtTrackEntity>(R.layout.item_music_type_1,
                 trackRes) { holder, item ->
-                holder.binding.avm = RecyclerViewTrackChartViewModel(item).apply {
+                holder.binding.avm = RecyclerViewTrackChartViewModel(item, albumInfoUsecase).apply {
                     onAttach(this@SearchIndexFragment)
                     retrieveThumbnail()
                 }

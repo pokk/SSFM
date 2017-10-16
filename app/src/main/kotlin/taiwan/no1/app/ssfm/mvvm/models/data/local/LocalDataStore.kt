@@ -1,7 +1,7 @@
 package taiwan.no1.app.ssfm.mvvm.models.data.local
 
-import com.raizlabs.android.dbflow.kotlinextensions.`is`
 import com.raizlabs.android.dbflow.kotlinextensions.delete
+import com.raizlabs.android.dbflow.kotlinextensions.eq
 import com.raizlabs.android.dbflow.kotlinextensions.from
 import com.raizlabs.android.dbflow.kotlinextensions.limit
 import com.raizlabs.android.dbflow.kotlinextensions.orderBy
@@ -17,6 +17,7 @@ import de.umass.lastfm.Session
 import de.umass.lastfm.Track
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
+import taiwan.no1.app.ssfm.mvvm.models.entities.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity_Table
@@ -58,6 +59,10 @@ class LocalDataStore: IDataStore {
         TODO()
     }
 
+    override fun getAlbumInfo(artist: String, albumOrMbid: String): Observable<AlbumEntity> {
+        TODO()
+    }
+
     override fun getArtistTags(artist: String, session: Session): Observable<Collection<String>> {
         TODO()
     }
@@ -83,7 +88,7 @@ class LocalDataStore: IDataStore {
     }
 
     override fun insertKeyword(keyword: String) =
-        (select from KeywordEntity::class where (KeywordEntity_Table.keyword `is` keyword)).rx().list.
+        (select from KeywordEntity::class where (KeywordEntity_Table.keyword eq keyword)).rx().list.
             flatMapObservable {
                 (if (0 == it.size) KeywordEntity(keyword = keyword) else it.first().apply { searchTimes += 1 }).save().toObservable()
             }
@@ -93,7 +98,7 @@ class LocalDataStore: IDataStore {
     }
 
     override fun removeKeywords(keyword: String?): Observable<Boolean> {
-        return (keyword?.let { (delete(KeywordEntity::class) where (KeywordEntity_Table.keyword `is` keyword)).rx() } ?:
+        return (keyword?.let { (delete(KeywordEntity::class) where (KeywordEntity_Table.keyword eq keyword)).rx() } ?:
             delete(KeywordEntity::class).rx()).
             // The return value of `executeUpdateDelete` is the number of the deleted or updated items.
             executeUpdateDelete().map { 0 < it }.toObservable()

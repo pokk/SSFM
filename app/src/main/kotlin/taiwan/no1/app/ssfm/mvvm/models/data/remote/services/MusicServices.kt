@@ -5,6 +5,8 @@ import retrofit2.http.GET
 import retrofit2.http.QueryMap
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.config.Music1Config
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.config.Music2Config
+import taiwan.no1.app.ssfm.mvvm.models.data.remote.config.Music3Config
+import taiwan.no1.app.ssfm.mvvm.models.entities.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 
@@ -20,4 +22,7 @@ interface MusicServices {
 
     @GET(Music2Config.API_REQUEST)
     fun getMusic(@QueryMap queries: Map<String, String>): Observable<DetailMusicEntity>
+
+    @GET(Music3Config.API_REQUEST)
+    fun getAlbumInfo(@QueryMap queries: Map<String, String>): Observable<AlbumEntity>
 }

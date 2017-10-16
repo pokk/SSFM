@@ -8,6 +8,7 @@ import de.umass.lastfm.Session
 import de.umass.lastfm.Track
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.misc.constants.Constant
+import taiwan.no1.app.ssfm.mvvm.models.entities.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
@@ -54,6 +55,8 @@ interface IDataStore {
     fun getSimilarArtist(artist: String): Observable<Collection<Artist>>
 
     fun getArtistTopAlbum(artist: String): Observable<Collection<Album>>
+
+    fun getAlbumInfo(artist: String, albumOrMbid: String): Observable<AlbumEntity>
 
     fun getArtistTags(artist: String, session: Session): Observable<Collection<String>>
 

@@ -77,5 +77,14 @@ class NetModule {
             baseUrl(restfulApiFactory.createMusic2Config().getApiBaseUrl())
             build()
         }.create(MusicServices::class.java)
+
+    @Provides
+    @Network
+    @Named("music3")
+    fun provideRetrofit2_3(baseBuilder: Retrofit.Builder, restfulApiFactory: RestfulApiFactory): MusicServices =
+        with(baseBuilder) {
+            baseUrl(restfulApiFactory.createMusic3Config().getApiBaseUrl())
+            build()
+        }.create(MusicServices::class.java)
     //endregion
 }

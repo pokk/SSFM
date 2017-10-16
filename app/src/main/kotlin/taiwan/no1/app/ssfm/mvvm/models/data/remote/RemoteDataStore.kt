@@ -1,6 +1,8 @@
 package taiwan.no1.app.ssfm.mvvm.models.data.remote
 
 import android.content.Context
+import com.devrapid.kotlinknifer.logi
+import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.observable
 import dagger.Lazy
 import de.umass.lastfm.Album
@@ -20,6 +22,7 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.internal.di.components.NetComponent
 import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.services.MusicServices
+import taiwan.no1.app.ssfm.mvvm.models.entities.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
@@ -38,6 +41,8 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
     lateinit var musicService1: Lazy<MusicServices>
     @field:[Inject Named("music2")]
     lateinit var musicService2: Lazy<MusicServices>
+    @field:[Inject Named("music3")]
+    lateinit var musicService3: Lazy<MusicServices>
 
     private val lastfm_key by lazy { context.getString(R.string.lastfm_api_key) }
     private val lastfm_secret by lazy { context.getString(R.string.lastfm_secret_key) }
@@ -47,7 +52,7 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
     }
 
     override fun getSearchMusicRes(keyword: String, page: Int, pageSize: Int): Observable<SearchMusicEntity> {
-        val query: Map<String, String> = mapOf(
+        val query = mapOf(
             context.getString(R.string.t_pair1) to context.getString(R.string.v_pair1),
             context.getString(R.string.t_pair2) to keyword,
             context.getString(R.string.t_pair3) to page.toString(),
@@ -58,7 +63,7 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
     }
 
     override fun getDetailMusicRes(hash: String): Observable<DetailMusicEntity> {
-        val query: Map<String, String> = mapOf(
+        val query = mapOf(
             context.getString(R.string.t_pair6) to context.getString(R.string.v_pair6),
             context.getString(R.string.t_pair7) to context.getString(R.string.v_pair7),
             context.getString(R.string.t_pair8) to hash)
@@ -80,6 +85,19 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
 
     override fun getArtistTopAlbum(artist: String): Observable<Collection<Album>> =
         ObservableJust(Artist.getTopAlbums(artist, lastfm_key))
+
+    override fun getAlbumInfo(artist: String, albumOrMbid: String): Observable<AlbumEntity> {
+        val query = mapOf(
+            "method" to "album.getInfo",
+            "api_key" to lastfm_key,
+            "mbid" to albumOrMbid)
+        logi(albumOrMbid, "!!!!!!!!!!!!!!!!!!!!!!!!")
+
+        return musicService3.get().getAlbumInfo(query).flatMap {
+            logw(it)
+            observable<AlbumEntity> { AlbumEntity(null) }
+        }
+    }
 
     override fun getArtistTags(artist: String, session: Session): Observable<Collection<String>> =
         ObservableJust(Artist.getTags(artist, session))

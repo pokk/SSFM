@@ -1,9 +1,6 @@
 package taiwan.no1.app.ssfm.mvvm.models.data.repositories
 
-import de.umass.lastfm.Image
-import de.umass.lastfm.PaginatedResult
 import de.umass.lastfm.Session
-import io.reactivex.Observable
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Local
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Remote
 import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
@@ -34,10 +31,12 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
 
     override fun getArtistTopAlbum(artist: String) = remote.getArtistTopAlbum(artist)
 
+    override fun getAlbumInfo(artist: String, albumOrMbid: String) = remote.getAlbumInfo(artist, albumOrMbid)
+
     override fun getArtistTags(artist: String, session: Session) =
         remote.getArtistTags(artist, session)
 
-    override fun getArtistImages(mbid: String): Observable<PaginatedResult<Image>> =
+    override fun getArtistImages(mbid: String) =
         remote.getArtistImages(mbid)
 
     override fun getSimilarTracks(artist: String, mbid: String) =
