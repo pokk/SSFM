@@ -83,14 +83,12 @@
         <!-- TODO: Change shadow color. -->
         <ImageView
             android:id="@+id/iv_music_icon"
+            style="@style/ImageView.Shadow"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/shadow"
             android:error="@{@drawable/sample_jieyi_icon}"
             android:imageUrl="@{avm.thumbnail}"
-            android:paddingBottom="5dp"
-            android:paddingEnd="5dp"
             android:placeHolder="@{@drawable/sample_lady_gaga}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
