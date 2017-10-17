@@ -9,6 +9,8 @@ import taiwan.no1.app.ssfm.mvvm.models.data.remote.config.Music3Config
 import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTrackEntity
 
 /**
  * Http api request interface set by using [retrofit2.Retrofit].
@@ -25,4 +27,10 @@ interface MusicServices {
 
     @GET(Music3Config.API_REQUEST)
     fun getAlbumInfo(@QueryMap queries: Map<String, String>): Observable<AlbumEntity>
+
+    @GET(Music3Config.API_REQUEST)
+    fun getChartTopTrack(@QueryMap queries: Map<String, String>): Observable<ChartTopTrackEntity>
+
+    @GET(Music3Config.API_REQUEST)
+    fun getChartTopArtist(@QueryMap queries: Map<String, String>): Observable<ChartTopArtistEntity>
 }

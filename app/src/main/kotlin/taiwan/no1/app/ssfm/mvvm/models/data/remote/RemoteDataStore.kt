@@ -6,7 +6,6 @@ import dagger.Lazy
 import de.umass.lastfm.Album
 import de.umass.lastfm.Artist
 import de.umass.lastfm.Authenticator
-import de.umass.lastfm.Chart
 import de.umass.lastfm.Image
 import de.umass.lastfm.PaginatedResult
 import de.umass.lastfm.Session
@@ -24,6 +23,8 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTrackEntity
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -73,11 +74,19 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
     override fun obtainSession(user: String, pwd: String): Observable<Session> =
         ObservableJust(Authenticator.getMobileSession(user, pwd, lastfm_key, lastfm_secret))
 
-    override fun getChartTopArtist(page: Int): Observable<Collection<Artist>> =
-        ObservableJust(Chart.getTopArtists(page, lastfm_key).pageResults)
+    override fun getChartTopArtist(page: Int): Observable<ChartTopArtistEntity> {
+        val query =
+            mutableMapOf("page" to page.toString(), "method" to "chart.getTopArtists").baseLastFmParams()
 
-    override fun getChartTopTracks(page: Int): Observable<Collection<Track>> =
-        ObservableJust(Chart.getTopTracks(page, lastfm_key).pageResults)
+        return musicService3.get().getChartTopArtist(query)
+    }
+
+    override fun getChartTopTracks(page: Int): Observable<ChartTopTrackEntity> {
+        val query =
+            mutableMapOf("page" to page.toString(), "method" to "chart.getTopTracks").baseLastFmParams()
+
+        return musicService3.get().getChartTopTrack(query)
+    }
 
     override fun getSimilarArtist(artist: String): Observable<Collection<Artist>> =
         ObservableJust(Artist.getSimilar(artist, 10, lastfm_key))
@@ -86,8 +95,8 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
         ObservableJust(Artist.getTopAlbums(artist, lastfm_key))
 
     override fun getAlbumInfo(artist: String, albumOrMbid: String): Observable<AlbumEntity> {
-        val query = mutableMapOf("mbid" to albumOrMbid,
-            "method" to "album.getInfo").baseLastFmParams()
+        val query =
+            mutableMapOf("mbid" to albumOrMbid, "method" to "album.getInfo").baseLastFmParams()
 
         return musicService3.get().getAlbumInfo(query)
     }

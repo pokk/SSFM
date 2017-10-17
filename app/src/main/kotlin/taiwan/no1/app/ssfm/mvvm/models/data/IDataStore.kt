@@ -12,6 +12,8 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTrackEntity
 
 /**
  * Interface that represents a data store from where data is retrieved.
@@ -48,9 +50,9 @@ interface IDataStore {
     // NOTE: 5/13/17 We should keep the 'Session' and 'UserName' in the shared preferences.
     fun obtainSession(user: String, pwd: String): Observable<Session>
 
-    fun getChartTopArtist(page: Int = 1): Observable<Collection<Artist>>
+    fun getChartTopArtist(page: Int = 1): Observable<ChartTopArtistEntity>
 
-    fun getChartTopTracks(page: Int = 1): Observable<Collection<Track>>
+    fun getChartTopTracks(page: Int = 1): Observable<ChartTopTrackEntity>
 
     fun getSimilarArtist(artist: String): Observable<Collection<Artist>>
 

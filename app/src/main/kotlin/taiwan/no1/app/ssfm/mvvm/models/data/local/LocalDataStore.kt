@@ -22,6 +22,8 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity_Table
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTrackEntity
 
 
 /**
@@ -43,11 +45,11 @@ class LocalDataStore: IDataStore {
         TODO("Local database has no session...")
     }
 
-    override fun getChartTopArtist(page: Int): Observable<Collection<Artist>> {
+    override fun getChartTopArtist(page: Int): Observable<ChartTopArtistEntity> {
         TODO()
     }
 
-    override fun getChartTopTracks(page: Int): Observable<Collection<Track>> {
+    override fun getChartTopTracks(page: Int): Observable<ChartTopTrackEntity> {
         TODO()
     }
 

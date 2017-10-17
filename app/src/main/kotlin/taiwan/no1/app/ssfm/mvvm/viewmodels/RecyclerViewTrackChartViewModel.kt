@@ -9,7 +9,6 @@ import com.devrapid.kotlinknifer.observer
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import org.jsoup.Jsoup
 import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.mvvm.models.entities.ExtTrackEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
@@ -40,9 +39,9 @@ class RecyclerViewTrackChartViewModel(val item: ExtTrackEntity,
     fun retrieveThumbnail() {
         item.imageUrl.takeIf { it.isNotBlank() }?.let { thumbnail.set(it) } ?:
             observable<String> {
-                val document = Jsoup.connect(item.track.url).get()
-                val classes = document.getElementsByClass("cover-art")
-                it.onNext(if (classes.isNotEmpty()) classes[0].attr("src") else "")
+                //                val document = Jsoup.connect(item.track.url).get()
+//                val classes = document.getElementsByClass("cover-art")
+//                it.onNext(if (classes.isNotEmpty()) classes[0].attr("src") else "")
             }.subscribeOn(Schedulers.io()).
                 bindToLifecycle(lifecycleProvider).
                 observeOn(AndroidSchedulers.mainThread()).
