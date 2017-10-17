@@ -7,6 +7,8 @@ import com.google.gson.annotations.SerializedName
  * @author  jieyi
  * @since   10/17/17
  */
+data class Tags(@SerializedName("tag") var tags: List<TagEntity.Tag>?)
+
 data class Image(@SerializedName("#text") var text: String?,
                  var size: String?)
 

@@ -23,7 +23,7 @@ class RecyclerViewArtistChartViewModel(val item: ArtistEntity.Artist,
 
     fun artistOnClick(view: View) {
         lifecycleProvider.execute(usecase,
-            GetAlbumInfoCase.RequestValue(item.name ?: "", "63b3a8ca-26f2-4e2b-b867-647a6ec2bebd")) {
+            GetAlbumInfoCase.RequestValue(item.name ?: "", "")) {
             onNext { logw(it) }
         }
     }

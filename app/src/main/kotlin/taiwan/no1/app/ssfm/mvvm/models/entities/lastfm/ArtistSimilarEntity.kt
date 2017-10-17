@@ -6,8 +6,4 @@ import com.google.gson.annotations.SerializedName
  * @author  jieyi
  * @since   10/16/17
  */
-
-data class ArtistSimilarEntity(@SerializedName("similarartists") var similarartist: Similarartists?) {
-    data class Similarartists(@SerializedName("artist") var artists: List<ArtistEntity.Artist>?,
-                              @SerializedName("@attr") var attr: Attr?)
-}
+data class ArtistSimilarEntity(@SerializedName("similarartists") var similarartist: ChartTopArtistEntity.Artists)

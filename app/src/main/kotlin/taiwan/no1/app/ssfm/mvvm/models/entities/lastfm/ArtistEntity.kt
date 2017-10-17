@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName
  * @author  jieyi
  * @since   10/16/17
  */
-
 data class ArtistEntity(var artist: Artist?) {
     data class Artist(var name: String?,
                       var mbid: String?,
@@ -37,9 +36,4 @@ data class ArtistEntity(var artist: Artist?) {
                      @SerializedName("playcount") var playCount: String?)
 
     data class Similar(@SerializedName("artist") var artists: List<Artist>?)
-
-    data class Tags(var tag: List<Tag?>?)
-
-    data class Tag(var name: String?,
-                   var url: String?)
 }
