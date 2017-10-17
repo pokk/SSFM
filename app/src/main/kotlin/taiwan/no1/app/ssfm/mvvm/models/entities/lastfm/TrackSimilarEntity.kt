@@ -8,6 +8,6 @@ import com.google.gson.annotations.SerializedName
  */
 
 data class TrackSimilarEntity(@SerializedName("similartracks") var similartrack: Similartracks?) {
-    data class Similartracks(@SerializedName("track") var tracks: List<TrackEntity.Track?>?,
+    data class Similartracks(@SerializedName("track") var tracks: List<TrackEntity.Track>?,
                              @SerializedName("@attr") var attr: Attr?)
 }

@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName
 data class AlbumEntity(var album: Album?) {
     data class Album(@SerializedName("@attr") var attr: Attr?,
                      var artist: String?,
-                     @SerializedName("image") var images: List<Image?>?,
+                     @SerializedName("image") var images: List<Image>?,
                      var listeners: String?,
                      var mbid: String?,
                      var name: String?,
@@ -27,5 +27,5 @@ data class AlbumEntity(var album: Album?) {
     data class Tag(var name: String?,
                    var url: String?)
 
-    data class Tracks(@SerializedName("track") var tracks: List<TrackEntity.Track?>?)
+    data class Tracks(@SerializedName("track") var tracks: List<TrackEntity.Track>?)
 }

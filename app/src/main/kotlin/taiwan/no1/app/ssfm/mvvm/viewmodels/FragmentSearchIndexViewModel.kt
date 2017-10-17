@@ -1,14 +1,13 @@
 package taiwan.no1.app.ssfm.mvvm.viewmodels
 
-import com.devrapid.kotlinknifer.logw
 import de.umass.lastfm.Album
 import de.umass.lastfm.Image
 import de.umass.lastfm.PaginatedResult
 import taiwan.no1.app.ssfm.misc.extension.execute
-import taiwan.no1.app.ssfm.mvvm.models.entities.ExtArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.ExtTrackEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTrackEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistImagesCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetTopAlbumsCase
@@ -25,17 +24,9 @@ class FragmentSearchIndexViewModel(private val topArtistsUsecase: BaseUsecase<Ch
                                    private val topAlbumsUsecase: BaseUsecase<Collection<Album>, GetTopAlbumsCase.RequestValue>,
                                    private val artistImagesUsecase: BaseUsecase<PaginatedResult<Image>, GetArtistImagesCase.RequestValue>):
     BaseViewModel() {
-    fun fetchArtistList(callback: (List<ExtArtistEntity>) -> Unit) {
-        lifecycleProvider.execute(topArtistsUsecase) {
-            onNext { logw(it) }
-//            onNext { callback.invoke(it.map { ExtArtistEntity(it) }) }
-        }
-    }
+    fun fetchArtistList(callback: (List<ArtistEntity.Artist>) -> Unit) =
+        lifecycleProvider.execute(topArtistsUsecase) { onNext { callback(it.artists.artists ?: emptyList()) } }
 
-    fun fetchTrackList(callback: (List<ExtTrackEntity>) -> Unit) {
-        lifecycleProvider.execute(topTracksUsecase) {
-            //            onNext { callback.invoke(it.map { ExtTrackEntity(it) }) }
-            onNext { logw(it) }
-        }
-    }
+    fun fetchTrackList(callback: (List<TrackEntity.Track>) -> Unit) =
+        lifecycleProvider.execute(topTracksUsecase) { onNext { callback(it.track.tracks ?: emptyList()) } }
 }

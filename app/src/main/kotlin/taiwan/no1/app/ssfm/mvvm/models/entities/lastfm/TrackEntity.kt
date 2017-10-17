@@ -12,7 +12,7 @@ data class TrackEntity(var track: Track?) {
                      @SerializedName("@attr") var attr: Attr?,
                      var artist: ArtistEntity.Artist?,
                      var duration: String?,
-                     @SerializedName("image") var images: List<Image?>?,
+                     @SerializedName("image") var images: List<Image>?,
                      var listeners: String?,
                      var match: Double?,
                      var mbid: String?,

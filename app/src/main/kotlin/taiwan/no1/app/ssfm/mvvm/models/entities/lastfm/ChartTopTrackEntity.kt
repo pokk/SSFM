@@ -8,6 +8,6 @@ import com.google.gson.annotations.SerializedName
  */
 
 data class ChartTopTrackEntity(@SerializedName("tracks") var track: Tracks) {
-    data class Tracks(@SerializedName("track") var tracks: List<TrackEntity.Track?>?,
+    data class Tracks(@SerializedName("track") var tracks: List<TrackEntity.Track>?,
                       @SerializedName("@attr") var attr: Attr?)
 }

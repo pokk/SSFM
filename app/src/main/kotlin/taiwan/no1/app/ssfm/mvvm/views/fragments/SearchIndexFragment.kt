@@ -8,9 +8,9 @@ import taiwan.no1.app.ssfm.databinding.ItemArtistType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType1Binding
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshRecyclerView
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
-import taiwan.no1.app.ssfm.mvvm.models.entities.ExtArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.ExtTrackEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetAlbumInfoCase
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentSearchIndexViewModel
@@ -29,8 +29,8 @@ import javax.inject.Inject
 class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, FragmentSearchIndexBinding>() {
     @Inject override lateinit var viewModel: FragmentSearchIndexViewModel
     @Inject lateinit var albumInfoUsecase: BaseUsecase<AlbumEntity, GetAlbumInfoCase.RequestValue>
-    private var trackRes = mutableListOf<ExtTrackEntity>()
-    private var artistRes = mutableListOf<ExtArtistEntity>()
+    private var artistRes = mutableListOf<ArtistEntity.Artist>()
+    private var trackRes = mutableListOf<TrackEntity.Track>()
 
     //region Fragment lifecycle
     override fun onResume() {
@@ -45,24 +45,22 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
         binding?.apply {
             artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             trackLayoutManager = WrapContentLinearLayoutManager(activity)
-            artistAdapter = BaseDataBindingAdapter<ItemArtistType1Binding, ExtArtistEntity>(R.layout.item_artist_type_1,
+            artistAdapter = BaseDataBindingAdapter<ItemArtistType1Binding, ArtistEntity.Artist>(R.layout.item_artist_type_1,
                 artistRes) { holder, item ->
                 holder.binding.avm = RecyclerViewArtistChartViewModel(item, albumInfoUsecase).apply {
                     onAttach(this@SearchIndexFragment)
-                    retrieveThumbnail()
                 }
             }
-            trackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, ExtTrackEntity>(R.layout.item_music_type_1,
+            trackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, TrackEntity.Track>(R.layout.item_music_type_1,
                 trackRes) { holder, item ->
                 holder.binding.avm = RecyclerViewTrackChartViewModel(item, albumInfoUsecase).apply {
                     onAttach(this@SearchIndexFragment)
-                    retrieveThumbnail()
                 }
             }
             artistDecoration = HorizontalItemDecorator(20)
         }
         viewModel.fetchArtistList {
-            artistRes = (artistRes to binding?.artistAdapter as BaseDataBindingAdapter<ItemArtistType1Binding, ExtArtistEntity>).
+            artistRes = (artistRes to binding?.artistAdapter as BaseDataBindingAdapter<ItemArtistType1Binding, ArtistEntity.Artist>).
                 refreshRecyclerView { addAll(it) }
         }
         viewModel.fetchTrackList { trackRes.refreshRecyclerView { addAll(it) } }
@@ -79,8 +77,8 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
      * @return a new updated list.
      */
     // HACK(jieyi): 10/13/17 Here should be a general function.
-    private fun MutableList<ExtTrackEntity>.refreshRecyclerView(block: ArrayList<ExtTrackEntity>.() -> Unit) {
-        trackRes = (this to binding?.trackAdapter as BaseDataBindingAdapter<ItemMusicType1Binding, ExtTrackEntity>).
+    private fun MutableList<TrackEntity.Track>.refreshRecyclerView(block: ArrayList<TrackEntity.Track>.() -> Unit) {
+        trackRes = (this to binding?.trackAdapter as BaseDataBindingAdapter<ItemMusicType1Binding, TrackEntity.Track>).
             refreshRecyclerView(block)
     }
 }
