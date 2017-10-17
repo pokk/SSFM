@@ -2,17 +2,14 @@ package taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency
 
 import dagger.Module
 import dagger.Provides
-import de.umass.lastfm.Album
-import de.umass.lastfm.Image
-import de.umass.lastfm.PaginatedResult
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerFragment
 import taiwan.no1.app.ssfm.mvvm.models.data.repositories.DataRepository
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTrackEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetAlbumInfoCase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistImagesCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetTopAlbumsCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetTopArtistsCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetTopTracksCase
@@ -38,13 +35,8 @@ class SearchIndexFragmentModule {
 
     @Provides
     @PerFragment
-    fun provideTopAlbumsUsecase(dataRepository: DataRepository): BaseUsecase<Collection<Album>, GetTopAlbumsCase.RequestValue> =
+    fun provideTopAlbumsUsecase(dataRepository: DataRepository): BaseUsecase<ArtistTopAlbumEntity, GetTopAlbumsCase.RequestValue> =
         GetTopAlbumsCase(dataRepository)
-
-    @Provides
-    @PerFragment
-    fun provideArtistImagesUsecase(dataRepository: DataRepository): BaseUsecase<PaginatedResult<Image>, GetArtistImagesCase.RequestValue> =
-        GetArtistImagesCase(dataRepository)
 
     @Provides
     @PerFragment
@@ -55,10 +47,8 @@ class SearchIndexFragmentModule {
     @PerFragment
     fun provideViewModel(topArtistsUsecase: BaseUsecase<ChartTopArtistEntity, GetTopArtistsCase.RequestValue>,
                          topTracksUsecase: BaseUsecase<ChartTopTrackEntity, GetTopTracksCase.RequestValue>,
-                         topAlbumsUsecase: BaseUsecase<Collection<Album>, GetTopAlbumsCase.RequestValue>,
-                         topArtistImagesUsecase: BaseUsecase<PaginatedResult<Image>, GetArtistImagesCase.RequestValue>):
+                         topAlbumsUsecase: BaseUsecase<ArtistTopAlbumEntity, GetTopAlbumsCase.RequestValue>):
         FragmentSearchIndexViewModel = FragmentSearchIndexViewModel(topArtistsUsecase,
         topTracksUsecase,
-        topAlbumsUsecase,
-        topArtistImagesUsecase)
+        topAlbumsUsecase)
 }

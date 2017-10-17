@@ -37,9 +37,6 @@ class RecyclerViewSearchHistoryViewModel(private val entity: KeywordEntity,
      * @event_to [taiwan.no1.app.ssfm.mvvm.viewmodels.SearchViewModel.receiveClickHistoryEvent]
      */
     fun selectHistoryItem(view: View) {
-        RxBus.get().post(
-            RxBusConstant.VIEWMODEL_CLICK_HISTORY,
-            entity.keyword
-        )
+        RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_HISTORY, entity.keyword)
     }
 }

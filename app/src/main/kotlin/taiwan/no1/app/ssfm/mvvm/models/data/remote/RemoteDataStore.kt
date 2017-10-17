@@ -3,11 +3,8 @@ package taiwan.no1.app.ssfm.mvvm.models.data.remote
 import android.content.Context
 import com.devrapid.kotlinknifer.observable
 import dagger.Lazy
-import de.umass.lastfm.Album
 import de.umass.lastfm.Artist
 import de.umass.lastfm.Authenticator
-import de.umass.lastfm.Image
-import de.umass.lastfm.PaginatedResult
 import de.umass.lastfm.Session
 import de.umass.lastfm.Track
 import de.umass.lastfm.User
@@ -23,8 +20,11 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistSimilarEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTrackEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackSimilarEntity
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -88,11 +88,22 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
         return musicService3.get().getChartTopTrack(query)
     }
 
-    override fun getSimilarArtist(artist: String): Observable<Collection<Artist>> =
-        ObservableJust(Artist.getSimilar(artist, 10, lastfm_key))
+    override fun getSimilarArtist(artist: String): Observable<ArtistSimilarEntity> {
+        val query =
+            mutableMapOf("artist" to artist,
+                "limit" to 10.toString(),
+                "method" to "artist.getSimilar").baseLastFmParams()
 
-    override fun getArtistTopAlbum(artist: String): Observable<Collection<Album>> =
-        ObservableJust(Artist.getTopAlbums(artist, lastfm_key))
+        return musicService3.get().getSimilarArtistInfo(query)
+    }
+
+    override fun getArtistTopAlbum(artist: String): Observable<ArtistTopAlbumEntity> {
+        val query =
+            mutableMapOf("artist" to artist,
+                "method" to "artist.getTopAlbums").baseLastFmParams()
+
+        return musicService3.get().getArtistTopAlbum(query)
+    }
 
     override fun getAlbumInfo(artist: String, albumOrMbid: String): Observable<AlbumEntity> {
         val query =
@@ -104,11 +115,15 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
     override fun getArtistTags(artist: String, session: Session): Observable<Collection<String>> =
         ObservableJust(Artist.getTags(artist, session))
 
-    override fun getArtistImages(mbid: String): Observable<PaginatedResult<Image>> =
-        ObservableJust(Artist.getImages(mbid, lastfm_key))
+    override fun getSimilarTracks(artist: String, track: String): Observable<TrackSimilarEntity> {
+        val query =
+            mutableMapOf("artist" to artist,
+                "track" to track,
+                "limit" to 10.toString(),
+                "method" to "track.getSimilar").baseLastFmParams()
 
-    override fun getSimilarTracks(artist: String, mbid: String): Observable<Collection<Track>> =
-        ObservableJust(Track.getSimilar(artist, mbid, lastfm_key))
+        return musicService3.get().getSimilarTrackInfo(query)
+    }
 
     override fun getLovedTracks(user: String, page: Int): Observable<Collection<Track>> =
         ObservableJust(User.getLovedTracks(user, page, lastfm_key).pageResults)

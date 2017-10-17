@@ -1,9 +1,13 @@
 package taiwan.no1.app.ssfm.mvvm.models.data.repositories
 
 import de.umass.lastfm.Session
+import io.reactivex.Observable
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Local
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Remote
 import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistSimilarEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackSimilarEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -27,20 +31,17 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
 
     override fun getChartTopTracks(page: Int) = remote.getChartTopTracks(page)
 
-    override fun getSimilarArtist(artist: String) = remote.getSimilarArtist(artist)
+    override fun getSimilarArtist(artist: String): Observable<ArtistSimilarEntity> = remote.getSimilarArtist(artist)
 
-    override fun getArtistTopAlbum(artist: String) = remote.getArtistTopAlbum(artist)
+    override fun getArtistTopAlbum(artist: String): Observable<ArtistTopAlbumEntity> = remote.getArtistTopAlbum(artist)
 
     override fun getAlbumInfo(artist: String, albumOrMbid: String) = remote.getAlbumInfo(artist, albumOrMbid)
 
     override fun getArtistTags(artist: String, session: Session) =
         remote.getArtistTags(artist, session)
 
-    override fun getArtistImages(mbid: String) =
-        remote.getArtistImages(mbid)
-
-    override fun getSimilarTracks(artist: String, mbid: String) =
-        remote.getSimilarTracks(artist, mbid)
+    override fun getSimilarTracks(artist: String, track: String): Observable<TrackSimilarEntity> =
+        remote.getSimilarTracks(artist, track)
 
     override fun getLovedTracks(user: String, page: Int) =
         remote.getLovedTracks(user, page)

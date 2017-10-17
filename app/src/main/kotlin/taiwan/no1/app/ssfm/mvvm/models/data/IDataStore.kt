@@ -1,9 +1,5 @@
 package taiwan.no1.app.ssfm.mvvm.models.data
 
-import de.umass.lastfm.Album
-import de.umass.lastfm.Artist
-import de.umass.lastfm.Image
-import de.umass.lastfm.PaginatedResult
 import de.umass.lastfm.Session
 import de.umass.lastfm.Track
 import io.reactivex.Observable
@@ -12,8 +8,11 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistSimilarEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTrackEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackSimilarEntity
 
 /**
  * Interface that represents a data store from where data is retrieved.
@@ -54,17 +53,15 @@ interface IDataStore {
 
     fun getChartTopTracks(page: Int = 1): Observable<ChartTopTrackEntity>
 
-    fun getSimilarArtist(artist: String): Observable<Collection<Artist>>
+    fun getSimilarArtist(artist: String): Observable<ArtistSimilarEntity>
 
-    fun getArtistTopAlbum(artist: String): Observable<Collection<Album>>
+    fun getArtistTopAlbum(artist: String): Observable<ArtistTopAlbumEntity>
 
     fun getAlbumInfo(artist: String, albumOrMbid: String): Observable<AlbumEntity>
 
     fun getArtistTags(artist: String, session: Session): Observable<Collection<String>>
 
-    fun getArtistImages(mbid: String): Observable<PaginatedResult<Image>>
-
-    fun getSimilarTracks(artist: String, mbid: String): Observable<Collection<Track>>
+    fun getSimilarTracks(artist: String, track: String): Observable<TrackSimilarEntity>
 
     fun getLovedTracks(user: String, page: Int = 1): Observable<Collection<Track>>
 

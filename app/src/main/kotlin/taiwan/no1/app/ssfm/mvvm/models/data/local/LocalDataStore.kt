@@ -9,10 +9,6 @@ import com.raizlabs.android.dbflow.kotlinextensions.select
 import com.raizlabs.android.dbflow.kotlinextensions.where
 import com.raizlabs.android.dbflow.rx2.kotlinextensions.list
 import com.raizlabs.android.dbflow.rx2.kotlinextensions.rx
-import de.umass.lastfm.Album
-import de.umass.lastfm.Artist
-import de.umass.lastfm.Image
-import de.umass.lastfm.PaginatedResult
 import de.umass.lastfm.Session
 import de.umass.lastfm.Track
 import io.reactivex.Observable
@@ -22,8 +18,11 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity_Table
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistSimilarEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTrackEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackSimilarEntity
 
 
 /**
@@ -53,11 +52,11 @@ class LocalDataStore: IDataStore {
         TODO()
     }
 
-    override fun getSimilarArtist(artist: String): Observable<Collection<Artist>> {
+    override fun getSimilarArtist(artist: String): Observable<ArtistSimilarEntity> {
         TODO()
     }
 
-    override fun getArtistTopAlbum(artist: String): Observable<Collection<Album>> {
+    override fun getArtistTopAlbum(artist: String): Observable<ArtistTopAlbumEntity> {
         TODO()
     }
 
@@ -69,11 +68,7 @@ class LocalDataStore: IDataStore {
         TODO()
     }
 
-    override fun getArtistImages(mbid: String): Observable<PaginatedResult<Image>> {
-        TODO()
-    }
-
-    override fun getSimilarTracks(artist: String, mbid: String): Observable<Collection<Track>> {
+    override fun getSimilarTracks(artist: String, track: String): Observable<TrackSimilarEntity> {
         TODO()
     }
 
