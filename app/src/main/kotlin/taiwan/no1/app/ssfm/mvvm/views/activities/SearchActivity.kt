@@ -4,6 +4,8 @@ import android.app.Activity
 import android.app.Fragment
 import android.os.Bundle
 import android.util.SparseArray
+import com.devrapid.kotlinknifer.logi
+import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivitySearchBinding
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.FRAGMENT_SEARCH_HISTORY
@@ -63,8 +65,8 @@ class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>()
         setFragmentParameters(fragmentTag, params)?.let { targetFragment ->
             if (isSpecificTargetAction(fragmentTag) ||
                 fragmentStack.safePeek() is SearchResultFragment) {
-                popFragment(FRAGMENT_SEARCH_HISTORY)
-                return@let
+                if (popFragment(FRAGMENT_SEARCH_HISTORY))
+                    return@let
             }
 
             addFragment(targetFragment, true)
@@ -88,12 +90,23 @@ class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>()
         fragmentStack.push(fragment)
     }
 
-    private fun popFragment(toFragmentTag: String) {
+    private fun popFragment(toFragmentTag: String): Boolean {
+        logw(fragmentStack.safePeek(), fragmentStack.size)
+        fragmentStack.forEach { logi(it) }
+        // For staying the same history fragment.
         if (FRAGMENT_SEARCH_HISTORY == toFragmentTag && fragmentStack.safePeek() is SearchHistoryFragment)
-            return
+            return true
+        // This is very special case for clicking a artist or a track from the search index fragment.
+        // OPTIMIZE(jieyi): 10/18/17 Here may modified better!?
+        if (FRAGMENT_SEARCH_HISTORY == toFragmentTag && fragmentStack.safePeek() is SearchResultFragment && 2 == fragmentStack.size) {
+            fragmentManager.popBackStackImmediate()
+            fragmentStack.safePop()
+            return false
+        }
 
         fragmentManager.popBackStackImmediate()
         fragmentStack.safePop()
+        return true
     }
 
     private fun <E> Stack<E>.safePop() = lastOrNull()?.let { pop() }
