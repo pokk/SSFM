@@ -61,7 +61,9 @@ class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>()
 
     private fun navigate(fragmentTag: String, params: SparseArray<Any> = SparseArray()) {
         setFragmentParameters(fragmentTag, params)?.let { targetFragment ->
-            if (isSpecificTargetAction(fragmentTag)) {
+            if (isSpecificTargetAction(fragmentTag) ||
+                fragmentStack.safePeek() is SearchResultFragment) {
+                popFragment(FRAGMENT_SEARCH_HISTORY)
                 return@let
             }
 
@@ -69,18 +71,8 @@ class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>()
         }
     }
 
-    private fun isSpecificTargetAction(fragmentTag: String): Boolean {
-        if (FRAGMENT_SEARCH_HISTORY == fragmentTag) {
-            when (fragmentStack.safePeek()) {
-                is SearchHistoryFragment -> return true
-                is SearchResultFragment -> {
-                    popFragment(FRAGMENT_SEARCH_HISTORY)
-                    return true
-                }
-            }
-        }
-        return false
-    }
+    private fun isSpecificTargetAction(fragmentTag: String): Boolean =
+        FRAGMENT_SEARCH_HISTORY == fragmentTag && (fragmentStack.safePeek() is SearchHistoryFragment || fragmentStack.safePeek() is SearchResultFragment)
 
     private fun setFragmentParameters(tag: String, params: SparseArray<Any>) = searchFragments[tag].also {
         when (tag) {

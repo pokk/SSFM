@@ -36,7 +36,7 @@ class SearchViewModel(private val context: Context,
     val keyword by lazy { ObservableField<String>("") }
     /** Check search view is clicked or un-clicked */
     val isSearching by lazy { ObservableBoolean() }
-    val collapseView by lazy { ObservableBoolean(false) }
+    val collapseView by lazy { ObservableBoolean() }
 
     //region Lifecycle
     override fun <E> onAttach(lifecycleProvider: LifecycleProvider<E>) {
@@ -118,9 +118,9 @@ class SearchViewModel(private val context: Context,
      * @param keyword of the song or singer's name.
      *
      * @event_from [taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewSearchHistoryViewModel.selectHistoryItem]
+     * @event_from [taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewArtistChartViewModel.artistOnClick]
+     * @event_from [taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewTrackChartViewModel.trackOnClick]
      */
     @Subscribe(tags = arrayOf(Tag(VIEWMODEL_CLICK_HISTORY)))
-    fun receiveClickHistoryEvent(keyword: String) {
-        querySubmit(keyword)
-    }
+    fun receiveClickHistoryEvent(keyword: String) = querySubmit(keyword)
 }
