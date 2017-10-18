@@ -98,7 +98,7 @@ class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>()
             return true
         // This is very special case for clicking a artist or a track from the search index fragment.
         // OPTIMIZE(jieyi): 10/18/17 Here may modified better!?
-        if (FRAGMENT_SEARCH_HISTORY == toFragmentTag && fragmentStack.safePeek() is SearchResultFragment && 2 == fragmentStack.size) {
+        if (FRAGMENT_SEARCH_HISTORY == toFragmentTag && fragmentStack.safePeek() is SearchResultFragment) {
             fragmentManager.popBackStackImmediate()
             fragmentStack.safePop()
             return false

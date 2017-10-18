@@ -10,7 +10,7 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
  */
 class GetAlbumInfoCase(repository: IDataStore): BaseUsecase<AlbumEntity, GetAlbumInfoCase.RequestValue>(repository) {
     override fun fetchUsecase(): Observable<AlbumEntity> =
-        repository.getAlbumInfo(parameters?.artist ?: "", parameters?.albumOrMbid ?: "")
+        (parameters ?: GetAlbumInfoCase.RequestValue()).let { repository.getAlbumInfo(it.artist, it.albumOrMbid) }
 
     data class RequestValue(val artist: String = "", val albumOrMbid: String = ""): RequestValues
 }

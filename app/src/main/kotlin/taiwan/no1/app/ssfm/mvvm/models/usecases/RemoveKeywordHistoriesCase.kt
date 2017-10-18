@@ -2,7 +2,6 @@ package taiwan.no1.app.ssfm.mvvm.models.usecases
 
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
-import taiwan.no1.app.ssfm.mvvm.models.usecases.RemoveKeywordHistoriesCase.RequestValue
 
 /**
  * A usecase for retrieving the detail of a music.
@@ -10,8 +9,10 @@ import taiwan.no1.app.ssfm.mvvm.models.usecases.RemoveKeywordHistoriesCase.Reque
  * @author  jieyi
  * @since   8/14/17
  */
-class RemoveKeywordHistoriesCase(repository: IDataStore): BaseUsecase<Boolean, RequestValue>(repository) {
-    override fun fetchUsecase(): Observable<Boolean> = repository.removeKeywords(parameters?.keyword)
+class RemoveKeywordHistoriesCase(repository: IDataStore):
+    BaseUsecase<Boolean, RemoveKeywordHistoriesCase.RequestValue>(repository) {
+    override fun fetchUsecase(): Observable<Boolean> =
+        (parameters ?: RemoveKeywordHistoriesCase.RequestValue()).let { repository.removeKeywords(it.keyword) }
 
-    data class RequestValue(val keyword: String? = null): RequestValues
+    data class RequestValue(val keyword: String = ""): RequestValues
 }

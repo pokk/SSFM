@@ -46,9 +46,6 @@ class SearchIndexFragmentModule {
     @Provides
     @PerFragment
     fun provideViewModel(topArtistsUsecase: BaseUsecase<ChartTopArtistEntity, GetTopArtistsCase.RequestValue>,
-                         topTracksUsecase: BaseUsecase<ChartTopTrackEntity, GetTopTracksCase.RequestValue>,
-                         topAlbumsUsecase: BaseUsecase<ArtistTopAlbumEntity, GetTopAlbumsCase.RequestValue>):
-        FragmentSearchIndexViewModel = FragmentSearchIndexViewModel(topArtistsUsecase,
-        topTracksUsecase,
-        topAlbumsUsecase)
+                         topTracksUsecase: BaseUsecase<ChartTopTrackEntity, GetTopTracksCase.RequestValue>):
+        FragmentSearchIndexViewModel = FragmentSearchIndexViewModel(topArtistsUsecase, topTracksUsecase)
 }

@@ -74,16 +74,20 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
     override fun obtainSession(user: String, pwd: String): Observable<Session> =
         ObservableJust(Authenticator.getMobileSession(user, pwd, lastfm_key, lastfm_secret))
 
-    override fun getChartTopArtist(page: Int): Observable<ChartTopArtistEntity> {
+    override fun getChartTopArtist(page: Int, limit: Int): Observable<ChartTopArtistEntity> {
         val query =
-            mutableMapOf("page" to page.toString(), "method" to "chart.getTopArtists").baseLastFmParams()
+            mutableMapOf("page" to page.toString(),
+                "limit" to limit.toString(),
+                "method" to "chart.getTopArtists").baseLastFmParams()
 
         return musicService3.get().getChartTopArtist(query)
     }
 
-    override fun getChartTopTracks(page: Int): Observable<ChartTopTrackEntity> {
+    override fun getChartTopTracks(page: Int, limit: Int): Observable<ChartTopTrackEntity> {
         val query =
-            mutableMapOf("page" to page.toString(), "method" to "chart.getTopTracks").baseLastFmParams()
+            mutableMapOf("page" to page.toString(),
+                "limit" to limit.toString(),
+                "method" to "chart.getTopTracks").baseLastFmParams()
 
         return musicService3.get().getChartTopTrack(query)
     }

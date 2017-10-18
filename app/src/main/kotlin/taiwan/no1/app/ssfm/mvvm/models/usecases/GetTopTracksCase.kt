@@ -10,7 +10,8 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTrackEntity
  */
 class GetTopTracksCase(repository: IDataStore): BaseUsecase<ChartTopTrackEntity, GetTopTracksCase.RequestValue>(
     repository) {
-    override fun fetchUsecase(): Observable<ChartTopTrackEntity> = repository.getChartTopTracks(parameters?.page ?: 1)
+    override fun fetchUsecase(): Observable<ChartTopTrackEntity> =
+        (parameters ?: GetTopTracksCase.RequestValue()).let { repository.getChartTopTracks(it.page, it.limit) }
 
-    data class RequestValue(val page: Int = -1): RequestValues
+    data class RequestValue(val page: Int = 1, val limit: Int = 20): RequestValues
 }

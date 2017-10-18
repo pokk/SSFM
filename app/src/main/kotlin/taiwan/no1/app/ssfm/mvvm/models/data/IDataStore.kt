@@ -49,9 +49,9 @@ interface IDataStore {
     // NOTE: 5/13/17 We should keep the 'Session' and 'UserName' in the shared preferences.
     fun obtainSession(user: String, pwd: String): Observable<Session>
 
-    fun getChartTopArtist(page: Int = 1): Observable<ChartTopArtistEntity>
+    fun getChartTopArtist(page: Int = 1, limit: Int = 20): Observable<ChartTopArtistEntity>
 
-    fun getChartTopTracks(page: Int = 1): Observable<ChartTopTrackEntity>
+    fun getChartTopTracks(page: Int = 1, limit: Int = 20): Observable<ChartTopTrackEntity>
 
     fun getSimilarArtist(artist: String): Observable<ArtistSimilarEntity>
 

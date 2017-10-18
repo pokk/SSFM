@@ -3,6 +3,7 @@ package taiwan.no1.app.ssfm.controllers.services
 import android.app.IntentService
 import android.content.Context
 import android.content.Intent
+import com.raizlabs.android.dbflow.config.FlowConfig
 import com.raizlabs.android.dbflow.config.FlowManager
 
 /**
@@ -30,6 +31,6 @@ class InitializeService: IntentService("InitializeService") {
 
     private fun initial() {
         // Initial the database.
-        FlowManager.init(this)
+        FlowManager.init(FlowConfig.Builder(this).build())
     }
 }

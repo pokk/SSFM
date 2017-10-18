@@ -44,11 +44,11 @@ class LocalDataStore: IDataStore {
         TODO("Local database has no session...")
     }
 
-    override fun getChartTopArtist(page: Int): Observable<ChartTopArtistEntity> {
+    override fun getChartTopArtist(page: Int, limit: Int): Observable<ChartTopArtistEntity> {
         TODO()
     }
 
-    override fun getChartTopTracks(page: Int): Observable<ChartTopTrackEntity> {
+    override fun getChartTopTracks(page: Int, limit: Int): Observable<ChartTopTrackEntity> {
         TODO()
     }
 

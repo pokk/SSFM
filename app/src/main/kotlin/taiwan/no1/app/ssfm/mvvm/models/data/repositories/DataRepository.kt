@@ -27,9 +27,9 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
 
     override fun getDetailMusicRes(hash: String) = remote.getDetailMusicRes(hash)
 
-    override fun getChartTopArtist(page: Int) = remote.getChartTopArtist(page)
+    override fun getChartTopArtist(page: Int, limit: Int) = remote.getChartTopArtist(page, limit)
 
-    override fun getChartTopTracks(page: Int) = remote.getChartTopTracks(page)
+    override fun getChartTopTracks(page: Int, limit: Int) = remote.getChartTopTracks(page, limit)
 
     override fun getSimilarArtist(artist: String): Observable<ArtistSimilarEntity> = remote.getSimilarArtist(artist)
 

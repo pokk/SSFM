@@ -2,10 +2,13 @@ package taiwan.no1.app.ssfm.mvvm.views.fragments
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchIndexBinding
 import taiwan.no1.app.ssfm.databinding.ItemArtistType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType1Binding
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshRecyclerView
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
@@ -29,41 +32,54 @@ import javax.inject.Inject
 class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, FragmentSearchIndexBinding>() {
     @Inject override lateinit var viewModel: FragmentSearchIndexViewModel
     @Inject lateinit var albumInfoUsecase: BaseUsecase<AlbumEntity, GetAlbumInfoCase.RequestValue>
+    private val artistInfo by lazy { DataInfo() }
+    private val trackInfo by lazy { DataInfo() }
     private var artistRes = mutableListOf<ArtistEntity.Artist>()
     private var trackRes = mutableListOf<TrackEntity.Track>()
 
-    //region Fragment lifecycle
-    override fun onResume() {
-        super.onResume()
-        trackRes.clear()
-        artistRes.clear()
-    }
     //endregion
 
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
         binding?.apply {
             artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            trackLayoutManager = WrapContentLinearLayoutManager(activity)
             artistAdapter = BaseDataBindingAdapter<ItemArtistType1Binding, ArtistEntity.Artist>(R.layout.item_artist_type_1,
                 artistRes) { holder, item ->
                 holder.binding.avm = RecyclerViewArtistChartViewModel(item, albumInfoUsecase).apply {
                     onAttach(this@SearchIndexFragment)
                 }
             }
+            artistLoadmore = object: RecyclerViewScrollCallback {
+                override fun loadMoreEvent(recyclerView: RecyclerView, total: Int) {
+                    if (artistInfo.canLoadMoreFlag && !artistInfo.isLoading) {
+                        artistInfo.isLoading = true
+                        viewModel.fetchArtistList(artistInfo.page, artistInfo.limit, updateArtistCallback)
+                    }
+                }
+            }
+            artistDecoration = HorizontalItemDecorator(20)
+            trackLayoutManager = WrapContentLinearLayoutManager(activity)
             trackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, TrackEntity.Track>(R.layout.item_music_type_1,
                 trackRes) { holder, item ->
                 holder.binding.avm = RecyclerViewTrackChartViewModel(item, albumInfoUsecase).apply {
                     onAttach(this@SearchIndexFragment)
                 }
             }
-            artistDecoration = HorizontalItemDecorator(20)
+            trackLoadmore = object: RecyclerViewScrollCallback {
+                override fun loadMoreEvent(recyclerView: RecyclerView, total: Int) {
+                    if (trackInfo.canLoadMoreFlag && !trackInfo.isLoading) {
+                        trackInfo.isLoading = true
+                        viewModel.fetchTrackList(trackInfo.page, trackInfo.limit, updateTrackCallback)
+                    }
+                }
+            }
         }
-        viewModel.fetchArtistList {
-            artistRes = (artistRes to binding?.artistAdapter as BaseDataBindingAdapter<ItemArtistType1Binding, ArtistEntity.Artist>).
-                refreshRecyclerView { addAll(it) }
+        artistInfo.page.takeIf { 1 >= it && artistInfo.canLoadMoreFlag }?.let {
+            viewModel.fetchArtistList(artistInfo.page, artistInfo.limit, updateArtistCallback)
         }
-        viewModel.fetchTrackList { trackRes.refreshRecyclerView { addAll(it) } }
+        trackInfo.page.takeIf { 1 >= it && trackInfo.canLoadMoreFlag }?.let {
+            viewModel.fetchTrackList(trackInfo.page, trackInfo.limit, updateTrackCallback)
+        }
     }
 
     override fun provideInflateView(): Int = R.layout.fragment_search_index
@@ -81,4 +97,31 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
         trackRes = (this to binding?.trackAdapter as BaseDataBindingAdapter<ItemMusicType1Binding, TrackEntity.Track>).
             refreshRecyclerView(block)
     }
+
+    private val updateArtistCallback = { resList: List<ArtistEntity.Artist>, total: Int ->
+        artistRes = (artistRes to binding?.artistAdapter as BaseDataBindingAdapter<ItemArtistType1Binding, ArtistEntity.Artist>).
+            refreshRecyclerView {
+                artistInfo.page += 1
+                addAll(resList)
+            }
+        artistInfo.isLoading = false
+        // Raise the stopping loading more data flag for avoiding to load again.
+        artistInfo.canLoadMoreFlag = (total > artistInfo.page * artistInfo.limit)
+    }
+
+    private val updateTrackCallback = { resList: List<TrackEntity.Track>, total: Int ->
+        trackRes.refreshRecyclerView {
+            trackInfo.page += 1
+            addAll(resList)
+        }
+        logw(trackRes.size)
+        trackInfo.isLoading = false
+        // Raise the stopping loading more data flag for avoiding to load again.
+        trackInfo.canLoadMoreFlag = (total > trackInfo.page * trackInfo.limit)
+    }
+
+    data class DataInfo(var page: Int = 1,
+                        val limit: Int = 20,
+                        var isLoading: Boolean = false,
+                        var canLoadMoreFlag: Boolean = true)
 }

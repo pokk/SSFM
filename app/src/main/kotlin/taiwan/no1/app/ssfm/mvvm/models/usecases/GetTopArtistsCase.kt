@@ -10,7 +10,8 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopArtistEntity
  */
 class GetTopArtistsCase(repository: IDataStore): BaseUsecase<ChartTopArtistEntity, GetTopArtistsCase.RequestValue>(
     repository) {
-    override fun fetchUsecase(): Observable<ChartTopArtistEntity> = repository.getChartTopArtist(parameters?.page ?: 1)
+    override fun fetchUsecase(): Observable<ChartTopArtistEntity> =
+        (parameters ?: GetTopArtistsCase.RequestValue()).let { repository.getChartTopArtist(it.page, it.limit) }
 
-    data class RequestValue(val page: Int = -1): RequestValues
+    data class RequestValue(val page: Int = 1, val limit: Int = 20): RequestValues
 }
