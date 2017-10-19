@@ -1,5 +1,6 @@
 package taiwan.no1.app.ssfm.misc.extension.recyclerview
 
+import android.support.v7.widget.RecyclerView
 import taiwan.no1.app.ssfm.databinding.ItemArtistType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemSearchHistoryType1Binding
@@ -46,3 +47,18 @@ data class DataInfo(var page: Int = 1,
                     val limit: Int = 20,
                     var isLoading: Boolean = false,
                     var canLoadMoreFlag: Boolean = true)
+
+class RVCustomScrollCallback<T>(private val adapter: BaseDataBindingAdapter<*, T>,
+                                private val dataInfo: DataInfo,
+                                private var dataList: MutableList<T>,
+                                private val fetchMethod: (page: Int, limit: Int, callback: (List<T>, total: Int) -> Unit) -> Unit):
+    RecyclerViewScrollCallback {
+    override fun loadMoreEvent(recyclerView: RecyclerView, total: Int) {
+        if (dataInfo.canLoadMoreFlag && !dataInfo.isLoading) {
+            dataInfo.isLoading = true
+            fetchMethod(dataInfo.page, dataInfo.limit) { resList, total ->
+                dataList = resCallback(resList, total, dataList, adapter, dataInfo)
+            }
+        }
+    }
+}

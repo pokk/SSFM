@@ -2,14 +2,13 @@ package taiwan.no1.app.ssfm.mvvm.views.fragments
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchIndexBinding
 import taiwan.no1.app.ssfm.databinding.ItemArtistType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType1Binding
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.ArtistAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
-import taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.RVCustomScrollCallback
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.TrackAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.resCallback
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
@@ -49,17 +48,8 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
                     onAttach(this@SearchIndexFragment)
                 }
             }
-            artistLoadmore = object: RecyclerViewScrollCallback {
-                override fun loadMoreEvent(recyclerView: RecyclerView, total: Int) {
-                    if (artistInfo.canLoadMoreFlag && !artistInfo.isLoading) {
-                        artistInfo.isLoading = true
-                        viewModel.fetchArtistList(artistInfo.page, artistInfo.limit) { resList, total ->
-                            artistRes = resCallback(resList, total, artistRes, binding?.artistAdapter as ArtistAdapter,
-                                artistInfo)
-                        }
-                    }
-                }
-            }
+            artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as ArtistAdapter, artistInfo,
+                artistRes, viewModel::fetchArtistList)
             artistDecoration = HorizontalItemDecorator(20)
             trackLayoutManager = WrapContentLinearLayoutManager(activity)
             trackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, TrackEntity.Track>(R.layout.item_music_type_1,
@@ -68,17 +58,8 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
                     onAttach(this@SearchIndexFragment)
                 }
             }
-            trackLoadmore = object: RecyclerViewScrollCallback {
-                override fun loadMoreEvent(recyclerView: RecyclerView, total: Int) {
-                    if (trackInfo.canLoadMoreFlag && !trackInfo.isLoading) {
-                        trackInfo.isLoading = true
-                        viewModel.fetchTrackList(trackInfo.page, trackInfo.limit) { resList, total ->
-                            trackRes = resCallback(resList, total, trackRes, binding?.trackAdapter as TrackAdapter,
-                                trackInfo)
-                        }
-                    }
-                }
-            }
+            trackLoadmore = RVCustomScrollCallback(binding?.trackAdapter as TrackAdapter, trackInfo,
+                trackRes, viewModel::fetchTrackList)
         }
         // First time showing this fragment.
         artistInfo.page.takeIf { 1 >= it && artistInfo.canLoadMoreFlag }?.let {

@@ -6,6 +6,7 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchResultBinding
 import taiwan.no1.app.ssfm.databinding.ItemSearchMusicType1Binding
 import taiwan.no1.app.ssfm.misc.constants.Constant
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity.InfoBean
@@ -24,15 +25,14 @@ class SearchResultFragment: AdvancedFragment<FragmentSearchResultViewModel, Frag
     @Inject override lateinit var viewModel: FragmentSearchResultViewModel
     var keyword: String = ""
     private var res = mutableListOf<InfoBean>()
-    private var isLoading = false
-    private var canLoadMoreFlag = true
+    private val resInfo by lazy { DataInfo() }
 
     //region Fragment lifecycle
     override fun onResume() {
         super.onResume()
         // Due to this object is kept by `SearchActivity`, this list need to be cleared every time.
         res.clear()
-        isLoading = true
+        resInfo.isLoading = true
         viewModel.sendSearchRequest(keyword, resultCallback = updateListInfo)
     }
     //endregion
@@ -47,8 +47,8 @@ class SearchResultFragment: AdvancedFragment<FragmentSearchResultViewModel, Frag
             layoutManager = WrapContentLinearLayoutManager(activity)
             loadmore = object: RecyclerViewScrollCallback {
                 override fun loadMoreEvent(recyclerView: RecyclerView, total: Int) {
-                    if (canLoadMoreFlag && !isLoading) {
-                        isLoading = true
+                    if (resInfo.canLoadMoreFlag && !resInfo.isLoading) {
+                        resInfo.isLoading = true
                         val requestPage = Math.ceil(total / Constant.QUERY_PAGE_SIZE.toDouble()).toInt() + 1
                         viewModel.sendSearchRequest(keyword, requestPage, resultCallback = updateListInfo)
                     }
@@ -69,8 +69,8 @@ class SearchResultFragment: AdvancedFragment<FragmentSearchResultViewModel, Frag
         res = (binding?.adapter as BaseDataBindingAdapter<ItemSearchMusicType1Binding, InfoBean>).
             refresh(res, ArrayList(res).apply { addAll(musics) }).toMutableList()
         // TODO(jieyi): 9/28/17 Close the loading item or view.
-        isLoading = false
+        resInfo.isLoading = false
         // Raise the stopping loading more data flag for avoiding to load again.
-        canLoadMoreFlag = canLoadMore
+        resInfo.canLoadMoreFlag = canLoadMore
     }
 }
