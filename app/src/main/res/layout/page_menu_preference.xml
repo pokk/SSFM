@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -17,66 +17,56 @@
     <TextView
         android:id="@+id/tv_menu_home"
         style="@style/Menu.Items"
+        android:layout_below="@+id/include_toolbar"
         android:drawableLeft="@drawable/ic_sound_bars_pulse"
         android:text="@string/menu_home"
-        app:layout_constraintBottom_toTopOf="@+id/tv_menu_playlist"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include_toolbar"
-        app:layout_constraintVertical_bias="0.0"
         app:layout_constraintVertical_chainStyle="packed"/>
 
     <TextView
         android:id="@+id/tv_menu_playlist"
         style="@style/Menu.Items"
+        android:layout_below="@+id/tv_menu_home"
         android:drawableLeft="@drawable/ic_music"
-        android:text="@string/menu_my_playlist"
-        app:layout_constraintBottom_toTopOf="@+id/tv_menu_favorite"
-        app:layout_constraintStart_toStartOf="@+id/tv_menu_home"
-        app:layout_constraintTop_toBottomOf="@+id/tv_menu_home"
-        app:layout_constraintVertical_chainStyle="packed"/>
+        android:text="@string/menu_my_playlist"/>
 
     <TextView
         android:id="@+id/tv_menu_favorite"
         style="@style/Menu.Items"
+        android:layout_below="@+id/tv_menu_playlist"
         android:drawableLeft="@drawable/ic_favorite"
-        android:text="@string/menu_my_favorite"
-        app:layout_constraintBottom_toTopOf="@+id/tv_menu_search"
-        app:layout_constraintStart_toStartOf="@+id/tv_menu_playlist"
-        app:layout_constraintTop_toBottomOf="@+id/tv_menu_playlist"/>
+        android:text="@string/menu_my_favorite"/>
 
     <TextView
         android:id="@+id/tv_menu_search"
         style="@style/Menu.Items"
+        android:layout_below="@+id/tv_menu_favorite"
         android:drawableLeft="@drawable/ic_search"
-        android:text="@string/menu_search"
-        app:layout_constraintBottom_toTopOf="@+id/tv_menu_chart"
-        app:layout_constraintStart_toStartOf="@+id/tv_menu_favorite"
-        app:layout_constraintTop_toBottomOf="@+id/tv_menu_favorite"/>
+        android:text="@string/menu_search"/>
 
     <TextView
         android:id="@+id/tv_menu_chart"
         style="@style/Menu.Items"
+        android:layout_below="@+id/tv_menu_search"
         android:drawableLeft="@drawable/ic_chart"
-        android:text="@string/menu_charts"
-        app:layout_constraintBottom_toTopOf="@+id/tv_menu_setting"
-        app:layout_constraintStart_toStartOf="@+id/tv_menu_search"
-        app:layout_constraintTop_toBottomOf="@+id/tv_menu_search"/>
+        android:text="@string/menu_charts"/>
 
     <TextView
         android:id="@+id/tv_menu_setting"
         style="@style/Menu.Items"
+        android:layout_below="@+id/tv_menu_chart"
         android:drawableLeft="@drawable/ic_settings"
-        android:text="@string/menu_settings"
-        app:layout_constraintBottom_toTopOf="@+id/tv_menu_login"
-        app:layout_constraintStart_toStartOf="@+id/tv_menu_chart"
-        app:layout_constraintTop_toBottomOf="@+id/tv_menu_chart"/>
+        android:text="@string/menu_settings"/>
 
     <TextView
         android:id="@+id/tv_menu_login"
         style="@style/Menu.Items"
+        android:layout_below="@+id/tv_menu_setting"
+        android:layout_marginTop="30dp"
         android:drawableLeft="@drawable/ic_user"
-        android:text="@string/menu_login"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tv_menu_setting"
-        app:layout_constraintTop_toBottomOf="@+id/tv_menu_setting"/>
-</android.support.constraint.ConstraintLayout>
+        android:text="@string/menu_login"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_below="@id/tv_menu_login"/>
+</RelativeLayout>

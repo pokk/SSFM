@@ -47,13 +47,15 @@
 
     <style name="Menu.Items">
         <item name="android:drawablePadding">16dp</item>
+        <item name="android:fontFamily">@font/sigmar_one</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:paddingBottom">12dp</item>
         <item name="android:paddingEnd">16dp</item>
-        <item name="android:paddingStart">50dp</item>
-        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingStart">70dp</item>
+        <item name="android:paddingTop">12dp</item>
     </style>
 
     <style name="Menu.Search" parent="Widget.AppCompat.ActionButton">
