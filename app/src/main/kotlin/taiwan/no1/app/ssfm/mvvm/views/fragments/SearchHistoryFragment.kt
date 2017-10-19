@@ -4,6 +4,7 @@ import android.os.Bundle
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchHistoryBinding
 import taiwan.no1.app.ssfm.databinding.ItemSearchHistoryType1Binding
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.HistoryAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshRecyclerView
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
@@ -65,7 +66,6 @@ class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, Fr
      * @return a new updated list.
      */
     private fun MutableList<KeywordEntity>.refreshRecyclerView(block: ArrayList<KeywordEntity>.() -> Unit) {
-        res = (this to binding?.adapter as BaseDataBindingAdapter<ItemSearchHistoryType1Binding, KeywordEntity>).
-            refreshRecyclerView(block)
+        res = (binding?.adapter as HistoryAdapter to this).refreshRecyclerView(block)
     }
 }

@@ -1,10 +1,48 @@
 package taiwan.no1.app.ssfm.misc.extension.recyclerview
 
+import taiwan.no1.app.ssfm.databinding.ItemArtistType1Binding
+import taiwan.no1.app.ssfm.databinding.ItemMusicType1Binding
+import taiwan.no1.app.ssfm.databinding.ItemSearchHistoryType1Binding
+import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
 
 /**
  * @author  jieyi
  * @since   10/13/17
  */
-fun <T> Pair<MutableList<T>, BaseDataBindingAdapter<*, T>>.refreshRecyclerView(block: ArrayList<T>.() -> Unit) =
-    second.refresh(first, ArrayList(first).apply(block)).toMutableList()
+typealias ArtistAdapter = BaseDataBindingAdapter<ItemArtistType1Binding, ArtistEntity.Artist>
+typealias TrackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, TrackEntity.Track>
+typealias HistoryAdapter = BaseDataBindingAdapter<ItemSearchHistoryType1Binding, KeywordEntity>
+
+/**
+ * The operation for updating the list result by the adapter. Including updating the original list
+ * and the showing list on the recycler view.
+ *
+ * @param block the block operation for new data list.
+ * @return a new updated list.
+ */
+fun <T> Pair<BaseDataBindingAdapter<*, T>, MutableList<T>>.refreshRecyclerView(block: ArrayList<T>.() -> Unit) =
+    first.refresh(second, ArrayList(second).apply(block)).toMutableList()
+
+fun <T> resCallback(resList: Collection<T>,
+                    total: Int,
+                    list: MutableList<T>,
+                    adapter: BaseDataBindingAdapter<*, T>,
+                    info: DataInfo): MutableList<T> {
+    val newestList = (adapter to list).refreshRecyclerView {
+        info.page += 1
+        addAll(resList)
+    }
+    info.isLoading = false
+    // Raise the stopping loading more data flag for avoiding to load again.
+    info.canLoadMoreFlag = (total > info.page * info.limit)
+
+    return newestList
+}
+
+data class DataInfo(var page: Int = 1,
+                    val limit: Int = 20,
+                    var isLoading: Boolean = false,
+                    var canLoadMoreFlag: Boolean = true)

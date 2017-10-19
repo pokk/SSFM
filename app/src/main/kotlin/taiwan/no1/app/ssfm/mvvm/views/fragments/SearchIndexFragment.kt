@@ -3,11 +3,15 @@ package taiwan.no1.app.ssfm.mvvm.views.fragments
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchIndexBinding
 import taiwan.no1.app.ssfm.databinding.ItemArtistType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType1Binding
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.ArtistAdapter
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback
-import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshRecyclerView
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.TrackAdapter
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.resCallback
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
@@ -35,8 +39,6 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
     private var artistRes = mutableListOf<ArtistEntity.Artist>()
     private var trackRes = mutableListOf<TrackEntity.Track>()
 
-    //endregion
-
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
         binding?.apply {
@@ -51,7 +53,10 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
                 override fun loadMoreEvent(recyclerView: RecyclerView, total: Int) {
                     if (artistInfo.canLoadMoreFlag && !artistInfo.isLoading) {
                         artistInfo.isLoading = true
-                        viewModel.fetchArtistList(artistInfo.page, artistInfo.limit, updateArtistCallback)
+                        viewModel.fetchArtistList(artistInfo.page, artistInfo.limit) { resList, total ->
+                            artistRes = resCallback(resList, total, artistRes, binding?.artistAdapter as ArtistAdapter,
+                                artistInfo)
+                        }
                     }
                 }
             }
@@ -67,77 +72,27 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
                 override fun loadMoreEvent(recyclerView: RecyclerView, total: Int) {
                     if (trackInfo.canLoadMoreFlag && !trackInfo.isLoading) {
                         trackInfo.isLoading = true
-                        viewModel.fetchTrackList(trackInfo.page, trackInfo.limit, updateTrackCallback)
+                        viewModel.fetchTrackList(trackInfo.page, trackInfo.limit) { resList, total ->
+                            trackRes = resCallback(resList, total, trackRes, binding?.trackAdapter as TrackAdapter,
+                                trackInfo)
+                        }
                     }
                 }
             }
         }
+        // First time showing this fragment.
         artistInfo.page.takeIf { 1 >= it && artistInfo.canLoadMoreFlag }?.let {
-            viewModel.fetchArtistList(artistInfo.page, artistInfo.limit, updateArtistCallback)
+            viewModel.fetchArtistList(artistInfo.page, artistInfo.limit) { resList, total ->
+                artistRes = resCallback(resList, total, artistRes, binding?.artistAdapter as ArtistAdapter, artistInfo)
+            }
         }
         trackInfo.page.takeIf { 1 >= it && trackInfo.canLoadMoreFlag }?.let {
-            viewModel.fetchTrackList(trackInfo.page, trackInfo.limit, updateTrackCallback)
-            // NEW
-//            viewModel.fetchTrackList(trackInfo.page, trackInfo.limit) { list, total ->
-//                callback(list, total, artistInfo)
-//            }
+            viewModel.fetchTrackList(trackInfo.page, trackInfo.limit) { resList, total ->
+                trackRes = resCallback(resList, total, trackRes, binding?.trackAdapter as TrackAdapter, trackInfo)
+            }
         }
     }
 
     override fun provideInflateView(): Int = R.layout.fragment_search_index
     //endregion
-
-    /**
-     * The operation for updating the list result by the adapter. Including updating the original list
-     * and the showing list on the recycler view.
-     *
-     * @param block the block operation for new data list.
-     * @return a new updated list.
-     */
-    // HACK(jieyi): 10/13/17 Here should be a general function.
-//    private fun MutableList<TrackEntity.Track>.refreshRecyclerView(block: ArrayList<TrackEntity.Track>.() -> Unit) {
-//        trackRes = (this to binding?.trackAdapter as BaseDataBindingAdapter<ItemMusicType1Binding, TrackEntity.Track>).
-//            refreshRecyclerView(block)
-//    }
-
-    // NEW
-    private inline fun <reified T> MutableList<T>.refreshRecyclerView(noinline block: ArrayList<T>.() -> Unit) =
-        (this to binding?.trackAdapter as BaseDataBindingAdapter<*, T>).refreshRecyclerView(block)
-
-
-    private val updateArtistCallback = { resList: List<ArtistEntity.Artist>, total: Int ->
-        artistRes = (artistRes to binding?.artistAdapter as BaseDataBindingAdapter<ItemArtistType1Binding, ArtistEntity.Artist>).
-            refreshRecyclerView {
-                artistInfo.page += 1
-                addAll(resList)
-            }
-        artistInfo.isLoading = false
-        // Raise the stopping loading more data flag for avoiding to load again.
-        artistInfo.canLoadMoreFlag = (total > artistInfo.page * artistInfo.limit)
-    }
-
-    private val updateTrackCallback = { resList: List<TrackEntity.Track>, total: Int ->
-        trackRes.refreshRecyclerView {
-            trackInfo.page += 1
-            addAll(resList)
-        }
-        trackInfo.isLoading = false
-        // Raise the stopping loading more data flag for avoiding to load again.
-        trackInfo.canLoadMoreFlag = (total > trackInfo.page * trackInfo.limit)
-    }
-
-//    private fun <T> callback(resList: Collection<T>, total: Int, info: DataInfo, ) {
-//        trackRes.refreshRecyclerView {
-//            info.page += 1
-//            addAll(resList)
-//        }
-//        info.isLoading = false
-//        // Raise the stopping loading more data flag for avoiding to load again.
-//        info.canLoadMoreFlag = (total > info.page * info.limit)
-//    }
-
-    data class DataInfo(var page: Int = 1,
-                        val limit: Int = 20,
-                        var isLoading: Boolean = false,
-                        var canLoadMoreFlag: Boolean = true)
 }
