@@ -3,8 +3,6 @@ package taiwan.no1.app.ssfm.mvvm.views.fragments
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import com.devrapid.kotlinknifer.logw
-import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchIndexBinding
 import taiwan.no1.app.ssfm.databinding.ItemArtistType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType1Binding
@@ -79,6 +77,10 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
         }
         trackInfo.page.takeIf { 1 >= it && trackInfo.canLoadMoreFlag }?.let {
             viewModel.fetchTrackList(trackInfo.page, trackInfo.limit, updateTrackCallback)
+            // NEW
+//            viewModel.fetchTrackList(trackInfo.page, trackInfo.limit) { list, total ->
+//                callback(list, total, artistInfo)
+//            }
         }
     }
 
@@ -93,10 +95,15 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
      * @return a new updated list.
      */
     // HACK(jieyi): 10/13/17 Here should be a general function.
-    private fun MutableList<TrackEntity.Track>.refreshRecyclerView(block: ArrayList<TrackEntity.Track>.() -> Unit) {
-        trackRes = (this to binding?.trackAdapter as BaseDataBindingAdapter<ItemMusicType1Binding, TrackEntity.Track>).
-            refreshRecyclerView(block)
-    }
+//    private fun MutableList<TrackEntity.Track>.refreshRecyclerView(block: ArrayList<TrackEntity.Track>.() -> Unit) {
+//        trackRes = (this to binding?.trackAdapter as BaseDataBindingAdapter<ItemMusicType1Binding, TrackEntity.Track>).
+//            refreshRecyclerView(block)
+//    }
+
+    // NEW
+    private inline fun <reified T> MutableList<T>.refreshRecyclerView(noinline block: ArrayList<T>.() -> Unit) =
+        (this to binding?.trackAdapter as BaseDataBindingAdapter<*, T>).refreshRecyclerView(block)
+
 
     private val updateArtistCallback = { resList: List<ArtistEntity.Artist>, total: Int ->
         artistRes = (artistRes to binding?.artistAdapter as BaseDataBindingAdapter<ItemArtistType1Binding, ArtistEntity.Artist>).
@@ -114,11 +121,20 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
             trackInfo.page += 1
             addAll(resList)
         }
-        logw(trackRes.size)
         trackInfo.isLoading = false
         // Raise the stopping loading more data flag for avoiding to load again.
         trackInfo.canLoadMoreFlag = (total > trackInfo.page * trackInfo.limit)
     }
+
+//    private fun <T> callback(resList: Collection<T>, total: Int, info: DataInfo, ) {
+//        trackRes.refreshRecyclerView {
+//            info.page += 1
+//            addAll(resList)
+//        }
+//        info.isLoading = false
+//        // Raise the stopping loading more data flag for avoiding to load again.
+//        info.canLoadMoreFlag = (total > info.page * info.limit)
+//    }
 
     data class DataInfo(var page: Int = 1,
                         val limit: Int = 20,
