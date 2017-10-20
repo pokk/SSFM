@@ -36,10 +36,6 @@
         <!--<variable-->
         <!--name="trackDecoration"-->
         <!--type="android.support.v7.widget.RecyclerView.ItemDecoration"/>-->
-
-        <!--<variable-->
-        <!--name="trackLoadmore"-->
-        <!--type="taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback"/>-->
     </data>
 
     <android.support.constraint.ConstraintLayout
