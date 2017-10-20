@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".mvvm.views.activities.ChartActivity">
+
+    <data>
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="@dimen/rv_artist_length"
+            android:layout_height="@dimen/rv_artist_length"
+            android:layout_gravity="fill"
+            android:error="@{@drawable/sample_jieyi_icon}"
+            android:placeHolder="@{@drawable/sample_lady_gaga}"
+            android:scaleType="fitXY"
+            tools:src="@drawable/sample_lady_gaga"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="center_horizontal"
+            android:maxLines="1"
+            android:padding="12dp"
+            android:paddingEnd="@dimen/one_unit"
+            android:paddingStart="@dimen/one_unit"
+            tools:text="Pop"/>
+    </android.support.v7.widget.CardView>
+</layout>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <!--<variable-->
+        <!--name="vm"-->
+        <!--type="taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentSearchIndexViewModel"/>-->
+
+        <variable
+            name="artistLayoutManager"
+            type="android.support.v7.widget.RecyclerView.LayoutManager"/>
+
+        <variable
+            name="artistAdapter"
+            type="android.support.v7.widget.RecyclerView.Adapter"/>
+
+        <variable
+            name="artistDecoration"
+            type="android.support.v7.widget.RecyclerView.ItemDecoration"/>
+
+        <!--<variable-->
+        <!--name="artistLoadmore"-->
+        <!--type="taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback"/>-->
+
+        <variable
+            name="trackLayoutManager"
+            type="android.support.v7.widget.RecyclerView.LayoutManager"/>
+
+        <variable
+            name="trackAdapter"
+            type="android.support.v7.widget.RecyclerView.Adapter"/>
+
+        <variable
+            name="trackDecoration"
+            type="android.support.v7.widget.RecyclerView.ItemDecoration"/>
+
+        <!--<variable-->
+        <!--name="trackLoadmore"-->
+        <!--type="taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback"/>-->
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_top_artists"
+            style="@style/RecyclerView.Basic"
+            android:layout_height="@dimen/rv_artist_frame_height"
+            android:adapter="@{artistAdapter}"
+            android:itemDecoration="@{artistDecoration}"
+            android:layoutManager="@{artistLayoutManager}"
+            app:layout_constraintBottom_toTopOf="@+id/tv_new_song"
+            app:layout_constraintTop_toBottomOf="@+id/tv_popular"
+            tools:listitem="@layout/item_artist_type_1"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_top_tracks"
+            style="@style/RecyclerView.Basic"
+            android:layout_marginBottom="@dimen/one_unit"
+            android:adapter="@{trackAdapter}"
+            android:itemDecoration="@{trackDecoration}"
+            android:layoutManager="@{trackLayoutManager}"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_new_song"
+            tools:listitem="@layout/item_tag_type_1"/>
+
+        <TextView
+            android:id="@+id/tv_popular"
+            style="@style/RecyclerView.Title"
+            android:text="@string/tv_title_rank_songs"
+            app:layout_constraintBottom_toTopOf="@+id/rv_top_artists"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_new_song"
+            style="@style/RecyclerView.Title"
+            android:text="@string/rv_title_rank_genres"
+            app:layout_constraintBottom_toTopOf="@+id/rv_top_tracks"
+            app:layout_constraintTop_toBottomOf="@+id/rv_top_artists"/>
+    </android.support.constraint.ConstraintLayout>
+</layout>
