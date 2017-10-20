@@ -15,10 +15,11 @@
             android:layout_width="@dimen/rv_artist_length"
             android:layout_height="@dimen/rv_artist_length"
             android:layout_gravity="fill"
-            android:error="@{@drawable/sample_jieyi_icon}"
-            android:placeHolder="@{@drawable/sample_lady_gaga}"
             android:scaleType="fitXY"
             tools:src="@drawable/sample_lady_gaga"/>
+        <!--android:error="@{@drawable/sample_jieyi_icon}"-->
+        <!--android:imageUrl="@{avm.thumbnail}"-->
+        <!--android:placeHolder="@{@drawable/sample_lady_gaga}"-->
 
         <TextView
             android:layout_width="match_parent"

@@ -36,14 +36,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="@dimen/one_unit">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-                android:paddingEnd="@dimen/one_unit"
-                android:paddingStart="@dimen/one_unit"
                 android:text="@{avm.artistName}"
                 tools:text="Lady Gaga"/>
 
@@ -54,9 +53,7 @@
                 android:drawablePadding="@dimen/one_unit"
                 android:drawableStart="@drawable/lb_ic_thumb_up_outline"
                 android:gravity="center_vertical"
-                android:paddingEnd="@dimen/one_unit"
                 android:text="@{avm.playCount}"
-                android:paddingStart="@dimen/one_unit"
                 tools:text="123456789"/>
         </LinearLayout>
     </LinearLayout>

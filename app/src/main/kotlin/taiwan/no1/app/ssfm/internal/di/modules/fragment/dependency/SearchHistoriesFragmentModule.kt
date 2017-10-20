@@ -18,7 +18,7 @@ import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentSearchHistoryViewModel
  * @since   8/11/17
  */
 @Module
-class HistoriesFragmentModule {
+class SearchHistoriesFragmentModule {
     @Provides
     @PerFragment
     fun provideGetUsecase(dataRepository: DataRepository): BaseUsecase<List<KeywordEntity>, GetKeywordHistoriesCase.RequestValue> =

@@ -49,7 +49,7 @@ abstract class BindingActivityModule {
     abstract fun contributePlaylistActivityInjector(): PlaylistActivity
 
     @PerActivity
-    @ContributesAndroidInjector(modules = arrayOf(ChartActivityModule::class))
+    @ContributesAndroidInjector(modules = arrayOf(ChartActivityModule::class, BindingFragmentModule::class))
     abstract fun contributeChartActivityInjector(): ChartActivity
 
     @PerActivity
