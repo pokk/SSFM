@@ -59,7 +59,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_top_tracks"
             style="@style/RecyclerView.Basic"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="@dimen/one_unit"
             android:adapter="@{trackAdapter}"
             android:layoutManager="@{trackLayoutManager}"
             android:loadMore="@{trackLoadmore}"

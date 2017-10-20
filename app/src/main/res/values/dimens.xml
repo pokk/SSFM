@@ -2,4 +2,5 @@
 <resources>
     <dimen name="rv_artist_length">150dp</dimen>
     <dimen name="rv_artist_frame_height">165dp</dimen>
+    <dimen name="one_unit">8dp</dimen>
 </resources>

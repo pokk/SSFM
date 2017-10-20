@@ -19,6 +19,7 @@ class RecyclerViewArtistChartViewModel(val item: ArtistEntity.Artist,
                                        val usecase: BaseUsecase<AlbumEntity, GetAlbumInfoCase.RequestValue>):
     BaseViewModel() {
     val artistName by lazy { ObservableField<String>(item.name) }
+    val playCount by lazy { ObservableField<String>(item.playCount) }
     val thumbnail by lazy { ObservableField<String>(item.images?.get(EXTRA_LARGE)?.text ?: "") }
 
     /**

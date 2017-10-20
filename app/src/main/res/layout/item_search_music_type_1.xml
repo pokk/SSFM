@@ -14,7 +14,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:padding="@dimen/one_unit"
         tool:background="@color/colorPrimary">
 
         <ImageButton
@@ -31,8 +31,8 @@
             android:id="@+id/tv_track_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="@dimen/one_unit"
+            android:layout_marginStart="@dimen/one_unit"
             android:layout_toEndOf="@+id/iv_action"
             android:layout_toStartOf="@+id/tv_total_time"
             android:text="@{avm.songName}"

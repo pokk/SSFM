@@ -12,9 +12,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="@dimen/one_unit"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/one_unit"
         android:contentDescription="@string/todo"
         android:src="@drawable/ic_mail"/>
 
