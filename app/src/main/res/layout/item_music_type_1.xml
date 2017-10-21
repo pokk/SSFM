@@ -9,7 +9,7 @@
 
         <variable
             name="avm"
-            type="taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewTrackChartViewModel"/>
+            type="taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewSearchTrackChartViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout

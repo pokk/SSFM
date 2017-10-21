@@ -8,7 +8,7 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagEntity
  * @author  jieyi
  * @since   9/20/17
  */
-class RecyclerViewTagChartViewModel(val item: TagEntity.Tag): BaseViewModel() {
+class RecyclerViewChartTagViewModel(val item: TagEntity.Tag): BaseViewModel() {
     val tagName by lazy { ObservableField<String>(item.name?.apply { this[0].toUpperCase() }) }
 
     /**

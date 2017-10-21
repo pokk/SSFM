@@ -20,8 +20,8 @@ import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagEntity
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartIndexViewModel
-import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewArtistChartViewModel
-import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewTagChartViewModel
+import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewChartTagViewModel
+import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewSearchArtistChartViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.itemdecorator.GridSpacingItemDecorator
@@ -47,7 +47,7 @@ class ChartIndexFragment: AdvancedFragment<FragmentChartIndexViewModel, Fragment
             artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             artistAdapter = BaseDataBindingAdapter<ItemArtistType1Binding, ArtistEntity.Artist>(R.layout.item_artist_type_1,
                 artistRes) { holder, item ->
-                holder.binding.avm = RecyclerViewArtistChartViewModel(item).apply {
+                holder.binding.avm = RecyclerViewSearchArtistChartViewModel(item).apply {
                     onAttach(this@ChartIndexFragment)
                 }
                 val sd = App.compactContext.scaledDrawable(R.drawable.lb_ic_thumb_up_outline, 0.5f, 0.5f)
@@ -60,7 +60,7 @@ class ChartIndexFragment: AdvancedFragment<FragmentChartIndexViewModel, Fragment
             tagLayoutManager = StaggeredGridLayoutManager(3, VERTICAL)
             tagAdapter = BaseDataBindingAdapter<ItemTagType1Binding, TagEntity.Tag>(R.layout.item_tag_type_1,
                 tagRes) { holder, item ->
-                holder.binding.avm = RecyclerViewTagChartViewModel(item).apply {
+                holder.binding.avm = RecyclerViewChartTagViewModel(item).apply {
                     onAttach(this@ChartIndexFragment)
                 }
             }

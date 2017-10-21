@@ -12,7 +12,7 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity.InfoBean
  * @author  jieyi
  * @since   9/20/17
  */
-class RecyclerViewMusicResultViewModel(val res: InfoBean, context: Context): BaseObservable() {
+class RecyclerViewSearchMusicResultViewModel(val res: InfoBean, context: Context): BaseObservable() {
     val songName by lazy { ObservableField<String>(res.songname ?: "") }
     val singerName by lazy { ObservableField<String>(res.singername ?: "") }
     val duration by lazy { ObservableField<String>(res.duration.toTimeString()) }

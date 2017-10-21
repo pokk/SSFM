@@ -11,7 +11,7 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallbac
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity.InfoBean
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentSearchResultViewModel
-import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewMusicResultViewModel
+import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewSearchMusicResultViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
 import javax.inject.Inject
@@ -42,7 +42,7 @@ class SearchResultFragment: AdvancedFragment<FragmentSearchResultViewModel, Frag
         binding?.apply {
             adapter = BaseDataBindingAdapter<ItemSearchMusicType1Binding, InfoBean>(R.layout.item_search_music_type_1,
                 res) { holder, item ->
-                holder.binding.avm = RecyclerViewMusicResultViewModel(item, activity)
+                holder.binding.avm = RecyclerViewSearchMusicResultViewModel(item, activity)
             }
             layoutManager = WrapContentLinearLayoutManager(activity)
             loadmore = object: RecyclerViewScrollCallback {

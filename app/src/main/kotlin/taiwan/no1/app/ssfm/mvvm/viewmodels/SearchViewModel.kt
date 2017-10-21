@@ -118,8 +118,8 @@ class SearchViewModel(private val context: Context,
      * @param keyword of the song or singer's name.
      *
      * @event_from [taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewSearchHistoryViewModel.selectHistoryItem]
-     * @event_from [taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewArtistChartViewModel.artistOnClick]
-     * @event_from [taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewTrackChartViewModel.trackOnClick]
+     * @event_from [taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewSearchArtistChartViewModel.artistOnClick]
+     * @event_from [taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewSearchTrackChartViewModel.trackOnClick]
      */
     @Subscribe(tags = arrayOf(Tag(VIEWMODEL_CLICK_HISTORY)))
     fun receiveClickHistoryEvent(keyword: String) = querySubmit(keyword)

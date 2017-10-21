@@ -30,7 +30,8 @@ class PlayMainActivity: AdvancedActivity<PlayMainViewModel, ActivityMusicBinding
     private lateinit var playList: IPlayList
     private lateinit var player: IPlayerHandler
     private val permissionsStorage: Array<String> = arrayOf(WRITE_EXTERNAL_STORAGE)
-    private val path: Array<String> = arrayOf("http://fs.w.kugou.com/201710090907/283f0884f31f87ccf3ba32506e65b07e/G100/M02/1F/03/pA0DAFjzVJyAAhJ0ADOhTT8_t00044.mp3", "/storage/emulated/0/Download/test.mp3")
+    private val path: Array<String> = arrayOf("http://fs.w.kugou.com/201710211733/3476653fc2fc99dcfe6345519f02f736/G100/M02/1F/03/pA0DAFjzVJyAAhJ0ADOhTT8_t00044.mp3",
+        "/storage/emulated/0/Download/test.mp3")
     private val permissionsRequestCode = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {

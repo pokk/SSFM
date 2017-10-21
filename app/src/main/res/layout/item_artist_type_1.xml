@@ -8,7 +8,7 @@
 
         <variable
             name="avm"
-            type="taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewArtistChartViewModel"/>
+            type="taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewSearchArtistChartViewModel"/>
     </data>
 
     <LinearLayout

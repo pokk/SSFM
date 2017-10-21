@@ -17,8 +17,8 @@ import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentSearchIndexViewModel
-import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewArtistChartViewModel
-import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewTrackChartViewModel
+import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewSearchArtistChartViewModel
+import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewSearchTrackChartViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.itemdecorator.HorizontalItemDecorator
@@ -42,7 +42,7 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
             artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             artistAdapter = BaseDataBindingAdapter<ItemArtistType1Binding, ArtistEntity.Artist>(R.layout.item_artist_type_1,
                 artistRes) { holder, item ->
-                holder.binding.avm = RecyclerViewArtistChartViewModel(item).apply {
+                holder.binding.avm = RecyclerViewSearchArtistChartViewModel(item).apply {
                     onAttach(this@SearchIndexFragment)
                 }
                 val sd = App.compactContext.scaledDrawable(R.drawable.lb_ic_thumb_up_outline, 0.5f, 0.5f)
@@ -54,7 +54,7 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
             trackLayoutManager = WrapContentLinearLayoutManager(activity)
             trackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, TrackEntity.Track>(R.layout.item_music_type_1,
                 trackRes) { holder, item ->
-                holder.binding.avm = RecyclerViewTrackChartViewModel(item).apply {
+                holder.binding.avm = RecyclerViewSearchTrackChartViewModel(item).apply {
                     onAttach(this@SearchIndexFragment)
                 }
             }
