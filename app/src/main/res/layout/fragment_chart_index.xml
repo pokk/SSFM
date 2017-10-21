@@ -26,15 +26,15 @@
             type="taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback"/>
 
         <variable
-            name="trackLayoutManager"
+            name="tagLayoutManager"
             type="android.support.v7.widget.RecyclerView.LayoutManager"/>
 
         <variable
-            name="trackAdapter"
+            name="tagAdapter"
             type="android.support.v7.widget.RecyclerView.Adapter"/>
 
         <variable
-            name="trackDecoration"
+            name="tagDecoration"
             type="android.support.v7.widget.RecyclerView.ItemDecoration"/>
     </data>
 
@@ -45,30 +45,30 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_top_artists"
             style="@style/RecyclerView.Basic"
-            android:layout_height="@dimen/rv_artist_frame_height"
+            android:layout_height="wrap_content"
+            android:adapter="@{artistAdapter}"
+            android:itemDecoration="@{artistDecoration}"
+            android:layoutManager="@{artistLayoutManager}"
             app:layout_constraintBottom_toTopOf="@+id/tv_new_song"
             app:layout_constraintTop_toBottomOf="@+id/tv_popular"
             tools:listitem="@layout/item_artist_type_1"/>
-        <!--android:adapter="@{artistAdapter}"-->
-        <!--android:itemDecoration="@{artistDecoration}"-->
-        <!--android:layoutManager="@{artistLayoutManager}"-->
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_top_tracks"
             style="@style/RecyclerView.Basic"
             android:layout_marginBottom="@dimen/one_unit"
+            android:adapter="@{tagAdapter}"
+            android:itemDecoration="@{tagDecoration}"
+            android:layoutManager="@{tagLayoutManager}"
             android:scrollbars="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_new_song"
             tools:listitem="@layout/item_tag_type_1"/>
-        <!--android:adapter="@{trackAdapter}"-->
-        <!--android:itemDecoration="@{trackDecoration}"-->
-        <!--android:layoutManager="@{trackLayoutManager}"-->
 
         <TextView
             android:id="@+id/tv_popular"
             style="@style/RecyclerView.Title"
-            android:text="@string/tv_title_rank_songs"
+            android:text="@string/tv_title_rank_artists"
             app:layout_constraintBottom_toTopOf="@+id/rv_top_artists"
             app:layout_constraintTop_toTopOf="parent"/>
 

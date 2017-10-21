@@ -19,6 +19,7 @@ class App: DaggerApplication() {
     companion object {
         lateinit var injector: AndroidInjector<App>
         val appComponent by lazy { injector as AppComponent }
+        val compactContext by lazy { appComponent.context() }
     }
 
     init {

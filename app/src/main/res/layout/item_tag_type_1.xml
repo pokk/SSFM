@@ -5,6 +5,10 @@
     tools:context=".mvvm.views.activities.ChartActivity">
 
     <data>
+
+        <variable
+            name="avm"
+            type="taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewTagChartViewModel"/>
     </data>
 
     <android.support.v7.widget.CardView
@@ -17,19 +21,17 @@
             android:layout_gravity="fill"
             android:scaleType="fitXY"
             tools:src="@drawable/sample_lady_gaga"/>
-        <!--android:error="@{@drawable/sample_jieyi_icon}"-->
-        <!--android:imageUrl="@{avm.thumbnail}"-->
-        <!--android:placeHolder="@{@drawable/sample_lady_gaga}"-->
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:maxLines="1"
             android:padding="12dp"
             android:paddingEnd="@dimen/one_unit"
             android:paddingStart="@dimen/one_unit"
+            android:text="@{avm.tagName}"
             tools:text="Pop"/>
     </android.support.v7.widget.CardView>
 </layout>

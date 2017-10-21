@@ -51,9 +51,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/one_unit"
-                android:drawableStart="@drawable/lb_ic_thumb_up_outline"
                 android:gravity="center_vertical"
                 android:text="@{avm.playCount}"
+                tools:drawableStart="@drawable/lb_ic_thumb_up_outline"
                 tools:text="123456789"/>
         </LinearLayout>
     </LinearLayout>

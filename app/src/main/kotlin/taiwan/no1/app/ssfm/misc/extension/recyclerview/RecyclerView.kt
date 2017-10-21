@@ -4,8 +4,10 @@ import android.support.v7.widget.RecyclerView
 import taiwan.no1.app.ssfm.databinding.ItemArtistType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemSearchHistoryType1Binding
+import taiwan.no1.app.ssfm.databinding.ItemTagType1Binding
 import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
 
@@ -15,6 +17,7 @@ import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdap
  */
 typealias ArtistAdapter = BaseDataBindingAdapter<ItemArtistType1Binding, ArtistEntity.Artist>
 typealias TrackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, TrackEntity.Track>
+typealias TagAdapter = BaseDataBindingAdapter<ItemTagType1Binding, TagEntity.Tag>
 typealias HistoryAdapter = BaseDataBindingAdapter<ItemSearchHistoryType1Binding, KeywordEntity>
 
 /**

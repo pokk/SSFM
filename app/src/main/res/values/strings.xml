@@ -17,5 +17,5 @@
     <string name="rv_title_popular">Popular</string>
     <string name="rv_title_new_tracks">New Songs</string>
     <string name="rv_title_rank_genres">Rank Genres</string>
-    <string name="tv_title_rank_songs">Rank Songs</string>
+    <string name="tv_title_rank_artists">Rank Artists</string>
 </resources>
