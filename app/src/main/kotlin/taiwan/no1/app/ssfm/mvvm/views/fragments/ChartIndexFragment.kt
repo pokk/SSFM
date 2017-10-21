@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.widget.GridLayout.VERTICAL
 import com.devrapid.kotlinknifer.logw
+import org.jetbrains.anko.act
 import taiwan.no1.app.ssfm.App
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentChartIndexBinding
@@ -23,6 +24,7 @@ import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartIndexViewModel
 import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewChartTagViewModel
 import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewSearchArtistChartViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
+import taiwan.no1.app.ssfm.mvvm.views.activities.ChartActivity
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.itemdecorator.GridSpacingItemDecorator
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.itemdecorator.HorizontalItemDecorator
@@ -30,11 +32,21 @@ import javax.inject.Inject
 
 
 /**
- *
  * @author  jieyi
  * @since   8/20/17
  */
 class ChartIndexFragment: AdvancedFragment<FragmentChartIndexViewModel, FragmentChartIndexBinding>() {
+    //region Static initialization
+    companion object Factory {
+        /**
+         * Use this factory method to create a new instance of this fragment using the provided parameters.
+         *
+         * @return A new instance of [android.app.Fragment] ChartIndexFragment.
+         */
+        fun newInstance() = ChartIndexFragment()
+    }
+    //endregion
+
     @Inject override lateinit var viewModel: FragmentChartIndexViewModel
     private val artistInfo by lazy { DataInfo() }
     private val tagInfo by lazy { DataInfo() }
@@ -49,6 +61,10 @@ class ChartIndexFragment: AdvancedFragment<FragmentChartIndexViewModel, Fragment
                 artistRes) { holder, item ->
                 holder.binding.avm = RecyclerViewSearchArtistChartViewModel(item).apply {
                     onAttach(this@ChartIndexFragment)
+                    clickItemListener = {
+                        // TODO(jieyi): 10/22/17 Change fragment to create instance method.
+                        (act as ChartActivity).navigate(ChartArtistDetailFragment(), true)
+                    }
                 }
                 val sd = App.compactContext.scaledDrawable(R.drawable.lb_ic_thumb_up_outline, 0.5f, 0.5f)
                 holder.binding.tvPlayCount.setCompoundDrawables(sd, null, null, null)
@@ -65,7 +81,6 @@ class ChartIndexFragment: AdvancedFragment<FragmentChartIndexViewModel, Fragment
                 }
             }
             tagDecoration = GridSpacingItemDecorator(3, 20, false)
-
         }
         // First time showing this fragment.
         artistInfo.page.takeIf { 1 >= it && artistInfo.canLoadMoreFlag }?.let {

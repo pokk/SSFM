@@ -25,6 +25,17 @@ import javax.inject.Inject
  * @since   9/16/17
  */
 class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>() {
+    //region Static initialization
+    companion object Factory {
+        /**
+         * Use this factory method to create a new instance of this activity using the provided parameters.
+         *
+         * @return A new instance of [Activity] SearchActivity.
+         */
+        fun newInstance() = SearchActivity()
+    }
+    //endregion
+
     @Inject override lateinit var viewModel: SearchViewModel
     private val fragmentStack by lazy { Stack<Fragment>() }
     private val searchFragments by lazy {

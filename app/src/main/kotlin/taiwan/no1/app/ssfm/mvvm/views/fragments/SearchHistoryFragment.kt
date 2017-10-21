@@ -22,6 +22,17 @@ import javax.inject.Inject
  * @since   8/20/17
  */
 class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, FragmentSearchHistoryBinding>() {
+    //region Static initialization
+    companion object Factory {
+        /**
+         * Use this factory method to create a new instance of this fragment using the provided parameters.
+         *
+         * @return A new instance of [android.app.Fragment] SearchHistoryFragment.
+         */
+        fun newInstance() = SearchHistoryFragment()
+    }
+    //endregion
+
     @Inject override lateinit var viewModel: FragmentSearchHistoryViewModel
     // This usecase is for each items of the recyclerview.
     @Inject lateinit var deleteUsecase: BaseUsecase<Boolean, RemoveKeywordHistoriesCase.RequestValue>

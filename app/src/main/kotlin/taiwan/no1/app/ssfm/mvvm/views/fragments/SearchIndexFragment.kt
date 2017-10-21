@@ -30,6 +30,17 @@ import javax.inject.Inject
  * @since   8/20/17
  */
 class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, FragmentSearchIndexBinding>() {
+    //region Static initialization
+    companion object Factory {
+        /**
+         * Use this factory method to create a new instance of this fragment using the provided parameters.
+         *
+         * @return A new instance of [android.app.Fragment] SearchIndexFragment.
+         */
+        fun newInstance() = SearchIndexFragment()
+    }
+    //endregion
+
     @Inject override lateinit var viewModel: FragmentSearchIndexViewModel
     private val artistInfo by lazy { DataInfo() }
     private val trackInfo by lazy { DataInfo() }

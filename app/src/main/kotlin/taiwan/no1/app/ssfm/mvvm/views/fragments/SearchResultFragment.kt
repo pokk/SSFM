@@ -22,6 +22,17 @@ import javax.inject.Inject
  * @since   8/20/17
  */
 class SearchResultFragment: AdvancedFragment<FragmentSearchResultViewModel, FragmentSearchResultBinding>() {
+    //region Static initialization
+    companion object Factory {
+        /**
+         * Use this factory method to create a new instance of this fragment using the provided parameters.
+         *
+         * @return A new instance of [android.app.Fragment] SearchResultFragment.
+         */
+        fun newInstance() = SearchResultFragment()
+    }
+    //endregion
+
     @Inject override lateinit var viewModel: FragmentSearchResultViewModel
     var keyword: String = ""
     private var res = mutableListOf<InfoBean>()

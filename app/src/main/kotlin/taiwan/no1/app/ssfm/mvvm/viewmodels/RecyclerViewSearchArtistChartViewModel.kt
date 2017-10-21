@@ -16,6 +16,7 @@ class RecyclerViewSearchArtistChartViewModel(val item: ArtistEntity.Artist): Bas
     val artistName by lazy { ObservableField<String>(item.name) }
     val playCount by lazy { ObservableField<String>(item.playCount) }
     val thumbnail by lazy { ObservableField<String>(item.images?.get(EXTRA_LARGE)?.text ?: "") }
+    var clickItemListener: ((item: ArtistEntity.Artist) -> Unit)? = null
 
     /**
      * A callback event for clicking a item to list item.
@@ -25,6 +26,9 @@ class RecyclerViewSearchArtistChartViewModel(val item: ArtistEntity.Artist): Bas
      * @event_to [taiwan.no1.app.ssfm.mvvm.viewmodels.SearchViewModel.receiveClickHistoryEvent]
      */
     fun artistOnClick(view: View) {
+        // For `searching activity`.
         RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_HISTORY, item.name)
+        // For `top chart activity`.
+        clickItemListener?.invoke(item)
     }
 }

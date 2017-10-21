@@ -13,6 +13,17 @@ import javax.inject.Inject
  * @since   9/16/17
  */
 class PlaylistActivity: AdvancedActivity<PlaylistViewModel, ActivityPlaylistBinding>() {
+    //region Static initialization
+    companion object Factory {
+        /**
+         * Use this factory method to create a new instance of this activity using the provided parameters.
+         *
+         * @return A new instance of [Activity] PlaylistActivity.
+         */
+        fun newInstance() = PlaylistActivity()
+    }
+    //endregion
+
     @Inject override lateinit var viewModel: PlaylistViewModel
 
     //region Base activity implement

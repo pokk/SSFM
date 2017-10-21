@@ -13,6 +13,17 @@ import javax.inject.Inject
  * @since   9/13/17
  */
 class LoginActivity: AdvancedActivity<LoginViewModel, ActivityLoginBinding>() {
+    //region Static initialization
+    companion object Factory {
+        /**
+         * Use this factory method to create a new instance of this activity using the provided parameters.
+         *
+         * @return A new instance of [Activity] LoginActivity.
+         */
+        fun newInstance() = LoginActivity()
+    }
+    //endregion
+
     @Inject override lateinit var viewModel: LoginViewModel
     private val menuItems by lazy {
         // create menu items;
