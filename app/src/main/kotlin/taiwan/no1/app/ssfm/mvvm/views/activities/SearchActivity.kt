@@ -5,7 +5,6 @@ import android.app.Fragment
 import android.os.Bundle
 import android.util.SparseArray
 import com.devrapid.kotlinknifer.logi
-import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivitySearchBinding
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.FRAGMENT_SEARCH_HISTORY
@@ -91,7 +90,6 @@ class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>()
     }
 
     private fun popFragment(toFragmentTag: String): Boolean {
-        logw(fragmentStack.safePeek(), fragmentStack.size)
         fragmentStack.forEach { logi(it) }
         // For staying the same history fragment.
         if (FRAGMENT_SEARCH_HISTORY == toFragmentTag && fragmentStack.safePeek() is SearchHistoryFragment)

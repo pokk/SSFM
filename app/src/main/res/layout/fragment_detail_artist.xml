@@ -1,47 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-        <!--<variable-->
-        <!--name="vm"-->
-        <!--type="taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartIndexViewModel"/>-->
+        <variable
+            name="vm"
+            type="taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartArtistDetailViewModel"/>
     </data>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Hot Albums"/>
-
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-        </android.support.v7.widget.RecyclerView>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Similar Artists"/>
+            <ImageView
+                android:id="@+id/tv_cover"
+                style="@style/ChartDetail"
+                app:layout_constraintBottom_toTopOf="@+id/tv_artist_name"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="spread"
+                tools:src="@drawable/sample_lady_gaga"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </android.support.v7.widget.RecyclerView>
+            <TextView
+                android:id="@+id/tv_artist_name"
+                style="@style/ChartDetail.Name"
+                app:layout_constraintBottom_toTopOf="@+id/tv_artist_intro"
+                app:layout_constraintTop_toBottomOf="@+id/tv_cover"
+                tools:text="Lady Gaga"/>
+
+            <TextView
+                android:id="@+id/tv_artist_intro"
+                style="@style/ChartDetail.Summary"
+                app:layout_constraintBottom_toTopOf="@+id/tv_title_album"
+                app:layout_constraintTop_toBottomOf="@+id/tv_artist_name"
+                tools:text="Stefani Joanne Angelina Germanotta (born March 28, 1986), who performs under the stage name Lady Gaga, is a singer, songwriter and musician from New York City, New York, United States. \n\nBefore Gaga adopted her stage name she was in a band called Stefani Germanotta Band. She released her first EP, “Red and Blue“, in early 2006. The following year, music producer Rob Fusari dubbed her Lady Gaga, inspired by the Queen song “Radio Gaga“."/>
+
+            <TextView
+                android:id="@+id/tv_title_album"
+                style="@style/RecyclerView.Title"
+                android:text="Hot Albums"
+                app:layout_constraintBottom_toTopOf="@+id/rv_album"
+                app:layout_constraintTop_toBottomOf="@+id/tv_artist_intro"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_album"
+                style="@style/ChartDetail"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/tv_title_similar"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title_album"
+                tools:listitem="@layout/item_artist_type_1">
+            </android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/tv_title_similar"
+                style="@style/RecyclerView.Title"
+                android:text="Similar Artists"
+                app:layout_constraintBottom_toTopOf="@+id/rv_similar"
+                app:layout_constraintTop_toBottomOf="@+id/rv_album"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_similar"
+                style="@style/ChartDetail.Summary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title_similar">
+            </android.support.v7.widget.RecyclerView>
+
+        </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>
 </layout>
