@@ -106,10 +106,9 @@ class MediaPlayerProxy(imageView: RotatedCircleWithIconImageView):
                         downloadModel = MediaTempFileModel(url, object : IMediaDownloader.DownloadListener {
                             override fun onDownloadFinish() {
                                 this@MediaPlayerProxy.mMediaPlayer.prepareAsync()
-                                this@MediaPlayerProxy.mMediaPlayer.setDataSource(MediaTempFileModel.TEMP)
                             }
                         })
-
+                        this@MediaPlayerProxy.mMediaPlayer.setDataSource(MediaTempFileModel.TEMP)
                     }
                     downloadModel.start()
                     mObserver = observer

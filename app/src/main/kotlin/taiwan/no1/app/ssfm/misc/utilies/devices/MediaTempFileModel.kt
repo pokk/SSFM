@@ -35,6 +35,11 @@ class MediaTempFileModel(url: String, listener: DownloadListener): IMediaDownloa
     override fun start() {
         thread {
 
+            val file = File(TEMP)
+            file.takeIf { it.exists() }.let {
+                file.createNewFile()
+            }
+
             val conn = URL(this@MediaTempFileModel.url)
             val streamUrl = URL(this@MediaTempFileModel.url)
 
@@ -65,7 +70,6 @@ class MediaTempFileModel(url: String, listener: DownloadListener): IMediaDownloa
             val stream = FileOutputStream(TEMP)
             stream.write(mediaBuffer)
             stream.close()
-            this@MediaTempFileModel.listener.onDownloadFinish()
         }
     }
 
