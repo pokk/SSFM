@@ -20,6 +20,7 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistSimilarEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopArtistEntity
@@ -90,6 +91,14 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
                 "method" to "chart.getTopTracks").baseLastFmParams()
 
         return musicService3.get().getChartTopTrack(query)
+    }
+
+    override fun getArtistInfo(mbid: String, artist: String): Observable<ArtistEntity> {
+        val query =
+            mutableMapOf(mbid.takeIf { it.isNotBlank() }?.let { "mbid" to it } ?: "artist" to artist,
+                "method" to "chart.getTopTracks").baseLastFmParams()
+
+        return musicService3.get().getArtistInfo(query)
     }
 
     override fun getSimilarArtist(artist: String): Observable<ArtistSimilarEntity> {

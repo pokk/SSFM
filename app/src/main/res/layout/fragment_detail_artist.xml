@@ -5,9 +5,9 @@
 
     <data>
 
-        <!--<variable-->
-        <!--name="vm"-->
-        <!--type="taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartIndexViewModel"/>-->
+        <variable
+            name="vm"
+            type="taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartArtistDetailViewModel"/>
     </data>
 
     <android.support.v4.widget.NestedScrollView

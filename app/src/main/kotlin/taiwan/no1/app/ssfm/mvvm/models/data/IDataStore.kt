@@ -8,6 +8,7 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistSimilarEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopArtistEntity
@@ -52,6 +53,8 @@ interface IDataStore {
     fun getChartTopArtist(page: Int = 1, limit: Int = 20): Observable<ChartTopArtistEntity>
 
     fun getChartTopTracks(page: Int = 1, limit: Int = 20): Observable<ChartTopTrackEntity>
+
+    fun getArtistInfo(mbid: String = "", artist: String = ""): Observable<ArtistEntity>
 
     fun getSimilarArtist(artist: String): Observable<ArtistSimilarEntity>
 
