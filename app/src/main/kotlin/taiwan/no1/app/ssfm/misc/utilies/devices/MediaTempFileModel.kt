@@ -17,13 +17,15 @@ import kotlin.concurrent.thread
  */
 
 class MediaTempFileModel(url: String, listener: DownloadListener): IMediaDownloader {
-
-    private val TEMP = "/storage/emulated/0/Download/temp.mp3"
     private var url: String = ""
     private var listener: DownloadListener
     @Volatile lateinit var mediaBuffer: ByteArray
     var percentage: Double = .0
         private set
+
+    companion object {
+        val TEMP = "/storage/emulated/0/Download/temp.mp3"
+    }
 
     init {
         this.url = url
@@ -54,6 +56,7 @@ class MediaTempFileModel(url: String, listener: DownloadListener): IMediaDownloa
             }
 
             writeToTemp()
+            this@MediaTempFileModel.listener.onDownloadFinish()
         }
     }
 

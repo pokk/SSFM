@@ -18,7 +18,6 @@ class MediaDataSourceModel(private var url: String, private var listener: IMedia
     var percentage: Double = .0
         private set
 
-
     @Synchronized
     @Throws(IOException::class)
     override fun readAt(position: Long, buffer: ByteArray?, offset: Int, size: Int): Int {
