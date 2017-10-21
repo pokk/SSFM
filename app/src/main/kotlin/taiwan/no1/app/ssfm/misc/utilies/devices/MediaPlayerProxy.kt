@@ -1,6 +1,7 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices
 
 import android.annotation.TargetApi
+import android.media.MediaDataSource
 import android.media.MediaPlayer
 import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
@@ -33,9 +34,11 @@ class MediaPlayerProxy(imageView: RotatedCircleWithIconImageView):
     private var mMediaPlayer = MediaPlayer()
     private var mState: EPlayerState = STOP
     private var getStreamingBufferPercentage: (percentage: Int) -> Unit = {}
-    private lateinit var downloadModel: MediaDownloadModel
+    private lateinit var downloadModel: IMediaDownloader
     private var mObserver: Observer<Unit>? = null
     private var pauseTime: Int = 0
+    private val MARSHMALLOW = android.os.Build.VERSION_CODES.M
+    private val CURRENT_VERSION = android.os.Build.VERSION.SDK_INT
 
     init {
         mImageView = imageView
@@ -90,12 +93,25 @@ class MediaPlayerProxy(imageView: RotatedCircleWithIconImageView):
 
                 mMediaPlayer.let {
                     logd("prepare asynchronous thread")
-                    downloadModel = MediaDownloadModel(url, object: IMediaDownloader.DownloadListener {
-                        override fun onDownloadFinish() {
-                            this@MediaPlayerProxy.mMediaPlayer.prepareAsync()
+                    if (MARSHMALLOW <= CURRENT_VERSION) {
+                        downloadModel = MediaDataSourceModel(url, object : IMediaDownloader.DownloadListener {
+                            override fun onDownloadFinish() {
+                                this@MediaPlayerProxy.mMediaPlayer.prepareAsync()
+                            }
+                        })
+                        downloadModel?.let {
+                            this@MediaPlayerProxy.mMediaPlayer.setDataSource(it as MediaDataSource)
                         }
-                    })
-                    it.setDataSource(downloadModel)
+                    } else {
+                        downloadModel = MediaTempFileModel(url, object : IMediaDownloader.DownloadListener {
+                            override fun onDownloadFinish() {
+                                this@MediaPlayerProxy.mMediaPlayer.prepareAsync()
+                                this@MediaPlayerProxy.mMediaPlayer.setDataSource(MediaTempFileModel.TEMP)
+                            }
+                        })
+
+                    }
+                    downloadModel.start()
                     mObserver = observer
                 }
             } catch (e: Exception) {
