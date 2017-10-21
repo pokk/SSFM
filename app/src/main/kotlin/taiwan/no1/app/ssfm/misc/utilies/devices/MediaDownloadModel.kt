@@ -13,12 +13,34 @@ import kotlin.concurrent.thread
  * Created by weian on 2017/8/19.
  */
 
-class MediaDownloadModel(private var url: String, private var listener: DownloadListener): MediaDataSource() {
+class MediaDownloadModel(private var url: String, private var listener: IMediaDownloader.DownloadListener): MediaDataSource(), IMediaDownloader {
     @Volatile lateinit var mediaBuffer: ByteArray
     var percentage: Double = .0
         private set
 
-    init {
+
+    @Synchronized
+    @Throws(IOException::class)
+    override fun readAt(position: Long, buffer: ByteArray?, offset: Int, size: Int): Int {
+        var readSize = size
+        synchronized(mediaBuffer) {
+            val length = mediaBuffer.size
+            if (position >= length) {
+                return -1 // -1 indicates EOF
+            }
+            if (position + readSize > length) {
+                readSize -= (position + readSize - length).toInt()
+            }
+            System.arraycopy(mediaBuffer, position.toInt(), buffer, offset, readSize)
+            return size
+        }
+    }
+
+    override fun getSize(): Long = mediaBuffer.size.toLong()
+
+    override fun close() {}
+
+    override fun start() {
         thread {
             val conn = URL(this@MediaDownloadModel.url)
             val streamUrl = URL(this@MediaDownloadModel.url)
@@ -44,36 +66,13 @@ class MediaDownloadModel(private var url: String, private var listener: Download
         }
     }
 
-    @Synchronized
-    @Throws(IOException::class)
-    override fun readAt(position: Long, buffer: ByteArray?, offset: Int, size: Int): Int {
-        var readSize = size
-        synchronized(mediaBuffer) {
-            val length = mediaBuffer.size
-            if (position >= length) {
-                return -1 // -1 indicates EOF
-            }
-            if (position + readSize > length) {
-                readSize -= (position + readSize - length).toInt()
-            }
-            System.arraycopy(mediaBuffer, position.toInt(), buffer, offset, readSize)
-            return size
-        }
-    }
-
-    override fun getSize(): Long = mediaBuffer.size.toLong()
-
-    override fun close() {}
-
-    fun writeToFile(path: String) {
+    override fun writeToFile(path: String): Int {
         thread {
             val stream = FileOutputStream(path)
             stream.write(mediaBuffer)
             stream.close()
-        }.start()
-    }
+        }
 
-    interface DownloadListener {
-        fun onDownloadFinish(): Unit
+        return mediaBuffer.size
     }
 }

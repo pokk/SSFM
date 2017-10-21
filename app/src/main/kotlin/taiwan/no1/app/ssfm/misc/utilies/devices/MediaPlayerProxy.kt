@@ -23,11 +23,12 @@ import kotlin.concurrent.thread
  * Created by weian on 2017/6/18.
  */
 
-class MediaPlayerProxy: IMultiMediaPlayer,
-    MediaPlayer.OnPreparedListener,
-    MediaPlayer.OnErrorListener,
-    MediaPlayer.OnBufferingUpdateListener,
-    MediaPlayer.OnCompletionListener {
+class MediaPlayerProxy(imageView: RotatedCircleWithIconImageView):
+        IMultiMediaPlayer,
+        MediaPlayer.OnPreparedListener,
+        MediaPlayer.OnErrorListener,
+        MediaPlayer.OnBufferingUpdateListener,
+        MediaPlayer.OnCompletionListener {
     private var mImageView: RotatedCircleWithIconImageView
     private var mMediaPlayer = MediaPlayer()
     private var mState: EPlayerState = STOP
@@ -36,7 +37,7 @@ class MediaPlayerProxy: IMultiMediaPlayer,
     private var mObserver: Observer<Unit>? = null
     private var pauseTime: Int = 0
 
-    constructor(imageView: RotatedCircleWithIconImageView) {
+    init {
         mImageView = imageView
         mMediaPlayer = MediaPlayer()
         mMediaPlayer.setOnPreparedListener(this)
@@ -89,7 +90,7 @@ class MediaPlayerProxy: IMultiMediaPlayer,
 
                 mMediaPlayer.let {
                     logd("prepare asynchronous thread")
-                    downloadModel = MediaDownloadModel(url, object: MediaDownloadModel.DownloadListener {
+                    downloadModel = MediaDownloadModel(url, object: IMediaDownloader.DownloadListener {
                         override fun onDownloadFinish() {
                             this@MediaPlayerProxy.mMediaPlayer.prepareAsync()
                         }
