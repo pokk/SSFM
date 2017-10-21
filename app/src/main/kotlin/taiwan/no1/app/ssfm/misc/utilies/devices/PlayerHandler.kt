@@ -13,14 +13,15 @@ import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.RANDOM
  * Created by weian on 2017/7/7.
  */
 
-class PlayerHandler: IPlayerHandler {
+class PlayerHandler(player: IMultiMediaPlayer, playList: IPlayList):
+        IPlayerHandler {
     private var mPlayIndex: IPlayList
     private var mPlayer: IMultiMediaPlayer
     private var mPlayList: Array<String> = arrayOf()
     private var timer: PausableTimer ?= null
     private val TAG = "PlayerHandler"
 
-    constructor(player: IMultiMediaPlayer, playList: IPlayList) {
+    init {
         mPlayer = player
         mPlayIndex = playList
     }
