@@ -9,33 +9,33 @@
             name="vm"
             type="taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartIndexViewModel"/>
 
-        <!--<variable-->
-        <!--name="artistLayoutManager"-->
-        <!--type="android.support.v7.widget.RecyclerView.LayoutManager"/>-->
+        <variable
+            name="artistLayoutManager"
+            type="android.support.v7.widget.RecyclerView.LayoutManager"/>
 
-        <!--<variable-->
-        <!--name="artistAdapter"-->
-        <!--type="android.support.v7.widget.RecyclerView.Adapter"/>-->
+        <variable
+            name="artistAdapter"
+            type="android.support.v7.widget.RecyclerView.Adapter"/>
 
-        <!--<variable-->
-        <!--name="artistDecoration"-->
-        <!--type="android.support.v7.widget.RecyclerView.ItemDecoration"/>-->
+        <variable
+            name="artistDecoration"
+            type="android.support.v7.widget.RecyclerView.ItemDecoration"/>
 
-        <!--<variable-->
-        <!--name="artistLoadmore"-->
-        <!--type="taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback"/>-->
+        <variable
+            name="artistLoadmore"
+            type="taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback"/>
 
-        <!--<variable-->
-        <!--name="trackLayoutManager"-->
-        <!--type="android.support.v7.widget.RecyclerView.LayoutManager"/>-->
+        <variable
+            name="trackLayoutManager"
+            type="android.support.v7.widget.RecyclerView.LayoutManager"/>
 
-        <!--<variable-->
-        <!--name="trackAdapter"-->
-        <!--type="android.support.v7.widget.RecyclerView.Adapter"/>-->
+        <variable
+            name="trackAdapter"
+            type="android.support.v7.widget.RecyclerView.Adapter"/>
 
-        <!--<variable-->
-        <!--name="trackDecoration"-->
-        <!--type="android.support.v7.widget.RecyclerView.ItemDecoration"/>-->
+        <variable
+            name="trackDecoration"
+            type="android.support.v7.widget.RecyclerView.ItemDecoration"/>
     </data>
 
     <android.support.constraint.ConstraintLayout

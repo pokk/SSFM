@@ -22,6 +22,7 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistSimilarEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTagEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTrackEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackSimilarEntity
 
@@ -50,6 +51,10 @@ class LocalDataStore: IDataStore {
     }
 
     override fun getChartTopTracks(page: Int, limit: Int): Observable<ChartTopTrackEntity> {
+        TODO()
+    }
+
+    override fun getChartTopTags(page: Int, limit: Int): Observable<ChartTopTagEntity> {
         TODO()
     }
 

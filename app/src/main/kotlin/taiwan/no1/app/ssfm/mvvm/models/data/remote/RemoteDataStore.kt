@@ -24,6 +24,7 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistSimilarEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTagEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTrackEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackSimilarEntity
 import javax.inject.Inject
@@ -93,10 +94,19 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
         return musicService3.get().getChartTopTrack(query)
     }
 
+    override fun getChartTopTags(page: Int, limit: Int): Observable<ChartTopTagEntity> {
+        val query =
+            mutableMapOf("page" to page.toString(),
+                "limit" to limit.toString(),
+                "method" to "chart.getTopTags").baseLastFmParams()
+
+        return musicService3.get().getChartTopTag(query)
+    }
+
     override fun getArtistInfo(mbid: String, artist: String): Observable<ArtistEntity> {
         val query =
             mutableMapOf(mbid.takeIf { it.isNotBlank() }?.let { "mbid" to it } ?: "artist" to artist,
-                "method" to "chart.getTopTracks").baseLastFmParams()
+                "method" to "artist.getInfo").baseLastFmParams()
 
         return musicService3.get().getArtistInfo(query)
     }

@@ -8,6 +8,7 @@ import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistSimilarEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTagEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackSimilarEntity
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -31,6 +32,9 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
     override fun getChartTopArtist(page: Int, limit: Int) = remote.getChartTopArtist(page, limit)
 
     override fun getChartTopTracks(page: Int, limit: Int) = remote.getChartTopTracks(page, limit)
+
+    override fun getChartTopTags(page: Int, limit: Int): Observable<ChartTopTagEntity> = remote.getChartTopTags(page,
+        limit)
 
     override fun getArtistInfo(mbid: String, artist: String): Observable<ArtistEntity> = remote.getArtistInfo(mbid,
         artist)
