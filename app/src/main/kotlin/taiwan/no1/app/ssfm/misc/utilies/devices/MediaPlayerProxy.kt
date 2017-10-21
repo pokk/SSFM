@@ -33,7 +33,7 @@ class MediaPlayerProxy(imageView: RotatedCircleWithIconImageView):
     private var mMediaPlayer = MediaPlayer()
     private var mState: EPlayerState = STOP
     private var getStreamingBufferPercentage: (percentage: Int) -> Unit = {}
-    private lateinit var downloadModel: MediaDownloadModel
+    private lateinit var downloadModel: MediaDataSourceModel
     private var mObserver: Observer<Unit>? = null
     private var pauseTime: Int = 0
 
@@ -90,7 +90,7 @@ class MediaPlayerProxy(imageView: RotatedCircleWithIconImageView):
 
                 mMediaPlayer.let {
                     logd("prepare asynchronous thread")
-                    downloadModel = MediaDownloadModel(url, object: IMediaDownloader.DownloadListener {
+                    downloadModel = MediaDataSourceModel(url, object: IMediaDownloader.DownloadListener {
                         override fun onDownloadFinish() {
                             this@MediaPlayerProxy.mMediaPlayer.prepareAsync()
                         }
