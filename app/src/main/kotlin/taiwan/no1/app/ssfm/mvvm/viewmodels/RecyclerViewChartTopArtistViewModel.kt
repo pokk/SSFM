@@ -2,7 +2,6 @@ package taiwan.no1.app.ssfm.mvvm.viewmodels
 
 import android.databinding.ObservableField
 import android.view.View
-import com.devrapid.kotlinknifer.logw
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
@@ -26,7 +25,6 @@ class RecyclerViewChartTopArtistViewModel(val item: ArtistEntity.Artist): BaseVi
      * @event_to [taiwan.no1.app.ssfm.mvvm.viewmodels.SearchViewModel.receiveClickHistoryEvent]
      */
     fun artistOnClick(view: View) {
-        logw("Hello!!!")
         RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_HISTORY, item.name)
     }
 }
