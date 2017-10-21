@@ -128,6 +128,10 @@ dependencies {
 //    implementation "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:$dbflow_version"
 //    implementation "net.zetetic:android-database-sqlcipher:${sqlcipher_version}@aar"
 
+    /* Media */
+    // ExoPlayer
+    implementation "com.google.android.exoplayer:exoplayer:$exo_player"
+
     /* For internet */
     // Retrofit 2
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
