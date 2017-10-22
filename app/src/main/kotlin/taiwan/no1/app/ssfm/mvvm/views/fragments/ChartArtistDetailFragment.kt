@@ -1,10 +1,20 @@
 package taiwan.no1.app.ssfm.mvvm.views.fragments
 
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailArtistBinding
+import taiwan.no1.app.ssfm.databinding.ItemArtistType2Binding
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.SimilarArtistAdapter
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshRecyclerView
+import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartArtistDetailViewModel
+import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewChartSimilarArtistViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
+import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
+import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.itemdecorator.HorizontalItemDecorator
 import javax.inject.Inject
 
 /**
@@ -34,14 +44,33 @@ class ChartArtistDetailFragment: AdvancedFragment<FragmentChartArtistDetailViewM
     //endregion
 
     @Inject override lateinit var viewModel: FragmentChartArtistDetailViewModel
-
+    private val artistInfo by lazy { DataInfo() }
+    private var artistRes = mutableListOf<ArtistEntity.Artist>()
     // Get the arguments from the bundle here.
     private val mbid: String by lazy { this.arguments.getString(ARG_PARAM_MBID) }
     private val artistName: String by lazy { this.arguments.getString(ARG_PARAM_ARTIST_NAME) }
 
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
-        viewModel.fetchDetailInfo(mbid, artistName)
+        binding?.apply {
+            artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            artistAdapter = BaseDataBindingAdapter<ItemArtistType2Binding, ArtistEntity.Artist>(R.layout.item_artist_type_2,
+                artistRes) { holder, item ->
+                holder.binding.avm = RecyclerViewChartSimilarArtistViewModel(item).apply {
+                    onAttach(this@ChartArtistDetailFragment)
+                    clickItemListener = {}
+                }
+            }
+            artistDecoration = HorizontalItemDecorator(20)
+        }
+        viewModel.fetchDetailInfo(mbid, artistName) {
+            // Refresh the similar artist recyclerview.
+            it.artist?.similar?.artists?.let {
+                artistRes = (binding?.artistAdapter as SimilarArtistAdapter to artistRes).refreshRecyclerView {
+                    addAll(it)
+                }
+            }
+        }
         viewModel.fetchHotAlbum(artistName)
     }
 

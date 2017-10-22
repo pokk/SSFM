@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.widget.GridLayout.VERTICAL
-import com.devrapid.kotlinknifer.logw
 import org.jetbrains.anko.act
 import taiwan.no1.app.ssfm.App
 import taiwan.no1.app.ssfm.R
@@ -92,7 +91,6 @@ class ChartIndexFragment: AdvancedFragment<FragmentChartIndexViewModel, Fragment
         tagInfo.page.takeIf { 1 >= it && tagInfo.canLoadMoreFlag }?.let {
             viewModel.fetchTrackList(tagInfo.page, tagInfo.limit) { resList, total ->
                 tagRes = resCallback(resList, total, tagRes, binding?.tagAdapter as TagAdapter, tagInfo)
-                logw(tagRes)
             }
         }
     }

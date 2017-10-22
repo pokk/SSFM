@@ -21,12 +21,13 @@ class FragmentChartArtistDetailViewModel(private val artistsInfoUsecase: BaseUse
     val artistSummary by lazy { ObservableField<String>("") }
     val artistImage by lazy { ObservableField<String>("") }
 
-    fun fetchDetailInfo(mbid: String, name: String) {
+    fun fetchDetailInfo(mbid: String, name: String, callback: (artistDeatilInfo: ArtistEntity) -> Unit) {
         lifecycleProvider.execute(artistsInfoUsecase, GetArtistInfoCase.RequestValue(name, mbid)) {
             onNext {
                 artistImage.set(it.artist?.images?.get(EXTRA_LARGE)?.text ?: "")
                 artistName.set(it.artist?.name ?: "")
                 artistSummary.set(it.artist?.bio?.summary ?: "")
+                callback(it)
             }
         }
     }
