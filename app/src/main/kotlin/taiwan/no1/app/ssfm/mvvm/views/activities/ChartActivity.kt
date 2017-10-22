@@ -17,23 +17,12 @@ import javax.inject.Inject
  * @since   9/16/17
  */
 class ChartActivity: AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
-    //region Static initialization
-    companion object Factory {
-        /**
-         * Use this factory method to create a new instance of this activity using the provided parameters.
-         *
-         * @return A new instance of [Activity] ChartActivity.
-         */
-        fun newInstance() = ChartActivity()
-    }
-    //endregion
-
     @Inject override lateinit var viewModel: ChartViewModel
 
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        navigate(ChartIndexFragment(), false)
+        navigate(ChartIndexFragment.newInstance(), false)
     }
     //endregion
 

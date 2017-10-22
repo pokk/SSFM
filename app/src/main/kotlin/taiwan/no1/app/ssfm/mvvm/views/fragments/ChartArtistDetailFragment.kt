@@ -16,16 +16,18 @@ class ChartArtistDetailFragment: AdvancedFragment<FragmentChartArtistDetailViewM
     //region Static initialization
     companion object Factory {
         // The key name of the fragment initialization parameters.
-        private const val ARG_PARAM_: String = "param_"
+        private const val ARG_PARAM_MBID: String = "param_mbid"
+        private const val ARG_PARAM_ARTIST_NAME: String = "param_artist_name"
 
         /**
          * Use this factory method to create a new instance of this fragment using the provided parameters.
          *
          * @return A new instance of [android.app.Fragment] ChartArtistDetailFragment.
          */
-        fun newInstance(arg1: String) = ChartArtistDetailFragment().also {
-            it.arguments = Bundle().also {
-                it.putString(ARG_PARAM_, arg1)
+        fun newInstance(mbid: String, artistName: String = "") = ChartArtistDetailFragment().also {
+            it.arguments = Bundle().apply {
+                putString(ARG_PARAM_MBID, mbid)
+                putString(ARG_PARAM_ARTIST_NAME, artistName)
             }
         }
     }
@@ -33,10 +35,14 @@ class ChartArtistDetailFragment: AdvancedFragment<FragmentChartArtistDetailViewM
 
     @Inject override lateinit var viewModel: FragmentChartArtistDetailViewModel
 
+    // Get the arguments from the bundle here.
+    private val mbid: String by lazy { this.arguments.getString(ARG_PARAM_MBID) }
+    private val artistName: String by lazy { this.arguments.getString(ARG_PARAM_ARTIST_NAME) }
+
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
-        binding?.apply {
-        }
+        viewModel.fetchDetailInfo(mbid, artistName)
+        viewModel.fetchHotAlbum(artistName)
     }
 
     override fun provideInflateView(): Int = R.layout.fragment_detail_artist

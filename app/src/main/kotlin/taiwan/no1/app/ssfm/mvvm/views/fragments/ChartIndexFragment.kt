@@ -63,7 +63,8 @@ class ChartIndexFragment: AdvancedFragment<FragmentChartIndexViewModel, Fragment
                     onAttach(this@ChartIndexFragment)
                     clickItemListener = {
                         // TODO(jieyi): 10/22/17 Change fragment to create instance method.
-                        (act as ChartActivity).navigate(ChartArtistDetailFragment(), true)
+                        (act as ChartActivity).navigate(ChartArtistDetailFragment.newInstance(item.mbid ?: "",
+                            item.name ?: ""), true)
                     }
                 }
                 val sd = App.compactContext.scaledDrawable(R.drawable.lb_ic_thumb_up_outline, 0.5f, 0.5f)

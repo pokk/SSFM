@@ -22,17 +22,6 @@ import javax.inject.Inject
  * @since   9/8/17
  */
 class PreferenceActivity: AdvancedActivity<PreferenceViewModel, ActivityPreferenceBinding>() {
-    //region Static initialization
-    companion object Factory {
-        /**
-         * Use this factory method to create a new instance of this activity using the provided parameters.
-         *
-         * @return A new instance of [Activity] PreferenceActivity.
-         */
-        fun newInstance() = PreferenceActivity()
-    }
-    //endregion
-
     @Inject override lateinit var viewModel: PreferenceViewModel
 
     private val preferenceList: MutableList<IExpandVisitable> =
