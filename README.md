@@ -17,6 +17,10 @@
 ![Retrofit2](https://img.shields.io/badge/Retrofit2-2.3.0-green.svg?style=flat-square)
 ![Glide](https://img.shields.io/badge/Glide-4.0.0-green.svg?style=flat-square)
 
+# Introduction
+
+This project music app provides the functions that listening online musics, downloading a music from remote server, checking top charts for artists or tracks or albums in this week, and searching a music for yourself.
+Basically, it's a demo app but the basic funtions we provide.
 
 # License
 
