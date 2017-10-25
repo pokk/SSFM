@@ -47,7 +47,7 @@ class ChartIndexFragment: AdvancedFragment<FragmentChartIndexViewModel, Fragment
     //endregion
 
     @Inject override lateinit var viewModel: FragmentChartIndexViewModel
-    private val artistInfo by lazy { DataInfo() }
+    private val artistInfo by lazy { DataInfo(limit = 30) }
     private val tagInfo by lazy { DataInfo() }
     private var artistRes = mutableListOf<ArtistEntity.Artist>()
     private var tagRes = mutableListOf<TagEntity.Tag>()

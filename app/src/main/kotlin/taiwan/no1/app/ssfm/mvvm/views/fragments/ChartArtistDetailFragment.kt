@@ -10,7 +10,6 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailArtistBinding
 import taiwan.no1.app.ssfm.databinding.ItemArtistType2Binding
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
-import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.SimilarArtistAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshRecyclerView
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
@@ -50,7 +49,6 @@ class ChartArtistDetailFragment: AdvancedFragment<FragmentChartArtistDetailViewM
     //endregion
 
     @Inject override lateinit var viewModel: FragmentChartArtistDetailViewModel
-    private val artistInfo by lazy { DataInfo() }
     private var artistRes = mutableListOf<ArtistEntity.Artist>()
     // Get the arguments from the bundle here.
     private val mbid: String by lazy { this.arguments.getString(ARG_PARAM_MBID) }
@@ -96,7 +94,7 @@ class ChartArtistDetailFragment: AdvancedFragment<FragmentChartArtistDetailViewM
     //endregion
 
     /**
-     * @param mbid
+     * @param artistName
      *
      * @event_from [taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewChartSimilarArtistViewModel.artistOnClick]
      */
