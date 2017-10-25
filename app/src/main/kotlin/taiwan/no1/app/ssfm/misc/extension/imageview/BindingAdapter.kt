@@ -7,6 +7,7 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 
 /**
@@ -19,15 +20,19 @@ fun ImageView.setSrc(bitmap: Bitmap) = setImageBitmap(bitmap)
 @BindingAdapter("android:src")
 fun ImageView.setSrc(resId: Int) = setImageResource(resId)
 
-@BindingAdapter("android:imageUrl", "android:placeHolder", "android:error")
-fun ImageView.loadImage(url: String?, holderDrawable: Drawable?, errorDrawable: Drawable?) {
+@BindingAdapter("android:imageUrl", "android:placeHolder", "android:error", "android:imgCallback", requireAll = false)
+fun ImageView.loadImage(url: String?,
+                        holderDrawable: Drawable?,
+                        errorDrawable: Drawable?,
+                        listener: RequestListener<Bitmap>?) {
     if (!url.isNullOrBlank()) {
-        Glide.with(context).load(url).apply(RequestOptions().apply {
+        Glide.with(context).asBitmap().load(url).apply(RequestOptions().apply {
             centerCrop()
             holderDrawable?.let { placeholder(it) }
             errorDrawable?.let { error(it) }
             priority(Priority.HIGH)
             diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-        }).into(this)
+        }).listener(listener).
+            into(this)
     }
 }

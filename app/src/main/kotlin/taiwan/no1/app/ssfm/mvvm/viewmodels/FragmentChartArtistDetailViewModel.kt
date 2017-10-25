@@ -1,7 +1,6 @@
 package taiwan.no1.app.ssfm.mvvm.viewmodels
 
 import android.databinding.ObservableField
-import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.EXTRA_LARGE
 import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
@@ -35,7 +34,7 @@ class FragmentChartArtistDetailViewModel(private val artistsInfoUsecase: BaseUse
     fun fetchHotAlbum(name: String) {
         lifecycleProvider.execute(topTopAlbumsUsecase, GetTopAlbumsCase.RequestValue(name)) {
             onNext {
-                it.topalbums.album?.forEach { logw(it.name) }
+                it.topalbums.album?.forEach { }
             }
         }
     }
