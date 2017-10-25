@@ -1,11 +1,13 @@
 package taiwan.no1.app.ssfm.misc.extension
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.ScaleDrawable
 import android.support.annotation.DrawableRes
 import android.support.v4.content.ContextCompat
+import android.support.v7.graphics.Palette
 
 /**
  * @author  jieyi
@@ -17,3 +19,5 @@ fun Context.scaledDrawable(@DrawableRes drawableId: Int, scaleWidth: Float, scal
     }
     return ScaleDrawable(drawable, 0, scaleWidth, scaleHeight).drawable
 }
+
+fun Bitmap.palette() = Palette.from(this)
