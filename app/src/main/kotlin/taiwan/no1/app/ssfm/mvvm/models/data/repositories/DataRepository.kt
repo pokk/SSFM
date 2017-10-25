@@ -5,10 +5,12 @@ import io.reactivex.Observable
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Local
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Remote
 import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistSimilarEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTagEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackSimilarEntity
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -50,6 +52,15 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
 
     override fun getSimilarTracks(artist: String, track: String): Observable<TrackSimilarEntity> =
         remote.getSimilarTracks(artist, track)
+
+    override fun getTagTopAlbums(tag: String, page: Int, limit: Int): Observable<AlbumEntity> =
+        remote.getTagTopAlbums(tag, page, limit)
+
+    override fun getTagTopArtists(tag: String, page: Int, limit: Int): Observable<ArtistEntity> =
+        remote.getTagTopArtists(tag, page, limit)
+
+    override fun getTagTopTracks(tag: String, page: Int, limit: Int): Observable<TrackEntity> =
+        remote.getTagTopTracks(tag, page, limit)
 
     override fun getLovedTracks(user: String, page: Int) =
         remote.getLovedTracks(user, page)

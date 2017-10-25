@@ -65,4 +65,14 @@ interface MusicServices {
 
     @GET(Music3Config.API_REQUEST)
     fun getChartTopTag(@QueryMap queries: Map<String, String>): Observable<ChartTopTagEntity>
+
+    // Tag
+    @GET(Music3Config.API_REQUEST)
+    fun getTagTopAlbum(@QueryMap queries: Map<String, String>): Observable<AlbumEntity>
+
+    @GET(Music3Config.API_REQUEST)
+    fun getTagTopArtist(@QueryMap queries: Map<String, String>): Observable<ArtistEntity>
+
+    @GET(Music3Config.API_REQUEST)
+    fun getTagTopTrack(@QueryMap queries: Map<String, String>): Observable<TrackEntity>
 }

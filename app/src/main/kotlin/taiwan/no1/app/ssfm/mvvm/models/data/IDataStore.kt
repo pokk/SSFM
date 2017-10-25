@@ -14,6 +14,7 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTagEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTrackEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackSimilarEntity
 
 /**
@@ -68,6 +69,12 @@ interface IDataStore {
     fun getArtistTags(artist: String, session: Session): Observable<Collection<String>>
 
     fun getSimilarTracks(artist: String, track: String): Observable<TrackSimilarEntity>
+
+    fun getTagTopAlbums(tag: String = "", page: Int = 1, limit: Int = 20): Observable<AlbumEntity>
+
+    fun getTagTopArtists(tag: String = "", page: Int = 1, limit: Int = 20): Observable<ArtistEntity>
+
+    fun getTagTopTracks(tag: String = "", page: Int = 1, limit: Int = 20): Observable<TrackEntity>
 
     fun getLovedTracks(user: String, page: Int = 1): Observable<Collection<Track>>
 
