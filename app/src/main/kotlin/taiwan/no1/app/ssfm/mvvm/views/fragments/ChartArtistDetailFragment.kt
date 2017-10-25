@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.mvvm.views.fragments
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import org.jetbrains.anko.act
@@ -54,6 +55,18 @@ class ChartArtistDetailFragment: AdvancedFragment<FragmentChartArtistDetailViewM
     // Get the arguments from the bundle here.
     private val mbid: String by lazy { this.arguments.getString(ARG_PARAM_MBID) }
     private val artistName: String by lazy { this.arguments.getString(ARG_PARAM_ARTIST_NAME) }
+
+    //region Lifecycle
+    override fun onResume() {
+        super.onResume()
+        RxBus.get().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        RxBus.get().unregister(this)
+    }
+    //endregion
 
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
