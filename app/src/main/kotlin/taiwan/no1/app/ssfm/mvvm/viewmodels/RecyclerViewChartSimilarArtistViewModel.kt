@@ -28,17 +28,14 @@ class RecyclerViewChartSimilarArtistViewModel(val item: ArtistEntity.Artist): Ba
     var clickItemListener: ((item: ArtistEntity.Artist) -> Unit)? = null
 
     /**
-     * A callback event for clicking a item to list item.
+     * A callback event for clicking an artist to list item.
      *
      * @param view [android.widget.RelativeLayout]
      *
-     * @event_to [taiwan.no1.app.ssfm.mvvm.viewmodels.SearchViewModel.receiveClickHistoryEvent]
+     * @event_to [taiwan.no1.app.ssfm.mvvm.views.fragments.ChartArtistDetailFragment.receiveSubFragmentEvent]
      */
     fun artistOnClick(view: View) {
-        // For `searching activity`.
-        RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_HISTORY, item.name)
-        // For `top chart activity`.
-        clickItemListener?.invoke(item)
+        RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_SIMILAR, item.name)
     }
 
     val imageCallback = object: RequestListener<Bitmap> {

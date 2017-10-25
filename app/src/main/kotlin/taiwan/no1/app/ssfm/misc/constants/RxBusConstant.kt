@@ -12,4 +12,6 @@ object RxBusConstant {
     const val FRAGMENT_SEARCH_RESULT = "Fragment Music Search Result"
 
     const val VIEWMODEL_CLICK_HISTORY = "Viewmodel Click History Keyword Item"
+
+    const val VIEWMODEL_CLICK_SIMILAR = "Viewmodel Click Similar Artist Item"
 }
