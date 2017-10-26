@@ -11,11 +11,11 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistSimilarEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopTrackEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTagEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTrackEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopAlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTagEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTrackEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackSimilarEntity
 
@@ -41,7 +41,7 @@ interface MusicServices {
     fun getArtistInfo(@QueryMap queries: Map<String, String>): Observable<ArtistEntity>
 
     @GET(Music3Config.API_REQUEST)
-    fun getArtistTopAlbum(@QueryMap queries: Map<String, String>): Observable<ArtistTopAlbumEntity>
+    fun getArtistTopAlbum(@QueryMap queries: Map<String, String>): Observable<TopAlbumEntity>
 
     @GET(Music3Config.API_REQUEST)
     fun getArtistTopTrack(@QueryMap queries: Map<String, String>): Observable<ArtistTopTrackEntity>
@@ -58,21 +58,21 @@ interface MusicServices {
 
     // Chart
     @GET(Music3Config.API_REQUEST)
-    fun getChartTopTrack(@QueryMap queries: Map<String, String>): Observable<ChartTopTrackEntity>
+    fun getChartTopTrack(@QueryMap queries: Map<String, String>): Observable<TopTrackEntity>
 
     @GET(Music3Config.API_REQUEST)
-    fun getChartTopArtist(@QueryMap queries: Map<String, String>): Observable<ChartTopArtistEntity>
+    fun getChartTopArtist(@QueryMap queries: Map<String, String>): Observable<TopArtistEntity>
 
     @GET(Music3Config.API_REQUEST)
-    fun getChartTopTag(@QueryMap queries: Map<String, String>): Observable<ChartTopTagEntity>
+    fun getChartTopTag(@QueryMap queries: Map<String, String>): Observable<TopTagEntity>
 
     // Tag
     @GET(Music3Config.API_REQUEST)
-    fun getTagTopAlbum(@QueryMap queries: Map<String, String>): Observable<AlbumEntity>
+    fun getTagTopAlbum(@QueryMap queries: Map<String, String>): Observable<TopAlbumEntity>
 
     @GET(Music3Config.API_REQUEST)
-    fun getTagTopArtist(@QueryMap queries: Map<String, String>): Observable<ArtistEntity>
+    fun getTagTopArtist(@QueryMap queries: Map<String, String>): Observable<TopArtistEntity>
 
     @GET(Music3Config.API_REQUEST)
-    fun getTagTopTrack(@QueryMap queries: Map<String, String>): Observable<TrackEntity>
+    fun getTagTopTrack(@QueryMap queries: Map<String, String>): Observable<TopTrackEntity>
 }

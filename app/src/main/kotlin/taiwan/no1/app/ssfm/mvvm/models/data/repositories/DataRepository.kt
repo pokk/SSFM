@@ -5,12 +5,12 @@ import io.reactivex.Observable
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Local
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Remote
 import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistSimilarEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTagEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopAlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTagEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTrackEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackSimilarEntity
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -35,7 +35,7 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
 
     override fun getChartTopTracks(page: Int, limit: Int) = remote.getChartTopTracks(page, limit)
 
-    override fun getChartTopTags(page: Int, limit: Int): Observable<ChartTopTagEntity> = remote.getChartTopTags(page,
+    override fun getChartTopTags(page: Int, limit: Int): Observable<TopTagEntity> = remote.getChartTopTags(page,
         limit)
 
     override fun getArtistInfo(mbid: String, artist: String): Observable<ArtistEntity> = remote.getArtistInfo(mbid,
@@ -43,7 +43,7 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
 
     override fun getSimilarArtist(artist: String): Observable<ArtistSimilarEntity> = remote.getSimilarArtist(artist)
 
-    override fun getArtistTopAlbum(artist: String): Observable<ArtistTopAlbumEntity> = remote.getArtistTopAlbum(artist)
+    override fun getArtistTopAlbum(artist: String): Observable<TopAlbumEntity> = remote.getArtistTopAlbum(artist)
 
     override fun getAlbumInfo(artist: String, albumOrMbid: String) = remote.getAlbumInfo(artist, albumOrMbid)
 
@@ -53,13 +53,13 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
     override fun getSimilarTracks(artist: String, track: String): Observable<TrackSimilarEntity> =
         remote.getSimilarTracks(artist, track)
 
-    override fun getTagTopAlbums(tag: String, page: Int, limit: Int): Observable<AlbumEntity> =
+    override fun getTagTopAlbums(tag: String, page: Int, limit: Int): Observable<TopAlbumEntity> =
         remote.getTagTopAlbums(tag, page, limit)
 
-    override fun getTagTopArtists(tag: String, page: Int, limit: Int): Observable<ArtistEntity> =
+    override fun getTagTopArtists(tag: String, page: Int, limit: Int): Observable<TopArtistEntity> =
         remote.getTagTopArtists(tag, page, limit)
 
-    override fun getTagTopTracks(tag: String, page: Int, limit: Int): Observable<TrackEntity> =
+    override fun getTagTopTracks(tag: String, page: Int, limit: Int): Observable<TopTrackEntity> =
         remote.getTagTopTracks(tag, page, limit)
 
     override fun getLovedTracks(user: String, page: Int) =

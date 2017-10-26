@@ -22,11 +22,10 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistSimilarEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTagEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTrackEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopAlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTagEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTrackEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackSimilarEntity
 import javax.inject.Inject
 import javax.inject.Named
@@ -77,7 +76,7 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
     override fun obtainSession(user: String, pwd: String): Observable<Session> =
         ObservableJust(Authenticator.getMobileSession(user, pwd, lastfm_key, lastfm_secret))
 
-    override fun getChartTopArtist(page: Int, limit: Int): Observable<ChartTopArtistEntity> {
+    override fun getChartTopArtist(page: Int, limit: Int): Observable<TopArtistEntity> {
         val query =
             mutableMapOf("page" to page.toString(),
                 "limit" to limit.toString(),
@@ -86,7 +85,7 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
         return musicService3.get().getChartTopArtist(query)
     }
 
-    override fun getChartTopTracks(page: Int, limit: Int): Observable<ChartTopTrackEntity> {
+    override fun getChartTopTracks(page: Int, limit: Int): Observable<TopTrackEntity> {
         val query =
             mutableMapOf("page" to page.toString(),
                 "limit" to limit.toString(),
@@ -95,7 +94,7 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
         return musicService3.get().getChartTopTrack(query)
     }
 
-    override fun getChartTopTags(page: Int, limit: Int): Observable<ChartTopTagEntity> {
+    override fun getChartTopTags(page: Int, limit: Int): Observable<TopTagEntity> {
         val query =
             mutableMapOf("page" to page.toString(),
                 "limit" to limit.toString(),
@@ -121,7 +120,7 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
         return musicService3.get().getSimilarArtistInfo(query)
     }
 
-    override fun getArtistTopAlbum(artist: String): Observable<ArtistTopAlbumEntity> {
+    override fun getArtistTopAlbum(artist: String): Observable<TopAlbumEntity> {
         val query =
             mutableMapOf("artist" to artist,
                 "method" to "artist.getTopAlbums").baseLastFmParams()
@@ -149,7 +148,7 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
         return musicService3.get().getSimilarTrackInfo(query)
     }
 
-    override fun getTagTopAlbums(tag: String, page: Int, limit: Int): Observable<AlbumEntity> {
+    override fun getTagTopAlbums(tag: String, page: Int, limit: Int): Observable<TopAlbumEntity> {
         val query =
             mutableMapOf("tag" to tag,
                 "page" to page.toString(),
@@ -159,7 +158,7 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
         return musicService3.get().getTagTopAlbum(query)
     }
 
-    override fun getTagTopArtists(tag: String, page: Int, limit: Int): Observable<ArtistEntity> {
+    override fun getTagTopArtists(tag: String, page: Int, limit: Int): Observable<TopArtistEntity> {
         val query =
             mutableMapOf("tag" to tag,
                 "page" to page.toString(),
@@ -169,7 +168,7 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
         return musicService3.get().getTagTopArtist(query)
     }
 
-    override fun getTagTopTracks(tag: String, page: Int, limit: Int): Observable<TrackEntity> {
+    override fun getTagTopTracks(tag: String, page: Int, limit: Int): Observable<TopTrackEntity> {
         val query =
             mutableMapOf("tag" to tag,
                 "page" to page.toString(),

@@ -2,15 +2,15 @@ package taiwan.no1.app.ssfm.mvvm.models.usecases
 
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopArtistEntity
 
 /**
  * @author  jieyi
  * @since   10/11/17
  */
-class GetTopArtistsCase(repository: IDataStore): BaseUsecase<ChartTopArtistEntity, GetTopArtistsCase.RequestValue>(
+class GetTopArtistsCase(repository: IDataStore): BaseUsecase<TopArtistEntity, GetTopArtistsCase.RequestValue>(
     repository) {
-    override fun fetchUsecase(): Observable<ChartTopArtistEntity> =
+    override fun fetchUsecase(): Observable<TopArtistEntity> =
         (parameters ?: GetTopArtistsCase.RequestValue()).let { repository.getChartTopArtist(it.page, it.limit) }
 
     data class RequestValue(val page: Int = 1, val limit: Int = 20): RequestValues

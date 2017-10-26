@@ -8,10 +8,10 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTagEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTrackEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopAlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTagEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTrackEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetAlbumInfoCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistInfoCase
@@ -32,17 +32,17 @@ class UseCaseModule {
     // Chart top
     @Provides
     @PerFragment
-    fun provideTopArtistsUsecase(dataRepository: DataRepository): BaseUsecase<ChartTopArtistEntity, GetTopArtistsCase.RequestValue> =
+    fun provideTopArtistsUsecase(dataRepository: DataRepository): BaseUsecase<TopArtistEntity, GetTopArtistsCase.RequestValue> =
         GetTopArtistsCase(dataRepository)
 
     @Provides
     @PerFragment
-    fun provideTopTracksUsecase(dataRepository: DataRepository): BaseUsecase<ChartTopTrackEntity, GetTopTracksCase.RequestValue> =
+    fun provideTopTracksUsecase(dataRepository: DataRepository): BaseUsecase<TopTrackEntity, GetTopTracksCase.RequestValue> =
         GetTopTracksCase(dataRepository)
 
     @Provides
     @PerFragment
-    fun provideTopTagsUsecase(dataRepository: DataRepository): BaseUsecase<ChartTopTagEntity, GetTopTagsCase.RequestValue> =
+    fun provideTopTagsUsecase(dataRepository: DataRepository): BaseUsecase<TopTagEntity, GetTopTagsCase.RequestValue> =
         GetTopTagsCase(dataRepository)
 
     // Artist
@@ -53,7 +53,7 @@ class UseCaseModule {
 
     @Provides
     @PerFragment
-    fun provideArtistTopAlbumUsecase(dataRepository: DataRepository): BaseUsecase<ArtistTopAlbumEntity, GetTopAlbumsCase.RequestValue> =
+    fun provideArtistTopAlbumUsecase(dataRepository: DataRepository): BaseUsecase<TopAlbumEntity, GetTopAlbumsCase.RequestValue> =
         GetTopAlbumsCase(dataRepository)
 
     // Album

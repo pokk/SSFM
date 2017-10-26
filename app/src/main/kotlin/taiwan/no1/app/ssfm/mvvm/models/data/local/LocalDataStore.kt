@@ -20,11 +20,10 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistSimilarEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTagEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTrackEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopAlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTagEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTrackEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackSimilarEntity
 
 
@@ -47,15 +46,15 @@ class LocalDataStore: IDataStore {
         TODO("Local database has no session...")
     }
 
-    override fun getChartTopArtist(page: Int, limit: Int): Observable<ChartTopArtistEntity> {
+    override fun getChartTopArtist(page: Int, limit: Int): Observable<TopArtistEntity> {
         TODO()
     }
 
-    override fun getChartTopTracks(page: Int, limit: Int): Observable<ChartTopTrackEntity> {
+    override fun getChartTopTracks(page: Int, limit: Int): Observable<TopTrackEntity> {
         TODO()
     }
 
-    override fun getChartTopTags(page: Int, limit: Int): Observable<ChartTopTagEntity> {
+    override fun getChartTopTags(page: Int, limit: Int): Observable<TopTagEntity> {
         TODO()
     }
 
@@ -67,7 +66,7 @@ class LocalDataStore: IDataStore {
         TODO()
     }
 
-    override fun getArtistTopAlbum(artist: String): Observable<ArtistTopAlbumEntity> {
+    override fun getArtistTopAlbum(artist: String): Observable<TopAlbumEntity> {
         TODO()
     }
 
@@ -83,15 +82,15 @@ class LocalDataStore: IDataStore {
         TODO()
     }
 
-    override fun getTagTopAlbums(tag: String, page: Int, limit: Int): Observable<AlbumEntity> {
+    override fun getTagTopAlbums(tag: String, page: Int, limit: Int): Observable<TopAlbumEntity> {
         TODO()
     }
 
-    override fun getTagTopArtists(tag: String, page: Int, limit: Int): Observable<ArtistEntity> {
+    override fun getTagTopArtists(tag: String, page: Int, limit: Int): Observable<TopArtistEntity> {
         TODO()
     }
 
-    override fun getTagTopTracks(tag: String, page: Int, limit: Int): Observable<TrackEntity> {
+    override fun getTagTopTracks(tag: String, page: Int, limit: Int): Observable<TopTrackEntity> {
         TODO()
     }
 

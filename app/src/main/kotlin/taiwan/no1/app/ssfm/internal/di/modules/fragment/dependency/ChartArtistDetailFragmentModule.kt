@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerFragment
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopAlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistInfoCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetTopAlbumsCase
@@ -21,6 +21,6 @@ class ChartArtistDetailFragmentModule {
     @Provides
     @PerFragment
     fun provideViewModel(artistsInfoUsecase: BaseUsecase<ArtistEntity, GetArtistInfoCase.RequestValue>,
-                         topTopAlbumsUsecase: BaseUsecase<ArtistTopAlbumEntity, GetTopAlbumsCase.RequestValue>):
+                         topTopAlbumsUsecase: BaseUsecase<TopAlbumEntity, GetTopAlbumsCase.RequestValue>):
         FragmentChartArtistDetailViewModel = FragmentChartArtistDetailViewModel(artistsInfoUsecase, topTopAlbumsUsecase)
 }

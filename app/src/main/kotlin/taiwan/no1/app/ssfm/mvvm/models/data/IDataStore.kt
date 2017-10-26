@@ -10,11 +10,10 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistSimilarEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTagEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ChartTopTrackEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopAlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTagEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTrackEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackSimilarEntity
 
 /**
@@ -52,17 +51,17 @@ interface IDataStore {
     // NOTE: 5/13/17 We should keep the 'Session' and 'UserName' in the shared preferences.
     fun obtainSession(user: String, pwd: String): Observable<Session>
 
-    fun getChartTopArtist(page: Int = 1, limit: Int = 20): Observable<ChartTopArtistEntity>
+    fun getChartTopArtist(page: Int = 1, limit: Int = 20): Observable<TopArtistEntity>
 
-    fun getChartTopTracks(page: Int = 1, limit: Int = 20): Observable<ChartTopTrackEntity>
+    fun getChartTopTracks(page: Int = 1, limit: Int = 20): Observable<TopTrackEntity>
 
-    fun getChartTopTags(page: Int = 1, limit: Int = 30): Observable<ChartTopTagEntity>
+    fun getChartTopTags(page: Int = 1, limit: Int = 30): Observable<TopTagEntity>
 
     fun getArtistInfo(mbid: String = "", artist: String = ""): Observable<ArtistEntity>
 
     fun getSimilarArtist(artist: String): Observable<ArtistSimilarEntity>
 
-    fun getArtistTopAlbum(artist: String): Observable<ArtistTopAlbumEntity>
+    fun getArtistTopAlbum(artist: String): Observable<TopAlbumEntity>
 
     fun getAlbumInfo(artist: String, albumOrMbid: String): Observable<AlbumEntity>
 
@@ -70,11 +69,11 @@ interface IDataStore {
 
     fun getSimilarTracks(artist: String, track: String): Observable<TrackSimilarEntity>
 
-    fun getTagTopAlbums(tag: String = "", page: Int = 1, limit: Int = 20): Observable<AlbumEntity>
+    fun getTagTopAlbums(tag: String = "", page: Int = 1, limit: Int = 20): Observable<TopAlbumEntity>
 
-    fun getTagTopArtists(tag: String = "", page: Int = 1, limit: Int = 20): Observable<ArtistEntity>
+    fun getTagTopArtists(tag: String = "", page: Int = 1, limit: Int = 20): Observable<TopArtistEntity>
 
-    fun getTagTopTracks(tag: String = "", page: Int = 1, limit: Int = 20): Observable<TrackEntity>
+    fun getTagTopTracks(tag: String = "", page: Int = 1, limit: Int = 20): Observable<TopTrackEntity>
 
     fun getLovedTracks(user: String, page: Int = 1): Observable<Collection<Track>>
 

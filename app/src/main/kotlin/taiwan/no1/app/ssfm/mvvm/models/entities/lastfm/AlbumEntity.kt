@@ -17,7 +17,7 @@ data class AlbumEntity(var album: Album?) {
                      @SerializedName("playcount") var playCount: String?,
                      var tags: Tags?,
                      var title: String?,
-                     @SerializedName("tracks") var track: ChartTopTrackEntity.Tracks?,
+                     @SerializedName("tracks") var track: TopTrackEntity.Tracks?,
                      var url: String?,
                      var wiki: Wiki?)
 }

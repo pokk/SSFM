@@ -4,7 +4,7 @@ import android.databinding.ObservableField
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.EXTRA_LARGE
 import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopAlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistInfoCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetTopAlbumsCase
@@ -14,7 +14,7 @@ import taiwan.no1.app.ssfm.mvvm.models.usecases.GetTopAlbumsCase
  * @since   8/20/17
  */
 class FragmentChartArtistDetailViewModel(private val artistsInfoUsecase: BaseUsecase<ArtistEntity, GetArtistInfoCase.RequestValue>,
-                                         private val topTopAlbumsUsecase: BaseUsecase<ArtistTopAlbumEntity, GetTopAlbumsCase.RequestValue>):
+                                         private val topTopAlbumsUsecase: BaseUsecase<TopAlbumEntity, GetTopAlbumsCase.RequestValue>):
     BaseViewModel() {
     val artistName by lazy { ObservableField<String>("") }
     val artistSummary by lazy { ObservableField<String>("") }
@@ -34,7 +34,7 @@ class FragmentChartArtistDetailViewModel(private val artistsInfoUsecase: BaseUse
     fun fetchHotAlbum(name: String) {
         lifecycleProvider.execute(topTopAlbumsUsecase, GetTopAlbumsCase.RequestValue(name)) {
             onNext {
-                it.topalbums.album?.forEach { }
+                it.topalbums.album.forEach { }
             }
         }
     }
