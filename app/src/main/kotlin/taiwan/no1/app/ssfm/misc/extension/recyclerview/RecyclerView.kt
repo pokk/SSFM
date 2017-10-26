@@ -6,7 +6,11 @@ import taiwan.no1.app.ssfm.databinding.ItemArtistType2Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemSearchHistoryType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemTagType1Binding
+import taiwan.no1.app.ssfm.databinding.ItemUniversalType1Binding
+import taiwan.no1.app.ssfm.databinding.ItemUniversalType2Binding
+import taiwan.no1.app.ssfm.databinding.ItemUniversalType3Binding
 import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
@@ -21,6 +25,9 @@ typealias TrackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, TrackEnti
 typealias TagAdapter = BaseDataBindingAdapter<ItemTagType1Binding, TagEntity.Tag>
 typealias HistoryAdapter = BaseDataBindingAdapter<ItemSearchHistoryType1Binding, KeywordEntity>
 typealias SimilarArtistAdapter = BaseDataBindingAdapter<ItemArtistType2Binding, ArtistEntity.Artist>
+typealias Universal1Adapter = BaseDataBindingAdapter<ItemUniversalType1Binding, AlbumEntity.Album>
+typealias Universal2Adapter = BaseDataBindingAdapter<ItemUniversalType2Binding, ArtistEntity.Artist>
+typealias Universal3Adapter = BaseDataBindingAdapter<ItemUniversalType3Binding, TrackEntity.Track>
 
 /**
  * The operation for updating the list result by the adapter. Including updating the original list

@@ -1,15 +1,29 @@
 package taiwan.no1.app.ssfm.mvvm.views.fragments
 
 import android.os.Bundle
-import com.hwangjr.rxbus.RxBus
+import android.support.v7.widget.LinearLayoutManager
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailTagBinding
+import taiwan.no1.app.ssfm.databinding.ItemUniversalType1Binding
+import taiwan.no1.app.ssfm.databinding.ItemUniversalType2Binding
+import taiwan.no1.app.ssfm.databinding.ItemUniversalType3Binding
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.RVCustomScrollCallback
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.Universal1Adapter
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.Universal2Adapter
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.Universal3Adapter
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.resCallback
+import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartTagDetailViewModel
+import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewUniversal1ViewModel
+import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewUniversal2ViewModel
+import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewUniversal3ViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
+import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
+import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.itemdecorator.HorizontalItemDecorator
 import javax.inject.Inject
 
 /**
@@ -46,49 +60,63 @@ class ChartTagDetailFragment: AdvancedFragment<FragmentChartTagDetailViewModel, 
     // Get the arguments from the bundle here.
     private val musicTag: String by lazy { this.arguments.getString(ARG_PARAM_TAG) }
 
-    //region Lifecycle
-    override fun onResume() {
-        super.onResume()
-        RxBus.get().register(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        RxBus.get().unregister(this)
-    }
-    //endregion
-
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
         binding?.apply {
-            //            artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-//            artistAdapter = BaseDataBindingAdapter<ItemArtistType2Binding, ArtistEntity.Artist>(R.layout.item_artist_type_2,
-//                artistRes) { holder, item ->
-//                holder.binding.avm = RecyclerViewChartSimilarArtistViewModel(item).apply {
-//                    onAttach(this@ChartTagDetailFragment)
-//                    clickItemListener = {}
-//                }
-//            }
-//            artistDecoration = HorizontalItemDecorator(20)
-//        }
-//        viewModel.fetchDetailInfo(mbid, artistName) {
-//            // Refresh the similar artist recyclerview.
-//            it.artist?.similar?.artists?.let {
-//                artistRes = (binding?.artistAdapter as SimilarArtistAdapter to artistRes).refreshRecyclerView {
-//                    addAll(it)
-//                }
-//            }
+            albumLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            trackLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+
+            albumAdapter = BaseDataBindingAdapter<ItemUniversalType1Binding, AlbumEntity.Album>(R.layout.item_universal_type_1,
+                albumRes) { holder, item ->
+                holder.binding.avm = RecyclerViewUniversal1ViewModel(item).apply {
+                    onAttach(this@ChartTagDetailFragment)
+                }
+            }
+            artistAdapter = BaseDataBindingAdapter<ItemUniversalType2Binding, ArtistEntity.Artist>(R.layout.item_universal_type_2,
+                artistRes) { holder, item ->
+                holder.binding.avm = RecyclerViewUniversal2ViewModel(item).apply {
+                    onAttach(this@ChartTagDetailFragment)
+                }
+            }
+            trackAdapter = BaseDataBindingAdapter<ItemUniversalType3Binding, TrackEntity.Track>(R.layout.item_universal_type_3,
+                trackRes) { holder, item ->
+                holder.binding.avm = RecyclerViewUniversal3ViewModel(item).apply {
+                    onAttach(this@ChartTagDetailFragment)
+                }
+            }
+
+            albumLoadmore = RVCustomScrollCallback(binding?.albumAdapter as Universal1Adapter, albumInfo,
+                albumRes) { page: Int, limit: Int, callback: (List<AlbumEntity.Album>, total: Int) -> Unit ->
+                viewModel.fetchHotAlbum(musicTag, page, limit, callback)
+            }
+            artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as Universal2Adapter, artistInfo,
+                artistRes) { page: Int, limit: Int, callback: (List<ArtistEntity.Artist>, total: Int) -> Unit ->
+                viewModel.fetchHotArtist(musicTag, page, limit, callback)
+            }
+            trackLoadmore = RVCustomScrollCallback(binding?.trackAdapter as Universal3Adapter, trackInfo,
+                trackRes) { page: Int, limit: Int, callback: (List<TrackEntity.Track>, total: Int) -> Unit ->
+                viewModel.fetchHotTrack(musicTag, page, limit, callback)
+            }
+
+            albumDecoration = HorizontalItemDecorator(20)
+            artistDecoration = HorizontalItemDecorator(20)
+            trackDecoration = HorizontalItemDecorator(20)
         }
         albumInfo.page.takeIf { 1 >= it && albumInfo.canLoadMoreFlag }?.let {
             viewModel.fetchHotAlbum(musicTag, albumInfo.page, albumInfo.limit) { resList, total ->
+                albumRes = resCallback(resList, total, albumRes, binding?.albumAdapter as Universal1Adapter, albumInfo)
             }
         }
 //        artistInfo.page.takeIf { 1 >= it && artistInfo.canLoadMoreFlag }?.let {
 //            viewModel.fetchHotArtist(musicTag, artistInfo.page, artistInfo.limit) { resList, total ->
+//                artistRes = resCallback(resList, total, artistRes, binding?.artistAdapter as Universal2Adapter,
+//                    artistInfo)
 //            }
 //        }
 //        trackInfo.page.takeIf { 1 >= it && trackInfo.canLoadMoreFlag }?.let {
 //            viewModel.fetchHotTrack(musicTag, trackInfo.page, trackInfo.limit) { resList, total ->
+//                trackRes = resCallback(resList, total, trackRes, binding?.trackAdapter as Universal3Adapter, trackInfo)
 //            }
 //        }
     }

@@ -2,15 +2,15 @@ package taiwan.no1.app.ssfm.mvvm.models.usecases
 
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagTopArtistEntity
 
 /**
  * @author  jieyi
  * @since   10/26/17
  */
 class GetTagTopArtistsCase(repository: IDataStore):
-    BaseUsecase<TopArtistEntity, GetTagTopArtistsCase.RequestValue>(repository) {
-    override fun fetchUsecase(): Observable<TopArtistEntity> =
+    BaseUsecase<TagTopArtistEntity, GetTagTopArtistsCase.RequestValue>(repository) {
+    override fun fetchUsecase(): Observable<TagTopArtistEntity> =
         (parameters ?: GetTagTopArtistsCase.RequestValue()).let {
             repository.getTagTopArtists(it.tag, it.page, it.limit)
         }

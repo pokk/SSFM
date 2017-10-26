@@ -8,8 +8,8 @@ import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistSimilarEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagTopArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopAlbumEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTagEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTrackEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackSimilarEntity
@@ -57,7 +57,7 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
     override fun getTagTopAlbums(tag: String, page: Int, limit: Int): Observable<TopAlbumEntity> =
         remote.getTagTopAlbums(tag, page, limit)
 
-    override fun getTagTopArtists(tag: String, page: Int, limit: Int): Observable<TopArtistEntity> =
+    override fun getTagTopArtists(tag: String, page: Int, limit: Int): Observable<TagTopArtistEntity> =
         remote.getTagTopArtists(tag, page, limit)
 
     override fun getTagTopTracks(tag: String, page: Int, limit: Int): Observable<TopTrackEntity> =
