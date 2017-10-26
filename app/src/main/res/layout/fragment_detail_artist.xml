@@ -34,31 +34,40 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/tv_cover"
-                style="@style/ChartDetail"
-                android:error="@{@drawable/sample_jieyi_icon}"
-                android:imageUrl="@{vm.artistImage}"
-                android:placeHolder="@{@drawable/sample_lady_gaga}"
-                app:layout_constraintBottom_toTopOf="@+id/tv_artist_name"
+            <FrameLayout
+                android:id="@+id/fl_fog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="spread"
-                tools:src="@drawable/sample_lady_gaga"/>
+                app:layout_constraintVertical_chainStyle="spread">
 
-            <TextView
-                android:id="@+id/tv_artist_name"
-                style="@style/ChartDetail.Name"
-                android:text="@{vm.artistName}"
-                app:layout_constraintBottom_toTopOf="@+id/tv_artist_intro"
-                app:layout_constraintTop_toBottomOf="@+id/tv_cover"
-                tools:text="Lady Gaga"/>
+                <ImageView
+                    android:id="@+id/tv_cover"
+                    style="@style/ChartDetail"
+                    android:error="@{@drawable/sample_jieyi_icon}"
+                    android:imageUrl="@{vm.artistImage}"
+                    android:placeHolder="@{@drawable/sample_lady_gaga}"
+                    tools:src="@drawable/sample_lady_gaga"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gradient_background"/>
+
+                <TextView
+                    android:id="@+id/tv_artist_name"
+                    style="@style/ChartDetail.Name"
+                    android:layout_gravity="bottom"
+                    android:text="@{vm.artistName}"
+                    tools:text="Lady Gaga"/>
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/tv_artist_intro"
                 style="@style/ChartDetail.Summary"
                 android:text="@{vm.artistSummary}"
                 app:layout_constraintBottom_toTopOf="@+id/tv_title_album"
-                app:layout_constraintTop_toBottomOf="@+id/tv_artist_name"
+                app:layout_constraintTop_toBottomOf="@+id/fl_fog"
                 tools:text="Stefani Joanne Angelina Germanotta (born March 28, 1986), who performs under the stage name Lady Gaga, is a singer, songwriter and musician from New York City, New York, United States. \n\nBefore Gaga adopted her stage name she was in a band called Stefani Germanotta Band. She released her first EP, “Red and Blue“, in early 2006. The following year, music producer Rob Fusari dubbed her Lady Gaga, inspired by the Queen song “Radio Gaga“."/>
 
             <TextView
@@ -86,7 +95,7 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_similar"
-                style="@style/ChartDetail.Summary"
+                style="@style/ChartDetail"
                 android:adapter="@{artistAdapter}"
                 android:itemDecoration="@{artistDecoration}"
                 android:layoutManager="@{artistLayoutManager}"

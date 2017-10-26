@@ -44,7 +44,7 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_top_artists"
-            style="@style/RecyclerView.Basic"
+            style="@style/RecyclerView.Horizontal"
             android:layout_height="wrap_content"
             android:adapter="@{artistAdapter}"
             android:itemDecoration="@{artistDecoration}"
@@ -56,7 +56,6 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_top_tracks"
             style="@style/RecyclerView.Basic"
-            android:layout_marginBottom="@dimen/one_unit"
             android:adapter="@{tagAdapter}"
             android:itemDecoration="@{tagDecoration}"
             android:layoutManager="@{tagLayoutManager}"

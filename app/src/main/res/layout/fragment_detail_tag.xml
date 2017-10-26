@@ -88,13 +88,11 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_top_album"
-                style="@style/ChartDetail"
-                android:layout_height="wrap_content"
+                style="@style/RecyclerView.Horizontal"
                 android:adapter="@{albumAdapter}"
                 android:itemDecoration="@{albumDecoration}"
                 android:layoutManager="@{albumLayoutManager}"
                 android:loadMore="@{albumLoadmore}"
-
                 app:layout_constraintBottom_toTopOf="@+id/tv_title_artist"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title_album"
                 tools:listitem="">
@@ -109,7 +107,7 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_top_artists"
-                style="@style/ChartDetail.Summary"
+                style="@style/RecyclerView.Horizontal"
                 android:adapter="@{artistAdapter}"
                 android:itemDecoration="@{artistDecoration}"
                 android:layoutManager="@{artistLayoutManager}"
@@ -127,7 +125,7 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_top_track"
-                style="@style/ChartDetail.Summary"
+                style="@style/RecyclerView.Horizontal"
                 android:layout_height="160dp"
                 android:adapter="@{trackAdapter}"
                 android:itemDecoration="@{trackDecoration}"

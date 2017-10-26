@@ -132,8 +132,14 @@
     <style name="RecyclerView.Basic">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">0dp</item>
-        <item name="android:layout_marginEnd">8dp</item>
-        <item name="android:layout_marginStart">8dp</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+        <item name="layout_constraintHorizontal_bias">0.5</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+    </style>
+
+    <style name="RecyclerView.Horizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="layout_constraintEnd_toEndOf">parent</item>
         <item name="layout_constraintHorizontal_bias">0.5</item>
         <item name="layout_constraintStart_toStartOf">parent</item>
@@ -164,7 +170,6 @@
     </style>
 
     <style name="ChartDetail.Name">
-        <item name="android:layout_marginBottom">16dp</item>
         <item name="android:layout_marginTop">16dp</item>
         <item name="android:gravity">center</item>
         <item name="android:maxLines">1</item>
