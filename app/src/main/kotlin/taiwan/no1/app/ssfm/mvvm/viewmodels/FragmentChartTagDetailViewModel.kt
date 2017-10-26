@@ -1,8 +1,6 @@
 package taiwan.no1.app.ssfm.mvvm.viewmodels
 
 import android.databinding.ObservableField
-import com.devrapid.kotlinknifer.loge
-import com.devrapid.kotlinknifer.logv
 import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
@@ -36,16 +34,10 @@ class FragmentChartTagDetailViewModel(
 //        }
     }
 
-    fun fetchHotAlbum(name: String, page: Int, limit: Int, callback: (List<AlbumEntity.Album>, total: Int) -> Unit) {
+    fun fetchHotAlbum(name: String, page: Int, limit: Int,
+                      callback: (List<AlbumEntity.AlbumWithArtist>, total: Int) -> Unit) {
         lifecycleProvider.execute(topAlbumsUsecase, GetTagTopAlbumsCase.RequestValue(name, page, limit)) {
-            onNext {
-                logv(it)
-                callback(it.albums.albums, it.albums.attr?.total?.toInt() ?: 0)
-            }
-            onError {
-                loge(it.message)
-                loge(it.stackTrace)
-            }
+            onNext { callback(it.albums.albums, it.albums.attr?.total?.toInt() ?: 0) }
         }
     }
 

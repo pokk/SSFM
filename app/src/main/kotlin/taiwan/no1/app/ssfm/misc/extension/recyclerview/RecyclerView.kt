@@ -25,7 +25,7 @@ typealias TrackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, TrackEnti
 typealias TagAdapter = BaseDataBindingAdapter<ItemTagType1Binding, TagEntity.Tag>
 typealias HistoryAdapter = BaseDataBindingAdapter<ItemSearchHistoryType1Binding, KeywordEntity>
 typealias SimilarArtistAdapter = BaseDataBindingAdapter<ItemArtistType2Binding, ArtistEntity.Artist>
-typealias Universal1Adapter = BaseDataBindingAdapter<ItemUniversalType1Binding, AlbumEntity.Album>
+typealias Universal1Adapter = BaseDataBindingAdapter<ItemUniversalType1Binding, AlbumEntity.AlbumWithArtist>
 typealias Universal2Adapter = BaseDataBindingAdapter<ItemUniversalType2Binding, ArtistEntity.Artist>
 typealias Universal3Adapter = BaseDataBindingAdapter<ItemUniversalType3Binding, TrackEntity.Track>
 

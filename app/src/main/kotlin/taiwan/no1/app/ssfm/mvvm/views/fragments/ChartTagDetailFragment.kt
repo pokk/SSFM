@@ -53,7 +53,7 @@ class ChartTagDetailFragment: AdvancedFragment<FragmentChartTagDetailViewModel, 
     private val albumInfo by lazy { DataInfo() }
     private val artistInfo by lazy { DataInfo() }
     private val trackInfo by lazy { DataInfo() }
-    private var albumRes = mutableListOf<AlbumEntity.Album>()
+    private var albumRes = mutableListOf<AlbumEntity.AlbumWithArtist>()
     private var artistRes = mutableListOf<ArtistEntity.Artist>()
     private var trackRes = mutableListOf<TrackEntity.Track>()
 
@@ -67,7 +67,7 @@ class ChartTagDetailFragment: AdvancedFragment<FragmentChartTagDetailViewModel, 
             artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             trackLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
-            albumAdapter = BaseDataBindingAdapter<ItemUniversalType1Binding, AlbumEntity.Album>(R.layout.item_universal_type_1,
+            albumAdapter = BaseDataBindingAdapter<ItemUniversalType1Binding, AlbumEntity.AlbumWithArtist>(R.layout.item_universal_type_1,
                 albumRes) { holder, item ->
                 holder.binding.avm = RecyclerViewUniversal1ViewModel(item).apply {
                     onAttach(this@ChartTagDetailFragment)
@@ -87,7 +87,7 @@ class ChartTagDetailFragment: AdvancedFragment<FragmentChartTagDetailViewModel, 
             }
 
             albumLoadmore = RVCustomScrollCallback(binding?.albumAdapter as Universal1Adapter, albumInfo,
-                albumRes) { page: Int, limit: Int, callback: (List<AlbumEntity.Album>, total: Int) -> Unit ->
+                albumRes) { page: Int, limit: Int, callback: (List<AlbumEntity.AlbumWithArtist>, total: Int) -> Unit ->
                 viewModel.fetchHotAlbum(musicTag, page, limit, callback)
             }
             artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as Universal2Adapter, artistInfo,
@@ -108,17 +108,17 @@ class ChartTagDetailFragment: AdvancedFragment<FragmentChartTagDetailViewModel, 
                 albumRes = resCallback(resList, total, albumRes, binding?.albumAdapter as Universal1Adapter, albumInfo)
             }
         }
-//        artistInfo.page.takeIf { 1 >= it && artistInfo.canLoadMoreFlag }?.let {
-//            viewModel.fetchHotArtist(musicTag, artistInfo.page, artistInfo.limit) { resList, total ->
-//                artistRes = resCallback(resList, total, artistRes, binding?.artistAdapter as Universal2Adapter,
-//                    artistInfo)
-//            }
-//        }
-//        trackInfo.page.takeIf { 1 >= it && trackInfo.canLoadMoreFlag }?.let {
-//            viewModel.fetchHotTrack(musicTag, trackInfo.page, trackInfo.limit) { resList, total ->
-//                trackRes = resCallback(resList, total, trackRes, binding?.trackAdapter as Universal3Adapter, trackInfo)
-//            }
-//        }
+        artistInfo.page.takeIf { 1 >= it && artistInfo.canLoadMoreFlag }?.let {
+            viewModel.fetchHotArtist(musicTag, artistInfo.page, artistInfo.limit) { resList, total ->
+                artistRes = resCallback(resList, total, artistRes, binding?.artistAdapter as Universal2Adapter,
+                    artistInfo)
+            }
+        }
+        trackInfo.page.takeIf { 1 >= it && trackInfo.canLoadMoreFlag }?.let {
+            viewModel.fetchHotTrack(musicTag, trackInfo.page, trackInfo.limit) { resList, total ->
+                trackRes = resCallback(resList, total, trackRes, binding?.trackAdapter as Universal3Adapter, trackInfo)
+            }
+        }
     }
 
     override fun provideInflateView(): Int = R.layout.fragment_detail_tag

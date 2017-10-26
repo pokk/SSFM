@@ -9,7 +9,6 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.devrapid.kotlinknifer.logi
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes
 import taiwan.no1.app.ssfm.misc.extension.palette
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
@@ -19,15 +18,11 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
  * @author  jieyi
  * @since   10/26/17
  */
-class RecyclerViewUniversal1ViewModel(val item: AlbumEntity.Album): BaseViewModel() {
+class RecyclerViewUniversal1ViewModel(val item: AlbumEntity.AlbumWithArtist): BaseViewModel() {
     val artistName by lazy { ObservableField<String>(item.name) }
     val thumbnail by lazy { ObservableField<String>(item.images?.get(ImageSizes.LARGE)?.text ?: "") }
     val textBackground by lazy { ObservableInt() }
     val textColor by lazy { ObservableInt() }
-
-    init {
-        logi(item)
-    }
 
     fun itemOnClick(view: View) {
     }

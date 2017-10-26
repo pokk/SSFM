@@ -8,16 +8,19 @@ import com.google.gson.annotations.SerializedName
  * @since   10/16/17
  */
 data class AlbumEntity(var album: Album?) {
-    data class Album(@SerializedName("@attr") var attr: Attr?,
-                     var artist: String?,
-                     @SerializedName("image") var images: List<Image>?,
-                     var listeners: String?,
-                     var mbid: String?,
-                     var name: String?,
-                     @SerializedName("playcount") var playCount: String?,
-                     var tags: Tags?,
-                     var title: String?,
-                     @SerializedName("tracks") var track: TopTrackEntity.Tracks?,
-                     var url: String?,
-                     var wiki: Wiki?)
+    data class Album(var artist: String?): BaseAlbum()
+
+    data class AlbumWithArtist(var artist: ArtistEntity.Artist?): BaseAlbum()
+
+    open class BaseAlbum(@SerializedName("@attr") var attr: Attr? = null,
+                         @SerializedName("image") var images: List<Image>? = null,
+                         var listeners: String? = null,
+                         var mbid: String? = null,
+                         var name: String? = null,
+                         @SerializedName("playcount") var playCount: String? = null,
+                         var tags: Tags? = null,
+                         var title: String? = null,
+                         @SerializedName("tracks") var track: TopTrackEntity.Tracks? = null,
+                         var url: String? = null,
+                         var wiki: Wiki? = null)
 }
