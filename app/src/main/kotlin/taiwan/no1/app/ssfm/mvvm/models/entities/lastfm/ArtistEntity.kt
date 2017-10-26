@@ -19,7 +19,7 @@ data class ArtistEntity(var artist: Artist?) {
                       var stats: Stats?,
                       var similar: Similar?,
                       var tags: Tags?,
-                      var bio: Bio?)
+                      var bio: Bio?): BaseEntity
 
     data class Bio(var links: Links?,
                    var published: String?,

@@ -14,9 +14,7 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.Universal2Adapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.Universal3Adapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.resCallback
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartTagDetailViewModel
 import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewUniversal1ViewModel
 import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewUniversal2ViewModel
@@ -53,9 +51,9 @@ class ChartTagDetailFragment: AdvancedFragment<FragmentChartTagDetailViewModel, 
     private val albumInfo by lazy { DataInfo() }
     private val artistInfo by lazy { DataInfo() }
     private val trackInfo by lazy { DataInfo() }
-    private var albumRes = mutableListOf<AlbumEntity.AlbumWithArtist>()
-    private var artistRes = mutableListOf<ArtistEntity.Artist>()
-    private var trackRes = mutableListOf<TrackEntity.Track>()
+    private var albumRes = mutableListOf<BaseEntity>()
+    private var artistRes = mutableListOf<BaseEntity>()
+    private var trackRes = mutableListOf<BaseEntity>()
 
     // Get the arguments from the bundle here.
     private val musicTag: String by lazy { this.arguments.getString(ARG_PARAM_TAG) }
@@ -67,19 +65,26 @@ class ChartTagDetailFragment: AdvancedFragment<FragmentChartTagDetailViewModel, 
             artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             trackLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
-            albumAdapter = BaseDataBindingAdapter<ItemUniversalType1Binding, AlbumEntity.AlbumWithArtist>(R.layout.item_universal_type_1,
+            albumAdapter = BaseDataBindingAdapter<ItemUniversalType1Binding, BaseEntity>(R.layout.item_universal_type_1,
                 albumRes) { holder, item ->
                 holder.binding.avm = RecyclerViewUniversal1ViewModel(item).apply {
                     onAttach(this@ChartTagDetailFragment)
                 }
             }
-            artistAdapter = BaseDataBindingAdapter<ItemUniversalType2Binding, ArtistEntity.Artist>(R.layout.item_universal_type_2,
+            artistAdapter = BaseDataBindingAdapter<ItemUniversalType2Binding, BaseEntity>(R.layout.item_universal_type_2,
                 artistRes) { holder, item ->
                 holder.binding.avm = RecyclerViewUniversal2ViewModel(item).apply {
                     onAttach(this@ChartTagDetailFragment)
                 }
             }
-            trackAdapter = BaseDataBindingAdapter<ItemUniversalType3Binding, TrackEntity.Track>(R.layout.item_universal_type_3,
+//            initRecyclerView(this::setArtistLayoutManager,
+//                this::setArtistLoadmore,
+//                this::setArtistDecoration,
+//                activity,
+//                artistAdapter,
+//                artistInfo,
+//                artistRes)
+            trackAdapter = BaseDataBindingAdapter<ItemUniversalType3Binding, BaseEntity>(R.layout.item_universal_type_3,
                 trackRes) { holder, item ->
                 holder.binding.avm = RecyclerViewUniversal3ViewModel(item).apply {
                     onAttach(this@ChartTagDetailFragment)
@@ -87,15 +92,15 @@ class ChartTagDetailFragment: AdvancedFragment<FragmentChartTagDetailViewModel, 
             }
 
             albumLoadmore = RVCustomScrollCallback(binding?.albumAdapter as Universal1Adapter, albumInfo,
-                albumRes) { page: Int, limit: Int, callback: (List<AlbumEntity.AlbumWithArtist>, total: Int) -> Unit ->
+                albumRes) { page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit ->
                 viewModel.fetchHotAlbum(musicTag, page, limit, callback)
             }
             artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as Universal2Adapter, artistInfo,
-                artistRes) { page: Int, limit: Int, callback: (List<ArtistEntity.Artist>, total: Int) -> Unit ->
+                artistRes) { page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit ->
                 viewModel.fetchHotArtist(musicTag, page, limit, callback)
             }
             trackLoadmore = RVCustomScrollCallback(binding?.trackAdapter as Universal3Adapter, trackInfo,
-                trackRes) { page: Int, limit: Int, callback: (List<TrackEntity.Track>, total: Int) -> Unit ->
+                trackRes) { page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit ->
                 viewModel.fetchHotTrack(musicTag, page, limit, callback)
             }
 
@@ -123,4 +128,20 @@ class ChartTagDetailFragment: AdvancedFragment<FragmentChartTagDetailViewModel, 
 
     override fun provideInflateView(): Int = R.layout.fragment_detail_tag
     //endregion
+
+    // TODO(jieyi): 10/27/17 To become a strategy pattern.
+//    fun initRecyclerView(layoutManager: ((layoutManager: RecyclerView.LayoutManager) -> Unit)?,
+//                         callback: ((callback: RecyclerViewScrollCallback) -> Unit)?,
+//                         decoration: ((decoration: RecyclerView.ItemDecoration) -> Unit)?,
+//                         context: Context,
+//                         adapter1: RecyclerView.Adapter<*>,
+//                         dataInfo: DataInfo,
+//                         entity: MutableList<BaseEntity>) {
+//        layoutManager?.invoke(WrapContentLinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false))
+//        callback?.invoke(RVCustomScrollCallback(adapter1 as Universal2Adapter, dataInfo,
+//            entity) { page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit ->
+//            viewModel.fetchHotArtist(musicTag, page, limit, callback)
+//        })
+//        decoration?.invoke(HorizontalItemDecorator(20))
+//    }
 }

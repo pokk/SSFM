@@ -22,5 +22,5 @@ data class AlbumEntity(var album: Album?) {
                          var title: String? = null,
                          @SerializedName("tracks") var track: TopTrackEntity.Tracks? = null,
                          var url: String? = null,
-                         var wiki: Wiki? = null)
+                         var wiki: Wiki? = null): BaseEntity
 }

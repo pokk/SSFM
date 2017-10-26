@@ -9,5 +9,5 @@ data class TagEntity(var tag: Tag) {
                    var total: Int?,
                    var reach: Int?,
                    var url: String?,
-                   var wiki: Wiki?)
+                   var wiki: Wiki?): BaseEntity
 }

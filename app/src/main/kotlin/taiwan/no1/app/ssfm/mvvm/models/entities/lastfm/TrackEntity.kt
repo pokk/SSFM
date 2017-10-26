@@ -20,5 +20,5 @@ data class TrackEntity(var track: Track?) {
                      var streamable: Streamable?,
                      @SerializedName("toptags") var topTag: Tags?,
                      var url: String?,
-                     var wiki: Wiki?)
+                     var wiki: Wiki?): BaseEntity
 }

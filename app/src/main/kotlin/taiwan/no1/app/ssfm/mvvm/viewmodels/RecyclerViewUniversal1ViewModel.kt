@@ -12,15 +12,16 @@ import com.bumptech.glide.request.target.Target
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes
 import taiwan.no1.app.ssfm.misc.extension.palette
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
 
 /**
  *
  * @author  jieyi
  * @since   10/26/17
  */
-class RecyclerViewUniversal1ViewModel(val item: AlbumEntity.AlbumWithArtist): BaseViewModel() {
-    val artistName by lazy { ObservableField<String>(item.name) }
-    val thumbnail by lazy { ObservableField<String>(item.images?.get(ImageSizes.LARGE)?.text ?: "") }
+class RecyclerViewUniversal1ViewModel(val item: BaseEntity): BaseViewModel() {
+    val artistName by lazy { ObservableField<String>((item as AlbumEntity.AlbumWithArtist).name) }
+    val thumbnail by lazy { ObservableField<String>((item as AlbumEntity.AlbumWithArtist).images?.get(ImageSizes.LARGE)?.text ?: "") }
     val textBackground by lazy { ObservableInt() }
     val textColor by lazy { ObservableInt() }
 
