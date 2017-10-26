@@ -20,6 +20,7 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistSimilarEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopAlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTagEntity
@@ -66,7 +67,7 @@ class LocalDataStore: IDataStore {
         TODO()
     }
 
-    override fun getArtistTopAlbum(artist: String): Observable<TopAlbumEntity> {
+    override fun getArtistTopAlbum(artist: String): Observable<ArtistTopAlbumEntity> {
         TODO()
     }
 

@@ -14,4 +14,5 @@ object RxBusConstant {
     const val VIEWMODEL_CLICK_HISTORY = "Viewmodel Click History Keyword Item"
 
     const val VIEWMODEL_CLICK_SIMILAR = "Viewmodel Click Similar Artist Item"
+    const val VIEWMODEL_CLICK_TAG = "Viewmodel Click Tag Item"
 }

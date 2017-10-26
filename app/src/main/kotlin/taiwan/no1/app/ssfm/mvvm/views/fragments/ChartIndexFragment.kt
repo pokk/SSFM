@@ -78,6 +78,10 @@ class ChartIndexFragment: AdvancedFragment<FragmentChartIndexViewModel, Fragment
                 tagRes) { holder, item ->
                 holder.binding.avm = RecyclerViewChartTagViewModel(item).apply {
                     onAttach(this@ChartIndexFragment)
+                    clickItemListener = {
+                        // TODO(jieyi): 10/22/17 Change fragment to create instance method.
+                        (act as ChartActivity).navigate(ChartTagDetailFragment.newInstance(item.name ?: ""), true)
+                    }
                 }
             }
             tagDecoration = GridSpacingItemDecorator(3, 20, false)

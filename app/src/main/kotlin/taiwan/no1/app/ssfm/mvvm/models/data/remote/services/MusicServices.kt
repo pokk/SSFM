@@ -11,6 +11,7 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistSimilarEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopTrackEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopAlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopArtistEntity
@@ -41,7 +42,7 @@ interface MusicServices {
     fun getArtistInfo(@QueryMap queries: Map<String, String>): Observable<ArtistEntity>
 
     @GET(Music3Config.API_REQUEST)
-    fun getArtistTopAlbum(@QueryMap queries: Map<String, String>): Observable<TopAlbumEntity>
+    fun getArtistTopAlbum(@QueryMap queries: Map<String, String>): Observable<ArtistTopAlbumEntity>
 
     @GET(Music3Config.API_REQUEST)
     fun getArtistTopTrack(@QueryMap queries: Map<String, String>): Observable<ArtistTopTrackEntity>

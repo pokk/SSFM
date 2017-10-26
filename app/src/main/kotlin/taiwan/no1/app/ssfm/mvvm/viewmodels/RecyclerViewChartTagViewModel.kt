@@ -10,15 +10,9 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagEntity
  */
 class RecyclerViewChartTagViewModel(val item: TagEntity.Tag): BaseViewModel() {
     val tagName by lazy { ObservableField<String>(item.name?.apply { this[0].toUpperCase() }) }
+    var clickItemListener: ((item: TagEntity.Tag) -> Unit)? = null
 
-    /**
-     * A callback event for clicking a item to list item.
-     *
-     * @param view [android.widget.RelativeLayout]
-     *
-     * @event_to [taiwan.no1.app.ssfm.mvvm.viewmodels.SearchViewModel.receiveClickHistoryEvent]
-     */
-    fun artistOnClick(view: View) {
-//        RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_HISTORY, item.name)
+    fun tagOnClick(view: View) {
+        clickItemListener?.invoke(item)
     }
 }

@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
  * @author  jieyi
  * @since   10/17/17
  */
-data class TopAlbumEntity(var albums: Topalbums) {
-    data class Topalbums(@SerializedName("album") var albums: List<AlbumEntity.Album>,
+data class ArtistTopAlbumEntity(var topalbums: TopAlbums) {
+    data class TopAlbums(@SerializedName("album") var albums: List<AlbumEntity.Album>,
                          @SerializedName("@attr") var attr: Attr?)
 }

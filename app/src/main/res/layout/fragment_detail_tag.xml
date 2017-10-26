@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".mvvm.views.activities.ChartActivity">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartTagDetailViewModel"/>
+
+        <!--<variable-->
+        <!--name="albumLayoutManager"-->
+        <!--type="android.support.v7.widget.RecyclerView.LayoutManager"/>-->
+
+        <!--<variable-->
+        <!--name="albumAdapter"-->
+        <!--type="android.support.v7.widget.RecyclerView.Adapter"/>-->
+
+        <!--<variable-->
+        <!--name="albumDecoration"-->
+        <!--type="android.support.v7.widget.RecyclerView.ItemDecoration"/>-->
+
+        <!--<variable-->
+        <!--name="albumLoadmore"-->
+        <!--type="taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback"/>-->
+
+        <!--<variable-->
+        <!--name="artistLayoutManager"-->
+        <!--type="android.support.v7.widget.RecyclerView.LayoutManager"/>-->
+
+        <!--<variable-->
+        <!--name="artistAdapter"-->
+        <!--type="android.support.v7.widget.RecyclerView.Adapter"/>-->
+
+        <!--<variable-->
+        <!--name="artistDecoration"-->
+        <!--type="android.support.v7.widget.RecyclerView.ItemDecoration"/>-->
+
+        <!--<variable-->
+        <!--name="artistLoadmore"-->
+        <!--type="taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback"/>-->
+
+        <!--<variable-->
+        <!--name="trackLayoutManager"-->
+        <!--type="android.support.v7.widget.RecyclerView.LayoutManager"/>-->
+
+        <!--<variable-->
+        <!--name="trackAdapter"-->
+        <!--type="android.support.v7.widget.RecyclerView.Adapter"/>-->
+
+        <!--<variable-->
+        <!--name="trackDecoration"-->
+        <!--type="android.support.v7.widget.RecyclerView.ItemDecoration"/>-->
+
+        <!--<variable-->
+        <!--name="trackLoadmore"-->
+        <!--type="taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback"/>-->
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_tag_intro"
+                style="@style/ChartDetail.Summary"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:text="@{vm.tagSummary}"
+                app:layout_constraintBottom_toTopOf="@+id/tv_title_album"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Stefani Joanne Angelina Germanotta (born March 28, 1986), who performs under the stage name Lady Gaga, is a singer, songwriter and musician from New York City, New York, United States. \n\nBefore Gaga adopted her stage name she was in a band called Stefani Germanotta Band. She released her first EP, “Red and Blue“, in early 2006. The following year, music producer Rob Fusari dubbed her Lady Gaga, inspired by the Queen song “Radio Gaga“."/>
+
+            <TextView
+                android:id="@+id/tv_title_album"
+                style="@style/RecyclerView.Title"
+                android:layout_marginStart="8dp"
+                android:text="Hot Albums"
+                app:layout_constraintBottom_toTopOf="@+id/rv_top_album"
+                app:layout_constraintTop_toBottomOf="@+id/tv_tag_intro"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_top_album"
+                style="@style/ChartDetail"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/tv_title_artist"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title_album"
+                tools:listitem="">
+                <!--android:adapter="@{albumAdapter}"-->
+                <!--android:itemDecoration="@{albumDecoration}"-->
+                <!--android:layoutManager="@{albumLayoutManager}"-->
+                <!--android:loadMore="@{albumLoadmore}"-->
+            </android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/tv_title_artist"
+                style="@style/RecyclerView.Title"
+                android:layout_marginStart="8dp"
+                android:text="Hot Artists"
+                app:layout_constraintBottom_toTopOf="@+id/rv_top_track"
+                app:layout_constraintTop_toBottomOf="@+id/rv_top_album"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_top_artists"
+                style="@style/ChartDetail.Summary"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title_track"
+                tools:listitem="@layout/item_artist_type_2"/>
+            <!--android:adapter="@{artistAdapter}"-->
+            <!--android:itemDecoration="@{artistDecoration}"-->
+            <!--android:layoutManager="@{artistLayoutManager}"-->
+            <!--android:loadMore="@{artistLoadmore}"-->
+
+            <TextView
+                android:id="@+id/tv_title_track"
+                style="@style/RecyclerView.Title"
+                android:layout_marginStart="8dp"
+                android:text="Hot Tracks"
+                app:layout_constraintBottom_toTopOf="@+id/rv_top_artists"
+                app:layout_constraintTop_toBottomOf="@+id/rv_top_track"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_top_track"
+                style="@style/ChartDetail.Summary"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/tv_title_track"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title_artist"
+                tools:listitem="@layout/item_artist_type_2"/>
+            <!--android:adapter="@{trackAdapter}"-->
+            <!--android:itemDecoration="@{trackDecoration}"-->
+            <!--android:layoutManager="@{trackLayoutManager}"-->
+            <!--android:loadMore="@{trackLoadmore}"-->
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>

@@ -10,7 +10,7 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopAlbumEntity
  */
 class GetTopAlbumsCase(repository: IDataStore):
     BaseUsecase<TopAlbumEntity, GetTopAlbumsCase.RequestValue>(repository) {
-    override fun fetchUsecase(): Observable<TopAlbumEntity> = repository.getArtistTopAlbum(parameters?.name ?: "")
+    override fun fetchUsecase(): Observable<TopAlbumEntity> = repository.getTagTopAlbums(parameters?.name ?: "")
 
     data class RequestValue(val name: String = ""): RequestValues
 }
