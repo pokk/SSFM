@@ -23,7 +23,6 @@
             android:error="@{@drawable/sample_jieyi_icon}"
             android:imageUrl="@{avm.thumbnail}"
             android:imgCallback="@{avm.imageCallback}"
-            android:placeHolder="@{@drawable/sample_lady_gaga}"
             tools:src="@drawable/sample_lady_gaga"/>
 
         <TextView

@@ -46,12 +46,12 @@
                     style="@style/ChartDetail"
                     android:error="@{@drawable/sample_jieyi_icon}"
                     android:imageUrl="@{vm.artistImage}"
-                    android:placeHolder="@{@drawable/sample_lady_gaga}"
                     tools:src="@drawable/sample_lady_gaga"/>
 
-                <ImageView
+                <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_gravity="bottom"
                     android:background="@drawable/gradient_background"/>
 
                 <TextView

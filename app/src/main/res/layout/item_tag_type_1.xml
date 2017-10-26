@@ -13,12 +13,12 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="wrap_content"
-        android:onClick="@{avm::tagOnClick}"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{avm::tagOnClick}">
 
         <ImageView
-            android:layout_width="@dimen/rv_artist_length"
-            android:layout_height="@dimen/rv_artist_length"
+            android:layout_width="@dimen/rv_tag_width"
+            android:layout_height="@dimen/rv_tag_height"
             android:layout_gravity="fill"
             android:background="@drawable/bkg_menu_fog"
             android:scaleType="fitXY"

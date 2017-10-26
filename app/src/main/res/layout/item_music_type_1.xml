@@ -89,7 +89,6 @@
             android:layout_marginBottom="@dimen/one_unit"
             android:error="@{@drawable/sample_jieyi_icon}"
             android:imageUrl="@{avm.thumbnail}"
-            android:placeHolder="@{@drawable/sample_lady_gaga}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
