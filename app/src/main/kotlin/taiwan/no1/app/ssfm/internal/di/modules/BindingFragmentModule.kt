@@ -6,14 +6,12 @@ import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerFragment
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.ChartArtistDetailFragmentModule
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.ChartIndexFragmentModule
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.ChartTagDetailFragmentModule
-import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.CheckModule
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.SearchHistoriesFragmentModule
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.SearchIndexFragmentModule
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.SearchMusicFragmentModule
 import taiwan.no1.app.ssfm.mvvm.views.fragments.ChartArtistDetailFragment
 import taiwan.no1.app.ssfm.mvvm.views.fragments.ChartIndexFragment
 import taiwan.no1.app.ssfm.mvvm.views.fragments.ChartTagDetailFragment
-import taiwan.no1.app.ssfm.mvvm.views.fragments.MainFragment
 import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchHistoryFragment
 import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchIndexFragment
 import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchResultFragment
@@ -27,10 +25,6 @@ import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchResultFragment
  */
 @Module
 abstract class BindingFragmentModule {
-    @PerFragment
-    @ContributesAndroidInjector(modules = arrayOf(CheckModule::class))
-    abstract fun contributeMainFragmentInjector(): MainFragment
-
     @PerFragment
     @ContributesAndroidInjector(modules = arrayOf(SearchIndexFragmentModule::class))
     abstract fun contributeSearchIndexFragmentInjector(): SearchIndexFragment

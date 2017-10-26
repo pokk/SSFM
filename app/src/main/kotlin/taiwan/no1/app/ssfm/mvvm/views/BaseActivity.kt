@@ -9,6 +9,7 @@ import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import com.trello.rxlifecycle2.components.RxActivity
 import com.yalantis.guillotine.animation.GuillotineAnimation
+import com.yalantis.guillotine.interfaces.GuillotineListener
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -34,10 +35,28 @@ abstract class BaseActivity: RxActivity(), HasFragmentInjector, HasSupportFragme
     @Inject lateinit var fragmentInjector: DispatchingAndroidInjector<android.app.Fragment>
     val menu by lazy { layoutInflater.inflate(R.layout.page_menu_preference, null) }
     protected val navigator by lazy { Navigator(this) }
+    /** For keeping the menu is opening or closing. */
+    private var isMenuClosed = true
+    private val guillotine by lazy {
+        GuillotineAnimation.GuillotineBuilder(menu, menu.iv_content_hamburger, iv_content_hamburger)
+            .setStartDelay(250)
+            .setActionBarViewForAnimation(tb_toolbar)
+            .setClosedOnStart(true)
+            .setGuillotineListener(object: GuillotineListener {
+                override fun onGuillotineClosed() {
+                    isMenuClosed = true
+                }
+
+                override fun onGuillotineOpened() {
+                    isMenuClosed = false
+                }
+            })
+            .build()
+    }
     // FIXED(jieyi): 9/23/17 Register it in the parent class that it will be not reflected.
     protected var busEvent = object {
         @Subscribe(tags = arrayOf(Tag("testTag")))
-        fun testMethod(str: String) {
+        fun receive(str: String) {
         }
     }
     private val rootView by lazy { findViewById<ViewGroup>(R.id.root) }
@@ -79,14 +98,18 @@ abstract class BaseActivity: RxActivity(), HasFragmentInjector, HasSupportFragme
      */
     override fun fragmentInjector(): AndroidInjector<android.app.Fragment> = fragmentInjector
 
+    override fun onBackPressed() {
+        if (!isMenuClosed) {
+            guillotine.close()
+            return
+        }
+        super.onBackPressed()
+    }
+
     protected fun attachMenuView() {
         rootView?.also {
             it.addView(menu)
-            GuillotineAnimation.GuillotineBuilder(menu, menu.iv_content_hamburger, iv_content_hamburger)
-                .setStartDelay(250)
-                .setActionBarViewForAnimation(tb_toolbar)
-                .setClosedOnStart(true)
-                .build()
+            guillotine
         }
     }
 }

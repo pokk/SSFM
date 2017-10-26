@@ -33,7 +33,7 @@ abstract class BindingActivityModule {
      * the children fragment can obtain the parent's fragment injector.
      */
     @PerActivity
-    @ContributesAndroidInjector(modules = arrayOf(MainActivityModule::class, BindingFragmentModule::class))
+    @ContributesAndroidInjector(modules = arrayOf(MainActivityModule::class))
     abstract fun contributeMainActivityInjector(): MainActivity
 
     @PerActivity
