@@ -1,6 +1,5 @@
 package taiwan.no1.app.ssfm.misc.extension.recyclerview
 
-import android.databinding.ViewDataBinding
 import android.support.v7.widget.RecyclerView
 import taiwan.no1.app.ssfm.databinding.ItemArtistType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemArtistType2Binding
@@ -17,7 +16,7 @@ import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdap
  * @author  jieyi
  * @since   10/13/17
  */
-typealias BaseAdapter = BaseDataBindingAdapter<ViewDataBinding, BaseEntity>
+typealias BaseAdapter<V> = BaseDataBindingAdapter<V, BaseEntity>
 typealias ArtistAdapter = BaseDataBindingAdapter<ItemArtistType1Binding, BaseEntity>
 typealias TrackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, BaseEntity>
 typealias TagAdapter = BaseDataBindingAdapter<ItemTagType1Binding, BaseEntity>

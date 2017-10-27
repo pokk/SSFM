@@ -22,6 +22,8 @@ import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewUniversal3ViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.itemdecorator.HorizontalItemDecorator
+import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.viewholders.BindingHolder
+import taiwan.no1.app.ssfm.pattern.strategy.InitialHorizontalRVStrategy
 import javax.inject.Inject
 
 /**
@@ -61,16 +63,41 @@ class ChartTagDetailFragment: AdvancedFragment<FragmentChartTagDetailViewModel, 
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
         binding?.apply {
-            albumLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            val i1 = InitialHorizontalRVStrategy<ItemUniversalType1Binding, Universal1Adapter>(
+                this::setAlbumLayoutManager,
+                this::setAlbumAdapter,
+                this::setAlbumLoadmore,
+                this::setAlbumDecoration,
+                this@ChartTagDetailFragment,
+                albumAdapter,
+                albumInfo,
+                albumRes,
+                { page, limit, callback ->
+                    viewModel.fetchHotAlbum(musicTag, page, limit, callback)
+                },
+                { holder, item ->
+                    (holder as BindingHolder<ItemUniversalType1Binding>).binding.avm = RecyclerViewUniversal1ViewModel(
+                        item).apply {
+                        onAttach(this@ChartTagDetailFragment)
+                    }
+                },
+                R.layout.item_universal_type_1)
+
+            i1.initLayoutManager()
+            i1.initAdapter()
+            i1.initDecoration()
+            i1.initLoadMore()
+
+//            albumLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             trackLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
-            albumAdapter = BaseDataBindingAdapter<ItemUniversalType1Binding, BaseEntity>(R.layout.item_universal_type_1,
-                albumRes) { holder, item ->
-                holder.binding.avm = RecyclerViewUniversal1ViewModel(item).apply {
-                    onAttach(this@ChartTagDetailFragment)
-                }
-            }
+//            albumAdapter = BaseDataBindingAdapter<ItemUniversalType1Binding, BaseEntity>(R.layout.item_universal_type_1,
+//                albumRes) { holder, item ->
+//                holder.binding.avm = RecyclerViewUniversal1ViewModel(item).apply {
+//                    onAttach(this@ChartTagDetailFragment)
+//                }
+//            }
             artistAdapter = BaseDataBindingAdapter<ItemUniversalType2Binding, BaseEntity>(R.layout.item_universal_type_2,
                 artistRes) { holder, item ->
                 holder.binding.avm = RecyclerViewUniversal2ViewModel(item).apply {
@@ -91,10 +118,10 @@ class ChartTagDetailFragment: AdvancedFragment<FragmentChartTagDetailViewModel, 
                 }
             }
 
-            albumLoadmore = RVCustomScrollCallback(binding?.albumAdapter as Universal1Adapter, albumInfo,
-                albumRes) { page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit ->
-                viewModel.fetchHotAlbum(musicTag, page, limit, callback)
-            }
+//            albumLoadmore = RVCustomScrollCallback(binding?.albumAdapter as Universal1Adapter, albumInfo,
+//                albumRes) { page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit ->
+//                viewModel.fetchHotAlbum(musicTag, page, limit, callback)
+//            }
             artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as Universal2Adapter, artistInfo,
                 artistRes) { page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit ->
                 viewModel.fetchHotArtist(musicTag, page, limit, callback)
@@ -104,7 +131,7 @@ class ChartTagDetailFragment: AdvancedFragment<FragmentChartTagDetailViewModel, 
                 viewModel.fetchHotTrack(musicTag, page, limit, callback)
             }
 
-            albumDecoration = HorizontalItemDecorator(20)
+//            albumDecoration = HorizontalItemDecorator(20)
             artistDecoration = HorizontalItemDecorator(20)
             trackDecoration = HorizontalItemDecorator(20)
         }
