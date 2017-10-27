@@ -8,6 +8,7 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.HistoryAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshRecyclerView
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.RemoveKeywordHistoriesCase
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentSearchHistoryViewModel
@@ -36,7 +37,7 @@ class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, Fr
     @Inject override lateinit var viewModel: FragmentSearchHistoryViewModel
     // This usecase is for each items of the recyclerview.
     @Inject lateinit var deleteUsecase: BaseUsecase<Boolean, RemoveKeywordHistoriesCase.RequestValue>
-    private var res = mutableListOf<KeywordEntity>()
+    private var res = mutableListOf<BaseEntity>()
 
     //region Fragment lifecycle
     override fun onResume() {
@@ -48,7 +49,7 @@ class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, Fr
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
         binding?.apply {
-            adapter = BaseDataBindingAdapter<ItemSearchHistoryType1Binding, KeywordEntity>(R.layout.item_search_history_type_1,
+            adapter = BaseDataBindingAdapter<ItemSearchHistoryType1Binding, BaseEntity>(R.layout.item_search_history_type_1,
                 res) { holder, item ->
                 holder.binding.avm = RecyclerViewSearchHistoryViewModel(item, activity, deleteUsecase).
                     apply { deleteItemListener = deleteItem }
@@ -76,7 +77,7 @@ class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, Fr
      * @param block the block operation for new data list.
      * @return a new updated list.
      */
-    private fun MutableList<KeywordEntity>.refreshRecyclerView(block: ArrayList<KeywordEntity>.() -> Unit) {
+    private fun MutableList<BaseEntity>.refreshRecyclerView(block: ArrayList<BaseEntity>.() -> Unit) {
         res = (binding?.adapter as HistoryAdapter to this).refreshRecyclerView(block)
     }
 }

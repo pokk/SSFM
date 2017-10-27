@@ -6,16 +6,17 @@ import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.EXTRA_LARGE
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
 
 /**
  *
  * @author  jieyi
  * @since   9/20/17
  */
-class RecyclerViewSearchArtistChartViewModel(val item: ArtistEntity.Artist): BaseViewModel() {
-    val artistName by lazy { ObservableField<String>(item.name) }
-    val playCount by lazy { ObservableField<String>(item.playCount) }
-    val thumbnail by lazy { ObservableField<String>(item.images?.get(EXTRA_LARGE)?.text ?: "") }
+class RecyclerViewSearchArtistChartViewModel(val item: BaseEntity): BaseViewModel() {
+    val artistName by lazy { ObservableField<String>((item as ArtistEntity.Artist).name) }
+    val playCount by lazy { ObservableField<String>((item as ArtistEntity.Artist).playCount) }
+    val thumbnail by lazy { ObservableField<String>((item as ArtistEntity.Artist).images?.get(EXTRA_LARGE)?.text ?: "") }
     var clickItemListener: ((item: ArtistEntity.Artist) -> Unit)? = null
 
     /**
@@ -27,7 +28,7 @@ class RecyclerViewSearchArtistChartViewModel(val item: ArtistEntity.Artist): Bas
      */
     fun artistOnClick(view: View) {
         // For `searching activity`.
-        RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_HISTORY, item.name)
+        RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_HISTORY, (item as ArtistEntity.Artist).name)
         // For `top chart activity`.
         clickItemListener?.invoke(item)
     }

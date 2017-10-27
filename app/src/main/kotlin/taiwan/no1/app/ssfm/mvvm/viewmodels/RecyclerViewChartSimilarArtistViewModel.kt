@@ -14,15 +14,16 @@ import taiwan.no1.app.ssfm.misc.constants.ImageSizes.LARGE
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
 import taiwan.no1.app.ssfm.misc.extension.palette
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
 
 /**
  *
  * @author  jieyi
  * @since   9/20/17
  */
-class RecyclerViewChartSimilarArtistViewModel(val item: ArtistEntity.Artist): BaseViewModel() {
-    val artistName by lazy { ObservableField<String>(item.name) }
-    val thumbnail by lazy { ObservableField<String>(item.images?.get(LARGE)?.text ?: "") }
+class RecyclerViewChartSimilarArtistViewModel(val item: BaseEntity): BaseViewModel() {
+    val artistName by lazy { ObservableField<String>((item as ArtistEntity.Artist).name) }
+    val thumbnail by lazy { ObservableField<String>((item as ArtistEntity.Artist).images?.get(LARGE)?.text ?: "") }
     val textBackground by lazy { ObservableInt() }
     val textColor by lazy { ObservableInt() }
     var clickItemListener: ((item: ArtistEntity.Artist) -> Unit)? = null
@@ -35,7 +36,7 @@ class RecyclerViewChartSimilarArtistViewModel(val item: ArtistEntity.Artist): Ba
      * @event_to [taiwan.no1.app.ssfm.mvvm.views.fragments.ChartArtistDetailFragment.receiveSubFragmentEvent]
      */
     fun artistOnClick(view: View) {
-        RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_SIMILAR, item.name)
+        RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_SIMILAR, (item as ArtistEntity.Artist).name)
     }
 
     val imageCallback = object: RequestListener<Bitmap> {

@@ -8,6 +8,7 @@ import com.devrapid.kotlinknifer.observer
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
 import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.RemoveKeywordHistoriesCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.RemoveKeywordHistoriesCase.RequestValue
@@ -17,16 +18,16 @@ import taiwan.no1.app.ssfm.mvvm.models.usecases.RemoveKeywordHistoriesCase.Reque
  * @author  jieyi
  * @since   9/20/17
  */
-class RecyclerViewSearchHistoryViewModel(private val entity: KeywordEntity,
+class RecyclerViewSearchHistoryViewModel(private val entity: BaseEntity,
                                          private val context: Context,
                                          private val deleteHistoriesUsecase: BaseUsecase<Boolean, RemoveKeywordHistoriesCase.RequestValue>):
     BaseObservable() {
     lateinit var deleteItemListener: (entity: KeywordEntity, isSuccess: Boolean) -> Unit
-    val keyword by lazy { ObservableField<String>(entity.keyword) }
+    val keyword by lazy { ObservableField<String>((entity as KeywordEntity).keyword) }
 
     fun deleteHistoryClick(view: View) {
         deleteHistoriesUsecase.execute(RequestValue(keyword.get()),
-            observer = observer { deleteItemListener(entity, it) })
+            observer = observer { deleteItemListener((entity as KeywordEntity), it) })
     }
 
     /**
@@ -37,6 +38,6 @@ class RecyclerViewSearchHistoryViewModel(private val entity: KeywordEntity,
      * @event_to [taiwan.no1.app.ssfm.mvvm.viewmodels.SearchViewModel.receiveClickHistoryEvent]
      */
     fun selectHistoryItem(view: View) {
-        RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_HISTORY, entity.keyword)
+        RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_HISTORY, (entity as KeywordEntity).keyword)
     }
 }

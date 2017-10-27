@@ -17,8 +17,7 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.TagAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.resCallback
 import taiwan.no1.app.ssfm.misc.extension.scaledDrawable
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartIndexViewModel
 import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewChartTagViewModel
 import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewSearchArtistChartViewModel
@@ -49,21 +48,21 @@ class ChartIndexFragment: AdvancedFragment<FragmentChartIndexViewModel, Fragment
     @Inject override lateinit var viewModel: FragmentChartIndexViewModel
     private val artistInfo by lazy { DataInfo(limit = 30) }
     private val tagInfo by lazy { DataInfo() }
-    private var artistRes = mutableListOf<ArtistEntity.Artist>()
-    private var tagRes = mutableListOf<TagEntity.Tag>()
+    private var artistRes = mutableListOf<BaseEntity>()
+    private var tagRes = mutableListOf<BaseEntity>()
 
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
         binding?.apply {
             artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            artistAdapter = BaseDataBindingAdapter<ItemArtistType1Binding, ArtistEntity.Artist>(R.layout.item_artist_type_1,
+            artistAdapter = BaseDataBindingAdapter<ItemArtistType1Binding, BaseEntity>(R.layout.item_artist_type_1,
                 artistRes) { holder, item ->
                 holder.binding.avm = RecyclerViewSearchArtistChartViewModel(item).apply {
                     onAttach(this@ChartIndexFragment)
                     clickItemListener = {
                         // TODO(jieyi): 10/22/17 Change fragment to create instance method.
-                        (act as ChartActivity).navigate(ChartArtistDetailFragment.newInstance(item.mbid ?: "",
-                            item.name ?: ""), true)
+                        (act as ChartActivity).navigate(ChartArtistDetailFragment.newInstance(it.mbid ?: "",
+                            it.name ?: ""), true)
                     }
                 }
                 val sd = App.compactContext.scaledDrawable(R.drawable.lb_ic_thumb_up_outline, 0.5f, 0.5f)
@@ -74,13 +73,13 @@ class ChartIndexFragment: AdvancedFragment<FragmentChartIndexViewModel, Fragment
             artistDecoration = HorizontalItemDecorator(20)
 
             tagLayoutManager = StaggeredGridLayoutManager(3, VERTICAL)
-            tagAdapter = BaseDataBindingAdapter<ItemTagType1Binding, TagEntity.Tag>(R.layout.item_tag_type_1,
+            tagAdapter = BaseDataBindingAdapter<ItemTagType1Binding, BaseEntity>(R.layout.item_tag_type_1,
                 tagRes) { holder, item ->
                 holder.binding.avm = RecyclerViewChartTagViewModel(item).apply {
                     onAttach(this@ChartIndexFragment)
                     clickItemListener = {
                         // TODO(jieyi): 10/22/17 Change fragment to create instance method.
-                        (act as ChartActivity).navigate(ChartTagDetailFragment.newInstance(item.name ?: ""), true)
+                        (act as ChartActivity).navigate(ChartTagDetailFragment.newInstance(it.name ?: ""), true)
                     }
                 }
             }

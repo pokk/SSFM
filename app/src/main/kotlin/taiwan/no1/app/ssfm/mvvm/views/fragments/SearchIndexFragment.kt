@@ -14,8 +14,7 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.TrackAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.resCallback
 import taiwan.no1.app.ssfm.misc.extension.scaledDrawable
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentSearchIndexViewModel
 import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewSearchArtistChartViewModel
 import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewSearchTrackChartViewModel
@@ -44,14 +43,14 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
     @Inject override lateinit var viewModel: FragmentSearchIndexViewModel
     private val artistInfo by lazy { DataInfo() }
     private val trackInfo by lazy { DataInfo() }
-    private var artistRes = mutableListOf<ArtistEntity.Artist>()
-    private var trackRes = mutableListOf<TrackEntity.Track>()
+    private var artistRes = mutableListOf<BaseEntity>()
+    private var trackRes = mutableListOf<BaseEntity>()
 
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
         binding?.apply {
             artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            artistAdapter = BaseDataBindingAdapter<ItemArtistType1Binding, ArtistEntity.Artist>(R.layout.item_artist_type_1,
+            artistAdapter = BaseDataBindingAdapter<ItemArtistType1Binding, BaseEntity>(R.layout.item_artist_type_1,
                 artistRes) { holder, item ->
                 holder.binding.avm = RecyclerViewSearchArtistChartViewModel(item).apply {
                     onAttach(this@SearchIndexFragment)
@@ -63,7 +62,7 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
                 artistRes, viewModel::fetchArtistList)
             artistDecoration = HorizontalItemDecorator(20)
             trackLayoutManager = WrapContentLinearLayoutManager(activity)
-            trackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, TrackEntity.Track>(R.layout.item_music_type_1,
+            trackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, BaseEntity>(R.layout.item_music_type_1,
                 trackRes) { holder, item ->
                 holder.binding.avm = RecyclerViewSearchTrackChartViewModel(item).apply {
                     onAttach(this@SearchIndexFragment)

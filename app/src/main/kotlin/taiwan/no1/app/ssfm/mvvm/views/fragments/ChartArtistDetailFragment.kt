@@ -13,7 +13,7 @@ import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.SimilarArtistAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshRecyclerView
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartArtistDetailViewModel
 import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewChartSimilarArtistViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
@@ -49,7 +49,7 @@ class ChartArtistDetailFragment: AdvancedFragment<FragmentChartArtistDetailViewM
     //endregion
 
     @Inject override lateinit var viewModel: FragmentChartArtistDetailViewModel
-    private var artistRes = mutableListOf<ArtistEntity.Artist>()
+    private var artistRes = mutableListOf<BaseEntity>()
     // Get the arguments from the bundle here.
     private val mbid: String by lazy { this.arguments.getString(ARG_PARAM_MBID) }
     private val artistName: String by lazy { this.arguments.getString(ARG_PARAM_ARTIST_NAME) }
@@ -70,7 +70,7 @@ class ChartArtistDetailFragment: AdvancedFragment<FragmentChartArtistDetailViewM
     override fun init(savedInstanceState: Bundle?) {
         binding?.apply {
             artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            artistAdapter = BaseDataBindingAdapter<ItemArtistType2Binding, ArtistEntity.Artist>(R.layout.item_artist_type_2,
+            artistAdapter = BaseDataBindingAdapter<ItemArtistType2Binding, BaseEntity>(R.layout.item_artist_type_2,
                 artistRes) { holder, item ->
                 holder.binding.avm = RecyclerViewChartSimilarArtistViewModel(item).apply {
                     onAttach(this@ChartArtistDetailFragment)

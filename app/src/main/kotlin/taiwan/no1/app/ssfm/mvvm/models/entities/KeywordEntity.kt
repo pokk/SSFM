@@ -4,6 +4,7 @@ import com.raizlabs.android.dbflow.annotation.PrimaryKey
 import com.raizlabs.android.dbflow.annotation.Table
 import com.raizlabs.android.dbflow.rx2.structure.BaseRXModel
 import taiwan.no1.app.ssfm.mvvm.models.data.local.database.MusicDatabase
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
 
 /**
  * @author  jieyi
@@ -13,4 +14,4 @@ import taiwan.no1.app.ssfm.mvvm.models.data.local.database.MusicDatabase
 @Table(database = MusicDatabase::class, allFields = true)
 data class KeywordEntity(@PrimaryKey(autoincrement = true) var id: Long = 0,
                          var keyword: String = "",
-                         var searchTimes: Long = 1): BaseRXModel()
+                         var searchTimes: Long = 1): BaseRXModel(), BaseEntity

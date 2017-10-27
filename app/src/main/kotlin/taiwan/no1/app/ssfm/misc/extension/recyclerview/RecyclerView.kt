@@ -1,5 +1,6 @@
 package taiwan.no1.app.ssfm.misc.extension.recyclerview
 
+import android.databinding.ViewDataBinding
 import android.support.v7.widget.RecyclerView
 import taiwan.no1.app.ssfm.databinding.ItemArtistType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemArtistType2Binding
@@ -9,22 +10,19 @@ import taiwan.no1.app.ssfm.databinding.ItemTagType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemUniversalType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemUniversalType2Binding
 import taiwan.no1.app.ssfm.databinding.ItemUniversalType3Binding
-import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
 
 /**
  * @author  jieyi
  * @since   10/13/17
  */
-typealias ArtistAdapter = BaseDataBindingAdapter<ItemArtistType1Binding, ArtistEntity.Artist>
-typealias TrackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, TrackEntity.Track>
-typealias TagAdapter = BaseDataBindingAdapter<ItemTagType1Binding, TagEntity.Tag>
-typealias HistoryAdapter = BaseDataBindingAdapter<ItemSearchHistoryType1Binding, KeywordEntity>
-typealias SimilarArtistAdapter = BaseDataBindingAdapter<ItemArtistType2Binding, ArtistEntity.Artist>
+typealias BaseAdapter = BaseDataBindingAdapter<ViewDataBinding, BaseEntity>
+typealias ArtistAdapter = BaseDataBindingAdapter<ItemArtistType1Binding, BaseEntity>
+typealias TrackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, BaseEntity>
+typealias TagAdapter = BaseDataBindingAdapter<ItemTagType1Binding, BaseEntity>
+typealias HistoryAdapter = BaseDataBindingAdapter<ItemSearchHistoryType1Binding, BaseEntity>
+typealias SimilarArtistAdapter = BaseDataBindingAdapter<ItemArtistType2Binding, BaseEntity>
 typealias Universal1Adapter = BaseDataBindingAdapter<ItemUniversalType1Binding, BaseEntity>
 typealias Universal2Adapter = BaseDataBindingAdapter<ItemUniversalType2Binding, BaseEntity>
 typealias Universal3Adapter = BaseDataBindingAdapter<ItemUniversalType3Binding, BaseEntity>
