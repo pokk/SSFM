@@ -8,6 +8,7 @@ import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistSimilarEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopTrackEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagTopArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopAlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTagEntity
@@ -45,6 +46,8 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
     override fun getSimilarArtist(artist: String): Observable<ArtistSimilarEntity> = remote.getSimilarArtist(artist)
 
     override fun getArtistTopAlbum(artist: String): Observable<ArtistTopAlbumEntity> = remote.getArtistTopAlbum(artist)
+
+    override fun getArtistTopTrack(artist: String): Observable<ArtistTopTrackEntity> = remote.getArtistTopTrack(artist)
 
     override fun getAlbumInfo(artist: String, albumOrMbid: String) = remote.getAlbumInfo(artist, albumOrMbid)
 

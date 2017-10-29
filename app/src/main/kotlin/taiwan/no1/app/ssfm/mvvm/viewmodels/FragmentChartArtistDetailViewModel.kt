@@ -5,15 +5,18 @@ import taiwan.no1.app.ssfm.misc.constants.ImageSizes.EXTRA_LARGE
 import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopTrackEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistInfoCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistTopAlbumsCase
+import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistTopTracksCase
 
 /**
  * @author  jieyi
  * @since   8/20/17
  */
 class FragmentChartArtistDetailViewModel(private val artistsInfoUsecase: BaseUsecase<ArtistEntity, GetArtistInfoCase.RequestValue>,
+                                         private val artistTopTracksUsecase: BaseUsecase<ArtistTopTrackEntity, GetArtistTopTracksCase.RequestValue>,
                                          private val artistTopAlbumsUsecase: BaseUsecase<ArtistTopAlbumEntity, GetArtistTopAlbumsCase.RequestValue>):
     BaseViewModel() {
     val artistName by lazy { ObservableField<String>("") }
@@ -27,6 +30,14 @@ class FragmentChartArtistDetailViewModel(private val artistsInfoUsecase: BaseUse
                 artistName.set(it.artist?.name ?: "")
                 artistSummary.set(it.artist?.bio?.summary ?: "")
                 callback(it)
+            }
+        }
+    }
+
+    fun fetchHotTracks(name: String) {
+        lifecycleProvider.execute(artistTopTracksUsecase, GetArtistTopTracksCase.RequestValue(name)) {
+            onNext {
+                it.toptracks.tracks.forEach { }
             }
         }
     }

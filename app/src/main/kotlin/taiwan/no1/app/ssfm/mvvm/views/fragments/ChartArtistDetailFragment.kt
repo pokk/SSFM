@@ -69,6 +69,7 @@ class ChartArtistDetailFragment: AdvancedFragment<FragmentChartArtistDetailViewM
                 }
             }
         }
+        viewModel.fetchHotTracks(artistName)
         viewModel.fetchHotAlbum(artistName)
     }
 

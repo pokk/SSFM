@@ -9,6 +9,7 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopTrackEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagTopArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopAlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopArtistEntity
@@ -18,6 +19,7 @@ import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetAlbumInfoCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistInfoCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistTopAlbumsCase
+import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistTopTracksCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetKeywordHistoriesCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetTagTopAlbumsCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetTagTopArtistsCase
@@ -60,6 +62,11 @@ class UseCaseModule {
     @PerFragment
     fun provideArtistTopAlbumUsecase(dataRepository: DataRepository): BaseUsecase<ArtistTopAlbumEntity, GetArtistTopAlbumsCase.RequestValue> =
         GetArtistTopAlbumsCase(dataRepository)
+
+    @Provides
+    @PerFragment
+    fun provideArtistTopTrackUsecase(dataRepository: DataRepository): BaseUsecase<ArtistTopTrackEntity, GetArtistTopTracksCase.RequestValue> =
+        GetArtistTopTracksCase(dataRepository)
 
     // Album
     @Provides

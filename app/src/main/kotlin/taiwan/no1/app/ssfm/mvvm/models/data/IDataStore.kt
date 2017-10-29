@@ -11,6 +11,7 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistSimilarEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopTrackEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagTopArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopAlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopArtistEntity
@@ -64,6 +65,8 @@ interface IDataStore {
     fun getSimilarArtist(artist: String): Observable<ArtistSimilarEntity>
 
     fun getArtistTopAlbum(artist: String): Observable<ArtistTopAlbumEntity>
+
+    fun getArtistTopTrack(artist: String): Observable<ArtistTopTrackEntity>
 
     fun getAlbumInfo(artist: String, albumOrMbid: String): Observable<AlbumEntity>
 
