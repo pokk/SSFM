@@ -2,14 +2,9 @@ package taiwan.no1.app.ssfm.mvvm.views.fragments
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import com.hwangjr.rxbus.RxBus
-import com.hwangjr.rxbus.annotation.Subscribe
-import com.hwangjr.rxbus.annotation.Tag
-import org.jetbrains.anko.act
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailArtistBinding
 import taiwan.no1.app.ssfm.databinding.ItemArtistType2Binding
-import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.SimilarArtistAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshRecyclerView
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
@@ -17,7 +12,6 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartArtistDetailViewModel
 import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewChartSimilarArtistViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
-import taiwan.no1.app.ssfm.mvvm.views.activities.ChartActivity
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.itemdecorator.HorizontalItemDecorator
 import javax.inject.Inject
@@ -54,18 +48,6 @@ class ChartArtistDetailFragment: AdvancedFragment<FragmentChartArtistDetailViewM
     private val mbid: String by lazy { this.arguments.getString(ARG_PARAM_MBID) }
     private val artistName: String by lazy { this.arguments.getString(ARG_PARAM_ARTIST_NAME) }
 
-    //region Lifecycle
-    override fun onResume() {
-        super.onResume()
-        RxBus.get().register(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        RxBus.get().unregister(this)
-    }
-    //endregion
-
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
         binding?.apply {
@@ -92,14 +74,4 @@ class ChartArtistDetailFragment: AdvancedFragment<FragmentChartArtistDetailViewM
 
     override fun provideInflateView(): Int = R.layout.fragment_detail_artist
     //endregion
-
-    /**
-     * @param artistName
-     *
-     * @event_from [taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewChartSimilarArtistViewModel.artistOnClick]
-     */
-    @Subscribe(tags = arrayOf(Tag(RxBusConstant.VIEWMODEL_CLICK_SIMILAR)))
-    fun receiveSubFragmentEvent(artistName: String) {
-        (act as ChartActivity).navigate(ChartArtistDetailFragment.newInstance(artistName = artistName), true)
-    }
 }

@@ -18,11 +18,11 @@ class FragmentChartIndexViewModel(private val topArtistsUsecase: BaseUsecase<Top
     BaseViewModel() {
     fun fetchArtistList(page: Int = 1, limit: Int = 20, callback: (List<ArtistEntity.Artist>, total: Int) -> Unit) =
         lifecycleProvider.execute(topArtistsUsecase, GetTopArtistsCase.RequestValue(page, limit)) {
-            onNext { callback(it.artists.artists ?: emptyList(), it.artists.attr?.total?.toInt() ?: 0) }
+            onNext { callback(it.artists.artists, it.artists.attr?.total?.toInt() ?: 0) }
         }
 
     fun fetchTrackList(page: Int = 1, limit: Int = 20, callback: (List<TagEntity.Tag>, total: Int) -> Unit) =
         lifecycleProvider.execute(topTagsUsecase, GetTopTagsCase.RequestValue(page, limit)) {
-            onNext { callback(it.tag.tags ?: emptyList(), it.tag.attr?.total?.toInt() ?: 0) }
+            onNext { callback(it.tag.tags, it.tag.attr?.total?.toInt() ?: 0) }
         }
 }

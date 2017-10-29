@@ -9,6 +9,7 @@ import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.mikhaellopez.circularimageview.CircularImageView
 
 /**
  * @author  jieyi
@@ -36,3 +37,6 @@ fun ImageView.loadImage(url: String?,
             into(this)
     }
 }
+
+@BindingAdapter("android:shadowColor")
+fun CircularImageView.addShadowColor(color: Int) = setShadowColor(color)

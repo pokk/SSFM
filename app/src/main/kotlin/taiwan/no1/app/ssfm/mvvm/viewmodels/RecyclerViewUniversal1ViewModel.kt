@@ -24,6 +24,7 @@ class RecyclerViewUniversal1ViewModel(val item: BaseEntity): BaseViewModel() {
     val thumbnail by lazy { ObservableField<String>((item as AlbumEntity.AlbumWithArtist).images?.get(ImageSizes.LARGE)?.text ?: "") }
     val textBackground by lazy { ObservableInt() }
     val textColor by lazy { ObservableInt() }
+    val shadowColor by lazy { ObservableInt() }
 
     fun itemOnClick(view: View) {
     }
@@ -41,6 +42,7 @@ class RecyclerViewUniversal1ViewModel(val item: BaseEntity): BaseViewModel() {
                 maximumColorCount(24).
                 generate().let {
                 textBackground.set(it.vibrantSwatch?.rgb ?: Color.BLACK)
+                shadowColor.set(it.vibrantSwatch?.rgb ?: Color.BLACK)
                 textColor.set(it.vibrantSwatch?.bodyTextColor ?: Color.GRAY)
                 false
             }
