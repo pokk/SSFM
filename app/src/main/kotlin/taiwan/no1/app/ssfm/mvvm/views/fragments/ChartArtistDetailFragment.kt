@@ -6,6 +6,7 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailArtistBinding
 import taiwan.no1.app.ssfm.databinding.ItemArtistType2Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType2Binding
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.ArtistTopTrackAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.SimilarArtistAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshRecyclerView
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
@@ -81,7 +82,12 @@ class ChartArtistDetailFragment: AdvancedFragment<FragmentChartArtistDetailViewM
                 }
             }
         }
-        viewModel.fetchHotTracks(artistName)
+        viewModel.fetchHotTracks(artistName) {
+            // Refresh the similar artist recyclerview.
+            trackRes = (binding?.trackAdapter as ArtistTopTrackAdapter to trackRes).refreshRecyclerView {
+                addAll(it)
+            }
+        }
         viewModel.fetchHotAlbum(artistName)
     }
 

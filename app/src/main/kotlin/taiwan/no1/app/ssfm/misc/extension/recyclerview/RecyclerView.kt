@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import taiwan.no1.app.ssfm.databinding.ItemArtistType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemArtistType2Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType1Binding
+import taiwan.no1.app.ssfm.databinding.ItemMusicType2Binding
 import taiwan.no1.app.ssfm.databinding.ItemSearchHistoryType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemTagType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemUniversalType1Binding
@@ -22,6 +23,7 @@ typealias TrackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, BaseEntit
 typealias TagAdapter = BaseDataBindingAdapter<ItemTagType1Binding, BaseEntity>
 typealias HistoryAdapter = BaseDataBindingAdapter<ItemSearchHistoryType1Binding, BaseEntity>
 typealias SimilarArtistAdapter = BaseDataBindingAdapter<ItemArtistType2Binding, BaseEntity>
+typealias ArtistTopTrackAdapter = BaseDataBindingAdapter<ItemMusicType2Binding, BaseEntity>
 typealias Universal1Adapter = BaseDataBindingAdapter<ItemUniversalType1Binding, BaseEntity>
 typealias Universal2Adapter = BaseDataBindingAdapter<ItemUniversalType2Binding, BaseEntity>
 typealias Universal3Adapter = BaseDataBindingAdapter<ItemUniversalType3Binding, BaseEntity>

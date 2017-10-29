@@ -37,14 +37,9 @@ class FragmentChartArtistDetailViewModel(private val artistsInfoUsecase: BaseUse
         }
     }
 
-    fun fetchHotTracks(name: String) {
-        logw(name)
+    fun fetchHotTracks(name: String, callback: (entity: List<ArtistTopTrackEntity.Track>) -> Unit) {
         lifecycleProvider.execute(artistTopTracksUsecase, GetArtistTopTracksCase.RequestValue(name)) {
-            onNext {
-                logw(it)
-                it.toptracks.tracks.forEach { }
-            }
-            onError { loge(it.message) }
+            onNext { callback(it.toptracks.tracks) }
         }
     }
 
