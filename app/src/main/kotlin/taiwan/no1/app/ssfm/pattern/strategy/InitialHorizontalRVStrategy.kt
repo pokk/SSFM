@@ -23,6 +23,7 @@ class InitialHorizontalRVStrategy<V: ViewDataBinding, A: BaseAdapter<V>>(private
                                                                          private val callback: ((callback: RecyclerViewScrollCallback) -> Unit)?,
                                                                          private val decoration: ((decoration: RecyclerView.ItemDecoration) -> Unit)?,
                                                                          private val rxFragment: RxFragment,
+                                                                         private val adapter1: () -> BaseDataBindingAdapter<V, BaseEntity>?,
                                                                          private val adapter2: RecyclerView.Adapter<*>?,
                                                                          private val dataInfo: DataInfo,
                                                                          private val entity: MutableList<BaseEntity>,
@@ -46,6 +47,9 @@ class InitialHorizontalRVStrategy<V: ViewDataBinding, A: BaseAdapter<V>>(private
     }
 
     override fun initLoadMore() {
-        callback?.invoke(RVCustomScrollCallback(adapter2 as A, dataInfo, entity, fetchFun))
+        callback?.invoke(RVCustomScrollCallback(adapter1 as BaseDataBindingAdapter<V, BaseEntity>,
+            dataInfo,
+            entity,
+            fetchFun))
     }
 }
