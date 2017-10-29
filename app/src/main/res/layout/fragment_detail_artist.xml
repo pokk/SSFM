@@ -24,6 +24,18 @@
         <variable
             name="artistLoadmore"
             type="taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback"/>
+
+        <variable
+            name="trackLayoutManager"
+            type="android.support.v7.widget.RecyclerView.LayoutManager"/>
+
+        <variable
+            name="trackAdapter"
+            type="android.support.v7.widget.RecyclerView.Adapter"/>
+
+        <variable
+            name="trackDecoration"
+            type="android.support.v7.widget.RecyclerView.ItemDecoration"/>
     </data>
 
     <android.support.v4.widget.NestedScrollView
@@ -83,8 +95,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toTopOf="@+id/tv_title_similar"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title_album"
-                tools:listitem="">
-            </android.support.v7.widget.RecyclerView>
+                tools:listitem=""/>
 
             <TextView
                 android:id="@+id/tv_title_similar"
@@ -99,10 +110,27 @@
                 android:adapter="@{artistAdapter}"
                 android:itemDecoration="@{artistDecoration}"
                 android:layoutManager="@{artistLayoutManager}"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_title_hot_tracks"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title_similar"
-                tools:listitem="@layout/item_artist_type_2">
-            </android.support.v7.widget.RecyclerView>
+                tools:listitem=""/>
+
+            <TextView
+                android:id="@+id/tv_title_hot_tracks"
+                style="@style/RecyclerView.Title"
+                android:text="Hot Tracks"
+                app:layout_constraintBottom_toTopOf="@+id/rv_top_tracks"
+                app:layout_constraintTop_toBottomOf="@+id/rv_similar"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_top_tracks"
+                android:layout_height="200dp"
+                style="@style/ChartDetail"
+                android:adapter="@{trackAdapter}"
+                android:itemDecoration="@{trackDecoration}"
+                android:layoutManager="@{trackLayoutManager}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title_hot_tracks"
+                tools:listitem=""/>
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>
 </layout>

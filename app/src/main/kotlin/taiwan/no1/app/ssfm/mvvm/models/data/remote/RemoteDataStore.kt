@@ -134,7 +134,7 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
     override fun getArtistTopTrack(artist: String): Observable<ArtistTopTrackEntity> {
         val query =
             mutableMapOf("artist" to artist,
-                "method" to "artist.artist.getTopTracks").baseLastFmParams()
+                "method" to "artist.getTopTracks").baseLastFmParams()
 
         return musicService3.get().getArtistTopTrack(query)
     }

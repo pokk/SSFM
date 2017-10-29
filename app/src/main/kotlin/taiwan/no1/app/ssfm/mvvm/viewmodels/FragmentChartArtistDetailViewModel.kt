@@ -1,6 +1,9 @@
 package taiwan.no1.app.ssfm.mvvm.viewmodels
 
 import android.databinding.ObservableField
+import com.devrapid.kotlinknifer.logd
+import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.EXTRA_LARGE
 import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
@@ -35,18 +38,24 @@ class FragmentChartArtistDetailViewModel(private val artistsInfoUsecase: BaseUse
     }
 
     fun fetchHotTracks(name: String) {
+        logw(name)
         lifecycleProvider.execute(artistTopTracksUsecase, GetArtistTopTracksCase.RequestValue(name)) {
             onNext {
+                logw(it)
                 it.toptracks.tracks.forEach { }
             }
+            onError { loge(it.message) }
         }
     }
 
     fun fetchHotAlbum(name: String) {
+        logw(name)
         lifecycleProvider.execute(artistTopAlbumsUsecase, GetArtistTopAlbumsCase.RequestValue(name)) {
             onNext {
+                logd(it)
                 it.topalbums.albums.forEach { }
             }
+            onError { loge(it.message) }
         }
     }
 }

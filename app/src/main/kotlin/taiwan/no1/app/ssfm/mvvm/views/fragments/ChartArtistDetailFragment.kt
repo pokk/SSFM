@@ -5,11 +5,13 @@ import android.support.v7.widget.LinearLayoutManager
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailArtistBinding
 import taiwan.no1.app.ssfm.databinding.ItemArtistType2Binding
+import taiwan.no1.app.ssfm.databinding.ItemMusicType2Binding
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.SimilarArtistAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshRecyclerView
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartArtistDetailViewModel
+import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewChartArtistHotTrackViewModel
 import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewChartSimilarArtistViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
@@ -44,6 +46,7 @@ class ChartArtistDetailFragment: AdvancedFragment<FragmentChartArtistDetailViewM
 
     @Inject override lateinit var viewModel: FragmentChartArtistDetailViewModel
     private var artistRes = mutableListOf<BaseEntity>()
+    private var trackRes = mutableListOf<BaseEntity>()
     // Get the arguments from the bundle here.
     private val mbid: String by lazy { this.arguments.getString(ARG_PARAM_MBID) }
     private val artistName: String by lazy { this.arguments.getString(ARG_PARAM_ARTIST_NAME) }
@@ -60,6 +63,15 @@ class ChartArtistDetailFragment: AdvancedFragment<FragmentChartArtistDetailViewM
                 }
             }
             artistDecoration = HorizontalItemDecorator(20)
+
+            trackLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+            trackAdapter = BaseDataBindingAdapter<ItemMusicType2Binding, BaseEntity>(R.layout.item_music_type_2,
+                trackRes) { holder, item ->
+                holder.binding.avm = RecyclerViewChartArtistHotTrackViewModel(item).apply {
+                    onAttach(this@ChartArtistDetailFragment)
+                }
+            }
+            trackDecoration = HorizontalItemDecorator(20)
         }
         viewModel.fetchDetailInfo(mbid, artistName) {
             // Refresh the similar artist recyclerview.
