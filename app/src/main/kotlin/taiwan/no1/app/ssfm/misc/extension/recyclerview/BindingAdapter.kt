@@ -9,12 +9,12 @@ import android.support.v7.widget.RecyclerView
  * @since   10/1/17
  */
 @BindingAdapter("android:layoutManager", "android:adapter", "android:itemDecoration", requireAll = false)
-fun RecyclerView.setAdapter(layoutManager: RecyclerView.LayoutManager,
-                            adapter: RecyclerView.Adapter<*>,
-                            itemDecoration: RecyclerView.ItemDecoration) {
-    this.layoutManager = layoutManager
-    this.adapter = adapter
-    this.addItemDecoration(itemDecoration)
+fun RecyclerView.setAdapter(layoutManager: RecyclerView.LayoutManager?,
+                            adapter: RecyclerView.Adapter<*>?,
+                            itemDecoration: RecyclerView.ItemDecoration?) {
+    layoutManager?.let { this.layoutManager = it }
+    adapter?.let { this.adapter = it }
+    itemDecoration?.let { addItemDecoration(it) }
 }
 
 // OPTIMIZE(jieyi): 10/2/17 Help want! I might instead an anonymous variable method for loading more.

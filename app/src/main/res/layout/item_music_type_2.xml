@@ -9,9 +9,9 @@
             type="taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewChartArtistHotTrackViewModel"/>
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
         android:orientation="horizontal"
         tool:background="@color/colorPrimary">
 
@@ -19,8 +19,9 @@
             android:id="@+id/iv_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="3dp"
             android:gravity="center"
             android:src="@drawable/ic_play_circle"/>
 
@@ -28,9 +29,11 @@
             android:id="@+id/tv_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:layout_margin="3dp"
+            android:layout_toEndOf="@+id/iv_action"
+            android:text="@{avm.trackNumber}"
             android:textColor="@color/colorWhite"
             tool:text="2"/>
 
@@ -38,10 +41,12 @@
             android:id="@+id/tv_album_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@id/tv_number"
+            android:layout_toStartOf="@id/iv_frequency"
             android:text="@{avm.trackName}"
-            android:layout_weight="10"
-            android:gravity="start"
             android:textColor="@color/colorWhite"
             tool:text="The Cure"/>
 
@@ -49,8 +54,9 @@
             android:id="@+id/iv_frequency"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
+            android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_toStartOf="@id/tv_total_time"
             android:src="@drawable/ic_sound_bars_pulse"
             android:visibility="invisible"
             tool:visibility="visible"/>
@@ -59,10 +65,10 @@
             android:id="@+id/tv_total_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1.5"
-            android:gravity="center"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="3dp"
             android:textColor="@color/colorWhite"
             tool:text="4:14"/>
-    </LinearLayout>
+    </RelativeLayout>
 </layout>

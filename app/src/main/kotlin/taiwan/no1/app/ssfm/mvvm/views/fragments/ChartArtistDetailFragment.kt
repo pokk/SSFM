@@ -72,7 +72,6 @@ class ChartArtistDetailFragment: AdvancedFragment<FragmentChartArtistDetailViewM
                     onAttach(this@ChartArtistDetailFragment)
                 }
             }
-            trackDecoration = HorizontalItemDecorator(20)
         }
         viewModel.fetchDetailInfo(mbid, artistName) {
             // Refresh the similar artist recyclerview.
@@ -84,9 +83,7 @@ class ChartArtistDetailFragment: AdvancedFragment<FragmentChartArtistDetailViewM
         }
         viewModel.fetchHotTracks(artistName) {
             // Refresh the similar artist recyclerview.
-            trackRes = (binding?.trackAdapter as ArtistTopTrackAdapter to trackRes).refreshRecyclerView {
-                addAll(it)
-            }
+            trackRes = (binding?.trackAdapter as ArtistTopTrackAdapter to trackRes).refreshRecyclerView { addAll(it) }
         }
         viewModel.fetchHotAlbum(artistName)
     }

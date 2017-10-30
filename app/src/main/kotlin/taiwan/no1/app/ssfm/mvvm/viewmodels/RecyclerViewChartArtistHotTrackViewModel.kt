@@ -14,6 +14,7 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
  */
 class RecyclerViewChartArtistHotTrackViewModel(val item: BaseEntity): BaseViewModel() {
     val trackName by lazy { ObservableField<String>((item as TrackEntity.TrackWithStreamableString).name) }
+    val trackNumber by lazy { ObservableField<String>((item as TrackEntity.TrackWithStreamableString).attr?.rank ?: "0") }
 
     /**
      * A callback event for clicking a item to list item.

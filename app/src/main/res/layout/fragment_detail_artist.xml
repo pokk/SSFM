@@ -22,20 +22,12 @@
             type="android.support.v7.widget.RecyclerView.ItemDecoration"/>
 
         <variable
-            name="artistLoadmore"
-            type="taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback"/>
-
-        <variable
             name="trackLayoutManager"
             type="android.support.v7.widget.RecyclerView.LayoutManager"/>
 
         <variable
             name="trackAdapter"
             type="android.support.v7.widget.RecyclerView.Adapter"/>
-
-        <variable
-            name="trackDecoration"
-            type="android.support.v7.widget.RecyclerView.ItemDecoration"/>
     </data>
 
     <android.support.v4.widget.NestedScrollView
@@ -110,7 +102,7 @@
                 android:adapter="@{artistAdapter}"
                 android:itemDecoration="@{artistDecoration}"
                 android:layoutManager="@{artistLayoutManager}"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_title_hot_tracks"
+                app:layout_constraintBottom_toTopOf="@+id/tv_title_hot_tracks"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title_similar"
                 tools:listitem=""/>
 
@@ -123,14 +115,16 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_top_tracks"
-                android:layout_height="200dp"
                 style="@style/ChartDetail"
+                android:layout_height="216dp"
+                android:layout_marginBottom="@dimen/one_unit"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:adapter="@{trackAdapter}"
-                android:itemDecoration="@{trackDecoration}"
                 android:layoutManager="@{trackLayoutManager}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title_hot_tracks"
-                tools:listitem=""/>
+                tools:listitem="@layout/item_music_type_2"/>
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>
 </layout>
