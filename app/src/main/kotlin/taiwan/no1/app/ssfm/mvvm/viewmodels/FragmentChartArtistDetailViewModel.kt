@@ -9,6 +9,7 @@ import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopTrackEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistInfoCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistTopAlbumsCase
@@ -37,7 +38,7 @@ class FragmentChartArtistDetailViewModel(private val artistsInfoUsecase: BaseUse
         }
     }
 
-    fun fetchHotTracks(name: String, callback: (entity: List<ArtistTopTrackEntity.Track>) -> Unit) {
+    fun fetchHotTracks(name: String, callback: (entity: List<TrackEntity.TrackWithStreamableString>) -> Unit) {
         lifecycleProvider.execute(artistTopTracksUsecase, GetArtistTopTracksCase.RequestValue(name)) {
             onNext { callback(it.toptracks.tracks) }
         }

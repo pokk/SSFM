@@ -7,18 +7,21 @@ import com.google.gson.annotations.SerializedName
  * @since   10/16/17
  */
 data class TrackEntity(var track: Track?) {
-    data class Track(var album: AlbumEntity.Album?,
-                     @SerializedName("@attr") var attr: Attr?,
-                     var artist: ArtistEntity.Artist?,
-                     var duration: String?,
-                     @SerializedName("image") var images: List<Image>?,
-                     var listeners: String?,
-                     var match: Double?,
-                     var mbid: String?,
-                     var name: String?,
-                     @SerializedName("playcount") var playcount: String?,
-                     var streamable: Streamable?,
-                     @SerializedName("toptags") var topTag: Tags?,
-                     var url: String?,
-                     var wiki: Wiki?): BaseEntity
+    data class Track(var streamable: Streamable?): BaseTrack()
+
+    data class TrackWithStreamableString(var streamable: String?): BaseTrack()
+
+    open class BaseTrack(var album: AlbumEntity.Album? = null,
+                         @SerializedName("@attr") var attr: Attr? = null,
+                         var artist: ArtistEntity.Artist? = null,
+                         var duration: String? = null,
+                         @SerializedName("image") var images: List<Image>? = null,
+                         var listeners: String? = null,
+                         var match: Double? = null,
+                         var mbid: String? = null,
+                         var name: String? = null,
+                         @SerializedName("playcount") var playcount: String? = null,
+                         @SerializedName("toptags") var topTag: Tags? = null,
+                         var url: String? = null,
+                         var wiki: Wiki? = null): BaseEntity
 }

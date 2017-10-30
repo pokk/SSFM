@@ -7,16 +7,6 @@ import com.google.gson.annotations.SerializedName
  * @since   10/17/17
  */
 data class ArtistTopTrackEntity(var toptracks: Tracks) {
-    data class Tracks(@SerializedName("track") var tracks: List<Track>,
+    data class Tracks(@SerializedName("track") var tracks: List<TrackEntity.TrackWithStreamableString>,
                       @SerializedName("@attr") var attr: Attr?)
-
-    data class Track(var name: String?,
-                     var playcount: String?,
-                     var listeners: String?,
-                     var mbid: String?,
-                     var url: String?,
-                     var streamable: String?,
-                     var artist: ArtistEntity.Artist?,
-                     var image: List<Image?>?,
-                     @SerializedName("@attr") var attr: Attr?): BaseEntity
 }
