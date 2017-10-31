@@ -1,8 +1,6 @@
 package taiwan.no1.app.ssfm.mvvm.viewmodels
 
-import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
-import android.view.View
 import com.devrapid.kotlinknifer.loge
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.EXTRA_LARGE
 import taiwan.no1.app.ssfm.misc.extension.execute
@@ -24,16 +22,17 @@ class FragmentChartArtistDetailViewModel(private val artistsInfoUsecase: BaseUse
                                          private val artistTopAlbumsUsecase: BaseUsecase<ArtistTopAlbumEntity, GetArtistTopAlbumsCase.RequestValue>):
     BaseViewModel() {
     val artistName by lazy { ObservableField<String>("") }
-    val artistSummary by lazy { ObservableField<String>("") }
     val artistImage by lazy { ObservableField<String>("") }
-    val expand by lazy { ObservableBoolean(false) }
+    val artistSummary by lazy { ObservableField<String>("") }
 
-    fun fetchDetailInfo(mbid: String, name: String, callback: (artistDeatilInfo: ArtistEntity) -> Unit) {
+    fun fetchDetailInfo(mbid: String, name: String, callback: (artistDetailInfo: ArtistEntity) -> Unit) {
         lifecycleProvider.execute(artistsInfoUsecase, GetArtistInfoCase.RequestValue(name, mbid)) {
             onNext {
-                artistImage.set(it.artist?.images?.get(EXTRA_LARGE)?.text ?: "")
-                artistName.set(it.artist?.name ?: "")
-                artistSummary.set(it.artist?.bio?.summary ?: "")
+                it.artist?.let {
+                    artistImage.set(it.images?.get(EXTRA_LARGE)?.text ?: "")
+                    artistName.set(it.name ?: "")
+                    artistSummary.set(it.bio?.content ?: "")
+                }
                 callback(it)
             }
         }
@@ -52,9 +51,5 @@ class FragmentChartArtistDetailViewModel(private val artistsInfoUsecase: BaseUse
             }
             onError { loge(it.message) }
         }
-    }
-
-    fun clickMore(view: View) {
-        if (expand.get()) expand.set(false) else expand.set(true)
     }
 }

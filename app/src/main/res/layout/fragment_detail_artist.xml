@@ -66,24 +66,17 @@
                     tools:text="Lady Gaga"/>
             </FrameLayout>
 
-            <at.blogc.android.views.ExpandableTextView
+            <com.borjabravo.readmoretextview.ReadMoreTextView
                 android:id="@+id/tv_artist_intro"
                 style="@style/ChartDetail.Summary"
                 android:text="@{vm.artistSummary}"
-                android:toggle="@{vm.expand}"
                 app:layout_constraintBottom_toTopOf="@+id/tv_title_album"
                 app:layout_constraintTop_toBottomOf="@+id/fl_fog"
+                app:trimCollapsedText="read more"
+                app:trimExpandedText="read less"
+                app:trimLength="300"
+                app:trimMode="trimModeLength"
                 tools:text="Stefani Joanne Angelina Germanotta (born March 28, 1986), who performs under the stage name Lady Gaga, is a singer, songwriter and musician from New York City, New York, United States. \n\nBefore Gaga adopted her stage name she was in a band called Stefani Germanotta Band. She released her first EP, “Red and Blue“, in early 2006. The following year, music producer Rob Fusari dubbed her Lady Gaga, inspired by the Queen song “Radio Gaga“."/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
-                android:onClick="@{vm::clickMore}"
-                android:text="more"
-                app:layout_constraintEnd_toEndOf="@+id/tv_artist_intro"
-                app:layout_constraintTop_toBottomOf="@+id/tv_artist_intro"/>
 
             <TextView
                 android:id="@+id/tv_title_album"

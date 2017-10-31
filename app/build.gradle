@@ -150,7 +150,7 @@ dependencies {
     implementation "com.github.mmin18:realtimeblurview:1.1.0"
     implementation "com.mikhaellopez:circularimageview:3.0.2"
     implementation "com.github.Yalantis:GuillotineMenu-Android:1.2"
-    implementation "at.blogc:expandabletextview:1.0.5"
+    implementation "com.borjabravo:readmoretextview:2.0.1"
     //noinspection GradleCompatible
     implementation "com.android.support:appcompat-v7:$android_support_version"
     implementation "com.android.support:palette-v7:$android_support_version"
