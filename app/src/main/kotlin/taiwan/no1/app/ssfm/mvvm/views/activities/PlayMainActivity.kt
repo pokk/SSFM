@@ -12,7 +12,7 @@ import taiwan.no1.app.ssfm.databinding.ActivityMusicBinding
 import taiwan.no1.app.ssfm.misc.utilies.devices.IMultiMediaPlayer
 import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList
 import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler
-import taiwan.no1.app.ssfm.misc.utilies.devices.MediaPlayerProxy
+import taiwan.no1.app.ssfm.misc.utilies.devices.MediaPlayerAdapter
 import taiwan.no1.app.ssfm.misc.utilies.devices.PlayListModel
 import taiwan.no1.app.ssfm.misc.utilies.devices.PlayerHandler
 import taiwan.no1.app.ssfm.mvvm.viewmodels.PlayMainViewModel
@@ -26,20 +26,20 @@ import javax.inject.Inject
  */
 class PlayMainActivity: AdvancedActivity<PlayMainViewModel, ActivityMusicBinding>() {
     @Inject override lateinit var viewModel: PlayMainViewModel
-    private lateinit var mediaPlayerProxy: IMultiMediaPlayer
+    private lateinit var mediaPlayerAdapter: IMultiMediaPlayer
     private lateinit var playList: IPlayList
     private lateinit var player: IPlayerHandler
     private val permissionsStorage: Array<String> = arrayOf(WRITE_EXTERNAL_STORAGE)
-    private val path: Array<String> = arrayOf("http://fs.w.kugou.com/201710211733/3476653fc2fc99dcfe6345519f02f736/G100/M02/1F/03/pA0DAFjzVJyAAhJ0ADOhTT8_t00044.mp3",
+    private val path: Array<String> = arrayOf("https://soundsthatmatterblog.files.wordpress.com/2012/12/04-just-give-me-a-reason-feat-nate-ruess.mp3",
         "/storage/emulated/0/Download/test.mp3")
     private val permissionsRequestCode = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mediaPlayerProxy = MediaPlayerProxy(rcii_album)
+        mediaPlayerAdapter = MediaPlayerAdapter(rcii_album)
         playList = PlayListModel()
-        player = PlayerHandler(mediaPlayerProxy, playList)
+        player = PlayerHandler(mediaPlayerAdapter, playList)
 
         requirePermission()
 
