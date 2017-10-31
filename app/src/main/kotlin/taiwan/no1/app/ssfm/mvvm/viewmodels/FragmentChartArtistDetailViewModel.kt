@@ -1,9 +1,9 @@
 package taiwan.no1.app.ssfm.mvvm.viewmodels
 
+import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
-import com.devrapid.kotlinknifer.logd
+import android.view.View
 import com.devrapid.kotlinknifer.loge
-import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.EXTRA_LARGE
 import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
@@ -26,6 +26,7 @@ class FragmentChartArtistDetailViewModel(private val artistsInfoUsecase: BaseUse
     val artistName by lazy { ObservableField<String>("") }
     val artistSummary by lazy { ObservableField<String>("") }
     val artistImage by lazy { ObservableField<String>("") }
+    val expand by lazy { ObservableBoolean(false) }
 
     fun fetchDetailInfo(mbid: String, name: String, callback: (artistDeatilInfo: ArtistEntity) -> Unit) {
         lifecycleProvider.execute(artistsInfoUsecase, GetArtistInfoCase.RequestValue(name, mbid)) {
@@ -45,13 +46,15 @@ class FragmentChartArtistDetailViewModel(private val artistsInfoUsecase: BaseUse
     }
 
     fun fetchHotAlbum(name: String) {
-        logw(name)
         lifecycleProvider.execute(artistTopAlbumsUsecase, GetArtistTopAlbumsCase.RequestValue(name)) {
             onNext {
-                logd(it)
                 it.topalbums.albums.forEach { }
             }
             onError { loge(it.message) }
         }
+    }
+
+    fun clickMore(view: View) {
+        if (expand.get()) expand.set(false) else expand.set(true)
     }
 }
