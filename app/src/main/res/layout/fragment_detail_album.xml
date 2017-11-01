@@ -1,63 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/iv_album"
-        style="@style/ImageView.Shadow"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        android:layout_marginBottom="56dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:paddingBottom="@dimen/one_unit"
-        android:paddingEnd="@dimen/one_unit"
-        app:layout_constraintBottom_toTopOf="@+id/tv_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="spread_inside"
-        app:srcCompat="@drawable/sample_lady_gaga"/>
+    <data>
 
-    <TextView
-        android:id="@+id/tv_album_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/iv_album"
-        app:layout_constraintTop_toTopOf="@+id/iv_album"/>
+        <variable
+            name="vm"
+            type="taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartAlbumDetailViewModel"/>
+    </data>
 
-    <TextView
-        android:id="@+id/tv_tags"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/one_unit"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="@+id/tv_album_name"
-        app:layout_constraintStart_toStartOf="@+id/tv_album_name"
-        app:layout_constraintTop_toBottomOf="@+id/tv_album_name"/>
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_title"
-        style="@style/RecyclerView.Title"
-        android:text="Songs"
-        app:layout_constraintBottom_toTopOf="@+id/rv_tracks"
-        app:layout_constraintTop_toBottomOf="@+id/iv_album"/>
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/iv_album"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_marginBottom="56dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            app:civ_border="false"
+            app:civ_shadow="true"
+            app:civ_shadow_color="@color/colorBlack"
+            app:civ_shadow_radius="10"
+            app:layout_constraintBottom_toTopOf="@+id/tv_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread_inside"
+            tools:src="@drawable/sample_lady_gaga"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_tracks"
-        android:layout_width="395dp"
-        android:layout_height="379dp"
-        android:layout_marginBottom="@dimen/one_unit"
-        android:layout_marginEnd="@dimen/one_unit"
-        android:layout_marginStart="@dimen/one_unit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:listitem="@layout/item_music_type_2"
-        />
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_album_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_album"
+            app:layout_constraintTop_toTopOf="@+id/iv_album"/>
+
+        <TextView
+            android:id="@+id/tv_tags"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/one_unit"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="@+id/tv_album_name"
+            app:layout_constraintStart_toStartOf="@+id/tv_album_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_album_name"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/RecyclerView.Title"
+            android:text="Songs"
+            app:layout_constraintBottom_toTopOf="@+id/rv_tracks"
+            app:layout_constraintTop_toBottomOf="@+id/iv_album"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_tracks"
+            android:layout_width="395dp"
+            android:layout_height="379dp"
+            android:layout_marginBottom="@dimen/one_unit"
+            android:layout_marginEnd="@dimen/one_unit"
+            android:layout_marginStart="@dimen/one_unit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:listitem="@layout/item_music_type_4"/>
+    </android.support.constraint.ConstraintLayout>
+</layout>

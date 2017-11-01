@@ -21,9 +21,9 @@ class FragmentChartArtistDetailViewModel(private val artistsInfoUsecase: BaseUse
                                          private val artistTopTracksUsecase: BaseUsecase<ArtistTopTrackEntity, GetArtistTopTracksCase.RequestValue>,
                                          private val artistTopAlbumsUsecase: BaseUsecase<ArtistTopAlbumEntity, GetArtistTopAlbumsCase.RequestValue>):
     BaseViewModel() {
-    val artistName by lazy { ObservableField<String>("") }
-    val artistImage by lazy { ObservableField<String>("") }
-    val artistSummary by lazy { ObservableField<String>("") }
+    val artistName by lazy { ObservableField<String>() }
+    val artistImage by lazy { ObservableField<String>() }
+    val artistSummary by lazy { ObservableField<String>() }
 
     fun fetchDetailInfo(mbid: String, name: String, callback: (artistDetailInfo: ArtistEntity) -> Unit) {
         lifecycleProvider.execute(artistsInfoUsecase, GetArtistInfoCase.RequestValue(name, mbid)) {

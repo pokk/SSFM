@@ -9,7 +9,9 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes
+import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
 import taiwan.no1.app.ssfm.misc.extension.palette
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
@@ -26,7 +28,17 @@ class RecyclerViewUniversal1ViewModel(val item: BaseEntity): BaseViewModel() {
     val textColor by lazy { ObservableInt() }
     val shadowColor by lazy { ObservableInt() }
 
+    /**
+     * A callback event for clicking an artist to list item.
+     *
+     * @param view [android.widget.RelativeLayout]
+     *
+     * @event_to [taiwan.no1.app.ssfm.mvvm.views.activities.ChartActivity.navigateToAlbumDetail]
+     */
     fun itemOnClick(view: View) {
+        RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_ALBUM,
+            hashMapOf("Artist Name" to (item as AlbumEntity.AlbumWithArtist).artist?.name,
+                "Artist Album Name" to item.name))
     }
 
     val imageCallback = object: RequestListener<Bitmap> {

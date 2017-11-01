@@ -22,7 +22,7 @@ class FragmentChartTagDetailViewModel(
     private val topArtistsUsecase: BaseUsecase<TagTopArtistEntity, GetTagTopArtistsCase.RequestValue>,
     private val topTracksUsecase: BaseUsecase<TopTrackEntity, GetTagTopTracksCase.RequestValue>):
     BaseViewModel() {
-    val tagSummary by lazy { ObservableField<String>("") }
+    val tagSummary by lazy { ObservableField<String>() }
 
     fun fetchDetailInfo(mbid: String, name: String, callback: (artistDeatilInfo: ArtistEntity) -> Unit) {
 //        lifecycleProvider.execute(artistsInfoUsecase, GetArtistInfoCase.RequestValue(name, mbid)) {

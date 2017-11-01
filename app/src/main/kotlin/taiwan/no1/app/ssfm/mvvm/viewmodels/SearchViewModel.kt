@@ -33,7 +33,7 @@ class SearchViewModel(private val context: Context,
     /** Menu Title */
     val title by lazy { ObservableField<String>(context.getString(R.string.menu_search)) }
     /** The keyword of a song or singer's name */
-    val keyword by lazy { ObservableField<String>("") }
+    val keyword by lazy { ObservableField<String>() }
     /** Check search view is clicked or un-clicked */
     val isSearching by lazy { ObservableBoolean() }
     val collapseView by lazy { ObservableBoolean() }

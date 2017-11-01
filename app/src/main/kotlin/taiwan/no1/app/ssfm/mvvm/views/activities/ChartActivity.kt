@@ -12,8 +12,10 @@ import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
 import taiwan.no1.app.ssfm.misc.extension.addFragment
 import taiwan.no1.app.ssfm.mvvm.viewmodels.ChartViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedActivity
+import taiwan.no1.app.ssfm.mvvm.views.fragments.ChartAlbumDetailFragment
 import taiwan.no1.app.ssfm.mvvm.views.fragments.ChartArtistDetailFragment
 import taiwan.no1.app.ssfm.mvvm.views.fragments.ChartIndexFragment
+import java.util.HashMap
 import javax.inject.Inject
 
 /**
@@ -48,9 +50,21 @@ class ChartActivity: AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
      * @event_from [taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewUniversal2ViewModel.itemOnClick]
      */
     @Subscribe(tags = arrayOf(Tag(RxBusConstant.VIEWMODEL_CLICK_SIMILAR)))
-    fun receiveSubFragmentEvent(artistName: String) {
+    fun navigateToArtistDetail(artistName: String) {
         navigate(ChartArtistDetailFragment.newInstance(artistName = artistName), true)
     }
+
+    /**
+     * @param params
+     *
+     * @event_from [taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewUniversal1ViewModel.itemOnClick]
+     */
+    @Subscribe(tags = arrayOf(Tag(RxBusConstant.VIEWMODEL_CLICK_ALBUM)))
+    fun navigateToAlbumDetail(params: HashMap<String, String>) {
+        val (artistName, artistAlbum) = (params["Artist Name"] ?: "") to (params["Artist Album Name"] ?: "")
+        navigate(ChartAlbumDetailFragment.newInstance(artistAlbum, artistName), true)
+    }
+
 
     fun navigate(fragment: Fragment, needBack: Boolean) {
         fragmentManager.addFragment(R.id.fl_container, fragment, needBack)

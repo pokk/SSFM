@@ -33,7 +33,7 @@ class RecyclerViewChartSimilarArtistViewModel(val item: BaseEntity): BaseViewMod
      *
      * @param view [android.widget.RelativeLayout]
      *
-     * @event_to [taiwan.no1.app.ssfm.mvvm.views.activities.ChartActivity.receiveSubFragmentEvent]
+     * @event_to [taiwan.no1.app.ssfm.mvvm.views.activities.ChartActivity.navigateToArtistDetail]
      */
     fun artistOnClick(view: View) {
         RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_SIMILAR, (item as ArtistEntity.Artist).name)
