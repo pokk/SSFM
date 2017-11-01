@@ -26,6 +26,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="330dp"
+                android:imageUrl="@{vm.artistImage}"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/image09"/>
+
             <com.mikhaellopez.circularimageview.CircularImageView
                 android:id="@+id/iv_album"
                 android:layout_width="180dp"
@@ -49,6 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{vm.albumName}"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/iv_album"
                 app:layout_constraintTop_toTopOf="@+id/iv_album"
@@ -73,6 +84,7 @@
                 android:layout_marginTop="8dp"
                 android:lines="5"
                 android:text="@{vm.albumSummary}"
+                android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/iv_album"
                 app:layout_constraintTop_toBottomOf="@+id/tv_tags"
@@ -88,11 +100,9 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_tracks"
-                android:layout_width="395dp"
-                android:layout_height="200dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_width="0dp"
+                android:layout_height="240dp"
+                android:layout_margin="@dimen/one_unit"
                 android:adapter="@{trackAdapter}"
                 android:layoutManager="@{trackLayoutManager}"
                 app:layout_constraintBottom_toBottomOf="parent"

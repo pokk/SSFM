@@ -68,6 +68,7 @@
             android:layout_centerVertical="true"
             android:layout_margin="3dp"
             android:layout_toStartOf="@id/ib_options"
+            android:text="@{avm.trackDuration}"
             android:textColor="@color/colorWhite"
             tool:text="4:14"/>
 
