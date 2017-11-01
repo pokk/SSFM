@@ -56,24 +56,30 @@
 
             <TextView
                 android:id="@+id/tv_album_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/one_unit"
+                android:layout_marginStart="@dimen/one_unit"
+                android:gravity="center_horizontal"
                 android:text="@{vm.albumName}"
                 android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/iv_album"
                 app:layout_constraintTop_toTopOf="@+id/iv_album"
                 tools:text="The Fame"/>
 
             <TextView
-                android:id="@+id/tv_tags"
+                android:id="@+id/tv_artist_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/one_unit"
-                android:text="TextView"
+                android:fontFamily="sans-serif-smallcaps"
+                android:text="@{vm.artistName}"
                 app:layout_constraintEnd_toEndOf="@+id/tv_album_name"
                 app:layout_constraintStart_toStartOf="@+id/tv_album_name"
-                app:layout_constraintTop_toBottomOf="@+id/tv_album_name"/>
+                app:layout_constraintTop_toBottomOf="@+id/tv_album_name"
+                tools:text="Lady Gaga"/>
 
             <TextView
                 android:id="@+id/tv_summary"
@@ -82,13 +88,12 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:lines="5"
+                android:lines="10"
                 android:text="@{vm.albumSummary}"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/iv_album"
-                app:layout_constraintTop_toBottomOf="@+id/tv_tags"
-                tools:lines="4"
+                app:layout_constraintTop_toBottomOf="@+id/tv_artist_name"
                 tools:text="The Fame is the debut studio album by American singer Lady Gaga. It was released on August 19, 2008 through Interscope Records. After joining Kon Live Distribution and Cherrytree Records in 2008, Gaga began working on the album with different producers, primarily RedOne, Martin Kierszenbaum and Rob Fusari. Musically, The Fame is a synth-pop and dance-pop album that has influences of pop music from the 1980s. Lyrically, the album visualizes Gaga's love of fame in general while also dealing with subjects such as love, sex, money, drugs and sexual identity. Promotion was primarily through The Fame Ball Tour and multiple television appearances. The Fame was reissued as a deluxe edition with The Fame Monster on November 18, 2009.\n\nThe album received generally favorable reviews from music critics, who commended the album's lyrical content and Gaga's musicianship and vocal ability. The album was a commercial success, topping the charts in different countries worldwide, including the United Kingdom, Canada, Germany, Ireland, Poland and Switzerland. In the United States, it peaked at number two on the Billboard 200, while topping the Dance/Electronic Albums chart for 106 non-consecutive weeks. The Fame became the fifth best-selling album of 2009. It has sold 4.7 million copies in the United States as of April 2016 and is the seventh best-selling digital album in history. The album had sold 15 million copies worldwide as of November 2010.\n\nThe first two singles from The Fame—'Just Dance' and 'Poker Face'—gained international success, topping the charts in several countries worldwide, including the United States, United Kingdom and Australia. Subsequent singles 'LoveGame' and 'Paparazzi', were commercial successes as well, charting within the top 10 of more than 10 countries worldwide. 'Eh, Eh (Nothing Else I Can Say)' had a limited release, while 'Beautiful, Dirty, Rich' was a promotional single. User-contributed text is available under the Creative Commons By-SA License; additional terms may apply."/>
 
             <TextView
@@ -101,7 +106,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_tracks"
                 android:layout_width="0dp"
-                android:layout_height="240dp"
+                android:layout_height="252dp"
                 android:layout_margin="@dimen/one_unit"
                 android:adapter="@{trackAdapter}"
                 android:layoutManager="@{trackLayoutManager}"

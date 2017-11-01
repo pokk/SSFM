@@ -17,6 +17,7 @@ class FragmentChartAlbumDetailViewModel(private val albumInfoCase: BaseUsecase<A
                                         private val artistInfoCase: BaseUsecase<ArtistEntity, GetArtistInfoCase.RequestValue>):
     BaseViewModel() {
     val artistImage by lazy { ObservableField<String>() }
+    val artistName by lazy { ObservableField<String>() }
     val albumName by lazy { ObservableField<String>() }
     val albumSummary by lazy { ObservableField<String>() }
     val albumImage by lazy { ObservableField<String>() }
@@ -34,7 +35,10 @@ class FragmentChartAlbumDetailViewModel(private val albumInfoCase: BaseUsecase<A
         }
 
         lifecycleProvider.execute(artistInfoCase, GetArtistInfoCase.RequestValue(artistName)) {
-            onNext { it.artist?.images?.get(EXTRA_LARGE)?.text?.let { artistImage.set(it) } }
+            onNext {
+                this@FragmentChartAlbumDetailViewModel.artistName.set(artistName)
+                it.artist?.images?.get(EXTRA_LARGE)?.text?.let { artistImage.set(it) }
+            }
         }
     }
 }
