@@ -1,6 +1,7 @@
 package taiwan.no1.app.ssfm.mvvm.viewmodels
 
 import android.databinding.ObservableField
+import taiwan.no1.app.ssfm.misc.constants.ImageSizes.EXTRA_LARGE
 import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
@@ -12,14 +13,20 @@ import taiwan.no1.app.ssfm.mvvm.models.usecases.GetAlbumInfoCase
  */
 class FragmentChartAlbumDetailViewModel(private val albumInfoCase: BaseUsecase<AlbumEntity, GetAlbumInfoCase.RequestValue>):
     BaseViewModel() {
-    val artistName by lazy { ObservableField<String>() }
     val artistImage by lazy { ObservableField<String>() }
-    val artistSummary by lazy { ObservableField<String>() }
+    val albumName by lazy { ObservableField<String>() }
+    val albumSummary by lazy { ObservableField<String>() }
+    val albumImage by lazy { ObservableField<String>() }
 
-    fun fetchDetailInfo(albumName: String, artistName: String, callback: (albumDetailCallback: AlbumEntity) -> Unit) {
+    fun fetchDetailInfo(albumName: String,
+                        artistName: String,
+                        callback: (albumDetailCallback: AlbumEntity.Album) -> Unit) {
         lifecycleProvider.execute(albumInfoCase, GetAlbumInfoCase.RequestValue(artistName, albumName)) {
             onNext {
-                callback(it)
+                this@FragmentChartAlbumDetailViewModel.albumName.set(it.album?.name ?: "")
+                albumSummary.set(it.album?.wiki?.content ?: "")
+                albumImage.set(it.album?.images?.get(EXTRA_LARGE)?.text ?: "")
+                it.album?.let(callback)
             }
         }
     }

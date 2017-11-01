@@ -141,7 +141,12 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
 
     override fun getAlbumInfo(artist: String, albumOrMbid: String): Observable<AlbumEntity> {
         val query =
-            mutableMapOf("mbid" to albumOrMbid, "method" to "album.getInfo").baseLastFmParams()
+            mutableMapOf("method" to "album.getInfo").baseLastFmParams().apply {
+                if (artist.isBlank())
+                    put("mbid", albumOrMbid)
+                else
+                    putAll(mapOf("artist" to artist, "album" to albumOrMbid))
+            }
 
         return musicService3.get().getAlbumInfo(query)
     }

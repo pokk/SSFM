@@ -36,8 +36,9 @@ class RecyclerViewUniversal1ViewModel(val item: BaseEntity): BaseViewModel() {
      * @event_to [taiwan.no1.app.ssfm.mvvm.views.activities.ChartActivity.navigateToAlbumDetail]
      */
     fun itemOnClick(view: View) {
+        item as AlbumEntity.AlbumWithArtist
         RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_ALBUM,
-            hashMapOf("Artist Name" to (item as AlbumEntity.AlbumWithArtist).artist?.name,
+            hashMapOf("Artist Name" to item.artist?.name,
                 "Artist Album Name" to item.name))
     }
 

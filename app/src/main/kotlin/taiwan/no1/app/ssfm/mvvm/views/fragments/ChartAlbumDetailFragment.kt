@@ -1,11 +1,18 @@
 package taiwan.no1.app.ssfm.mvvm.views.fragments
 
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailAlbumBinding
+import taiwan.no1.app.ssfm.databinding.ItemMusicType4Binding
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.AlbumTrackAdapter
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshRecyclerView
+import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartAlbumDetailViewModel
+import taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewChartAlbumTrackViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
+import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
 import javax.inject.Inject
 
 /**
@@ -44,6 +51,18 @@ class ChartAlbumDetailFragment: AdvancedFragment<FragmentChartAlbumDetailViewMod
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
         binding?.apply {
+            trackLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+            trackAdapter = BaseDataBindingAdapter<ItemMusicType4Binding, BaseEntity>(R.layout.item_music_type_4,
+                trackRes) { holder, item ->
+                holder.binding.avm = RecyclerViewChartAlbumTrackViewModel(item).apply {
+                    onAttach(this@ChartAlbumDetailFragment)
+                }
+            }
+        }
+        viewModel.fetchDetailInfo(artistAlbumName, artistName) {
+            trackRes = (binding?.trackAdapter as AlbumTrackAdapter to trackRes).refreshRecyclerView {
+                it.track?.tracks?.let { addAll(it) }
+            }
         }
     }
 
