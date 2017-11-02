@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/one_unit"
             android:layout_toEndOf="@id/tv_number"
             android:layout_toStartOf="@id/iv_frequency"
             android:text="@{avm.trackName}"

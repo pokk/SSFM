@@ -1,5 +1,6 @@
 package taiwan.no1.app.ssfm.mvvm.viewmodels
 
+import android.databinding.ObservableArrayList
 import android.databinding.ObservableField
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.EXTRA_LARGE
 import taiwan.no1.app.ssfm.misc.extension.execute
@@ -21,6 +22,7 @@ class FragmentChartAlbumDetailViewModel(private val albumInfoCase: BaseUsecase<A
     val albumName by lazy { ObservableField<String>() }
     val albumSummary by lazy { ObservableField<String>() }
     val albumImage by lazy { ObservableField<String>() }
+    val albumTags by lazy { ObservableArrayList<String>() }
 
     fun fetchDetailInfo(albumName: String,
                         artistName: String,
@@ -30,6 +32,7 @@ class FragmentChartAlbumDetailViewModel(private val albumInfoCase: BaseUsecase<A
                 this@FragmentChartAlbumDetailViewModel.albumName.set(it.album?.name ?: "")
                 albumSummary.set(it.album?.wiki?.content ?: "")
                 albumImage.set(it.album?.images?.get(EXTRA_LARGE)?.text ?: "")
+                albumTags.addAll(it.album?.tags?.tags?.map { it.name } ?: arrayListOf())
                 it.album?.let(callback)
             }
         }
