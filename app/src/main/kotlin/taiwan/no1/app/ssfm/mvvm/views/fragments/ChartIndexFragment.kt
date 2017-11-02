@@ -14,7 +14,8 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.ArtistAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RVCustomScrollCallback
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.TagAdapter
-import taiwan.no1.app.ssfm.misc.extension.recyclerview.resCallback
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.extension.scaledDrawable
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
@@ -86,14 +87,14 @@ class ChartIndexFragment: AdvancedFragment<FragmentChartIndexViewModel, Fragment
             tagDecoration = GridSpacingItemDecorator(3, 20, false)
         }
         // First time showing this fragment.
-        artistInfo.page.takeIf { 1 >= it && artistInfo.canLoadMoreFlag }?.let {
-            viewModel.fetchArtistList(artistInfo.page, artistInfo.limit) { resList, total ->
-                artistRes = resCallback(resList, total, artistRes, binding?.artistAdapter as ArtistAdapter, artistInfo)
+        artistInfo.firstFetch {
+            viewModel.fetchArtistList(it.page, it.limit) { resList, total ->
+                artistRes.refreshAndChangeList(resList, total, binding?.artistAdapter as ArtistAdapter, it)
             }
         }
-        tagInfo.page.takeIf { 1 >= it && tagInfo.canLoadMoreFlag }?.let {
-            viewModel.fetchTrackList(tagInfo.page, tagInfo.limit) { resList, total ->
-                tagRes = resCallback(resList, total, tagRes, binding?.tagAdapter as TagAdapter, tagInfo)
+        tagInfo.firstFetch {
+            viewModel.fetchTrackList(it.page, it.limit) { resList, total ->
+                tagRes.refreshAndChangeList(resList, total, binding?.tagAdapter as TagAdapter, it)
             }
         }
     }

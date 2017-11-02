@@ -12,7 +12,8 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.RVCustomScrollCallback
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.Universal1Adapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.Universal2Adapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.Universal3Adapter
-import taiwan.no1.app.ssfm.misc.extension.recyclerview.resCallback
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartTagDetailViewModel
@@ -101,20 +102,20 @@ class ChartTagDetailFragment: AdvancedFragment<FragmentChartTagDetailViewModel, 
             artistDecoration = HorizontalItemDecorator(20)
             trackDecoration = HorizontalItemDecorator(20)
         }
-        albumInfo.page.takeIf { 1 >= it && albumInfo.canLoadMoreFlag }?.let {
-            viewModel.fetchHotAlbum(musicTag, albumInfo.page, albumInfo.limit) { resList, total ->
-                albumRes = resCallback(resList, total, albumRes, binding?.albumAdapter as Universal1Adapter, albumInfo)
+        // First time showing this fragment.
+        albumInfo.firstFetch {
+            viewModel.fetchHotAlbum(musicTag, it.page, it.limit) { resList, total ->
+                albumRes.refreshAndChangeList(resList, total, binding?.albumAdapter as Universal1Adapter, it)
             }
         }
-        artistInfo.page.takeIf { 1 >= it && artistInfo.canLoadMoreFlag }?.let {
-            viewModel.fetchHotArtist(musicTag, artistInfo.page, artistInfo.limit) { resList, total ->
-                artistRes = resCallback(resList, total, artistRes, binding?.artistAdapter as Universal2Adapter,
-                    artistInfo)
+        artistInfo.firstFetch {
+            viewModel.fetchHotArtist(musicTag, it.page, it.limit) { resList, total ->
+                artistRes.refreshAndChangeList(resList, total, binding?.artistAdapter as Universal2Adapter, it)
             }
         }
-        trackInfo.page.takeIf { 1 >= it && trackInfo.canLoadMoreFlag }?.let {
-            viewModel.fetchHotTrack(musicTag, trackInfo.page, trackInfo.limit) { resList, total ->
-                trackRes = resCallback(resList, total, trackRes, binding?.trackAdapter as Universal3Adapter, trackInfo)
+        trackInfo.firstFetch {
+            viewModel.fetchHotTrack(musicTag, it.page, it.limit) { resList, total ->
+                trackRes.refreshAndChangeList(resList, total, binding?.trackAdapter as Universal3Adapter, it)
             }
         }
     }

@@ -1,7 +1,5 @@
 package taiwan.no1.app.ssfm.mvvm.models.data
 
-import de.umass.lastfm.Session
-import de.umass.lastfm.Track
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.misc.constants.Constant
 import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
@@ -52,7 +50,7 @@ interface IDataStore {
      * @return      The user session.
      */
     // NOTE: 5/13/17 We should keep the 'Session' and 'UserName' in the shared preferences.
-    fun obtainSession(user: String, pwd: String): Observable<Session>
+    fun obtainSession(user: String, pwd: String): Observable<Any>
 
     fun getChartTopArtist(page: Int = 1, limit: Int = 20): Observable<TopArtistEntity>
 
@@ -70,7 +68,7 @@ interface IDataStore {
 
     fun getAlbumInfo(artist: String, albumOrMbid: String): Observable<AlbumEntity>
 
-    fun getArtistTags(artist: String, session: Session): Observable<Collection<String>>
+    fun getArtistTags(artist: String, session: Any): Observable<Collection<String>>
 
     fun getSimilarTracks(artist: String, track: String): Observable<TrackSimilarEntity>
 
@@ -80,11 +78,11 @@ interface IDataStore {
 
     fun getTagTopTracks(tag: String = "", page: Int = 1, limit: Int = 20): Observable<TopTrackEntity>
 
-    fun getLovedTracks(user: String, page: Int = 1): Observable<Collection<Track>>
+    fun getLovedTracks(user: String, page: Int = 1): Observable<Any>
 
-    fun loveTrack(artist: String, track: String, session: Session): Observable<Track>
+    fun loveTrack(artist: String, track: String, session: Any): Observable<Any>
 
-    fun unloveTrack(artist: String, track: String, session: Session): Observable<Track>
+    fun unloveTrack(artist: String, track: String, session: Any): Observable<Any>
 
     fun insertKeyword(keyword: String): Observable<Boolean>
 

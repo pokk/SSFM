@@ -11,7 +11,8 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.ArtistAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RVCustomScrollCallback
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.TrackAdapter
-import taiwan.no1.app.ssfm.misc.extension.recyclerview.resCallback
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.extension.scaledDrawable
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
@@ -72,14 +73,14 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
                 trackRes, viewModel::fetchTrackList)
         }
         // First time showing this fragment.
-        artistInfo.page.takeIf { 1 >= it && artistInfo.canLoadMoreFlag }?.let {
-            viewModel.fetchArtistList(artistInfo.page, artistInfo.limit) { resList, total ->
-                artistRes = resCallback(resList, total, artistRes, binding?.artistAdapter as ArtistAdapter, artistInfo)
+        artistInfo.firstFetch {
+            viewModel.fetchArtistList(it.page, it.limit) { resList, total ->
+                artistRes.refreshAndChangeList(resList, total, binding?.artistAdapter as ArtistAdapter, it)
             }
         }
-        trackInfo.page.takeIf { 1 >= it && trackInfo.canLoadMoreFlag }?.let {
-            viewModel.fetchTrackList(trackInfo.page, trackInfo.limit) { resList, total ->
-                trackRes = resCallback(resList, total, trackRes, binding?.trackAdapter as TrackAdapter, trackInfo)
+        trackInfo.firstFetch {
+            viewModel.fetchTrackList(it.page, it.limit) { resList, total ->
+                trackRes.refreshAndChangeList(resList, total, binding?.trackAdapter as TrackAdapter, it)
             }
         }
     }

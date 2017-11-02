@@ -37,12 +37,12 @@ class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, Fr
     @Inject override lateinit var viewModel: FragmentSearchHistoryViewModel
     // This usecase is for each items of the recyclerview.
     @Inject lateinit var deleteUsecase: BaseUsecase<Boolean, RemoveKeywordHistoriesCase.RequestValue>
-    private var res = mutableListOf<BaseEntity>()
+    private var searchRes = mutableListOf<BaseEntity>()
 
     //region Fragment lifecycle
     override fun onResume() {
         super.onResume()
-        res.clear()
+        searchRes.clear()
     }
     //endregion
 
@@ -50,14 +50,14 @@ class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, Fr
     override fun init(savedInstanceState: Bundle?) {
         binding?.apply {
             adapter = BaseDataBindingAdapter<ItemSearchHistoryType1Binding, BaseEntity>(R.layout.item_search_history_type_1,
-                res) { holder, item ->
+                searchRes) { holder, item ->
                 holder.binding.avm = RecyclerViewSearchHistoryViewModel(item, activity, deleteUsecase).
                     apply { deleteItemListener = deleteItem }
             }
             layoutManager = WrapContentLinearLayoutManager(activity)
         }
 
-        viewModel.fetchHistoryList { res.refreshRecyclerView { addAll(it) } }
+        viewModel.fetchHistoryList { searchRes.refreshRecyclerView { addAll(it) } }
     }
 
     override fun provideInflateView(): Int = R.layout.fragment_search_history
@@ -66,18 +66,17 @@ class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, Fr
     /** An anonymous callback function for a delete event from the viewholder. */
     private val deleteItem = { entity: KeywordEntity, isSuccess: Boolean ->
         if (isSuccess) {
-            res.refreshRecyclerView { remove(entity) }
+            searchRes.refreshRecyclerView { remove(entity) }
         }
     }
 
     /**
-     * The operation for updating the list result by the adapter. Including updating the original list
+     * The operation for updating the list searchResult by the adapter. Including updating the original list
      * and the showing list on the recycler view.
      *
      * @param block the block operation for new data list.
      * @return a new updated list.
      */
-    private fun MutableList<BaseEntity>.refreshRecyclerView(block: ArrayList<BaseEntity>.() -> Unit) {
-        res = (binding?.adapter as HistoryAdapter to this).refreshRecyclerView(block)
-    }
+    private fun MutableList<BaseEntity>.refreshRecyclerView(block: ArrayList<BaseEntity>.() -> Unit) =
+        (binding?.adapter as HistoryAdapter to this).refreshRecyclerView(block)
 }

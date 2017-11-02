@@ -6,7 +6,6 @@ import android.view.View
 import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
-import de.umass.lastfm.Chart
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
@@ -51,8 +50,6 @@ class MainViewModel(private val context: Context, private val usecase: BaseUseca
             //            val chart = Chart.getTopArtists(key)
             //            val artists = chart.pageResults
             //            artists.forEach { logd(it.getImageURL(ImageSize.LARGE)) }
-
-            val chart = Chart.getTopTracks(key).pageResults.forEach { it }
         }
 
         usecase.parameters = DetailMusicCase.RequestValue("e2a060761620ff482a272b67b204774d")

@@ -7,8 +7,10 @@ import taiwan.no1.app.ssfm.databinding.FragmentDetailArtistBinding
 import taiwan.no1.app.ssfm.databinding.ItemArtistType2Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType2Binding
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.ArtistTopTrackAdapter
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.SimilarArtistAdapter
-import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshRecyclerView
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartArtistDetailViewModel
@@ -46,6 +48,8 @@ class ChartArtistDetailFragment: AdvancedFragment<FragmentChartArtistDetailViewM
     //endregion
 
     @Inject override lateinit var viewModel: FragmentChartArtistDetailViewModel
+    private val artistInfo by lazy { DataInfo() }
+    private val trackInfo by lazy { DataInfo() }
     private var artistRes = mutableListOf<BaseEntity>()
     private var trackRes = mutableListOf<BaseEntity>()
     // Get the arguments from the bundle here.
@@ -73,17 +77,18 @@ class ChartArtistDetailFragment: AdvancedFragment<FragmentChartArtistDetailViewM
                 }
             }
         }
-        viewModel.fetchDetailInfo(mbid, artistName) {
-            // Refresh the similar artist recyclerview.
-            it.artist?.similar?.artists?.let {
-                artistRes = (binding?.artistAdapter as SimilarArtistAdapter to artistRes).refreshRecyclerView {
-                    addAll(it)
+        // First time showing this fragment.
+        artistInfo.firstFetch { info ->
+            viewModel.fetchDetailInfo(mbid, artistName) {
+                it.artist?.similar?.artists?.let {
+                    artistRes.refreshAndChangeList(it, 0, binding?.artistAdapter as SimilarArtistAdapter, info)
                 }
             }
         }
-        viewModel.fetchHotTracks(artistName) {
-            // Refresh the similar artist recyclerview.
-            trackRes = (binding?.trackAdapter as ArtistTopTrackAdapter to trackRes).refreshRecyclerView { addAll(it) }
+        trackInfo.firstFetch { info ->
+            viewModel.fetchHotTracks(artistName) {
+                trackRes.refreshAndChangeList(it, 0, binding?.trackAdapter as ArtistTopTrackAdapter, info)
+            }
         }
         viewModel.fetchHotAlbum(artistName)
     }
