@@ -48,6 +48,7 @@
                 <ImageView
                     android:id="@+id/tv_cover"
                     style="@style/ChartDetail"
+                    android:layout_height="400dp"
                     android:error="@{@drawable/sample_jieyi_icon}"
                     android:imageUrl="@{vm.artistImage}"
                     tools:src="@drawable/sample_lady_gaga"/>
@@ -62,6 +63,7 @@
                     android:id="@+id/tv_artist_name"
                     style="@style/ChartDetail.Name"
                     android:layout_gravity="bottom"
+                    android:layout_marginBottom="20dp"
                     android:text="@{vm.artistName}"
                     tools:text="Lady Gaga"/>
             </FrameLayout>
@@ -103,12 +105,13 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_similar"
                 style="@style/ChartDetail"
+                android:layout_height="190dp"
                 android:adapter="@{artistAdapter}"
                 android:itemDecoration="@{artistDecoration}"
                 android:layoutManager="@{artistLayoutManager}"
                 app:layout_constraintBottom_toTopOf="@+id/tv_title_hot_tracks"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title_similar"
-                tools:listitem=""/>
+                tools:listitem="@layout/item_artist_type_1"/>
 
             <TextView
                 android:id="@+id/tv_title_hot_tracks"

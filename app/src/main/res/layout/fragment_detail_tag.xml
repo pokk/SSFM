@@ -89,13 +89,14 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_top_album"
                 style="@style/RecyclerView.Horizontal"
+                android:layout_height="180dp"
                 android:adapter="@{albumAdapter}"
                 android:itemDecoration="@{albumDecoration}"
                 android:layoutManager="@{albumLayoutManager}"
                 android:loadMore="@{albumLoadmore}"
                 app:layout_constraintBottom_toTopOf="@+id/tv_title_artist"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title_album"
-                tools:listitem="">
+                tools:listitem="@layout/item_universal_type_1">
             </android.support.v7.widget.RecyclerView>
 
             <TextView
@@ -109,12 +110,13 @@
                 android:id="@+id/rv_top_artists"
                 style="@style/RecyclerView.Horizontal"
                 android:adapter="@{artistAdapter}"
+                android:layout_height="180dp"
                 android:itemDecoration="@{artistDecoration}"
                 android:layoutManager="@{artistLayoutManager}"
                 android:loadMore="@{artistLoadmore}"
                 app:layout_constraintBottom_toTopOf="@+id/tv_title_track"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title_artist"
-                tools:listitem=""/>
+                tools:listitem="@layout/item_universal_type_2"/>
 
             <TextView
                 android:id="@+id/tv_title_track"
@@ -126,14 +128,14 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_top_track"
                 style="@style/RecyclerView.Horizontal"
-                android:layout_height="160dp"
+                android:layout_height="180dp"
                 android:adapter="@{trackAdapter}"
                 android:itemDecoration="@{trackDecoration}"
                 android:layoutManager="@{trackLayoutManager}"
                 android:loadMore="@{trackLoadmore}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title_track"
-                tools:listitem=""/>
+                tools:listitem="@layout/item_universal_type_3"/>
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>
 </layout>
