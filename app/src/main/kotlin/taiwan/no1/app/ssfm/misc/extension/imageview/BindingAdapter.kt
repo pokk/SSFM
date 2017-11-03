@@ -21,6 +21,11 @@ fun ImageView.setSrc(bitmap: Bitmap) = setImageBitmap(bitmap)
 @BindingAdapter("android:src")
 fun ImageView.setSrc(resId: Int) = setImageResource(resId)
 
+@BindingAdapter("android:bkgDrawable")
+fun ImageView.setBackgroundDrawable(drawable: Drawable?) {
+    drawable?.let { background = it }
+}
+
 @BindingAdapter("android:imageUrl", "android:placeHolder", "android:error", "android:imgCallback", requireAll = false)
 fun ImageView.loadImage(url: String?,
                         holderDrawable: Drawable?,

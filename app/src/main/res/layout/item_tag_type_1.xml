@@ -20,9 +20,10 @@
             android:layout_width="@dimen/rv_tag_width"
             android:layout_height="@dimen/rv_tag_height"
             android:layout_gravity="fill"
-            android:background="@drawable/bkg_menu_fog"
+            android:bkgDrawable="@{avm.background}"
             android:scaleType="fitXY"
             tools:src="@drawable/sample_lady_gaga"/>
+        <!--android:background="@drawable/bkg_menu_fog"-->
 
         <TextView
             android:layout_width="match_parent"
