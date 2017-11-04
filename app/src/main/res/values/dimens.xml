@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="rv_artist_length">140dp</dimen>
-    <dimen name="rv_artist_frame_height">155dp</dimen>
+    <dimen name="rv_artist_frame_height">140dp</dimen>
     <dimen name="one_unit">8dp</dimen>
     <dimen name="rv_tag_height">100dp</dimen>
     <dimen name="rv_tag_width">160dp</dimen>

@@ -72,12 +72,13 @@
                 style="@style/ChartDetail.Summary"
                 android:layout_marginEnd="@dimen/one_unit"
                 android:layout_marginStart="@dimen/one_unit"
+                android:layout_marginTop="60dp"
                 android:text="@{vm.tagSummary}"
                 app:layout_constraintBottom_toTopOf="@+id/tv_title_album"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Stefani Joanne Angelina Germanotta (born March 28, 1986), who performs under the stage name Lady Gaga, is a singer, songwriter and musician from New York City, New York, United States. \n\nBefore Gaga adopted her stage name she was in a band called Stefani Germanotta Band. She released her first EP, “Red and Blue“, in early 2006. The following year, music producer Rob Fusari dubbed her Lady Gaga, inspired by the Queen song “Radio Gaga“."/>
+                tools:text="Rock music is a genre of music started in America. It has its roots in 1940s and 1950s rock and roll and rockabilly, which evolved from blues, country music and other influences. According to the All Music Guide, “In its purest form, Rock n Roll has three chords, a strong, insistent back beat, and a catchy melody.  Early rock n roll drew from a variety of sources, primarily blues, RnB, and country, but also gospel, traditional pop, jazz, and folk."/>
 
             <TextView
                 android:id="@+id/tv_title_album"
