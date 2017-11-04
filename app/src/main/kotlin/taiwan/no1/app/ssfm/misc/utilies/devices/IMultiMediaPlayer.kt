@@ -22,4 +22,5 @@ interface IMultiMediaPlayer {
     fun isPlaying(): Boolean
     fun getState(): EPlayerState
     fun writeToFile(path: String)
+    fun setDurationListener(listener: (duration: Int) -> Unit)
 }

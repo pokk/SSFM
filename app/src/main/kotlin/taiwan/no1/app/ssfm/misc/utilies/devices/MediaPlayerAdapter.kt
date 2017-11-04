@@ -24,6 +24,7 @@ import kotlin.concurrent.thread
  * Created by weian on 2017/6/18.
  */
 
+@TargetApi(23)
 class MediaPlayerAdapter(imageView: RotatedCircleWithIconImageView):
         IMultiMediaPlayer,
         MediaPlayer.OnPreparedListener,
@@ -39,6 +40,7 @@ class MediaPlayerAdapter(imageView: RotatedCircleWithIconImageView):
     private var pauseTime: Int = 0
     private val MARSHMALLOW = android.os.Build.VERSION_CODES.M
     private val CURRENT_VERSION = android.os.Build.VERSION.SDK_INT
+    private var durationListener: (duration: Int) -> Unit = {}
 
     init {
         mImageView = imageView
@@ -50,10 +52,10 @@ class MediaPlayerAdapter(imageView: RotatedCircleWithIconImageView):
 
     override fun onPrepared(mp: MediaPlayer?) {
         logd("start playing")
-        mImageView.endTime = mMediaPlayer.duration / 1000
         mMediaPlayer.start()
         mImageView.start()
         mState = PLAYING
+        durationListener(mp?.let { it.duration } ?: 0)
     }
 
     override fun onError(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
@@ -80,7 +82,6 @@ class MediaPlayerAdapter(imageView: RotatedCircleWithIconImageView):
     /**
      * API
      */
-    @TargetApi(23)
     override fun playURL(url: String, observer: Observer<Unit>) {
         thread {
             try {
@@ -93,13 +94,15 @@ class MediaPlayerAdapter(imageView: RotatedCircleWithIconImageView):
 
                 mMediaPlayer.let {
                     logd("prepare asynchronous thread")
-                    if (MARSHMALLOW <= CURRENT_VERSION) {
+                    // FIXME(Weian): can not get duration, MediaDataSource maybe have some issue. Disable MediaDataSource for a while.
+                    // if (MARSHMALLOW <= CURRENT_VERSION) {
+                    if (false) {
                         downloadModel = MediaDataSourceModel(url, object : IMediaDownloader.DownloadListener {
                             override fun onDownloadFinish() {
                                 this@MediaPlayerAdapter.mMediaPlayer.prepareAsync()
                             }
                         })
-                        downloadModel?.let {
+                        downloadModel.let {
                             this@MediaPlayerAdapter.mMediaPlayer.setDataSource(it as MediaDataSource)
                         }
                     } else {
@@ -191,6 +194,10 @@ class MediaPlayerAdapter(imageView: RotatedCircleWithIconImageView):
     override fun writeToFile(path: String) {
         if (!mMediaPlayer.isPlaying) return
         downloadModel.writeToFile(path)
+    }
+
+    override fun setDurationListener(listener: (duration: Int) -> Unit) {
+        durationListener = listener
     }
 
     /*class Builder {

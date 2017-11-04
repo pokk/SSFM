@@ -1,8 +1,5 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices
 
-import android.nfc.Tag
-import android.util.Log
-import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.misc.utilies.devices.IMediaDownloader.DownloadListener
@@ -36,7 +33,7 @@ class MediaTempFileModel(url: String, listener: DownloadListener): IMediaDownloa
         thread {
 
             val file = File(TEMP)
-            file.takeIf { it.exists() }.let {
+            file.takeUnless { it.exists() }.let {
                 file.createNewFile()
             }
 

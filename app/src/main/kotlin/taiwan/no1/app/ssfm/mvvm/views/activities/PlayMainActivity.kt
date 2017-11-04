@@ -38,6 +38,9 @@ class PlayMainActivity: AdvancedActivity<PlayMainViewModel, ActivityMusicBinding
         super.onCreate(savedInstanceState)
 
         mediaPlayerAdapter = MediaPlayerAdapter(rcii_album)
+        mediaPlayerAdapter.setDurationListener { duration ->
+            rcii_album.endTime = duration
+        }
         playList = PlayListModel()
         player = PlayerHandler(mediaPlayerAdapter, playList)
 
