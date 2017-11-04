@@ -9,25 +9,11 @@ import com.raizlabs.android.dbflow.kotlinextensions.select
 import com.raizlabs.android.dbflow.kotlinextensions.where
 import com.raizlabs.android.dbflow.rx2.kotlinextensions.list
 import com.raizlabs.android.dbflow.rx2.kotlinextensions.rx
-import de.umass.lastfm.Session
-import de.umass.lastfm.Track
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
-import taiwan.no1.app.ssfm.mvvm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity_Table
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistSimilarEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopTrackEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagTopArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopAlbumEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTagEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTrackEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackSimilarEntity
 
 
 /**
@@ -37,81 +23,44 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackSimilarEntity
  * @since   5/10/17
  */
 class LocalDataStore: IDataStore {
-    override fun getSearchMusicRes(keyword: String, page: Int, pageSize: Int): Observable<SearchMusicEntity> {
+    override fun getSearchMusicRes(keyword: String, page: Int, pageSize: Int): Observable<SearchMusicEntity> =
         TODO("Local database has no session...")
-    }
 
-    override fun getDetailMusicRes(hash: String): Observable<DetailMusicEntity> {
-        TODO("Local database has no session...")
-    }
+    override fun getDetailMusicRes(hash: String) = TODO("Local database has no session...")
 
-    override fun obtainSession(user: String, pwd: String): Observable<Session> {
-        TODO("Local database has no session...")
-    }
+    override fun obtainSession(user: String, pwd: String) = TODO("Local database has no session...")
 
-    override fun getChartTopArtist(page: Int, limit: Int): Observable<TopArtistEntity> {
-        TODO()
-    }
+    override fun getChartTopArtist(page: Int, limit: Int) = TODO()
 
-    override fun getChartTopTracks(page: Int, limit: Int): Observable<TopTrackEntity> {
-        TODO()
-    }
+    override fun getChartTopTracks(page: Int, limit: Int) = TODO()
 
-    override fun getChartTopTags(page: Int, limit: Int): Observable<TopTagEntity> {
-        TODO()
-    }
+    override fun getChartTopTags(page: Int, limit: Int) = TODO()
 
-    override fun getArtistInfo(mbid: String, artist: String): Observable<ArtistEntity> {
-        TODO()
-    }
+    override fun getArtistInfo(mbid: String, artist: String) = TODO()
 
-    override fun getSimilarArtist(artist: String): Observable<ArtistSimilarEntity> {
-        TODO()
-    }
+    override fun getSimilarArtist(artist: String) = TODO()
 
-    override fun getArtistTopAlbum(artist: String): Observable<ArtistTopAlbumEntity> {
-        TODO()
-    }
+    override fun getArtistTopAlbum(artist: String) = TODO()
 
-    override fun getArtistTopTrack(artist: String): Observable<ArtistTopTrackEntity> {
-        TODO()
-    }
+    override fun getArtistTopTrack(artist: String) = TODO()
 
-    override fun getAlbumInfo(artist: String, albumOrMbid: String): Observable<AlbumEntity> {
-        TODO()
-    }
+    override fun getAlbumInfo(artist: String, albumOrMbid: String) = TODO()
 
-    override fun getArtistTags(artist: String, session: Session): Observable<Collection<String>> {
-        TODO()
-    }
+    override fun getArtistTags(artist: String, session: Any) = TODO()
 
-    override fun getSimilarTracks(artist: String, track: String): Observable<TrackSimilarEntity> {
-        TODO()
-    }
+    override fun getSimilarTracks(artist: String, track: String) = TODO()
 
-    override fun getTagTopAlbums(tag: String, page: Int, limit: Int): Observable<TopAlbumEntity> {
-        TODO()
-    }
+    override fun getTagTopAlbums(tag: String, page: Int, limit: Int) = TODO()
 
-    override fun getTagTopArtists(tag: String, page: Int, limit: Int): Observable<TagTopArtistEntity> {
-        TODO()
-    }
+    override fun getTagTopArtists(tag: String, page: Int, limit: Int) = TODO()
 
-    override fun getTagTopTracks(tag: String, page: Int, limit: Int): Observable<TopTrackEntity> {
-        TODO()
-    }
+    override fun getTagTopTracks(tag: String, page: Int, limit: Int) = TODO()
 
-    override fun getLovedTracks(user: String, page: Int): Observable<Collection<Track>> {
-        TODO()
-    }
+    override fun getLovedTracks(user: String, page: Int) = TODO()
 
-    override fun loveTrack(artist: String, track: String, session: Session): Observable<Track> {
-        TODO()
-    }
+    override fun loveTrack(artist: String, track: String, session: Any) = TODO()
 
-    override fun unloveTrack(artist: String, track: String, session: Session): Observable<Track> {
-        TODO()
-    }
+    override fun unloveTrack(artist: String, track: String, session: Any) = TODO()
 
     override fun insertKeyword(keyword: String) =
         (select from KeywordEntity::class where (KeywordEntity_Table.keyword eq keyword)).rx().list.

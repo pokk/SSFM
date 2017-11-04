@@ -3,11 +3,6 @@ package taiwan.no1.app.ssfm.mvvm.models.data.remote
 import android.content.Context
 import com.devrapid.kotlinknifer.observable
 import dagger.Lazy
-import de.umass.lastfm.Artist
-import de.umass.lastfm.Authenticator
-import de.umass.lastfm.Session
-import de.umass.lastfm.Track
-import de.umass.lastfm.User
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import io.reactivex.internal.operators.observable.ObservableJust
@@ -76,8 +71,8 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
         return musicService2.get().getMusic(query)
     }
 
-    override fun obtainSession(user: String, pwd: String): Observable<Session> =
-        ObservableJust(Authenticator.getMobileSession(user, pwd, lastfm_key, lastfm_secret))
+    override fun obtainSession(user: String, pwd: String): Observable<Any> = TODO()
+//        ObservableJust(Authenticator.getMobileSession(user, pwd, lastfm_key, lastfm_secret))
 
     override fun getChartTopArtist(page: Int, limit: Int): Observable<TopArtistEntity> {
         val query =
@@ -151,8 +146,8 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
         return musicService3.get().getAlbumInfo(query)
     }
 
-    override fun getArtistTags(artist: String, session: Session): Observable<Collection<String>> =
-        ObservableJust(Artist.getTags(artist, session))
+    override fun getArtistTags(artist: String, session: Any): Observable<Collection<String>> = TODO()
+//        ObservableJust(Artist.getTags(artist, session))
 
     override fun getSimilarTracks(artist: String, track: String): Observable<TrackSimilarEntity> {
         val query =
@@ -194,34 +189,28 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
         return musicService3.get().getTagTopTrack(query)
     }
 
-    override fun getLovedTracks(user: String, page: Int): Observable<Collection<Track>> =
-        ObservableJust(User.getLovedTracks(user, page, lastfm_key).pageResults)
+    override fun getLovedTracks(user: String, page: Int): Observable<Any> = TODO()
+//        ObservableJust(User.getLovedTracks(user, page, lastfm_key).pageResults)
 
-    override fun loveTrack(artist: String, track: String, session: Session): Observable<Track> =
-        observableCreateWrapper {
-            val res = Track.love(artist, track, session)
+    override fun loveTrack(artist: String, track: String, session: Any): Observable<Any> = TODO()
+//        observableCreateWrapper {
+//            val res = Track.love(artist, track, session)
+//
+//            // TODO: 6/4/17 Add that return next, error, or complete which depend on result's status.
+//        }
 
-            // TODO: 6/4/17 Add that return next, error, or complete which depend on result's status.
-        }
+    override fun unloveTrack(artist: String, track: String, session: Any): Observable<Any> = TODO()
+//        observableCreateWrapper {
+//            val res = Track.unlove(artist, track, session)
+//
+//            // TODO: 6/4/17 Add that return next, error, or complete which depend on result's status.
+//        }
 
-    override fun unloveTrack(artist: String, track: String, session: Session): Observable<Track> =
-        observableCreateWrapper {
-            val res = Track.unlove(artist, track, session)
+    override fun insertKeyword(keyword: String): Observable<Boolean> = TODO()
 
-            // TODO: 6/4/17 Add that return next, error, or complete which depend on result's status.
-        }
+    override fun getKeywords(quantity: Int): Observable<List<KeywordEntity>> = TODO()
 
-    override fun insertKeyword(keyword: String): Observable<Boolean> {
-        TODO()
-    }
-
-    override fun getKeywords(quantity: Int): Observable<List<KeywordEntity>> {
-        TODO()
-    }
-
-    override fun removeKeywords(keyword: String?): Observable<Boolean> {
-        TODO()
-    }
+    override fun removeKeywords(keyword: String?): Observable<Boolean> = TODO()
 
     /**
      * Wrapping the [Observable.create] with [Schedulers.IO].

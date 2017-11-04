@@ -6,7 +6,9 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailAlbumBinding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType4Binding
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.AlbumTrackAdapter
-import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshRecyclerView
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartAlbumDetailViewModel
@@ -42,6 +44,8 @@ class ChartAlbumDetailFragment: AdvancedFragment<FragmentChartAlbumDetailViewMod
     //endregion
 
     @Inject override lateinit var viewModel: FragmentChartAlbumDetailViewModel
+    private val tagInfo by lazy { DataInfo() }
+    private val trackInfo by lazy { DataInfo() }
     private var tagRes = mutableListOf<BaseEntity>()
     private var trackRes = mutableListOf<BaseEntity>()
     // Get the arguments from the bundle here.
@@ -59,9 +63,11 @@ class ChartAlbumDetailFragment: AdvancedFragment<FragmentChartAlbumDetailViewMod
                 }
             }
         }
-        viewModel.fetchDetailInfo(artistAlbumName, artistName) {
-            trackRes = (binding?.trackAdapter as AlbumTrackAdapter to trackRes).refreshRecyclerView {
-                it.track?.tracks?.let { addAll(it) }
+        trackInfo.firstFetch { info ->
+            viewModel.fetchDetailInfo(artistAlbumName, artistName) {
+                it.track?.tracks?.let {
+                    trackRes.refreshAndChangeList(it, 0, binding?.trackAdapter as AlbumTrackAdapter, info)
+                }
             }
         }
     }

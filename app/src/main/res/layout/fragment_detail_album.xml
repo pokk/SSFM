@@ -40,7 +40,7 @@
                 android:id="@+id/iv_album"
                 android:layout_width="180dp"
                 android:layout_height="180dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="@dimen/one_unit"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="200dp"
                 android:imageUrl="@{vm.albumImage}"
@@ -48,7 +48,7 @@
                 app:civ_shadow="true"
                 app:civ_shadow_color="@color/colorBlack"
                 app:civ_shadow_radius="10"
-                app:layout_constraintBottom_toTopOf="@+id/tv_title"
+                app:layout_constraintBottom_toTopOf="@+id/tv_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="spread_inside"
@@ -64,9 +64,9 @@
                 android:text="@{vm.albumName}"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/iv_album"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/iv_album"
-                app:layout_constraintTop_toTopOf="@+id/iv_album"
                 tools:text="The Fame"/>
 
             <TextView
@@ -81,19 +81,37 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_album_name"
                 tools:text="Lady Gaga"/>
 
-            <TextView
-                android:id="@+id/tv_summary"
+            <me.gujun.android.taggroup.TagGroup
+                android:id="@+id/tg_tags"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:lines="10"
-                android:text="@{vm.albumSummary}"
-                android:textSize="12sp"
+                android:layout_marginEnd="@dimen/one_unit"
+                android:layout_marginStart="@dimen/one_unit"
+                android:layout_marginTop="@dimen/one_unit"
+                android:tags="@{vm.albumTags}"
+                app:atg_backgroundColor="#00000000"
+                app:atg_borderColor="@color/colorDarkGray"
+                app:atg_pressedBackgroundColor="#00000000"
+                app:atg_textColor="@color/colorDarkGray"
+                app:atg_textSize="12sp"
+                app:atg_verticalPadding="2dp"
+                app:atg_verticalSpacing="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/iv_album"
-                app:layout_constraintTop_toBottomOf="@+id/tv_artist_name"
+                app:layout_constraintTop_toBottomOf="@+id/tv_artist_name"/>
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/one_unit"
+                android:layout_marginStart="@dimen/one_unit"
+                android:lines="6"
+                android:text="@{vm.albumSummary}"
+                app:layout_constraintBottom_toTopOf="@id/tv_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_album"
                 tools:text="The Fame is the debut studio album by American singer Lady Gaga. It was released on August 19, 2008 through Interscope Records. After joining Kon Live Distribution and Cherrytree Records in 2008, Gaga began working on the album with different producers, primarily RedOne, Martin Kierszenbaum and Rob Fusari. Musically, The Fame is a synth-pop and dance-pop album that has influences of pop music from the 1980s. Lyrically, the album visualizes Gaga's love of fame in general while also dealing with subjects such as love, sex, money, drugs and sexual identity. Promotion was primarily through The Fame Ball Tour and multiple television appearances. The Fame was reissued as a deluxe edition with The Fame Monster on November 18, 2009.\n\nThe album received generally favorable reviews from music critics, who commended the album's lyrical content and Gaga's musicianship and vocal ability. The album was a commercial success, topping the charts in different countries worldwide, including the United Kingdom, Canada, Germany, Ireland, Poland and Switzerland. In the United States, it peaked at number two on the Billboard 200, while topping the Dance/Electronic Albums chart for 106 non-consecutive weeks. The Fame became the fifth best-selling album of 2009. It has sold 4.7 million copies in the United States as of April 2016 and is the seventh best-selling digital album in history. The album had sold 15 million copies worldwide as of November 2010.\n\nThe first two singles from The Fame—'Just Dance' and 'Poker Face'—gained international success, topping the charts in several countries worldwide, including the United States, United Kingdom and Australia. Subsequent singles 'LoveGame' and 'Paparazzi', were commercial successes as well, charting within the top 10 of more than 10 countries worldwide. 'Eh, Eh (Nothing Else I Can Say)' had a limited release, while 'Beautiful, Dirty, Rich' was a promotional single. User-contributed text is available under the Creative Commons By-SA License; additional terms may apply."/>
 
             <TextView
@@ -101,7 +119,7 @@
                 style="@style/RecyclerView.Title"
                 android:text="Songs"
                 app:layout_constraintBottom_toTopOf="@+id/rv_tracks"
-                app:layout_constraintTop_toBottomOf="@+id/iv_album"/>
+                app:layout_constraintTop_toBottomOf="@+id/tv_content"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_tracks"

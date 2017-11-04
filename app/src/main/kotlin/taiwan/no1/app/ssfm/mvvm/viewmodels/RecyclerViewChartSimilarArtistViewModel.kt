@@ -9,7 +9,9 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.devrapid.kotlinknifer.getColorWithAlpha
 import com.hwangjr.rxbus.RxBus
+import taiwan.no1.app.ssfm.App
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.LARGE
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
 import taiwan.no1.app.ssfm.misc.extension.palette
@@ -48,10 +50,10 @@ class RecyclerViewChartSimilarArtistViewModel(val item: BaseEntity): BaseViewMod
                                      target: Target<Bitmap>?,
                                      dataSource: DataSource?,
                                      isFirstResource: Boolean) =
-            resource.palette().
-                maximumColorCount(24).
-                generate().let {
-                textBackground.set(it.vibrantSwatch?.rgb ?: Color.BLACK)
+            resource.palette().maximumColorCount(24).generate().let {
+                App.appComponent.context().
+                    getColorWithAlpha(it.vibrantSwatch?.rgb ?: Color.BLACK, 0.5f).
+                    let(textBackground::set)
                 textColor.set(it.vibrantSwatch?.bodyTextColor ?: Color.GRAY)
                 false
             }

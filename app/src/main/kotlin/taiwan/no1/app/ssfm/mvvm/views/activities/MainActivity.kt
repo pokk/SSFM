@@ -10,36 +10,5 @@ import javax.inject.Inject
 class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>() {
     @Inject override lateinit var viewModel: MainViewModel
 
-    override fun onResume() {
-        super.onResume()
-
-        // NOTE: 5/11/17 We can use the cache as like this way.
-//        Caller.getInstance().cache = FileSystemCache(File("${Environment.getExternalStorageDirectory()}/.lastfm"))
-//        Caller.getInstance().cache = null
-//        Caller.getInstance().userAgent = "tst"
-
-        val user = getString(R.string.lastfm_name)
-        val password = getString(R.string.lastfm_password)
-        val key = getString(R.string.lastfm_api_key)
-        val secret = getString(R.string.lastfm_secret_key)
-
-//        val repo = DataRepository(LocalDataStore(), RemoteDataStore(applicationContext))
-//
-//        repo.getDetailMusicRes("e2a060761620ff482a272b67b204774d").
-//            subscribeBy({
-//                            logw(it)
-//                        }, {
-//                            loge(it.message)
-//                            loge(it)
-//                        }, {
-//                            logd()
-//                        })
-//        repo.obtainSession(user, password).subscribe {
-//            logd(it)
-//            logw(Track.unlove("cher", "believe", it))
-//            Radio.tune(Radio.RadioStation("test"), it)
-//        }
-    }
-
     override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_main)
 }

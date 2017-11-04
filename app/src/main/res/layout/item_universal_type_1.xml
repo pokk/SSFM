@@ -26,6 +26,7 @@
             android:imageUrl="@{avm.thumbnail}"
             android:imgCallback="@{avm.imageCallback}"
             android:scaleType="centerCrop"
+            android:background="@null"
             android:shadowColor="@{avm.shadowColor}"
             android:src="@drawable/sample_lady_gaga"
             app:civ_border="false"
