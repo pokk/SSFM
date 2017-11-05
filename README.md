@@ -20,7 +20,7 @@
 # Introduction
 
 This project music app provides the functions that listening online musics, downloading a music from remote server, checking top charts for artists or tracks or albums in this week, and searching a music for yourself.
-Basically, it's a demo app but the basic funtions we provide.
+Basically, it's a demo app but the basic functions we provide.
 
 # License
 
