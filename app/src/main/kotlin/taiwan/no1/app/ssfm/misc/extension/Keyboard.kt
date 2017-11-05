@@ -15,7 +15,7 @@ fun Context.hideSoftKeyboard() =
     (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).
         toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
 
-fun View.ShideSoftKeyboard() =
+fun View.hideSoftKeyboard() =
     (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).
         hideSoftInputFromWindow(windowToken, 0)
 

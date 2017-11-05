@@ -4,24 +4,17 @@ import android.content.Context
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.view.View
+import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.R
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopTrackEntity
-import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistInfoCase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistTopAlbumsCase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistTopTracksCase
+import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.VIEWMODEL_CLICK_SIMILAR
+import taiwan.no1.app.ssfm.misc.extension.hideSoftKeyboard
 
 /**
  *
  * @author  jieyi
  * @since   9/13/17
  */
-class ChartViewModel(private val context: Context,
-                     private val artistsInfoUsecase: BaseUsecase<ArtistEntity, GetArtistInfoCase.RequestValue>,
-                     private val artistTopTracksUsecase: BaseUsecase<ArtistTopTrackEntity, GetArtistTopTracksCase.RequestValue>,
-                     private val artistTopAlbumsUsecase: BaseUsecase<ArtistTopAlbumEntity, GetArtistTopAlbumsCase.RequestValue>):
+class ChartViewModel(private val context: Context):
     BaseViewModel() {
     /** Menu Title */
     val title by lazy { ObservableField<String>(context.getString(R.string.menu_charts)) }
@@ -53,8 +46,15 @@ class ChartViewModel(private val context: Context,
      * The action of submitting the search query.
      *
      * @param query the query of song's or singer's name for searching a music.
+     *
+     * @event_to [taiwan.no1.app.ssfm.mvvm.views.activities.ChartActivity.navigateToArtistDetail]
      */
     fun querySubmit(query: String): Boolean {
+        // TODO(jieyi): 11/5/17
+        // - Close the search bar.
+        // - Dismiss the previous search fragment.
+        RxBus.get().post(VIEWMODEL_CLICK_SIMILAR, query)
+        context.hideSoftKeyboard()
         return true
     }
 

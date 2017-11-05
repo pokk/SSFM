@@ -82,15 +82,14 @@ class ChartArtistDetailFragment: AdvancedFragment<FragmentChartArtistDetailViewM
             viewModel.fetchDetailInfo(mbid, artistName) {
                 it.artist?.similar?.artists?.let {
                     artistRes.refreshAndChangeList(it, 0, binding?.artistAdapter as SimilarArtistAdapter, info)
+                    // If the artist exists then we can find the artist's detail tracks and albums.
+                    viewModel.fetchHotTracks(artistName) {
+                        trackRes.refreshAndChangeList(it, 0, binding?.trackAdapter as ArtistTopTrackAdapter, trackInfo)
+                    }
+                    viewModel.fetchHotAlbum(artistName)
                 }
             }
         }
-        trackInfo.firstFetch { info ->
-            viewModel.fetchHotTracks(artistName) {
-                trackRes.refreshAndChangeList(it, 0, binding?.trackAdapter as ArtistTopTrackAdapter, info)
-            }
-        }
-        viewModel.fetchHotAlbum(artistName)
     }
 
     override fun provideInflateView(): Int = R.layout.fragment_detail_artist

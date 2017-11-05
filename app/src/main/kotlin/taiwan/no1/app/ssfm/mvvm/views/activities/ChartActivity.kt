@@ -46,6 +46,7 @@ class ChartActivity: AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     /**
      * @param artistName
      *
+     * @event_from [taiwan.no1.app.ssfm.mvvm.viewmodels.ChartViewModel.querySubmit]
      * @event_from [taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewChartSimilarArtistViewModel.artistOnClick]
      * @event_from [taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewUniversal2ViewModel.itemOnClick]
      */

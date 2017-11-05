@@ -1,8 +1,6 @@
 package taiwan.no1.app.ssfm.mvvm.viewmodels
 
 import android.databinding.ObservableField
-import com.devrapid.kotlinknifer.loge
-import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagEntity
@@ -29,14 +27,7 @@ class FragmentChartTagDetailViewModel(
 
     fun fetchTagDetailInfo(tag: String) {
         lifecycleProvider.execute(tagInfoUsecase, GetTagInfoCase.RequestValue(tag)) {
-            onNext {
-                logw(it)
-                tagSummary.set(it.tag.wiki?.summary)
-            }
-            onError {
-                loge(it.message)
-                loge(it)
-            }
+            onNext { tagSummary.set(it.tag.wiki?.summary) }
         }
     }
 
