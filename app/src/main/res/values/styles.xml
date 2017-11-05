@@ -177,4 +177,45 @@
         <item name="android:textSize">30sp</item>
     </style>
 
+    <!-- Recycler View Item -->
+    <style name="RecyclerViewItem"/>
+
+    <style name="RecyclerViewItem.Artist">
+        <item name="android:layout_width">@dimen/rv_artist_image_height</item>
+    </style>
+
+    <style name="RecyclerViewItem.Artist.Image">
+        <item name="android:layout_height">@dimen/rv_artist_image_height</item>
+        <item name="android:layout_gravity">fill</item>
+        <item name="android:scaleType">fitXY</item>
+    </style>
+
+    <style name="RecyclerViewItem.Artist.Text">
+        <item name="android:layout_height">@dimen/rv_artist_text_height</item>
+        <item name="android:layout_gravity">center_horizontal|bottom</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="RecyclerViewItem.Artist.Card">
+        <item name="android:layout_height">@dimen/rv_card_artist_height</item>
+        <item name="cardCornerRadius">@dimen/cd_artist_corner_radius</item>
+        <item name="cardElevation">@dimen/cd_artist_elevation</item>
+    </style>
+
+    <style name="RecyclerViewItem.Artist.Linear"/>
+
+    <style name="RecyclerViewItem.Artist.Linear.Text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="RecyclerViewItem.Artist.Linear.Follower">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawablePadding">@dimen/one_unit</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
 </resources>

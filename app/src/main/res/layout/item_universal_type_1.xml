@@ -14,31 +14,26 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="180dp"
+        android:layout_height="@dimen/rv_card_artist_height"
         android:onClick="@{avm::itemOnClick}"
         android:orientation="vertical">
 
         <com.mikhaellopez.circularimageview.CircularImageView
-            android:layout_width="@dimen/rv_artist_length"
-            android:layout_height="@dimen/rv_artist_length"
-            android:layout_gravity="fill"
+            style="@style/RecyclerViewItem.Artist.Image"
+            android:background="@null"
             android:error="@{@drawable/sample_jieyi_icon}"
             android:imageUrl="@{avm.thumbnail}"
             android:imgCallback="@{avm.imageCallback}"
             android:scaleType="centerCrop"
-            android:background="@null"
             android:shadowColor="@{avm.shadowColor}"
-            android:src="@drawable/sample_lady_gaga"
             app:civ_border="false"
             app:civ_shadow="true"
-            app:civ_shadow_radius="10"/>
+            app:civ_shadow_radius="10"
+            tools:src="@drawable/sample_lady_gaga"/>
 
         <TextView
-            android:layout_width="@dimen/rv_artist_length"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal|bottom"
+            style="@style/RecyclerViewItem.Artist.Text"
             android:background="@{avm.textBackground}"
-            android:gravity="center"
             android:text="@{avm.artistName}"
             android:textColor="@{avm.textColor}"
             tools:text="Lady Gaga"/>

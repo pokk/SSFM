@@ -12,28 +12,21 @@
     </data>
 
     <android.support.v7.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="180dp"
+        style="@style/RecyclerViewItem.Artist.Card"
         android:onClick="@{avm::artistOnClick}">
 
         <ImageView
-            android:layout_width="@dimen/rv_artist_length"
-            android:layout_height="@dimen/rv_artist_length"
-            android:layout_gravity="fill"
+            style="@style/RecyclerViewItem.Artist.Image"
             android:error="@{@drawable/sample_jieyi_icon}"
             android:imageUrl="@{avm.thumbnail}"
             android:imgCallback="@{avm.imageCallback}"
-            android:scaleType="fitXY"
             tools:src="@drawable/sample_lady_gaga"/>
 
         <TextView
-            android:layout_width="@dimen/rv_artist_length"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal|bottom"
-            android:gravity="center"
+            style="@style/RecyclerViewItem.Artist.Text"
+            android:background="@{avm.textBackground}"
             android:text="@{avm.artistName}"
             android:textColor="@{avm.textColor}"
-            android:background="@{avm.textBackground}"
             tools:text="Lady Gaga"/>
     </android.support.v7.widget.CardView>
 </layout>

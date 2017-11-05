@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="rv_artist_length">140dp</dimen>
-    <dimen name="rv_artist_frame_height">140dp</dimen>
+    <dimen name="rv_artist_image_height">140dp</dimen>
     <dimen name="one_unit">8dp</dimen>
     <dimen name="rv_tag_height">100dp</dimen>
     <dimen name="rv_tag_width">160dp</dimen>
+    <dimen name="rv_artist_text_height">40dp</dimen>
+    <dimen name="rv_card_artist_height">180dp</dimen>
+    <dimen name="cd_artist_corner_radius">4dp</dimen>
+    <dimen name="cd_artist_elevation">3dp</dimen>
 </resources>
