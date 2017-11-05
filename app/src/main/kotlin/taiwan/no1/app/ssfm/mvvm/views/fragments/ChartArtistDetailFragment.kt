@@ -79,6 +79,7 @@ class ChartArtistDetailFragment: AdvancedFragment<FragmentChartArtistDetailViewM
                 }
             }
         }
+        // FIXME(jieyi): 11/6/17 Modified to the mvvm architecture.
         val d = resources.getDrawable(R.drawable.sample_lady_gaga).current as BitmapDrawable
         biv_cover.inputBitmap(d.bitmap)
         // First time showing this fragment.
