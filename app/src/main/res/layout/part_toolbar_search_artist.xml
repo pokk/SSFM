@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".mvvm.views.activities.SearchActivity">
+    tools:context=".mvvm.views.activities.ChartActivity">
 
     <data>
 
@@ -11,7 +11,7 @@
 
         <variable
             name="svm"
-            type="taiwan.no1.app.ssfm.mvvm.viewmodels.SearchViewModel"/>
+            type="taiwan.no1.app.ssfm.mvvm.viewmodels.ChartViewModel"/>
     </data>
 
     <android.support.v7.widget.Toolbar
@@ -30,7 +30,7 @@
 
         <TextView
             style="@style/Menu.Title"
-            android:text="@={svm.title}"
+            android:text="@{svm.title}"
             android:visibility="@{svm.isSearching ? View.GONE : View.VISIBLE}"
             tools:text="ACTIVITY TITLE"/>
 
@@ -43,7 +43,7 @@
             android:onQueryTextChange="@{svm::textChanged}"
             android:onQueryTextSubmit="@{svm::querySubmit}"
             android:onSearchClick="@{svm::openSearchView}"
-            android:queryHint="Input the singer/song name."
+            android:queryHint="Input an artist name."
             android:searchHintIcon="@null"
             android:searchIcon="@drawable/ic_search"
             android:searchText="@{svm.keyword}"/>

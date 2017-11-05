@@ -145,6 +145,14 @@
         <item name="layout_constraintStart_toStartOf">parent</item>
     </style>
 
+    <style name="RecyclerView.SeparateLine">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:background">@color/colorGray</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+    </style>
+
     <!-- ImageView -->
     <style name="ImageView"/>
 

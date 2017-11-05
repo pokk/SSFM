@@ -27,8 +27,13 @@
             layout="@layout/part_toolbar_view"
             app:title="@{vm.title}"/>
 
-        <include
-            style="@style/Template.Activity"
-            layout="@layout/part_main_playlist"/>
+        <FrameLayout
+            android:id="@+id/fl_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/include_toolbar"/>
     </android.support.constraint.ConstraintLayout>
 </layout>

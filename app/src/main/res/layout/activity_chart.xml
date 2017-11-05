@@ -24,8 +24,8 @@
         <include
             android:id="@+id/include_toolbar"
             style="@style/Template.TopBar.Toolbar"
-            layout="@layout/part_toolbar_view"
-            app:title="@{vm.title}"/>
+            layout="@layout/part_toolbar_search_artist"
+            app:svm="@{vm}"/>
 
         <FrameLayout
             android:id="@+id/fl_container"

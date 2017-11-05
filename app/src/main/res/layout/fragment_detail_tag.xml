@@ -87,6 +87,12 @@
                 app:layout_constraintBottom_toTopOf="@+id/rv_top_album"
                 app:layout_constraintTop_toBottomOf="@+id/tv_tag_intro"/>
 
+            <View
+                style="@style/RecyclerView.SeparateLine"
+                app:layout_constraintBottom_toBottomOf="@id/tv_title_album"
+                app:layout_constraintStart_toEndOf="@id/tv_title_album"
+                app:layout_constraintTop_toTopOf="@id/tv_title_album"/>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_top_album"
                 style="@style/RecyclerView.Horizontal"
@@ -107,6 +113,12 @@
                 app:layout_constraintBottom_toTopOf="@+id/rv_top_artists"
                 app:layout_constraintTop_toBottomOf="@+id/rv_top_album"/>
 
+            <View
+                style="@style/RecyclerView.SeparateLine"
+                app:layout_constraintBottom_toBottomOf="@id/tv_title_artist"
+                app:layout_constraintStart_toEndOf="@id/tv_title_artist"
+                app:layout_constraintTop_toTopOf="@id/tv_title_artist"/>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_top_artists"
                 style="@style/RecyclerView.Horizontal"
@@ -125,6 +137,12 @@
                 android:text="Hot Tracks"
                 app:layout_constraintBottom_toTopOf="@+id/rv_top_track"
                 app:layout_constraintTop_toBottomOf="@+id/rv_top_artists"/>
+
+            <View
+                style="@style/RecyclerView.SeparateLine"
+                app:layout_constraintBottom_toBottomOf="@id/tv_title_track"
+                app:layout_constraintStart_toEndOf="@id/tv_title_track"
+                app:layout_constraintTop_toTopOf="@id/tv_title_track"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_top_track"

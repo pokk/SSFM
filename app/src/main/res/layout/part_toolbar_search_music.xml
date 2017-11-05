@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".mvvm.views.activities.SearchActivity">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="svm"
+            type="taiwan.no1.app.ssfm.mvvm.viewmodels.SearchViewModel"/>
+    </data>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_toolbar"
+        style="@style/Toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_content_hamburger"
+            style="@style/Menu.Hamburger"
+            android:contentDescription="@string/menu_switch_button"
+            android:src="@drawable/ic_menu_90"
+            android:visibility="@{svm.isSearching ? View.GONE : View.VISIBLE}"/>
+
+        <TextView
+            style="@style/Menu.Title"
+            android:text="@{svm.title}"
+            android:visibility="@{svm.isSearching ? View.GONE : View.VISIBLE}"
+            tools:text="ACTIVITY TITLE"/>
+
+        <SearchView
+            android:id="@+id/sv_music_search"
+            style="@style/Menu.Search"
+            android:closeIcon="@drawable/ic_close"
+            android:collapseView="@{svm.collapseView}"
+            android:onClose="@{svm::closeSearchView}"
+            android:onQueryTextChange="@{svm::textChanged}"
+            android:onQueryTextSubmit="@{svm::querySubmit}"
+            android:onSearchClick="@{svm::openSearchView}"
+            android:queryHint="Input the singer/song name."
+            android:searchHintIcon="@null"
+            android:searchIcon="@drawable/ic_search"
+            android:searchText="@{svm.keyword}"/>
+    </android.support.v7.widget.Toolbar>
+</layout>

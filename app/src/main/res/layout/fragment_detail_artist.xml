@@ -87,6 +87,12 @@
                 app:layout_constraintBottom_toTopOf="@+id/rv_album"
                 app:layout_constraintTop_toBottomOf="@+id/tv_artist_intro"/>
 
+            <View
+                style="@style/RecyclerView.SeparateLine"
+                app:layout_constraintBottom_toBottomOf="@id/tv_title_album"
+                app:layout_constraintStart_toEndOf="@id/tv_title_album"
+                app:layout_constraintTop_toTopOf="@id/tv_title_album"/>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_album"
                 style="@style/ChartDetail"
@@ -101,6 +107,12 @@
                 android:text="Similar Artists"
                 app:layout_constraintBottom_toTopOf="@+id/rv_similar"
                 app:layout_constraintTop_toBottomOf="@+id/rv_album"/>
+
+            <View
+                style="@style/RecyclerView.SeparateLine"
+                app:layout_constraintBottom_toBottomOf="@id/tv_title_similar"
+                app:layout_constraintStart_toEndOf="@id/tv_title_similar"
+                app:layout_constraintTop_toTopOf="@id/tv_title_similar"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_similar"
@@ -119,6 +131,12 @@
                 android:text="Hot Tracks"
                 app:layout_constraintBottom_toTopOf="@+id/rv_top_tracks"
                 app:layout_constraintTop_toBottomOf="@+id/rv_similar"/>
+
+            <View
+                style="@style/RecyclerView.SeparateLine"
+                app:layout_constraintBottom_toBottomOf="@id/tv_title_hot_tracks"
+                app:layout_constraintStart_toEndOf="@id/tv_title_hot_tracks"
+                app:layout_constraintTop_toTopOf="@id/tv_title_hot_tracks"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_top_tracks"

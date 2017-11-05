@@ -71,11 +71,23 @@
             app:layout_constraintBottom_toTopOf="@+id/rv_top_artists"
             app:layout_constraintTop_toTopOf="parent"/>
 
+        <View
+            style="@style/RecyclerView.SeparateLine"
+            app:layout_constraintBottom_toBottomOf="@id/tv_popular"
+            app:layout_constraintStart_toEndOf="@id/tv_popular"
+            app:layout_constraintTop_toTopOf="@id/tv_popular"/>
+
         <TextView
             android:id="@+id/tv_new_song"
             style="@style/RecyclerView.Title"
             android:text="@string/rv_title_rank_genres"
             app:layout_constraintBottom_toTopOf="@+id/rv_top_tracks"
             app:layout_constraintTop_toBottomOf="@+id/rv_top_artists"/>
+
+        <View
+            style="@style/RecyclerView.SeparateLine"
+            app:layout_constraintBottom_toBottomOf="@id/tv_new_song"
+            app:layout_constraintStart_toEndOf="@id/tv_new_song"
+            app:layout_constraintTop_toTopOf="@id/tv_new_song"/>
     </android.support.constraint.ConstraintLayout>
 </layout>
