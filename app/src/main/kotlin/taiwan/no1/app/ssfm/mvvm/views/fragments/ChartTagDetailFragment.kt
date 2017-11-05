@@ -103,6 +103,7 @@ class ChartTagDetailFragment: AdvancedFragment<FragmentChartTagDetailViewModel, 
             trackDecoration = HorizontalItemDecorator(20)
         }
         // First time showing this fragment.
+        viewModel.fetchTagDetailInfo(musicTag)
         albumInfo.firstFetch {
             viewModel.fetchHotAlbum(musicTag, it.page, it.limit) { resList, total ->
                 albumRes.refreshAndChangeList(resList, total, binding?.albumAdapter as Universal1Adapter, it)

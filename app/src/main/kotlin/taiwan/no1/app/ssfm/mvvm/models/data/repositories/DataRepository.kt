@@ -1,8 +1,10 @@
 package taiwan.no1.app.ssfm.mvvm.models.data.repositories
 
+import io.reactivex.Observable
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Local
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Remote
 import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -49,6 +51,8 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
     override fun getTagTopArtists(tag: String, page: Int, limit: Int) = remote.getTagTopArtists(tag, page, limit)
 
     override fun getTagTopTracks(tag: String, page: Int, limit: Int) = remote.getTagTopTracks(tag, page, limit)
+
+    override fun getTagInfo(tag: String): Observable<TagEntity> = remote.getTagInfo(tag)
 
     override fun getLovedTracks(user: String, page: Int) = remote.getLovedTracks(user, page)
 

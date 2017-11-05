@@ -14,6 +14,7 @@ import taiwan.no1.app.ssfm.mvvm.models.data.IDataStore
 import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity_Table
 import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagEntity
 
 
 /**
@@ -55,6 +56,8 @@ class LocalDataStore: IDataStore {
     override fun getTagTopArtists(tag: String, page: Int, limit: Int) = TODO()
 
     override fun getTagTopTracks(tag: String, page: Int, limit: Int) = TODO()
+
+    override fun getTagInfo(tag: String): Observable<TagEntity> = TODO()
 
     override fun getLovedTracks(user: String, page: Int) = TODO()
 
