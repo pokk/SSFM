@@ -45,8 +45,9 @@
             <TextView
                 android:id="@+id/tv_play_count"
                 style="@style/RecyclerViewItem.Artist.Linear.Follower"
+                android:text="@{avm.playCount}"
                 tools:drawableStart="@drawable/lb_ic_thumb_up_outline"
-                tools:text="123456789"/>
+                tools:text="123,456K"/>
         </LinearLayout>
     </LinearLayout>
 </layout>
