@@ -45,7 +45,7 @@ abstract class BindingActivityModule {
     abstract fun contributePlayMainActivityInjector(): PlayMainActivity
 
     @PerActivity
-    @ContributesAndroidInjector(modules = arrayOf(PlaylistActivityModule::class))
+    @ContributesAndroidInjector(modules = arrayOf(PlaylistActivityModule::class, BindingFragmentModule::class))
     abstract fun contributePlaylistActivityInjector(): PlaylistActivity
 
     @PerActivity

@@ -38,8 +38,8 @@
 
             <com.mikhaellopez.circularimageview.CircularImageView
                 android:id="@+id/iv_album"
-                android:layout_width="180dp"
-                android:layout_height="180dp"
+                android:layout_width="@dimen/circle_image_length"
+                android:layout_height="@dimen/circle_image_length"
                 android:layout_marginBottom="@dimen/one_unit"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="200dp"

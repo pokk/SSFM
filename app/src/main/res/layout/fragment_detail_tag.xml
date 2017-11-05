@@ -96,7 +96,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_top_album"
                 style="@style/RecyclerView.Horizontal"
-                android:layout_height="180dp"
+                android:layout_height="190dp"
                 android:adapter="@{albumAdapter}"
                 android:itemDecoration="@{albumDecoration}"
                 android:layoutManager="@{albumLayoutManager}"

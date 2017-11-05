@@ -1,10 +1,13 @@
 package taiwan.no1.app.ssfm.mvvm.views.activities
 
 import android.app.Activity
+import android.os.Bundle
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityPlaylistBinding
+import taiwan.no1.app.ssfm.misc.extension.addFragment
 import taiwan.no1.app.ssfm.mvvm.viewmodels.PlaylistViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedActivity
+import taiwan.no1.app.ssfm.mvvm.views.fragments.PlaylistIndexFragment
 import javax.inject.Inject
 
 /**
@@ -14,6 +17,11 @@ import javax.inject.Inject
  */
 class PlaylistActivity: AdvancedActivity<PlaylistViewModel, ActivityPlaylistBinding>() {
     @Inject override lateinit var viewModel: PlaylistViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        fragmentManager.addFragment(R.id.fl_container, PlaylistIndexFragment.newInstance(), false)
+    }
 
     //region Base activity implement
     override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_playlist)

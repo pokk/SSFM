@@ -116,7 +116,7 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_similar"
-                style="@style/ChartDetail"
+                style="@style/RecyclerView.Horizontal"
                 android:layout_height="190dp"
                 android:adapter="@{artistAdapter}"
                 android:itemDecoration="@{artistDecoration}"

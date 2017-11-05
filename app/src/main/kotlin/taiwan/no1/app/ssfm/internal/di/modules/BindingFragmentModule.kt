@@ -7,6 +7,7 @@ import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.ChartAlbumDet
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.ChartArtistDetailFragmentModule
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.ChartIndexFragmentModule
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.ChartTagDetailFragmentModule
+import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.PlaylistIndexFragmentModule
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.SearchHistoriesFragmentModule
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.SearchIndexFragmentModule
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.SearchMusicFragmentModule
@@ -14,6 +15,7 @@ import taiwan.no1.app.ssfm.mvvm.views.fragments.ChartAlbumDetailFragment
 import taiwan.no1.app.ssfm.mvvm.views.fragments.ChartArtistDetailFragment
 import taiwan.no1.app.ssfm.mvvm.views.fragments.ChartIndexFragment
 import taiwan.no1.app.ssfm.mvvm.views.fragments.ChartTagDetailFragment
+import taiwan.no1.app.ssfm.mvvm.views.fragments.PlaylistIndexFragment
 import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchHistoryFragment
 import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchIndexFragment
 import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchResultFragment
@@ -27,6 +29,13 @@ import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchResultFragment
  */
 @Module
 abstract class BindingFragmentModule {
+    //region Playlist
+    @PerFragment
+    @ContributesAndroidInjector(modules = arrayOf(PlaylistIndexFragmentModule::class))
+    abstract fun contributePlaylistIndexFragmentInjector(): PlaylistIndexFragment
+    //endregion
+
+    //region Search
     @PerFragment
     @ContributesAndroidInjector(modules = arrayOf(SearchIndexFragmentModule::class))
     abstract fun contributeSearchIndexFragmentInjector(): SearchIndexFragment
@@ -38,7 +47,9 @@ abstract class BindingFragmentModule {
     @PerFragment
     @ContributesAndroidInjector(modules = arrayOf(SearchMusicFragmentModule::class))
     abstract fun contributeSearchResuletFragmentInjector(): SearchResultFragment
+    //endregion
 
+    //region Chart
     @PerFragment
     @ContributesAndroidInjector(modules = arrayOf(ChartIndexFragmentModule::class))
     abstract fun contributeChartIndexFragmentInjector(): ChartIndexFragment
@@ -54,4 +65,5 @@ abstract class BindingFragmentModule {
     @PerFragment
     @ContributesAndroidInjector(modules = arrayOf(ChartAlbumDetailFragmentModule::class))
     abstract fun contributeChartAlbumDetailFragmentInjector(): ChartAlbumDetailFragment
+    //endregion
 }
