@@ -45,3 +45,21 @@ fun ImageView.loadImage(url: String?,
 
 @BindingAdapter("android:shadowColor")
 fun CircularImageView.addShadowColor(color: Int) = setShadowColor(color)
+
+//@BindingAdapter("android:imageUrl", "android:placeHolder", "android:error", "android:imgCallback", requireAll = false)
+//fun BlurryImageView.loadImage(url: String?,
+//                              holderDrawable: Drawable?,
+//                              errorDrawable: Drawable?,
+//                              listener: RequestListener<Bitmap>?) {
+//    if (!url.isNullOrBlank()) {
+//        val imageview = ImageView(context)
+//
+//        Glide.with(context).asBitmap().load(url).apply(RequestOptions().apply {
+//            centerCrop()
+//            holderDrawable?.let { placeholder(it) }
+//            errorDrawable?.let { error(it) }
+//            priority(Priority.HIGH)
+//            diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+//        }).listener(listener).into(imageview)
+//    }
+//}
