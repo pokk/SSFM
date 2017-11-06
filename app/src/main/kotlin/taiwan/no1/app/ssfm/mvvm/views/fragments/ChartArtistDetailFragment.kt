@@ -1,9 +1,7 @@
 package taiwan.no1.app.ssfm.mvvm.views.fragments
 
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_detail_artist.biv_cover
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailArtistBinding
 import taiwan.no1.app.ssfm.databinding.ItemArtistType2Binding
@@ -79,9 +77,6 @@ class ChartArtistDetailFragment: AdvancedFragment<FragmentChartArtistDetailViewM
                 }
             }
         }
-        // FIXME(jieyi): 11/6/17 Modified to the mvvm architecture.
-        val d = resources.getDrawable(R.drawable.sample_lady_gaga).current as BitmapDrawable
-        biv_cover.inputBitmap(d.bitmap)
         // First time showing this fragment.
         artistInfo.firstFetch { info ->
             viewModel.fetchDetailInfo(mbid, artistName) {

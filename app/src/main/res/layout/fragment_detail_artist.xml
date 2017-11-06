@@ -45,18 +45,13 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="spread">
 
-                <!--<ImageView-->
-                <!--android:id="@+id/tv_cover"-->
-                <!--style="@style/ChartDetail"-->
-                <!--android:layout_height="400dp"-->
-                <!--android:error="@{@drawable/sample_jieyi_icon}"-->
-                <!--android:imageUrl="@{vm.artistImage}"-->
-                <!--tools:src="@drawable/sample_lady_gaga"/>-->
-
-                <taiwan.no1.app.ssfm.misc.widgets.BlurryImageView
-                    android:id="@+id/biv_cover"
+                <ImageView
+                    android:id="@+id/tv_cover"
                     style="@style/ChartDetail"
-                    android:layout_height="400dp"/>
+                    android:layout_height="400dp"
+                    android:error="@{@drawable/sample_jieyi_icon}"
+                    android:imageUrl="@{vm.artistImage}"
+                    tools:src="@drawable/sample_lady_gaga"/>
 
                 <View
                     android:layout_width="match_parent"
