@@ -8,6 +8,30 @@
         <variable
             name="vm"
             type="taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentPlaylistIndexViewModel"/>
+
+        <variable
+            name="playlistLayoutManager"
+            type="android.support.v7.widget.RecyclerView.LayoutManager"/>
+
+        <variable
+            name="playlistAdapter"
+            type="android.support.v7.widget.RecyclerView.Adapter"/>
+
+        <variable
+            name="playlistLoadmore"
+            type="taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback"/>
+
+        <variable
+            name="recentlyLayoutManager"
+            type="android.support.v7.widget.RecyclerView.LayoutManager"/>
+
+        <variable
+            name="recentlyAdapter"
+            type="android.support.v7.widget.RecyclerView.Adapter"/>
+
+        <variable
+            name="recentlyLoadmore"
+            type="taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback"/>
     </data>
 
     <android.support.constraint.ConstraintLayout

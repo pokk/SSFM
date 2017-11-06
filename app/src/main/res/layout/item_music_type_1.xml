@@ -92,7 +92,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="0dp"
             tools:src="@drawable/sample_lady_gaga"/>
     </android.support.constraint.ConstraintLayout>
 </layout>
