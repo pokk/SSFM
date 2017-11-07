@@ -53,12 +53,15 @@ interface IDataStore {
     // NOTE: 5/13/17 We should keep the 'Session' and 'UserName' in the shared preferences.
     fun obtainSession(user: String, pwd: String): Observable<Any>
 
+    //region Chart
     fun getChartTopArtist(page: Int = 1, limit: Int = 20): Observable<TopArtistEntity>
 
     fun getChartTopTracks(page: Int = 1, limit: Int = 20): Observable<TopTrackEntity>
 
     fun getChartTopTags(page: Int = 1, limit: Int = 30): Observable<TopTagEntity>
+    //endregion
 
+    //region Artist
     fun getArtistInfo(mbid: String = "", artist: String = ""): Observable<ArtistEntity>
 
     fun getSimilarArtist(artist: String): Observable<ArtistSimilarEntity>
@@ -67,12 +70,16 @@ interface IDataStore {
 
     fun getArtistTopTrack(artist: String): Observable<ArtistTopTrackEntity>
 
-    fun getAlbumInfo(artist: String, albumOrMbid: String): Observable<AlbumEntity>
-
     fun getArtistTags(artist: String, session: Any): Observable<Collection<String>>
 
     fun getSimilarTracks(artist: String, track: String): Observable<TrackSimilarEntity>
+    //endregion
 
+    //region Album
+    fun getAlbumInfo(artist: String, albumOrMbid: String): Observable<AlbumEntity>
+    //endregion
+
+    //region Tag
     fun getTagTopAlbums(tag: String = "", page: Int = 1, limit: Int = 20): Observable<TopAlbumEntity>
 
     fun getTagTopArtists(tag: String = "", page: Int = 1, limit: Int = 20): Observable<TagTopArtistEntity>
@@ -80,6 +87,15 @@ interface IDataStore {
     fun getTagTopTracks(tag: String = "", page: Int = 1, limit: Int = 20): Observable<TopTrackEntity>
 
     fun getTagInfo(tag: String = ""): Observable<TagEntity>
+    //endregion
+
+    //region Playlist
+//    fun getPlaylists(id: Int = -1): Observable<List<PlaylistEntity>>
+//
+//    fun addPlaylistItem(playlistId: Int = -1): Observable<Boolean>
+//
+//    fun removePlaylistItem(playlistId: Int = -1): Observable<Boolean>
+    //endregion
 
     fun getLovedTracks(user: String, page: Int = 1): Observable<Any>
 
@@ -87,9 +103,11 @@ interface IDataStore {
 
     fun unloveTrack(artist: String, track: String, session: Any): Observable<Any>
 
+    //region Search History
     fun insertKeyword(keyword: String): Observable<Boolean>
 
     fun getKeywords(quantity: Int = -1): Observable<List<KeywordEntity>>
 
     fun removeKeywords(keyword: String? = null): Observable<Boolean>
+    //endregion
 }

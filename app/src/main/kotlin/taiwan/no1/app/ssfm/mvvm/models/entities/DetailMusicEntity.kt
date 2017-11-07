@@ -18,7 +18,7 @@ data class DetailMusicEntity(var status: Int = 0,
                              var err_code: Int = 0,
                              var data: DataBean? = null) {
 
-    @Table(database = MusicDatabase::class)
+    @Table(database = MusicDatabase::class, name = "MusicEntity")
     data class DataBean(@PrimaryKey(autoincrement = true) var id: Long = 0,
                         @Column var uri: String = "",
                         var hash: String = "",
