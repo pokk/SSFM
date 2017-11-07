@@ -10,6 +10,8 @@ import taiwan.no1.app.ssfm.databinding.ActivitySearchBinding
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.FRAGMENT_SEARCH_HISTORY
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.FRAGMENT_SEARCH_INDEX
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.FRAGMENT_SEARCH_RESULT
+import taiwan.no1.app.ssfm.misc.extension.addFragment
+import taiwan.no1.app.ssfm.mvvm.views.AdvancedActivity
 import java.util.Stack
 import javax.inject.Inject
 

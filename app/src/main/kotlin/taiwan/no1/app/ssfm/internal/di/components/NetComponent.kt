@@ -4,7 +4,7 @@ import dagger.Component
 import taiwan.no1.app.ssfm.App
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.Network
 import taiwan.no1.app.ssfm.internal.di.modules.NetModule
-import taiwan.no1.app.ssfm.mvvm.models.data.remote.RemoteDataStore
+import taiwan.no1.app.ssfm.models.data.remote.RemoteDataStore
 
 /**
  * A component whose lifetime is the same as application for injecting to [RemoteDataStore].

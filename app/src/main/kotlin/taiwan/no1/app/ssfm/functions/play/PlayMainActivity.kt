@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import com.devrapid.kotlinknifer.logi
+import kotlinx.android.synthetic.main.part_main_play_music.rcii_album
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityMusicBinding
 import taiwan.no1.app.ssfm.misc.utilies.devices.IMultiMediaPlayer
@@ -14,6 +15,7 @@ import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler
 import taiwan.no1.app.ssfm.misc.utilies.devices.MediaPlayerAdapter
 import taiwan.no1.app.ssfm.misc.utilies.devices.PlayListModel
 import taiwan.no1.app.ssfm.misc.utilies.devices.PlayerHandler
+import taiwan.no1.app.ssfm.mvvm.views.AdvancedActivity
 import javax.inject.Inject
 
 /**

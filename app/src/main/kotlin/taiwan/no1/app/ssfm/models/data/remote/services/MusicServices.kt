@@ -3,6 +3,11 @@ package taiwan.no1.app.ssfm.mvvm.models.data.remote.services
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.QueryMap
+import taiwan.no1.app.ssfm.models.data.remote.config.Music1Config
+import taiwan.no1.app.ssfm.models.data.remote.config.Music2Config
+import taiwan.no1.app.ssfm.models.data.remote.config.Music3Config
+import taiwan.no1.app.ssfm.models.entities.DetailMusicEntity
+import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistSimilarEntity

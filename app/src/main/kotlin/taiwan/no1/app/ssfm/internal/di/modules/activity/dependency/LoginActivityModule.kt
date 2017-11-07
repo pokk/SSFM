@@ -3,6 +3,7 @@ package taiwan.no1.app.ssfm.internal.di.modules.activity.dependency
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import taiwan.no1.app.ssfm.functions.login.LoginViewModel
 import taiwan.no1.app.ssfm.functions.main.MainActivity
 import taiwan.no1.app.ssfm.functions.main.MainViewModel
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerActivity

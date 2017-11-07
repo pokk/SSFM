@@ -11,8 +11,10 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartAlbumDetailViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
+import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
 import javax.inject.Inject
 
 /**
@@ -63,7 +65,7 @@ class ChartAlbumDetailFragment: AdvancedFragment<FragmentChartAlbumDetailViewMod
         }
         trackInfo.firstFetch { info ->
             viewModel.fetchDetailInfo(artistAlbumName, artistName) {
-                it.track.tracks.let {
+                it.track?.tracks?.let {
                     trackRes.refreshAndChangeList(it, 0, binding?.trackAdapter as AlbumTrackAdapter, info)
                 }
             }

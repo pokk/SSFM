@@ -6,6 +6,7 @@ import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 
 /**
  *
@@ -15,7 +16,7 @@ import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
 class RecyclerViewChartTopArtistViewModel(val item: ArtistEntity.Artist): BaseViewModel() {
     val artistName by lazy { ObservableField<String>(item.name) }
     val playCount by lazy { ObservableField<String>(item.playCount) }
-    val thumbnail by lazy { ObservableField<String>(item.images.get(ImageSizes.EXTRA_LARGE).text ?: "") }
+    val thumbnail by lazy { ObservableField<String>(item.images?.get(ImageSizes.EXTRA_LARGE)?.text ?: "") }
 
     /**
      * A callback event for clicking a item to list item.

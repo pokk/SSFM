@@ -8,6 +8,7 @@ import io.reactivex.Observer
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import taiwan.no1.app.ssfm.models.data.IDataStore
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase.RequestValues
 
 /**

@@ -16,6 +16,8 @@ import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.LARGE
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
 import taiwan.no1.app.ssfm.misc.extension.palette
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
 
 /**
  *
@@ -24,7 +26,7 @@ import taiwan.no1.app.ssfm.misc.extension.palette
  */
 class RecyclerViewChartSimilarArtistViewModel(val item: BaseEntity): BaseViewModel() {
     val artistName by lazy { ObservableField<String>((item as ArtistEntity.Artist).name) }
-    val thumbnail by lazy { ObservableField<String>((item as ArtistEntity.Artist).images.get(LARGE).text ?: "") }
+    val thumbnail by lazy { ObservableField<String>((item as ArtistEntity.Artist).images?.get(LARGE)?.text ?: "") }
     val textBackground by lazy { ObservableInt() }
     val textColor by lazy { ObservableInt() }
     var clickItemListener: ((item: ArtistEntity.Artist) -> Unit)? = null

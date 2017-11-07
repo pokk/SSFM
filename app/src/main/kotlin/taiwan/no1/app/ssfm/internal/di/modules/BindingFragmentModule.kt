@@ -2,6 +2,12 @@ package taiwan.no1.app.ssfm.internal.di.modules
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import taiwan.no1.app.ssfm.functions.chart.ChartArtistDetailFragment
+import taiwan.no1.app.ssfm.functions.chart.ChartTagDetailFragment
+import taiwan.no1.app.ssfm.functions.playlist.PlaylistIndexFragment
+import taiwan.no1.app.ssfm.functions.search.SearchHistoryFragment
+import taiwan.no1.app.ssfm.functions.search.SearchIndexFragment
+import taiwan.no1.app.ssfm.functions.search.SearchResultFragment
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerFragment
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.ChartAlbumDetailFragmentModule
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.ChartArtistDetailFragmentModule
@@ -12,13 +18,7 @@ import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.SearchHistori
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.SearchIndexFragmentModule
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.SearchMusicFragmentModule
 import taiwan.no1.app.ssfm.mvvm.views.fragments.ChartAlbumDetailFragment
-import taiwan.no1.app.ssfm.mvvm.views.fragments.ChartArtistDetailFragment
 import taiwan.no1.app.ssfm.mvvm.views.fragments.ChartIndexFragment
-import taiwan.no1.app.ssfm.mvvm.views.fragments.ChartTagDetailFragment
-import taiwan.no1.app.ssfm.mvvm.views.fragments.PlaylistIndexFragment
-import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchHistoryFragment
-import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchIndexFragment
-import taiwan.no1.app.ssfm.mvvm.views.fragments.SearchResultFragment
 
 /**
  * A base component upon which [Fragment] components may depend. Fragment-level components should extend this component.

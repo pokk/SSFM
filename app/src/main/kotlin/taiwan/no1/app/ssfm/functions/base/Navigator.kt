@@ -9,6 +9,14 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.internal.operators.observable.ObservableTimer
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.page_menu_preference.view.tv_menu_chart
+import kotlinx.android.synthetic.main.page_menu_preference.view.tv_menu_favorite
+import kotlinx.android.synthetic.main.page_menu_preference.view.tv_menu_home
+import kotlinx.android.synthetic.main.page_menu_preference.view.tv_menu_login
+import kotlinx.android.synthetic.main.page_menu_preference.view.tv_menu_playlist
+import kotlinx.android.synthetic.main.page_menu_preference.view.tv_menu_search
+import kotlinx.android.synthetic.main.page_menu_preference.view.tv_menu_setting
+import kotlinx.android.synthetic.main.part_toolbar_menu.view.iv_content_hamburger
 import org.jetbrains.anko.startActivity
 import taiwan.no1.app.ssfm.functions.chart.ChartActivity
 import taiwan.no1.app.ssfm.functions.login.LoginActivity

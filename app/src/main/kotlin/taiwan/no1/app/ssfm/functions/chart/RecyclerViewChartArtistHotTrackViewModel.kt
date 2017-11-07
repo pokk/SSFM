@@ -5,6 +5,8 @@ import android.view.View
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
 
 /**
  *
@@ -13,7 +15,7 @@ import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
  */
 class RecyclerViewChartArtistHotTrackViewModel(val item: BaseEntity): BaseViewModel() {
     val trackName by lazy { ObservableField<String>((item as TrackEntity.TrackWithStreamableString).name) }
-    val trackNumber by lazy { ObservableField<String>((item as TrackEntity.TrackWithStreamableString).attr.rank ?: "0") }
+    val trackNumber by lazy { ObservableField<String>((item as TrackEntity.TrackWithStreamableString).attr?.rank ?: "0") }
 
     /**
      * A callback event for clicking a item to list item.

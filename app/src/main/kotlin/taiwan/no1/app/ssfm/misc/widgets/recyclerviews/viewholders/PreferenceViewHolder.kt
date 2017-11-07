@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.item_preference_first_layer_title.view.tv_
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.ExpandRecyclerViewAdapter
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.viewtype.ExpandableViewTypeFactory
+import taiwan.no1.app.ssfm.models.entities.PreferenceEntity
 
 /**
  * A [AdaptiveViewHolder] for controlling the main preference items with an option selection.

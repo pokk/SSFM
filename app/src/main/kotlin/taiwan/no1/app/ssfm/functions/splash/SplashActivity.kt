@@ -3,6 +3,7 @@ package taiwan.no1.app.ssfm.functions.splash
 import android.app.Activity
 import android.os.Bundle
 import org.jetbrains.anko.startActivity
+import taiwan.no1.app.ssfm.functions.chart.ChartActivity
 import kotlin.concurrent.timer
 
 /**

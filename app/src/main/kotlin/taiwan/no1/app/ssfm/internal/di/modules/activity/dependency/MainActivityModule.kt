@@ -3,8 +3,12 @@ package taiwan.no1.app.ssfm.internal.di.modules.activity.dependency
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import taiwan.no1.app.ssfm.functions.main.MainViewModel
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerActivity
 import taiwan.no1.app.ssfm.models.entities.DetailMusicEntity
+import taiwan.no1.app.ssfm.mvvm.models.data.repositories.DataRepository
+import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
+import taiwan.no1.app.ssfm.mvvm.models.usecases.DetailMusicCase
 
 /**
  *
@@ -22,7 +26,7 @@ class MainActivityModule {
      */
     @Provides
     @PerActivity
-    fun provideUsecase(dataRepository: DataRepository): BaseUsecase<DetailMusicEntity, RequestValue> =
+    fun provideUsecase(dataRepository: DataRepository): BaseUsecase<DetailMusicEntity, DetailMusicCase.RequestValue> =
         DetailMusicCase(dataRepository)
 
     /**
@@ -34,6 +38,7 @@ class MainActivityModule {
      */
     @Provides
     @PerActivity
-    fun provideViewModel(context: Context, usecase: BaseUsecase<DetailMusicEntity, RequestValue>): MainViewModel =
+    fun provideViewModel(context: Context,
+                         usecase: BaseUsecase<DetailMusicEntity, DetailMusicCase.RequestValue>): MainViewModel =
         MainViewModel(context, usecase)
 }

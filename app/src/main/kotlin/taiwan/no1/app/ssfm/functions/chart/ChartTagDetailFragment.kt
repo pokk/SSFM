@@ -15,7 +15,11 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.Universal3Adapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartTagDetailViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
+import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
+import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.itemdecorator.HorizontalItemDecorator
 import javax.inject.Inject
 
 /**

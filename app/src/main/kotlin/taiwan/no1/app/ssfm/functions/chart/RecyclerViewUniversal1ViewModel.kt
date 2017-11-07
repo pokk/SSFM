@@ -16,6 +16,8 @@ import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
 import taiwan.no1.app.ssfm.misc.extension.palette
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
 
 /**
  *
@@ -24,7 +26,7 @@ import taiwan.no1.app.ssfm.misc.extension.palette
  */
 class RecyclerViewUniversal1ViewModel(val item: BaseEntity): BaseViewModel() {
     val artistName by lazy { ObservableField<String>((item as AlbumEntity.AlbumWithArtist).name) }
-    val thumbnail by lazy { ObservableField<String>((item as AlbumEntity.AlbumWithArtist).images.get(ImageSizes.LARGE).text ?: "") }
+    val thumbnail by lazy { ObservableField<String>((item as AlbumEntity.AlbumWithArtist).images?.get(ImageSizes.LARGE)?.text ?: "") }
     val textBackground by lazy { ObservableInt() }
     val textColor by lazy { ObservableInt() }
     val shadowColor by lazy { ObservableInt() }
@@ -39,8 +41,7 @@ class RecyclerViewUniversal1ViewModel(val item: BaseEntity): BaseViewModel() {
     fun itemOnClick(view: View) {
         item as AlbumEntity.AlbumWithArtist
         RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_ALBUM,
-            hashMapOf("Artist Name" to item.artist.name,
-                "Artist Album Name" to item.name))
+            hashMapOf("Artist Name" to item.artist?.name, "Artist Album Name" to item.name))
     }
 
     val imageCallback = object: RequestListener<Bitmap> {

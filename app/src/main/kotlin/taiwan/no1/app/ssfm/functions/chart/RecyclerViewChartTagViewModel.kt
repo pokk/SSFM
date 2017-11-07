@@ -6,6 +6,8 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.view.View
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagEntity
 import java.util.Random
 
 /**
@@ -13,7 +15,7 @@ import java.util.Random
  * @since   9/20/17
  */
 class RecyclerViewChartTagViewModel(val item: BaseEntity): BaseViewModel() {
-    val tagName by lazy { ObservableField<String>((item as TagEntity.Tag).name.apply { this[0].toUpperCase() }) }
+    val tagName by lazy { ObservableField<String>((item as TagEntity.Tag).name?.apply { this[0].toUpperCase() }) }
     val background by lazy {
         fun randomColor(): Int =
             Random().let { Color.argb(it.nextInt(256), it.nextInt(256), it.nextInt(256), it.nextInt(256)) }

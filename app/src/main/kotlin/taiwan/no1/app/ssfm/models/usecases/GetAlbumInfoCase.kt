@@ -1,6 +1,7 @@
 package taiwan.no1.app.ssfm.mvvm.models.usecases
 
 import io.reactivex.Observable
+import taiwan.no1.app.ssfm.models.data.IDataStore
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
 
 /**

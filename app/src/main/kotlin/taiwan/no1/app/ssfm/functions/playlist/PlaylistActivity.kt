@@ -4,6 +4,8 @@ import android.app.Activity
 import android.os.Bundle
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityPlaylistBinding
+import taiwan.no1.app.ssfm.misc.extension.addFragment
+import taiwan.no1.app.ssfm.mvvm.views.AdvancedActivity
 import javax.inject.Inject
 
 /**

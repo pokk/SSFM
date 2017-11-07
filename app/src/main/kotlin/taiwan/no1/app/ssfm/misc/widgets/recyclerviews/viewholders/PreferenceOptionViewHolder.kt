@@ -7,6 +7,7 @@ import io.reactivex.internal.operators.observable.ObservableJust
 import kotlinx.android.synthetic.main.item_preference_second_layer_title.view.tv_selection
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.ExpandRecyclerViewAdapter
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.viewtype.ExpandableViewTypeFactory
+import taiwan.no1.app.ssfm.models.entities.PreferenceOptionEntity
 
 /**
  * A [AdaptiveViewHolder] for controlling the sub-layout of a main preference item.

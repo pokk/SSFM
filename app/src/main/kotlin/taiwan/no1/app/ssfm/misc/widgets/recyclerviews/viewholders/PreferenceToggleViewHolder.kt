@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.item_preference_first_layer_toggle.view.tv
 import org.jetbrains.anko.sdk25.coroutines.onCheckedChange
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.ExpandRecyclerViewAdapter
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.viewtype.ExpandableViewTypeFactory
+import taiwan.no1.app.ssfm.models.entities.PreferenceToggleEntity
 
 /**
  * A [AdaptiveViewHolder] for controlling the main preference items with toggle button.

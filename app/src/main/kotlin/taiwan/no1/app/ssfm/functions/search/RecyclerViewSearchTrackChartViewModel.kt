@@ -6,6 +6,8 @@ import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.LARGE
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
 
 /**
  *
@@ -14,8 +16,8 @@ import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
  */
 class RecyclerViewSearchTrackChartViewModel(val item: BaseEntity): BaseViewModel() {
     val trackName by lazy { ObservableField<String>((item as TrackEntity.Track).name) }
-    val artistName by lazy { ObservableField<String>((item as TrackEntity.Track).artist.name ?: "") }
-    val thumbnail by lazy { ObservableField<String>((item as TrackEntity.Track).images.get(LARGE).text) }
+    val artistName by lazy { ObservableField<String>((item as TrackEntity.Track).artist?.name ?: "") }
+    val thumbnail by lazy { ObservableField<String>((item as TrackEntity.Track).images?.get(LARGE)?.text) }
 
     /**
      * A callback event for clicking a item to list item.

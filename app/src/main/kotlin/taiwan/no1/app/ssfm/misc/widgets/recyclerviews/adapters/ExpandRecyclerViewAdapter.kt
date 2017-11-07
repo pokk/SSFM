@@ -5,6 +5,7 @@ import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
 import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.viewtype.ExpandableViewTypeFactory
+import taiwan.no1.app.ssfm.models.entities.PreferenceEntity
 import taiwan.no1.app.ssfm.mvvm.models.IExpandVisitable
 
 /**

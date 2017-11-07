@@ -3,12 +3,15 @@ package taiwan.no1.app.ssfm.functions.preference
 import android.app.Activity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.part_main_preference.rv_preference
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityPreferenceBinding
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.ExpandRecyclerViewAdapter
 import taiwan.no1.app.ssfm.models.entities.PreferenceEntity
 import taiwan.no1.app.ssfm.models.entities.PreferenceOptionEntity
 import taiwan.no1.app.ssfm.models.entities.PreferenceToggleEntity
+import taiwan.no1.app.ssfm.mvvm.models.IExpandVisitable
+import taiwan.no1.app.ssfm.mvvm.views.AdvancedActivity
 import javax.inject.Inject
 
 /**

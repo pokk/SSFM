@@ -1,9 +1,19 @@
 package taiwan.no1.app.ssfm.mvvm.models.data.local
 
 import com.raizlabs.android.dbflow.kotlinextensions.delete
+import com.raizlabs.android.dbflow.kotlinextensions.eq
 import com.raizlabs.android.dbflow.kotlinextensions.from
+import com.raizlabs.android.dbflow.kotlinextensions.limit
+import com.raizlabs.android.dbflow.kotlinextensions.orderBy
 import com.raizlabs.android.dbflow.kotlinextensions.select
+import com.raizlabs.android.dbflow.kotlinextensions.where
+import com.raizlabs.android.dbflow.rx2.kotlinextensions.list
+import com.raizlabs.android.dbflow.rx2.kotlinextensions.rx
 import io.reactivex.Observable
+import taiwan.no1.app.ssfm.models.data.IDataStore
+import taiwan.no1.app.ssfm.models.entities.KeywordEntity
+import taiwan.no1.app.ssfm.models.entities.KeywordEntity_Table
+import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagEntity
 
 

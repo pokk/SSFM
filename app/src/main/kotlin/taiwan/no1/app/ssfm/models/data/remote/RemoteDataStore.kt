@@ -13,6 +13,19 @@ import taiwan.no1.app.ssfm.models.data.IDataStore
 import taiwan.no1.app.ssfm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity
+import taiwan.no1.app.ssfm.mvvm.models.data.remote.services.MusicServices
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistSimilarEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopTrackEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagTopArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopAlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTagEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTrackEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackSimilarEntity
 import javax.inject.Inject
 import javax.inject.Named
 

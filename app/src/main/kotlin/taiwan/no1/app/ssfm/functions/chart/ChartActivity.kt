@@ -9,6 +9,10 @@ import com.hwangjr.rxbus.annotation.Tag
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityChartBinding
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
+import taiwan.no1.app.ssfm.misc.extension.addFragment
+import taiwan.no1.app.ssfm.mvvm.views.AdvancedActivity
+import taiwan.no1.app.ssfm.mvvm.views.fragments.ChartAlbumDetailFragment
+import taiwan.no1.app.ssfm.mvvm.views.fragments.ChartIndexFragment
 import java.util.HashMap
 import javax.inject.Inject
 

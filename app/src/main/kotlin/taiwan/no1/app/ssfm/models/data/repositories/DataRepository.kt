@@ -3,6 +3,7 @@ package taiwan.no1.app.ssfm.mvvm.models.data.repositories
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Local
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Remote
+import taiwan.no1.app.ssfm.models.data.IDataStore
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagEntity
 import javax.inject.Inject
 import javax.inject.Singleton

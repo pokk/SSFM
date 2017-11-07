@@ -12,6 +12,7 @@ import taiwan.no1.app.ssfm.databinding.ItemUniversalType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemUniversalType2Binding
 import taiwan.no1.app.ssfm.databinding.ItemUniversalType3Binding
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
 
 /**
  * @author  jieyi

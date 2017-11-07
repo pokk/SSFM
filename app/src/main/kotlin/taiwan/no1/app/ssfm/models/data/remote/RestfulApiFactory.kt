@@ -1,6 +1,10 @@
 package taiwan.no1.app.ssfm.mvvm.models.data.remote
 
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.Network
+import taiwan.no1.app.ssfm.models.data.remote.config.IApiConfig
+import taiwan.no1.app.ssfm.models.data.remote.config.Music1Config
+import taiwan.no1.app.ssfm.models.data.remote.config.Music2Config
+import taiwan.no1.app.ssfm.models.data.remote.config.Music3Config
 import javax.inject.Inject
 
 /**

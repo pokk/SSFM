@@ -5,6 +5,14 @@ import com.devrapid.kotlinknifer.loge
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.EXTRA_LARGE
 import taiwan.no1.app.ssfm.misc.extension.execute
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopTrackEntity
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
+import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
+import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistInfoCase
+import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistTopAlbumsCase
+import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistTopTracksCase
 
 /**
  * @author  jieyi
@@ -22,9 +30,9 @@ class FragmentChartArtistDetailViewModel(private val artistsInfoUsecase: BaseUse
         lifecycleProvider.execute(artistsInfoUsecase, GetArtistInfoCase.RequestValue(name, mbid)) {
             onNext {
                 it.artist.let {
-                    artistImage.set(it.images.get(EXTRA_LARGE).text ?: "")
-                    artistName.set(it.name ?: "")
-                    artistSummary.set(it.bio.content ?: "")
+                    artistImage.set(it?.images?.get(EXTRA_LARGE)?.text ?: "")
+                    artistName.set(it?.name ?: "")
+                    artistSummary.set(it?.bio?.content ?: "")
                 }
                 callback(it)
             }

@@ -16,6 +16,8 @@ import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.FRAGMENT_SEARCH_INDEX
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.FRAGMENT_SEARCH_RESULT
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.VIEWMODEL_CLICK_HISTORY
 import taiwan.no1.app.ssfm.misc.extension.execute
+import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
+import taiwan.no1.app.ssfm.mvvm.models.usecases.SaveKeywordHistoryCase
 
 /**
  *
@@ -23,7 +25,7 @@ import taiwan.no1.app.ssfm.misc.extension.execute
  * @since   9/13/17
  */
 class SearchViewModel(private val context: Context,
-                      private val addHistoryUsecase: BaseUsecase<Boolean, RequestValue>):
+                      private val addHistoryUsecase: BaseUsecase<Boolean, SaveKeywordHistoryCase.RequestValue>):
     BaseViewModel() {
     /** For navigating to other fragments from the parent activity */
     lateinit var navigateListener: (fragmentTag: String, params: SparseArray<Any>?) -> Unit
@@ -76,7 +78,7 @@ class SearchViewModel(private val context: Context,
     fun querySubmit(query: String): Boolean {
         query.takeIf { it.isNotBlank() }?.let {
             navigateListener(FRAGMENT_SEARCH_RESULT, SparseArray<Any>().apply { put(0, it) })
-            lifecycleProvider.execute(addHistoryUsecase, RequestValue(it)) {
+            lifecycleProvider.execute(addHistoryUsecase, SaveKeywordHistoryCase.RequestValue(it)) {
                 // For ensuring that the search view focus is canceled.
                 onComplete { keyword.set(it) }
             }
