@@ -3,10 +3,9 @@ package taiwan.no1.app.ssfm.internal.di.modules.activity.dependency
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import taiwan.no1.app.ssfm.functions.chart.ChartViewModel
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerActivity
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.UseCaseModule
-import taiwan.no1.app.ssfm.mvvm.viewmodels.ChartViewModel
-import taiwan.no1.app.ssfm.mvvm.views.activities.ChartActivity
 
 /**
  *
@@ -23,5 +22,6 @@ class ChartActivityModule {
      */
     @Provides
     @PerActivity
-    fun provideViewModel(context: Context): ChartViewModel = ChartViewModel(context)
+    fun provideViewModel(context: Context): ChartViewModel = ChartViewModel(
+        context)
 }

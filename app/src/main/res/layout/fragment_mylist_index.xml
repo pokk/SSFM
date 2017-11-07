@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentPlaylistIndexViewModel"/>
+            type="taiwan.no1.app.ssfm.functions.playlist.FragmentPlaylistIndexViewModel"/>
 
         <variable
             name="playlistLayoutManager"

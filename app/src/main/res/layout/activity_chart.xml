@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="taiwan.no1.app.ssfm.mvvm.viewmodels.ChartViewModel"/>
+            type="taiwan.no1.app.ssfm.functions.chart.ChartViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout

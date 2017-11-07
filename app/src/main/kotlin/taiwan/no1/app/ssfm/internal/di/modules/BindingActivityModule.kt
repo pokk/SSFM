@@ -2,6 +2,8 @@ package taiwan.no1.app.ssfm.internal.di.modules
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import taiwan.no1.app.ssfm.functions.main.MainActivity
+import taiwan.no1.app.ssfm.functions.main.TestActivity
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerActivity
 import taiwan.no1.app.ssfm.internal.di.modules.activity.dependency.ActivityModule
 import taiwan.no1.app.ssfm.internal.di.modules.activity.dependency.ChartActivityModule
@@ -11,14 +13,6 @@ import taiwan.no1.app.ssfm.internal.di.modules.activity.dependency.PlayMainActiv
 import taiwan.no1.app.ssfm.internal.di.modules.activity.dependency.PlaylistActivityModule
 import taiwan.no1.app.ssfm.internal.di.modules.activity.dependency.PreferenceActivityModule
 import taiwan.no1.app.ssfm.internal.di.modules.activity.dependency.SearchActivityModule
-import taiwan.no1.app.ssfm.mvvm.views.activities.ChartActivity
-import taiwan.no1.app.ssfm.mvvm.views.activities.LoginActivity
-import taiwan.no1.app.ssfm.mvvm.views.activities.MainActivity
-import taiwan.no1.app.ssfm.mvvm.views.activities.PlayMainActivity
-import taiwan.no1.app.ssfm.mvvm.views.activities.PlaylistActivity
-import taiwan.no1.app.ssfm.mvvm.views.activities.PreferenceActivity
-import taiwan.no1.app.ssfm.mvvm.views.activities.SearchActivity
-import taiwan.no1.app.ssfm.mvvm.views.activities.TestActivity
 
 /**
  * Dagger module that provides each of [Activity] in this central module during the activity lifecycle.

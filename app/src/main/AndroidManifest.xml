@@ -32,7 +32,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".mvvm.views.activities.MainActivity">
+        <activity android:name=".functions.main.MainActivity">
         </activity>
         <activity android:name=".mvvm.views.activities.LoginActivity">
         </activity>
@@ -46,7 +46,7 @@
         </activity>
         <activity android:name=".mvvm.views.activities.PreferenceActivity">
         </activity>
-        <activity android:name=".mvvm.views.activities.TestActivity">
+        <activity android:name=".functions.main.TestActivity">
         </activity>
 
         <service android:name=".controllers.services.InitializeService"/>

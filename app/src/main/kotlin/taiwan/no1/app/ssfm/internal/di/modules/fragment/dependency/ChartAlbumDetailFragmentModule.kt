@@ -3,11 +3,6 @@ package taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency
 import dagger.Module
 import dagger.Provides
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerFragment
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.GetAlbumInfoCase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistInfoCase
 import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartAlbumDetailViewModel
 
 /**

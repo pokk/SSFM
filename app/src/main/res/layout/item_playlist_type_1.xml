@@ -8,7 +8,7 @@
 
         <!--<variable-->
         <!--name="avm"-->
-        <!--type="taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewSearchArtistChartViewModel"/>-->
+        <!--tytaiwan.no1.app.ssfm.functions.search.RecyclerViewSearchArtistChartViewModelodel"/>-->
     </data>
 
     <RelativeLayout
