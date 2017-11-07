@@ -4,6 +4,8 @@ import io.reactivex.Observable
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Local
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Remote
 import taiwan.no1.app.ssfm.models.data.IDataStore
+import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
+import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagEntity
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -53,6 +55,18 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
     override fun getTagTopTracks(tag: String, page: Int, limit: Int) = remote.getTagTopTracks(tag, page, limit)
 
     override fun getTagInfo(tag: String): Observable<TagEntity> = remote.getTagInfo(tag)
+
+    override fun getPlaylists(id: Int): Observable<List<PlaylistEntity>> = local.getPlaylists(id)
+
+    override fun addPlaylist(entity: PlaylistEntity): Observable<Boolean> = local.addPlaylist(entity)
+
+    override fun editPlaylist(entity: PlaylistEntity): Observable<Boolean> = local.editPlaylist(entity)
+
+    override fun removePlaylist(entity: PlaylistEntity): Observable<Boolean> = local.removePlaylist(entity)
+
+    override fun addPlaylistItem(entity: PlaylistItemEntity): Observable<Boolean> = local.addPlaylistItem(entity)
+
+    override fun removePlaylistItem(entity: PlaylistItemEntity): Observable<Boolean> = local.removePlaylistItem(entity)
 
     override fun getLovedTracks(user: String, page: Int) = remote.getLovedTracks(user, page)
 

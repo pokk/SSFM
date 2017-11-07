@@ -4,6 +4,8 @@ import io.reactivex.Observable
 import taiwan.no1.app.ssfm.misc.constants.Constant
 import taiwan.no1.app.ssfm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.models.entities.KeywordEntity
+import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
+import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
@@ -90,11 +92,17 @@ interface IDataStore {
     //endregion
 
     //region Playlist
-//    fun getPlaylists(id: Int = -1): Observable<List<PlaylistEntity>>
-//
-//    fun addPlaylistItem(playlistId: Int = -1): Observable<Boolean>
-//
-//    fun removePlaylistItem(playlistId: Int = -1): Observable<Boolean>
+    fun getPlaylists(id: Int = -1): Observable<List<PlaylistEntity>>
+
+    fun addPlaylist(entity: PlaylistEntity): Observable<Boolean>
+
+    fun editPlaylist(entity: PlaylistEntity): Observable<Boolean>
+
+    fun removePlaylist(entity: PlaylistEntity): Observable<Boolean>
+
+    fun addPlaylistItem(entity: PlaylistItemEntity): Observable<Boolean>
+
+    fun removePlaylistItem(entity: PlaylistItemEntity): Observable<Boolean>
     //endregion
 
     fun getLovedTracks(user: String, page: Int = 1): Observable<Any>

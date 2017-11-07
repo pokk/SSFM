@@ -2,7 +2,9 @@ package taiwan.no1.app.ssfm.models.entities
 
 import com.raizlabs.android.dbflow.annotation.PrimaryKey
 import com.raizlabs.android.dbflow.annotation.Table
+import com.raizlabs.android.dbflow.rx2.structure.BaseRXModel
 import taiwan.no1.app.ssfm.mvvm.models.data.local.database.MusicDatabase
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
 
 /**
  * @author  jieyi
@@ -16,4 +18,4 @@ data class PlaylistItemEntity(@PrimaryKey(autoincrement = true) var id: Long = 0
                               var external_track_uri: String = "",
                               var external_track_name: String = "",
                               var external_artist_name: String = "",
-                              var external_album_name: String = "")
+                              var external_album_name: String = ""): BaseRXModel(), BaseEntity

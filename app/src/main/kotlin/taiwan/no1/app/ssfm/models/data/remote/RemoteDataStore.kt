@@ -12,6 +12,8 @@ import taiwan.no1.app.ssfm.internal.di.components.NetComponent
 import taiwan.no1.app.ssfm.models.data.IDataStore
 import taiwan.no1.app.ssfm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.models.entities.KeywordEntity
+import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
+import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.data.remote.services.MusicServices
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
@@ -197,6 +199,18 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
 
         return musicService3.get().getTagInfo(query)
     }
+
+    override fun getPlaylists(id: Int): Observable<List<PlaylistEntity>> = TODO()
+
+    override fun addPlaylist(entity: PlaylistEntity): Observable<Boolean> = TODO()
+
+    override fun editPlaylist(entity: PlaylistEntity): Observable<Boolean> = TODO()
+
+    override fun removePlaylist(entity: PlaylistEntity): Observable<Boolean> = TODO()
+
+    override fun addPlaylistItem(entity: PlaylistItemEntity): Observable<Boolean> = TODO()
+
+    override fun removePlaylistItem(entity: PlaylistItemEntity): Observable<Boolean> = TODO()
 
     override fun getLovedTracks(user: String, page: Int): Observable<Any> = TODO()
 //        ObservableJust(User.getLovedTracks(user, page, lastfm_key).pageResults)
