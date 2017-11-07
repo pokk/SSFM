@@ -8,7 +8,7 @@
 
         <variable
             name="pmvm"
-            type="taiwan.no1.app.ssfm.mvvm.viewmodels.PlayMainViewModel"/>
+            type="taiwan.no1.app.ssfm.functions.play.PlayMainViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout

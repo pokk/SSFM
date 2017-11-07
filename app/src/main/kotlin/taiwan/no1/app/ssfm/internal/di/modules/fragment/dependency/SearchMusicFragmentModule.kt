@@ -2,11 +2,11 @@ package taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency
 
 import dagger.Module
 import dagger.Provides
+import taiwan.no1.app.ssfm.functions.search.FragmentSearchResultViewModel
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerFragment
-import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
+import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.SearchMusicCase
-import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentSearchResultViewModel
 
 /**
  * A base component upon which fragment's components may depend. Activity-level components should extend this component.

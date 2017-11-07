@@ -3,9 +3,9 @@ package taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency
 import dagger.Module
 import dagger.Provides
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerFragment
+import taiwan.no1.app.ssfm.models.entities.KeywordEntity
+import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.data.repositories.DataRepository
-import taiwan.no1.app.ssfm.mvvm.models.entities.KeywordEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity

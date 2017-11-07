@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="taiwan.no1.app.ssfm.mvvm.viewmodels.SearchViewModel"/>
+            type="taiwan.no1.app.ssfm.functions.search.SearchViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout

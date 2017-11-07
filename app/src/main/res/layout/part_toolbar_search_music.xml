@@ -11,7 +11,7 @@
 
         <variable
             name="svm"
-            type="taiwan.no1.app.ssfm.mvvm.viewmodels.SearchViewModel"/>
+            type="taiwan.no1.app.ssfm.functions.search.SearchViewModel"/>
     </data>
 
     <android.support.v7.widget.Toolbar
