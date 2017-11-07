@@ -25,7 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".mvvm.views.activities.SplashActivity"
+            android:name=".functions.splash.SplashActivity"
             android:theme="@style/AppTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -34,17 +34,17 @@
         </activity>
         <activity android:name=".functions.main.MainActivity">
         </activity>
-        <activity android:name=".mvvm.views.activities.LoginActivity">
+        <activity android:name=".functions.login.LoginActivity">
         </activity>
-        <activity android:name=".mvvm.views.activities.PlaylistActivity">
+        <activity android:name=".functions.playlist.PlaylistActivity">
         </activity>
-        <activity android:name=".mvvm.views.activities.PlayMainActivity">
+        <activity android:name=".functions.play.PlayMainActivity">
         </activity>
-        <activity android:name=".mvvm.views.activities.ChartActivity">
+        <activity android:name=".functions.chart.ChartActivity">
         </activity>
-        <activity android:name=".mvvm.views.activities.SearchActivity">
+        <activity android:name=".functions.search.SearchActivity">
         </activity>
-        <activity android:name=".mvvm.views.activities.PreferenceActivity">
+        <activity android:name=".functions.preference.PreferenceActivity">
         </activity>
         <activity android:name=".functions.main.TestActivity">
         </activity>

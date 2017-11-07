@@ -37,6 +37,6 @@ class SearchActivityModule {
     @Provides
     @PerActivity
     fun provideViewModel(context: Context,
-                         addHistoryUsecase: BaseUsecase<Boolean, SaveKeywordHistoryCase.RequestValue>): SearchViewModel =
-        SearchViewModel(context, addHistoryUsecase)
+                         addHistoryUsecase: BaseUsecase<Boolean, SaveKeywordHistoryCase.RequestValue>):
+        SearchViewModel = SearchViewModel(context, addHistoryUsecase)
 }
