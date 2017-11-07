@@ -1,6 +1,5 @@
 package taiwan.no1.app.ssfm.internal.di.modules
 
-import android.preference.PreferenceActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import taiwan.no1.app.ssfm.functions.chart.ChartActivity
@@ -9,6 +8,7 @@ import taiwan.no1.app.ssfm.functions.main.MainActivity
 import taiwan.no1.app.ssfm.functions.main.TestActivity
 import taiwan.no1.app.ssfm.functions.play.PlayMainActivity
 import taiwan.no1.app.ssfm.functions.playlist.PlaylistActivity
+import taiwan.no1.app.ssfm.functions.preference.PreferenceActivity
 import taiwan.no1.app.ssfm.functions.search.SearchActivity
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerActivity
 import taiwan.no1.app.ssfm.internal.di.modules.activity.dependency.ActivityModule

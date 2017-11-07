@@ -23,18 +23,17 @@ import javax.inject.Inject
 class PreferenceActivity: AdvancedActivity<PreferenceViewModel, ActivityPreferenceBinding>() {
     @Inject override lateinit var viewModel: PreferenceViewModel
 
-    private val preferenceList: MutableList<IExpandVisitable> =
-        mutableListOf(
-            PreferenceEntity("Theme", "Dark", R.drawable.ic_theme, childItemList = mutableListOf(
-                PreferenceOptionEntity("Dark"),
-                PreferenceOptionEntity("Light"))),
-            PreferenceToggleEntity("Auto Play", true, R.drawable.ic_music_disk),
-            PreferenceToggleEntity("Auto Download", false, R.drawable.ic_download),
-            PreferenceToggleEntity("Download Only Wifi", false, R.drawable.ic_wifi),
-            PreferenceToggleEntity("Lock Screen Lyrics Display", true, R.drawable.ic_queue_music),
-            PreferenceToggleEntity("Last Selected Channel", false),
-            PreferenceEntity("About Us", "", R.drawable.ic_info_outline),
-            PreferenceEntity("Feedback", "", R.drawable.ic_feedback))
+    private val preferenceList: MutableList<IExpandVisitable> = mutableListOf(
+        PreferenceEntity("Theme", "Dark", R.drawable.ic_theme, childItemList = mutableListOf(
+            PreferenceOptionEntity("Dark"),
+            PreferenceOptionEntity("Light"))),
+        PreferenceToggleEntity("Auto Play", true, R.drawable.ic_music_disk),
+        PreferenceToggleEntity("Auto Download", false, R.drawable.ic_download),
+        PreferenceToggleEntity("Download Only Wifi", false, R.drawable.ic_wifi),
+        PreferenceToggleEntity("Lock Screen Lyrics Display", true, R.drawable.ic_queue_music),
+        PreferenceToggleEntity("Last Selected Channel", false),
+        PreferenceEntity("About Us", "", R.drawable.ic_info_outline),
+        PreferenceEntity("Feedback", "", R.drawable.ic_feedback))
 
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
