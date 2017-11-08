@@ -15,7 +15,7 @@ import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistInfoCase
  * @author  jieyi
  * @since   8/20/17
  */
-class FragmentChartAlbumDetailViewModel(private val albumInfoCase: BaseUsecase<AlbumEntity, GetAlbumInfoCase.RequestValue>,
+class ChartAlbumDetailFragmentViewModel(private val albumInfoCase: BaseUsecase<AlbumEntity, GetAlbumInfoCase.RequestValue>,
                                         private val artistInfoCase: BaseUsecase<ArtistEntity, GetArtistInfoCase.RequestValue>):
     BaseViewModel() {
     val artistImage by lazy { ObservableField<String>() }
@@ -30,7 +30,7 @@ class FragmentChartAlbumDetailViewModel(private val albumInfoCase: BaseUsecase<A
                         callback: (albumDetailCallback: AlbumEntity.Album) -> Unit) {
         lifecycleProvider.execute(albumInfoCase, GetAlbumInfoCase.RequestValue(artistName, albumName)) {
             onNext {
-                this@FragmentChartAlbumDetailViewModel.albumName.set(it.album?.name ?: "")
+                this@ChartAlbumDetailFragmentViewModel.albumName.set(it.album?.name ?: "")
                 albumSummary.set(it.album?.wiki?.content ?: "")
                 albumImage.set(it.album?.images?.get(EXTRA_LARGE)?.text ?: "")
                 albumTags.addAll(it.album?.tags?.tags?.map { it.name } ?: arrayListOf())
@@ -40,7 +40,7 @@ class FragmentChartAlbumDetailViewModel(private val albumInfoCase: BaseUsecase<A
 
         lifecycleProvider.execute(artistInfoCase, GetArtistInfoCase.RequestValue(artistName)) {
             onNext {
-                this@FragmentChartAlbumDetailViewModel.artistName.set(artistName)
+                this@ChartAlbumDetailFragmentViewModel.artistName.set(artistName)
                 it.artist?.images?.get(EXTRA_LARGE)?.text.let { artistImage.set(it) }
             }
         }

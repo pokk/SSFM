@@ -12,7 +12,7 @@ import taiwan.no1.app.ssfm.mvvm.models.usecases.GetTagInfoCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetTagTopAlbumsCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetTagTopArtistsCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetTagTopTracksCase
-import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartTagDetailViewModel
+import taiwan.no1.app.ssfm.mvvm.viewmodels.ChartTagDetailFragmentViewModel
 
 /**
  * A base component upon which fragment's components may depend. Activity-level components should extend this component.
@@ -28,6 +28,6 @@ class ChartTagDetailFragmentModule {
                          topAlbumsUsecase: BaseUsecase<TopAlbumEntity, GetTagTopAlbumsCase.RequestValue>,
                          topArtistsUsecase: BaseUsecase<TagTopArtistEntity, GetTagTopArtistsCase.RequestValue>,
                          topTracksUsecase: BaseUsecase<TopTrackEntity, GetTagTopTracksCase.RequestValue>):
-        FragmentChartTagDetailViewModel =
-        FragmentChartTagDetailViewModel(tagInfoUsecase, topAlbumsUsecase, topArtistsUsecase, topTracksUsecase)
+        ChartTagDetailFragmentViewModel =
+        ChartTagDetailFragmentViewModel(tagInfoUsecase, topAlbumsUsecase, topArtistsUsecase, topTracksUsecase)
 }

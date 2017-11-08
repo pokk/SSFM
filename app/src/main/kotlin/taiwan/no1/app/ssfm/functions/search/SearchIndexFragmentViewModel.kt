@@ -15,7 +15,7 @@ import taiwan.no1.app.ssfm.mvvm.models.usecases.GetTopTracksCase
  * @author  jieyi
  * @since   8/20/17
  */
-class FragmentSearchIndexViewModel(private val topArtistsUsecase: BaseUsecase<TopArtistEntity, GetTopArtistsCase.RequestValue>,
+class SearchIndexFragmentViewModel(private val topArtistsUsecase: BaseUsecase<TopArtistEntity, GetTopArtistsCase.RequestValue>,
                                    private val topTracksUsecase: BaseUsecase<TopTrackEntity, GetTopTracksCase.RequestValue>):
     BaseViewModel() {
     fun fetchArtistList(page: Int = 1, limit: Int = 20, callback: (List<ArtistEntity.Artist>, total: Int) -> Unit) =

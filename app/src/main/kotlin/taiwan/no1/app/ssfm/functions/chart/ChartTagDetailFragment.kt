@@ -16,7 +16,7 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
-import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartTagDetailViewModel
+import taiwan.no1.app.ssfm.mvvm.viewmodels.ChartTagDetailFragmentViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.itemdecorator.HorizontalItemDecorator
@@ -26,7 +26,7 @@ import javax.inject.Inject
  * @author  jieyi
  * @since   10/26/17
  */
-class ChartTagDetailFragment: AdvancedFragment<FragmentChartTagDetailViewModel, FragmentDetailTagBinding>() {
+class ChartTagDetailFragment: AdvancedFragment<ChartTagDetailFragmentViewModel, FragmentDetailTagBinding>() {
     //region Static initialization
     companion object Factory {
         // The key name of the fragment initialization parameters.
@@ -45,7 +45,7 @@ class ChartTagDetailFragment: AdvancedFragment<FragmentChartTagDetailViewModel, 
     }
     //endregion
 
-    @Inject override lateinit var viewModel: FragmentChartTagDetailViewModel
+    @Inject override lateinit var viewModel: ChartTagDetailFragmentViewModel
     private val albumInfo by lazy { DataInfo() }
     private val artistInfo by lazy { DataInfo() }
     private val trackInfo by lazy { DataInfo() }

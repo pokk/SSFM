@@ -3,6 +3,8 @@ package taiwan.no1.app.ssfm.functions.playlist
 import android.os.Bundle
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentMylistIndexBinding
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
+import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
 import javax.inject.Inject
 
@@ -25,6 +27,10 @@ class PlaylistIndexFragment: AdvancedFragment<FragmentPlaylistIndexViewModel, Fr
     //endregion
 
     @Inject override lateinit var viewModel: FragmentPlaylistIndexViewModel
+    private val playlistInfo by lazy { DataInfo() }
+    private val recentlyPlayedInfo by lazy { DataInfo() }
+    private var playlistRes = mutableListOf<BaseEntity>()
+    private var recentlyPlayedRes = mutableListOf<BaseEntity>()
 
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {

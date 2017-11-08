@@ -16,7 +16,7 @@ import taiwan.no1.app.ssfm.mvvm.models.usecases.SearchMusicCase
  * @author  jieyi
  * @since   8/20/17
  */
-class FragmentSearchResultViewModel(private val searchUsecase: BaseUsecase<SearchMusicEntity, SearchMusicCase.RequestValue>):
+class SearchResultFragmentViewModel(private val searchUsecase: BaseUsecase<SearchMusicEntity, SearchMusicCase.RequestValue>):
     BaseViewModel() {
     fun sendSearchRequest(keyword: String,
                           page: Int = 1,

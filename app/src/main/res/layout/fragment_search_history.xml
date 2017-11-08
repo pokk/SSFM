@@ -8,7 +8,7 @@
 
         <variable
             name="vm"
-            type="taiwan.no1.app.ssfm.functions.search.FragmentSearchHistoryViewModel"/>
+            type="taiwan.no1.app.ssfm.functions.search.SearchHistoryFragmentViewModel"/>
 
         <variable
             name="layoutManager"

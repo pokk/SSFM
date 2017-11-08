@@ -18,7 +18,7 @@ import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistTopTracksCase
  * @author  jieyi
  * @since   8/20/17
  */
-class FragmentChartArtistDetailViewModel(private val artistsInfoUsecase: BaseUsecase<ArtistEntity, GetArtistInfoCase.RequestValue>,
+class ChartArtistDetailFragmentViewModel(private val artistsInfoUsecase: BaseUsecase<ArtistEntity, GetArtistInfoCase.RequestValue>,
                                          private val artistTopTracksUsecase: BaseUsecase<ArtistTopTrackEntity, GetArtistTopTracksCase.RequestValue>,
                                          private val artistTopAlbumsUsecase: BaseUsecase<ArtistTopAlbumEntity, GetArtistTopAlbumsCase.RequestValue>):
     BaseViewModel() {

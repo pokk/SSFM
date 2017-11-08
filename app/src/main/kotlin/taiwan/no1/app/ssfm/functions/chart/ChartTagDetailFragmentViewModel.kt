@@ -18,7 +18,7 @@ import taiwan.no1.app.ssfm.mvvm.models.usecases.GetTagTopTracksCase
  * @author  jieyi
  * @since   10/26/17
  */
-class FragmentChartTagDetailViewModel(
+class ChartTagDetailFragmentViewModel(
     private val tagInfoUsecase: BaseUsecase<TagEntity, GetTagInfoCase.RequestValue>,
     private val topAlbumsUsecase: BaseUsecase<TopAlbumEntity, GetTagTopAlbumsCase.RequestValue>,
     private val topArtistsUsecase: BaseUsecase<TagTopArtistEntity, GetTagTopArtistsCase.RequestValue>,

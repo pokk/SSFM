@@ -12,7 +12,7 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
-import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartAlbumDetailViewModel
+import taiwan.no1.app.ssfm.mvvm.viewmodels.ChartAlbumDetailFragmentViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
 import javax.inject.Inject
@@ -22,7 +22,7 @@ import javax.inject.Inject
  * @author  jieyi
  * @since   11/1/17
  */
-class ChartAlbumDetailFragment: AdvancedFragment<FragmentChartAlbumDetailViewModel, FragmentDetailAlbumBinding>() {
+class ChartAlbumDetailFragment: AdvancedFragment<ChartAlbumDetailFragmentViewModel, FragmentDetailAlbumBinding>() {
     //region Static initialization
     companion object Factory {
         // The key name of the fragment initialization parameters.
@@ -43,7 +43,7 @@ class ChartAlbumDetailFragment: AdvancedFragment<FragmentChartAlbumDetailViewMod
     }
     //endregion
 
-    @Inject override lateinit var viewModel: FragmentChartAlbumDetailViewModel
+    @Inject override lateinit var viewModel: ChartAlbumDetailFragmentViewModel
     private val tagInfo by lazy { DataInfo() }
     private val trackInfo by lazy { DataInfo() }
     private var tagRes = mutableListOf<BaseEntity>()

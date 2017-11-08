@@ -26,7 +26,7 @@ import javax.inject.Inject
  * @author  jieyi
  * @since   8/20/17
  */
-class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, FragmentSearchIndexBinding>() {
+class SearchIndexFragment: AdvancedFragment<SearchIndexFragmentViewModel, FragmentSearchIndexBinding>() {
     //region Static initialization
     companion object Factory {
         /**
@@ -38,7 +38,7 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
     }
     //endregion
 
-    @Inject override lateinit var viewModel: FragmentSearchIndexViewModel
+    @Inject override lateinit var viewModel: SearchIndexFragmentViewModel
     private val artistInfo by lazy { DataInfo() }
     private val trackInfo by lazy { DataInfo() }
     private var artistRes = mutableListOf<BaseEntity>()
@@ -48,6 +48,8 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
     override fun init(savedInstanceState: Bundle?) {
         binding?.apply {
             artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            trackLayoutManager = WrapContentLinearLayoutManager(activity)
+
             artistAdapter = BaseDataBindingAdapter<ItemArtistType1Binding, BaseEntity>(R.layout.item_artist_type_1,
                 artistRes) { holder, item ->
                 holder.binding.avm = RecyclerViewSearchArtistChartViewModel(item).apply {
@@ -56,18 +58,19 @@ class SearchIndexFragment: AdvancedFragment<FragmentSearchIndexViewModel, Fragme
                 val sd = App.compactContext.scaledDrawable(R.drawable.lb_ic_thumb_up_outline, 0.5f, 0.5f)
                 holder.binding.tvPlayCount.setCompoundDrawables(sd, null, null, null)
             }
-            artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as ArtistAdapter, artistInfo,
-                artistRes, viewModel::fetchArtistList)
-            artistDecoration = HorizontalItemDecorator(20)
-            trackLayoutManager = WrapContentLinearLayoutManager(activity)
             trackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, BaseEntity>(R.layout.item_music_type_1,
                 trackRes) { holder, item ->
                 holder.binding.avm = RecyclerViewSearchTrackChartViewModel(item).apply {
                     onAttach(this@SearchIndexFragment)
                 }
             }
+
+            artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as ArtistAdapter, artistInfo,
+                artistRes, viewModel::fetchArtistList)
             trackLoadmore = RVCustomScrollCallback(binding?.trackAdapter as TrackAdapter, trackInfo,
                 trackRes, viewModel::fetchTrackList)
+
+            artistDecoration = HorizontalItemDecorator(20)
         }
         // First time showing this fragment.
         artistInfo.firstFetch {

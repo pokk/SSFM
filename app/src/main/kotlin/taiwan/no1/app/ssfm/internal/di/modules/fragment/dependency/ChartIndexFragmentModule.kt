@@ -8,7 +8,7 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTagEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetTopArtistsCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetTopTagsCase
-import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartIndexViewModel
+import taiwan.no1.app.ssfm.mvvm.viewmodels.ChartIndexFragmentViewModel
 
 /**
  * A base component upon which fragment's components may depend. Activity-level components should extend this component.
@@ -22,5 +22,5 @@ class ChartIndexFragmentModule {
     @PerFragment
     fun provideViewModel(topArtistsUsecase: BaseUsecase<TopArtistEntity, GetTopArtistsCase.RequestValue>,
                          topTagsUsecase: BaseUsecase<TopTagEntity, GetTopTagsCase.RequestValue>):
-        FragmentChartIndexViewModel = FragmentChartIndexViewModel(topArtistsUsecase, topTagsUsecase)
+        ChartIndexFragmentViewModel = ChartIndexFragmentViewModel(topArtistsUsecase, topTagsUsecase)
 }

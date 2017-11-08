@@ -13,7 +13,7 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
-import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartArtistDetailViewModel
+import taiwan.no1.app.ssfm.mvvm.viewmodels.ChartArtistDetailFragmentViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.itemdecorator.HorizontalItemDecorator
@@ -24,7 +24,7 @@ import javax.inject.Inject
  * @author  jieyi
  * @since   8/20/17
  */
-class ChartArtistDetailFragment: AdvancedFragment<FragmentChartArtistDetailViewModel, FragmentDetailArtistBinding>() {
+class ChartArtistDetailFragment: AdvancedFragment<ChartArtistDetailFragmentViewModel, FragmentDetailArtistBinding>() {
     //region Static initialization
     companion object Factory {
         // The key name of the fragment initialization parameters.
@@ -45,7 +45,7 @@ class ChartArtistDetailFragment: AdvancedFragment<FragmentChartArtistDetailViewM
     }
     //endregion
 
-    @Inject override lateinit var viewModel: FragmentChartArtistDetailViewModel
+    @Inject override lateinit var viewModel: ChartArtistDetailFragmentViewModel
     private val artistInfo by lazy { DataInfo() }
     private val trackInfo by lazy { DataInfo() }
     private var artistRes = mutableListOf<BaseEntity>()

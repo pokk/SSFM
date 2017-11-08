@@ -20,7 +20,7 @@ import javax.inject.Inject
  * @author  jieyi
  * @since   8/20/17
  */
-class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, FragmentSearchHistoryBinding>() {
+class SearchHistoryFragment: AdvancedFragment<SearchHistoryFragmentViewModel, FragmentSearchHistoryBinding>() {
     //region Static initialization
     companion object Factory {
         /**
@@ -32,7 +32,7 @@ class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, Fr
     }
     //endregion
 
-    @Inject override lateinit var viewModel: FragmentSearchHistoryViewModel
+    @Inject override lateinit var viewModel: SearchHistoryFragmentViewModel
     // This usecase is for each items of the recyclerview.
     @Inject lateinit var deleteUsecase: BaseUsecase<Boolean, RemoveKeywordHistoriesCase.RequestValue>
     private var searchRes = mutableListOf<BaseEntity>()
@@ -47,6 +47,7 @@ class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, Fr
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
         binding?.apply {
+            layoutManager = WrapContentLinearLayoutManager(activity)
             adapter = BaseDataBindingAdapter<ItemSearchHistoryType1Binding, BaseEntity>(R.layout.item_search_history_type_1,
                 searchRes) { holder, item ->
                 holder.binding.avm = RecyclerViewSearchHistoryViewModel(item,
@@ -54,7 +55,6 @@ class SearchHistoryFragment: AdvancedFragment<FragmentSearchHistoryViewModel, Fr
                     deleteUsecase).
                     apply { deleteItemListener = deleteItem }
             }
-            layoutManager = WrapContentLinearLayoutManager(activity)
         }
 
         viewModel.fetchHistoryList { searchRes.refreshRecyclerView { addAll(it) } }

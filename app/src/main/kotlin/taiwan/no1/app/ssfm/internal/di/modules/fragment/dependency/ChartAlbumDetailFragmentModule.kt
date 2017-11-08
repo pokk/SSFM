@@ -8,7 +8,7 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetAlbumInfoCase
 import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistInfoCase
-import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartAlbumDetailViewModel
+import taiwan.no1.app.ssfm.mvvm.viewmodels.ChartAlbumDetailFragmentViewModel
 
 /**
  * A base component upon which fragment's components may depend. Activity-level components should extend this component.
@@ -22,5 +22,5 @@ class ChartAlbumDetailFragmentModule {
     @PerFragment
     fun provideViewModel(albumsUsecase: BaseUsecase<AlbumEntity, GetAlbumInfoCase.RequestValue>,
                          artistUsecase: BaseUsecase<ArtistEntity, GetArtistInfoCase.RequestValue>):
-        FragmentChartAlbumDetailViewModel = FragmentChartAlbumDetailViewModel(albumsUsecase, artistUsecase)
+        ChartAlbumDetailFragmentViewModel = ChartAlbumDetailFragmentViewModel(albumsUsecase, artistUsecase)
 }

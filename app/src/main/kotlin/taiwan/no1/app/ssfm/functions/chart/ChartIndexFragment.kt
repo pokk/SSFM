@@ -24,7 +24,7 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.extension.scaledDrawable
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
-import taiwan.no1.app.ssfm.mvvm.viewmodels.FragmentChartIndexViewModel
+import taiwan.no1.app.ssfm.mvvm.viewmodels.ChartIndexFragmentViewModel
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.itemdecorator.GridSpacingItemDecorator
@@ -36,7 +36,7 @@ import javax.inject.Inject
  * @author  jieyi
  * @since   8/20/17
  */
-class ChartIndexFragment: AdvancedFragment<FragmentChartIndexViewModel, FragmentChartIndexBinding>() {
+class ChartIndexFragment: AdvancedFragment<ChartIndexFragmentViewModel, FragmentChartIndexBinding>() {
     //region Static initialization
     companion object Factory {
         /**
@@ -48,7 +48,7 @@ class ChartIndexFragment: AdvancedFragment<FragmentChartIndexViewModel, Fragment
     }
     //endregion
 
-    @Inject override lateinit var viewModel: FragmentChartIndexViewModel
+    @Inject override lateinit var viewModel: ChartIndexFragmentViewModel
     private val artistInfo by lazy { DataInfo(limit = 30) }
     private val tagInfo by lazy { DataInfo() }
     private var artistRes = mutableListOf<BaseEntity>()

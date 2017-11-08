@@ -19,7 +19,7 @@ import javax.inject.Inject
  * @author  jieyi
  * @since   8/20/17
  */
-class SearchResultFragment: AdvancedFragment<FragmentSearchResultViewModel, FragmentSearchResultBinding>() {
+class SearchResultFragment: AdvancedFragment<SearchResultFragmentViewModel, FragmentSearchResultBinding>() {
     //region Static initialization
     companion object Factory {
         /**
@@ -31,7 +31,7 @@ class SearchResultFragment: AdvancedFragment<FragmentSearchResultViewModel, Frag
     }
     //endregion
 
-    @Inject override lateinit var viewModel: FragmentSearchResultViewModel
+    @Inject override lateinit var viewModel: SearchResultFragmentViewModel
     var keyword: String = ""
     private var res = mutableListOf<InfoBean>()
     private val resInfo by lazy { DataInfo() }
@@ -49,11 +49,11 @@ class SearchResultFragment: AdvancedFragment<FragmentSearchResultViewModel, Frag
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
         binding?.apply {
+            layoutManager = WrapContentLinearLayoutManager(activity)
             adapter = BaseDataBindingAdapter<ItemSearchMusicType1Binding, InfoBean>(R.layout.item_search_music_type_1,
                 res) { holder, item ->
                 holder.binding.avm = RecyclerViewSearchMusicResultViewModel(item, activity)
             }
-            layoutManager = WrapContentLinearLayoutManager(activity)
             loadmore = object: RecyclerViewScrollCallback {
                 override fun loadMoreEvent(recyclerView: RecyclerView, total: Int) {
                     if (resInfo.canLoadMoreFlag && !resInfo.isLoading) {

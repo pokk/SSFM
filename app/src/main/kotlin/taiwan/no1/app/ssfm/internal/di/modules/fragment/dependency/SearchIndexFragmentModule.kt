@@ -2,7 +2,7 @@ package taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency
 
 import dagger.Module
 import dagger.Provides
-import taiwan.no1.app.ssfm.functions.search.FragmentSearchIndexViewModel
+import taiwan.no1.app.ssfm.functions.search.SearchIndexFragmentViewModel
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerFragment
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopArtistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTrackEntity
@@ -22,5 +22,5 @@ class SearchIndexFragmentModule {
     @PerFragment
     fun provideViewModel(topArtistsUsecase: BaseUsecase<TopArtistEntity, GetTopArtistsCase.RequestValue>,
                          topTracksUsecase: BaseUsecase<TopTrackEntity, GetTopTracksCase.RequestValue>):
-        FragmentSearchIndexViewModel = FragmentSearchIndexViewModel(topArtistsUsecase, topTracksUsecase)
+        SearchIndexFragmentViewModel = SearchIndexFragmentViewModel(topArtistsUsecase, topTracksUsecase)
 }

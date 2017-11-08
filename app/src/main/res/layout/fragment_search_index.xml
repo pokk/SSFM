@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="taiwan.no1.app.ssfm.functions.search.FragmentSearchIndexViewModel"/>
+            type="taiwan.no1.app.ssfm.functions.search.SearchIndexFragmentViewModel"/>
 
         <variable
             name="artistLayoutManager"
