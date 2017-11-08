@@ -1,8 +1,8 @@
-package taiwan.no1.app.ssfm.mvvm.models.usecases
+package taiwan.no1.app.ssfm.models.usecases
 
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.models.data.IDataStore
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.ArtistEntity
 
 /**
  * @author  jieyi
@@ -10,7 +10,7 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
  */
 class GetArtistInfoCase(repository: IDataStore): BaseUsecase<ArtistEntity, GetArtistInfoCase.RequestValue>(repository) {
     override fun fetchUsecase(): Observable<ArtistEntity> =
-        (parameters ?: GetArtistInfoCase.RequestValue()).let { repository.getArtistInfo(it.Mbid, it.artist) }
+        (parameters ?: RequestValue()).let { repository.getArtistInfo(it.Mbid, it.artist) }
 
     data class RequestValue(val artist: String = "", val Mbid: String = ""): RequestValues
 }

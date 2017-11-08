@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.models.usecases
+package taiwan.no1.app.ssfm.models.usecases
 
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.models.data.IDataStore
@@ -12,7 +12,7 @@ import taiwan.no1.app.ssfm.models.data.IDataStore
 class RemoveKeywordHistoriesCase(repository: IDataStore):
     BaseUsecase<Boolean, RemoveKeywordHistoriesCase.RequestValue>(repository) {
     override fun fetchUsecase(): Observable<Boolean> =
-        (parameters ?: RemoveKeywordHistoriesCase.RequestValue()).let { repository.removeKeywords(it.keyword) }
+        (parameters ?: RequestValue()).let { repository.removeKeywords(it.keyword) }
 
     data class RequestValue(val keyword: String = ""): RequestValues
 }

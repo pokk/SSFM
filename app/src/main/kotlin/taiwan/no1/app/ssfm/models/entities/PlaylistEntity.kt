@@ -3,8 +3,8 @@ package taiwan.no1.app.ssfm.models.entities
 import com.raizlabs.android.dbflow.annotation.PrimaryKey
 import com.raizlabs.android.dbflow.annotation.Table
 import com.raizlabs.android.dbflow.rx2.structure.BaseRXModel
-import taiwan.no1.app.ssfm.mvvm.models.data.local.database.MusicDatabase
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.models.data.local.database.MusicDatabase
+import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 
 /**
  * @author  jieyi

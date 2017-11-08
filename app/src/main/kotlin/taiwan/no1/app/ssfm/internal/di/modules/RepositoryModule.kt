@@ -6,8 +6,8 @@ import dagger.Provides
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Local
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Remote
 import taiwan.no1.app.ssfm.models.data.IDataStore
+import taiwan.no1.app.ssfm.models.data.local.LocalDataStore
 import taiwan.no1.app.ssfm.models.data.remote.RemoteDataStore
-import taiwan.no1.app.ssfm.mvvm.models.data.local.LocalDataStore
 
 /**
  * Dagger module that provides the required objects of [taiwan.no1.app.ssfm.mvvm.models.data.repositories.DataRepository].

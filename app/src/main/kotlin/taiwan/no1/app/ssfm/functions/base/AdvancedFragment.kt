@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.views
+package taiwan.no1.app.ssfm.functions.base
 
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import taiwan.no1.app.ssfm.functions.base.IViewModel
 import java.lang.reflect.ParameterizedType
 
 /**

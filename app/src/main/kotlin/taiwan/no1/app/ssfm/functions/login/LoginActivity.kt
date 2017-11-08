@@ -3,8 +3,8 @@ package taiwan.no1.app.ssfm.functions.login
 import android.app.Activity
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityLoginBinding
+import taiwan.no1.app.ssfm.functions.base.AdvancedActivity
 import taiwan.no1.app.ssfm.misc.widgets.MenuItem
-import taiwan.no1.app.ssfm.mvvm.views.AdvancedActivity
 import javax.inject.Inject
 
 /**

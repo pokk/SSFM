@@ -2,7 +2,7 @@ package taiwan.no1.app.ssfm.models.entities
 
 import android.support.annotation.DrawableRes
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.viewtype.ExpandableViewTypeFactory
-import taiwan.no1.app.ssfm.mvvm.models.IExpandVisitable
+import taiwan.no1.app.ssfm.models.IExpandVisitable
 
 /**
  * The entity of the main item of the preference setting with a toggle button.

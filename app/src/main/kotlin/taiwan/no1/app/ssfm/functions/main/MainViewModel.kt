@@ -6,8 +6,8 @@ import android.view.View
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.models.entities.TagEntity
-import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.DetailMusicCase
+import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
+import taiwan.no1.app.ssfm.models.usecases.DetailMusicCase
 
 /**
  *

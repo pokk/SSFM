@@ -24,7 +24,6 @@ import taiwan.no1.app.ssfm.functions.play.PlayMainActivity
 import taiwan.no1.app.ssfm.functions.playlist.PlaylistActivity
 import taiwan.no1.app.ssfm.functions.preference.PreferenceActivity
 import taiwan.no1.app.ssfm.functions.search.SearchActivity
-import taiwan.no1.app.ssfm.mvvm.views.BaseActivity
 import java.util.concurrent.TimeUnit.MILLISECONDS
 
 /**

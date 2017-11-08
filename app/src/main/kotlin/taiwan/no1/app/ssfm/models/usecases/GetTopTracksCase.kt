@@ -1,8 +1,8 @@
-package taiwan.no1.app.ssfm.mvvm.models.usecases
+package taiwan.no1.app.ssfm.models.usecases
 
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.models.data.IDataStore
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTrackEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.TopTrackEntity
 
 /**
  * @author  jieyi
@@ -11,7 +11,7 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTrackEntity
 class GetTopTracksCase(repository: IDataStore): BaseUsecase<TopTrackEntity, GetTopTracksCase.RequestValue>(
     repository) {
     override fun fetchUsecase(): Observable<TopTrackEntity> =
-        (parameters ?: GetTopTracksCase.RequestValue()).let { repository.getChartTopTracks(it.page, it.limit) }
+        (parameters ?: RequestValue()).let { repository.getChartTopTracks(it.page, it.limit) }
 
     data class RequestValue(val page: Int = 1, val limit: Int = 20): RequestValues
 }

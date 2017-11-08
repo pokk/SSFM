@@ -8,8 +8,8 @@ import taiwan.no1.app.ssfm.misc.constants.Constant
 import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity.InfoBean
-import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.SearchMusicCase
+import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
+import taiwan.no1.app.ssfm.models.usecases.SearchMusicCase
 
 /**
  *

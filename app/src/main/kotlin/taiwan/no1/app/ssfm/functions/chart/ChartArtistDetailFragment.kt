@@ -6,17 +6,16 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailArtistBinding
 import taiwan.no1.app.ssfm.databinding.ItemArtistType2Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType2Binding
+import taiwan.no1.app.ssfm.functions.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.ArtistTopTrackAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.SimilarArtistAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
-import taiwan.no1.app.ssfm.mvvm.viewmodels.ChartArtistDetailFragmentViewModel
-import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
-import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
-import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.itemdecorator.HorizontalItemDecorator
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.itemdecorator.HorizontalItemDecorator
+import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import javax.inject.Inject
 
 /**

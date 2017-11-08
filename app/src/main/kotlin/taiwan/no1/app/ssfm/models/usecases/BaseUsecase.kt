@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.models.usecases
+package taiwan.no1.app.ssfm.models.usecases
 
 import com.devrapid.kotlinknifer.ObserverPlugin
 import com.trello.rxlifecycle2.LifecycleProvider
@@ -9,7 +9,7 @@ import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import taiwan.no1.app.ssfm.models.data.IDataStore
-import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase.RequestValues
+import taiwan.no1.app.ssfm.models.usecases.BaseUsecase.RequestValues
 
 /**
  * Abstract class for a Use Case as an inter-actor.

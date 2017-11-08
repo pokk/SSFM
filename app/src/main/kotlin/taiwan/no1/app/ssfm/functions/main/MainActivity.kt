@@ -3,7 +3,7 @@ package taiwan.no1.app.ssfm.functions.main
 import android.app.Activity
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityMainBinding
-import taiwan.no1.app.ssfm.mvvm.views.AdvancedActivity
+import taiwan.no1.app.ssfm.functions.base.AdvancedActivity
 import javax.inject.Inject
 
 class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>() {

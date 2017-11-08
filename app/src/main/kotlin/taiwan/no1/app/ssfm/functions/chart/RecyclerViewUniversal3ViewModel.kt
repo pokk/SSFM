@@ -12,8 +12,8 @@ import com.bumptech.glide.request.target.Target
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes
 import taiwan.no1.app.ssfm.misc.extension.palette
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
 
 /**
  *

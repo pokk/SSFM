@@ -1,11 +1,10 @@
-package taiwan.no1.app.ssfm.mvvm.views
+package taiwan.no1.app.ssfm.functions.base
 
 import android.app.Activity
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.annotation.CallSuper
-import taiwan.no1.app.ssfm.functions.base.IViewModel
 import java.lang.reflect.ParameterizedType
 
 /**

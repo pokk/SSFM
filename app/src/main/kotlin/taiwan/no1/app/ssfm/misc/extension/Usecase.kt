@@ -2,8 +2,8 @@ package taiwan.no1.app.ssfm.misc.extension
 
 import com.devrapid.kotlinknifer.ObserverPlugin
 import com.trello.rxlifecycle2.LifecycleProvider
-import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase.RequestValues
+import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
+import taiwan.no1.app.ssfm.models.usecases.BaseUsecase.RequestValues
 
 /**
  * @author  jieyi

@@ -1,15 +1,15 @@
-package taiwan.no1.app.ssfm.mvvm.viewmodels
+package taiwan.no1.app.ssfm.functions.chart
 
 import android.databinding.ObservableArrayList
 import android.databinding.ObservableField
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.EXTRA_LARGE
 import taiwan.no1.app.ssfm.misc.extension.execute
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.GetAlbumInfoCase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistInfoCase
+import taiwan.no1.app.ssfm.models.entities.lastfm.AlbumEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.ArtistEntity
+import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
+import taiwan.no1.app.ssfm.models.usecases.GetAlbumInfoCase
+import taiwan.no1.app.ssfm.models.usecases.GetArtistInfoCase
 
 /**
  * @author  jieyi

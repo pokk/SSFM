@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.models.data.remote.services
+package taiwan.no1.app.ssfm.models.data.remote.services
 
 import io.reactivex.Observable
 import retrofit2.http.GET
@@ -8,19 +8,19 @@ import taiwan.no1.app.ssfm.models.data.remote.config.Music2Config
 import taiwan.no1.app.ssfm.models.data.remote.config.Music3Config
 import taiwan.no1.app.ssfm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistSimilarEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopTrackEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagTopArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopAlbumEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTagEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTrackEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackSimilarEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.AlbumEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.ArtistEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.ArtistSimilarEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.ArtistTopAlbumEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.ArtistTopTrackEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.TagEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.TagTopArtistEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.TopAlbumEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.TopArtistEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.TopTagEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.TopTrackEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.TrackSimilarEntity
 
 /**
  * Http api request interface set by using [retrofit2.Retrofit].

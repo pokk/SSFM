@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.models.entities.lastfm
+package taiwan.no1.app.ssfm.models.entities.lastfm
 
 /**
  * @author  jieyi

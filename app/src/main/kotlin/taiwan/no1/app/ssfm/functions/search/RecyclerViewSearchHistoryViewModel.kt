@@ -8,9 +8,9 @@ import com.devrapid.kotlinknifer.observer
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
 import taiwan.no1.app.ssfm.models.entities.KeywordEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
-import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.RemoveKeywordHistoriesCase
+import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
+import taiwan.no1.app.ssfm.models.usecases.RemoveKeywordHistoriesCase
 
 /**
  *

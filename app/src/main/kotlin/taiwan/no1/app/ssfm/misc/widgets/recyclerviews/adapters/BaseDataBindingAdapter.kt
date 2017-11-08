@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters
+package taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters
 
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
@@ -7,7 +7,7 @@ import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.viewholders.BindingHolder
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.viewholders.BindingHolder
 
 /**
  *

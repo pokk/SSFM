@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.views
+package taiwan.no1.app.ssfm.functions.base
 
 import android.os.Bundle
 import android.support.annotation.CallSuper
@@ -19,7 +19,6 @@ import kotlinx.android.synthetic.main.part_toolbar_menu.tb_toolbar
 import kotlinx.android.synthetic.main.part_toolbar_menu.view.iv_content_hamburger
 import kotlinx.android.synthetic.main.part_toolbar_view.iv_content_hamburger
 import taiwan.no1.app.ssfm.R
-import taiwan.no1.app.ssfm.functions.base.Navigator
 import javax.inject.Inject
 
 /**

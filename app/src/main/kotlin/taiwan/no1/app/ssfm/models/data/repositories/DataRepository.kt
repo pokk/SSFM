@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.models.data.repositories
+package taiwan.no1.app.ssfm.models.data.repositories
 
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Local
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Remote

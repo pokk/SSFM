@@ -4,8 +4,8 @@ import android.databinding.ObservableField
 import android.view.View
 import com.devrapid.kotlinknifer.toTimeString
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
 
 /**
  *

@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="taiwan.no1.app.ssfm.mvvm.viewmodels.ChartAlbumDetailFragmentViewModel"/>
+            type="taiwan.no1.app.ssfm.functions.chart.ChartAlbumDetailFragmentViewModel"/>
 
         <variable
             name="trackLayoutManager"

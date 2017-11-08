@@ -1,18 +1,18 @@
-package taiwan.no1.app.ssfm.mvvm.viewmodels
+package taiwan.no1.app.ssfm.functions.chart
 
 import android.databinding.ObservableField
 import com.devrapid.kotlinknifer.loge
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.EXTRA_LARGE
 import taiwan.no1.app.ssfm.misc.extension.execute
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopAlbumEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistTopTrackEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
-import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistInfoCase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistTopAlbumsCase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.GetArtistTopTracksCase
+import taiwan.no1.app.ssfm.models.entities.lastfm.ArtistEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.ArtistTopAlbumEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.ArtistTopTrackEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
+import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
+import taiwan.no1.app.ssfm.models.usecases.GetArtistInfoCase
+import taiwan.no1.app.ssfm.models.usecases.GetArtistTopAlbumsCase
+import taiwan.no1.app.ssfm.models.usecases.GetArtistTopTracksCase
 
 /**
  * @author  jieyi

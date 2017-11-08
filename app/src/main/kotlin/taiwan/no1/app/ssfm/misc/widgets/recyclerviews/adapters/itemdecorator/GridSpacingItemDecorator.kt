@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.itemdecorator
+package taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.itemdecorator
 
 import android.graphics.Rect
 import android.support.v7.widget.RecyclerView

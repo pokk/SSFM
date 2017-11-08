@@ -6,8 +6,8 @@ import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
 
 /**
  *

@@ -6,8 +6,8 @@ import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.EXTRA_LARGE
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.ArtistEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 
 /**
  *

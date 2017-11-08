@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.views.fragments
+package taiwan.no1.app.ssfm.functions.chart
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -10,10 +10,7 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentChartIndexBinding
 import taiwan.no1.app.ssfm.databinding.ItemArtistType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemTagType1Binding
-import taiwan.no1.app.ssfm.functions.chart.ChartActivity
-import taiwan.no1.app.ssfm.functions.chart.ChartArtistDetailFragment
-import taiwan.no1.app.ssfm.functions.chart.ChartTagDetailFragment
-import taiwan.no1.app.ssfm.functions.chart.RecyclerViewChartTagViewModel
+import taiwan.no1.app.ssfm.functions.base.AdvancedFragment
 import taiwan.no1.app.ssfm.functions.search.RecyclerViewSearchArtistChartViewModel
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.ArtistAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
@@ -23,12 +20,10 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.extension.scaledDrawable
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
-import taiwan.no1.app.ssfm.mvvm.viewmodels.ChartIndexFragmentViewModel
-import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
-import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
-import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.itemdecorator.GridSpacingItemDecorator
-import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.itemdecorator.HorizontalItemDecorator
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.itemdecorator.GridSpacingItemDecorator
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.itemdecorator.HorizontalItemDecorator
+import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import javax.inject.Inject
 
 

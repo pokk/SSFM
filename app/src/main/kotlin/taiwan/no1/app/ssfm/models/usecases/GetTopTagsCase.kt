@@ -1,8 +1,8 @@
-package taiwan.no1.app.ssfm.mvvm.models.usecases
+package taiwan.no1.app.ssfm.models.usecases
 
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.models.data.IDataStore
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTagEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.TopTagEntity
 
 /**
  * @author  jieyi
@@ -10,7 +10,7 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTagEntity
  */
 class GetTopTagsCase(repository: IDataStore): BaseUsecase<TopTagEntity, GetTopTagsCase.RequestValue>(repository) {
     override fun fetchUsecase(): Observable<TopTagEntity> =
-        (parameters ?: GetTopTagsCase.RequestValue()).let { repository.getChartTopTags() }
+        (parameters ?: RequestValue()).let { repository.getChartTopTags() }
 
     data class RequestValue(val page: Int = 1, val limit: Int = 30): RequestValues
 }

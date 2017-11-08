@@ -5,8 +5,8 @@ import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistUsecase
+import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.models.usecases.GetPlaylistItemsUsecase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
 
 /**
  * @author  jieyi

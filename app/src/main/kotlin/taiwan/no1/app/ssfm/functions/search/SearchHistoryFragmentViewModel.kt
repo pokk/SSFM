@@ -4,8 +4,8 @@ import android.content.Context
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.models.entities.KeywordEntity
-import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.GetKeywordHistoriesCase
+import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
+import taiwan.no1.app.ssfm.models.usecases.GetKeywordHistoriesCase
 
 /**
  *

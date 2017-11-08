@@ -1,8 +1,8 @@
-package taiwan.no1.app.ssfm.mvvm.models.usecases
+package taiwan.no1.app.ssfm.models.usecases
 
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.models.data.IDataStore
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopAlbumEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.TopAlbumEntity
 
 /**
  * @author  jieyi

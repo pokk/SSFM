@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.models.usecases
+package taiwan.no1.app.ssfm.models.usecases
 
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.misc.constants.Constant
@@ -13,7 +13,7 @@ import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity
  */
 class SearchMusicCase(repository: IDataStore): BaseUsecase<SearchMusicEntity, SearchMusicCase.RequestValue>(repository) {
     override fun fetchUsecase(): Observable<SearchMusicEntity> =
-        (parameters ?: SearchMusicCase.RequestValue()).let {
+        (parameters ?: RequestValue()).let {
             repository.getSearchMusicRes(it.singerOrSongName, it.page, it.pageSize)
         }
 

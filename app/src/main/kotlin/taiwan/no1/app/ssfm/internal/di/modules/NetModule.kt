@@ -12,8 +12,8 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.Network
-import taiwan.no1.app.ssfm.mvvm.models.data.remote.RestfulApiFactory
-import taiwan.no1.app.ssfm.mvvm.models.data.remote.services.MusicServices
+import taiwan.no1.app.ssfm.models.data.remote.RestfulApiFactory
+import taiwan.no1.app.ssfm.models.data.remote.services.MusicServices
 import javax.inject.Named
 
 /**

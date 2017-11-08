@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.models.entities.lastfm
+package taiwan.no1.app.ssfm.models.entities.lastfm
 
 import android.support.annotation.IntDef
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.EXTRA_LARGE

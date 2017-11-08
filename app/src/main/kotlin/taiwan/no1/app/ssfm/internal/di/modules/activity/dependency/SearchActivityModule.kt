@@ -5,9 +5,9 @@ import dagger.Module
 import dagger.Provides
 import taiwan.no1.app.ssfm.functions.search.SearchViewModel
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerActivity
-import taiwan.no1.app.ssfm.mvvm.models.data.repositories.DataRepository
-import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.SaveKeywordHistoryCase
+import taiwan.no1.app.ssfm.models.data.repositories.DataRepository
+import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
+import taiwan.no1.app.ssfm.models.usecases.SaveKeywordHistoryCase
 
 /**
  *

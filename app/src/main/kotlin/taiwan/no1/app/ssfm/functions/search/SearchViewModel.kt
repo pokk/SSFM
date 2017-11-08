@@ -16,8 +16,8 @@ import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.FRAGMENT_SEARCH_INDEX
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.FRAGMENT_SEARCH_RESULT
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.VIEWMODEL_CLICK_HISTORY
 import taiwan.no1.app.ssfm.misc.extension.execute
-import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.SaveKeywordHistoryCase
+import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
+import taiwan.no1.app.ssfm.models.usecases.SaveKeywordHistoryCase
 
 /**
  *

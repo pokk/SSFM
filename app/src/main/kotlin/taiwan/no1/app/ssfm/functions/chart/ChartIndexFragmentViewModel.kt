@@ -1,14 +1,14 @@
-package taiwan.no1.app.ssfm.mvvm.viewmodels
+package taiwan.no1.app.ssfm.functions.chart
 
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.extension.execute
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTagEntity
-import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.GetTopArtistsCase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.GetTopTagsCase
+import taiwan.no1.app.ssfm.models.entities.lastfm.ArtistEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.TagEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.TopArtistEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.TopTagEntity
+import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
+import taiwan.no1.app.ssfm.models.usecases.GetTopArtistsCase
+import taiwan.no1.app.ssfm.models.usecases.GetTopTagsCase
 
 /**
  * @author  jieyi

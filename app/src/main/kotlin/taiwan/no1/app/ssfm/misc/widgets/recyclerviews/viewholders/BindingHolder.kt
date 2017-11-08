@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.views.recyclerviews.viewholders
+package taiwan.no1.app.ssfm.misc.widgets.recyclerviews.viewholders
 
 import android.databinding.ViewDataBinding
 import android.support.v7.widget.RecyclerView

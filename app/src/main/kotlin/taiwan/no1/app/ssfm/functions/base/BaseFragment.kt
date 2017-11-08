@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.views
+package taiwan.no1.app.ssfm.functions.base
 
 import android.app.Activity
 import android.app.Fragment

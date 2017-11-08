@@ -2,13 +2,13 @@ package taiwan.no1.app.ssfm.functions.search
 
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.extension.execute
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopArtistEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TopTrackEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
-import taiwan.no1.app.ssfm.mvvm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.GetTopArtistsCase
-import taiwan.no1.app.ssfm.mvvm.models.usecases.GetTopTracksCase
+import taiwan.no1.app.ssfm.models.entities.lastfm.ArtistEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.TopArtistEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.TopTrackEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
+import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
+import taiwan.no1.app.ssfm.models.usecases.GetTopArtistsCase
+import taiwan.no1.app.ssfm.models.usecases.GetTopTracksCase
 
 
 /**

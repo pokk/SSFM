@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.models.data.remote
+package taiwan.no1.app.ssfm.models.data.remote
 
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.Network
 import taiwan.no1.app.ssfm.models.data.remote.config.IApiConfig

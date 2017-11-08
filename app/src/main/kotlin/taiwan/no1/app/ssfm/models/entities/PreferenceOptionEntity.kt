@@ -1,7 +1,7 @@
 package taiwan.no1.app.ssfm.models.entities
 
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.viewtype.ExpandableViewTypeFactory
-import taiwan.no1.app.ssfm.mvvm.models.IExpandVisitable
+import taiwan.no1.app.ssfm.models.IExpandVisitable
 
 /**
  * The entity of the sub-item of the options in preference setting.

@@ -2,7 +2,7 @@ package taiwan.no1.app.ssfm.functions.main
 
 import android.os.Bundle
 import taiwan.no1.app.ssfm.R
-import taiwan.no1.app.ssfm.mvvm.views.BaseActivity
+import taiwan.no1.app.ssfm.functions.base.BaseActivity
 
 /**
  * Just for testing the custom view.

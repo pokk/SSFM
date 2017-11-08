@@ -7,6 +7,7 @@ import taiwan.no1.app.ssfm.databinding.FragmentDetailTagBinding
 import taiwan.no1.app.ssfm.databinding.ItemUniversalType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemUniversalType2Binding
 import taiwan.no1.app.ssfm.databinding.ItemUniversalType3Binding
+import taiwan.no1.app.ssfm.functions.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RVCustomScrollCallback
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.Universal1Adapter
@@ -15,11 +16,9 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.Universal3Adapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
-import taiwan.no1.app.ssfm.mvvm.viewmodels.ChartTagDetailFragmentViewModel
-import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
-import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
-import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.itemdecorator.HorizontalItemDecorator
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.itemdecorator.HorizontalItemDecorator
+import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import javax.inject.Inject
 
 /**

@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.mvvm.models
+package taiwan.no1.app.ssfm.models
 
 import com.devrapid.adaptiverecyclerview.IVisitable
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.viewtype.ExpandableViewTypeFactory
