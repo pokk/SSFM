@@ -208,6 +208,8 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
 
     override fun removePlaylist(entity: PlaylistEntity): Observable<Boolean> = TODO()
 
+    override fun getPlaylistItems(playlistId: Int): Observable<List<PlaylistItemEntity>> = TODO()
+
     override fun addPlaylistItem(entity: PlaylistItemEntity): Observable<Boolean> = TODO()
 
     override fun removePlaylistItem(entity: PlaylistItemEntity): Observable<Boolean> = TODO()

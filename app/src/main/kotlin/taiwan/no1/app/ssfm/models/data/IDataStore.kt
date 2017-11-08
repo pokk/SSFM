@@ -100,6 +100,8 @@ interface IDataStore {
 
     fun removePlaylist(entity: PlaylistEntity): Observable<Boolean>
 
+    fun getPlaylistItems(playlistId: Int): Observable<List<PlaylistItemEntity>>
+
     fun addPlaylistItem(entity: PlaylistItemEntity): Observable<Boolean>
 
     fun removePlaylistItem(entity: PlaylistItemEntity): Observable<Boolean>

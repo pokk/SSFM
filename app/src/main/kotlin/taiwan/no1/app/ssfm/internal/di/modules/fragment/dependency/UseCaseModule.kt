@@ -4,7 +4,16 @@ import dagger.Module
 import dagger.Provides
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerFragment
 import taiwan.no1.app.ssfm.models.entities.KeywordEntity
+import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
+import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity
+import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemUsecase
+import taiwan.no1.app.ssfm.models.usecases.AddPlaylistUsecase
+import taiwan.no1.app.ssfm.models.usecases.EditPlaylistUsecase
+import taiwan.no1.app.ssfm.models.usecases.GetPlaylistItemsUsecase
+import taiwan.no1.app.ssfm.models.usecases.GetPlaylistsUsecase
+import taiwan.no1.app.ssfm.models.usecases.RemovePlaylistItemUsecase
+import taiwan.no1.app.ssfm.models.usecases.RemovePlaylistUsecase
 import taiwan.no1.app.ssfm.mvvm.models.data.repositories.DataRepository
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.AlbumEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.ArtistEntity
@@ -113,4 +122,39 @@ class UseCaseModule {
     @PerFragment
     fun provideDeleteUsecase(dataRepository: DataRepository): BaseUsecase<Boolean, RemoveKeywordHistoriesCase.RequestValue> =
         RemoveKeywordHistoriesCase(dataRepository)
+
+    @Provides
+    @PerFragment
+    fun provideAddPlaylistItemUsecase(dataRepository: DataRepository): BaseUsecase<Boolean, AddPlaylistItemUsecase.RequestValue> =
+        AddPlaylistItemUsecase(dataRepository)
+
+    @Provides
+    @PerFragment
+    fun provideAddPlaylistUsecase(dataRepository: DataRepository): BaseUsecase<Boolean, AddPlaylistUsecase.RequestValue> =
+        AddPlaylistUsecase(dataRepository)
+
+    @Provides
+    @PerFragment
+    fun provideGetPlaylistsUsecase(dataRepository: DataRepository): BaseUsecase<List<PlaylistEntity>, AddPlaylistUsecase.RequestValue> =
+        GetPlaylistsUsecase(dataRepository)
+
+    @Provides
+    @PerFragment
+    fun provideGetPlaylistItemseUsecase(dataRepository: DataRepository): BaseUsecase<List<PlaylistItemEntity>, GetPlaylistItemsUsecase.RequestValue> =
+        GetPlaylistItemsUsecase(dataRepository)
+
+    @Provides
+    @PerFragment
+    fun provideRemovePlaylistUsecase(dataRepository: DataRepository): BaseUsecase<Boolean, AddPlaylistUsecase.RequestValue> =
+        RemovePlaylistUsecase(dataRepository)
+
+    @Provides
+    @PerFragment
+    fun provideRemovePlaylisItemUsecase(dataRepository: DataRepository): BaseUsecase<Boolean, AddPlaylistItemUsecase.RequestValue> =
+        RemovePlaylistItemUsecase(dataRepository)
+
+    @Provides
+    @PerFragment
+    fun provideEditPlaylistUsecase(dataRepository: DataRepository): BaseUsecase<Boolean, AddPlaylistUsecase.RequestValue> =
+        EditPlaylistUsecase(dataRepository)
 }

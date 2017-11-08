@@ -69,6 +69,8 @@ class LocalDataStore: IDataStore {
 
     override fun removePlaylist(entity: PlaylistEntity) = entity.delete().toObservable()
 
+    override fun getPlaylistItems(playlistId: Int) = TODO()
+
     override fun addPlaylistItem(entity: PlaylistItemEntity) = entity.save().toObservable()
 
     override fun removePlaylistItem(entity: PlaylistItemEntity) = entity.delete().toObservable()
