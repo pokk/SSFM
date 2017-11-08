@@ -16,7 +16,6 @@ import taiwan.no1.app.ssfm.models.entities.KeywordEntity_Table
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity
-import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TagEntity
 
 
 /**
@@ -59,19 +58,20 @@ class LocalDataStore: IDataStore {
 
     override fun getTagTopTracks(tag: String, page: Int, limit: Int) = TODO()
 
-    override fun getTagInfo(tag: String): Observable<TagEntity> = TODO()
+    override fun getTagInfo(tag: String) = TODO()
 
-    override fun getPlaylists(id: Int): Observable<List<PlaylistEntity>> = TODO()
+    override fun getPlaylists() =
+        (select from PlaylistEntity::class).rx().list.toObservable()
 
-    override fun addPlaylist(entity: PlaylistEntity): Observable<Boolean> = entity.save().toObservable()
+    override fun addPlaylist(entity: PlaylistEntity) = entity.save().toObservable()
 
-    override fun editPlaylist(entity: PlaylistEntity): Observable<Boolean> = entity.update().toObservable()
+    override fun editPlaylist(entity: PlaylistEntity) = entity.update().toObservable()
 
-    override fun removePlaylist(entity: PlaylistEntity): Observable<Boolean> = entity.delete().toObservable()
+    override fun removePlaylist(entity: PlaylistEntity) = entity.delete().toObservable()
 
-    override fun addPlaylistItem(entity: PlaylistItemEntity): Observable<Boolean> = entity.save().toObservable()
+    override fun addPlaylistItem(entity: PlaylistItemEntity) = entity.save().toObservable()
 
-    override fun removePlaylistItem(entity: PlaylistItemEntity): Observable<Boolean> = entity.delete().toObservable()
+    override fun removePlaylistItem(entity: PlaylistItemEntity) = entity.delete().toObservable()
 
     override fun getLovedTracks(user: String, page: Int) = TODO()
 

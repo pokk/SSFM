@@ -56,7 +56,7 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
 
     override fun getTagInfo(tag: String): Observable<TagEntity> = remote.getTagInfo(tag)
 
-    override fun getPlaylists(id: Int): Observable<List<PlaylistEntity>> = local.getPlaylists(id)
+    override fun getPlaylists(): Observable<List<PlaylistEntity>> = local.getPlaylists()
 
     override fun addPlaylist(entity: PlaylistEntity): Observable<Boolean> = local.addPlaylist(entity)
 
