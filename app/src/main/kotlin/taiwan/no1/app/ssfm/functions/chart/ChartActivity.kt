@@ -3,6 +3,7 @@ package taiwan.no1.app.ssfm.functions.chart
 import android.app.Activity
 import android.app.Fragment
 import android.os.Bundle
+import com.devrapid.kotlinknifer.addFragment
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
@@ -10,7 +11,6 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityChartBinding
 import taiwan.no1.app.ssfm.functions.base.AdvancedActivity
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
-import taiwan.no1.app.ssfm.misc.extension.addFragment
 import java.util.HashMap
 import javax.inject.Inject
 

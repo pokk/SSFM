@@ -2,10 +2,10 @@ package taiwan.no1.app.ssfm.functions.playlist
 
 import android.app.Activity
 import android.os.Bundle
+import com.devrapid.kotlinknifer.addFragment
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityPlaylistBinding
 import taiwan.no1.app.ssfm.functions.base.AdvancedActivity
-import taiwan.no1.app.ssfm.misc.extension.addFragment
 import javax.inject.Inject
 
 /**
