@@ -1,5 +1,6 @@
 package taiwan.no1.app.ssfm.functions.playlist
 
+import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
@@ -12,15 +13,15 @@ import taiwan.no1.app.ssfm.models.usecases.GetPlaylistItemsUsecase
  * @author  jieyi
  * @since   8/20/17
  */
-class FragmentPlaylistIndexViewModel(val getPlaylistsUsecase: BaseUsecase<List<PlaylistEntity>, AddPlaylistUsecase.RequestValue>,
+class PlaylistIndexFragmentViewModel(val getPlaylistsUsecase: BaseUsecase<List<PlaylistEntity>, AddPlaylistUsecase.RequestValue>,
                                      val getPlaylistItemsUsecase: BaseUsecase<List<PlaylistItemEntity>, GetPlaylistItemsUsecase.RequestValue>):
     BaseViewModel() {
-    fun fetchArtistList(playlistCallback: (List<PlaylistEntity>) -> Unit,
-                        recentlyCallback: (List<PlaylistItemEntity>) -> Unit) {
+    fun fetchPlaylistAndRecently(playlistCallback: (List<PlaylistEntity>) -> Unit,
+                                 recentlyCallback: (List<PlaylistItemEntity>) -> Unit) {
         lifecycleProvider.execute(getPlaylistsUsecase) {
             onNext {
                 playlistCallback(it)
-                lifecycleProvider.execute(getPlaylistItemsUsecase) { onNext(recentlyCallback) }
+//                lifecycleProvider.execute(getPlaylistItemsUsecase) { onNext(recentlyCallback) }
             }
         }
     }
