@@ -2,11 +2,11 @@ package taiwan.no1.app.ssfm.functions.search
 
 import android.databinding.ObservableField
 import android.view.View
+import com.devrapid.kotlinknifer.formatToMoneyKarma
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.EXTRA_LARGE
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
-import taiwan.no1.app.ssfm.misc.extension.formatToMoneyKarma
 import taiwan.no1.app.ssfm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 

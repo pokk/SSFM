@@ -4,11 +4,11 @@ import android.content.Context
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.view.View
+import com.devrapid.kotlinknifer.hideSoftKeyboard
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.VIEWMODEL_CLICK_SIMILAR
-import taiwan.no1.app.ssfm.misc.extension.hideSoftKeyboard
 
 /**
  *

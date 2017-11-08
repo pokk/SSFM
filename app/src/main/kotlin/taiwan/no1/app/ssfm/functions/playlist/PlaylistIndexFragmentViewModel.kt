@@ -1,6 +1,5 @@
 package taiwan.no1.app.ssfm.functions.playlist
 
-import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
