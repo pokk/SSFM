@@ -1,49 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tool="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="5dp"
-    tool:background="@color/colorPrimary">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tool="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/iv_action"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:src="@drawable/ic_play_circle"/>
+    <data>
 
-    <TextView
-        android:id="@+id/tv_track_name"
+        <variable
+            name="avm"
+            type="taiwan.no1.app.ssfm.functions.playlist.RecyclerViewRecentlyPlaylistViewModel"/>
+
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/one_unit"
-        android:layout_marginStart="@dimen/one_unit"
-        android:layout_toEndOf="@+id/iv_action"
-        android:layout_toStartOf="@+id/tv_total_time"
-        android:textColor="@color/colorWhite"
-        tool:text="The Cure"/>
+        android:padding="5dp"
+        tool:background="@color/colorPrimary">
 
-    <TextView
-        android:id="@+id/tv_album_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/tv_track_name"
-        android:layout_alignStart="@+id/tv_track_name"
-        android:layout_below="@+id/tv_track_name"
-        android:layout_gravity="center"
-        android:textColor="@color/colorWhite"
-        tool:text="New album"/>
+        <ImageView
+            android:id="@+id/iv_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_play_circle"/>
+
+        <TextView
+            android:id="@+id/tv_track_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/one_unit"
+            android:layout_marginStart="@dimen/one_unit"
+            android:layout_toEndOf="@+id/iv_action"
+            android:layout_toStartOf="@+id/tv_total_time"
+            android:textColor="@color/colorWhite"
+            tool:text="The Cure"/>
+
+        <TextView
+            android:id="@+id/tv_album_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/tv_track_name"
+            android:layout_alignStart="@+id/tv_track_name"
+            android:layout_below="@+id/tv_track_name"
+            android:layout_gravity="center"
+            android:textColor="@color/colorWhite"
+            tool:text="New album"/>
 
 
-    <TextView
-        android:id="@+id/tv_total_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:textColor="@color/colorWhite"
-        tool:text="4:14"/>
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tv_total_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorWhite"
+            tool:text="4:14"/>
+    </RelativeLayout>
+</layout>

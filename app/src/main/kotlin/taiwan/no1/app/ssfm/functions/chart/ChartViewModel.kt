@@ -48,7 +48,7 @@ class ChartViewModel(private val context: Context):
      *
      * @param query the query of song's or singer's name for searching a music.
      *
-     * @event_to [taiwan.no1.app.ssfm.mvvm.views.activities.ChartActivity.navigateToArtistDetail]
+     * @event_to [taiwan.no1.app.ssfm.functions.chart.ChartActivity.navigateToArtistDetail]
      */
     fun querySubmit(query: String): Boolean {
         // TODO(jieyi): 11/5/17

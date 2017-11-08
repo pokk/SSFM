@@ -14,5 +14,7 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
 data class PlaylistEntity(@PrimaryKey(autoincrement = true) var id: Long = 0,
                           var name: String = "",
                           var image_uri: String = "",
+                          var track_quantity: Int = -1,
+                          var album_quantity: Int = -1,
                           var last_played_item: Int = -1,
                           var is_random: Boolean = false): BaseRXModel(), BaseEntity

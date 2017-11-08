@@ -13,9 +13,17 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
  * @since   11/1/17
  */
 class RecyclerViewChartAlbumTrackViewModel(val item: BaseEntity): BaseViewModel() {
-    val trackName by lazy { ObservableField<String>((item as TrackEntity.Track).name) }
-    val trackNumber by lazy { ObservableField<String>((item as TrackEntity.Track).attr?.rank ?: "0") }
-    val trackDuration by lazy { ObservableField<String>((item as TrackEntity.Track).duration?.toInt()?.toTimeString()) }
+    val trackName by lazy { ObservableField<String>() }
+    val trackNumber by lazy { ObservableField<String>() }
+    val trackDuration by lazy { ObservableField<String>() }
+
+    init {
+        (item as TrackEntity.Track).let {
+            trackName.set(it.name)
+            trackNumber.set(it.attr?.rank ?: 0.toString())
+            trackDuration.set(it.duration?.toInt()?.toTimeString())
+        }
+    }
 
     fun trackOnClick(view: View) {
     }

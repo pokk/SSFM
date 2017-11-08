@@ -35,7 +35,7 @@ class RecyclerViewUniversal2ViewModel(val item: BaseEntity): BaseViewModel() {
      *
      * @param view [android.widget.RelativeLayout]
      *
-     * @event_to [taiwan.no1.app.ssfm.mvvm.views.activities.ChartActivity.navigateToArtistDetail]
+     * @event_to [taiwan.no1.app.ssfm.functions.chart.ChartActivity.navigateToArtistDetail]
      */
     fun itemOnClick(view: View) {
         RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_SIMILAR, (item as ArtistEntity.Artist).name)

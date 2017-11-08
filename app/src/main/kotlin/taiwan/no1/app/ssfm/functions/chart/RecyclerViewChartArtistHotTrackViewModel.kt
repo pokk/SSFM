@@ -14,15 +14,22 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
  * @since   10/29/17
  */
 class RecyclerViewChartArtistHotTrackViewModel(val item: BaseEntity): BaseViewModel() {
-    val trackName by lazy { ObservableField<String>((item as TrackEntity.TrackWithStreamableString).name) }
-    val trackNumber by lazy { ObservableField<String>((item as TrackEntity.TrackWithStreamableString).attr?.rank ?: "0") }
+    val trackName by lazy { ObservableField<String>() }
+    val trackNumber by lazy { ObservableField<String>() }
+
+    init {
+        (item as TrackEntity.TrackWithStreamableString).let {
+            trackName.set(it.name)
+            trackNumber.set(it.attr?.rank ?: 0.toString())
+        }
+    }
 
     /**
      * A callback event for clicking a item to list item.
      *
      * @param view [android.widget.RelativeLayout]
      *
-     * @event_to [taiwan.no1.app.ssfm.mvvm.viewmodels.SearchViewModel.receiveClickHistoryEvent]
+     * @event_to [taiwan.no1.app.ssfm.functions.search.SearchViewModel.receiveClickHistoryEvent]
      */
     fun trackOnClick(view: View) {
         RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_HISTORY, (item as TrackEntity.TrackWithStreamableString).name)

@@ -3,9 +3,13 @@ package taiwan.no1.app.ssfm.functions.playlist
 import android.os.Bundle
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentMylistIndexBinding
+import taiwan.no1.app.ssfm.databinding.ItemMusicType3Binding
+import taiwan.no1.app.ssfm.databinding.ItemPlaylistType1Binding
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
+import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.mvvm.views.AdvancedFragment
+import taiwan.no1.app.ssfm.mvvm.views.recyclerviews.adapters.BaseDataBindingAdapter
 import javax.inject.Inject
 
 /**
@@ -35,6 +39,21 @@ class PlaylistIndexFragment: AdvancedFragment<FragmentPlaylistIndexViewModel, Fr
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
         binding?.apply {
+            playlistLayoutManager = WrapContentLinearLayoutManager(activity)
+            recentlyLayoutManager = WrapContentLinearLayoutManager(activity)
+
+            playlistAdapter = BaseDataBindingAdapter<ItemPlaylistType1Binding, BaseEntity>(R.layout.item_playlist_type_1,
+                playlistRes) { holder, item ->
+                holder.binding.avm = RecyclerViewPlaylistViewModel(item).apply {
+                    onAttach(this@PlaylistIndexFragment)
+                }
+            }
+            recentlyAdapter = BaseDataBindingAdapter<ItemMusicType3Binding, BaseEntity>(R.layout.item_music_type_3,
+                recentlyPlayedRes) { holder, item ->
+                holder.binding.avm = RecyclerViewRecentlyPlaylistViewModel(item).apply {
+                    onAttach(this@PlaylistIndexFragment)
+                }
+            }
         }
     }
 

@@ -36,7 +36,7 @@ class RecyclerViewUniversal1ViewModel(val item: BaseEntity): BaseViewModel() {
      *
      * @param view [android.widget.RelativeLayout]
      *
-     * @event_to [taiwan.no1.app.ssfm.mvvm.views.activities.ChartActivity.navigateToAlbumDetail]
+     * @event_to [taiwan.no1.app.ssfm.functions.chart.ChartActivity.navigateToAlbumDetail]
      */
     fun itemOnClick(view: View) {
         item as AlbumEntity.AlbumWithArtist

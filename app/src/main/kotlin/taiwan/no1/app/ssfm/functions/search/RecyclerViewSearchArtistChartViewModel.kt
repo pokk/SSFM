@@ -16,21 +16,27 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
  * @since   9/20/17
  */
 class RecyclerViewSearchArtistChartViewModel(val item: BaseEntity): BaseViewModel() {
-    val artistName by lazy { ObservableField<String>((item as ArtistEntity.Artist).name) }
-    val playCount by lazy {
-        val count = ((item as ArtistEntity.Artist).playCount?.toInt() ?: 0) / 1000
-
-        ObservableField<String>("${count.toString().formatToMoneyKarma()}K")
-    }
-    val thumbnail by lazy { ObservableField<String>((item as ArtistEntity.Artist).images?.get(EXTRA_LARGE)?.text ?: "") }
+    val artistName by lazy { ObservableField<String>() }
+    val playCount by lazy { ObservableField<String>() }
+    val thumbnail by lazy { ObservableField<String>() }
     var clickItemListener: ((item: ArtistEntity.Artist) -> Unit)? = null
+
+    init {
+        (item as ArtistEntity.Artist).let {
+            val count = (it.playCount?.toInt() ?: 0) / 1000
+
+            artistName.set(it.name)
+            playCount.set("${count.toString().formatToMoneyKarma()}K")
+            thumbnail.set(it.images?.get(EXTRA_LARGE)?.text ?: "")
+        }
+    }
 
     /**
      * A callback event for clicking a item to list item.
      *
      * @param view [android.widget.RelativeLayout]
      *
-     * @event_to [taiwan.no1.app.ssfm.mvvm.viewmodels.SearchViewModel.receiveClickHistoryEvent]
+     * @event_to [taiwan.no1.app.ssfm.functions.search.SearchViewModel.receiveClickHistoryEvent]
      */
     fun artistOnClick(view: View) {
         // For `searching activity`.

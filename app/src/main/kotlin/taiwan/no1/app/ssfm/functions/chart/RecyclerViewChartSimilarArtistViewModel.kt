@@ -25,18 +25,25 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
  * @since   9/20/17
  */
 class RecyclerViewChartSimilarArtistViewModel(val item: BaseEntity): BaseViewModel() {
-    val artistName by lazy { ObservableField<String>((item as ArtistEntity.Artist).name) }
-    val thumbnail by lazy { ObservableField<String>((item as ArtistEntity.Artist).images?.get(LARGE)?.text ?: "") }
+    val artistName by lazy { ObservableField<String>() }
+    val thumbnail by lazy { ObservableField<String>() }
     val textBackground by lazy { ObservableInt() }
     val textColor by lazy { ObservableInt() }
     var clickItemListener: ((item: ArtistEntity.Artist) -> Unit)? = null
+
+    init {
+        (item as ArtistEntity.Artist).let {
+            artistName.set(it.name)
+            thumbnail.set(it.images?.get(LARGE)?.text ?: "")
+        }
+    }
 
     /**
      * A callback event for clicking an artist to list item.
      *
      * @param view [android.widget.RelativeLayout]
      *
-     * @event_to [taiwan.no1.app.ssfm.mvvm.views.activities.ChartActivity.navigateToArtistDetail]
+     * @event_to [taiwan.no1.app.ssfm.functions.chart.ChartActivity.navigateToArtistDetail]
      */
     fun artistOnClick(view: View) {
         RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_SIMILAR, (item as ArtistEntity.Artist).name)

@@ -1,11 +1,11 @@
-package taiwan.no1.app.ssfm.functions.search
+package taiwan.no1.app.ssfm.functions.playlist
 
 import android.databinding.ObservableField
 import android.view.View
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
-import taiwan.no1.app.ssfm.misc.constants.ImageSizes.LARGE
 import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
+import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
 
@@ -14,16 +14,19 @@ import taiwan.no1.app.ssfm.mvvm.models.entities.lastfm.TrackEntity
  * @author  jieyi
  * @since   9/20/17
  */
-class RecyclerViewSearchTrackChartViewModel(val item: BaseEntity): BaseViewModel() {
-    val trackName by lazy { ObservableField<String>() }
-    val artistName by lazy { ObservableField<String>() }
-    val thumbnail by lazy { ObservableField<String>() }
+class RecyclerViewPlaylistViewModel(val item: BaseEntity): BaseViewModel() {
+    val playlistName by lazy { ObservableField<String>() }
+    val playlistTrackNumber by lazy { ObservableField<String>() }
+    val playlistThumbnail by lazy { ObservableField<String>() }
 
     init {
-        (item as TrackEntity.Track).let {
-            trackName.set(it.name)
-            artistName.set(it.artist?.name ?: "")
-            thumbnail.set(it.images?.get(LARGE)?.text ?: "")
+        (item as PlaylistEntity).let {
+            val pluralOfAlbum = if (it.album_quantity > 1) "s" else ""
+            val pluralOfTrack = if (it.track_quantity > 1) "s" else ""
+
+            playlistName.set(it.name)
+            playlistTrackNumber.set("${it.album_quantity} album$pluralOfAlbum, ${it.track_quantity} track$pluralOfTrack")
+            playlistThumbnail.set(it.image_uri)
         }
     }
 

@@ -44,9 +44,9 @@ class ChartActivity: AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     /**
      * @param artistName
      *
-     * @event_from [taiwan.no1.app.ssfm.mvvm.viewmodels.ChartViewModel.querySubmit]
-     * @event_from [taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewChartSimilarArtistViewModel.artistOnClick]
-     * @event_from [taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewUniversal2ViewModel.itemOnClick]
+     * @event_from [taiwan.no1.app.ssfm.functions.chart.ChartViewModel.querySubmit]
+     * @event_from [taiwan.no1.app.ssfm.functions.chart.RecyclerViewChartSimilarArtistViewModel.artistOnClick]
+     * @event_from [taiwan.no1.app.ssfm.functions.chart.RecyclerViewUniversal2ViewModel.itemOnClick]
      */
     @Subscribe(tags = arrayOf(Tag(RxBusConstant.VIEWMODEL_CLICK_SIMILAR)))
     fun navigateToArtistDetail(artistName: String) {
@@ -56,7 +56,7 @@ class ChartActivity: AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     /**
      * @param params
      *
-     * @event_from [taiwan.no1.app.ssfm.mvvm.viewmodels.RecyclerViewUniversal1ViewModel.itemOnClick]
+     * @event_from [taiwan.no1.app.ssfm.functions.chart.RecyclerViewUniversal1ViewModel.itemOnClick]
      */
     @Subscribe(tags = arrayOf(Tag(RxBusConstant.VIEWMODEL_CLICK_ALBUM)))
     fun navigateToAlbumDetail(params: HashMap<String, String>) {
