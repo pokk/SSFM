@@ -15,7 +15,7 @@ data class PlaylistItemEntity(@PrimaryKey(autoincrement = true) var id: Long = 0
                               var playlist_id: Int = -1,  // History list id is 65535.
                               var music_id: Int = -1,
                               var is_offline: Boolean = false,
-                              var external_track_uri: String = "",
-                              var external_track_name: String = "",
-                              var external_artist_name: String = "",
-                              var external_album_name: String = ""): BaseRXModel(), BaseEntity
+                              var track_uri: String = "",
+                              var track_name: String = "",
+                              var artist_name: String = "",
+                              var album_name: String = ""): BaseRXModel(), BaseEntity

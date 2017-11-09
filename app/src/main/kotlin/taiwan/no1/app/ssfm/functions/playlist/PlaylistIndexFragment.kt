@@ -1,15 +1,14 @@
 package taiwan.no1.app.ssfm.functions.playlist
 
 import android.os.Bundle
-import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentMylistIndexBinding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType3Binding
 import taiwan.no1.app.ssfm.databinding.ItemPlaylistType1Binding
 import taiwan.no1.app.ssfm.functions.base.AdvancedFragment
-import taiwan.no1.app.ssfm.misc.extension.recyclerview.ArtistAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.PlaylistAdapter
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.RecentlyAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
@@ -64,8 +63,12 @@ class PlaylistIndexFragment: AdvancedFragment<PlaylistIndexFragmentViewModel, Fr
         playlistInfo.firstFetch { info ->
             viewModel.fetchPlaylistAndRecently({
                 playlistRes.refreshAndChangeList(it, 1, binding?.playlistAdapter as PlaylistAdapter, info)
-                logw(playlistRes)
-            }) { }
+            }, {
+                recentlyPlayedRes.refreshAndChangeList(it,
+                    1,
+                    binding?.recentlyAdapter as RecentlyAdapter,
+                    recentlyPlayedInfo)
+            })
         }
     }
 

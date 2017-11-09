@@ -54,7 +54,7 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
 
     override fun getTagInfo(tag: String) = remote.getTagInfo(tag)
 
-    override fun getPlaylists() = local.getPlaylists()
+    override fun getPlaylists(id: Long) = local.getPlaylists(id)
 
     override fun addPlaylist(entity: PlaylistEntity) = local.addPlaylist(entity)
 

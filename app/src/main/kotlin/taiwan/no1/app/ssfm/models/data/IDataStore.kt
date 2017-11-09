@@ -92,7 +92,7 @@ interface IDataStore {
     //endregion
 
     //region Playlist
-    fun getPlaylists(): Observable<List<PlaylistEntity>>
+    fun getPlaylists(id: Long = -1): Observable<List<PlaylistEntity>>
 
     fun addPlaylist(entity: PlaylistEntity): Observable<Boolean>
 
@@ -100,7 +100,7 @@ interface IDataStore {
 
     fun removePlaylist(entity: PlaylistEntity): Observable<Boolean>
 
-    fun getPlaylistItems(playlistId: Int): Observable<List<PlaylistItemEntity>>
+    fun getPlaylistItems(playlistId: Int = -1): Observable<List<PlaylistItemEntity>>
 
     fun addPlaylistItem(entity: PlaylistItemEntity): Observable<Boolean>
 

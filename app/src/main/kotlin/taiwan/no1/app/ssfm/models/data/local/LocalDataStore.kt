@@ -9,12 +9,15 @@ import com.raizlabs.android.dbflow.kotlinextensions.select
 import com.raizlabs.android.dbflow.kotlinextensions.where
 import com.raizlabs.android.dbflow.rx2.kotlinextensions.list
 import com.raizlabs.android.dbflow.rx2.kotlinextensions.rx
+import com.raizlabs.android.dbflow.sql.language.BaseModelQueriable
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.models.data.IDataStore
 import taiwan.no1.app.ssfm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.models.entities.KeywordEntity_Table
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
+import taiwan.no1.app.ssfm.models.entities.PlaylistEntity_Table
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
+import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity_Table
 import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity
 
 
@@ -60,8 +63,14 @@ class LocalDataStore: IDataStore {
 
     override fun getTagInfo(tag: String) = TODO()
 
-    override fun getPlaylists() =
-        (select from PlaylistEntity::class).rx().list.toObservable()
+    override fun getPlaylists(id: Long): Observable<List<PlaylistEntity>> {
+        val sqlQuery: BaseModelQueriable<PlaylistEntity> = when (id) {
+            -1L -> select from PlaylistEntity::class
+            else -> select from PlaylistEntity::class where (PlaylistEntity_Table.id eq id)
+        }
+
+        return sqlQuery.rx().list.toObservable()
+    }
 
     override fun addPlaylist(entity: PlaylistEntity) = entity.save().toObservable()
 
@@ -69,7 +78,8 @@ class LocalDataStore: IDataStore {
 
     override fun removePlaylist(entity: PlaylistEntity) = entity.delete().toObservable()
 
-    override fun getPlaylistItems(playlistId: Int) = TODO()
+    override fun getPlaylistItems(playlistId: Int) =
+        (select from PlaylistItemEntity::class where (PlaylistItemEntity_Table.playlist_id eq playlistId)).rx().list.toObservable()
 
     override fun addPlaylistItem(entity: PlaylistItemEntity) = entity.save().toObservable()
 
