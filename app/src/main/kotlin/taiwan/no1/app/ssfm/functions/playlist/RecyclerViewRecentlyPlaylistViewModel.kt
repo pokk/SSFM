@@ -2,12 +2,9 @@ package taiwan.no1.app.ssfm.functions.playlist
 
 import android.databinding.ObservableField
 import android.view.View
-import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
-import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
-import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
 
 /**
  *
@@ -34,6 +31,5 @@ class RecyclerViewRecentlyPlaylistViewModel(val item: BaseEntity): BaseViewModel
      * @event_to [taiwan.no1.app.ssfm.functions.search.SearchViewModel.receiveClickHistoryEvent]
      */
     fun trackOnClick(view: View) {
-        RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_HISTORY, (item as TrackEntity.Track).name)
     }
 }

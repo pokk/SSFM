@@ -3,6 +3,7 @@ package taiwan.no1.app.ssfm.pattern.strategy
 import android.databinding.ViewDataBinding
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import com.devrapid.kotlinknifer.recyclerview.itemdecorator.HorizontalItemDecorator
 import com.trello.rxlifecycle2.components.RxFragment
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.BaseAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
@@ -10,7 +11,6 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.RVCustomScrollCallback
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
-import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.itemdecorator.HorizontalItemDecorator
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.viewholders.BindingHolder
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 

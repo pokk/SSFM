@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.functions.search
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import com.devrapid.kotlinknifer.recyclerview.itemdecorator.HorizontalItemDecorator
 import taiwan.no1.app.ssfm.App
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchIndexBinding
@@ -17,7 +18,6 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.extension.scaledDrawable
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
-import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.itemdecorator.HorizontalItemDecorator
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import javax.inject.Inject
 
@@ -55,7 +55,7 @@ class SearchIndexFragment: AdvancedFragment<SearchIndexFragmentViewModel, Fragme
                 holder.binding.avm = RecyclerViewSearchArtistChartViewModel(item).apply {
                     onAttach(this@SearchIndexFragment)
                 }
-                val sd = App.compactContext.scaledDrawable(R.drawable.lb_ic_thumb_up_outline, 0.5f, 0.5f)
+                val sd = App.compactContext.scaledDrawable(R.drawable.ic_pause_circle, 0.5f, 0.5f)
                 holder.binding.tvPlayCount.setCompoundDrawables(sd, null, null, null)
             }
             trackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, BaseEntity>(R.layout.item_music_type_1,

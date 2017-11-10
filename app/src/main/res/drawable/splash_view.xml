@@ -6,6 +6,6 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/lb_ic_hq"/>
+            android:src="@drawable/sample_lady_gaga"/>
     </item>
 </layer-list>

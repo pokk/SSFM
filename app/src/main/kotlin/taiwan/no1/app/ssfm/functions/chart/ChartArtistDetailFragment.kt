@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.functions.chart
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import com.devrapid.kotlinknifer.recyclerview.itemdecorator.HorizontalItemDecorator
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailArtistBinding
 import taiwan.no1.app.ssfm.databinding.ItemArtistType2Binding
@@ -14,7 +15,6 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
-import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.itemdecorator.HorizontalItemDecorator
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import javax.inject.Inject
 
