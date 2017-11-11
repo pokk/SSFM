@@ -54,7 +54,7 @@
             tools:listitem="@layout/item_artist_type_1"/>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_top_tracks"
+            android:id="@+id/rv_top_tags"
             style="@style/RecyclerView.Basic"
             android:adapter="@{tagAdapter}"
             android:itemDecoration="@{tagDecoration}"
@@ -81,7 +81,7 @@
             android:id="@+id/tv_new_song"
             style="@style/RecyclerView.Title"
             android:text="@string/rv_title_rank_genres"
-            app:layout_constraintBottom_toTopOf="@+id/rv_top_tracks"
+            app:layout_constraintBottom_toTopOf="@+id/rv_top_tags"
             app:layout_constraintTop_toBottomOf="@+id/rv_top_artists"/>
 
         <View

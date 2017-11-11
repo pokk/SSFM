@@ -129,7 +129,7 @@
                 android:id="@+id/tv_title_hot_tracks"
                 style="@style/RecyclerView.Title"
                 android:text="Hot Tracks"
-                app:layout_constraintBottom_toTopOf="@+id/rv_top_tracks"
+                app:layout_constraintBottom_toTopOf="@+id/rv_top_tags"
                 app:layout_constraintTop_toBottomOf="@+id/rv_similar"/>
 
             <View
@@ -139,7 +139,7 @@
                 app:layout_constraintTop_toTopOf="@id/tv_title_hot_tracks"/>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_top_tracks"
+                android:id="@+id/rv_top_tags"
                 style="@style/ChartDetail"
                 android:layout_height="216dp"
                 android:layout_marginBottom="@dimen/one_unit"

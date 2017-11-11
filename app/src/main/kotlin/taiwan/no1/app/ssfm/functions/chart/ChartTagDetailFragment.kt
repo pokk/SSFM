@@ -15,7 +15,9 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.Universal1Adapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.Universal2Adapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.Universal3Adapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.keepAllLastItemPosition
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.restoreAllLastItemPosition
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
@@ -51,9 +53,28 @@ class ChartTagDetailFragment: AdvancedFragment<ChartTagDetailFragmentViewModel, 
     private var albumRes = mutableListOf<BaseEntity>()
     private var artistRes = mutableListOf<BaseEntity>()
     private var trackRes = mutableListOf<BaseEntity>()
-
     // Get the arguments from the bundle here.
     private val musicTag: String by lazy { this.arguments.getString(ARG_PARAM_TAG) }
+
+    //region Fragment lifecycle
+    override fun onResume() {
+        super.onResume()
+        binding?.apply {
+            listOf(Pair(albumInfo, albumLayoutManager),
+                Pair(artistInfo, artistLayoutManager),
+                Pair(trackInfo, trackLayoutManager)).restoreAllLastItemPosition()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding?.apply {
+            listOf(Triple(albumInfo, rvTopAlbum, albumLayoutManager),
+                Triple(artistInfo, rvTopArtists, artistLayoutManager),
+                Triple(trackInfo, rvTopTrack, trackLayoutManager)).keepAllLastItemPosition()
+        }
+    }
+    //endregion
 
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
@@ -118,5 +139,5 @@ class ChartTagDetailFragment: AdvancedFragment<ChartTagDetailFragmentViewModel, 
     }
 
     override fun provideInflateView(): Int = R.layout.fragment_detail_tag
-    //endregion
+//endregion
 }

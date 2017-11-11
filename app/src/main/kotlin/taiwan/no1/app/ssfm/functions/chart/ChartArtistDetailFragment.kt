@@ -12,7 +12,9 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.ArtistTopTrackAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.SimilarArtistAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.keepAllLastItemPosition
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.restoreAllLastItemPosition
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
@@ -52,6 +54,24 @@ class ChartArtistDetailFragment: AdvancedFragment<ChartArtistDetailFragmentViewM
     // Get the arguments from the bundle here.
     private val mbid: String by lazy { this.arguments.getString(ARG_PARAM_MBID) }
     private val artistName: String by lazy { this.arguments.getString(ARG_PARAM_ARTIST_NAME) }
+
+    //region Fragment lifecycle
+    override fun onResume() {
+        super.onResume()
+        binding?.apply {
+            listOf(Pair(artistInfo, artistLayoutManager),
+                Pair(trackInfo, trackLayoutManager)).restoreAllLastItemPosition()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding?.apply {
+            listOf(Triple(artistInfo, rvSimilar, artistLayoutManager),
+                Triple(trackInfo, rvAlbum, trackLayoutManager)).keepAllLastItemPosition()
+        }
+    }
+    //endregion
 
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {

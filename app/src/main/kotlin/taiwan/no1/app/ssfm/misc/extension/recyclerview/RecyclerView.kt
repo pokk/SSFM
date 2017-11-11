@@ -1,5 +1,6 @@
 package taiwan.no1.app.ssfm.misc.extension.recyclerview
 
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import taiwan.no1.app.ssfm.databinding.ItemArtistType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemArtistType2Binding
@@ -76,8 +77,35 @@ fun DataInfo.firstFetch(fetchBlock: (info: DataInfo) -> Unit) =
 
 data class DataInfo(var page: Int = 1,
                     val limit: Int = 20,
+                    var lastPosition: Int = 0,
+                    var lastOffset: Int = 0,
                     var isLoading: Boolean = false,
                     var canLoadMoreFlag: Boolean = true)
+
+/**
+ * For keeping the last item position when the [Activity] or [Fragment] is going to pause state.
+ *
+ * @param recyclerview the item in the [RecyclerView].
+ * @param layoutManager the [recyclerview]'s [RecyclerView.LayoutManager].
+ */
+fun DataInfo.keepLastItemPosition(recyclerview: RecyclerView, layoutManager: LinearLayoutManager?) = apply {
+    lastOffset = recyclerview.computeHorizontalScrollOffset()
+    lastPosition = layoutManager?.findFirstVisibleItemPosition() ?: 0
+}
+
+/**
+ * For restoring the last item position when the [Activity] or [Fragment] resumes.
+ *
+ * @param layoutManager the recyclerview's [RecyclerView.LayoutManager].
+ */
+fun DataInfo.restoreLastItemPosition(layoutManager: LinearLayoutManager?) =
+    takeIf { 0 <= lastPosition }?.let { layoutManager?.scrollToPositionWithOffset(0, -lastOffset) }
+
+fun List<Pair<DataInfo, RecyclerView.LayoutManager?>>.restoreAllLastItemPosition() =
+    forEach { it.first.restoreLastItemPosition(it.second as LinearLayoutManager) }
+
+fun List<Triple<DataInfo, RecyclerView, RecyclerView.LayoutManager?>>.keepAllLastItemPosition() =
+    forEach { it.first.keepLastItemPosition(it.second, it.third as LinearLayoutManager) }
 
 class RVCustomScrollCallback<T>(private val adapter: BaseDataBindingAdapter<*, T>,
                                 private val dataInfo: DataInfo,

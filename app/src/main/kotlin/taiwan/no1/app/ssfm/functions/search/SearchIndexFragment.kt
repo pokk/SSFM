@@ -14,7 +14,9 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RVCustomScrollCallback
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.TrackAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.keepAllLastItemPosition
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.restoreAllLastItemPosition
 import taiwan.no1.app.ssfm.misc.extension.scaledDrawable
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
@@ -43,6 +45,24 @@ class SearchIndexFragment: AdvancedFragment<SearchIndexFragmentViewModel, Fragme
     private val trackInfo by lazy { DataInfo() }
     private var artistRes = mutableListOf<BaseEntity>()
     private var trackRes = mutableListOf<BaseEntity>()
+
+    //region Fragment lifecycle
+    override fun onResume() {
+        super.onResume()
+        binding?.apply {
+            listOf(Pair(artistInfo, artistLayoutManager),
+                Pair(trackInfo, trackLayoutManager)).restoreAllLastItemPosition()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding?.apply {
+            listOf(Triple(artistInfo, rvTopArtists, artistLayoutManager),
+                Triple(trackInfo, rvTopTracks, trackLayoutManager)).keepAllLastItemPosition()
+        }
+    }
+    //endregion
 
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
