@@ -1,5 +1,6 @@
 package taiwan.no1.app.ssfm.functions.chart
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.HorizontalItemDecorator
@@ -53,6 +54,7 @@ class ChartTagDetailFragment: AdvancedFragment<ChartTagDetailFragmentViewModel, 
     private var albumRes = mutableListOf<BaseEntity>()
     private var artistRes = mutableListOf<BaseEntity>()
     private var trackRes = mutableListOf<BaseEntity>()
+    private var nestViewLastPosition = 0
     // Get the arguments from the bundle here.
     private val musicTag: String by lazy { this.arguments.getString(ARG_PARAM_TAG) }
 
@@ -63,15 +65,18 @@ class ChartTagDetailFragment: AdvancedFragment<ChartTagDetailFragmentViewModel, 
             listOf(Pair(albumInfo, albumLayoutManager),
                 Pair(artistInfo, artistLayoutManager),
                 Pair(trackInfo, trackLayoutManager)).restoreAllLastItemPosition()
+            nsvContainer.scrollTo(0, nestViewLastPosition)
         }
     }
 
+    @SuppressLint("RestrictedApi")
     override fun onPause() {
         super.onPause()
         binding?.apply {
             listOf(Triple(albumInfo, rvTopAlbum, albumLayoutManager),
                 Triple(artistInfo, rvTopArtists, artistLayoutManager),
                 Triple(trackInfo, rvTopTrack, trackLayoutManager)).keepAllLastItemPosition()
+            nestViewLastPosition = nsvContainer.computeVerticalScrollOffset()
         }
     }
     //endregion

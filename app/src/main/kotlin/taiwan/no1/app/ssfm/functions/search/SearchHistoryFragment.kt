@@ -50,9 +50,7 @@ class SearchHistoryFragment: AdvancedFragment<SearchHistoryFragmentViewModel, Fr
             layoutManager = WrapContentLinearLayoutManager(activity)
             adapter = BaseDataBindingAdapter<ItemSearchHistoryType1Binding, BaseEntity>(R.layout.item_search_history_type_1,
                 searchRes) { holder, item ->
-                holder.binding.avm = RecyclerViewSearchHistoryViewModel(item,
-                    activity,
-                    deleteUsecase).
+                holder.binding.avm = RecyclerViewSearchHistoryViewModel(item, activity, deleteUsecase).
                     apply { deleteItemListener = deleteItem }
             }
         }

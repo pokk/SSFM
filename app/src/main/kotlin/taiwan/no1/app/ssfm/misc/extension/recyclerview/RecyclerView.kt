@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.misc.extension.recyclerview
 
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.widget.LinearLayout.HORIZONTAL
 import taiwan.no1.app.ssfm.databinding.ItemArtistType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemArtistType2Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType1Binding
@@ -89,7 +90,10 @@ data class DataInfo(var page: Int = 1,
  * @param layoutManager the [recyclerview]'s [RecyclerView.LayoutManager].
  */
 fun DataInfo.keepLastItemPosition(recyclerview: RecyclerView, layoutManager: LinearLayoutManager?) = apply {
-    lastOffset = recyclerview.computeHorizontalScrollOffset()
+    lastOffset = if (HORIZONTAL == layoutManager?.orientation)
+        recyclerview.computeHorizontalScrollOffset()
+    else
+        recyclerview.computeVerticalScrollOffset()
     lastPosition = layoutManager?.findFirstVisibleItemPosition() ?: 0
 }
 
