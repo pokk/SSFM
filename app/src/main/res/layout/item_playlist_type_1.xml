@@ -15,10 +15,11 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/three_unit"
-        android:paddingEnd="@dimen/three_unit"
         android:layout_marginBottom="5dp"
-        android:orientation="horizontal">
+        android:onClick="@{avm::playlistOnClick}"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/three_unit"
+        android:paddingStart="@dimen/three_unit">
 
         <ImageView
             android:id="@+id/iv_playlist_image"

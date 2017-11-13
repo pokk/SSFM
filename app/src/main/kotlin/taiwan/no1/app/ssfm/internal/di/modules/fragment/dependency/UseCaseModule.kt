@@ -140,7 +140,7 @@ class UseCaseModule {
 
     @Provides
     @PerFragment
-    fun provideGetPlaylistItemseUsecase(dataRepository: DataRepository): BaseUsecase<List<PlaylistItemEntity>, GetPlaylistItemsUsecase.RequestValue> =
+    fun provideGetPlaylistItemsUsecase(dataRepository: DataRepository): BaseUsecase<List<PlaylistItemEntity>, GetPlaylistItemsUsecase.RequestValue> =
         GetPlaylistItemsUsecase(dataRepository)
 
     @Provides
@@ -150,7 +150,7 @@ class UseCaseModule {
 
     @Provides
     @PerFragment
-    fun provideRemovePlaylisItemUsecase(dataRepository: DataRepository): BaseUsecase<Boolean, AddPlaylistItemUsecase.RequestValue> =
+    fun provideRemovePlaylistItemUsecase(dataRepository: DataRepository): BaseUsecase<Boolean, AddPlaylistItemUsecase.RequestValue> =
         RemovePlaylistItemUsecase(dataRepository)
 
     @Provides

@@ -11,10 +11,10 @@ import taiwan.no1.app.ssfm.models.usecases.GetPlaylistItemsUsecase
 
 /**
  * @author  jieyi
- * @since   8/20/17
+ * @since   11/10/17
  */
-class PlaylistIndexFragmentViewModel(val getPlaylistsUsecase: BaseUsecase<List<PlaylistEntity>, AddPlaylistUsecase.RequestValue>,
-                                     val getPlaylistItemsUsecase: BaseUsecase<List<PlaylistItemEntity>, GetPlaylistItemsUsecase.RequestValue>) :
+class PlaylistIndexFragmentViewModel(private val getPlaylistsUsecase: BaseUsecase<List<PlaylistEntity>, AddPlaylistUsecase.RequestValue>,
+                                     private val getPlaylistItemsUsecase: BaseUsecase<List<PlaylistItemEntity>, GetPlaylistItemsUsecase.RequestValue>) :
     BaseViewModel() {
     fun fetchPlaylistAndRecently(playlistCallback: (List<PlaylistEntity>) -> Unit,
                                  recentlyCallback: (List<PlaylistItemEntity>) -> Unit) {

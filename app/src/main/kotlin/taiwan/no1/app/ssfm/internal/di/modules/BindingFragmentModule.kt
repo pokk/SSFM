@@ -6,6 +6,7 @@ import taiwan.no1.app.ssfm.functions.chart.ChartAlbumDetailFragment
 import taiwan.no1.app.ssfm.functions.chart.ChartArtistDetailFragment
 import taiwan.no1.app.ssfm.functions.chart.ChartIndexFragment
 import taiwan.no1.app.ssfm.functions.chart.ChartTagDetailFragment
+import taiwan.no1.app.ssfm.functions.playlist.PlaylistDetailFragment
 import taiwan.no1.app.ssfm.functions.playlist.PlaylistIndexFragment
 import taiwan.no1.app.ssfm.functions.search.SearchHistoryFragment
 import taiwan.no1.app.ssfm.functions.search.SearchIndexFragment
@@ -33,6 +34,10 @@ abstract class BindingFragmentModule {
     @PerFragment
     @ContributesAndroidInjector(modules = arrayOf(PlaylistIndexFragmentModule::class))
     abstract fun contributePlaylistIndexFragmentInjector(): PlaylistIndexFragment
+
+    @PerFragment
+    @ContributesAndroidInjector(modules = arrayOf(PlaylistIndexFragmentModule::class))
+    abstract fun contributePlaylistDetailFragmentInjector(): PlaylistDetailFragment
     //endregion
 
     //region Search
