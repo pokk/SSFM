@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".mvvm.views.activities.SearchActivity">
+
+    <data>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        tools:background="@color/colorPrimary">
+        <!--android:onClick="@{avm::trackOnClick}"-->
+
+        <RelativeLayout
+            android:id="@+id/rl_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimaryDark"
+            android:orientation="vertical"
+            android:padding="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.413">
+
+            <ImageView
+                android:id="@+id/iv_action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                tools:src="@drawable/selector_controller_play"/>
+
+            <TextView
+                android:id="@+id/tv_index"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                tools:text="2"/>
+
+            <TextView
+                android:id="@+id/tv_album_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="@dimen/one_unit"
+                android:layout_marginStart="78dp"
+                android:layout_toEndOf="@+id/tv_index"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                tools:text="The Cure"/>
+            <!--android:text="@{avm.trackName}"-->
+
+            <TextView
+                android:id="@+id/tv_singer_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/tv_album_name"
+                android:layout_alignStart="@+id/tv_album_name"
+                android:layout_below="@+id/tv_album_name"
+                android:textColor="@color/colorWhite"
+                tools:text="Lady Gaga"/>
+            <!--android:text="@{avm.artistName}"-->
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/iv_music_icon"
+            style="@style/ImageView.Shadow"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="@dimen/one_unit"
+            android:layout_marginStart="34dp"
+            android:error="@{@drawable/sample_jieyi_icon}"
+            android:placeHolder="@{@drawable/loading_placeholder}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.9"
+            tools:src="@drawable/sample_lady_gaga"/>
+        <!--android:imageUrl="@{avm.thumbnail}"-->
+    </android.support.constraint.ConstraintLayout>
+</layout>

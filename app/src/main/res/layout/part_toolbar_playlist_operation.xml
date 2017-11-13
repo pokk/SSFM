@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".functions.playlist.PlaylistActivity">
+
+    <data>
+
+        <variable
+            name="title"
+            type="String"/>
+
+        <variable
+            name="svm"
+            type="taiwan.no1.app.ssfm.functions.playlist.PlaylistViewModel"/>
+    </data>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_toolbar"
+        style="@style/Toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_content_hamburger"
+            style="@style/Menu.Hamburger"
+            android:contentDescription="@string/menu_switch_button"
+            android:src="@drawable/ic_menu_90"/>
+
+        <TextView
+            style="@style/Menu.Title"
+            android:text="@{title}"
+            tools:text="ACTIVITY TITLE"/>
+
+        <ImageButton
+            style="@style/Menu.PlaylistItems"
+            android:onClick="@{svm::addPlaylistOnClick}"
+            android:src="@drawable/ic_more_vert"/>
+
+        <ImageButton
+            style="@style/Menu.PlaylistItems"
+            android:layout_marginEnd="0dp"
+            android:onClick="@{svm::moreOnClick}"
+            android:src="@drawable/ic_add"/>
+    </android.support.v7.widget.Toolbar>
+</layout>
