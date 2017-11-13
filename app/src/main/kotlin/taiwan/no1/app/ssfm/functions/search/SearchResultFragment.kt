@@ -23,7 +23,8 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
     //region Static initialization
     companion object Factory {
         /**
-         * Use this factory method to create a new instance of this fragment using the provided parameters.
+         * Use this factory method to create a new instance of this fragment using the
+         * provided parameters.
          *
          * @return A new instance of [android.app.Fragment] SearchResultFragment.
          */
@@ -72,8 +73,8 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
     //endregion
 
     /**
-     * An anonymous callback function for updating the recyclerview list and the item lists from the
-     * viewholder of the loading more event.
+     * An anonymous callback function for updating the recyclerview list and the item lists
+     * from the viewholder of the loading more event.
      */
     private val updateListInfo = { keyword: String, musics: MutableList<InfoBean>, canLoadMore: Boolean ->
         this.keyword = keyword

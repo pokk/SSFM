@@ -32,7 +32,8 @@ class SearchIndexFragment : AdvancedFragment<SearchIndexFragmentViewModel, Fragm
     //region Static initialization
     companion object Factory {
         /**
-         * Use this factory method to create a new instance of this fragment using the provided parameters.
+         * Use this factory method to create a new instance of this fragment using the
+         * provided parameters.
          *
          * @return A new instance of [android.app.Fragment] SearchIndexFragment.
          */
