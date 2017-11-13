@@ -9,7 +9,7 @@ import com.trello.rxlifecycle2.LifecycleProvider
  * @author  jieyi
  * @since   5/8/17
  */
-abstract class BaseViewModel: BaseObservable(), IViewModel {
+abstract class BaseViewModel : BaseObservable(), IViewModel {
     protected lateinit var lifecycleProvider: LifecycleProvider<*>
 
     // OPTIMIZE(jieyi): 9/29/17 We might make a general callback listener object!?

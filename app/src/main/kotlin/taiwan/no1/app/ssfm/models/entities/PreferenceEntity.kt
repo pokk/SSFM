@@ -16,6 +16,6 @@ data class PreferenceEntity(val title: String,
                             @DrawableRes val icon: Int = -1,
                             var observer: Observer<String>? = null,
                             override var childItemList: List<IExpandVisitable> = mutableListOf(),
-                            override var isExpanded: Boolean = false): IExpandVisitable {
+                            override var isExpanded: Boolean = false) : IExpandVisitable {
     override fun type(typeFactory: ExpandableViewTypeFactory): Int = typeFactory.type(this)
 }

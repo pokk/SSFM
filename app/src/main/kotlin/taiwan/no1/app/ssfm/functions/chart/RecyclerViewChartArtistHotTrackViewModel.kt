@@ -13,7 +13,7 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
  * @author  jieyi
  * @since   10/29/17
  */
-class RecyclerViewChartArtistHotTrackViewModel(val item: BaseEntity): BaseViewModel() {
+class RecyclerViewChartArtistHotTrackViewModel(val item: BaseEntity) : BaseViewModel() {
     val trackName by lazy { ObservableField<String>() }
     val trackNumber by lazy { ObservableField<String>() }
 
@@ -32,6 +32,7 @@ class RecyclerViewChartArtistHotTrackViewModel(val item: BaseEntity): BaseViewMo
      * @event_to [taiwan.no1.app.ssfm.functions.search.SearchViewModel.receiveClickHistoryEvent]
      */
     fun trackOnClick(view: View) {
-        RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_HISTORY, (item as TrackEntity.TrackWithStreamableString).name)
+        RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_HISTORY,
+            (item as TrackEntity.TrackWithStreamableString).name)
     }
 }

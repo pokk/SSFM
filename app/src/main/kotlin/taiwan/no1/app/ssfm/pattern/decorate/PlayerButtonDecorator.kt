@@ -13,7 +13,7 @@ import org.jetbrains.anko.sdk25.coroutines.onClick
  * @author  jieyi
  * @since   7/2/17
  */
-abstract class PlayerButtonDecorator(protected val imageButton: ImageButton): IPlayerButton {
+abstract class PlayerButtonDecorator(protected val imageButton: ImageButton) : IPlayerButton {
     open var listener: (btn: ImageButton) -> Unit = { _: ImageButton -> }
     open var state: Int = 0
 

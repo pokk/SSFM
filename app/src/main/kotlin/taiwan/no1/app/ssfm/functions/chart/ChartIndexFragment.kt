@@ -33,7 +33,7 @@ import javax.inject.Inject
  * @author  jieyi
  * @since   8/20/17
  */
-class ChartIndexFragment: AdvancedFragment<ChartIndexFragmentViewModel, FragmentChartIndexBinding>() {
+class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, FragmentChartIndexBinding>() {
     //region Static initialization
     companion object Factory {
         /**
@@ -70,7 +70,9 @@ class ChartIndexFragment: AdvancedFragment<ChartIndexFragmentViewModel, Fragment
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
         binding?.apply {
-            artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            artistLayoutManager = WrapContentLinearLayoutManager(activity,
+                LinearLayoutManager.HORIZONTAL,
+                false)
             artistAdapter = BaseDataBindingAdapter<ItemArtistType1Binding, BaseEntity>(R.layout.item_artist_type_1,
                 artistRes) { holder, item ->
                 holder.binding.avm = RecyclerViewSearchArtistChartViewModel(item).apply {
@@ -84,8 +86,10 @@ class ChartIndexFragment: AdvancedFragment<ChartIndexFragmentViewModel, Fragment
                 val sd = App.compactContext.scaledDrawable(R.drawable.ic_pause_circle, 0.5f, 0.5f)
                 holder.binding.tvPlayCount.setCompoundDrawables(sd, null, null, null)
             }
-            artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as ArtistAdapter, artistInfo,
-                artistRes, viewModel::fetchArtistList)
+            artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as ArtistAdapter,
+                artistInfo,
+                artistRes,
+                viewModel::fetchArtistList)
             artistDecoration = HorizontalItemDecorator(20)
 
             tagLayoutManager = StaggeredGridLayoutManager(3, VERTICAL)
@@ -95,7 +99,8 @@ class ChartIndexFragment: AdvancedFragment<ChartIndexFragmentViewModel, Fragment
                     onAttach(this@ChartIndexFragment)
                     clickItemListener = {
                         // TODO(jieyi): 10/22/17 Change fragment to create instance method.
-                        (act as ChartActivity).navigate(ChartTagDetailFragment.newInstance(it.name ?: ""), true)
+                        (act as ChartActivity).navigate(ChartTagDetailFragment.newInstance(it.name ?: ""),
+                            true)
                     }
                 }
             }
@@ -104,7 +109,10 @@ class ChartIndexFragment: AdvancedFragment<ChartIndexFragmentViewModel, Fragment
         // First time showing this fragment.
         artistInfo.firstFetch {
             viewModel.fetchArtistList(it.page, it.limit) { resList, total ->
-                artistRes.refreshAndChangeList(resList, total, binding?.artistAdapter as ArtistAdapter, it)
+                artistRes.refreshAndChangeList(resList,
+                    total,
+                    binding?.artistAdapter as ArtistAdapter,
+                    it)
             }
         }
         tagInfo.firstFetch {

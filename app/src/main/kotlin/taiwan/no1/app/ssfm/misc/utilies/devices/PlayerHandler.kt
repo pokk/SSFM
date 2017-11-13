@@ -13,12 +13,12 @@ import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.RANDOM
  * Created by weian on 2017/7/7.
  */
 
-class PlayerHandler(player: IMultiMediaPlayer, playList: IPlayList):
-        IPlayerHandler {
+class PlayerHandler(player: IMultiMediaPlayer, playList: IPlayList) :
+    IPlayerHandler {
     private var mPlayIndex: IPlayList
     private var mPlayer: IMultiMediaPlayer
     private var mPlayList: Array<String> = arrayOf()
-    private var timer: PausableTimer ?= null
+    private var timer: PausableTimer? = null
     private val TAG = "PlayerHandler"
 
     init {
@@ -29,7 +29,7 @@ class PlayerHandler(player: IMultiMediaPlayer, playList: IPlayList):
     override fun play(index: Int) {
         mPlayer.takeIf { it.isPlaying() }?.stop()
 
-        val observer = object: Observer<Unit> {
+        val observer = object : Observer<Unit> {
             override fun onSubscribe(d: Disposable) {
                 Log.i(TAG, "observer onSubscribe")
             }
@@ -52,7 +52,8 @@ class PlayerHandler(player: IMultiMediaPlayer, playList: IPlayList):
             mPlayList[index].startsWith("https://")) {
             // web address
             mPlayer.playURL(mPlayList[index], observer)
-        } else {
+        }
+        else {
             // local path
             mPlayer.playLocal(mPlayList[index], observer)
         }

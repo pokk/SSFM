@@ -12,7 +12,7 @@ import com.raizlabs.android.dbflow.config.FlowManager
  * @author  jieyi
  * @since   9/17/17
  */
-class InitializeService: IntentService("InitializeService") {
+class InitializeService : IntentService("InitializeService") {
     companion object {
         private const val ACTION_INIT_WHEN_APP_CREATE = "taiwan.no1.service.action.INIT"
         fun start(context: Context) {

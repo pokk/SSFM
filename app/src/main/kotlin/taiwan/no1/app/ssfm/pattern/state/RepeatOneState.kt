@@ -10,7 +10,7 @@ import taiwan.no1.app.ssfm.misc.widgets.PlayerControllerLayout
  * @author  jieyi
  * @since   7/1/17
  */
-class RepeatOneState: IControllerButtonState {
+class RepeatOneState : IControllerButtonState {
     override fun onclick(wrapper: PlayerControllerLayout) {
         wrapper.stateRecycleMode = ShuffleState()
         wrapper.listImageButtons[0].imageResource = R.drawable.selector_controller_shuffle

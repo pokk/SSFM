@@ -8,7 +8,7 @@ import android.view.View
  * @author  jieyi
  * @since   7/6/17
  */
-class PageTransformer: ViewPager.PageTransformer {
+class PageTransformer : ViewPager.PageTransformer {
     private val MIN_SCALE = 0.75f
 
     override fun transformPage(view: View, position: Float) {

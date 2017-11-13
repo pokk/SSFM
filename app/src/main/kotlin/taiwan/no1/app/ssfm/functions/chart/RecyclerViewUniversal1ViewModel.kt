@@ -24,9 +24,11 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
  * @author  jieyi
  * @since   10/26/17
  */
-class RecyclerViewUniversal1ViewModel(val item: BaseEntity): BaseViewModel() {
+class RecyclerViewUniversal1ViewModel(val item: BaseEntity) : BaseViewModel() {
     val artistName by lazy { ObservableField<String>((item as AlbumEntity.AlbumWithArtist).name) }
-    val thumbnail by lazy { ObservableField<String>((item as AlbumEntity.AlbumWithArtist).images?.get(ImageSizes.LARGE)?.text ?: "") }
+    val thumbnail by lazy {
+        ObservableField<String>((item as AlbumEntity.AlbumWithArtist).images?.get(ImageSizes.LARGE)?.text ?: "")
+    }
     val textBackground by lazy { ObservableInt() }
     val textColor by lazy { ObservableInt() }
     val shadowColor by lazy { ObservableInt() }
@@ -44,8 +46,11 @@ class RecyclerViewUniversal1ViewModel(val item: BaseEntity): BaseViewModel() {
             hashMapOf("Artist Name" to item.artist?.name, "Artist Album Name" to item.name))
     }
 
-    val imageCallback = object: RequestListener<Bitmap> {
-        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean) =
+    val imageCallback = object : RequestListener<Bitmap> {
+        override fun onLoadFailed(e: GlideException?,
+                                  model: Any?,
+                                  target: Target<Bitmap>?,
+                                  isFirstResource: Boolean) =
             false
 
         override fun onResourceReady(resource: Bitmap,

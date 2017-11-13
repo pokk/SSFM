@@ -10,7 +10,7 @@ import taiwan.no1.app.ssfm.R
  * @author  jieyi
  * @since   7/2/17
  */
-class RepeatPlayerButtonDecorator(btn: ImageButton): PlayerButtonDecorator(btn) {
+class RepeatPlayerButtonDecorator(btn: ImageButton) : PlayerButtonDecorator(btn) {
     init {
         btn.imageResource = R.drawable.selector_controller_repeat
     }

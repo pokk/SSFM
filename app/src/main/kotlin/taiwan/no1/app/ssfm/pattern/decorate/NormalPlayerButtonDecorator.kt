@@ -8,7 +8,7 @@ import android.widget.ImageButton
  * @author  jieyi
  * @since   7/3/17
  */
-class NormalPlayerButtonDecorator(val btn: ImageButton, setting: (Wrapper.() -> Unit)? = null):
+class NormalPlayerButtonDecorator(val btn: ImageButton, setting: (Wrapper.() -> Unit)? = null) :
     PlayerButtonDecorator(btn) {
 
     init {

@@ -13,7 +13,7 @@ import taiwan.no1.app.ssfm.models.usecases.GetKeywordHistoriesCase
  * @since   8/20/17
  */
 class SearchHistoryFragmentViewModel(private val context: Context,
-                                     private val getHistoriesUsecase: BaseUsecase<List<KeywordEntity>, GetKeywordHistoriesCase.RequestValue>):
+                                     private val getHistoriesUsecase: BaseUsecase<List<KeywordEntity>, GetKeywordHistoriesCase.RequestValue>) :
     BaseViewModel() {
     fun fetchHistoryList(callback: (List<KeywordEntity>) -> Unit) {
         lifecycleProvider.execute(getHistoriesUsecase) { onNext(callback) }

@@ -25,7 +25,7 @@ import taiwan.no1.app.ssfm.models.usecases.BaseUsecase.RequestValues
  * @author  jieyi
  * @since   8/14/17
  */
-abstract class BaseUsecase<T, R: RequestValues>(protected val repository: IDataStore) {
+abstract class BaseUsecase<T, R : RequestValues>(protected val repository: IDataStore) {
     /** Provide a common parameter variable for the children class. */
     var parameters: R? = null
     // TODO(jieyi): 8/14/17 This two functions could be a interface.
@@ -39,7 +39,8 @@ abstract class BaseUsecase<T, R: RequestValues>(protected val repository: IDataS
      *
      * @param observer a reaction of [Observer] from viewmodel, the data are omitted from database or remote.
      */
-    fun execute(lifecycleProvider: LifecycleProvider<*>? = null, observer: Observer<T>) = lifecycleProvider?.let {
+    fun execute(lifecycleProvider: LifecycleProvider<*>? = null,
+                observer: Observer<T>) = lifecycleProvider?.let {
         buildUsecase().bindToLifecycle(it).subscribe(observer)
     } ?: buildUsecase().subscribe(observer)
 
@@ -49,7 +50,9 @@ abstract class BaseUsecase<T, R: RequestValues>(protected val repository: IDataS
      * @param parameter the parameter for retrieving data.
      * @param observer a reaction of [Observer] from viewmodel, the data are omitted from database or remote.
      */
-    fun execute(parameter: R, lifecycleProvider: LifecycleProvider<*>? = null, observer: Observer<T>) {
+    fun execute(parameter: R,
+                lifecycleProvider: LifecycleProvider<*>? = null,
+                observer: Observer<T>) {
         parameters = parameter
         execute(lifecycleProvider, observer)
     }
@@ -80,7 +83,8 @@ abstract class BaseUsecase<T, R: RequestValues>(protected val repository: IDataS
      * @param lifecycleProvider an activity or a fragment of the [LifecycleProvider] object.
      * @param observer a reaction of [ObserverPlugin] from viewmodel, the data are omitted from database or remote.
      */
-    fun execute(lifecycleProvider: LifecycleProvider<*>? = null, observer: ObserverPlugin<T>.() -> Unit) =
+    fun execute(lifecycleProvider: LifecycleProvider<*>? = null,
+                observer: ObserverPlugin<T>.() -> Unit) =
         lifecycleProvider?.let {
             buildUsecase().bindToLifecycle(it).subscribe(ObserverPlugin<T>().apply(observer))
         } ?: buildUsecase().subscribe(ObserverPlugin<T>().apply(observer))
@@ -92,7 +96,9 @@ abstract class BaseUsecase<T, R: RequestValues>(protected val repository: IDataS
      * @param lifecycleProvider an activity or a fragment of the [LifecycleProvider] object.
      * @param observer a reaction of [ObserverPlugin] from viewmodel, the data are omitted from database or remote.
      */
-    fun execute(parameter: R, lifecycleProvider: LifecycleProvider<*>? = null, observer: ObserverPlugin<T>.() -> Unit) {
+    fun execute(parameter: R,
+                lifecycleProvider: LifecycleProvider<*>? = null,
+                observer: ObserverPlugin<T>.() -> Unit) {
         parameters = parameter
         execute(lifecycleProvider, observer)
     }

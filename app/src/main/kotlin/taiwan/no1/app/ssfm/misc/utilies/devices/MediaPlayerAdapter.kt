@@ -25,12 +25,12 @@ import kotlin.concurrent.thread
  */
 
 @TargetApi(23)
-class MediaPlayerAdapter(imageView: RotatedCircleWithIconImageView):
-        IMultiMediaPlayer,
-        MediaPlayer.OnPreparedListener,
-        MediaPlayer.OnErrorListener,
-        MediaPlayer.OnBufferingUpdateListener,
-        MediaPlayer.OnCompletionListener {
+class MediaPlayerAdapter(imageView: RotatedCircleWithIconImageView) :
+    IMultiMediaPlayer,
+    MediaPlayer.OnPreparedListener,
+    MediaPlayer.OnErrorListener,
+    MediaPlayer.OnBufferingUpdateListener,
+    MediaPlayer.OnCompletionListener {
     private var mImageView: RotatedCircleWithIconImageView
     private var mMediaPlayer = MediaPlayer()
     private var mState: EPlayerState = STOP
@@ -97,26 +97,30 @@ class MediaPlayerAdapter(imageView: RotatedCircleWithIconImageView):
                     // FIXME(Weian): can not get duration, MediaDataSource maybe have some issue. Disable MediaDataSource for a while.
                     // if (MARSHMALLOW <= CURRENT_VERSION) {
                     if (false) {
-                        downloadModel = MediaDataSourceModel(url, object : IMediaDownloader.DownloadListener {
-                            override fun onDownloadFinish() {
-                                this@MediaPlayerAdapter.mMediaPlayer.prepareAsync()
-                            }
-                        })
+                        downloadModel = MediaDataSourceModel(url,
+                            object : IMediaDownloader.DownloadListener {
+                                override fun onDownloadFinish() {
+                                    this@MediaPlayerAdapter.mMediaPlayer.prepareAsync()
+                                }
+                            })
                         downloadModel.let {
                             this@MediaPlayerAdapter.mMediaPlayer.setDataSource(it as MediaDataSource)
                         }
-                    } else {
-                        downloadModel = MediaTempFileModel(url, object : IMediaDownloader.DownloadListener {
-                            override fun onDownloadFinish() {
-                                this@MediaPlayerAdapter.mMediaPlayer.prepareAsync()
-                            }
-                        })
+                    }
+                    else {
+                        downloadModel = MediaTempFileModel(url,
+                            object : IMediaDownloader.DownloadListener {
+                                override fun onDownloadFinish() {
+                                    this@MediaPlayerAdapter.mMediaPlayer.prepareAsync()
+                                }
+                            })
                         this@MediaPlayerAdapter.mMediaPlayer.setDataSource(MediaTempFileModel.TEMP)
                     }
                     downloadModel.start()
                     mObserver = observer
                 }
-            } catch (e: Exception) {
+            }
+            catch (e: Exception) {
                 loge(e.toString())
                 loge("URL is not valid: $url")
 

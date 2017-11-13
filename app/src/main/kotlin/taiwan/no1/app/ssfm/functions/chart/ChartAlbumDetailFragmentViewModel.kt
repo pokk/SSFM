@@ -16,7 +16,7 @@ import taiwan.no1.app.ssfm.models.usecases.GetArtistInfoCase
  * @since   8/20/17
  */
 class ChartAlbumDetailFragmentViewModel(private val albumInfoCase: BaseUsecase<AlbumEntity, GetAlbumInfoCase.RequestValue>,
-                                        private val artistInfoCase: BaseUsecase<ArtistEntity, GetArtistInfoCase.RequestValue>):
+                                        private val artistInfoCase: BaseUsecase<ArtistEntity, GetArtistInfoCase.RequestValue>) :
     BaseViewModel() {
     val artistImage by lazy { ObservableField<String>() }
     val artistName by lazy { ObservableField<String>() }
@@ -28,7 +28,8 @@ class ChartAlbumDetailFragmentViewModel(private val albumInfoCase: BaseUsecase<A
     fun fetchDetailInfo(albumName: String,
                         artistName: String,
                         callback: (albumDetailCallback: AlbumEntity.Album) -> Unit) {
-        lifecycleProvider.execute(albumInfoCase, GetAlbumInfoCase.RequestValue(artistName, albumName)) {
+        lifecycleProvider.execute(albumInfoCase,
+            GetAlbumInfoCase.RequestValue(artistName, albumName)) {
             onNext {
                 this@ChartAlbumDetailFragmentViewModel.albumName.set(it.album?.name ?: "")
                 albumSummary.set(it.album?.wiki?.content ?: "")

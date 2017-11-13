@@ -15,7 +15,7 @@ import taiwan.no1.app.ssfm.R
  * @author  jieyi
  * @since   6/7/17
  */
-class MenuItem(context: Context): LinearLayout(context) {
+class MenuItem(context: Context) : LinearLayout(context) {
     var tv_menu: TextView
 
     init {
@@ -24,12 +24,13 @@ class MenuItem(context: Context): LinearLayout(context) {
         tv_menu = view.tv_title
     }
 
-    constructor(context: Context, @DrawableRes resIcon: Int, @StringRes resTitle: Int): this(context) {
+    constructor(context: Context, @DrawableRes resIcon: Int, @StringRes resTitle: Int) : this(
+        context) {
         tv_menu.setText(resTitle)
         tv_menu.setCompoundDrawablesWithIntrinsicBounds(resIcon, 0, 0, 0)
     }
 
-    constructor(context: Context, @DrawableRes resIcon: Int, title: String): this(context) {
+    constructor(context: Context, @DrawableRes resIcon: Int, title: String) : this(context) {
         tv_menu.text = title
         logw(resIcon)
         tv_menu.setCompoundDrawablesWithIntrinsicBounds(resIcon, 0, 0, 0)

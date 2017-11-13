@@ -20,7 +20,7 @@ import javax.inject.Inject
  * @author  jieyi
  * @since   11/5/17
  */
-class PlaylistIndexFragment: AdvancedFragment<PlaylistIndexFragmentViewModel, FragmentMylistIndexBinding>() {
+class PlaylistIndexFragment : AdvancedFragment<PlaylistIndexFragmentViewModel, FragmentMylistIndexBinding>() {
     //region Static initialization
     companion object Factory {
         /**
@@ -62,7 +62,10 @@ class PlaylistIndexFragment: AdvancedFragment<PlaylistIndexFragmentViewModel, Fr
         // First time showing this fragment.
         playlistInfo.firstFetch { info ->
             viewModel.fetchPlaylistAndRecently({
-                playlistRes.refreshAndChangeList(it, 1, binding?.playlistAdapter as PlaylistAdapter, info)
+                playlistRes.refreshAndChangeList(it,
+                    1,
+                    binding?.playlistAdapter as PlaylistAdapter,
+                    info)
             }, {
                 recentlyPlayedRes.refreshAndChangeList(it,
                     1,

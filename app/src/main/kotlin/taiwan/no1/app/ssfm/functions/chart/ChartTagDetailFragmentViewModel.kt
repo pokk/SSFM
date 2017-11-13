@@ -22,7 +22,7 @@ class ChartTagDetailFragmentViewModel(
     private val tagInfoUsecase: BaseUsecase<TagEntity, GetTagInfoCase.RequestValue>,
     private val topAlbumsUsecase: BaseUsecase<TopAlbumEntity, GetTagTopAlbumsCase.RequestValue>,
     private val topArtistsUsecase: BaseUsecase<TagTopArtistEntity, GetTagTopArtistsCase.RequestValue>,
-    private val topTracksUsecase: BaseUsecase<TopTrackEntity, GetTagTopTracksCase.RequestValue>):
+    private val topTracksUsecase: BaseUsecase<TopTrackEntity, GetTagTopTracksCase.RequestValue>) :
     BaseViewModel() {
     val tagSummary by lazy { ObservableField<String>() }
 
@@ -34,19 +34,28 @@ class ChartTagDetailFragmentViewModel(
 
     fun fetchHotAlbum(name: String, page: Int, limit: Int,
                       callback: (List<BaseEntity>, total: Int) -> Unit) {
-        lifecycleProvider.execute(topAlbumsUsecase, GetTagTopAlbumsCase.RequestValue(name, page, limit)) {
+        lifecycleProvider.execute(topAlbumsUsecase,
+            GetTagTopAlbumsCase.RequestValue(name, page, limit)) {
             onNext { callback(it.albums.albums, it.albums.attr?.total?.toInt() ?: 0) }
         }
     }
 
-    fun fetchHotArtist(name: String, page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit) {
-        lifecycleProvider.execute(topArtistsUsecase, GetTagTopArtistsCase.RequestValue(name, page, limit)) {
+    fun fetchHotArtist(name: String,
+                       page: Int,
+                       limit: Int,
+                       callback: (List<BaseEntity>, total: Int) -> Unit) {
+        lifecycleProvider.execute(topArtistsUsecase,
+            GetTagTopArtistsCase.RequestValue(name, page, limit)) {
             onNext { callback(it.topartists.artists, it.topartists.attr?.total?.toInt() ?: 0) }
         }
     }
 
-    fun fetchHotTrack(name: String, page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit) {
-        lifecycleProvider.execute(topTracksUsecase, GetTagTopTracksCase.RequestValue(name, page, limit)) {
+    fun fetchHotTrack(name: String,
+                      page: Int,
+                      limit: Int,
+                      callback: (List<BaseEntity>, total: Int) -> Unit) {
+        lifecycleProvider.execute(topTracksUsecase,
+            GetTagTopTracksCase.RequestValue(name, page, limit)) {
             onNext { callback(it.track.tracks, it.track.attr?.total?.toInt() ?: 0) }
         }
     }

@@ -7,9 +7,9 @@ import com.google.gson.annotations.SerializedName
  * @since   10/16/17
  */
 data class TrackEntity(var track: Track?) {
-    data class Track(var streamable: Streamable?): BaseTrack()
+    data class Track(var streamable: Streamable?) : BaseTrack()
 
-    data class TrackWithStreamableString(var streamable: String?): BaseTrack()
+    data class TrackWithStreamableString(var streamable: String?) : BaseTrack()
 
     open class BaseTrack(var album: AlbumEntity.Album? = null,
                          @SerializedName("@attr") var attr: Attr? = null,
@@ -23,5 +23,5 @@ data class TrackEntity(var track: Track?) {
                          @SerializedName("playcount") var playcount: String? = null,
                          @SerializedName("toptags") var topTag: Tags? = null,
                          var url: String? = null,
-                         var wiki: Wiki? = null): BaseEntity
+                         var wiki: Wiki? = null) : BaseEntity
 }

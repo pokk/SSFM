@@ -42,7 +42,8 @@ class NetModule {
 
     @Provides
     @Network
-    fun provideOkHttpCache(context: Context): Cache = Cache(context.cacheDir, 10 * 1024 * 1024 /* 10 MiB */)
+    fun provideOkHttpCache(context: Context): Cache = Cache(context.cacheDir,
+        10 * 1024 * 1024 /* 10 MiB */)
 
     @Provides
     @Network
@@ -66,7 +67,8 @@ class NetModule {
     @Provides
     @Network
     @Named("music1")
-    fun provideRetrofit2_1(baseBuilder: Retrofit.Builder, restfulApiFactory: RestfulApiFactory): MusicServices =
+    fun provideRetrofit2_1(baseBuilder: Retrofit.Builder,
+                           restfulApiFactory: RestfulApiFactory): MusicServices =
         with(baseBuilder) {
             baseUrl(restfulApiFactory.createMusic1Config().getApiBaseUrl())
             build()
@@ -75,7 +77,8 @@ class NetModule {
     @Provides
     @Network
     @Named("music2")
-    fun provideRetrofit2_2(baseBuilder: Retrofit.Builder, restfulApiFactory: RestfulApiFactory): MusicServices =
+    fun provideRetrofit2_2(baseBuilder: Retrofit.Builder,
+                           restfulApiFactory: RestfulApiFactory): MusicServices =
         with(baseBuilder) {
             baseUrl(restfulApiFactory.createMusic2Config().getApiBaseUrl())
             build()
@@ -84,7 +87,8 @@ class NetModule {
     @Provides
     @Network
     @Named("music3")
-    fun provideRetrofit2_3(baseBuilder: Retrofit.Builder, restfulApiFactory: RestfulApiFactory): MusicServices =
+    fun provideRetrofit2_3(baseBuilder: Retrofit.Builder,
+                           restfulApiFactory: RestfulApiFactory): MusicServices =
         with(baseBuilder) {
             baseUrl(restfulApiFactory.createMusic3Config().getApiBaseUrl())
             build()

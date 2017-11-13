@@ -13,7 +13,7 @@ import kotlin.concurrent.thread
  * Created by weian on 2017/10/21.
  */
 
-class MediaTempFileModel(url: String, listener: DownloadListener): IMediaDownloader {
+class MediaTempFileModel(url: String, listener: DownloadListener) : IMediaDownloader {
     private var url: String = ""
     private var listener: DownloadListener
     @Volatile lateinit var mediaBuffer: ByteArray

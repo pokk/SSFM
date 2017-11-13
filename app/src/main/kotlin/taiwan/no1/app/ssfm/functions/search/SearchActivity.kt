@@ -20,7 +20,7 @@ import javax.inject.Inject
  * @author  jieyi
  * @since   9/16/17
  */
-class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>() {
+class SearchActivity : AdvancedActivity<SearchViewModel, ActivitySearchBinding>() {
     @Inject override lateinit var viewModel: SearchViewModel
     private val fragmentStack by lazy { Stack<Fragment>() }
     private val searchFragments by lazy {
@@ -43,7 +43,8 @@ class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>()
     //endregion
 
     //region Base activity implement
-    override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_search)
+    override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this,
+        R.layout.activity_search)
     //endregion
 
     override fun onBackPressed() {
@@ -71,7 +72,8 @@ class SearchActivity: AdvancedActivity<SearchViewModel, ActivitySearchBinding>()
     private fun isSpecificTargetAction(fragmentTag: String): Boolean =
         FRAGMENT_SEARCH_HISTORY == fragmentTag && (fragmentStack.safePeek() is SearchHistoryFragment || fragmentStack.safePeek() is SearchResultFragment)
 
-    private fun setFragmentParameters(tag: String, params: SparseArray<Any>) = searchFragments[tag].also {
+    private fun setFragmentParameters(tag: String,
+                                      params: SparseArray<Any>) = searchFragments[tag].also {
         when (tag) {
             FRAGMENT_SEARCH_RESULT -> (it as SearchResultFragment).keyword = params[0] as? String ?: ""
             FRAGMENT_SEARCH_HISTORY -> Unit

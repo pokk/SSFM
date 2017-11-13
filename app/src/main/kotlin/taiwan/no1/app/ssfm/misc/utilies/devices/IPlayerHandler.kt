@@ -16,6 +16,7 @@ interface IPlayerHandler {
      * real media player
      */
     fun play(index: Int = 0)
+
     fun stop()
     fun pause()
     fun resume()
@@ -29,6 +30,7 @@ interface IPlayerHandler {
      * playlist
      */
     fun previous()
+
     fun next()
     fun downloadProcess()
     fun loopAll(is_loop: Boolean)

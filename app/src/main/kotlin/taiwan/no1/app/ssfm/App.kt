@@ -15,7 +15,7 @@ import taiwan.no1.app.ssfm.internal.di.components.DaggerAppComponent
  * @author  jieyi
  * @since   5/9/17
  */
-class App: DaggerApplication() {
+class App : DaggerApplication() {
     companion object {
         lateinit var injector: AndroidInjector<App>
         val appComponent by lazy { injector as AppComponent }

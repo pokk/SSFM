@@ -17,7 +17,9 @@ import android.view.View
  * @author  jieyi
  * @since   11/6/17
  */
-class BlurryImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0):
+class BlurryImageView @JvmOverloads constructor(context: Context,
+                                                attrs: AttributeSet? = null,
+                                                defStyleAttr: Int = 0) :
     View(context, attrs, defStyleAttr) {
     private var bitmap: Bitmap? = null
     private val paint by lazy { Paint() }
@@ -25,7 +27,13 @@ class BlurryImageView @JvmOverloads constructor(context: Context, attrs: Attribu
     fun inputBitmap(bitmap: Bitmap) {
         this.bitmap = bitmap
 
-        val shaderA = LinearGradient(0f, 0f, 0f, bitmap.height.toFloat(), -0x1, 0x00ffffff, Shader.TileMode.CLAMP)
+        val shaderA = LinearGradient(0f,
+            0f,
+            0f,
+            bitmap.height.toFloat(),
+            -0x1,
+            0x00ffffff,
+            Shader.TileMode.CLAMP)
         val shaderB = BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
         paint.shader = ComposeShader(shaderA, shaderB, PorterDuff.Mode.SRC_IN)
 
@@ -33,6 +41,10 @@ class BlurryImageView @JvmOverloads constructor(context: Context, attrs: Attribu
     }
 
     override fun onDraw(canvas: Canvas) {
-        canvas.drawRect(0f, 0f, bitmap?.width?.toFloat() ?: 0f, bitmap?.height?.toFloat() ?: 0f, paint)
+        canvas.drawRect(0f,
+            0f,
+            bitmap?.width?.toFloat() ?: 0f,
+            bitmap?.height?.toFloat() ?: 0f,
+            paint)
     }
 }

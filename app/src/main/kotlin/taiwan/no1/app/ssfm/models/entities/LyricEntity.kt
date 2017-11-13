@@ -12,4 +12,4 @@ import taiwan.no1.app.ssfm.models.data.local.database.MusicDatabase
  */
 @Table(database = MusicDatabase::class, allFields = true)
 data class LyricEntity(@PrimaryKey(autoincrement = true) var id: Long = 0,
-                       var lyric: String = ""): BaseRXModel()
+                       var lyric: String = "") : BaseRXModel()

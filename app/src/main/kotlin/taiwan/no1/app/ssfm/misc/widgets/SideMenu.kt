@@ -31,7 +31,7 @@ import java.lang.ref.WeakReference
  * @author  jieyi
  * @since   6/7/17
  */
-class SideMenu(context: Context, @LayoutRes resMenu: Int = -1): FrameLayout(context) {
+class SideMenu(context: Context, @LayoutRes resMenu: Int = -1) : FrameLayout(context) {
     companion object {
         private const val PRESSED_MOVE_HORIZONTAL = 2
         private const val PRESSED_MOVE_VERTICAL = 3
@@ -102,7 +102,9 @@ class SideMenu(context: Context, @LayoutRes resMenu: Int = -1): FrameLayout(cont
         (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).let {
             it.inflate(R.layout.custom_menu_view_container, this)
 
-            vScrollMenu = it.inflate(if (0 <= resMenu) resMenu else R.layout.custom_menu_scroll_view, this, false)
+            vScrollMenu = it.inflate(if (0 <= resMenu) resMenu else R.layout.custom_menu_scroll_view,
+                this,
+                false)
             rl_menu_holder.addView(vScrollMenu)
         }
     }
@@ -227,7 +229,8 @@ class SideMenu(context: Context, @LayoutRes resMenu: Int = -1): FrameLayout(cont
         }.start()
     }
 
-    fun setMenuBackground(@DrawableRes resBackground: Int) = iv_background.setImageResource(resBackground)
+    fun setMenuBackground(@DrawableRes resBackground: Int) = iv_background.setImageResource(
+        resBackground)
 
     fun setShadowVisible(isVisible: Boolean) = iv_shadow.setBackgroundResource(if (isVisible) R.drawable.shadow else 0)
 
@@ -282,7 +285,9 @@ class SideMenu(context: Context, @LayoutRes resMenu: Int = -1): FrameLayout(cont
         iv_shadow.pivotY = pivotY * 1.1f
     }
 
-    private fun buildScaleDownAnimation(target: View, targetScaleX: Float, targetScaleY: Float): AnimatorSet =
+    private fun buildScaleDownAnimation(target: View,
+                                        targetScaleX: Float,
+                                        targetScaleY: Float): AnimatorSet =
         // scale down animation
         AnimatorSet().also {
             it.playTogether(ObjectAnimator.ofFloat(target, "scaleX", targetScaleX),
@@ -292,11 +297,14 @@ class SideMenu(context: Context, @LayoutRes resMenu: Int = -1): FrameLayout(cont
                 it.playTogether(ObjectAnimator.ofFloat(target, "rotationY", -1 * ROTATE_Y_ANGLE))
             }
 
-            it.interpolator = AnimationUtils.loadInterpolator(activity, android.R.anim.decelerate_interpolator)
+            it.interpolator = AnimationUtils.loadInterpolator(activity,
+                android.R.anim.decelerate_interpolator)
             it.duration = ANIMATION_DURATION
         }
 
-    private fun buildScaleUpAnimation(target: View, targetScaleX: Float, targetScaleY: Float): AnimatorSet =
+    private fun buildScaleUpAnimation(target: View,
+                                      targetScaleX: Float,
+                                      targetScaleY: Float): AnimatorSet =
         // scale animation
         AnimatorSet().also {
             it.playTogether(ObjectAnimator.ofFloat(target, "scaleX", targetScaleX),
@@ -339,9 +347,13 @@ class SideMenu(context: Context, @LayoutRes resMenu: Int = -1): FrameLayout(cont
         return targetScale
     }
 
-    private fun showScrollViewMenu(scrollViewMenu: View) = scrollViewMenu.parent ?: let { addView(scrollViewMenu) }
+    private fun showScrollViewMenu(scrollViewMenu: View) = scrollViewMenu.parent ?: let {
+        addView(scrollViewMenu)
+    }
 
-    private fun hideScrollViewMenu(scrollViewMenu: View) = scrollViewMenu.parent ?: let { removeView(scrollViewMenu) }
+    private fun hideScrollViewMenu(scrollViewMenu: View) = scrollViewMenu.parent ?: let {
+        removeView(scrollViewMenu)
+    }
 
     /**
      * Menu Listener.

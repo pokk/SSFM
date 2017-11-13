@@ -15,7 +15,7 @@ import taiwan.no1.app.ssfm.models.usecases.DetailMusicCase
  * @since   5/8/17
  */
 class MainViewModel(private val context: Context,
-                    private val usecase: BaseUsecase<DetailMusicEntity, DetailMusicCase.RequestValue>):
+                    private val usecase: BaseUsecase<DetailMusicEntity, DetailMusicCase.RequestValue>) :
     BaseViewModel() {
     private val entity = TagEntity(20, "Jieyi")
 

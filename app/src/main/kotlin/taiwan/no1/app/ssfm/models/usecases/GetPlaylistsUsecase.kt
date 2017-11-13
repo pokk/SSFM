@@ -8,7 +8,7 @@ import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
  * @author  jieyi
  * @since   11/8/17
  */
-class GetPlaylistsUsecase(repository: IDataStore):
+class GetPlaylistsUsecase(repository: IDataStore) :
     BaseUsecase<List<PlaylistEntity>, AddPlaylistUsecase.RequestValue>(repository) {
     override fun fetchUsecase(): Observable<List<PlaylistEntity>> = repository.getPlaylists()
 }

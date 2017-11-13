@@ -13,7 +13,7 @@ import javax.inject.Inject
  * @author  jieyi
  * @since   9/16/17
  */
-class PlaylistActivity: AdvancedActivity<PlaylistViewModel, ActivityPlaylistBinding>() {
+class PlaylistActivity : AdvancedActivity<PlaylistViewModel, ActivityPlaylistBinding>() {
     @Inject override lateinit var viewModel: PlaylistViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +22,7 @@ class PlaylistActivity: AdvancedActivity<PlaylistViewModel, ActivityPlaylistBind
     }
 
     //region Base activity implement
-    override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_playlist)
+    override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this,
+        R.layout.activity_playlist)
     //endregion
 }

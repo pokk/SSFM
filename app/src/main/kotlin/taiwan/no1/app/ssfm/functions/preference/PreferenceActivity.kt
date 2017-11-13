@@ -20,7 +20,7 @@ import javax.inject.Inject
  * @author  jieyi
  * @since   9/8/17
  */
-class PreferenceActivity: AdvancedActivity<PreferenceViewModel, ActivityPreferenceBinding>() {
+class PreferenceActivity : AdvancedActivity<PreferenceViewModel, ActivityPreferenceBinding>() {
     @Inject override lateinit var viewModel: PreferenceViewModel
 
     private val preferenceList: MutableList<IExpandVisitable> = mutableListOf(
@@ -46,6 +46,7 @@ class PreferenceActivity: AdvancedActivity<PreferenceViewModel, ActivityPreferen
     //endregion
 
     //region Base activity implement
-    override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_preference)
+    override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this,
+        R.layout.activity_preference)
     //endregion
 }

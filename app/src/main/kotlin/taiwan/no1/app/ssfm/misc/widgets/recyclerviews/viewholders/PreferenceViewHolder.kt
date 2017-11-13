@@ -17,7 +17,8 @@ import taiwan.no1.app.ssfm.models.entities.PreferenceEntity
  * @author  jieyi
  * @since   9/8/17
  */
-class PreferenceViewHolder(view: View): AdaptiveViewHolder<ExpandableViewTypeFactory, PreferenceEntity>(view) {
+class PreferenceViewHolder(view: View) : AdaptiveViewHolder<ExpandableViewTypeFactory, PreferenceEntity>(
+    view) {
     override fun initView(model: PreferenceEntity, position: Int, adapter: Any) {
         adapter as ExpandRecyclerViewAdapter
         val newPosition by lazy { adapter.calculateIndex(position) }

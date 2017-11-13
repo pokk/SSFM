@@ -27,14 +27,18 @@ import taiwan.no1.app.ssfm.pattern.state.RepeatState
  * @since   6/28/17
  */
 class PlayerControllerLayout
-@JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0):
+@JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
     ViewGroup(context, attrs, defStyleAttr) {
     val properties: ImageButton.() -> Unit = {
         backgroundColor = Color.BLACK
         scaleType = ImageView.ScaleType.FIT_CENTER
         padding = 20
     }
-    val listImageButtons = listOf(imageButton(), imageButton(), imageButton(), imageButton(), imageButton())
+    val listImageButtons = listOf(imageButton(),
+        imageButton(),
+        imageButton(),
+        imageButton(),
+        imageButton())
     val listBtnListeners = mutableListOf(
         { _: ImageButton -> },
         { _: ImageButton -> },
@@ -72,8 +76,9 @@ class PlayerControllerLayout
                     MeasureSpec.EXACTLY))
         }
         // Pick the highest component's height and plus left & right margin.
-        val maxHeight = listImageButtons.map { it.height }.max()?.plus(paddingTop)?.plus(paddingBottom) ?:
-                        MeasureSpec.getSize(heightMeasureSpec)
+        val maxHeight = listImageButtons.map { it.height }.max()?.plus(paddingTop)?.plus(
+            paddingBottom) ?:
+            MeasureSpec.getSize(heightMeasureSpec)
         // Set this layout size.
         setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), maxHeight)
     }
@@ -97,7 +102,8 @@ class PlayerControllerLayout
             // l: left, r: right
             val (l, r) = when (index) {
                 0 -> Pair(paddingLeft, paddingLeft + btn.measuredWidth)
-                2 -> Pair(layoutWidth / 2 - btn.measuredWidth / 2, layoutWidth / 2 + btn.measuredWidth / 2)
+                2 -> Pair(layoutWidth / 2 - btn.measuredWidth / 2,
+                    layoutWidth / 2 + btn.measuredWidth / 2)
                 1, 3, 4 -> Pair(prev.right, prev.right + btn.measuredWidth)
                 else -> Pair(0, 0)
             }

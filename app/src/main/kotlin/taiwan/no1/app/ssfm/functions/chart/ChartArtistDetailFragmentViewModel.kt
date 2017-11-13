@@ -20,13 +20,15 @@ import taiwan.no1.app.ssfm.models.usecases.GetArtistTopTracksCase
  */
 class ChartArtistDetailFragmentViewModel(private val artistsInfoUsecase: BaseUsecase<ArtistEntity, GetArtistInfoCase.RequestValue>,
                                          private val artistTopTracksUsecase: BaseUsecase<ArtistTopTrackEntity, GetArtistTopTracksCase.RequestValue>,
-                                         private val artistTopAlbumsUsecase: BaseUsecase<ArtistTopAlbumEntity, GetArtistTopAlbumsCase.RequestValue>):
+                                         private val artistTopAlbumsUsecase: BaseUsecase<ArtistTopAlbumEntity, GetArtistTopAlbumsCase.RequestValue>) :
     BaseViewModel() {
     val artistName by lazy { ObservableField<String>() }
     val artistImage by lazy { ObservableField<String>() }
     val artistSummary by lazy { ObservableField<String>() }
 
-    fun fetchDetailInfo(mbid: String, name: String, callback: (artistDetailInfo: ArtistEntity) -> Unit) {
+    fun fetchDetailInfo(mbid: String,
+                        name: String,
+                        callback: (artistDetailInfo: ArtistEntity) -> Unit) {
         lifecycleProvider.execute(artistsInfoUsecase, GetArtistInfoCase.RequestValue(name, mbid)) {
             onNext {
                 it.artist.let {
@@ -39,14 +41,17 @@ class ChartArtistDetailFragmentViewModel(private val artistsInfoUsecase: BaseUse
         }
     }
 
-    fun fetchHotTracks(name: String, callback: (entity: List<TrackEntity.TrackWithStreamableString>) -> Unit) {
-        lifecycleProvider.execute(artistTopTracksUsecase, GetArtistTopTracksCase.RequestValue(name)) {
+    fun fetchHotTracks(name: String,
+                       callback: (entity: List<TrackEntity.TrackWithStreamableString>) -> Unit) {
+        lifecycleProvider.execute(artistTopTracksUsecase,
+            GetArtistTopTracksCase.RequestValue(name)) {
             onNext { callback(it.toptracks.tracks) }
         }
     }
 
     fun fetchHotAlbum(name: String) {
-        lifecycleProvider.execute(artistTopAlbumsUsecase, GetArtistTopAlbumsCase.RequestValue(name)) {
+        lifecycleProvider.execute(artistTopAlbumsUsecase,
+            GetArtistTopAlbumsCase.RequestValue(name)) {
             onNext {
                 it.topalbums.albums.forEach { }
             }

@@ -26,7 +26,11 @@ fun ImageView.setBackgroundDrawable(drawable: Drawable?) {
     drawable?.let { background = it }
 }
 
-@BindingAdapter("android:imageUrl", "android:placeHolder", "android:error", "android:imgCallback", requireAll = false)
+@BindingAdapter("android:imageUrl",
+    "android:placeHolder",
+    "android:error",
+    "android:imgCallback",
+    requireAll = false)
 fun ImageView.loadImage(url: String?,
                         holderDrawable: Drawable?,
                         errorDrawable: Drawable?,

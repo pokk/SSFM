@@ -12,4 +12,4 @@ import taiwan.no1.app.ssfm.models.data.local.database.MusicDatabase
  */
 @Table(database = MusicDatabase::class, allFields = true)
 data class TagEntity(@PrimaryKey(autoincrement = true) var id: Long = 0,
-                     var name: String = ""): BaseRXModel()
+                     var name: String = "") : BaseRXModel()

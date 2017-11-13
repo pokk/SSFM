@@ -19,7 +19,7 @@ import javax.inject.Inject
  * @author  jieyi
  * @since   8/20/17
  */
-class SearchResultFragment: AdvancedFragment<SearchResultFragmentViewModel, FragmentSearchResultBinding>() {
+class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, FragmentSearchResultBinding>() {
     //region Static initialization
     companion object Factory {
         /**
@@ -54,12 +54,14 @@ class SearchResultFragment: AdvancedFragment<SearchResultFragmentViewModel, Frag
                 res) { holder, item ->
                 holder.binding.avm = RecyclerViewSearchMusicResultViewModel(item, activity)
             }
-            loadmore = object: RecyclerViewScrollCallback {
+            loadmore = object : RecyclerViewScrollCallback {
                 override fun loadMoreEvent(recyclerView: RecyclerView, total: Int) {
                     if (resInfo.canLoadMoreFlag && !resInfo.isLoading) {
                         resInfo.isLoading = true
                         val requestPage = Math.ceil(total / Constant.QUERY_PAGE_SIZE.toDouble()).toInt() + 1
-                        viewModel.sendSearchRequest(keyword, requestPage, resultCallback = updateListInfo)
+                        viewModel.sendSearchRequest(keyword,
+                            requestPage,
+                            resultCallback = updateListInfo)
                     }
                 }
             }

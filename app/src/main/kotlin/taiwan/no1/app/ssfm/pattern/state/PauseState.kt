@@ -10,7 +10,7 @@ import taiwan.no1.app.ssfm.misc.widgets.PlayerControllerLayout
  * @author  jieyi
  * @since   7/1/17
  */
-class PauseState: IControllerButtonState {
+class PauseState : IControllerButtonState {
     override fun onclick(wrapper: PlayerControllerLayout) {
         wrapper.statePlayMode = PlayState()
         wrapper.listImageButtons[2].imageResource = R.drawable.selector_controller_pause

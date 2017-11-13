@@ -25,7 +25,7 @@ import taiwan.no1.app.ssfm.models.usecases.SaveKeywordHistoryCase
  * @since   9/13/17
  */
 class SearchViewModel(private val context: Context,
-                      private val addHistoryUsecase: BaseUsecase<Boolean, SaveKeywordHistoryCase.RequestValue>):
+                      private val addHistoryUsecase: BaseUsecase<Boolean, SaveKeywordHistoryCase.RequestValue>) :
     BaseViewModel() {
     /** For navigating to other fragments from the parent activity */
     lateinit var navigateListener: (fragmentTag: String, params: SparseArray<Any>?) -> Unit

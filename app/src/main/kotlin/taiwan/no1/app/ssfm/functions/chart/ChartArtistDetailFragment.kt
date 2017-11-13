@@ -26,7 +26,7 @@ import javax.inject.Inject
  * @author  jieyi
  * @since   8/20/17
  */
-class ChartArtistDetailFragment: AdvancedFragment<ChartArtistDetailFragmentViewModel, FragmentDetailArtistBinding>() {
+class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentViewModel, FragmentDetailArtistBinding>() {
     //region Static initialization
     companion object Factory {
         // The key name of the fragment initialization parameters.
@@ -38,7 +38,8 @@ class ChartArtistDetailFragment: AdvancedFragment<ChartArtistDetailFragmentViewM
          *
          * @return A new instance of [android.app.Fragment] ChartArtistDetailFragment.
          */
-        fun newInstance(mbid: String = "", artistName: String = "") = ChartArtistDetailFragment().also {
+        fun newInstance(mbid: String = "",
+                        artistName: String = "") = ChartArtistDetailFragment().also {
             it.arguments = Bundle().apply {
                 putString(ARG_PARAM_MBID, mbid)
                 putString(ARG_PARAM_ARTIST_NAME, artistName)
@@ -81,7 +82,9 @@ class ChartArtistDetailFragment: AdvancedFragment<ChartArtistDetailFragmentViewM
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
         binding?.apply {
-            artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            artistLayoutManager = WrapContentLinearLayoutManager(activity,
+                LinearLayoutManager.HORIZONTAL,
+                false)
             artistAdapter = BaseDataBindingAdapter<ItemArtistType2Binding, BaseEntity>(R.layout.item_artist_type_2,
                 artistRes) { holder, item ->
                 holder.binding.avm = RecyclerViewChartSimilarArtistViewModel(item).apply {
@@ -91,7 +94,9 @@ class ChartArtistDetailFragment: AdvancedFragment<ChartArtistDetailFragmentViewM
             }
             artistDecoration = HorizontalItemDecorator(20)
 
-            trackLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+            trackLayoutManager = WrapContentLinearLayoutManager(activity,
+                LinearLayoutManager.VERTICAL,
+                false)
             trackAdapter = BaseDataBindingAdapter<ItemMusicType2Binding, BaseEntity>(R.layout.item_music_type_2,
                 trackRes) { holder, item ->
                 holder.binding.avm = RecyclerViewChartArtistHotTrackViewModel(item).apply {
@@ -103,10 +108,16 @@ class ChartArtistDetailFragment: AdvancedFragment<ChartArtistDetailFragmentViewM
         artistInfo.firstFetch { info ->
             viewModel.fetchDetailInfo(mbid, artistName) {
                 it.artist?.similar?.artists?.let {
-                    artistRes.refreshAndChangeList(it, 0, binding?.artistAdapter as SimilarArtistAdapter, info)
+                    artistRes.refreshAndChangeList(it,
+                        0,
+                        binding?.artistAdapter as SimilarArtistAdapter,
+                        info)
                     // If the artist exists then we can find the artist's detail tracks and albums.
                     viewModel.fetchHotTracks(artistName) {
-                        trackRes.refreshAndChangeList(it, 0, binding?.trackAdapter as ArtistTopTrackAdapter, trackInfo)
+                        trackRes.refreshAndChangeList(it,
+                            0,
+                            binding?.trackAdapter as ArtistTopTrackAdapter,
+                            trackInfo)
                     }
                     viewModel.fetchHotAlbum(artistName)
                 }

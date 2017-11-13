@@ -89,7 +89,8 @@ data class DataInfo(var page: Int = 1,
  * @param recyclerview the item in the [RecyclerView].
  * @param layoutManager the [recyclerview]'s [RecyclerView.LayoutManager].
  */
-fun DataInfo.keepLastItemPosition(recyclerview: RecyclerView, layoutManager: LinearLayoutManager?) = apply {
+fun DataInfo.keepLastItemPosition(recyclerview: RecyclerView,
+                                  layoutManager: LinearLayoutManager?) = apply {
     lastOffset = if (HORIZONTAL == layoutManager?.orientation)
         recyclerview.computeHorizontalScrollOffset()
     else
@@ -114,7 +115,7 @@ fun List<Triple<DataInfo, RecyclerView, RecyclerView.LayoutManager?>>.keepAllLas
 class RVCustomScrollCallback<T>(private val adapter: BaseDataBindingAdapter<*, T>,
                                 private val dataInfo: DataInfo,
                                 private var dataList: MutableList<T>,
-                                private val fetchMethod: (page: Int, limit: Int, callback: (List<T>, total: Int) -> Unit) -> Unit):
+                                private val fetchMethod: (page: Int, limit: Int, callback: (List<T>, total: Int) -> Unit) -> Unit) :
     RecyclerViewScrollCallback {
     override fun loadMoreEvent(recyclerView: RecyclerView, total: Int) {
         if (dataInfo.canLoadMoreFlag && !dataInfo.isLoading) {

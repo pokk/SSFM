@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView
  * @author  jieyi
  * @since   9/21/17
  */
-class BindingHolder<out BH: ViewDataBinding>(val binding: BH): RecyclerView.ViewHolder(binding.root) {
+class BindingHolder<out BH : ViewDataBinding>(val binding: BH) : RecyclerView.ViewHolder(binding.root) {
     init {
         binding.executePendingBindings()
     }

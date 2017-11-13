@@ -18,18 +18,18 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
  * @author  jieyi
  * @since   10/27/17
  */
-class InitialHorizontalRVStrategy<V: ViewDataBinding, A: BaseAdapter<V>>(private val layoutManager: ((layoutManager: RecyclerView.LayoutManager) -> Unit)?,
-                                                                         private val adapter: ((adapter: BaseAdapter<V>) -> Unit)?,
-                                                                         private val callback: ((callback: RecyclerViewScrollCallback) -> Unit)?,
-                                                                         private val decoration: ((decoration: RecyclerView.ItemDecoration) -> Unit)?,
-                                                                         private val rxFragment: RxFragment,
-                                                                         private val adapter1: () -> BaseDataBindingAdapter<V, BaseEntity>?,
-                                                                         private val adapter2: RecyclerView.Adapter<*>?,
-                                                                         private val dataInfo: DataInfo,
-                                                                         private val entity: MutableList<BaseEntity>,
-                                                                         private val fetchFun: (page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit) -> Unit,
-                                                                         private val bindingBlock: (holder: BindingHolder<ViewDataBinding>, item: BaseEntity) -> Unit,
-                                                                         private val viewId: Int):
+class InitialHorizontalRVStrategy<V : ViewDataBinding, A : BaseAdapter<V>>(private val layoutManager: ((layoutManager: RecyclerView.LayoutManager) -> Unit)?,
+                                                                           private val adapter: ((adapter: BaseAdapter<V>) -> Unit)?,
+                                                                           private val callback: ((callback: RecyclerViewScrollCallback) -> Unit)?,
+                                                                           private val decoration: ((decoration: RecyclerView.ItemDecoration) -> Unit)?,
+                                                                           private val rxFragment: RxFragment,
+                                                                           private val adapter1: () -> BaseDataBindingAdapter<V, BaseEntity>?,
+                                                                           private val adapter2: RecyclerView.Adapter<*>?,
+                                                                           private val dataInfo: DataInfo,
+                                                                           private val entity: MutableList<BaseEntity>,
+                                                                           private val fetchFun: (page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit) -> Unit,
+                                                                           private val bindingBlock: (holder: BindingHolder<ViewDataBinding>, item: BaseEntity) -> Unit,
+                                                                           private val viewId: Int) :
     IInitialRecyclerViewStrategy {
     override fun initLayoutManager() {
         layoutManager?.invoke(WrapContentLinearLayoutManager(rxFragment.activity,

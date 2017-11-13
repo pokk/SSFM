@@ -14,13 +14,19 @@ import java.util.Random
  * @author  jieyi
  * @since   9/20/17
  */
-class RecyclerViewChartTagViewModel(val item: BaseEntity): BaseViewModel() {
+class RecyclerViewChartTagViewModel(val item: BaseEntity) : BaseViewModel() {
     val tagName by lazy { ObservableField<String>() }
     val background by lazy {
         fun randomColor(): Int =
-            Random().let { Color.argb(it.nextInt(256), it.nextInt(256), it.nextInt(256), it.nextInt(256)) }
+            Random().let {
+                Color.argb(it.nextInt(256),
+                    it.nextInt(256),
+                    it.nextInt(256),
+                    it.nextInt(256))
+            }
 
-        val background = GradientDrawable(GradientDrawable.Orientation.BR_TL, intArrayOf(randomColor(), randomColor()))
+        val background = GradientDrawable(GradientDrawable.Orientation.BR_TL,
+            intArrayOf(randomColor(), randomColor()))
         ObservableField<Drawable>(background)
     }
     var clickItemListener: ((item: TagEntity.Tag) -> Unit)? = null

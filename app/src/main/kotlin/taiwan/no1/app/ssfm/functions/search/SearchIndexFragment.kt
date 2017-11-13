@@ -28,7 +28,7 @@ import javax.inject.Inject
  * @author  jieyi
  * @since   8/20/17
  */
-class SearchIndexFragment: AdvancedFragment<SearchIndexFragmentViewModel, FragmentSearchIndexBinding>() {
+class SearchIndexFragment : AdvancedFragment<SearchIndexFragmentViewModel, FragmentSearchIndexBinding>() {
     //region Static initialization
     companion object Factory {
         /**
@@ -67,7 +67,9 @@ class SearchIndexFragment: AdvancedFragment<SearchIndexFragmentViewModel, Fragme
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
         binding?.apply {
-            artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            artistLayoutManager = WrapContentLinearLayoutManager(activity,
+                LinearLayoutManager.HORIZONTAL,
+                false)
             trackLayoutManager = WrapContentLinearLayoutManager(activity)
 
             artistAdapter = BaseDataBindingAdapter<ItemArtistType1Binding, BaseEntity>(R.layout.item_artist_type_1,
@@ -85,8 +87,10 @@ class SearchIndexFragment: AdvancedFragment<SearchIndexFragmentViewModel, Fragme
                 }
             }
 
-            artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as ArtistAdapter, artistInfo,
-                artistRes, viewModel::fetchArtistList)
+            artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as ArtistAdapter,
+                artistInfo,
+                artistRes,
+                viewModel::fetchArtistList)
             trackLoadmore = RVCustomScrollCallback(binding?.trackAdapter as TrackAdapter, trackInfo,
                 trackRes, viewModel::fetchTrackList)
 
@@ -95,12 +99,18 @@ class SearchIndexFragment: AdvancedFragment<SearchIndexFragmentViewModel, Fragme
         // First time showing this fragment.
         artistInfo.firstFetch {
             viewModel.fetchArtistList(it.page, it.limit) { resList, total ->
-                artistRes.refreshAndChangeList(resList, total, binding?.artistAdapter as ArtistAdapter, it)
+                artistRes.refreshAndChangeList(resList,
+                    total,
+                    binding?.artistAdapter as ArtistAdapter,
+                    it)
             }
         }
         trackInfo.firstFetch {
             viewModel.fetchTrackList(it.page, it.limit) { resList, total ->
-                trackRes.refreshAndChangeList(resList, total, binding?.trackAdapter as TrackAdapter, it)
+                trackRes.refreshAndChangeList(resList,
+                    total,
+                    binding?.trackAdapter as TrackAdapter,
+                    it)
             }
         }
     }

@@ -12,7 +12,7 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
  * @author  jieyi
  * @since   11/1/17
  */
-class RecyclerViewChartAlbumTrackViewModel(val item: BaseEntity): BaseViewModel() {
+class RecyclerViewChartAlbumTrackViewModel(val item: BaseEntity) : BaseViewModel() {
     val trackName by lazy { ObservableField<String>() }
     val trackNumber by lazy { ObservableField<String>() }
     val trackDuration by lazy { ObservableField<String>() }

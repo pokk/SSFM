@@ -15,7 +15,7 @@ import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.VIEWMODEL_CLICK_SIMILAR
  * @author  jieyi
  * @since   9/13/17
  */
-class ChartViewModel(private val context: Context):
+class ChartViewModel(private val context: Context) :
     BaseViewModel() {
     /** Menu Title */
     val title by lazy { ObservableField<String>(context.getString(R.string.menu_charts)) }

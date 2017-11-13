@@ -11,7 +11,8 @@ import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity
  * @author  jieyi
  * @since   8/14/17
  */
-class SearchMusicCase(repository: IDataStore): BaseUsecase<SearchMusicEntity, SearchMusicCase.RequestValue>(repository) {
+class SearchMusicCase(repository: IDataStore) : BaseUsecase<SearchMusicEntity, SearchMusicCase.RequestValue>(
+    repository) {
     override fun fetchUsecase(): Observable<SearchMusicEntity> =
         (parameters ?: RequestValue()).let {
             repository.getSearchMusicRes(it.singerOrSongName, it.page, it.pageSize)
@@ -19,5 +20,5 @@ class SearchMusicCase(repository: IDataStore): BaseUsecase<SearchMusicEntity, Se
 
     data class RequestValue(val singerOrSongName: String = "",
                             val page: Int = 1,
-                            val pageSize: Int = Constant.QUERY_PAGE_SIZE): RequestValues
+                            val pageSize: Int = Constant.QUERY_PAGE_SIZE) : RequestValues
 }

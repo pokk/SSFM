@@ -14,7 +14,7 @@ import taiwan.no1.app.ssfm.models.entities.PreferenceEntity
  * @author  jieyi
  * @since   9/6/17
  */
-class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisitable>):
+class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisitable>) :
     AdaptiveAdapter<ExpandableViewTypeFactory, IExpandVisitable, AdaptiveViewHolder<ExpandableViewTypeFactory, IExpandVisitable>>() {
     override var typeFactory: ExpandableViewTypeFactory = ExpandableViewTypeFactory()
     /**
@@ -35,7 +35,7 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
     private val originalParentPosition: MutableList<Int> = MutableList(dataList.size, { 0 })
 
     class ExpandDiffUtil(private var oldList: MutableList<IExpandVisitable>,
-                         private var newList: MutableList<IExpandVisitable>): DiffUtil.Callback() {
+                         private var newList: MutableList<IExpandVisitable>) : DiffUtil.Callback() {
         override fun getOldListSize(): Int = oldList.size
 
         override fun getNewListSize(): Int = newList.size
@@ -59,7 +59,10 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
                 it.isExpanded = true
                 it.childItemList
             }
-            ArrayList(dataList).toMutableList().apply { addAll(newIndex + 1, subList as Collection<IExpandVisitable>) }
+            ArrayList(dataList).toMutableList().apply {
+                addAll(newIndex + 1,
+                    subList as Collection<IExpandVisitable>)
+            }
         }
     }
 
@@ -76,7 +79,10 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
                 it.isExpanded = false
                 it.childItemList
             }
-            ArrayList(dataList).toMutableList().apply { subList(newIndex + 1, newIndex + 1 + subList.size).clear() }
+            ArrayList(dataList).toMutableList().apply {
+                subList(newIndex + 1,
+                    newIndex + 1 + subList.size).clear()
+            }
         }
     }
 

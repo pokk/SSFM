@@ -11,7 +11,7 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
  * @author  jieyi
  * @since   9/20/17
  */
-class RecyclerViewPlaylistViewModel(val item: BaseEntity): BaseViewModel() {
+class RecyclerViewPlaylistViewModel(val item: BaseEntity) : BaseViewModel() {
     val playlistName by lazy { ObservableField<String>() }
     val playlistTrackNumber by lazy { ObservableField<String>() }
     val playlistThumbnail by lazy { ObservableField<String>() }

@@ -11,7 +11,7 @@ import javax.inject.Inject
  * @author  jieyi
  * @since   9/13/17
  */
-class LoginActivity: AdvancedActivity<LoginViewModel, ActivityLoginBinding>() {
+class LoginActivity : AdvancedActivity<LoginViewModel, ActivityLoginBinding>() {
     @Inject override lateinit var viewModel: LoginViewModel
 
     private val menuItems by lazy {

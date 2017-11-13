@@ -8,10 +8,10 @@ import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
  * @author  jieyi
  * @since   11/8/17
  */
-class GetPlaylistItemsUsecase(repository: IDataStore):
+class GetPlaylistItemsUsecase(repository: IDataStore) :
     BaseUsecase<List<PlaylistItemEntity>, GetPlaylistItemsUsecase.RequestValue>(repository) {
     override fun fetchUsecase(): Observable<List<PlaylistItemEntity>> =
         (parameters ?: GetPlaylistItemsUsecase.RequestValue()).let { repository.getPlaylistItems(it.playlistId) }
 
-    data class RequestValue(val playlistId: Int = -1): RequestValues
+    data class RequestValue(val playlistId: Int = -1) : RequestValues
 }

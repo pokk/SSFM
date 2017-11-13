@@ -22,5 +22,6 @@ class ChartAlbumDetailFragmentModule {
     @PerFragment
     fun provideViewModel(albumsUsecase: BaseUsecase<AlbumEntity, GetAlbumInfoCase.RequestValue>,
                          artistUsecase: BaseUsecase<ArtistEntity, GetArtistInfoCase.RequestValue>):
-        ChartAlbumDetailFragmentViewModel = ChartAlbumDetailFragmentViewModel(albumsUsecase, artistUsecase)
+        ChartAlbumDetailFragmentViewModel = ChartAlbumDetailFragmentViewModel(albumsUsecase,
+        artistUsecase)
 }

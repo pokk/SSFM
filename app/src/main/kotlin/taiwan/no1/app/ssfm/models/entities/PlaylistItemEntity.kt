@@ -18,4 +18,4 @@ data class PlaylistItemEntity(@PrimaryKey(autoincrement = true) var id: Long = 0
                               var track_uri: String = "",
                               var track_name: String = "",
                               var artist_name: String = "",
-                              var album_name: String = ""): BaseRXModel(), BaseEntity
+                              var album_name: String = "") : BaseRXModel(), BaseEntity

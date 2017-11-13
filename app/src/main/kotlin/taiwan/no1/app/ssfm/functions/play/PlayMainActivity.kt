@@ -23,7 +23,7 @@ import javax.inject.Inject
  * @author  jieyi
  * @since   9/10/17
  */
-class PlayMainActivity: AdvancedActivity<PlayMainViewModel, ActivityMusicBinding>() {
+class PlayMainActivity : AdvancedActivity<PlayMainViewModel, ActivityMusicBinding>() {
     @Inject override lateinit var viewModel: PlayMainViewModel
     private lateinit var mediaPlayerAdapter: IMultiMediaPlayer
     private lateinit var playList: IPlayList
@@ -48,17 +48,18 @@ class PlayMainActivity: AdvancedActivity<PlayMainViewModel, ActivityMusicBinding
         playList.setList(path.size)
         player.setPlayList(path)
 
-        rcii_album.onClickEvent = {
-            view, isPaused ->
+        rcii_album.onClickEvent = { view, isPaused ->
             if (isPaused) {
                 logi("pause")
                 player.pause()
-            } else {
+            }
+            else {
                 if (player.playerState() == IPlayerHandler.EPlayerState.STOP) {
                     logi("play")
                     player.random(true)
                     player.play(0)
-                } else if (player.playerState() == IPlayerHandler.EPlayerState.PAUSE) {
+                }
+                else if (player.playerState() == IPlayerHandler.EPlayerState.PAUSE) {
                     logi("resume")
                     player.resume()
                 }
@@ -71,7 +72,7 @@ class PlayMainActivity: AdvancedActivity<PlayMainViewModel, ActivityMusicBinding
             it == PackageManager.PERMISSION_DENIED
         }?.let {
             ActivityCompat.requestPermissions(this,
-                    permissionsStorage, permissionsRequestCode)
+                permissionsStorage, permissionsRequestCode)
         }
     }
 

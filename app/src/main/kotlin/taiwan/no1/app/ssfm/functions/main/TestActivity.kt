@@ -10,7 +10,7 @@ import taiwan.no1.app.ssfm.functions.base.BaseActivity
  * @author  jieyi
  * @since   6/8/17
  */
-class TestActivity: BaseActivity() {
+class TestActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.part_main_preference)

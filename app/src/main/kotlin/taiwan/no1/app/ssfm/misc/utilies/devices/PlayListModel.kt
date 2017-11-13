@@ -13,7 +13,7 @@ import java.util.Stack
  * Created by weian on 2017/7/6.
  */
 
-class PlayListModel: IPlayList {
+class PlayListModel : IPlayList {
     private var mTotal: Int = 0
     private var mCurrentIndex: Int = -1
     private var mPrevious: Stack<Int> = Stack()

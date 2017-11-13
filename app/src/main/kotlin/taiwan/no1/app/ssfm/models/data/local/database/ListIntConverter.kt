@@ -9,7 +9,7 @@ import com.raizlabs.android.dbflow.converter.TypeConverter
  * @since   8/19/17
  */
 @com.raizlabs.android.dbflow.annotation.TypeConverter
-class ListIntConverter: TypeConverter<String, IntArray>() {
+class ListIntConverter : TypeConverter<String, IntArray>() {
     companion object {
         private const val SEPARATE_SYMBOL = ", "
     }

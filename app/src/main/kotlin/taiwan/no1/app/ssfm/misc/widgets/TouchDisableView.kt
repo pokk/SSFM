@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 
 internal class TouchDisableView
-@JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0):
+@JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
     ViewGroup(context, attrs, defStyleAttr) {
     var content: View? = null
         set(v) {

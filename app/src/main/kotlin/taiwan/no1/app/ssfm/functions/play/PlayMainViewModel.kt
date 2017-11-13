@@ -12,7 +12,7 @@ import taiwan.no1.app.ssfm.models.entities.DetailMusicEntity
  * @author  jieyi
  * @since   9/10/17
  */
-class PlayMainViewModel(private val context: Context): BaseViewModel() {
+class PlayMainViewModel(private val context: Context) : BaseViewModel() {
     var music = ObservableField<DetailMusicEntity>(DetailMusicEntity())
     val title by lazy { ObservableField<String>(context.getString(R.string.menu_home)) }
 

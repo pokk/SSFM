@@ -15,7 +15,8 @@ import taiwan.no1.app.ssfm.models.entities.PreferenceOptionEntity
  * @author  jieyi
  * @since   9/8/17
  */
-class PreferenceOptionViewHolder(view: View): AdaptiveViewHolder<ExpandableViewTypeFactory, PreferenceOptionEntity>(view) {
+class PreferenceOptionViewHolder(view: View) : AdaptiveViewHolder<ExpandableViewTypeFactory, PreferenceOptionEntity>(
+    view) {
     override fun initView(model: PreferenceOptionEntity, position: Int, adapter: Any) {
         adapter as ExpandRecyclerViewAdapter
 

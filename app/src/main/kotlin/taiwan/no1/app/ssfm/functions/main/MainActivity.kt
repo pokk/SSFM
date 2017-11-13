@@ -6,7 +6,7 @@ import taiwan.no1.app.ssfm.databinding.ActivityMainBinding
 import taiwan.no1.app.ssfm.functions.base.AdvancedActivity
 import javax.inject.Inject
 
-class MainActivity: AdvancedActivity<MainViewModel, ActivityMainBinding>() {
+class MainActivity : AdvancedActivity<MainViewModel, ActivityMainBinding>() {
     @Inject override lateinit var viewModel: MainViewModel
 
     override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_main)

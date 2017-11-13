@@ -23,7 +23,7 @@ import javax.inject.Inject
  * @author  jieyi
  * @since   5/9/17
  */
-abstract class BaseFragment: RxFragment(), HasFragmentInjector {
+abstract class BaseFragment : RxFragment(), HasFragmentInjector {
     /** From an activity for providing to children searchFragments. */
     @Inject lateinit var childFragmentInjector: DispatchingAndroidInjector<Fragment>
 

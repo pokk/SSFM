@@ -16,7 +16,7 @@ import javax.inject.Singleton
  */
 @Singleton
 class DataRepository @Inject constructor(@Local private var local: IDataStore,
-                                         @Remote private var remote: IDataStore): IDataStore {
+                                         @Remote private var remote: IDataStore) : IDataStore {
     override fun obtainSession(user: String, pwd: String) = remote.obtainSession(user, pwd)
 
     override fun getSearchMusicRes(keyword: String, page: Int, pageSize: Int) =
@@ -40,17 +40,25 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
 
     override fun getArtistTopTrack(artist: String) = remote.getArtistTopTrack(artist)
 
-    override fun getAlbumInfo(artist: String, albumOrMbid: String) = remote.getAlbumInfo(artist, albumOrMbid)
+    override fun getAlbumInfo(artist: String, albumOrMbid: String) = remote.getAlbumInfo(artist,
+        albumOrMbid)
 
     override fun getArtistTags(artist: String, session: Any) = remote.getArtistTags(artist, session)
 
-    override fun getSimilarTracks(artist: String, track: String) = remote.getSimilarTracks(artist, track)
+    override fun getSimilarTracks(artist: String, track: String) = remote.getSimilarTracks(artist,
+        track)
 
-    override fun getTagTopAlbums(tag: String, page: Int, limit: Int) = remote.getTagTopAlbums(tag, page, limit)
+    override fun getTagTopAlbums(tag: String, page: Int, limit: Int) = remote.getTagTopAlbums(tag,
+        page,
+        limit)
 
-    override fun getTagTopArtists(tag: String, page: Int, limit: Int) = remote.getTagTopArtists(tag, page, limit)
+    override fun getTagTopArtists(tag: String, page: Int, limit: Int) = remote.getTagTopArtists(tag,
+        page,
+        limit)
 
-    override fun getTagTopTracks(tag: String, page: Int, limit: Int) = remote.getTagTopTracks(tag, page, limit)
+    override fun getTagTopTracks(tag: String, page: Int, limit: Int) = remote.getTagTopTracks(tag,
+        page,
+        limit)
 
     override fun getTagInfo(tag: String) = remote.getTagInfo(tag)
 
@@ -71,9 +79,14 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
 
     override fun getLovedTracks(user: String, page: Int) = remote.getLovedTracks(user, page)
 
-    override fun loveTrack(artist: String, track: String, session: Any) = remote.loveTrack(artist, track, session)
+    override fun loveTrack(artist: String, track: String, session: Any) = remote.loveTrack(artist,
+        track,
+        session)
 
-    override fun unloveTrack(artist: String, track: String, session: Any) = remote.unloveTrack(artist, track, session)
+    override fun unloveTrack(artist: String, track: String, session: Any) = remote.unloveTrack(
+        artist,
+        track,
+        session)
 
     override fun insertKeyword(keyword: String) = local.insertKeyword(keyword)
 

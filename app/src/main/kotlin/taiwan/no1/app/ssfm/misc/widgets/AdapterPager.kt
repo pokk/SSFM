@@ -12,7 +12,7 @@ import taiwan.no1.app.ssfm.R
  * @author  jieyi
  * @since   7/5/17
  */
-class AdapterPager(val context: Context, val listView: List<Int>): PagerAdapter() {
+class AdapterPager(val context: Context, val listView: List<Int>) : PagerAdapter() {
     override fun instantiateItem(container: ViewGroup, position: Int): View {
         return context.layoutInflater.inflate(R.layout.sample_button, null).also {
             //            it.iv_ppp.imageResource = listView[position]

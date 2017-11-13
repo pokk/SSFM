@@ -14,15 +14,16 @@ import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.viewholders.BindingHolder
  * @author  jieyi
  * @since   9/20/17
  */
-class BaseDataBindingAdapter<BH: ViewDataBinding, D>(@LayoutRes private val layoutId: Int,
-                                                     private var dataList: MutableList<D>,
-                                                     private val bindVHBlock: (holder: BindingHolder<BH>, item: D) -> Unit):
+class BaseDataBindingAdapter<BH : ViewDataBinding, D>(@LayoutRes private val layoutId: Int,
+                                                      private var dataList: MutableList<D>,
+                                                      private val bindVHBlock: (holder: BindingHolder<BH>, item: D) -> Unit) :
     RecyclerView.Adapter<BindingHolder<BH>>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingHolder<BH> =
         DataBindingUtil.inflate<BH>(LayoutInflater.from(parent.context), layoutId, parent, false).
             let { BindingHolder(it) }
 
-    override fun onBindViewHolder(holder: BindingHolder<BH>, position: Int) = bindVHBlock(holder, dataList[position])
+    override fun onBindViewHolder(holder: BindingHolder<BH>, position: Int) = bindVHBlock(holder,
+        dataList[position])
 
     override fun getItemCount(): Int = dataList.size
 
@@ -31,7 +32,7 @@ class BaseDataBindingAdapter<BH: ViewDataBinding, D>(@LayoutRes private val layo
     fun refresh(oldData: List<D>,
                 newData: List<D>,
                 areContentsTheSame: (old: D, new: D) -> Boolean = { _, _ -> false }): List<D> {
-        DiffUtil.calculateDiff(object: DiffUtil.Callback() {
+        DiffUtil.calculateDiff(object : DiffUtil.Callback() {
             override fun getOldListSize(): Int = oldData.size
             override fun getNewListSize(): Int = newData.size
             override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =

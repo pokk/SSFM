@@ -28,7 +28,7 @@ import javax.inject.Inject
  * @author  jieyi
  * @since   10/26/17
  */
-class ChartTagDetailFragment: AdvancedFragment<ChartTagDetailFragmentViewModel, FragmentDetailTagBinding>() {
+class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel, FragmentDetailTagBinding>() {
     //region Static initialization
     companion object Factory {
         // The key name of the fragment initialization parameters.
@@ -84,9 +84,15 @@ class ChartTagDetailFragment: AdvancedFragment<ChartTagDetailFragmentViewModel, 
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
         binding?.apply {
-            albumLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            trackLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            albumLayoutManager = WrapContentLinearLayoutManager(activity,
+                LinearLayoutManager.HORIZONTAL,
+                false)
+            artistLayoutManager = WrapContentLinearLayoutManager(activity,
+                LinearLayoutManager.HORIZONTAL,
+                false)
+            trackLayoutManager = WrapContentLinearLayoutManager(activity,
+                LinearLayoutManager.HORIZONTAL,
+                false)
 
             albumAdapter = BaseDataBindingAdapter<ItemUniversalType1Binding, BaseEntity>(R.layout.item_universal_type_1,
                 albumRes) { holder, item ->
@@ -107,15 +113,18 @@ class ChartTagDetailFragment: AdvancedFragment<ChartTagDetailFragmentViewModel, 
                 }
             }
 
-            albumLoadmore = RVCustomScrollCallback(binding?.albumAdapter as Universal1Adapter, albumInfo,
+            albumLoadmore = RVCustomScrollCallback(binding?.albumAdapter as Universal1Adapter,
+                albumInfo,
                 albumRes) { page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit ->
                 viewModel.fetchHotAlbum(musicTag, page, limit, callback)
             }
-            artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as Universal2Adapter, artistInfo,
+            artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as Universal2Adapter,
+                artistInfo,
                 artistRes) { page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit ->
                 viewModel.fetchHotArtist(musicTag, page, limit, callback)
             }
-            trackLoadmore = RVCustomScrollCallback(binding?.trackAdapter as Universal3Adapter, trackInfo,
+            trackLoadmore = RVCustomScrollCallback(binding?.trackAdapter as Universal3Adapter,
+                trackInfo,
                 trackRes) { page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit ->
                 viewModel.fetchHotTrack(musicTag, page, limit, callback)
             }
@@ -128,17 +137,26 @@ class ChartTagDetailFragment: AdvancedFragment<ChartTagDetailFragmentViewModel, 
         viewModel.fetchTagDetailInfo(musicTag)
         albumInfo.firstFetch {
             viewModel.fetchHotAlbum(musicTag, it.page, it.limit) { resList, total ->
-                albumRes.refreshAndChangeList(resList, total, binding?.albumAdapter as Universal1Adapter, it)
+                albumRes.refreshAndChangeList(resList,
+                    total,
+                    binding?.albumAdapter as Universal1Adapter,
+                    it)
             }
         }
         artistInfo.firstFetch {
             viewModel.fetchHotArtist(musicTag, it.page, it.limit) { resList, total ->
-                artistRes.refreshAndChangeList(resList, total, binding?.artistAdapter as Universal2Adapter, it)
+                artistRes.refreshAndChangeList(resList,
+                    total,
+                    binding?.artistAdapter as Universal2Adapter,
+                    it)
             }
         }
         trackInfo.firstFetch {
             viewModel.fetchHotTrack(musicTag, it.page, it.limit) { resList, total ->
-                trackRes.refreshAndChangeList(resList, total, binding?.trackAdapter as Universal3Adapter, it)
+                trackRes.refreshAndChangeList(resList,
+                    total,
+                    binding?.trackAdapter as Universal3Adapter,
+                    it)
             }
         }
     }

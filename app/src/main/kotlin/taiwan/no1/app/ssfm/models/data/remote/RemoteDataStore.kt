@@ -38,7 +38,7 @@ import javax.inject.Named
  * @author  jieyi
  * @since   5/10/17
  */
-class RemoteDataStore constructor(private val context: Context): IDataStore {
+class RemoteDataStore constructor(private val context: Context) : IDataStore {
     @field:[Inject Named("music1")]
     lateinit var musicService1: Lazy<MusicServices>
     @field:[Inject Named("music2")]
@@ -54,7 +54,9 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
         NetComponent.Initializer.init().inject(this)
     }
 
-    override fun getSearchMusicRes(keyword: String, page: Int, pageSize: Int): Observable<SearchMusicEntity> {
+    override fun getSearchMusicRes(keyword: String,
+                                   page: Int,
+                                   pageSize: Int): Observable<SearchMusicEntity> {
         val query = mapOf(
             context.getString(R.string.t_pair1) to context.getString(R.string.v_pair1),
             context.getString(R.string.t_pair2) to keyword,
@@ -149,7 +151,8 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
         return musicService3.get().getAlbumInfo(query)
     }
 
-    override fun getArtistTags(artist: String, session: Any): Observable<Collection<String>> = TODO()
+    override fun getArtistTags(artist: String,
+                               session: Any): Observable<Collection<String>> = TODO()
 //        ObservableJust(Artist.getTags(artist, session))
 
     override fun getSimilarTracks(artist: String, track: String): Observable<TrackSimilarEntity> {
@@ -172,7 +175,9 @@ class RemoteDataStore constructor(private val context: Context): IDataStore {
         return musicService3.get().getTagTopAlbum(query)
     }
 
-    override fun getTagTopArtists(tag: String, page: Int, limit: Int): Observable<TagTopArtistEntity> {
+    override fun getTagTopArtists(tag: String,
+                                  page: Int,
+                                  limit: Int): Observable<TagTopArtistEntity> {
         val query =
             mutableMapOf("tag" to tag,
                 "page" to page.toString(),

@@ -13,7 +13,7 @@ import java.lang.reflect.ParameterizedType
  * @author  jieyi
  * @since   5/10/17
  */
-abstract class AdvancedActivity<VM: IViewModel, out B: ViewDataBinding>: BaseActivity() {
+abstract class AdvancedActivity<VM : IViewModel, out B : ViewDataBinding> : BaseActivity() {
     protected abstract var viewModel: VM
     protected val binding: B by lazy {
         val (activity, layoutId) = provideBindingLayoutId()

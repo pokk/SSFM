@@ -19,7 +19,7 @@ import javax.inject.Inject
  * @author  jieyi
  * @since   9/16/17
  */
-class ChartActivity: AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
+class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     @Inject override lateinit var viewModel: ChartViewModel
 
     //region Activity lifecycle

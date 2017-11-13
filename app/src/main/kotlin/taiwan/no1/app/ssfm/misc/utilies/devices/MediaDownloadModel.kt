@@ -13,7 +13,9 @@ import kotlin.concurrent.thread
  * Created by weian on 2017/8/19.
  */
 
-class MediaDownloadModel(private var url: String, private var listener: IMediaDownloader.DownloadListener): MediaDataSource(), IMediaDownloader {
+class MediaDownloadModel(private var url: String,
+                         private var listener: IMediaDownloader.DownloadListener) : MediaDataSource(),
+    IMediaDownloader {
     @Volatile lateinit var mediaBuffer: ByteArray
     var percentage: Double = .0
         private set

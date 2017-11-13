@@ -20,17 +20,22 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
  * @author  jieyi
  * @since   10/26/17
  */
-class RecyclerViewUniversal3ViewModel(val item: BaseEntity): BaseViewModel() {
+class RecyclerViewUniversal3ViewModel(val item: BaseEntity) : BaseViewModel() {
     val artistName by lazy { ObservableField<String>((item as TrackEntity.Track).name) }
-    val thumbnail by lazy { ObservableField<String>((item as TrackEntity.Track).images?.get(ImageSizes.LARGE)?.text ?: "") }
+    val thumbnail by lazy {
+        ObservableField<String>((item as TrackEntity.Track).images?.get(ImageSizes.LARGE)?.text ?: "")
+    }
     val textBackground by lazy { ObservableInt() }
     val textColor by lazy { ObservableInt() }
 
     fun itemOnClick(view: View) {
     }
 
-    val imageCallback = object: RequestListener<Bitmap> {
-        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean) =
+    val imageCallback = object : RequestListener<Bitmap> {
+        override fun onLoadFailed(e: GlideException?,
+                                  model: Any?,
+                                  target: Target<Bitmap>?,
+                                  isFirstResource: Boolean) =
             false
 
         override fun onResourceReady(resource: Bitmap,

@@ -27,7 +27,7 @@ import javax.inject.Inject
  * @author  jieyi
  * @since   5/9/17
  */
-abstract class BaseActivity: RxActivity(), HasFragmentInjector, HasSupportFragmentInjector {
+abstract class BaseActivity : RxActivity(), HasFragmentInjector, HasSupportFragmentInjector {
     // Copy from [DaggerAppCompatActivity], becz this cant inherit two classes.
     /** For providing to support searchFragments. */
     @Inject lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
@@ -42,7 +42,7 @@ abstract class BaseActivity: RxActivity(), HasFragmentInjector, HasSupportFragme
             .setStartDelay(250)
             .setActionBarViewForAnimation(tb_toolbar)
             .setClosedOnStart(true)
-            .setGuillotineListener(object: GuillotineListener {
+            .setGuillotineListener(object : GuillotineListener {
                 override fun onGuillotineClosed() {
                     isMenuClosed = true
                 }

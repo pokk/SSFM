@@ -21,5 +21,6 @@ class SearchHistoriesFragmentModule {
     @PerFragment
     fun provideViewModel(context: Context,
                          getHistoriesUsecase: BaseUsecase<List<KeywordEntity>, GetKeywordHistoriesCase.RequestValue>):
-        SearchHistoryFragmentViewModel = SearchHistoryFragmentViewModel(context, getHistoriesUsecase)
+        SearchHistoryFragmentViewModel = SearchHistoryFragmentViewModel(context,
+        getHistoriesUsecase)
 }

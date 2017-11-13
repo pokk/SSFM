@@ -8,10 +8,10 @@ import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
  * @author  jieyi
  * @since   11/8/17
  */
-class AddPlaylistItemUsecase(repository: IDataStore):
+class AddPlaylistItemUsecase(repository: IDataStore) :
     BaseUsecase<Boolean, AddPlaylistItemUsecase.RequestValue>(repository) {
     override fun fetchUsecase(): Observable<Boolean> =
         (parameters ?: AddPlaylistItemUsecase.RequestValue()).let { repository.addPlaylistItem(it.entity) }
 
-    data class RequestValue(val entity: PlaylistItemEntity = PlaylistItemEntity()): RequestValues
+    data class RequestValue(val entity: PlaylistItemEntity = PlaylistItemEntity()) : RequestValues
 }

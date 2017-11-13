@@ -8,7 +8,10 @@ import android.support.v7.widget.RecyclerView
  * @author  jieyi
  * @since   10/1/17
  */
-@BindingAdapter("android:layoutManager", "android:adapter", "android:itemDecoration", requireAll = false)
+@BindingAdapter("android:layoutManager",
+    "android:adapter",
+    "android:itemDecoration",
+    requireAll = false)
 fun RecyclerView.setAdapter(layoutManager: RecyclerView.LayoutManager?,
                             adapter: RecyclerView.Adapter<*>?,
                             itemDecoration: RecyclerView.ItemDecoration?) {
@@ -24,7 +27,7 @@ interface RecyclerViewScrollCallback {
 
 @BindingAdapter("android:loadMore")
 fun RecyclerView.setOnScrollListener(callback: RecyclerViewScrollCallback?) =
-    addOnScrollListener(object: RecyclerView.OnScrollListener() {
+    addOnScrollListener(object : RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             (recyclerView.layoutManager as LinearLayoutManager).let {
                 val visibleItems = it.childCount

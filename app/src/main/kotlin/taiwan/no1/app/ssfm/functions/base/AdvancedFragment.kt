@@ -14,7 +14,7 @@ import java.lang.reflect.ParameterizedType
  * @author  jieyi
  * @since   8/20/17
  */
-abstract class AdvancedFragment<VM: IViewModel, B: ViewDataBinding>: BaseFragment() {
+abstract class AdvancedFragment<VM : IViewModel, B : ViewDataBinding> : BaseFragment() {
     protected abstract var viewModel: VM
     protected var binding: B? = null
     // Data type of the parameters.

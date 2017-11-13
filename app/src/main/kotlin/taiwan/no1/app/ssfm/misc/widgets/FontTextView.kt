@@ -12,7 +12,9 @@ import taiwan.no1.app.ssfm.R
  * @author  jieyi
  * @since   6/14/17
  */
-class FontTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0):
+class FontTextView @JvmOverloads constructor(context: Context,
+                                             attrs: AttributeSet? = null,
+                                             defStyleAttr: Int = 0) :
     TextView(context, attrs, defStyleAttr) {
     init {
         context.obtainStyledAttributes(attrs, R.styleable.FontTextView, defStyleAttr, 0).also {

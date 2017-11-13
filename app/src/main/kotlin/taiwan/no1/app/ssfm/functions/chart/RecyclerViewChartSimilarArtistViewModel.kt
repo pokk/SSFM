@@ -24,7 +24,7 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
  * @author  jieyi
  * @since   9/20/17
  */
-class RecyclerViewChartSimilarArtistViewModel(val item: BaseEntity): BaseViewModel() {
+class RecyclerViewChartSimilarArtistViewModel(val item: BaseEntity) : BaseViewModel() {
     val artistName by lazy { ObservableField<String>() }
     val thumbnail by lazy { ObservableField<String>() }
     val textBackground by lazy { ObservableInt() }
@@ -49,8 +49,11 @@ class RecyclerViewChartSimilarArtistViewModel(val item: BaseEntity): BaseViewMod
         RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_SIMILAR, (item as ArtistEntity.Artist).name)
     }
 
-    val imageCallback = object: RequestListener<Bitmap> {
-        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean) =
+    val imageCallback = object : RequestListener<Bitmap> {
+        override fun onLoadFailed(e: GlideException?,
+                                  model: Any?,
+                                  target: Target<Bitmap>?,
+                                  isFirstResource: Boolean) =
             false
 
         override fun onResourceReady(resource: Bitmap,

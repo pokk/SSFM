@@ -11,6 +11,6 @@ import taiwan.no1.app.ssfm.models.IExpandVisitable
  */
 data class PreferenceOptionEntity(val title: String,
                                   override var childItemList: List<IExpandVisitable> = mutableListOf(),
-                                  override var isExpanded: Boolean = false): IExpandVisitable {
+                                  override var isExpanded: Boolean = false) : IExpandVisitable {
     override fun type(typeFactory: ExpandableViewTypeFactory): Int = typeFactory.type(this)
 }

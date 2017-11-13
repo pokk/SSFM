@@ -13,7 +13,7 @@ import javax.inject.Inject
  * @author  jieyi
  * @since   8/24/17
  */
-class BaseService: Service(), HasServiceInjector {
+class BaseService : Service(), HasServiceInjector {
     @Inject lateinit var serviceInjector: DispatchingAndroidInjector<Service>
 
     override fun onBind(intent: Intent?): IBinder? {

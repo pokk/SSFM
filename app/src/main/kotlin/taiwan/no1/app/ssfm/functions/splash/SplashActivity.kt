@@ -3,7 +3,7 @@ package taiwan.no1.app.ssfm.functions.splash
 import android.app.Activity
 import android.os.Bundle
 import org.jetbrains.anko.startActivity
-import taiwan.no1.app.ssfm.functions.chart.ChartActivity
+import taiwan.no1.app.ssfm.functions.playlist.PlaylistActivity
 import kotlin.concurrent.timer
 
 /**
@@ -12,7 +12,7 @@ import kotlin.concurrent.timer
  * @author  jieyi
  * @since   5/7/17
  */
-class SplashActivity: Activity() {
+class SplashActivity : Activity() {
     companion object {
         private val SPLASH_DELAY_TIME by lazy { 100L }
     }
@@ -24,7 +24,7 @@ class SplashActivity: Activity() {
         // Delay 0.5 second for showing the splash view.
         timer(initialDelay = SPLASH_DELAY_TIME, period = 1) {
             // Transfer to your main activity after delay 0.5 second.
-            startActivity<ChartActivity>()
+            startActivity<PlaylistActivity>()
             finish()
             cancel()
         }

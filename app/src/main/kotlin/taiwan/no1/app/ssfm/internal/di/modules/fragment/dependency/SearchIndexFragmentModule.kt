@@ -22,5 +22,6 @@ class SearchIndexFragmentModule {
     @PerFragment
     fun provideViewModel(topArtistsUsecase: BaseUsecase<TopArtistEntity, GetTopArtistsCase.RequestValue>,
                          topTracksUsecase: BaseUsecase<TopTrackEntity, GetTopTracksCase.RequestValue>):
-        SearchIndexFragmentViewModel = SearchIndexFragmentViewModel(topArtistsUsecase, topTracksUsecase)
+        SearchIndexFragmentViewModel = SearchIndexFragmentViewModel(topArtistsUsecase,
+        topTracksUsecase)
 }

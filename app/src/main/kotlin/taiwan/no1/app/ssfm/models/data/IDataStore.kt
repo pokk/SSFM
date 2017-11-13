@@ -82,11 +82,17 @@ interface IDataStore {
     //endregion
 
     //region Tag
-    fun getTagTopAlbums(tag: String = "", page: Int = 1, limit: Int = 20): Observable<TopAlbumEntity>
+    fun getTagTopAlbums(tag: String = "",
+                        page: Int = 1,
+                        limit: Int = 20): Observable<TopAlbumEntity>
 
-    fun getTagTopArtists(tag: String = "", page: Int = 1, limit: Int = 20): Observable<TagTopArtistEntity>
+    fun getTagTopArtists(tag: String = "",
+                         page: Int = 1,
+                         limit: Int = 20): Observable<TagTopArtistEntity>
 
-    fun getTagTopTracks(tag: String = "", page: Int = 1, limit: Int = 20): Observable<TopTrackEntity>
+    fun getTagTopTracks(tag: String = "",
+                        page: Int = 1,
+                        limit: Int = 20): Observable<TopTrackEntity>
 
     fun getTagInfo(tag: String = ""): Observable<TagEntity>
     //endregion
