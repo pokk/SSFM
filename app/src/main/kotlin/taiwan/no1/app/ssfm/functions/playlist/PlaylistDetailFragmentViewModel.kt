@@ -13,9 +13,6 @@ import taiwan.no1.app.ssfm.models.usecases.GetPlaylistItemsUsecase
 class PlaylistDetailFragmentViewModel(private val getPlaylistItemsUsecase: BaseUsecase<List<PlaylistItemEntity>, GetPlaylistItemsUsecase.RequestValue>) :
     BaseViewModel() {
     fun fetchPlaylistItems(callback: (List<PlaylistItemEntity>) -> Unit) {
-        lifecycleProvider.execute(getPlaylistItemsUsecase) {
-            onNext {
-            }
-        }
+        lifecycleProvider.execute(getPlaylistItemsUsecase) { onNext(callback) }
     }
 }

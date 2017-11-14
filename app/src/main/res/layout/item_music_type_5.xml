@@ -6,6 +6,10 @@
     tools:context=".mvvm.views.activities.SearchActivity">
 
     <data>
+
+        <variable
+            name="avm"
+            type="taiwan.no1.app.ssfm.functions.playlist.RecyclerViewPlaylistDetailViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -13,7 +17,6 @@
         android:layout_height="wrap_content"
         android:padding="5dp"
         tools:background="@color/colorPrimary">
-        <!--android:onClick="@{avm::trackOnClick}"-->
 
         <RelativeLayout
             android:id="@+id/rl_content"
@@ -44,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
+                android:text="@{avm.index}"
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"
                 tools:text="2"/>
@@ -57,10 +61,10 @@
                 android:layout_marginStart="78dp"
                 android:layout_toEndOf="@+id/tv_index"
                 android:layout_toStartOf="@id/tv_duration"
+                android:text="@{avm.trackName}"
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold"
                 tools:text="The Cure"/>
-            <!--android:text="@{avm.trackName}"-->
 
             <TextView
                 android:id="@+id/tv_singer_name"
@@ -69,9 +73,9 @@
                 android:layout_alignEnd="@+id/tv_album_name"
                 android:layout_alignStart="@+id/tv_album_name"
                 android:layout_below="@+id/tv_album_name"
+                android:text="@{avm.albumName}"
                 android:textColor="@color/colorWhite"
                 tools:text="Lady Gaga"/>
-            <!--android:text="@{avm.artistName}"-->
 
             <TextView
                 android:id="@+id/tv_duration"
@@ -80,6 +84,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="8dp"
+                android:text="@{avm.duration}"
                 tools:text="03:21"/>
         </RelativeLayout>
 
@@ -91,12 +96,12 @@
             android:layout_marginBottom="@dimen/one_unit"
             android:layout_marginStart="34dp"
             android:error="@{@drawable/sample_jieyi_icon}"
+            android:imageUrl="@{avm.thumbnail}"
             android:placeHolder="@{@drawable/loading_placeholder}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.9"
             tools:src="@drawable/sample_lady_gaga"/>
-        <!--android:imageUrl="@{avm.thumbnail}"-->
     </android.support.constraint.ConstraintLayout>
 </layout>

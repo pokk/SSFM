@@ -16,6 +16,7 @@ import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.ChartAlbumDet
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.ChartArtistDetailFragmentModule
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.ChartIndexFragmentModule
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.ChartTagDetailFragmentModule
+import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.PlaylistDetailFragmentModule
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.PlaylistIndexFragmentModule
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.SearchHistoriesFragmentModule
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.SearchIndexFragmentModule
@@ -36,7 +37,7 @@ abstract class BindingFragmentModule {
     abstract fun contributePlaylistIndexFragmentInjector(): PlaylistIndexFragment
 
     @PerFragment
-    @ContributesAndroidInjector(modules = arrayOf(PlaylistIndexFragmentModule::class))
+    @ContributesAndroidInjector(modules = arrayOf(PlaylistDetailFragmentModule::class))
     abstract fun contributePlaylistDetailFragmentInjector(): PlaylistDetailFragment
     //endregion
 

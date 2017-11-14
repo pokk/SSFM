@@ -45,18 +45,15 @@ abstract class BindingActivityModule {
     abstract fun contributePlayMainActivityInjector(): PlayMainActivity
 
     @PerActivity
-    @ContributesAndroidInjector(modules = arrayOf(PlaylistActivityModule::class,
-        BindingFragmentModule::class))
+    @ContributesAndroidInjector(modules = arrayOf(PlaylistActivityModule::class, BindingFragmentModule::class))
     abstract fun contributePlaylistActivityInjector(): PlaylistActivity
 
     @PerActivity
-    @ContributesAndroidInjector(modules = arrayOf(ChartActivityModule::class,
-        BindingFragmentModule::class))
+    @ContributesAndroidInjector(modules = arrayOf(ChartActivityModule::class, BindingFragmentModule::class))
     abstract fun contributeChartActivityInjector(): ChartActivity
 
     @PerActivity
-    @ContributesAndroidInjector(modules = arrayOf(SearchActivityModule::class,
-        BindingFragmentModule::class))
+    @ContributesAndroidInjector(modules = arrayOf(SearchActivityModule::class, BindingFragmentModule::class))
     abstract fun contributeSearchActivityInjector(): SearchActivity
 
     @PerActivity

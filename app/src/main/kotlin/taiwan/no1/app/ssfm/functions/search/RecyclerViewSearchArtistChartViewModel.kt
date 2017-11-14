@@ -6,7 +6,7 @@ import com.devrapid.kotlinknifer.formatToMoneyKarma
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.EXTRA_LARGE
-import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 
@@ -40,7 +40,7 @@ class RecyclerViewSearchArtistChartViewModel(val item: BaseEntity) : BaseViewMod
      */
     fun artistOnClick(view: View) {
         // For `searching activity`.
-        RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_HISTORY, (item as ArtistEntity.Artist).name)
+        RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_HISTORY, (item as ArtistEntity.Artist).name)
         // For `top chart activity`.
         clickItemListener?.invoke(item)
     }

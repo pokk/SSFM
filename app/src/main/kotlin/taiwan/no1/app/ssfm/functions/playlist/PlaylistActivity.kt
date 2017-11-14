@@ -4,12 +4,15 @@ import android.app.Activity
 import android.app.Fragment
 import android.os.Bundle
 import com.devrapid.kotlinknifer.addFragment
+import com.devrapid.kotlinknifer.logd
+import com.devrapid.kotlinknifer.logv
+import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityPlaylistBinding
 import taiwan.no1.app.ssfm.functions.base.AdvancedActivity
-import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import javax.inject.Inject
 
 /**
@@ -20,27 +23,37 @@ import javax.inject.Inject
 class PlaylistActivity : AdvancedActivity<PlaylistViewModel, ActivityPlaylistBinding>() {
     @Inject override lateinit var viewModel: PlaylistViewModel
 
+    //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        RxBus.get().register(this)
+        logd()
         fragmentManager.addFragment(R.id.fl_container, PlaylistIndexFragment.newInstance(), false)
     }
 
+    override fun onDestroy() {
+        RxBus.get().unregister(this)
+        logv()
+        super.onDestroy()
+    }
+    //endregion
+
     //region Base activity implement
-    override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this,
-        R.layout.activity_playlist)
+    override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_playlist)
     //endregion
 
     /**
-     * @param artistName
+     * @param playlistId
      *
      * @event_from [taiwan.no1.app.ssfm.functions.playlist.RecyclerViewPlaylistViewModel.playlistOnClick]
+     * @event_from [taiwan.no1.app.ssfm.functions.playlist.PlaylistViewModel.addPlaylistOnClick]
      */
-    @Subscribe(tags = arrayOf(Tag(RxBusConstant.VIEWMODEL_CLICK_SIMILAR)))
-    fun navigateToArtistDetail(playlistId: Int) {
-        navigate(PlaylistDetailFragment.newInstance(), true)
+    @Subscribe(tags = arrayOf(Tag(RxBusTag.VIEWMODEL_CLICK_PLAYLIST), Tag(RxBusTag.VIEWMODEL_CLICK_ADDP_LAYLIST)))
+    fun navigateToPlaylistDetail(playlistId: java.lang.Long) {
+        navigate(PlaylistDetailFragment.newInstance(playlistId.toLong()), true)
     }
 
-    fun navigate(fragment: Fragment, needBack: Boolean) {
+    private fun navigate(fragment: Fragment, needBack: Boolean) {
         fragmentManager.addFragment(R.id.fl_container, fragment, needBack)
     }
 }

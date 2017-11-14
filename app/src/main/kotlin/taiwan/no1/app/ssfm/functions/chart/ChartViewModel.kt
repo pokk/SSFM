@@ -8,7 +8,7 @@ import com.devrapid.kotlinknifer.hideSoftKeyboard
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
-import taiwan.no1.app.ssfm.misc.constants.RxBusConstant.VIEWMODEL_CLICK_SIMILAR
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CLICK_SIMILAR
 
 /**
  *

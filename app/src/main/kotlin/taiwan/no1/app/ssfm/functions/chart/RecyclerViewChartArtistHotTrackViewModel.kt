@@ -4,7 +4,7 @@ import android.databinding.ObservableField
 import android.view.View
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
-import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
 
@@ -32,7 +32,7 @@ class RecyclerViewChartArtistHotTrackViewModel(val item: BaseEntity) : BaseViewM
      * @event_to [taiwan.no1.app.ssfm.functions.search.SearchViewModel.receiveClickHistoryEvent]
      */
     fun trackOnClick(view: View) {
-        RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_HISTORY,
+        RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_HISTORY,
             (item as TrackEntity.TrackWithStreamableString).name)
     }
 }

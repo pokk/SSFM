@@ -10,7 +10,7 @@ import com.hwangjr.rxbus.annotation.Tag
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityChartBinding
 import taiwan.no1.app.ssfm.functions.base.AdvancedActivity
-import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import java.util.HashMap
 import javax.inject.Inject
 
@@ -46,7 +46,7 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
      * @event_from [taiwan.no1.app.ssfm.functions.chart.RecyclerViewChartSimilarArtistViewModel.artistOnClick]
      * @event_from [taiwan.no1.app.ssfm.functions.chart.RecyclerViewUniversal2ViewModel.itemOnClick]
      */
-    @Subscribe(tags = arrayOf(Tag(RxBusConstant.VIEWMODEL_CLICK_SIMILAR)))
+    @Subscribe(tags = arrayOf(Tag(RxBusTag.VIEWMODEL_CLICK_SIMILAR)))
     fun navigateToArtistDetail(artistName: String) {
         navigate(ChartArtistDetailFragment.newInstance(artistName = artistName), true)
     }
@@ -56,7 +56,7 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
      *
      * @event_from [taiwan.no1.app.ssfm.functions.chart.RecyclerViewUniversal1ViewModel.itemOnClick]
      */
-    @Subscribe(tags = arrayOf(Tag(RxBusConstant.VIEWMODEL_CLICK_ALBUM)))
+    @Subscribe(tags = arrayOf(Tag(RxBusTag.VIEWMODEL_CLICK_ALBUM)))
     fun navigateToAlbumDetail(params: HashMap<String, String>) {
         val (artistName, artistAlbum) = (params["Artist Name"] ?: "") to (params["Artist Album Name"] ?: "")
         navigate(ChartAlbumDetailFragment.newInstance(artistAlbum, artistName), true)

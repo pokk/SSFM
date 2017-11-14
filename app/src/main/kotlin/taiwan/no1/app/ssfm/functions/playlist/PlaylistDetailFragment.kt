@@ -1,14 +1,15 @@
 package taiwan.no1.app.ssfm.functions.playlist
 
 import android.os.Bundle
+import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentPlaylistDetailBinding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType5Binding
 import taiwan.no1.app.ssfm.functions.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
-import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
+import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import javax.inject.Inject
 
@@ -27,9 +28,9 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
          *
          * @return A new instance of [android.app.Fragment] PlaylistDetailFragment.
          */
-        fun newInstance(id: Int) = PlaylistDetailFragment().also {
+        fun newInstance(id: Long) = PlaylistDetailFragment().also {
             it.arguments = Bundle().apply {
-                putInt(ARG_PARAM_PLAYLIST_ID, id)
+                putLong(ARG_PARAM_PLAYLIST_ID, id)
             }
         }
     }
@@ -37,9 +38,14 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
 
     @Inject override lateinit var viewModel: PlaylistDetailFragmentViewModel
     private val playlistItemInfo by lazy { DataInfo() }
-    private var playlistItemRes = mutableListOf<BaseEntity>()
+    private var playlistItemRes = mutableListOf<BaseEntity>(PlaylistItemEntity(),
+        PlaylistItemEntity(),
+        PlaylistItemEntity(),
+        PlaylistItemEntity(),
+        PlaylistItemEntity(),
+        PlaylistItemEntity())
     // Get the arguments from the bundle here.
-    private val playlistId: Int by lazy { this.arguments.getInt(ARG_PARAM_PLAYLIST_ID) }
+    private val playlistId by lazy { this.arguments.getLong(ARG_PARAM_PLAYLIST_ID) }
 
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
@@ -48,16 +54,18 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
 
             itemAdapter = BaseDataBindingAdapter<ItemMusicType5Binding, BaseEntity>(R.layout.item_music_type_5,
                 playlistItemRes) { holder, item ->
-                holder.binding.avm = RecyclerViewPlaylistViewModel(item).apply {
+                holder.binding.avm = RecyclerViewPlaylistDetailViewModel(item).apply {
                     onAttach(this@PlaylistDetailFragment)
                 }
             }
         }
+        logw(playlistItemRes)
         // First time showing this fragment.
-        playlistItemInfo.firstFetch { info ->
-        }
+//        playlistItemInfo.firstFetch { info ->
+//            viewModel.fetchPlaylistItems {  }
+//        }
     }
 
-    override fun provideInflateView(): Int = R.layout.fragment_mylist_index
+    override fun provideInflateView(): Int = R.layout.fragment_playlist_detail
     //endregion
 }

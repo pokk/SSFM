@@ -14,7 +14,7 @@ import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.App
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes
-import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.misc.extension.palette
 import taiwan.no1.app.ssfm.models.entities.lastfm.AlbumEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
@@ -42,7 +42,7 @@ class RecyclerViewUniversal1ViewModel(val item: BaseEntity) : BaseViewModel() {
      */
     fun itemOnClick(view: View) {
         item as AlbumEntity.AlbumWithArtist
-        RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_ALBUM,
+        RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_ALBUM,
             hashMapOf("Artist Name" to item.artist?.name, "Artist Album Name" to item.name))
     }
 

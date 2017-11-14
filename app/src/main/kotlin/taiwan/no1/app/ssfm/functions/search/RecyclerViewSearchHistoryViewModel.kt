@@ -6,7 +6,7 @@ import android.databinding.ObservableField
 import android.view.View
 import com.devrapid.kotlinknifer.observer
 import com.hwangjr.rxbus.RxBus
-import taiwan.no1.app.ssfm.misc.constants.RxBusConstant
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
@@ -42,6 +42,6 @@ class RecyclerViewSearchHistoryViewModel(private val item: BaseEntity,
      * @event_to [taiwan.no1.app.ssfm.functions.search.SearchViewModel.receiveClickHistoryEvent]
      */
     fun selectHistoryItem(view: View) {
-        RxBus.get().post(RxBusConstant.VIEWMODEL_CLICK_HISTORY, (item as KeywordEntity).keyword)
+        RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_HISTORY, (item as KeywordEntity).keyword)
     }
 }
