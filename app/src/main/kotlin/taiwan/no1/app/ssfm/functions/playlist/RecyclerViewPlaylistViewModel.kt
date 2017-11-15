@@ -2,7 +2,6 @@ package taiwan.no1.app.ssfm.functions.playlist
 
 import android.databinding.ObservableField
 import android.view.View
-import com.devrapid.kotlinknifer.logw
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
@@ -35,9 +34,9 @@ class RecyclerViewPlaylistViewModel(val item: BaseEntity) : BaseViewModel() {
      *
      * @param view [android.widget.RelativeLayout]
      *
+     * @event_to [taiwan.no1.app.ssfm.functions.playlist.PlaylistActivity.navigateToPlaylistDetail]
      */
     fun playlistOnClick(view: View) {
-        logw("!!!!!!!!")
-        RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_PLAYLIST, (item as PlaylistEntity).id)
+        RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_PLAYLIST, item as PlaylistEntity)
     }
 }

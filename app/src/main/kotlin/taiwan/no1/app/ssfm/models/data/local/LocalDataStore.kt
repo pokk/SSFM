@@ -80,7 +80,7 @@ class LocalDataStore : IDataStore {
 
     override fun removePlaylist(entity: PlaylistEntity) = entity.delete().toObservable()
 
-    override fun getPlaylistItems(playlistId: Int) =
+    override fun getPlaylistItems(playlistId: Long) =
         (select from PlaylistItemEntity::class where (PlaylistItemEntity_Table.playlist_id eq playlistId)).rx().list.toObservable()
 
     override fun addPlaylistItem(entity: PlaylistItemEntity) = entity.save().toObservable()

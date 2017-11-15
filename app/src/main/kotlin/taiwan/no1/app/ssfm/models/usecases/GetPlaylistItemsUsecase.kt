@@ -13,5 +13,5 @@ class GetPlaylistItemsUsecase(repository: IDataStore) :
     override fun fetchUsecase(): Observable<List<PlaylistItemEntity>> =
         (parameters ?: GetPlaylistItemsUsecase.RequestValue()).let { repository.getPlaylistItems(it.playlistId) }
 
-    data class RequestValue(val playlistId: Int = -1) : RequestValues
+    data class RequestValue(val playlistId: Long = -1) : RequestValues
 }

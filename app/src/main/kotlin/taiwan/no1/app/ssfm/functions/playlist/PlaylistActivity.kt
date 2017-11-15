@@ -13,6 +13,7 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityPlaylistBinding
 import taiwan.no1.app.ssfm.functions.base.AdvancedActivity
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
+import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
 import javax.inject.Inject
 
 /**
@@ -49,8 +50,8 @@ class PlaylistActivity : AdvancedActivity<PlaylistViewModel, ActivityPlaylistBin
      * @event_from [taiwan.no1.app.ssfm.functions.playlist.PlaylistViewModel.addPlaylistOnClick]
      */
     @Subscribe(tags = arrayOf(Tag(RxBusTag.VIEWMODEL_CLICK_PLAYLIST), Tag(RxBusTag.VIEWMODEL_CLICK_ADDP_LAYLIST)))
-    fun navigateToPlaylistDetail(playlistId: java.lang.Long) {
-        navigate(PlaylistDetailFragment.newInstance(playlistId.toLong()), true)
+    fun navigateToPlaylistDetail(playlistId: PlaylistEntity) {
+        navigate(PlaylistDetailFragment.newInstance(playlistId), true)
     }
 
     private fun navigate(fragment: Fragment, needBack: Boolean) {

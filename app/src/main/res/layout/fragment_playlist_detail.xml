@@ -28,25 +28,16 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:imageUrl="@{vm.thumbnail}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/sample_lady_gaga"/>
 
         <TextView
-            android:id="@+id/tv_playlist_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            app:layout_constraintBottom_toTopOf="@+id/tv_name"
-            app:layout_constraintStart_toEndOf="@+id/iv_album_image"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
-            tools:text="Playlist"/>
-
-        <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{vm.playlistName}"
             app:layout_constraintBottom_toTopOf="@+id/tv_track_quantity"
             app:layout_constraintStart_toStartOf="@+id/tv_playlist_title"
             app:layout_constraintTop_toBottomOf="@+id/tv_playlist_title"
@@ -56,9 +47,9 @@
             android:id="@+id/tv_track_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_album_image"
-            app:layout_constraintStart_toStartOf="@+id/tv_name"
+            android:text="@{vm.trackQuantity}"
+            app:layout_constraintBottom_toTopOf="@+id/tv_duration"
+            app:layout_constraintStart_toStartOf="@+id/tv_playlist_title"
             app:layout_constraintTop_toBottomOf="@+id/tv_name"
             tools:text="32 tracks"/>
 
@@ -71,9 +62,36 @@
             android:adapter="@{itemAdapter}"
             android:layoutManager="@{itemLayoutManager}"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_album_image"
+            app:layout_constraintVertical_bias="0.0"
             tools:listitem="@layout/item_music_type_5"/>
+
+        <TextView
+            android:id="@+id/tv_playlist_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/four_unit"
+            android:text="@{vm.duration}"
+            app:layout_constraintBottom_toTopOf="@+id/tv_name"
+            app:layout_constraintStart_toEndOf="@+id/iv_album_image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Playlist"/>
+
+        <TextView
+            android:id="@+id/tv_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_playlist_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_track_quantity"
+            app:layout_constraintVertical_bias="0.018"
+            tools:text="4:32:22"/>
     </android.support.constraint.ConstraintLayout>
 </layout>

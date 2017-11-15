@@ -8,6 +8,8 @@ import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
+import taiwan.no1.app.ssfm.misc.extension.execute
+import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistUsecase
 import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
 
@@ -27,14 +29,9 @@ class PlaylistViewModel(private val context: Context,
      * @event_to [taiwan.no1.app.ssfm.functions.playlist.PlaylistActivity.navigateToPlaylistDetail]
      */
     fun addPlaylistOnClick(view: View?) {
-        // TODO(jieyi): 11/13/17 Add a form for inputting playlist's info.
-//        lifecycleProvider.execute(addPlaylistUsecase, AddPlaylistUsecase.RequestValue(PlaylistEntity())) {
-//            onNext { logd("????????") }
-//        }
-        logw("Hello!!!!")
-        RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_ADDP_LAYLIST, -1L)
-    }
-
-    fun moreOnClick(view: View?) {
+        lifecycleProvider.execute(addPlaylistUsecase, AddPlaylistUsecase.RequestValue(PlaylistEntity())) {
+            onNext { logw("Res: $it") }
+            onComplete { RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_ADDP_LAYLIST, PlaylistEntity()) }
+        }
     }
 }

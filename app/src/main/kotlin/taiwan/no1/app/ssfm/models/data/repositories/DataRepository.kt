@@ -70,7 +70,7 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
 
     override fun removePlaylist(entity: PlaylistEntity) = local.removePlaylist(entity)
 
-    override fun getPlaylistItems(playlistId: Int) =
+    override fun getPlaylistItems(playlistId: Long) =
         local.getPlaylistItems(playlistId)
 
     override fun addPlaylistItem(entity: PlaylistItemEntity) = local.addPlaylistItem(entity)
