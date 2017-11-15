@@ -7,6 +7,7 @@ import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.ItemTouchHelperAdapter
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.viewholders.BindingHolder
 
 /**
@@ -17,7 +18,7 @@ import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.viewholders.BindingHolder
 class BaseDataBindingAdapter<BH : ViewDataBinding, D>(@LayoutRes private val layoutId: Int,
                                                       private var dataList: MutableList<D>,
                                                       private val bindVHBlock: (holder: BindingHolder<BH>, item: D) -> Unit) :
-    RecyclerView.Adapter<BindingHolder<BH>>() {
+    RecyclerView.Adapter<BindingHolder<BH>>(), ItemTouchHelperAdapter {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingHolder<BH> =
         DataBindingUtil.inflate<BH>(LayoutInflater.from(parent.context), layoutId, parent, false).
             let { BindingHolder(it) }
@@ -26,6 +27,14 @@ class BaseDataBindingAdapter<BH : ViewDataBinding, D>(@LayoutRes private val lay
         dataList[position])
 
     override fun getItemCount(): Int = dataList.size
+
+    override fun onItemMove(fromPosition: Int, toPosition: Int) {
+    }
+
+    override fun onItemDismiss(position: Int) {
+        dataList.removeAt(position)
+        notifyItemRemoved(position)
+    }
 
     // TODO(jieyi): 9/28/17 Add footer layout!
 

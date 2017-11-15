@@ -1,6 +1,7 @@
 package taiwan.no1.app.ssfm.functions.playlist
 
 import android.os.Bundle
+import android.support.v7.widget.helper.ItemTouchHelper
 import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentPlaylistDetailBinding
@@ -9,11 +10,13 @@ import taiwan.no1.app.ssfm.functions.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.SimpleItemTouchHelperCallback
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import javax.inject.Inject
+
 
 /**
  * @author  jieyi
@@ -60,6 +63,9 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
                     onAttach(this@PlaylistDetailFragment)
                 }
             }
+
+            val callback = SimpleItemTouchHelperCallback(itemAdapter as BaseDataBindingAdapter<ItemMusicType5Binding, BaseEntity>)
+            ItemTouchHelper(callback).attachToRecyclerView(recyclerView)
         }
         viewModel.attachPlaylistInfo(playlist)
         if (-1 < playlist.id) {
@@ -67,6 +73,8 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
                 viewModel.fetchPlaylistItems(playlist.id) { logw(it) }
             }
         }
+
+
     }
 
     override fun provideInflateView(): Int = R.layout.fragment_playlist_detail

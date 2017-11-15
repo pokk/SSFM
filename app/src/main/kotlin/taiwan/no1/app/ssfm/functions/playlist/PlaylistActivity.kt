@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.Fragment
 import android.os.Bundle
 import com.devrapid.kotlinknifer.addFragment
-import com.devrapid.kotlinknifer.logv
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
@@ -32,7 +31,6 @@ class PlaylistActivity : AdvancedActivity<PlaylistViewModel, ActivityPlaylistBin
 
     override fun onDestroy() {
         RxBus.get().unregister(this)
-        logv()
         super.onDestroy()
     }
     //endregion
