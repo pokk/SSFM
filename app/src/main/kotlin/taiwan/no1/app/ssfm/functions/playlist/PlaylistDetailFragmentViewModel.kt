@@ -4,8 +4,10 @@ import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.view.View
 import android.widget.ImageButton
+import com.devrapid.kotlinknifer.hideSoftKeyboard
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
+import com.devrapid.kotlinknifer.showSoftKeyboard
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.extension.execute
@@ -52,8 +54,13 @@ class PlaylistDetailFragmentViewModel(private val editPlaylistUsecase: BaseUseca
                 lifecycleProvider.execute(editPlaylistUsecase, AddPlaylistUsecase.RequestValue(it)) {
                     onNext { logw(it) }
                     onError { loge(it) }
+                    onComplete { view.hideSoftKeyboard() }
                 }
             }
+        }
+        else {
+            view.requestFocus()
+            view.showSoftKeyboard()
         }
         isEditMode.set(!isEditMode.get())
         (view as ImageButton).setSrc(if (isEditMode.get()) R.drawable.ic_check else R.drawable.ic_edit)

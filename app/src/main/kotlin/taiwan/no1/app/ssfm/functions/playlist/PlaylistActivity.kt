@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.Fragment
 import android.os.Bundle
 import com.devrapid.kotlinknifer.addFragment
-import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.logv
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
@@ -28,7 +27,6 @@ class PlaylistActivity : AdvancedActivity<PlaylistViewModel, ActivityPlaylistBin
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         RxBus.get().register(this)
-        logd()
         fragmentManager.addFragment(R.id.fl_container, PlaylistIndexFragment.newInstance(), false)
     }
 

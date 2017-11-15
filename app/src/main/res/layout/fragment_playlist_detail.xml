@@ -40,9 +40,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:onClick="@{vm::editOnClick}"
             android:layout_marginRight="16dp"
             android:background="@null"
+            android:onClick="@{vm::editOnClick}"
             android:src="@drawable/ic_edit"
             app:layout_constraintBottom_toTopOf="@+id/recyclerView"
             app:layout_constraintRight_toRightOf="parent"/>
@@ -76,13 +76,17 @@
 
         <EditText
             android:id="@+id/et_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginTop="8dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:text="@={vm.playlistName}"
             android:visibility="@{vm.isEditMode ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@+id/tv_track_quantity"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_playlist_title"
             app:layout_constraintTop_toBottomOf="@+id/tv_playlist_title"
             tools:visibility="visible"/>

@@ -1,6 +1,7 @@
 package taiwan.no1.app.ssfm.functions.playlist
 
 import android.databinding.ObservableField
+import android.view.View
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
@@ -20,5 +21,9 @@ class RecyclerViewPlaylistDetailViewModel(val item: BaseEntity) : BaseViewModel(
     init {
         (item as PlaylistItemEntity).let {
         }
+    }
+
+    fun trackOnClick(view: View) {
+
     }
 }

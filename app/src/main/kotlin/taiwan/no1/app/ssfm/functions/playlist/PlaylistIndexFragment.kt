@@ -9,7 +9,6 @@ import taiwan.no1.app.ssfm.functions.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.PlaylistAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RecentlyAdapter
-import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
@@ -40,6 +39,12 @@ class PlaylistIndexFragment : AdvancedFragment<PlaylistIndexFragmentViewModel, F
     private var playlistRes = mutableListOf<BaseEntity>()
     private var recentlyPlayedRes = mutableListOf<BaseEntity>()
 
+    override fun onResume() {
+        super.onResume()
+        playlistRes.clear()
+        recentlyPlayedRes.clear()
+    }
+
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
         binding?.apply {
@@ -60,19 +65,12 @@ class PlaylistIndexFragment : AdvancedFragment<PlaylistIndexFragmentViewModel, F
             }
         }
         // First time showing this fragment.
-        playlistInfo.firstFetch { info ->
-            viewModel.fetchPlaylistAndRecently({
-                playlistRes.refreshAndChangeList(it,
-                    1,
-                    binding?.playlistAdapter as PlaylistAdapter,
-                    info)
-            }, {
-                recentlyPlayedRes.refreshAndChangeList(it,
-                    1,
-                    binding?.recentlyAdapter as RecentlyAdapter,
-                    recentlyPlayedInfo)
-            })
-        }
+        viewModel.fetchPlaylistAndRecently({
+            playlistRes.refreshAndChangeList(it, 1, binding?.playlistAdapter as PlaylistAdapter, playlistInfo)
+        }, {
+            recentlyPlayedRes.refreshAndChangeList(it,
+                1, binding?.recentlyAdapter as RecentlyAdapter, recentlyPlayedInfo)
+        })
     }
 
     override fun provideInflateView(): Int = R.layout.fragment_mylist_index
