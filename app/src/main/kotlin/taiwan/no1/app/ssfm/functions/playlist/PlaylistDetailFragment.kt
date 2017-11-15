@@ -23,7 +23,7 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
     //region Static initialization
     companion object Factory {
         // The key name of the fragment initialization parameters.
-        private const val ARG_PARAM_PLAYLIST_ID: String = "param_playlist_id"
+        private const val ARG_PARAM_PLAYLIST_OBJECT: String = "param_playlist_object"
 
         /**
          * Use this factory method to create a new instance of this fragment using the provided parameters.
@@ -32,7 +32,7 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
          */
         fun newInstance(id: PlaylistEntity) = PlaylistDetailFragment().also {
             it.arguments = Bundle().apply {
-                putParcelable(ARG_PARAM_PLAYLIST_ID, id)
+                putParcelable(ARG_PARAM_PLAYLIST_OBJECT, id)
             }
         }
     }
@@ -47,7 +47,7 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
         PlaylistItemEntity(),
         PlaylistItemEntity())
     // Get the arguments from the bundle here.
-    private val playlistId by lazy { this.arguments.getParcelable<PlaylistEntity>(ARG_PARAM_PLAYLIST_ID) }
+    private val playlist by lazy { this.arguments.getParcelable<PlaylistEntity>(ARG_PARAM_PLAYLIST_OBJECT) }
 
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
@@ -61,9 +61,10 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
                 }
             }
         }
-        if (-1 < playlistId.id) {
+        viewModel.attachPlaylistInfo(playlist)
+        if (-1 < playlist.id) {
             playlistItemInfo.firstFetch { info ->
-                viewModel.fetchPlaylistItems(playlistId.id) { logw(it) }
+                viewModel.fetchPlaylistItems(playlist.id) { logw(it) }
             }
         }
     }

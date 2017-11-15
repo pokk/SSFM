@@ -22,6 +22,5 @@ class PlaylistIndexFragmentModule {
     @PerFragment
     fun provideViewModel(getPlaylistsUsecase: BaseUsecase<List<PlaylistEntity>, AddPlaylistUsecase.RequestValue>,
                          getPlaylistItemsUsecase: BaseUsecase<List<PlaylistItemEntity>, GetPlaylistItemsUsecase.RequestValue>):
-        PlaylistIndexFragmentViewModel = PlaylistIndexFragmentViewModel(getPlaylistsUsecase,
-        getPlaylistItemsUsecase)
+        PlaylistIndexFragmentViewModel = PlaylistIndexFragmentViewModel(getPlaylistsUsecase, getPlaylistItemsUsecase)
 }

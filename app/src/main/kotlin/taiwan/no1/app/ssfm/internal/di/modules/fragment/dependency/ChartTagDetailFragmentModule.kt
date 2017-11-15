@@ -29,8 +29,5 @@ class ChartTagDetailFragmentModule {
                          topArtistsUsecase: BaseUsecase<TagTopArtistEntity, GetTagTopArtistsCase.RequestValue>,
                          topTracksUsecase: BaseUsecase<TopTrackEntity, GetTagTopTracksCase.RequestValue>):
         ChartTagDetailFragmentViewModel =
-        ChartTagDetailFragmentViewModel(tagInfoUsecase,
-            topAlbumsUsecase,
-            topArtistsUsecase,
-            topTracksUsecase)
+        ChartTagDetailFragmentViewModel(tagInfoUsecase, topAlbumsUsecase, topArtistsUsecase, topTracksUsecase)
 }

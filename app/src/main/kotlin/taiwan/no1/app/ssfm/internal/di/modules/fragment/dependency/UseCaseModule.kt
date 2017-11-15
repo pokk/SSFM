@@ -40,6 +40,7 @@ import taiwan.no1.app.ssfm.models.usecases.RemoveKeywordHistoriesCase
 import taiwan.no1.app.ssfm.models.usecases.RemovePlaylistItemUsecase
 import taiwan.no1.app.ssfm.models.usecases.RemovePlaylistUsecase
 import taiwan.no1.app.ssfm.models.usecases.SearchMusicCase
+import javax.inject.Named
 
 /**
  * @author  jieyi
@@ -130,6 +131,7 @@ class UseCaseModule {
 
     @Provides
     @PerFragment
+    @Named("add_playlist")
     fun provideAddPlaylistUsecase(dataRepository: DataRepository): BaseUsecase<Boolean, AddPlaylistUsecase.RequestValue> =
         AddPlaylistUsecase(dataRepository)
 
@@ -145,6 +147,7 @@ class UseCaseModule {
 
     @Provides
     @PerFragment
+    @Named("remove_playlist")
     fun provideRemovePlaylistUsecase(dataRepository: DataRepository): BaseUsecase<Boolean, AddPlaylistUsecase.RequestValue> =
         RemovePlaylistUsecase(dataRepository)
 
@@ -155,6 +158,7 @@ class UseCaseModule {
 
     @Provides
     @PerFragment
+    @Named("edit_playlist")
     fun provideEditPlaylistUsecase(dataRepository: DataRepository): BaseUsecase<Boolean, AddPlaylistUsecase.RequestValue> =
         EditPlaylistUsecase(dataRepository)
 }
