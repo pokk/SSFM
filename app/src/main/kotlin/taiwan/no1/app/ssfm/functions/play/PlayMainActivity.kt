@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.part_main_play_music.rcii_album
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityMusicBinding
 import taiwan.no1.app.ssfm.functions.base.AdvancedActivity
+import taiwan.no1.app.ssfm.misc.utilies.devices.ExoPlayerWrapper
 import taiwan.no1.app.ssfm.misc.utilies.devices.IMultiMediaPlayer
 import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList
 import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler
@@ -33,10 +34,23 @@ class PlayMainActivity : AdvancedActivity<PlayMainViewModel, ActivityMusicBindin
         "/storage/emulated/0/Download/test.mp3")
     private val permissionsRequestCode = 1
 
+    private lateinit var musicPlayer: ExoPlayerWrapper
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mediaPlayerAdapter = MediaPlayerAdapter(rcii_album)
+        var durationListener: (duration: Int) -> Unit = {
+            duration -> rcii_album.endTime = duration
+        }
+
+        var bufferPercentageListener: (percentage: Int) -> Unit = {
+            percentage -> 
+        }
+
+        musicPlayer = ExoPlayerWrapper(this.applicationContext,
+                durationListener, bufferPercentageListener)
+
+        /*mediaPlayerAdapter = MediaPlayerAdapter(rcii_album)
         mediaPlayerAdapter.setDurationListener { duration ->
             rcii_album.endTime = duration
         }
@@ -64,7 +78,7 @@ class PlayMainActivity : AdvancedActivity<PlayMainViewModel, ActivityMusicBindin
                     player.resume()
                 }
             }
-        }
+        }*/
     }
 
     private fun requirePermission() {
