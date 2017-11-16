@@ -77,7 +77,9 @@ class PlaylistIndexFragment : AdvancedFragment<PlaylistIndexFragmentViewModel, F
             playlistRes.refreshAndChangeList(it, 1, binding?.playlistAdapter as PlaylistAdapter, playlistInfo)
         }, {
             recentlyPlayedRes.refreshAndChangeList(it,
-                1, binding?.recentlyAdapter as RecentlyAdapter, recentlyPlayedInfo)
+                1,
+                binding?.recentlyAdapter as RecentlyAdapter,
+                recentlyPlayedInfo)
         })
     }
 

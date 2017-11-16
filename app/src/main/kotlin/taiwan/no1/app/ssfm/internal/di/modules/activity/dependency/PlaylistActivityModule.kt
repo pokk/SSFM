@@ -6,8 +6,11 @@ import dagger.Provides
 import taiwan.no1.app.ssfm.functions.playlist.PlaylistViewModel
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerActivity
 import taiwan.no1.app.ssfm.models.data.repositories.DataRepository
+import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistUsecase
 import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
+import taiwan.no1.app.ssfm.models.usecases.GetPlaylistsUsecase
+import javax.inject.Named
 
 /**
  *
@@ -29,6 +32,19 @@ class PlaylistActivityModule {
         AddPlaylistUsecase(dataRepository)
 
     /**
+     * Providing a [BaseUsecase] to the [PlaylistViewModel].
+     *
+     * @param dataRepository get a repository object by dagger 2.
+     * @return a [SearchMusicCase] but the data type is abstract class, we'd like to developer
+     * to use the abstract method directly.
+     */
+    @Provides
+    @PerActivity
+    @Named("activity_get_playlist")
+    fun provideGetPlaylistsUsecase(dataRepository: DataRepository): BaseUsecase<List<PlaylistEntity>, AddPlaylistUsecase.RequestValue> =
+        GetPlaylistsUsecase(dataRepository)
+
+    /**
      * Providing a [PlaylistViewModel] to the [PlaylistActivity].
      *
      * @param context originally from activity module.
@@ -37,6 +53,8 @@ class PlaylistActivityModule {
     @Provides
     @PerActivity
     fun provideViewModel(context: Context,
+                         @Named("activity_get_playlist")
+                         getPlaylistsUsecase: BaseUsecase<List<PlaylistEntity>, AddPlaylistUsecase.RequestValue>,
                          addPlaylistUsecase: BaseUsecase<Boolean, AddPlaylistUsecase.RequestValue>): PlaylistViewModel =
-        PlaylistViewModel(context, addPlaylistUsecase)
+        PlaylistViewModel(context, getPlaylistsUsecase, addPlaylistUsecase)
 }

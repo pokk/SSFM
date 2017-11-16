@@ -2,9 +2,11 @@ package taiwan.no1.app.ssfm
 
 import android.content.Context
 import android.support.multidex.MultiDex
+import com.devrapid.kotlinknifer.SharedPrefs
 import com.raizlabs.android.dbflow.config.FlowManager
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
+import org.jetbrains.anko.defaultSharedPreferences
 import taiwan.no1.app.ssfm.controllers.services.InitializeService
 import taiwan.no1.app.ssfm.internal.di.components.AppComponent
 import taiwan.no1.app.ssfm.internal.di.components.DaggerAppComponent
@@ -36,6 +38,8 @@ class App : DaggerApplication() {
     override fun onCreate() {
         super.onCreate()
 
+        // Initial the shared preferences.
+        SharedPrefs.setPrefSettings(defaultSharedPreferences)
         // Initial necessary lib by intent service.
         InitializeService.start(this)
     }
