@@ -24,6 +24,7 @@ import kotlin.concurrent.thread
  * Created by weian on 2017/6/18.
  */
 
+@Deprecated("will disable MediaPlayer")
 @TargetApi(23)
 class MediaPlayerAdapter(imageView: RotatedCircleWithIconImageView) :
     IMultiMediaPlayer,
