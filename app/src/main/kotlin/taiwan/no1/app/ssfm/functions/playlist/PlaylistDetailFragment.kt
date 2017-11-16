@@ -70,10 +70,8 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
             ItemTouchHelper(callback).attachToRecyclerView(recyclerView)
         }
         viewModel.attachPlaylistInfo(playlist)
-        if (-1 < playlist.id) {
-            playlistItemInfo.firstFetch { info ->
-                viewModel.fetchPlaylistItems(playlist.id) { logw(it) }
-            }
+        playlistItemInfo.firstFetch { info ->
+            viewModel.fetchPlaylistItems(playlist.id) { logw(it) }
         }
     }
 

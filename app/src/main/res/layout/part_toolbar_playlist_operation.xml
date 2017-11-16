@@ -31,10 +31,11 @@
             android:text="@{svm.title}"
             tools:text="ACTIVITY TITLE"/>
 
-        <ImageView
+        <ImageButton
             style="@style/Menu.PlaylistItems"
             android:layout_gravity="end|center_vertical"
             android:layout_marginEnd="@dimen/two_unit"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:onClick="@{svm::addPlaylistOnClick}"
             android:src="@drawable/ic_add"/>
     </android.support.v7.widget.Toolbar>

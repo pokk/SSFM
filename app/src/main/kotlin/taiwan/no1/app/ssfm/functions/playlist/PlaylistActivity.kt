@@ -47,6 +47,13 @@ class PlaylistActivity : AdvancedActivity<PlaylistViewModel, ActivityPlaylistBin
      */
     @Subscribe(tags = arrayOf(Tag(RxBusTag.VIEWMODEL_CLICK_PLAYLIST), Tag(RxBusTag.VIEWMODEL_CLICK_ADDP_LAYLIST)))
     fun navigateToPlaylistDetail(playlistId: PlaylistEntity) {
+        // FIXME(jieyi): 11/16/17 Cannot change playlist name when create a new playlist.
+        // Problem is that after adding a new data into database, the return value is boolean, then pass to
+        // the detail fragment. That's why the new [PlaylistEntity] cannot be updated.
+        //
+        // The fix method,
+        // 1. When adding a new data, then return the new data object.
+        // 2. Pass the new data's id to the detail fragment. Let detail fragment's viewmodel to retrieve it.
         navigate(PlaylistDetailFragment.newInstance(playlistId), true)
     }
 
