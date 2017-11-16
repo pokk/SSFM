@@ -14,7 +14,8 @@ import taiwan.no1.app.ssfm.models.usecases.GetPlaylistItemsUsecase
  * @since   11/10/17
  */
 class PlaylistIndexFragmentViewModel(private val getPlaylistsUsecase: BaseUsecase<List<PlaylistEntity>, AddPlaylistUsecase.RequestValue>,
-                                     private val getPlaylistItemsUsecase: BaseUsecase<List<PlaylistItemEntity>, GetPlaylistItemsUsecase.RequestValue>) :
+                                     private val getPlaylistItemsUsecase: BaseUsecase<List<PlaylistItemEntity>, GetPlaylistItemsUsecase.RequestValue>,
+                                     private val removePlaylistUsecase: BaseUsecase<Boolean, AddPlaylistUsecase.RequestValue>) :
     BaseViewModel() {
     fun fetchPlaylistAndRecently(playlistCallback: (List<PlaylistEntity>) -> Unit,
                                  recentlyCallback: (List<PlaylistItemEntity>) -> Unit) {
@@ -26,6 +27,12 @@ class PlaylistIndexFragmentViewModel(private val getPlaylistsUsecase: BaseUsecas
                     onNext(recentlyCallback)
                 }
             }
+        }
+    }
+
+    fun deletePlaylist(playlist: PlaylistEntity, callback: (Boolean) -> Unit) {
+        lifecycleProvider.execute(removePlaylistUsecase, AddPlaylistUsecase.RequestValue(playlist)) {
+            onNext(callback)
         }
     }
 }

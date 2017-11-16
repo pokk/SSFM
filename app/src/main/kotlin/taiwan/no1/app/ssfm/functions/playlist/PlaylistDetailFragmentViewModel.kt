@@ -14,6 +14,7 @@ import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.misc.extension.imageview.setSrc
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
+import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemUsecase
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistUsecase
 import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.models.usecases.GetPlaylistItemsUsecase
@@ -23,7 +24,8 @@ import taiwan.no1.app.ssfm.models.usecases.GetPlaylistItemsUsecase
  * @since   11/14/17
  */
 class PlaylistDetailFragmentViewModel(private val editPlaylistUsecase: BaseUsecase<Boolean, AddPlaylistUsecase.RequestValue>,
-                                      private val getPlaylistItemsUsecase: BaseUsecase<List<PlaylistItemEntity>, GetPlaylistItemsUsecase.RequestValue>) :
+                                      private val getPlaylistItemsUsecase: BaseUsecase<List<PlaylistItemEntity>, GetPlaylistItemsUsecase.RequestValue>,
+                                      private val removePlaylistItemUsecase: BaseUsecase<Boolean, AddPlaylistItemUsecase.RequestValue>) :
     BaseViewModel() {
     val playlistName by lazy { ObservableField<String>() }
     val trackQuantity by lazy { ObservableField<String>() }
@@ -43,6 +45,12 @@ class PlaylistDetailFragmentViewModel(private val editPlaylistUsecase: BaseUseca
 
     fun fetchPlaylistItems(playlistId: Long, callback: (List<PlaylistItemEntity>) -> Unit) {
         lifecycleProvider.execute(getPlaylistItemsUsecase, GetPlaylistItemsUsecase.RequestValue(playlistId)) {
+            onNext(callback)
+        }
+    }
+
+    fun deleteItem(item: PlaylistItemEntity, callback: (Boolean) -> Unit) {
+        lifecycleProvider.execute(removePlaylistItemUsecase, AddPlaylistItemUsecase.RequestValue(item)) {
             onNext(callback)
         }
     }

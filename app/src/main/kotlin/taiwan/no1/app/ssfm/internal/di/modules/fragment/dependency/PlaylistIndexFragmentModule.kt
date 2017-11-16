@@ -9,6 +9,7 @@ import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistUsecase
 import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.models.usecases.GetPlaylistItemsUsecase
+import javax.inject.Named
 
 /**
  * A base component upon which fragment's components may depend. Activity-level components should extend this component.
@@ -21,6 +22,8 @@ class PlaylistIndexFragmentModule {
     @Provides
     @PerFragment
     fun provideViewModel(getPlaylistsUsecase: BaseUsecase<List<PlaylistEntity>, AddPlaylistUsecase.RequestValue>,
-                         getPlaylistItemsUsecase: BaseUsecase<List<PlaylistItemEntity>, GetPlaylistItemsUsecase.RequestValue>):
-        PlaylistIndexFragmentViewModel = PlaylistIndexFragmentViewModel(getPlaylistsUsecase, getPlaylistItemsUsecase)
+                         getPlaylistItemsUsecase: BaseUsecase<List<PlaylistItemEntity>, GetPlaylistItemsUsecase.RequestValue>,
+                         @Named("remove_playlist")
+                         removePlaylistUsecase: BaseUsecase<Boolean, AddPlaylistUsecase.RequestValue>): PlaylistIndexFragmentViewModel =
+        PlaylistIndexFragmentViewModel(getPlaylistsUsecase, getPlaylistItemsUsecase, removePlaylistUsecase)
 }

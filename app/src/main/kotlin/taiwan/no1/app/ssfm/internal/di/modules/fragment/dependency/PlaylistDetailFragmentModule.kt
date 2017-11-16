@@ -5,6 +5,7 @@ import dagger.Provides
 import taiwan.no1.app.ssfm.functions.playlist.PlaylistDetailFragmentViewModel
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerFragment
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
+import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemUsecase
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistUsecase
 import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
 import taiwan.no1.app.ssfm.models.usecases.GetPlaylistItemsUsecase
@@ -22,6 +23,8 @@ class PlaylistDetailFragmentModule {
     @PerFragment
     fun provideViewModel(@Named("edit_playlist")
                          editPlaylistUsecase: BaseUsecase<Boolean, AddPlaylistUsecase.RequestValue>,
-                         getPlaylistItemsUsecase: BaseUsecase<List<PlaylistItemEntity>, GetPlaylistItemsUsecase.RequestValue>):
-        PlaylistDetailFragmentViewModel = PlaylistDetailFragmentViewModel(editPlaylistUsecase, getPlaylistItemsUsecase)
+                         getPlaylistItemsUsecase: BaseUsecase<List<PlaylistItemEntity>, GetPlaylistItemsUsecase.RequestValue>,
+                         @Named("remove_playlist_item")
+                         removePlaylistItemUsecase: BaseUsecase<Boolean, AddPlaylistItemUsecase.RequestValue>): PlaylistDetailFragmentViewModel =
+        PlaylistDetailFragmentViewModel(editPlaylistUsecase, getPlaylistItemsUsecase, removePlaylistItemUsecase)
 }

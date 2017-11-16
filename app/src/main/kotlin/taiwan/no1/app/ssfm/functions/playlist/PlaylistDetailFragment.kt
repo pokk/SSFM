@@ -10,6 +10,7 @@ import taiwan.no1.app.ssfm.functions.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.ItemTouchViewmodelCallback
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.SimpleItemTouchHelperCallback
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
@@ -64,7 +65,8 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
                 }
             }
 
-            val callback = SimpleItemTouchHelperCallback(itemAdapter as BaseDataBindingAdapter<ItemMusicType5Binding, BaseEntity>)
+            val callback = SimpleItemTouchHelperCallback(itemAdapter as BaseDataBindingAdapter<ItemMusicType5Binding, BaseEntity>,
+                vmItemTouchCallback)
             ItemTouchHelper(callback).attachToRecyclerView(recyclerView)
         }
         viewModel.attachPlaylistInfo(playlist)
@@ -73,10 +75,16 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
                 viewModel.fetchPlaylistItems(playlist.id) { logw(it) }
             }
         }
-
-
     }
 
     override fun provideInflateView(): Int = R.layout.fragment_playlist_detail
     //endregion
+
+    private val vmItemTouchCallback = object : ItemTouchViewmodelCallback {
+        override fun onItemDismiss(position: Int, direction: Int) {
+            (playlistItemRes[position] as PlaylistItemEntity).let { deletedItem ->
+                viewModel.deleteItem(deletedItem) { if (it) playlistItemRes.remove(deletedItem) }
+            }
+        }
+    }
 }

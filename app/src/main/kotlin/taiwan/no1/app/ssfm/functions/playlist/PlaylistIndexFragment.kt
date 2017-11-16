@@ -12,8 +12,10 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.PlaylistAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RecentlyAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.ItemTouchViewmodelCallback
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.SimpleItemTouchHelperCallback
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
+import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import javax.inject.Inject
 
@@ -66,7 +68,8 @@ class PlaylistIndexFragment : AdvancedFragment<PlaylistIndexFragmentViewModel, F
                 }
             }
 
-            val callback = SimpleItemTouchHelperCallback(playlistAdapter as BaseDataBindingAdapter<ItemPlaylistType1Binding, BaseEntity>)
+            val callback = SimpleItemTouchHelperCallback(playlistAdapter as BaseDataBindingAdapter<ItemPlaylistType1Binding, BaseEntity>,
+                vmItemTouchCallback)
             ItemTouchHelper(callback).attachToRecyclerView(rvPlaylist)
         }
         // First time showing this fragment.
@@ -80,4 +83,12 @@ class PlaylistIndexFragment : AdvancedFragment<PlaylistIndexFragmentViewModel, F
 
     override fun provideInflateView(): Int = R.layout.fragment_mylist_index
     //endregion
+
+    private val vmItemTouchCallback = object : ItemTouchViewmodelCallback {
+        override fun onItemDismiss(position: Int, direction: Int) {
+            (playlistRes[position] as PlaylistEntity).let { deletedItem ->
+                viewModel.deletePlaylist(deletedItem) { if (it) playlistRes.remove(deletedItem) }
+            }
+        }
+    }
 }
