@@ -132,8 +132,7 @@ class UseCaseModule {
 
     @Provides
     @PerFragment
-    @Named("add_playlist")
-    fun provideAddPlaylistUsecase(dataRepository: DataRepository): BaseUsecase<Boolean, AddPlaylistUsecase.RequestValue> =
+    fun provideAddPlaylistUsecase(dataRepository: DataRepository): BaseUsecase<PlaylistEntity, AddPlaylistUsecase.RequestValue> =
         AddPlaylistUsecase(dataRepository)
 
     @Provides

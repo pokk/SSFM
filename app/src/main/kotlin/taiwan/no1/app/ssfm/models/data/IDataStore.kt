@@ -100,7 +100,7 @@ interface IDataStore {
     //region Playlist
     fun getPlaylists(id: Long = -1): Observable<List<PlaylistEntity>>
 
-    fun addPlaylist(entity: PlaylistEntity): Observable<Boolean>
+    fun addPlaylist(entity: PlaylistEntity): Observable<PlaylistEntity>
 
     fun editPlaylist(entity: PlaylistEntity): Observable<Boolean>
 

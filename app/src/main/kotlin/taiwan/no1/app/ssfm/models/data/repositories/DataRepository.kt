@@ -1,5 +1,6 @@
 package taiwan.no1.app.ssfm.models.data.repositories
 
+import io.reactivex.Observable
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Local
 import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Remote
 import taiwan.no1.app.ssfm.models.data.IDataStore
@@ -64,7 +65,7 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
 
     override fun getPlaylists(id: Long) = local.getPlaylists(id)
 
-    override fun addPlaylist(entity: PlaylistEntity) = local.addPlaylist(entity)
+    override fun addPlaylist(entity: PlaylistEntity): Observable<PlaylistEntity> = local.addPlaylist(entity)
 
     override fun editPlaylist(entity: PlaylistEntity) = local.editPlaylist(entity)
 

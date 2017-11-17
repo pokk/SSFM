@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
-import com.devrapid.kotlinknifer.logi
 import kotlinx.android.synthetic.main.part_main_play_music.rcii_album
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityMusicBinding
@@ -14,9 +13,6 @@ import taiwan.no1.app.ssfm.misc.utilies.devices.ExoPlayerWrapper
 import taiwan.no1.app.ssfm.misc.utilies.devices.IMultiMediaPlayer
 import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList
 import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler
-import taiwan.no1.app.ssfm.misc.utilies.devices.MediaPlayerAdapter
-import taiwan.no1.app.ssfm.misc.utilies.devices.PlayListModel
-import taiwan.no1.app.ssfm.misc.utilies.devices.PlayerHandler
 import javax.inject.Inject
 
 /**
@@ -39,16 +35,14 @@ class PlayMainActivity : AdvancedActivity<PlayMainViewModel, ActivityMusicBindin
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var durationListener: (duration: Int) -> Unit = {
-            duration -> rcii_album.endTime = duration
+        var durationListener: (duration: Int) -> Unit = { duration ->
+            rcii_album.endTime = duration
         }
 
-        var bufferPercentageListener: (percentage: Int) -> Unit = {
-            percentage -> 
+        var bufferPercentageListener: (percentage: Int) -> Unit = { percentage ->
         }
 
-        musicPlayer = ExoPlayerWrapper(this.applicationContext,
-                durationListener, bufferPercentageListener)
+        musicPlayer = ExoPlayerWrapper(this.applicationContext, durationListener, bufferPercentageListener)
 
         /*mediaPlayerAdapter = MediaPlayerAdapter(rcii_album)
         mediaPlayerAdapter.setDurationListener { duration ->

@@ -3,6 +3,7 @@ package taiwan.no1.app.ssfm.functions.playlist
 import android.content.Context
 import android.databinding.ObservableField
 import android.view.View
+import com.devrapid.kotlinknifer.logw
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
@@ -18,8 +19,7 @@ import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
  * @since   9/13/17
  */
 class PlaylistViewModel(private val context: Context,
-                        private val getPlaylistsUsecase: BaseUsecase<List<PlaylistEntity>, AddPlaylistUsecase.RequestValue>,
-                        private val addPlaylistUsecase: BaseUsecase<Boolean, AddPlaylistUsecase.RequestValue>) :
+                        private val addPlaylistUsecase: BaseUsecase<PlaylistEntity, AddPlaylistUsecase.RequestValue>) :
     BaseViewModel() {
     val title by lazy { ObservableField<String>(context.getString(R.string.menu_my_playlist)) }
 
@@ -28,15 +28,10 @@ class PlaylistViewModel(private val context: Context,
      *
      * @event_to [taiwan.no1.app.ssfm.functions.playlist.PlaylistActivity.navigateToPlaylistDetail]
      */
-    fun addPlaylistOnClick(view: View?) {
+    fun addPlaylistOnClick(view: View) {
+        logw(view, view.parent.parent)
         lifecycleProvider.execute(addPlaylistUsecase, AddPlaylistUsecase.RequestValue(PlaylistEntity())) {
-            onNext {
-                if (it) {
-                    lifecycleProvider.execute(getPlaylistsUsecase) {
-                        onNext { RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_ADDP_LAYLIST, it.last()) }
-                    }
-                }
-            }
+            onNext { RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_ADDP_LAYLIST, it) }
         }
     }
 }

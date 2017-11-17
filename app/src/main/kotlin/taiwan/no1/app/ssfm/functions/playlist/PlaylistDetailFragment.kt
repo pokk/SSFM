@@ -34,9 +34,9 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
          *
          * @return A new instance of [android.app.Fragment] PlaylistDetailFragment.
          */
-        fun newInstance(id: PlaylistEntity) = PlaylistDetailFragment().also {
+        fun newInstance(playlist: PlaylistEntity) = PlaylistDetailFragment().also {
             it.arguments = Bundle().apply {
-                putParcelable(ARG_PARAM_PLAYLIST_OBJECT, id)
+                putParcelable(ARG_PARAM_PLAYLIST_OBJECT, playlist)
             }
         }
     }

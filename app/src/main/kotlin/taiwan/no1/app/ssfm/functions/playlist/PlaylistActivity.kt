@@ -40,14 +40,14 @@ class PlaylistActivity : AdvancedActivity<PlaylistViewModel, ActivityPlaylistBin
     //endregion
 
     /**
-     * @param playlistId
+     * @param playlist
      *
      * @event_from [taiwan.no1.app.ssfm.functions.playlist.RecyclerViewPlaylistViewModel.playlistOnClick]
      * @event_from [taiwan.no1.app.ssfm.functions.playlist.PlaylistViewModel.addPlaylistOnClick]
      */
     @Subscribe(tags = arrayOf(Tag(RxBusTag.VIEWMODEL_CLICK_PLAYLIST), Tag(RxBusTag.VIEWMODEL_CLICK_ADDP_LAYLIST)))
-    fun navigateToPlaylistDetail(playlistId: PlaylistEntity) {
-        navigate(PlaylistDetailFragment.newInstance(playlistId), true)
+    fun navigateToPlaylistDetail(playlist: PlaylistEntity) {
+        navigate(PlaylistDetailFragment.newInstance(playlist), true)
     }
 
     private fun navigate(fragment: Fragment, needBack: Boolean) {

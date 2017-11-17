@@ -11,6 +11,7 @@ import com.raizlabs.android.dbflow.rx2.kotlinextensions.list
 import com.raizlabs.android.dbflow.rx2.kotlinextensions.rx
 import com.raizlabs.android.dbflow.sql.language.BaseModelQueriable
 import io.reactivex.Observable
+import io.reactivex.rxkotlin.toSingle
 import taiwan.no1.app.ssfm.models.data.IDataStore
 import taiwan.no1.app.ssfm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.models.entities.KeywordEntity_Table
@@ -74,7 +75,10 @@ class LocalDataStore : IDataStore {
         return sqlQuery.rx().list.toObservable()
     }
 
-    override fun addPlaylist(entity: PlaylistEntity) = entity.save().toObservable()
+    override fun addPlaylist(entity: PlaylistEntity): Observable<PlaylistEntity> = entity.save().toObservable().flatMap {
+        // If adding a new data is success then return the new data; otherwise, an empty object.
+        if (it) getPlaylists().flatMap { it.last().toSingle().toObservable() } else PlaylistEntity().toSingle().toObservable()
+    }
 
     override fun editPlaylist(entity: PlaylistEntity) = entity.update().toObservable()
 
