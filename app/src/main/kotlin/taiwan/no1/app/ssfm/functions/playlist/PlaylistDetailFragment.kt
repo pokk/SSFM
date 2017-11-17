@@ -37,6 +37,10 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
         fun newInstance(playlist: PlaylistEntity) = PlaylistDetailFragment().also {
             it.arguments = Bundle().apply {
                 putParcelable(ARG_PARAM_PLAYLIST_OBJECT, playlist)
+
+//                it.sharedElementEnterTransition = TransitionInflater.from(App.compactContext.applicationContext).inflateTransition(
+//                    R.transition.change_bound_and_fade)
+//        enterTransition = TransitionInflater.from(App.compactContext.applicationContext).inflateTransition(android.R.transition.explode)
             }
         }
     }

@@ -31,6 +31,7 @@
             android:placeHolder="@{@drawable/loading_placeholder}"
             android:scaleType="fitXY"
             android:src="@drawable/image09"/>
+        <!--android:transitionName="transition"-->
         <!--android:imageUrl="@{avm.thumbnail}"-->
 
         <LinearLayout

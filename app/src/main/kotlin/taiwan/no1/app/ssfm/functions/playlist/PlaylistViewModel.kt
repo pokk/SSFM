@@ -3,7 +3,6 @@ package taiwan.no1.app.ssfm.functions.playlist
 import android.content.Context
 import android.databinding.ObservableField
 import android.view.View
-import com.devrapid.kotlinknifer.logw
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
@@ -29,9 +28,11 @@ class PlaylistViewModel(private val context: Context,
      * @event_to [taiwan.no1.app.ssfm.functions.playlist.PlaylistActivity.navigateToPlaylistDetail]
      */
     fun addPlaylistOnClick(view: View) {
-        logw(view, view.parent.parent)
+        // TODO(jieyi): 11/17/17 Judge the event is from where.
+//        ToolbarHelper(view).getCurrentFragment {
+//        }
         lifecycleProvider.execute(addPlaylistUsecase, AddPlaylistUsecase.RequestValue(PlaylistEntity())) {
-            onNext { RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_ADDP_LAYLIST, it) }
+            onNext { RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_ADDP_LAYLIST, Pair(it, hashMapOf<View, String>())) }
         }
     }
 }

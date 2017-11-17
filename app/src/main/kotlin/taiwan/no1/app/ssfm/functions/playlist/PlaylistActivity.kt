@@ -3,6 +3,7 @@ package taiwan.no1.app.ssfm.functions.playlist
 import android.app.Activity
 import android.app.Fragment
 import android.os.Bundle
+import android.view.View
 import com.devrapid.kotlinknifer.addFragment
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
@@ -46,11 +47,16 @@ class PlaylistActivity : AdvancedActivity<PlaylistViewModel, ActivityPlaylistBin
      * @event_from [taiwan.no1.app.ssfm.functions.playlist.PlaylistViewModel.addPlaylistOnClick]
      */
     @Subscribe(tags = arrayOf(Tag(RxBusTag.VIEWMODEL_CLICK_PLAYLIST), Tag(RxBusTag.VIEWMODEL_CLICK_ADDP_LAYLIST)))
-    fun navigateToPlaylistDetail(playlist: PlaylistEntity) {
-        navigate(PlaylistDetailFragment.newInstance(playlist), true)
+    fun navigateToPlaylistDetail(params: Pair<PlaylistEntity, HashMap<View, String>>) {
+        navigate(PlaylistDetailFragment.newInstance(params.first), true, params.second)
     }
 
-    private fun navigate(fragment: Fragment, needBack: Boolean) {
-        fragmentManager.addFragment(R.id.fl_container, fragment, needBack)
+    private fun navigate(fragment: Fragment, needBack: Boolean, sharedElements: HashMap<View, String>) {
+        if (sharedElements.isEmpty()) {
+            fragmentManager.addFragment(R.id.fl_container, fragment, needBack)
+        }
+        else {
+            fragmentManager.addFragment(R.id.fl_container, fragment, needBack, sharedElements)
+        }
     }
 }
