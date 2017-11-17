@@ -20,6 +20,7 @@ class ToolbarHelper(private val view: View) {
             first { outerLayout.getChildAt(it) is FrameLayout }.
             toSingle().map { outerLayout.getChildAt(it) as ViewGroup }.
             subscribe { container, t2 ->
+                // TODO(jieyi): 11/17/17 Find the way for getting the fragment from viewgroup.
             }
     }
 

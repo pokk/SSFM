@@ -33,9 +33,6 @@ class PlaylistIndexFragment : AdvancedFragment<PlaylistIndexFragmentViewModel, F
          */
         fun newInstance() = PlaylistIndexFragment().also {
             it.arguments = Bundle().also {}
-//            it.sharedElementReturnTransition = TransitionInflater.from(App.compactContext.applicationContext).inflateTransition(
-//                R.transition.change_bound_and_fade)
-//            it.exitTransition = TransitionInflater.from(App.compactContext.applicationContext).inflateTransition(android.R.transition.explode)
         }
     }
     //endregion
@@ -51,6 +48,7 @@ class PlaylistIndexFragment : AdvancedFragment<PlaylistIndexFragmentViewModel, F
         playlistRes.clear()
         recentlyPlayedRes.clear()
     }
+    //endregion
 
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {

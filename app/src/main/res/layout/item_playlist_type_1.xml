@@ -30,8 +30,8 @@
             android:error="@{@drawable/sample_jieyi_icon}"
             android:placeHolder="@{@drawable/loading_placeholder}"
             android:scaleType="fitXY"
-            android:src="@drawable/image09"/>
-        <!--android:transitionName="transition"-->
+            android:src="@drawable/image09"
+            android:transitionName="@string/transition_image"/>
         <!--android:imageUrl="@{avm.thumbnail}"-->
 
         <LinearLayout

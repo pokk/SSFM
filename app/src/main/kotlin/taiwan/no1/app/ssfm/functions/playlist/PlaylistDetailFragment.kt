@@ -37,10 +37,6 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
         fun newInstance(playlist: PlaylistEntity) = PlaylistDetailFragment().also {
             it.arguments = Bundle().apply {
                 putParcelable(ARG_PARAM_PLAYLIST_OBJECT, playlist)
-
-//                it.sharedElementEnterTransition = TransitionInflater.from(App.compactContext.applicationContext).inflateTransition(
-//                    R.transition.change_bound_and_fade)
-//        enterTransition = TransitionInflater.from(App.compactContext.applicationContext).inflateTransition(android.R.transition.explode)
             }
         }
     }
@@ -56,6 +52,8 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
         PlaylistItemEntity())
     // Get the arguments from the bundle here.
     private val playlist by lazy { this.arguments.getParcelable<PlaylistEntity>(ARG_PARAM_PLAYLIST_OBJECT) }
+
+    //endregion
 
     //region Base fragment implement
     override fun init(savedInstanceState: Bundle?) {
