@@ -72,6 +72,25 @@ class ExoPlayerWrapper(context: Context,
         exoPlayer.playWhenReady = true
     }
 
+    /**
+     * set the repeat mode: normal play, repeat one music, repeat the whole playlist
+     */
+    fun repeat(isRepeat: Boolean) {
+        if (isRepeat)
+            exoPlayer.repeatMode = Player.REPEAT_MODE_ONE
+        else
+            exoPlayer.repeatMode = Player.REPEAT_MODE_OFF
+    }
+
+    /**
+     * seek the play time when the music is playing
+     */
+    fun seekTo(time: Int) {
+        exoPlayer.seekTo(time.times(1000).toLong())
+    }
+
+    fun isPlaying(): Boolean = isPlaying
+
     private fun initExoPlayer(url: String) {
         val meter = DefaultBandwidthMeter()
         val dataSourceFactory = DefaultDataSourceFactory(context, Util.getUserAgent(context, "LocalExoPlayer"), meter)
