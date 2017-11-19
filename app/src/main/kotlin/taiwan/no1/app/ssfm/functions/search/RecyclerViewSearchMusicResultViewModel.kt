@@ -5,7 +5,7 @@ import android.databinding.BaseObservable
 import android.databinding.ObservableField
 import android.view.View
 import com.devrapid.kotlinknifer.toTimeString
-import taiwan.no1.app.ssfm.misc.utilies.devices.ExoPlayerWrapper
+import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayer
 import taiwan.no1.app.ssfm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity.InfoBean
 import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
@@ -26,10 +26,9 @@ class RecyclerViewSearchMusicResultViewModel(private val res: InfoBean,
     //region Action from View
     fun playOrStopMusicClick(view: View) {
         res.`_$320hash`?.let {
-            // TODO(jieyi): 11/19/17 The [player] shouldn't be here.
-            val player = ExoPlayerWrapper(context, {}, {})
             getDetailMusicCase.execute(GetDetailMusicCase.RequestValue(it)) {
                 onNext {
+                    val player = MusicPlayer.instance
                     if (player.isPlaying()) player.stop()
                     it.data?.play_url?.let(player::play)
                 }
