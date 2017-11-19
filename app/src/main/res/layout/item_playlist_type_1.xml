@@ -30,8 +30,7 @@
             android:error="@{@drawable/sample_jieyi_icon}"
             android:placeHolder="@{@drawable/loading_placeholder}"
             android:scaleType="fitXY"
-            android:src="@drawable/image09"
-            android:transitionName="@string/transition_image"/>
+            android:src="@drawable/image09"/>
         <!--android:imageUrl="@{avm.thumbnail}"-->
 
         <LinearLayout
@@ -44,6 +43,7 @@
             android:paddingStart="@dimen/three_unit">
 
             <TextView
+                android:id="@+id/tv_playlist_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{avm.playlistName}"

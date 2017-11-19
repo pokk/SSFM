@@ -4,6 +4,7 @@ import android.databinding.ObservableField
 import android.view.View
 import com.hwangjr.rxbus.RxBus
 import kotlinx.android.synthetic.main.item_playlist_type_1.view.iv_playlist_image
+import kotlinx.android.synthetic.main.item_playlist_type_1.view.tv_playlist_name
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
@@ -38,7 +39,13 @@ class RecyclerViewPlaylistViewModel(val item: BaseEntity) : BaseViewModel() {
      * @event_to [taiwan.no1.app.ssfm.functions.playlist.PlaylistActivity.navigateToPlaylistDetail]
      */
     fun playlistOnClick(view: View) {
-        RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_PLAYLIST,
-            Pair(item as PlaylistEntity, hashMapOf(view.iv_playlist_image to "transition")))
+        item as PlaylistEntity
+        val sharedElements =
+            listOf(Pair(view.iv_playlist_image, "transition_image_${item.id}"),
+                Pair(view.tv_playlist_name, "transition_name_${item.id}"))
+
+        sharedElements.forEach { it.first.transitionName = it.second }
+
+        RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_PLAYLIST, Pair(item, sharedElements))
     }
 }
