@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerFragment
 import taiwan.no1.app.ssfm.models.data.repositories.DataRepository
+import taiwan.no1.app.ssfm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
@@ -26,6 +27,7 @@ import taiwan.no1.app.ssfm.models.usecases.GetAlbumInfoCase
 import taiwan.no1.app.ssfm.models.usecases.GetArtistInfoCase
 import taiwan.no1.app.ssfm.models.usecases.GetArtistTopAlbumsCase
 import taiwan.no1.app.ssfm.models.usecases.GetArtistTopTracksCase
+import taiwan.no1.app.ssfm.models.usecases.GetDetailMusicCase
 import taiwan.no1.app.ssfm.models.usecases.GetKeywordHistoriesCase
 import taiwan.no1.app.ssfm.models.usecases.GetPlaylistItemsUsecase
 import taiwan.no1.app.ssfm.models.usecases.GetPlaylistsUsecase
@@ -117,6 +119,11 @@ class UseCaseModule {
     @PerFragment
     fun provideSearchUsecase(dataRepository: DataRepository): BaseUsecase<SearchMusicEntity, SearchMusicCase.RequestValue> =
         SearchMusicCase(dataRepository)
+
+    @Provides
+    @PerFragment
+    fun provideGetDetailMusicUsecase(dataRepository: DataRepository): BaseUsecase<DetailMusicEntity, GetDetailMusicCase.RequestValue> =
+        GetDetailMusicCase(dataRepository)
 
     // For Database
     @Provides

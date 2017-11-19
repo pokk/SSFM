@@ -10,7 +10,7 @@ import taiwan.no1.app.ssfm.models.entities.DetailMusicEntity
  * @author  jieyi
  * @since   8/14/17
  */
-class DetailMusicCase(repository: IDataStore) : BaseUsecase<DetailMusicEntity, DetailMusicCase.RequestValue>(
+class GetDetailMusicCase(repository: IDataStore) : BaseUsecase<DetailMusicEntity, GetDetailMusicCase.RequestValue>(
     repository) {
     override fun fetchUsecase(): Observable<DetailMusicEntity> =
         (parameters ?: RequestValue()).let { repository.getDetailMusicRes(it.hashCode) }

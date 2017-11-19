@@ -11,7 +11,10 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
+import taiwan.no1.app.ssfm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity.InfoBean
+import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
+import taiwan.no1.app.ssfm.models.usecases.GetDetailMusicCase
 import javax.inject.Inject
 
 /**
@@ -33,6 +36,7 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
     //endregion
 
     @Inject override lateinit var viewModel: SearchResultFragmentViewModel
+    @Inject lateinit var usecase: BaseUsecase<DetailMusicEntity, GetDetailMusicCase.RequestValue>
     var keyword: String = ""
     private var res = mutableListOf<InfoBean>()
     private val resInfo by lazy { DataInfo() }
@@ -53,7 +57,7 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
             layoutManager = WrapContentLinearLayoutManager(activity)
             adapter = BaseDataBindingAdapter<ItemSearchMusicType1Binding, InfoBean>(R.layout.item_search_music_type_1,
                 res) { holder, item ->
-                holder.binding.avm = RecyclerViewSearchMusicResultViewModel(item, activity)
+                holder.binding.avm = RecyclerViewSearchMusicResultViewModel(item, activity.applicationContext, usecase)
             }
             loadmore = object : RecyclerViewScrollCallback {
                 override fun loadMoreEvent(recyclerView: RecyclerView, total: Int) {
