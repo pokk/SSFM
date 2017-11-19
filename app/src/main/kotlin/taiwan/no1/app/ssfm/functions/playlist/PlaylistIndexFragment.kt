@@ -43,6 +43,7 @@ class PlaylistIndexFragment : AdvancedFragment<PlaylistIndexFragmentViewModel, F
     private var playlistRes = mutableListOf<BaseEntity>()
     private var recentlyPlayedRes = mutableListOf<BaseEntity>()
 
+    //region Fragment lifecycle
     override fun onResume() {
         super.onResume()
         playlistRes.clear()

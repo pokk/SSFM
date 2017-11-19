@@ -33,7 +33,6 @@
             android:imageUrl="@{vm.thumbnail}"
             android:scaleType="centerCrop"
             android:src="@drawable/image09"
-            android:transitionName="@string/transition_image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/sample_lady_gaga"/>

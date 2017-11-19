@@ -41,22 +41,21 @@ class PlaylistActivity : AdvancedActivity<PlaylistViewModel, ActivityPlaylistBin
     //endregion
 
     /**
-     * @param playlist
+     * @param params
      *
      * @event_from [taiwan.no1.app.ssfm.functions.playlist.RecyclerViewPlaylistViewModel.playlistOnClick]
      * @event_from [taiwan.no1.app.ssfm.functions.playlist.PlaylistViewModel.addPlaylistOnClick]
      */
     @Subscribe(tags = arrayOf(Tag(RxBusTag.VIEWMODEL_CLICK_PLAYLIST), Tag(RxBusTag.VIEWMODEL_CLICK_ADDP_LAYLIST)))
-    fun navigateToPlaylistDetail(params: Pair<PlaylistEntity, HashMap<View, String>>) {
-        navigate(PlaylistDetailFragment.newInstance(params.first), true, params.second)
+    fun navigateToPlaylistDetail(params: Pair<PlaylistEntity, List<Pair<View, String>>>) {
+        val sharedElements = params.second.takeIf { it.isNotEmpty() }?.let { HashMap(it.toMap()) } ?: HashMap()
+        navigate(PlaylistDetailFragment.newInstance(params.first,
+            sharedElements.map { it.value }.toList()),
+            true,
+            sharedElements)
     }
 
     private fun navigate(fragment: Fragment, needBack: Boolean, sharedElements: HashMap<View, String>) {
-        if (sharedElements.isEmpty()) {
-            fragmentManager.addFragment(R.id.fl_container, fragment, needBack)
-        }
-        else {
-            fragmentManager.addFragment(R.id.fl_container, fragment, needBack, sharedElements)
-        }
+        fragmentManager.addFragment(R.id.fl_container, fragment, needBack, sharedElements)
     }
 }
