@@ -52,7 +52,7 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
     //endregion
 
     //region Base fragment implement
-    override fun init(savedInstanceState: Bundle?) {
+    override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
             layoutManager = WrapContentLinearLayoutManager(activity)
             adapter = BaseDataBindingAdapter<ItemSearchMusicType1Binding, InfoBean>(R.layout.item_search_music_type_1,

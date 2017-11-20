@@ -14,7 +14,7 @@ import taiwan.no1.app.ssfm.models.data.local.LocalDataStore
 @Component(dependencies = arrayOf(AppComponent::class), modules = arrayOf(DatabaseModule::class))
 interface DatabaseComponent {
     object Initializer {
-//        fun init(): DatabaseComponent = DaggerDatabaseComponent.builder()
+//        fun rendered(): DatabaseComponent = DaggerDatabaseComponent.builder()
 //            .appComponent(App.appComponent)
 //            .roomModule(DatabaseModule())
 //            .build()

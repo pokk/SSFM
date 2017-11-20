@@ -24,7 +24,7 @@ class SplashActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // OPTIMIZE(jieyi): 11/17/17 The first active activity must init history data.
+        // OPTIMIZE(jieyi): 11/17/17 The first active activity must rendered history data.
 //        if (!isFirstStartApp) {
 //            AddPlaylistUsecase(LocalDataStore()).
 //                execute(AddPlaylistUsecase.RequestValue(PlaylistEntity(name = "history", is_history = true))) {

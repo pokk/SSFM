@@ -52,7 +52,7 @@ class PlaylistIndexFragment : AdvancedFragment<PlaylistIndexFragmentViewModel, F
     //endregion
 
     //region Base fragment implement
-    override fun init(savedInstanceState: Bundle?) {
+    override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
             playlistLayoutManager = WrapContentLinearLayoutManager(activity)
             recentlyLayoutManager = WrapContentLinearLayoutManager(activity)

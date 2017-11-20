@@ -54,7 +54,7 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
     private val artistName: String by lazy { this.arguments.getString(ARG_PARAM_ARTIST_NAME) }
 
     //region Base fragment implement
-    override fun init(savedInstanceState: Bundle?) {
+    override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
             trackLayoutManager = WrapContentLinearLayoutManager(activity,
                 LinearLayoutManager.VERTICAL,

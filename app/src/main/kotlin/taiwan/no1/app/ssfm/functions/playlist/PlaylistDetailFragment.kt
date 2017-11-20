@@ -65,7 +65,7 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
     private val playlist by lazy { arguments.getParcelable<PlaylistEntity>(ARG_PARAM_PLAYLIST_OBJECT) }
     private val transition by lazy { arguments.getStringArrayList(ARG_PARAM_PLAYLIST_TRANSITION) }
 
-    override fun init(savedInstanceState: Bundle?) {
+    override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
             // TODO(jieyi): 11/19/17 Create a map for each elements.
             if (transition.isNotEmpty()) {

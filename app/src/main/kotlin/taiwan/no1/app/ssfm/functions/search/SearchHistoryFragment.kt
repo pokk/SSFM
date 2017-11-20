@@ -45,7 +45,7 @@ class SearchHistoryFragment : AdvancedFragment<SearchHistoryFragmentViewModel, F
     //endregion
 
     //region Base fragment implement
-    override fun init(savedInstanceState: Bundle?) {
+    override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
             layoutManager = WrapContentLinearLayoutManager(activity)
             adapter = BaseDataBindingAdapter<ItemSearchHistoryType1Binding, BaseEntity>(R.layout.item_search_history_type_1,

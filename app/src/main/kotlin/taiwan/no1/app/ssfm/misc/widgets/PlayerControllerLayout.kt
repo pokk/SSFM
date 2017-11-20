@@ -118,7 +118,7 @@ class PlayerControllerLayout
                     imageResource = R.drawable.selector_controller_previous
                     padding = 20
                 }
-            // TODO: 7/4/17 This init icon won't be center in the beginning.
+            // TODO: 7/4/17 This rendered icon won't be center in the beginning.
                 2 -> PlayPlayerButtonDecorator(btn)
                 3 -> NormalPlayerButtonDecorator(btn) {
                     imageResource = R.drawable.selector_controller_next

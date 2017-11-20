@@ -62,7 +62,7 @@ abstract class BaseFragment : RxFragment(), HasFragmentInjector {
     override final fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        init(savedInstanceState)
+        rendered(savedInstanceState)
     }
 
     @CallSuper
@@ -83,11 +83,13 @@ abstract class BaseFragment : RxFragment(), HasFragmentInjector {
 
     //region Base activity implement
     /**
-     * Initialize the fragment method.
+     * The fragment's view is rendered so from this method we can do some operations for views, as like,
+     * set listeners or animations...etc.
+     * This method will be called each of time when the fragment reappears.
      *
      * @param savedInstanceState before status.
      */
-    abstract protected fun init(savedInstanceState: Bundle?)
+    abstract protected fun rendered(savedInstanceState: Bundle?)
 
     /**
      * Set the view for inflating.

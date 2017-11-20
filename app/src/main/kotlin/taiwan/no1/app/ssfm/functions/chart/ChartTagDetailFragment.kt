@@ -82,7 +82,7 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
     //endregion
 
     //region Base fragment implement
-    override fun init(savedInstanceState: Bundle?) {
+    override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
             albumLayoutManager = WrapContentLinearLayoutManager(activity,
                 LinearLayoutManager.HORIZONTAL,
