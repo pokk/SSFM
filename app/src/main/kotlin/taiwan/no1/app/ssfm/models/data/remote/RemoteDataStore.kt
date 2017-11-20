@@ -54,8 +54,6 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
     lateinit var musicV2Service: Lazy<MusicV2Service>
 
     private val lastfm_key by lazy { context.getString(R.string.lastfm_api_key) }
-    private val lastfm_secret by lazy { context.getString(R.string.lastfm_secret_key) }
-    private val restQuery = mapOf("api_key" to lastfm_key, "format" to "json")
 
     init {
         NetComponent.Initializer.init().inject(this)
