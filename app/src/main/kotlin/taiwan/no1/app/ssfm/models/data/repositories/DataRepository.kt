@@ -18,11 +18,14 @@ import javax.inject.Singleton
 @Singleton
 class DataRepository @Inject constructor(@Local private var local: IDataStore,
                                          @Remote private var remote: IDataStore) : IDataStore {
+    //region V1
     override fun getSearchMusicRes(keyword: String, page: Int, pageSize: Int) =
         remote.getSearchMusicRes(keyword, page, pageSize)
 
     override fun getDetailMusicRes(hash: String) = remote.getDetailMusicRes(hash)
+    //endregion
 
+    //region V2
     override fun searchMusic(keyword: String, page: Int, lang: String) = remote.searchMusic(keyword, page, lang)
 
     override fun fetchRankMusic(rankType: Int) = remote.fetchRankMusic(rankType)
@@ -30,14 +33,18 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
     override fun fetchHotPlaylist(page: Int) = remote.fetchHotPlaylist(page)
 
     override fun fetchPlaylistDetail(id: String) = remote.fetchPlaylistDetail(id)
+    //endregion
 
+    //region TopChart
     override fun getChartTopArtist(page: Int, limit: Int) = remote.getChartTopArtist(page, limit)
 
     override fun getChartTopTracks(page: Int, limit: Int) = remote.getChartTopTracks(page, limit)
 
     override fun getChartTopTags(page: Int, limit: Int) =
         remote.getChartTopTags(page, limit)
+    //endregion
 
+    //region Artist
     override fun getArtistInfo(mbid: String, artist: String) =
         remote.getArtistInfo(mbid, artist)
 
@@ -47,14 +54,19 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
 
     override fun getArtistTopTrack(artist: String) = remote.getArtistTopTrack(artist)
 
-    override fun getAlbumInfo(artist: String, albumOrMbid: String) = remote.getAlbumInfo(artist,
-        albumOrMbid)
 
     override fun getArtistTags(artist: String, session: Any) = remote.getArtistTags(artist, session)
 
     override fun getSimilarTracks(artist: String, track: String) = remote.getSimilarTracks(artist,
         track)
+    //endregion
 
+    //region Album
+    override fun getAlbumInfo(artist: String, albumOrMbid: String) = remote.getAlbumInfo(artist,
+        albumOrMbid)
+    //endregion
+
+    //region Tag
     override fun getTagTopAlbums(tag: String, page: Int, limit: Int) = remote.getTagTopAlbums(tag,
         page,
         limit)
@@ -68,7 +80,9 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
         limit)
 
     override fun getTagInfo(tag: String) = remote.getTagInfo(tag)
+    //endregion
 
+    //region Playlist
     override fun getPlaylists(id: Long) = local.getPlaylists(id)
 
     override fun addPlaylist(entity: PlaylistEntity): Observable<PlaylistEntity> = local.addPlaylist(entity)
@@ -83,10 +97,13 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
     override fun addPlaylistItem(entity: PlaylistItemEntity) = local.addPlaylistItem(entity)
 
     override fun removePlaylistItem(entity: PlaylistItemEntity) = local.removePlaylistItem(entity)
+    //endregion
 
+    //region Search History
     override fun insertKeyword(keyword: String) = local.insertKeyword(keyword)
 
     override fun getKeywords(quantity: Int) = local.getKeywords(quantity)
 
     override fun removeKeywords(keyword: String?) = local.removeKeywords(keyword)
+    //endregion
 }

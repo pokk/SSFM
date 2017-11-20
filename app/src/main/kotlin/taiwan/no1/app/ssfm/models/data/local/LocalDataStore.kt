@@ -29,13 +29,16 @@ import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity
  * @since   5/10/17
  */
 class LocalDataStore : IDataStore {
+    //region V1
     override fun getSearchMusicRes(keyword: String,
                                    page: Int,
                                    pageSize: Int): Observable<SearchMusicEntity> =
         TODO("Local database has no session...")
 
     override fun getDetailMusicRes(hash: String) = TODO("Local database has no session...")
+    //endregion
 
+    //region V2
     override fun searchMusic(keyword: String, page: Int, lang: String) = TODO()
 
     override fun fetchRankMusic(rankType: Int) = TODO()
@@ -43,13 +46,17 @@ class LocalDataStore : IDataStore {
     override fun fetchHotPlaylist(page: Int) = TODO()
 
     override fun fetchPlaylistDetail(id: String) = TODO()
+    //endregion
 
+    //region Chart
     override fun getChartTopArtist(page: Int, limit: Int) = TODO()
 
     override fun getChartTopTracks(page: Int, limit: Int) = TODO()
 
     override fun getChartTopTags(page: Int, limit: Int) = TODO()
+    //endregion
 
+    //region Artist
     override fun getArtistInfo(mbid: String, artist: String) = TODO()
 
     override fun getSimilarArtist(artist: String) = TODO()
@@ -58,12 +65,16 @@ class LocalDataStore : IDataStore {
 
     override fun getArtistTopTrack(artist: String) = TODO()
 
-    override fun getAlbumInfo(artist: String, albumOrMbid: String) = TODO()
-
     override fun getArtistTags(artist: String, session: Any) = TODO()
 
     override fun getSimilarTracks(artist: String, track: String) = TODO()
+    //endregion
 
+    //region Album
+    override fun getAlbumInfo(artist: String, albumOrMbid: String) = TODO()
+    //endregion
+
+    //region Tag
     override fun getTagTopAlbums(tag: String, page: Int, limit: Int) = TODO()
 
     override fun getTagTopArtists(tag: String, page: Int, limit: Int) = TODO()
@@ -71,7 +82,9 @@ class LocalDataStore : IDataStore {
     override fun getTagTopTracks(tag: String, page: Int, limit: Int) = TODO()
 
     override fun getTagInfo(tag: String) = TODO()
+    //endregion
 
+    //region Playlist
     override fun getPlaylists(id: Long): Observable<List<PlaylistEntity>> {
         val sqlQuery: BaseModelQueriable<PlaylistEntity> = when (id) {
             -1L -> select from PlaylistEntity::class
@@ -96,7 +109,9 @@ class LocalDataStore : IDataStore {
     override fun addPlaylistItem(entity: PlaylistItemEntity) = entity.save().toObservable()
 
     override fun removePlaylistItem(entity: PlaylistItemEntity) = entity.delete().toObservable()
+    //endregion
 
+    //region Search History
     override fun insertKeyword(keyword: String) =
         (select from KeywordEntity::class where (KeywordEntity_Table.keyword eq keyword)).rx().list.
             flatMapObservable {
@@ -113,4 +128,5 @@ class LocalDataStore : IDataStore {
             // The return value of `executeUpdateDelete` is the number of the deleted or updated items.
             executeUpdateDelete().map { 0 < it }.toObservable()
     }
+    //endregion
 }

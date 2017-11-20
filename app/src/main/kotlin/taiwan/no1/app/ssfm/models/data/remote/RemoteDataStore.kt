@@ -53,12 +53,13 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
     @field:[Inject Named("music4")]
     lateinit var musicV2Service: Lazy<MusicV2Service>
 
-    private val lastfm_key by lazy { context.getString(R.string.lastfm_api_key) }
+    private val lastFmKey by lazy { context.getString(R.string.lastfm_api_key) }
 
     init {
         NetComponent.Initializer.init().inject(this)
     }
 
+    //region V1
     override fun getSearchMusicRes(keyword: String,
                                    page: Int,
                                    pageSize: Int): Observable<SearchMusicEntity> {
@@ -80,7 +81,9 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
 
         return musicService2.get().getMusic(query)
     }
+    //endregion
 
+    //region V2
     override fun searchMusic(keyword: String, page: Int, lang: String): Observable<MusicEntity> {
         val query =
             mapOf(context.getString(R.string.s_pair1) to page.toString(),
@@ -109,7 +112,9 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
 
         return musicV2Service.get().playlistDetail(query)
     }
+    //endregion
 
+    //region Chart
     override fun getChartTopArtist(page: Int, limit: Int): Observable<TopArtistEntity> {
         val query =
             mutableMapOf("page" to page.toString(),
@@ -136,7 +141,9 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
 
         return musicService3.get().getChartTopTag(query)
     }
+    //endregion
 
+    //region Artist
     override fun getArtistInfo(mbid: String, artist: String): Observable<ArtistEntity> {
         val query =
             mutableMapOf(mbid.takeIf { it.isNotBlank() }?.let { "mbid" to it } ?: "artist" to artist,
@@ -170,18 +177,6 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
         return musicService3.get().getArtistTopTrack(query)
     }
 
-    override fun getAlbumInfo(artist: String, albumOrMbid: String): Observable<AlbumEntity> {
-        val query =
-            mutableMapOf("method" to "album.getInfo").baseLastFmParams().apply {
-                if (artist.isBlank())
-                    put("mbid", albumOrMbid)
-                else
-                    putAll(mapOf("artist" to artist, "album" to albumOrMbid))
-            }
-
-        return musicService3.get().getAlbumInfo(query)
-    }
-
     override fun getArtistTags(artist: String,
                                session: Any): Observable<Collection<String>> = TODO()
 //        ObservableJust(Artist.getTags(artist, session))
@@ -195,7 +190,23 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
 
         return musicService3.get().getSimilarTrackInfo(query)
     }
+    //endregion
 
+    //region Album
+    override fun getAlbumInfo(artist: String, albumOrMbid: String): Observable<AlbumEntity> {
+        val query =
+            mutableMapOf("method" to "album.getInfo").baseLastFmParams().apply {
+                if (artist.isBlank())
+                    put("mbid", albumOrMbid)
+                else
+                    putAll(mapOf("artist" to artist, "album" to albumOrMbid))
+            }
+
+        return musicService3.get().getAlbumInfo(query)
+    }
+    //endregion
+
+    //region Tag
     override fun getTagTopAlbums(tag: String, page: Int, limit: Int): Observable<TopAlbumEntity> {
         val query =
             mutableMapOf("tag" to tag,
@@ -235,7 +246,9 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
 
         return musicService3.get().getTagInfo(query)
     }
+    //endregion
 
+    //region Playlist
     override fun getPlaylists(id: Long): Observable<List<PlaylistEntity>> = TODO()
 
     override fun addPlaylist(entity: PlaylistEntity): Observable<PlaylistEntity> = TODO()
@@ -249,13 +262,17 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
     override fun addPlaylistItem(entity: PlaylistItemEntity): Observable<Boolean> = TODO()
 
     override fun removePlaylistItem(entity: PlaylistItemEntity): Observable<Boolean> = TODO()
+    //endregion
 
+    //region Search History
     override fun insertKeyword(keyword: String): Observable<Boolean> = TODO()
 
     override fun getKeywords(quantity: Int): Observable<List<KeywordEntity>> = TODO()
 
     override fun removeKeywords(keyword: String?): Observable<Boolean> = TODO()
+    //endregion
 
+    //region private
     /**
      * Wrapping the [Observable.create] with [Schedulers.IO].
      *
@@ -274,5 +291,6 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
     private fun <O> observableJustWrapper(data: O): Observable<O> = ObservableJust(data)
 
     private fun MutableMap<String, String>.baseLastFmParams() =
-        apply { putAll(mapOf("api_key" to lastfm_key, "format" to "json")) }
+        apply { putAll(mapOf("api_key" to lastFmKey, "format" to "json")) }
+    //endregion
 }

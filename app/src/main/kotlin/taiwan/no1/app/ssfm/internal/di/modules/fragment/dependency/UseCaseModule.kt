@@ -50,7 +50,7 @@ import javax.inject.Named
  */
 @Module
 class UseCaseModule {
-    // Chart top
+    //region Chart top
     @Provides
     @PerFragment
     fun provideTopArtistsUsecase(dataRepository: DataRepository): BaseUsecase<TopArtistEntity, GetTopArtistsCase.RequestValue> =
@@ -65,8 +65,9 @@ class UseCaseModule {
     @PerFragment
     fun provideTopTagsUsecase(dataRepository: DataRepository): BaseUsecase<TopTagEntity, GetTopTagsCase.RequestValue> =
         GetTopTagsCase(dataRepository)
+    //endregion
 
-    // Artist
+    //region Artist
     @Provides
     @PerFragment
     fun provideArtistInfoUsecase(dataRepository: DataRepository): BaseUsecase<ArtistEntity, GetArtistInfoCase.RequestValue> =
@@ -81,14 +82,16 @@ class UseCaseModule {
     @PerFragment
     fun provideArtistTopTrackUsecase(dataRepository: DataRepository): BaseUsecase<ArtistTopTrackEntity, GetArtistTopTracksCase.RequestValue> =
         GetArtistTopTracksCase(dataRepository)
+    //endregion
 
-    // Album
+    //region Album
     @Provides
     @PerFragment
     fun provideAlbumInfoUsecase(dataRepository: DataRepository): BaseUsecase<AlbumEntity, GetAlbumInfoCase.RequestValue> =
         GetAlbumInfoCase(dataRepository)
+    //endregion
 
-    // Tag
+    //region Tag
     @Provides
     @PerFragment
     fun provideTagInfoUsecase(dataRepository: DataRepository): BaseUsecase<TagEntity, GetTagInfoCase.RequestValue> =
@@ -108,8 +111,9 @@ class UseCaseModule {
     @PerFragment
     fun provideTagTopTrackUsecase(dataRepository: DataRepository): BaseUsecase<TopTrackEntity, GetTagTopTracksCase.RequestValue> =
         GetTagTopTracksCase(dataRepository)
+    //endregion
 
-    // Search music
+    //region Search music
     @Provides
     @PerFragment
     fun provideGetUsecase(dataRepository: DataRepository): BaseUsecase<List<KeywordEntity>, GetKeywordHistoriesCase.RequestValue> =
@@ -124,8 +128,9 @@ class UseCaseModule {
     @PerFragment
     fun provideGetDetailMusicUsecase(dataRepository: DataRepository): BaseUsecase<DetailMusicEntity, GetDetailMusicCase.RequestValue> =
         GetDetailMusicCase(dataRepository)
+    // endregion
 
-    // For Database
+    //region For Database
     @Provides
     @PerFragment
     fun provideDeleteUsecase(dataRepository: DataRepository): BaseUsecase<Boolean, RemoveKeywordHistoriesCase.RequestValue> =
@@ -169,4 +174,5 @@ class UseCaseModule {
     @Named("edit_playlist")
     fun provideEditPlaylistUsecase(dataRepository: DataRepository): BaseUsecase<Boolean, AddPlaylistUsecase.RequestValue> =
         EditPlaylistUsecase(dataRepository)
+    //endregion
 }
