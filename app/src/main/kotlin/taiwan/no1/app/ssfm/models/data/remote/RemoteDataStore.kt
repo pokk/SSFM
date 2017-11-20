@@ -11,6 +11,7 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.internal.di.components.NetComponent
 import taiwan.no1.app.ssfm.models.data.IDataStore
 import taiwan.no1.app.ssfm.models.data.remote.services.MusicServices
+import taiwan.no1.app.ssfm.models.data.remote.services.v2.MusicV2Service
 import taiwan.no1.app.ssfm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
@@ -28,6 +29,10 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.TopArtistEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.TopTagEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.TopTrackEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.TrackSimilarEntity
+import taiwan.no1.app.ssfm.models.entities.v2.HotPlaylistEntity
+import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
+import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
+import taiwan.no1.app.ssfm.models.entities.v2.SongListEntity
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -45,6 +50,8 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
     lateinit var musicService2: Lazy<MusicServices>
     @field:[Inject Named("music3")]
     lateinit var musicService3: Lazy<MusicServices>
+    @field:[Inject Named("music4")]
+    lateinit var musicV2Service: Lazy<MusicV2Service>
 
     private val lastfm_key by lazy { context.getString(R.string.lastfm_api_key) }
     private val lastfm_secret by lazy { context.getString(R.string.lastfm_secret_key) }
@@ -76,8 +83,34 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
         return musicService2.get().getMusic(query)
     }
 
-    override fun obtainSession(user: String, pwd: String): Observable<Any> = TODO()
-//        ObservableJust(Authenticator.getMobileSession(user, pwd, lastfm_key, lastfm_secret))
+    override fun searchMusic(keyword: String, page: Int, lang: String): Observable<MusicEntity> {
+        val query =
+            mapOf(context.getString(R.string.s_pair1) to page.toString(),
+                context.getString(R.string.s_pair2) to keyword,
+                context.getString(R.string.s_pair3) to context.getString(R.string.s_pair4),
+                context.getString(R.string.s_pair5) to context.getString(R.string.s_pair6),
+                context.getString(R.string.s_pair7) to "en")
+
+        return musicV2Service.get().searchMusic(query)
+    }
+
+    override fun fetchRankMusic(rankType: Int): Observable<MusicRankEntity> {
+        val query = mapOf(context.getString(R.string.r_pair1) to rankType.toString())
+
+        return musicV2Service.get().musicRanking(query)
+    }
+
+    override fun fetchHotPlaylist(page: Int): Observable<HotPlaylistEntity> {
+        val query = mapOf(context.getString(R.string.s_pair1) to page.toString())
+
+        return musicV2Service.get().hotPlaylist(query)
+    }
+
+    override fun fetchPlaylistDetail(id: String): Observable<SongListEntity> {
+        val query = mapOf(context.getString(R.string.b_pair1) to id)
+
+        return musicV2Service.get().playlistDetail(query)
+    }
 
     override fun getChartTopArtist(page: Int, limit: Int): Observable<TopArtistEntity> {
         val query =
@@ -218,23 +251,6 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
     override fun addPlaylistItem(entity: PlaylistItemEntity): Observable<Boolean> = TODO()
 
     override fun removePlaylistItem(entity: PlaylistItemEntity): Observable<Boolean> = TODO()
-
-    override fun getLovedTracks(user: String, page: Int): Observable<Any> = TODO()
-//        ObservableJust(User.getLovedTracks(user, page, lastfm_key).pageResults)
-
-    override fun loveTrack(artist: String, track: String, session: Any): Observable<Any> = TODO()
-//        observableCreateWrapper {
-//            val res = Track.love(artist, track, session)
-//
-//            // TODO: 6/4/17 Add that return next, error, or complete which depend on result's status.
-//        }
-
-    override fun unloveTrack(artist: String, track: String, session: Any): Observable<Any> = TODO()
-//        observableCreateWrapper {
-//            val res = Track.unlove(artist, track, session)
-//
-//            // TODO: 6/4/17 Add that return next, error, or complete which depend on result's status.
-//        }
 
     override fun insertKeyword(keyword: String): Observable<Boolean> = TODO()
 

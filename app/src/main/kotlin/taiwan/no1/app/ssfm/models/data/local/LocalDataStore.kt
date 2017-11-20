@@ -36,7 +36,13 @@ class LocalDataStore : IDataStore {
 
     override fun getDetailMusicRes(hash: String) = TODO("Local database has no session...")
 
-    override fun obtainSession(user: String, pwd: String) = TODO("Local database has no session...")
+    override fun searchMusic(keyword: String, page: Int, lang: String) = TODO()
+
+    override fun fetchRankMusic(rankType: Int) = TODO()
+
+    override fun fetchHotPlaylist(page: Int) = TODO()
+
+    override fun fetchPlaylistDetail(id: String) = TODO()
 
     override fun getChartTopArtist(page: Int, limit: Int) = TODO()
 
@@ -90,12 +96,6 @@ class LocalDataStore : IDataStore {
     override fun addPlaylistItem(entity: PlaylistItemEntity) = entity.save().toObservable()
 
     override fun removePlaylistItem(entity: PlaylistItemEntity) = entity.delete().toObservable()
-
-    override fun getLovedTracks(user: String, page: Int) = TODO()
-
-    override fun loveTrack(artist: String, track: String, session: Any) = TODO()
-
-    override fun unloveTrack(artist: String, track: String, session: Any) = TODO()
 
     override fun insertKeyword(keyword: String) =
         (select from KeywordEntity::class where (KeywordEntity_Table.keyword eq keyword)).rx().list.

@@ -18,12 +18,18 @@ import javax.inject.Singleton
 @Singleton
 class DataRepository @Inject constructor(@Local private var local: IDataStore,
                                          @Remote private var remote: IDataStore) : IDataStore {
-    override fun obtainSession(user: String, pwd: String) = remote.obtainSession(user, pwd)
-
     override fun getSearchMusicRes(keyword: String, page: Int, pageSize: Int) =
         remote.getSearchMusicRes(keyword, page, pageSize)
 
     override fun getDetailMusicRes(hash: String) = remote.getDetailMusicRes(hash)
+
+    override fun searchMusic(keyword: String, page: Int, lang: String) = remote.searchMusic(keyword, page, lang)
+
+    override fun fetchRankMusic(rankType: Int) = remote.fetchRankMusic(rankType)
+
+    override fun fetchHotPlaylist(page: Int) = remote.fetchHotPlaylist(page)
+
+    override fun fetchPlaylistDetail(id: String) = remote.fetchPlaylistDetail(id)
 
     override fun getChartTopArtist(page: Int, limit: Int) = remote.getChartTopArtist(page, limit)
 
@@ -77,17 +83,6 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
     override fun addPlaylistItem(entity: PlaylistItemEntity) = local.addPlaylistItem(entity)
 
     override fun removePlaylistItem(entity: PlaylistItemEntity) = local.removePlaylistItem(entity)
-
-    override fun getLovedTracks(user: String, page: Int) = remote.getLovedTracks(user, page)
-
-    override fun loveTrack(artist: String, track: String, session: Any) = remote.loveTrack(artist,
-        track,
-        session)
-
-    override fun unloveTrack(artist: String, track: String, session: Any) = remote.unloveTrack(
-        artist,
-        track,
-        session)
 
     override fun insertKeyword(keyword: String) = local.insertKeyword(keyword)
 

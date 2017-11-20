@@ -19,6 +19,10 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.TopArtistEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.TopTagEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.TopTrackEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.TrackSimilarEntity
+import taiwan.no1.app.ssfm.models.entities.v2.HotPlaylistEntity
+import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
+import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
+import taiwan.no1.app.ssfm.models.entities.v2.SongListEntity
 
 /**
  * Interface that represents a data store from where data is retrieved.
@@ -27,6 +31,7 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.TrackSimilarEntity
  * @since   5/10/17
  */
 interface IDataStore {
+    //region V1
     /**
      * Retrieve the musics or the artists information by the keyword.
      *
@@ -44,16 +49,17 @@ interface IDataStore {
      * @return      the result of [DetailMusicEntity]
      */
     fun getDetailMusicRes(hash: String): Observable<DetailMusicEntity>
+    //endregion
 
-    /**
-     * Retrieve the user session(This session's expired date is no limitation).
-     *
-     * @param user  user name.
-     * @param pwd   user password.
-     * @return      The user session.
-     */
-    // NOTE: 5/13/17 We should keep the 'Session' and 'UserName' in the shared preferences.
-    fun obtainSession(user: String, pwd: String): Observable<Any>
+    //region V2
+    fun searchMusic(keyword: String, page: Int = 0, lang: String = ""): Observable<MusicEntity>
+
+    fun fetchRankMusic(rankType: Int = 0): Observable<MusicRankEntity>
+
+    fun fetchHotPlaylist(page: Int = 0): Observable<HotPlaylistEntity>
+
+    fun fetchPlaylistDetail(id: String = ""): Observable<SongListEntity>
+    //endregion
 
     //region Chart
     fun getChartTopArtist(page: Int = 1, limit: Int = 20): Observable<TopArtistEntity>
@@ -112,12 +118,6 @@ interface IDataStore {
 
     fun removePlaylistItem(entity: PlaylistItemEntity): Observable<Boolean>
     //endregion
-
-    fun getLovedTracks(user: String, page: Int = 1): Observable<Any>
-
-    fun loveTrack(artist: String, track: String, session: Any): Observable<Any>
-
-    fun unloveTrack(artist: String, track: String, session: Any): Observable<Any>
 
     //region Search History
     fun insertKeyword(keyword: String): Observable<Boolean>

@@ -14,6 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.Network
 import taiwan.no1.app.ssfm.models.data.remote.RestfulApiFactory
 import taiwan.no1.app.ssfm.models.data.remote.services.MusicServices
+import taiwan.no1.app.ssfm.models.data.remote.services.v2.MusicV2Service
 import javax.inject.Named
 
 /**
@@ -93,5 +94,15 @@ class NetModule {
             baseUrl(restfulApiFactory.createMusic3Config().getApiBaseUrl())
             build()
         }.create(MusicServices::class.java)
+
+    @Provides
+    @Network
+    @Named("music4")
+    fun provideRetrofit2_4(baseBuilder: Retrofit.Builder,
+                           restfulApiFactory: RestfulApiFactory): MusicV2Service =
+        with(baseBuilder) {
+            baseUrl(restfulApiFactory.createMusic4Config().getApiBaseUrl())
+            build()
+        }.create(MusicV2Service::class.java)
     //endregion
 }

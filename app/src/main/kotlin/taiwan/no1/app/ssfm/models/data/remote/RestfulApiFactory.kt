@@ -5,6 +5,7 @@ import taiwan.no1.app.ssfm.models.data.remote.config.IApiConfig
 import taiwan.no1.app.ssfm.models.data.remote.config.Music1Config
 import taiwan.no1.app.ssfm.models.data.remote.config.Music2Config
 import taiwan.no1.app.ssfm.models.data.remote.config.Music3Config
+import taiwan.no1.app.ssfm.models.data.remote.config.Music4Config
 import javax.inject.Inject
 
 /**
@@ -35,4 +36,11 @@ class RestfulApiFactory @Inject constructor() {
      * @return Music http service config.
      */
     fun createMusic3Config(): IApiConfig = Music3Config()
+
+    /**
+     * Create a new http service configuration.
+     *
+     * @return Music http service config.
+     */
+    fun createMusic4Config(): IApiConfig = Music4Config()
 }

@@ -17,4 +17,49 @@
         <item>Charts</item>
         <item>Settings</item>
     </string-array>
+
+    <!-- For Music Code -->
+    <integer-array name="TypeCode">
+        <item>30002</item>
+        <item>30001</item>
+        <item>30004</item>
+        <item>30005</item>
+        <item>30006</item>
+        <item>30007</item>
+        <item>30008</item>
+        <item>30009</item>
+        <item>30010</item>
+        <item>30011</item>
+        <item>30013</item>
+        <item>30014</item>
+        <item>30012</item>
+        <item>30015</item>
+        <item>30016</item>
+        <item>31000</item>
+        <item>31001</item>
+        <item>31002</item>
+        <item>31003</item>
+    </integer-array>
+
+    <string-array name="TypeCodeName">
+        <item>Hito-Chinese</item>
+        <item>Billboard charts</item>
+        <item>UK charts</item>
+        <item>Oricon Japan charts</item>
+        <item>Korea M-net charts</item>
+        <item>Channel V Chinese</item>
+        <item>Channel V US, UK</item>
+        <item>Channel V JP, KOR</item>
+        <item>Chinese single song</item>
+        <item> </item>
+        <item>Chinese TOP(HK, TW)</item>
+        <item>Chinese TOP(China)</item>
+        <item>HK charts</item>
+        <item>China Hip-Pop charts</item>
+        <item>Beatport Electronics</item>
+        <item>Chinese</item>
+        <item>US</item>
+        <item>Japanese</item>
+        <item>Korean</item>
+    </string-array>
 </resources>
