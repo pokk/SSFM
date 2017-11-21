@@ -3,13 +3,13 @@ package taiwan.no1.app.ssfm.models.usecases
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.models.data.IDataStore
 import taiwan.no1.app.ssfm.models.entities.lastfm.TagEntity
+import taiwan.no1.app.ssfm.models.usecases.GetTagInfoCase.RequestValue
 
 /**
  * @author  jieyi
  * @since   11/5/17
  */
-class GetTagInfoCase(repository: IDataStore) : BaseUsecase<TagEntity, GetTagInfoCase.RequestValue>(
-    repository) {
+class GetTagInfoCase(repository: IDataStore) : BaseUsecase<TagEntity, RequestValue>(repository) {
     override fun fetchUsecase(): Observable<TagEntity> =
         (parameters ?: RequestValue()).let { repository.getTagInfo(it.tag) }
 

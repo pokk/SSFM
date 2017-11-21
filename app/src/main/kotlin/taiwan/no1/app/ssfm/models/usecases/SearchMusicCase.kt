@@ -4,6 +4,7 @@ import io.reactivex.Observable
 import taiwan.no1.app.ssfm.misc.constants.Constant
 import taiwan.no1.app.ssfm.models.data.IDataStore
 import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity
+import taiwan.no1.app.ssfm.models.usecases.SearchMusicCase.RequestValue
 
 /**
  * A usecase for searching the music by the song's or the singer's name.
@@ -11,12 +12,9 @@ import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity
  * @author  jieyi
  * @since   8/14/17
  */
-class SearchMusicCase(repository: IDataStore) : BaseUsecase<SearchMusicEntity, SearchMusicCase.RequestValue>(
-    repository) {
+class SearchMusicCase(repository: IDataStore) : BaseUsecase<SearchMusicEntity, RequestValue>(repository) {
     override fun fetchUsecase(): Observable<SearchMusicEntity> =
-        (parameters ?: RequestValue()).let {
-            repository.getSearchMusicRes(it.singerOrSongName, it.page, it.pageSize)
-        }
+        (parameters ?: RequestValue()).let { repository.getSearchMusicRes(it.singerOrSongName, it.page, it.pageSize) }
 
     data class RequestValue(val singerOrSongName: String = "",
                             val page: Int = 1,

@@ -2,13 +2,13 @@ package taiwan.no1.app.ssfm.models.usecases
 
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.models.data.IDataStore
+import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemUsecase.RequestValue
 
 /**
  * @author  jieyi
  * @since   11/8/17
  */
-class RemovePlaylistItemUsecase(repository: IDataStore) :
-    BaseUsecase<Boolean, AddPlaylistItemUsecase.RequestValue>(repository) {
+class RemovePlaylistItemUsecase(repository: IDataStore) : BaseUsecase<Boolean, RequestValue>(repository) {
     override fun fetchUsecase(): Observable<Boolean> =
-        (parameters ?: AddPlaylistItemUsecase.RequestValue()).let { repository.removePlaylistItem(it.entity) }
+        (parameters ?: RequestValue()).let { repository.removePlaylistItem(it.entity) }
 }
