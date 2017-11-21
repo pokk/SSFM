@@ -1,7 +1,6 @@
 package taiwan.no1.app.ssfm.internal.di.modules
 
 import android.content.Context
-import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -37,7 +36,7 @@ class NetModule {
     @Provides
     @Network
     fun provideGson() = with(GsonBuilder()) {
-        setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        //        setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         setLenient()
         create()
     }
