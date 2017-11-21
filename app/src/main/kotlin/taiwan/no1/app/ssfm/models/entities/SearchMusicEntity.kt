@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
  * @author jieyi
  * @since 5/20/17
  */
-
+@Deprecated("There is a better api for searching a music, please check v2")
 data class SearchMusicEntity(var status: Int = 0,
                              var error: String? = null,
                              var data: DataBean? = null,

@@ -30,9 +30,11 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.TrackSimilarEntity
  */
 interface MusicServices {
     @GET(Music1Config.API_REQUEST)
+    @Deprecated("There is a better api for searching a music, please check v2")
     fun searchMusic(@QueryMap queries: Map<String, String>): Observable<SearchMusicEntity>
 
     @GET(Music2Config.API_REQUEST)
+    @Deprecated("There is a better api for searching a music, please check v2")
     fun getMusic(@QueryMap queries: Map<String, String>): Observable<DetailMusicEntity>
 
     // Album

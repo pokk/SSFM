@@ -38,6 +38,7 @@ interface IDataStore {
      * @hashCode keyword   keyword of the music or the artist.
      * @return          the result of [SearchMusicEntity]
      */
+    @Deprecated("There is a better api for searching a music, please check v2")
     fun getSearchMusicRes(keyword: String,
                           page: Int = 1,
                           pageSize: Int = Constant.QUERY_PAGE_SIZE): Observable<SearchMusicEntity>
@@ -48,6 +49,7 @@ interface IDataStore {
      * @hashCode hash  the hash code of a music.
      * @return      the result of [DetailMusicEntity]
      */
+    @Deprecated("There is a better api for searching a music, please check v2")
     fun getDetailMusicRes(hash: String): Observable<DetailMusicEntity>
     //endregion
 

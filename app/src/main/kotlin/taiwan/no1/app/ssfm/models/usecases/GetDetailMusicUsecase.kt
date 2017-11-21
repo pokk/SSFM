@@ -11,6 +11,7 @@ import taiwan.no1.app.ssfm.models.usecases.GetDetailMusicUsecase.RequestValue
  * @author  jieyi
  * @since   8/14/17
  */
+@Deprecated("There is a better api for searching a music, please check v2")
 class GetDetailMusicUsecase(repository: IDataStore) : BaseUsecase<DetailMusicEntity, RequestValue>(repository) {
     override fun fetchUsecase(): Observable<DetailMusicEntity> =
         (parameters ?: RequestValue()).let { repository.getDetailMusicRes(it.hashCode) }

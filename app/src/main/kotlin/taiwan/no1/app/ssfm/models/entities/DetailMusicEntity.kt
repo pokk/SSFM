@@ -14,6 +14,7 @@ import java.sql.Date
  * @author jieyi
  * @since 5/22/17
  */
+@Deprecated("There is a better api for searching a music, please check v2")
 data class DetailMusicEntity(var status: Int = 0,
                              var err_code: Int = 0,
                              var data: DataBean? = null) {
