@@ -62,7 +62,8 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
                 override fun loadMoreEvent(recyclerView: RecyclerView, total: Int) {
                     if (resInfo.canLoadMoreFlag && !resInfo.isLoading) {
                         resInfo.isLoading = true
-                        viewModel.sendSearchRequest(keyword, resultCallback = updateListInfo)
+                        // OPTIMIZE(jieyi): 11/21/17 Modify the page constant.
+                        viewModel.sendSearchRequest(keyword, res.size / 10, updateListInfo)
                     }
                 }
             }
