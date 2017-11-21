@@ -4,29 +4,24 @@ import android.content.Context
 import android.databinding.BaseObservable
 import android.databinding.ObservableField
 import android.view.View
-import com.devrapid.kotlinknifer.toTimeString
 import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayer
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
-import taiwan.no1.app.ssfm.models.usecases.FetchMusicDetailCase
 
 /**
  * @author  jieyi
  * @since   9/20/17
  */
 class RecyclerViewSearchMusicResultViewModel(private val res: BaseEntity,
-                                             private val context: Context,
-                                             private val getDetailMusicCase: FetchMusicDetailCase) : BaseObservable() {
+                                             private val context: Context) : BaseObservable() {
     val songName by lazy { ObservableField<String>() }
     val singerName by lazy { ObservableField<String>() }
-    val duration by lazy { ObservableField<String>() }
     val coverUrl by lazy { ObservableField<String>() }
 
     init {
         (res as MusicEntity.Music).let {
             songName.set(it.title)
             singerName.set(it.artist)
-            duration.set(0.toTimeString())
             coverUrl.set(it.coverURL)
         }
     }

@@ -2,7 +2,6 @@ package taiwan.no1.app.ssfm.functions.search
 
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
-import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchResultBinding
 import taiwan.no1.app.ssfm.databinding.ItemSearchMusicType1Binding
@@ -13,7 +12,6 @@ import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
-import taiwan.no1.app.ssfm.models.usecases.FetchMusicDetailCase
 import javax.inject.Inject
 
 /**
@@ -35,7 +33,6 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
     //endregion
 
     @Inject override lateinit var viewModel: SearchResultFragmentViewModel
-    @Inject lateinit var usecase: FetchMusicDetailCase
     var keyword: String = ""
     private var res = mutableListOf<BaseEntity>()
     private val resInfo by lazy { DataInfo() }
@@ -56,7 +53,7 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
             layoutManager = WrapContentLinearLayoutManager(activity)
             adapter = BaseDataBindingAdapter<ItemSearchMusicType1Binding, BaseEntity>(R.layout.item_search_music_type_1,
                 res) { holder, item ->
-                holder.binding.avm = RecyclerViewSearchMusicResultViewModel(item, activity.applicationContext, usecase)
+                holder.binding.avm = RecyclerViewSearchMusicResultViewModel(item, activity.applicationContext)
             }
             loadmore = object : RecyclerViewScrollCallback {
                 override fun loadMoreEvent(recyclerView: RecyclerView, total: Int) {
@@ -79,7 +76,6 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
      */
     private val updateListInfo = { keyword: String, musics: MutableList<MusicEntity.Music>, canLoadMore: Boolean ->
         this.keyword = keyword
-        logw(musics)
         res = (binding?.adapter as BaseDataBindingAdapter<ItemSearchMusicType1Binding, BaseEntity>).
             refresh(res, ArrayList(res).apply { addAll(musics) }).toMutableList()
         // TODO(jieyi): 9/28/17 Close the loading item or view.

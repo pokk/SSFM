@@ -149,6 +149,7 @@ dependencies {
     implementation "com.github.Yalantis:GuillotineMenu-Android:1.2"
     implementation "com.borjabravo:readmoretextview:2.0.1"
     implementation "me.gujun.android.taggroup:library:1.4@aar"
+    implementation "com.sdsmdg.harjot:materialshadows:1.2.5"
     //noinspection GradleCompatible
     implementation "com.android.support:appcompat-v7:$android_support_version"
     implementation "com.android.support:palette-v7:$android_support_version"

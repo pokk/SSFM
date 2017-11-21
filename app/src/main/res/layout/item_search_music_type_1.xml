@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools">
 
     <data>
@@ -29,10 +28,12 @@
 
         <TextView
             android:id="@+id/tv_track_name"
-            android:layout_width="261dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/iv_cover"
             android:layout_marginEnd="@dimen/one_unit"
             android:layout_marginStart="@dimen/one_unit"
+            android:layout_marginTop="4dp"
             android:layout_toEndOf="@+id/iv_cover"
             android:layout_toStartOf="@+id/ib_options"
             android:text="@{avm.songName}"
@@ -40,7 +41,7 @@
             tool:text="The Cure"/>
 
         <TextView
-            android:layout_width="264dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/tv_track_name"
             android:layout_alignStart="@+id/tv_track_name"
@@ -49,6 +50,7 @@
             android:layout_marginStart="@dimen/one_unit"
             android:text="@{avm.singerName}"
             android:textColor="@color/colorGray"
+            android:textSize="12sp"
             tool:text="New album"/>
 
 
@@ -65,12 +67,13 @@
 
         <ImageView
             android:id="@+id/iv_cover"
+            style="@style/ImageView.Shadow"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:imageUrl="@{avm.coverUrl}"
             android:layout_centerVertical="true"
             android:layout_marginStart="8dp"
             android:layout_toEndOf="@+id/iv_action"
-            app:srcCompat="@drawable/sample_lady_gaga"/>
+            android:imageUrl="@{avm.coverUrl}"
+            android:src="@drawable/sample_lady_gaga"/>
     </RelativeLayout>
 </layout>
