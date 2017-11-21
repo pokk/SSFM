@@ -11,10 +11,8 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
-import taiwan.no1.app.ssfm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity.InfoBean
-import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.models.usecases.GetDetailMusicCase
+import taiwan.no1.app.ssfm.models.usecases.FetchMusicDetailCase
 import javax.inject.Inject
 
 /**
@@ -36,7 +34,7 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
     //endregion
 
     @Inject override lateinit var viewModel: SearchResultFragmentViewModel
-    @Inject lateinit var usecase: BaseUsecase<DetailMusicEntity, GetDetailMusicCase.RequestValue>
+    @Inject lateinit var usecase: FetchMusicDetailCase
     var keyword: String = ""
     private var res = mutableListOf<InfoBean>()
     private val resInfo by lazy { DataInfo() }

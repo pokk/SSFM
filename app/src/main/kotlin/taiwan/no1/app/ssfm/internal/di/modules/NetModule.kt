@@ -27,15 +27,15 @@ import javax.inject.Named
 class NetModule {
     @Provides
     @Network
-    fun provideConverterGson(gson: Gson): GsonConverterFactory = GsonConverterFactory.create(gson)
+    fun provideConverterGson(gson: Gson) = GsonConverterFactory.create(gson)
 
     @Provides
     @Network
-    fun provideRxJavaCallAdapter(): RxJava2CallAdapterFactory = RxJava2CallAdapterFactory.create()
+    fun provideRxJavaCallAdapter() = RxJava2CallAdapterFactory.create()
 
     @Provides
     @Network
-    fun provideGson(): Gson = with(GsonBuilder()) {
+    fun provideGson() = with(GsonBuilder()) {
         setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         setLenient()
         create()
@@ -43,12 +43,12 @@ class NetModule {
 
     @Provides
     @Network
-    fun provideOkHttpCache(context: Context): Cache = Cache(context.cacheDir,
+    fun provideOkHttpCache(context: Context) = Cache(context.cacheDir,
         10 * 1024 * 1024 /* 10 MiB */)
 
     @Provides
     @Network
-    fun provideOkHttpClient(cache: Cache): OkHttpClient = OkHttpClient.Builder().
+    fun provideOkHttpClient(cache: Cache) = OkHttpClient.Builder().
 //        addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }).
         cache(cache).
         build()
@@ -57,7 +57,7 @@ class NetModule {
     @Network
     fun provideBaseRetrofitBuilder(converter: GsonConverterFactory,
                                    callAdapter: RxJava2CallAdapterFactory,
-                                   okHttpClient: OkHttpClient): Retrofit.Builder =
+                                   okHttpClient: OkHttpClient) =
         Retrofit.Builder().apply {
             addConverterFactory(converter)
             addCallAdapterFactory(callAdapter)
@@ -69,7 +69,7 @@ class NetModule {
     @Network
     @Named("music1")
     fun provideRetrofit2_1(baseBuilder: Retrofit.Builder,
-                           restfulApiFactory: RestfulApiFactory): MusicServices =
+                           restfulApiFactory: RestfulApiFactory) =
         with(baseBuilder) {
             baseUrl(restfulApiFactory.createMusic1Config().getApiBaseUrl())
             build()
@@ -79,7 +79,7 @@ class NetModule {
     @Network
     @Named("music2")
     fun provideRetrofit2_2(baseBuilder: Retrofit.Builder,
-                           restfulApiFactory: RestfulApiFactory): MusicServices =
+                           restfulApiFactory: RestfulApiFactory) =
         with(baseBuilder) {
             baseUrl(restfulApiFactory.createMusic2Config().getApiBaseUrl())
             build()
@@ -89,7 +89,7 @@ class NetModule {
     @Network
     @Named("music3")
     fun provideRetrofit2_3(baseBuilder: Retrofit.Builder,
-                           restfulApiFactory: RestfulApiFactory): MusicServices =
+                           restfulApiFactory: RestfulApiFactory) =
         with(baseBuilder) {
             baseUrl(restfulApiFactory.createMusic3Config().getApiBaseUrl())
             build()
@@ -99,7 +99,7 @@ class NetModule {
     @Network
     @Named("music4")
     fun provideRetrofit2_4(baseBuilder: Retrofit.Builder,
-                           restfulApiFactory: RestfulApiFactory): MusicV2Service =
+                           restfulApiFactory: RestfulApiFactory) =
         with(baseBuilder) {
             baseUrl(restfulApiFactory.createMusic4Config().getApiBaseUrl())
             build()

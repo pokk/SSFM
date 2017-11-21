@@ -4,10 +4,8 @@ import android.content.Context
 import android.databinding.ObservableField
 import android.view.View
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
-import taiwan.no1.app.ssfm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.models.entities.TagEntity
-import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.models.usecases.GetDetailMusicCase
+import taiwan.no1.app.ssfm.models.usecases.FetchMusicDetailCase
 
 /**
  *
@@ -15,7 +13,7 @@ import taiwan.no1.app.ssfm.models.usecases.GetDetailMusicCase
  * @since   5/8/17
  */
 class MainViewModel(private val context: Context,
-                    private val usecase: BaseUsecase<DetailMusicEntity, GetDetailMusicCase.RequestValue>) :
+                    private val usecase: FetchMusicDetailCase) :
     BaseViewModel() {
     private val entity = TagEntity(20, "Jieyi")
 

@@ -6,7 +6,7 @@ import dagger.Provides
 import taiwan.no1.app.ssfm.functions.playlist.PlaylistViewModel
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerActivity
 import taiwan.no1.app.ssfm.models.data.repositories.DataRepository
-import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
+import taiwan.no1.app.ssfm.models.usecases.AddPlaylistCase
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistUsecase
 import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
 
@@ -26,8 +26,7 @@ class PlaylistActivityModule {
      */
     @Provides
     @PerActivity
-    fun provideAddPlaylistUsecase(dataRepository: DataRepository): BaseUsecase<PlaylistEntity, AddPlaylistUsecase.RequestValue> =
-        AddPlaylistUsecase(dataRepository)
+    fun provideAddPlaylistUsecase(dataRepository: DataRepository): AddPlaylistCase = AddPlaylistUsecase(dataRepository)
 
     /**
      * Providing a [PlaylistViewModel] to the [PlaylistActivity].
@@ -37,7 +36,6 @@ class PlaylistActivityModule {
      */
     @Provides
     @PerActivity
-    fun provideViewModel(context: Context,
-                         addPlaylistUsecase: BaseUsecase<PlaylistEntity, AddPlaylistUsecase.RequestValue>): PlaylistViewModel =
+    fun provideViewModel(context: Context, addPlaylistUsecase: AddPlaylistCase) =
         PlaylistViewModel(context, addPlaylistUsecase)
 }

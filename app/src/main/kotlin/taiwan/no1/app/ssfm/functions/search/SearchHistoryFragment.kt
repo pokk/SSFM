@@ -11,8 +11,7 @@ import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
-import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.models.usecases.RemoveKeywordHistoriesCase
+import taiwan.no1.app.ssfm.models.usecases.DeleteSearchHistoryCase
 import javax.inject.Inject
 
 /**
@@ -34,7 +33,7 @@ class SearchHistoryFragment : AdvancedFragment<SearchHistoryFragmentViewModel, F
 
     @Inject override lateinit var viewModel: SearchHistoryFragmentViewModel
     // This usecase is for each items of the recyclerview.
-    @Inject lateinit var deleteUsecase: BaseUsecase<Boolean, RemoveKeywordHistoriesCase.RequestValue>
+    @Inject lateinit var deleteUsecase: DeleteSearchHistoryCase
     private var searchRes = mutableListOf<BaseEntity>()
 
     //region Fragment lifecycle

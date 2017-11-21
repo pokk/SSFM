@@ -6,10 +6,9 @@ import android.databinding.ObservableField
 import android.view.View
 import com.devrapid.kotlinknifer.toTimeString
 import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayer
-import taiwan.no1.app.ssfm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity.InfoBean
-import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.models.usecases.GetDetailMusicCase
+import taiwan.no1.app.ssfm.models.usecases.FetchMusicDetailCase
+import taiwan.no1.app.ssfm.models.usecases.GetDetailMusicUsecase
 
 /**
  * @author  jieyi
@@ -17,7 +16,7 @@ import taiwan.no1.app.ssfm.models.usecases.GetDetailMusicCase
  */
 class RecyclerViewSearchMusicResultViewModel(private val res: InfoBean,
                                              private val context: Context,
-                                             private val getDetailMusicCase: BaseUsecase<DetailMusicEntity, GetDetailMusicCase.RequestValue>) :
+                                             private val getDetailMusicCase: FetchMusicDetailCase) :
     BaseObservable() {
     val songName by lazy { ObservableField<String>(res.songname ?: "") }
     val singerName by lazy { ObservableField<String>(res.singername ?: "") }
@@ -26,7 +25,7 @@ class RecyclerViewSearchMusicResultViewModel(private val res: InfoBean,
     //region Action from View
     fun playOrStopMusicClick(view: View) {
         res.`_$320hash`?.let {
-            getDetailMusicCase.execute(GetDetailMusicCase.RequestValue(it)) {
+            getDetailMusicCase.execute(GetDetailMusicUsecase.RequestValue(it)) {
                 onNext {
                     val player = MusicPlayer.instance
                     if (player.isPlaying()) player.stop()

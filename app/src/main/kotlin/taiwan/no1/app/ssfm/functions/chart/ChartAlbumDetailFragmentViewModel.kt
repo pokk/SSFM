@@ -6,17 +6,17 @@ import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.EXTRA_LARGE
 import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.models.entities.lastfm.AlbumEntity
-import taiwan.no1.app.ssfm.models.entities.lastfm.ArtistEntity
-import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.models.usecases.GetAlbumInfoCase
-import taiwan.no1.app.ssfm.models.usecases.GetArtistInfoCase
+import taiwan.no1.app.ssfm.models.usecases.FetchAlbumInfoCase
+import taiwan.no1.app.ssfm.models.usecases.FetchArtistInfoCase
+import taiwan.no1.app.ssfm.models.usecases.GetAlbumInfoUsecase
+import taiwan.no1.app.ssfm.models.usecases.GetArtistInfoUsecase
 
 /**
  * @author  jieyi
  * @since   8/20/17
  */
-class ChartAlbumDetailFragmentViewModel(private val albumInfoCase: BaseUsecase<AlbumEntity, GetAlbumInfoCase.RequestValue>,
-                                        private val artistInfoCase: BaseUsecase<ArtistEntity, GetArtistInfoCase.RequestValue>) :
+class ChartAlbumDetailFragmentViewModel(private val albumInfoCase: FetchAlbumInfoCase,
+                                        private val artistInfoCase: FetchArtistInfoCase) :
     BaseViewModel() {
     val artistImage by lazy { ObservableField<String>() }
     val artistName by lazy { ObservableField<String>() }
@@ -29,7 +29,7 @@ class ChartAlbumDetailFragmentViewModel(private val albumInfoCase: BaseUsecase<A
                         artistName: String,
                         callback: (albumDetailCallback: AlbumEntity.Album) -> Unit) {
         lifecycleProvider.execute(albumInfoCase,
-            GetAlbumInfoCase.RequestValue(artistName, albumName)) {
+            GetAlbumInfoUsecase.RequestValue(artistName, albumName)) {
             onNext {
                 this@ChartAlbumDetailFragmentViewModel.albumName.set(it.album?.name ?: "")
                 albumSummary.set(it.album?.wiki?.content ?: "")
@@ -39,7 +39,7 @@ class ChartAlbumDetailFragmentViewModel(private val albumInfoCase: BaseUsecase<A
             }
         }
 
-        lifecycleProvider.execute(artistInfoCase, GetArtistInfoCase.RequestValue(artistName)) {
+        lifecycleProvider.execute(artistInfoCase, GetArtistInfoUsecase.RequestValue(artistName)) {
             onNext {
                 this@ChartAlbumDetailFragmentViewModel.artistName.set(artistName)
                 it.artist?.images?.get(EXTRA_LARGE)?.text.let { artistImage.set(it) }

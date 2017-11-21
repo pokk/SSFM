@@ -21,5 +21,5 @@ class PreferenceActivityModule {
      */
     @Provides
     @PerActivity
-    fun provideViewModel(context: Context): PreferenceViewModel = PreferenceViewModel(context)
+    fun provideViewModel(context: Context) = PreferenceViewModel(context)
 }

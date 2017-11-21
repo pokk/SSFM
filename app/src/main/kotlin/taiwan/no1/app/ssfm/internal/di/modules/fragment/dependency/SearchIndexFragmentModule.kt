@@ -4,11 +4,8 @@ import dagger.Module
 import dagger.Provides
 import taiwan.no1.app.ssfm.functions.search.SearchIndexFragmentViewModel
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerFragment
-import taiwan.no1.app.ssfm.models.entities.lastfm.TopArtistEntity
-import taiwan.no1.app.ssfm.models.entities.lastfm.TopTrackEntity
-import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.models.usecases.GetTopArtistsCase
-import taiwan.no1.app.ssfm.models.usecases.GetTopTracksCase
+import taiwan.no1.app.ssfm.models.usecases.FetchTopArtistCase
+import taiwan.no1.app.ssfm.models.usecases.FetchTopTrackCase
 
 /**
  * A base component upon which fragment's components may depend. Activity-level components should extend this component.
@@ -20,7 +17,6 @@ import taiwan.no1.app.ssfm.models.usecases.GetTopTracksCase
 class SearchIndexFragmentModule {
     @Provides
     @PerFragment
-    fun provideViewModel(topArtistsUsecase: BaseUsecase<TopArtistEntity, GetTopArtistsCase.RequestValue>,
-                         topTracksUsecase: BaseUsecase<TopTrackEntity, GetTopTracksCase.RequestValue>):
-        SearchIndexFragmentViewModel = SearchIndexFragmentViewModel(topArtistsUsecase, topTracksUsecase)
+    fun provideViewModel(topArtistsUsecase: FetchTopArtistCase, topTracksUsecase: FetchTopTrackCase) =
+        SearchIndexFragmentViewModel(topArtistsUsecase, topTracksUsecase)
 }

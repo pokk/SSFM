@@ -4,51 +4,57 @@ import dagger.Module
 import dagger.Provides
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerFragment
 import taiwan.no1.app.ssfm.models.data.repositories.DataRepository
-import taiwan.no1.app.ssfm.models.entities.DetailMusicEntity
-import taiwan.no1.app.ssfm.models.entities.KeywordEntity
-import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
-import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
-import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity
-import taiwan.no1.app.ssfm.models.entities.lastfm.AlbumEntity
-import taiwan.no1.app.ssfm.models.entities.lastfm.ArtistEntity
-import taiwan.no1.app.ssfm.models.entities.lastfm.ArtistTopAlbumEntity
-import taiwan.no1.app.ssfm.models.entities.lastfm.ArtistTopTrackEntity
-import taiwan.no1.app.ssfm.models.entities.lastfm.TagEntity
-import taiwan.no1.app.ssfm.models.entities.lastfm.TagTopArtistEntity
-import taiwan.no1.app.ssfm.models.entities.lastfm.TopAlbumEntity
-import taiwan.no1.app.ssfm.models.entities.lastfm.TopArtistEntity
-import taiwan.no1.app.ssfm.models.entities.lastfm.TopTagEntity
-import taiwan.no1.app.ssfm.models.entities.lastfm.TopTrackEntity
-import taiwan.no1.app.ssfm.models.entities.v2.HotPlaylistEntity
-import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
-import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
-import taiwan.no1.app.ssfm.models.entities.v2.SongListEntity
+import taiwan.no1.app.ssfm.models.usecases.AddPlaylistCase
+import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemUsecase
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistUsecase
-import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
+import taiwan.no1.app.ssfm.models.usecases.DeleteSearchHistoryCase
+import taiwan.no1.app.ssfm.models.usecases.EditPlaylistCase
 import taiwan.no1.app.ssfm.models.usecases.EditPlaylistUsecase
-import taiwan.no1.app.ssfm.models.usecases.GetAlbumInfoCase
-import taiwan.no1.app.ssfm.models.usecases.GetArtistInfoCase
-import taiwan.no1.app.ssfm.models.usecases.GetArtistTopAlbumsCase
-import taiwan.no1.app.ssfm.models.usecases.GetArtistTopTracksCase
-import taiwan.no1.app.ssfm.models.usecases.GetDetailMusicCase
-import taiwan.no1.app.ssfm.models.usecases.GetKeywordHistoriesCase
+import taiwan.no1.app.ssfm.models.usecases.FetchAlbumInfoCase
+import taiwan.no1.app.ssfm.models.usecases.FetchArtistInfoCase
+import taiwan.no1.app.ssfm.models.usecases.FetchHotPlaylistCase
+import taiwan.no1.app.ssfm.models.usecases.FetchMusicDetailCase
+import taiwan.no1.app.ssfm.models.usecases.FetchMusicRankCase
+import taiwan.no1.app.ssfm.models.usecases.FetchPlaylistCase
+import taiwan.no1.app.ssfm.models.usecases.FetchPlaylistDetailCase
+import taiwan.no1.app.ssfm.models.usecases.FetchPlaylistItemCase
+import taiwan.no1.app.ssfm.models.usecases.FetchSearchHistoryCase
+import taiwan.no1.app.ssfm.models.usecases.FetchTagInfoCase
+import taiwan.no1.app.ssfm.models.usecases.FetchTopAlbumOfArtistCase
+import taiwan.no1.app.ssfm.models.usecases.FetchTopAlbumOfTagCase
+import taiwan.no1.app.ssfm.models.usecases.FetchTopArtistCase
+import taiwan.no1.app.ssfm.models.usecases.FetchTopArtistOfTagCase
+import taiwan.no1.app.ssfm.models.usecases.FetchTopTagCase
+import taiwan.no1.app.ssfm.models.usecases.FetchTopTrackCase
+import taiwan.no1.app.ssfm.models.usecases.FetchTopTrackOfArtistCase
+import taiwan.no1.app.ssfm.models.usecases.FetchTopTrackOfTagCase
+import taiwan.no1.app.ssfm.models.usecases.GetAlbumInfoUsecase
+import taiwan.no1.app.ssfm.models.usecases.GetArtistInfoUsecase
+import taiwan.no1.app.ssfm.models.usecases.GetArtistTopAlbumsUsecase
+import taiwan.no1.app.ssfm.models.usecases.GetArtistTopTracksUsecase
+import taiwan.no1.app.ssfm.models.usecases.GetDetailMusicUsecase
+import taiwan.no1.app.ssfm.models.usecases.GetKeywordHistoriesUsecase
 import taiwan.no1.app.ssfm.models.usecases.GetPlaylistItemsUsecase
 import taiwan.no1.app.ssfm.models.usecases.GetPlaylistsUsecase
-import taiwan.no1.app.ssfm.models.usecases.GetTagInfoCase
-import taiwan.no1.app.ssfm.models.usecases.GetTagTopAlbumsCase
-import taiwan.no1.app.ssfm.models.usecases.GetTagTopArtistsCase
-import taiwan.no1.app.ssfm.models.usecases.GetTagTopTracksCase
-import taiwan.no1.app.ssfm.models.usecases.GetTopArtistsCase
-import taiwan.no1.app.ssfm.models.usecases.GetTopTagsCase
-import taiwan.no1.app.ssfm.models.usecases.GetTopTracksCase
-import taiwan.no1.app.ssfm.models.usecases.RemoveKeywordHistoriesCase
+import taiwan.no1.app.ssfm.models.usecases.GetTagInfoUsecase
+import taiwan.no1.app.ssfm.models.usecases.GetTagTopAlbumsUsecase
+import taiwan.no1.app.ssfm.models.usecases.GetTagTopArtistsUsecase
+import taiwan.no1.app.ssfm.models.usecases.GetTagTopTracksUsecase
+import taiwan.no1.app.ssfm.models.usecases.GetTopArtistsUsecase
+import taiwan.no1.app.ssfm.models.usecases.GetTopTagsUsecase
+import taiwan.no1.app.ssfm.models.usecases.GetTopTracksUsecase
+import taiwan.no1.app.ssfm.models.usecases.RemoveKeywordHistoriesUsecase
+import taiwan.no1.app.ssfm.models.usecases.RemovePlaylistCase
+import taiwan.no1.app.ssfm.models.usecases.RemovePlaylistItemCase
 import taiwan.no1.app.ssfm.models.usecases.RemovePlaylistItemUsecase
 import taiwan.no1.app.ssfm.models.usecases.RemovePlaylistUsecase
-import taiwan.no1.app.ssfm.models.usecases.SearchMusicCase
-import taiwan.no1.app.ssfm.models.usecases.v2.GetHotPlaylistCase
-import taiwan.no1.app.ssfm.models.usecases.v2.GetMusicRankCase
-import taiwan.no1.app.ssfm.models.usecases.v2.GetSongListCase
+import taiwan.no1.app.ssfm.models.usecases.SearchMusicUsecase
+import taiwan.no1.app.ssfm.models.usecases.SearchMusicV1Case
+import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
+import taiwan.no1.app.ssfm.models.usecases.v2.GetHotPlaylistUsecase
+import taiwan.no1.app.ssfm.models.usecases.v2.GetMusicRankUsecase
+import taiwan.no1.app.ssfm.models.usecases.v2.GetSongListUsecase
 import javax.inject.Named
 
 /**
@@ -60,148 +66,144 @@ class UseCaseModule {
     //region Chart top
     @Provides
     @PerFragment
-    fun provideTopArtistsUsecase(dataRepository: DataRepository): BaseUsecase<TopArtistEntity, GetTopArtistsCase.RequestValue> =
-        GetTopArtistsCase(dataRepository)
+    fun provideTopArtistsUsecase(dataRepository: DataRepository): FetchTopArtistCase =
+        GetTopArtistsUsecase(dataRepository)
 
     @Provides
     @PerFragment
-    fun provideTopTracksUsecase(dataRepository: DataRepository): BaseUsecase<TopTrackEntity, GetTopTracksCase.RequestValue> =
-        GetTopTracksCase(dataRepository)
+    fun provideTopTracksUsecase(dataRepository: DataRepository): FetchTopTrackCase = GetTopTracksUsecase(dataRepository)
 
     @Provides
     @PerFragment
-    fun provideTopTagsUsecase(dataRepository: DataRepository): BaseUsecase<TopTagEntity, GetTopTagsCase.RequestValue> =
-        GetTopTagsCase(dataRepository)
+    fun provideTopTagsUsecase(dataRepository: DataRepository): FetchTopTagCase = GetTopTagsUsecase(dataRepository)
     //endregion
 
     //region Artist
     @Provides
     @PerFragment
-    fun provideArtistInfoUsecase(dataRepository: DataRepository): BaseUsecase<ArtistEntity, GetArtistInfoCase.RequestValue> =
-        GetArtistInfoCase(dataRepository)
+    fun provideArtistInfoUsecase(dataRepository: DataRepository): FetchArtistInfoCase =
+        GetArtistInfoUsecase(dataRepository)
 
     @Provides
     @PerFragment
-    fun provideArtistTopAlbumUsecase(dataRepository: DataRepository): BaseUsecase<ArtistTopAlbumEntity, GetArtistTopAlbumsCase.RequestValue> =
-        GetArtistTopAlbumsCase(dataRepository)
+    fun provideArtistTopAlbumUsecase(dataRepository: DataRepository): FetchTopAlbumOfArtistCase =
+        GetArtistTopAlbumsUsecase(dataRepository)
 
     @Provides
     @PerFragment
-    fun provideArtistTopTrackUsecase(dataRepository: DataRepository): BaseUsecase<ArtistTopTrackEntity, GetArtistTopTracksCase.RequestValue> =
-        GetArtistTopTracksCase(dataRepository)
+    fun provideArtistTopTrackUsecase(dataRepository: DataRepository): FetchTopTrackOfArtistCase =
+        GetArtistTopTracksUsecase(dataRepository)
     //endregion
 
     //region Album
     @Provides
     @PerFragment
-    fun provideAlbumInfoUsecase(dataRepository: DataRepository): BaseUsecase<AlbumEntity, GetAlbumInfoCase.RequestValue> =
-        GetAlbumInfoCase(dataRepository)
+    fun provideAlbumInfoUsecase(dataRepository: DataRepository): FetchAlbumInfoCase = GetAlbumInfoUsecase(dataRepository)
     //endregion
 
     //region Tag
     @Provides
     @PerFragment
-    fun provideTagInfoUsecase(dataRepository: DataRepository): BaseUsecase<TagEntity, GetTagInfoCase.RequestValue> =
-        GetTagInfoCase(dataRepository)
+    fun provideTagInfoUsecase(dataRepository: DataRepository): FetchTagInfoCase = GetTagInfoUsecase(dataRepository)
 
     @Provides
     @PerFragment
-    fun provideTagTopAlbumUsecase(dataRepository: DataRepository): BaseUsecase<TopAlbumEntity, GetTagTopAlbumsCase.RequestValue> =
-        GetTagTopAlbumsCase(dataRepository)
+    fun provideTagTopAlbumUsecase(dataRepository: DataRepository): FetchTopAlbumOfTagCase =
+        GetTagTopAlbumsUsecase(dataRepository)
 
     @Provides
     @PerFragment
-    fun provideTagTopArtistUsecase(dataRepository: DataRepository): BaseUsecase<TagTopArtistEntity, GetTagTopArtistsCase.RequestValue> =
-        GetTagTopArtistsCase(dataRepository)
+    fun provideTagTopArtistUsecase(dataRepository: DataRepository): FetchTopArtistOfTagCase =
+        GetTagTopArtistsUsecase(dataRepository)
 
     @Provides
     @PerFragment
-    fun provideTagTopTrackUsecase(dataRepository: DataRepository): BaseUsecase<TopTrackEntity, GetTagTopTracksCase.RequestValue> =
-        GetTagTopTracksCase(dataRepository)
+    fun provideTagTopTrackUsecase(dataRepository: DataRepository): FetchTopTrackOfTagCase =
+        GetTagTopTracksUsecase(dataRepository)
     //endregion
 
     //region Search music V1
     @Provides
     @PerFragment
-    fun provideGetKeywordHistoryUsecase(dataRepository: DataRepository): BaseUsecase<List<KeywordEntity>, GetKeywordHistoriesCase.RequestValue> =
-        GetKeywordHistoriesCase(dataRepository)
+    fun provideGetKeywordHistoryUsecase(dataRepository: DataRepository): FetchSearchHistoryCase =
+        GetKeywordHistoriesUsecase(dataRepository)
 
     @Provides
     @PerFragment
-    fun provideSearchMusicUsecase(dataRepository: DataRepository): BaseUsecase<SearchMusicEntity, SearchMusicCase.RequestValue> =
-        SearchMusicCase(dataRepository)
+    fun provideSearchMusicUsecase(dataRepository: DataRepository): SearchMusicV1Case =
+        SearchMusicUsecase(dataRepository)
 
     @Provides
     @PerFragment
-    fun provideGetDetailMusicUsecase(dataRepository: DataRepository): BaseUsecase<DetailMusicEntity, GetDetailMusicCase.RequestValue> =
-        GetDetailMusicCase(dataRepository)
+    fun provideGetDetailMusicUsecase(dataRepository: DataRepository): FetchMusicDetailCase =
+        GetDetailMusicUsecase(dataRepository)
     // endregion
 
     //region Search music V2
     @Provides
     @PerFragment
-    fun provideSearchMusicV2Usecase(dataRepository: DataRepository): BaseUsecase<MusicEntity, taiwan.no1.app.ssfm.models.usecases.v2.SearchMusicCase.RequestValue> =
-        taiwan.no1.app.ssfm.models.usecases.v2.SearchMusicCase(dataRepository)
+    fun provideSearchMusicV2Usecase(dataRepository: DataRepository): SearchMusicV2Case =
+        taiwan.no1.app.ssfm.models.usecases.v2.SearchMusicUsecase(dataRepository)
 
     @Provides
     @PerFragment
-    fun provideMusicRankUsecase(dataRepository: DataRepository): BaseUsecase<MusicRankEntity, GetMusicRankCase.RequestValue> =
-        GetMusicRankCase(dataRepository)
+    fun provideMusicRankUsecase(dataRepository: DataRepository): FetchMusicRankCase =
+        GetMusicRankUsecase(dataRepository)
 
     @Provides
     @PerFragment
-    fun provideHotPlaylistUsecase(dataRepository: DataRepository): BaseUsecase<HotPlaylistEntity, GetHotPlaylistCase.RequestValue> =
-        GetHotPlaylistCase(dataRepository)
+    fun provideHotPlaylistUsecase(dataRepository: DataRepository): FetchHotPlaylistCase =
+        GetHotPlaylistUsecase(dataRepository)
 
     @Provides
     @PerFragment
-    fun provideHotPlaylistDetailUsecase(dataRepository: DataRepository): BaseUsecase<SongListEntity, GetSongListCase.RequestValue> =
-        GetSongListCase(dataRepository)
+    fun provideHotPlaylistDetailUsecase(dataRepository: DataRepository): FetchPlaylistDetailCase =
+        GetSongListUsecase(dataRepository)
     //endregion
 
     //region For Database
     @Provides
     @PerFragment
-    fun provideDeleteUsecase(dataRepository: DataRepository): BaseUsecase<Boolean, RemoveKeywordHistoriesCase.RequestValue> =
-        RemoveKeywordHistoriesCase(dataRepository)
+    fun provideDeleteUsecase(dataRepository: DataRepository): DeleteSearchHistoryCase =
+        RemoveKeywordHistoriesUsecase(dataRepository)
 
     @Provides
     @PerFragment
     @Named("add_playlist_item")
-    fun provideAddPlaylistItemUsecase(dataRepository: DataRepository): BaseUsecase<Boolean, AddPlaylistItemUsecase.RequestValue> =
+    fun provideAddPlaylistItemUsecase(dataRepository: DataRepository): AddPlaylistItemCase =
         AddPlaylistItemUsecase(dataRepository)
 
     @Provides
     @PerFragment
-    fun provideAddPlaylistUsecase(dataRepository: DataRepository): BaseUsecase<PlaylistEntity, AddPlaylistUsecase.RequestValue> =
+    fun provideAddPlaylistUsecase(dataRepository: DataRepository): AddPlaylistCase =
         AddPlaylistUsecase(dataRepository)
 
     @Provides
     @PerFragment
-    fun provideGetPlaylistsUsecase(dataRepository: DataRepository): BaseUsecase<List<PlaylistEntity>, AddPlaylistUsecase.RequestValue> =
+    fun provideGetPlaylistsUsecase(dataRepository: DataRepository): FetchPlaylistCase =
         GetPlaylistsUsecase(dataRepository)
 
     @Provides
     @PerFragment
-    fun provideGetPlaylistItemsUsecase(dataRepository: DataRepository): BaseUsecase<List<PlaylistItemEntity>, GetPlaylistItemsUsecase.RequestValue> =
+    fun provideGetPlaylistItemsUsecase(dataRepository: DataRepository): FetchPlaylistItemCase =
         GetPlaylistItemsUsecase(dataRepository)
 
     @Provides
     @PerFragment
     @Named("remove_playlist")
-    fun provideRemovePlaylistUsecase(dataRepository: DataRepository): BaseUsecase<Boolean, AddPlaylistUsecase.RequestValue> =
+    fun provideRemovePlaylistUsecase(dataRepository: DataRepository): RemovePlaylistCase =
         RemovePlaylistUsecase(dataRepository)
 
     @Provides
     @PerFragment
     @Named("remove_playlist_item")
-    fun provideRemovePlaylistItemUsecase(dataRepository: DataRepository): BaseUsecase<Boolean, AddPlaylistItemUsecase.RequestValue> =
+    fun provideRemovePlaylistItemUsecase(dataRepository: DataRepository): RemovePlaylistItemCase =
         RemovePlaylistItemUsecase(dataRepository)
 
     @Provides
     @PerFragment
     @Named("edit_playlist")
-    fun provideEditPlaylistUsecase(dataRepository: DataRepository): BaseUsecase<Boolean, AddPlaylistUsecase.RequestValue> =
+    fun provideEditPlaylistUsecase(dataRepository: DataRepository): EditPlaylistCase =
         EditPlaylistUsecase(dataRepository)
     //endregion
 }

@@ -6,9 +6,9 @@ import dagger.Provides
 import taiwan.no1.app.ssfm.functions.main.MainViewModel
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerActivity
 import taiwan.no1.app.ssfm.models.data.repositories.DataRepository
-import taiwan.no1.app.ssfm.models.entities.DetailMusicEntity
 import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.models.usecases.GetDetailMusicCase
+import taiwan.no1.app.ssfm.models.usecases.FetchMusicDetailCase
+import taiwan.no1.app.ssfm.models.usecases.GetDetailMusicUsecase
 
 /**
  *
@@ -21,13 +21,12 @@ class MainActivityModule {
      * Providing a [BaseUsecase] to the [MainViewModel].
      *
      * @hashCode dataRepository get a repository object by dagger 2.
-     * @return a [GetDetailMusicCase] but the data type is abstract class, we'd like to developer
+     * @return a [GetDetailMusicUsecase] but the data type is abstract class, we'd like to developer
      *         to use the abstract method directly.
      */
     @Provides
     @PerActivity
-    fun provideUsecase(dataRepository: DataRepository): BaseUsecase<DetailMusicEntity, GetDetailMusicCase.RequestValue> =
-        GetDetailMusicCase(dataRepository)
+    fun provideUsecase(dataRepository: DataRepository): FetchMusicDetailCase = GetDetailMusicUsecase(dataRepository)
 
     /**
      * Providing a [MainViewModel] to the [MainActivity].
@@ -38,7 +37,6 @@ class MainActivityModule {
      */
     @Provides
     @PerActivity
-    fun provideViewModel(context: Context,
-                         usecase: BaseUsecase<DetailMusicEntity, GetDetailMusicCase.RequestValue>): MainViewModel =
+    fun provideViewModel(context: Context, usecase: FetchMusicDetailCase) =
         MainViewModel(context, usecase)
 }

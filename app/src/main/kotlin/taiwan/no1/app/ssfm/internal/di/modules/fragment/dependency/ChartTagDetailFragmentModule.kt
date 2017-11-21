@@ -4,15 +4,10 @@ import dagger.Module
 import dagger.Provides
 import taiwan.no1.app.ssfm.functions.chart.ChartTagDetailFragmentViewModel
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerFragment
-import taiwan.no1.app.ssfm.models.entities.lastfm.TagEntity
-import taiwan.no1.app.ssfm.models.entities.lastfm.TagTopArtistEntity
-import taiwan.no1.app.ssfm.models.entities.lastfm.TopAlbumEntity
-import taiwan.no1.app.ssfm.models.entities.lastfm.TopTrackEntity
-import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.models.usecases.GetTagInfoCase
-import taiwan.no1.app.ssfm.models.usecases.GetTagTopAlbumsCase
-import taiwan.no1.app.ssfm.models.usecases.GetTagTopArtistsCase
-import taiwan.no1.app.ssfm.models.usecases.GetTagTopTracksCase
+import taiwan.no1.app.ssfm.models.usecases.FetchTagInfoCase
+import taiwan.no1.app.ssfm.models.usecases.FetchTopAlbumOfTagCase
+import taiwan.no1.app.ssfm.models.usecases.FetchTopArtistOfTagCase
+import taiwan.no1.app.ssfm.models.usecases.FetchTopTrackOfTagCase
 
 /**
  * A base component upon which fragment's components may depend. Activity-level components should extend this component.
@@ -24,10 +19,9 @@ import taiwan.no1.app.ssfm.models.usecases.GetTagTopTracksCase
 class ChartTagDetailFragmentModule {
     @Provides
     @PerFragment
-    fun provideViewModel(tagInfoUsecase: BaseUsecase<TagEntity, GetTagInfoCase.RequestValue>,
-                         topAlbumsUsecase: BaseUsecase<TopAlbumEntity, GetTagTopAlbumsCase.RequestValue>,
-                         topArtistsUsecase: BaseUsecase<TagTopArtistEntity, GetTagTopArtistsCase.RequestValue>,
-                         topTracksUsecase: BaseUsecase<TopTrackEntity, GetTagTopTracksCase.RequestValue>):
-        ChartTagDetailFragmentViewModel =
+    fun provideViewModel(tagInfoUsecase: FetchTagInfoCase,
+                         topAlbumsUsecase: FetchTopAlbumOfTagCase,
+                         topArtistsUsecase: FetchTopArtistOfTagCase,
+                         topTracksUsecase: FetchTopTrackOfTagCase) =
         ChartTagDetailFragmentViewModel(tagInfoUsecase, topAlbumsUsecase, topArtistsUsecase, topTracksUsecase)
 }

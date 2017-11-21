@@ -9,8 +9,8 @@ import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
-import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
-import taiwan.no1.app.ssfm.models.usecases.RemoveKeywordHistoriesCase
+import taiwan.no1.app.ssfm.models.usecases.DeleteSearchHistoryCase
+import taiwan.no1.app.ssfm.models.usecases.RemoveKeywordHistoriesUsecase
 
 /**
  *
@@ -19,7 +19,7 @@ import taiwan.no1.app.ssfm.models.usecases.RemoveKeywordHistoriesCase
  */
 class RecyclerViewSearchHistoryViewModel(private val item: BaseEntity,
                                          private val context: Context,
-                                         private val deleteHistoriesUsecase: BaseUsecase<Boolean, RemoveKeywordHistoriesCase.RequestValue>) :
+                                         private val deleteHistoriesUsecase: DeleteSearchHistoryCase) :
     BaseObservable() {
     lateinit var deleteItemListener: (entity: KeywordEntity, isSuccess: Boolean) -> Unit
     val keyword by lazy { ObservableField<String>() }
@@ -30,7 +30,7 @@ class RecyclerViewSearchHistoryViewModel(private val item: BaseEntity,
     }
 
     fun deleteHistoryClick(view: View) {
-        deleteHistoriesUsecase.execute(RemoveKeywordHistoriesCase.RequestValue(keyword.get()),
+        deleteHistoriesUsecase.execute(RemoveKeywordHistoriesUsecase.RequestValue(keyword.get()),
             observer = observer { deleteItemListener((item as KeywordEntity), it) })
     }
 

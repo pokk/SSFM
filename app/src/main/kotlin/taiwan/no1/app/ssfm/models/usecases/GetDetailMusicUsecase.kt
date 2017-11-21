@@ -3,7 +3,7 @@ package taiwan.no1.app.ssfm.models.usecases
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.models.data.IDataStore
 import taiwan.no1.app.ssfm.models.entities.DetailMusicEntity
-import taiwan.no1.app.ssfm.models.usecases.GetDetailMusicCase.RequestValue
+import taiwan.no1.app.ssfm.models.usecases.GetDetailMusicUsecase.RequestValue
 
 /**
  * A usecase for retrieving the detail of a music.
@@ -11,7 +11,7 @@ import taiwan.no1.app.ssfm.models.usecases.GetDetailMusicCase.RequestValue
  * @author  jieyi
  * @since   8/14/17
  */
-class GetDetailMusicCase(repository: IDataStore) : BaseUsecase<DetailMusicEntity, RequestValue>(repository) {
+class GetDetailMusicUsecase(repository: IDataStore) : BaseUsecase<DetailMusicEntity, RequestValue>(repository) {
     override fun fetchUsecase(): Observable<DetailMusicEntity> =
         (parameters ?: RequestValue()).let { repository.getDetailMusicRes(it.hashCode) }
 

@@ -23,5 +23,5 @@ class PlayMainActivityModule {
      */
     @Provides
     @PerActivity
-    fun provideViewModel(context: Context): PlayMainViewModel = PlayMainViewModel(context)
+    fun provideViewModel(context: Context) = PlayMainViewModel(context)
 }

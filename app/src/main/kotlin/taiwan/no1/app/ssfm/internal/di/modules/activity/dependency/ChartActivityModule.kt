@@ -22,5 +22,5 @@ class ChartActivityModule {
      */
     @Provides
     @PerActivity
-    fun provideViewModel(context: Context): ChartViewModel = ChartViewModel(context)
+    fun provideViewModel(context: Context) = ChartViewModel(context)
 }

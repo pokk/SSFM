@@ -23,5 +23,5 @@ class LoginActivityModule {
      */
     @Provides
     @PerActivity
-    fun provideViewModel(context: Context): LoginViewModel = LoginViewModel(context)
+    fun provideViewModel(context: Context) = LoginViewModel(context)
 }
