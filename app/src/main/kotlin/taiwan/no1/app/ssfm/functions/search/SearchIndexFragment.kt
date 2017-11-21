@@ -89,9 +89,7 @@ class SearchIndexFragment : AdvancedFragment<SearchIndexFragmentViewModel, Fragm
             }
 
             artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as ArtistAdapter,
-                artistInfo,
-                artistRes,
-                viewModel::fetchArtistList)
+                artistInfo, artistRes, viewModel::fetchArtistList)
             trackLoadmore = RVCustomScrollCallback(binding?.trackAdapter as TrackAdapter, trackInfo,
                 trackRes, viewModel::fetchTrackList)
 
@@ -100,18 +98,12 @@ class SearchIndexFragment : AdvancedFragment<SearchIndexFragmentViewModel, Fragm
         // First time showing this fragment.
         artistInfo.firstFetch {
             viewModel.fetchArtistList(it.page, it.limit) { resList, total ->
-                artistRes.refreshAndChangeList(resList,
-                    total,
-                    binding?.artistAdapter as ArtistAdapter,
-                    it)
+                artistRes.refreshAndChangeList(resList, total, binding?.artistAdapter as ArtistAdapter, it)
             }
         }
         trackInfo.firstFetch {
             viewModel.fetchTrackList(it.page, it.limit) { resList, total ->
-                trackRes.refreshAndChangeList(resList,
-                    total,
-                    binding?.trackAdapter as TrackAdapter,
-                    it)
+                trackRes.refreshAndChangeList(resList, total, binding?.trackAdapter as TrackAdapter, it)
             }
         }
     }

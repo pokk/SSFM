@@ -25,8 +25,7 @@ class RecyclerViewChartTagViewModel(val item: BaseEntity) : BaseViewModel() {
                     it.nextInt(256))
             }
 
-        val background = GradientDrawable(GradientDrawable.Orientation.BR_TL,
-            intArrayOf(randomColor(), randomColor()))
+        val background = GradientDrawable(GradientDrawable.Orientation.BR_TL, intArrayOf(randomColor(), randomColor()))
         ObservableField<Drawable>(background)
     }
     var clickItemListener: ((item: TagEntity.Tag) -> Unit)? = null

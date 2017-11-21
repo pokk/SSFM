@@ -9,6 +9,8 @@
     <color name="colorThickDark">#547D7C</color>
     <color name="colorMainThemeBackground">#1A1A1C</color>
 
+    <color name="colorSimilarPrimaryDark">#664DC3FF</color>
+
     <!-- Basic color -->
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorIvory">#FFFFF0</color>
