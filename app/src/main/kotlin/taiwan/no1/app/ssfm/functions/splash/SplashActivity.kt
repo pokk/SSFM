@@ -4,7 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import com.devrapid.kotlinknifer.SharedPrefs
 import org.jetbrains.anko.startActivity
-import taiwan.no1.app.ssfm.functions.playlist.PlaylistActivity
+import taiwan.no1.app.ssfm.functions.search.SearchActivity
 import kotlin.concurrent.timer
 
 /**
@@ -37,7 +37,7 @@ class SplashActivity : Activity() {
         // Delay 0.5 second for showing the splash view.
         timer(initialDelay = SPLASH_DELAY_TIME, period = 1) {
             // Transfer to your main activity after delay 0.5 second.
-            startActivity<PlaylistActivity>()
+            startActivity<SearchActivity>()
             finish()
             cancel()
         }

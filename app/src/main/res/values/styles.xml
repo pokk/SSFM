@@ -197,7 +197,7 @@
         <item name="android:textSize">30sp</item>
     </style>
 
-    <!-- Recycler View Item -->
+    <!-- Recycler VMusicItem -->
     <style name="RecyclerViewItem"/>
 
     <style name="RecyclerViewItem.Artist">

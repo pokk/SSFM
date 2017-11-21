@@ -43,8 +43,7 @@ class SearchActivity : AdvancedActivity<SearchViewModel, ActivitySearchBinding>(
     //endregion
 
     //region Base activity implement
-    override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this,
-        R.layout.activity_search)
+    override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_search)
     //endregion
 
     override fun onBackPressed() {

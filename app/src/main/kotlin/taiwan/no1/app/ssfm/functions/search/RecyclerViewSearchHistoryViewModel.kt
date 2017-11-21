@@ -19,8 +19,7 @@ import taiwan.no1.app.ssfm.models.usecases.RemoveKeywordHistoriesUsecase
  */
 class RecyclerViewSearchHistoryViewModel(private val item: BaseEntity,
                                          private val context: Context,
-                                         private val deleteHistoriesUsecase: DeleteSearchHistoryCase) :
-    BaseObservable() {
+                                         private val deleteHistoriesUsecase: DeleteSearchHistoryCase) : BaseObservable() {
     lateinit var deleteItemListener: (entity: KeywordEntity, isSuccess: Boolean) -> Unit
     val keyword by lazy { ObservableField<String>() }
 

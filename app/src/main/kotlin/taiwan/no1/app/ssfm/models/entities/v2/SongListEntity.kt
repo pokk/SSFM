@@ -1,12 +1,14 @@
 package taiwan.no1.app.ssfm.models.entities.v2
 
+import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
+
 /**
  * @author  jieyi
  * @since   11/20/17
  */
 
 data class SongListEntity(val status: String = "",
-                          val data: Data = Data()) {
+                          val data: Data = Data()) : BaseEntity {
     data class Data(val share_uri: String = "",
                     val song_list_id: String = "",
                     val permission: Int = 0,

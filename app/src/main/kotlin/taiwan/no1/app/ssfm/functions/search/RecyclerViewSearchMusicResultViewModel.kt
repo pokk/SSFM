@@ -6,32 +6,38 @@ import android.databinding.ObservableField
 import android.view.View
 import com.devrapid.kotlinknifer.toTimeString
 import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayer
-import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity.InfoBean
+import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
 import taiwan.no1.app.ssfm.models.usecases.FetchMusicDetailCase
-import taiwan.no1.app.ssfm.models.usecases.GetDetailMusicUsecase
 
 /**
  * @author  jieyi
  * @since   9/20/17
  */
-class RecyclerViewSearchMusicResultViewModel(private val res: InfoBean,
+class RecyclerViewSearchMusicResultViewModel(private val res: BaseEntity,
                                              private val context: Context,
-                                             private val getDetailMusicCase: FetchMusicDetailCase) :
-    BaseObservable() {
-    val songName by lazy { ObservableField<String>(res.songname ?: "") }
-    val singerName by lazy { ObservableField<String>(res.singername ?: "") }
-    val duration by lazy { ObservableField<String>(res.duration.toTimeString()) }
+                                             private val getDetailMusicCase: FetchMusicDetailCase) : BaseObservable() {
+    val songName by lazy { ObservableField<String>() }
+    val singerName by lazy { ObservableField<String>() }
+    val duration by lazy { ObservableField<String>() }
+    val coverUrl by lazy { ObservableField<String>() }
+
+    init {
+        (res as MusicEntity.Music).let {
+            songName.set(it.title)
+            singerName.set(it.artist)
+            duration.set(0.toTimeString())
+            coverUrl.set(it.coverURL)
+        }
+    }
 
     //region Action from View
     fun playOrStopMusicClick(view: View) {
-        res.`_$320hash`?.let {
-            getDetailMusicCase.execute(GetDetailMusicUsecase.RequestValue(it)) {
-                onNext {
-                    val player = MusicPlayer.instance
-                    if (player.isPlaying()) player.stop()
-                    it.data?.play_url?.let(player::play)
-                }
-            }
+        res as MusicEntity.Music
+
+        MusicPlayer.instance.apply {
+            if (isPlaying()) stop()
+            play(res.url)
         }
     }
 

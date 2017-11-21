@@ -35,6 +35,9 @@ class RecyclerViewSearchTrackChartViewModel(val item: BaseEntity) : BaseViewMode
      * @event_to [taiwan.no1.app.ssfm.functions.search.SearchViewModel.receiveClickHistoryEvent]
      */
     fun trackOnClick(view: View) {
-        RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_HISTORY, (item as TrackEntity.Track).name)
+        item as TrackEntity.Track
+        val keyword = item.artist?.let { "${it.name} ${item.name}" } ?: item.name
+
+        RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_HISTORY, keyword)
     }
 }

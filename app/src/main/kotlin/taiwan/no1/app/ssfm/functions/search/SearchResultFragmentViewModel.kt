@@ -1,39 +1,29 @@
 package taiwan.no1.app.ssfm.functions.search
 
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.toObservable
-import io.reactivex.schedulers.Schedulers
+import com.devrapid.kotlinknifer.loge
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
-import taiwan.no1.app.ssfm.misc.constants.Constant
 import taiwan.no1.app.ssfm.misc.extension.execute
-import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity.InfoBean
-import taiwan.no1.app.ssfm.models.usecases.SearchMusicUsecase
-import taiwan.no1.app.ssfm.models.usecases.SearchMusicV1Case
+import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
+import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
+import taiwan.no1.app.ssfm.models.usecases.v2.SearchMusicUsecase
 
 /**
  *
  * @author  jieyi
  * @since   8/20/17
  */
-class SearchResultFragmentViewModel(private val searchUsecase: SearchMusicV1Case) :
-    BaseViewModel() {
-    fun sendSearchRequest(keyword: String,
-                          page: Int = 1,
-                          pageSize: Int = Constant.QUERY_PAGE_SIZE,
-                          resultCallback: (keyword: String, musics: MutableList<InfoBean>, canLoadMore: Boolean) -> Unit) =
+class SearchResultFragmentViewModel(private val searchUsecase: SearchMusicV2Case) : BaseViewModel() {
+    fun sendSearchRequest(keyword: String, page: Int = 0,
+                          resultCallback: (keyword: String, musics: MutableList<MusicEntity.Music>, canLoadMore: Boolean) -> Unit) =
         if (keyword.isNotBlank()) {
-            lifecycleProvider.execute(searchUsecase,
-                SearchMusicUsecase.RequestValue(keyword, page, pageSize)) {
+            lifecycleProvider.execute(searchUsecase, SearchMusicUsecase.RequestValue(keyword, page)) {
+                onError {
+                    loge(it.message)
+                    loge(it)
+                }
                 onNext {
                     // Raise the stop loading more data flag.
-                    val loadMoreFlag = Constant.QUERY_PAGE_SIZE <= (it.data?.info?.size ?: 0)
-
-                    it.data?.info?.toObservable()?.
-                        filter { (it.singername?.isNotEmpty() == true) && (it.songname?.isNotEmpty() == true) }?.
-                        subscribeOn(Schedulers.io())?.
-                        toList()?.observeOn(AndroidSchedulers.mainThread())?.subscribe { list, _ ->
-                        resultCallback(keyword, list, loadMoreFlag)
-                    } ?: resultCallback(keyword, mutableListOf(), loadMoreFlag)
+                    resultCallback(keyword, it.data.items.toMutableList(), it.data.has_more)
                 }
             }
         }

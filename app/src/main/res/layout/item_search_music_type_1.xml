@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools">
 
     <data>
@@ -13,6 +14,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{avm::playOrStopMusicClick}"
         android:padding="@dimen/one_unit"
         tool:background="@color/colorPrimary">
 
@@ -23,43 +25,32 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:background="@null"
-            android:onClick="@{avm::playOrStopMusicClick}"
             android:src="@drawable/ic_play_circle"/>
 
         <TextView
             android:id="@+id/tv_track_name"
-            android:layout_width="match_parent"
+            android:layout_width="261dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/one_unit"
             android:layout_marginStart="@dimen/one_unit"
-            android:layout_toEndOf="@+id/iv_action"
-            android:layout_toStartOf="@+id/tv_total_time"
+            android:layout_toEndOf="@+id/iv_cover"
+            android:layout_toStartOf="@+id/ib_options"
             android:text="@{avm.songName}"
             android:textColor="@color/colorWhite"
             tool:text="The Cure"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="264dp"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/tv_track_name"
             android:layout_alignStart="@+id/tv_track_name"
             android:layout_below="@+id/tv_track_name"
             android:layout_gravity="center"
+            android:layout_marginStart="@dimen/one_unit"
             android:text="@{avm.singerName}"
             android:textColor="@color/colorGray"
             tool:text="New album"/>
 
-
-        <TextView
-            android:id="@+id/tv_total_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="16dp"
-            android:layout_toStartOf="@+id/ib_options"
-            android:text="@{avm.duration}"
-            android:textColor="@color/colorWhite"
-            tool:text="4:14"/>
 
         <ImageButton
             android:id="@+id/ib_options"
@@ -69,6 +60,17 @@
             android:layout_centerVertical="true"
             android:background="@null"
             android:onClick="@{avm::optionClick}"
+            android:padding="@dimen/one_unit"
             android:src="@drawable/ic_more_vert"/>
+
+        <ImageView
+            android:id="@+id/iv_cover"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:imageUrl="@{avm.coverUrl}"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@+id/iv_action"
+            app:srcCompat="@drawable/sample_lady_gaga"/>
     </RelativeLayout>
 </layout>
