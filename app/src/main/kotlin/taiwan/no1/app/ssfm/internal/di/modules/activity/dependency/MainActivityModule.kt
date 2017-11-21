@@ -20,7 +20,7 @@ class MainActivityModule {
     /**
      * Providing a [BaseUsecase] to the [MainViewModel].
      *
-     * @param dataRepository get a repository object by dagger 2.
+     * @hashCode dataRepository get a repository object by dagger 2.
      * @return a [GetDetailMusicCase] but the data type is abstract class, we'd like to developer
      *         to use the abstract method directly.
      */
@@ -32,8 +32,8 @@ class MainActivityModule {
     /**
      * Providing a [MainViewModel] to the [MainActivity].
      *
-     * @param context originally from activity module.
-     * @param usecase receive from [provideUsecase] method.
+     * @hashCode context originally from activity module.
+     * @hashCode usecase receive from [provideUsecase] method.
      * @return a important [MainViewModel] for binding view and viewmodel by activity.
      */
     @Provides

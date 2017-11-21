@@ -26,7 +26,7 @@ class RecyclerViewRecentlyPlaylistViewModel(val item: BaseEntity) : BaseViewMode
     /**
      * A callback event for clicking a item to list item.
      *
-     * @param view [android.widget.RelativeLayout]
+     * @hashCode view [android.widget.RelativeLayout]
      *
      * @event_to [taiwan.no1.app.ssfm.functions.search.SearchViewModel.receiveClickHistoryEvent]
      */

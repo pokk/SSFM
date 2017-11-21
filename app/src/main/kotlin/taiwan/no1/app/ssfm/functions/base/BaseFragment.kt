@@ -87,7 +87,7 @@ abstract class BaseFragment : RxFragment(), HasFragmentInjector {
      * set listeners or animations...etc.
      * This method will be called each of time when the fragment reappears.
      *
-     * @param savedInstanceState before status.
+     * @hashCode savedInstanceState before status.
      */
     abstract protected fun rendered(savedInstanceState: Bundle?)
 

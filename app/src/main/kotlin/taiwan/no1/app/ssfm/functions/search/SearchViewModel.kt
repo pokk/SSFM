@@ -63,7 +63,7 @@ class SearchViewModel(private val context: Context,
     /**
      * The action of opening the search view.
      *
-     * @param view
+     * @hashCode view
      */
     fun openSearchView(view: View?) {
         collapseSearchView(false)
@@ -73,7 +73,7 @@ class SearchViewModel(private val context: Context,
     /**
      * The action of submitting the search query.
      *
-     * @param query the query of song's or singer's name for searching a music.
+     * @hashCode query the query of song's or singer's name for searching a music.
      */
     fun querySubmit(query: String): Boolean {
         query.takeIf { it.isNotBlank() }?.let {
@@ -90,7 +90,7 @@ class SearchViewModel(private val context: Context,
     /**
      * The action of the search query's newText is changed.
      *
-     * @param newText inputting by the user in the search view.
+     * @hashCode newText inputting by the user in the search view.
      */
     fun textChanged(newText: String): Boolean {
         // When clearing the text in the search view.
@@ -116,7 +116,7 @@ class SearchViewModel(private val context: Context,
     /**
      * The click event when clicking a item to the history list.
      *
-     * @param keyword of the song or singer's name.
+     * @hashCode keyword of the song or singer's name.
      *
      * @event_from [taiwan.no1.app.ssfm.functions.search.RecyclerViewSearchHistoryViewModel.selectHistoryItem]
      * @event_from [taiwan.no1.app.ssfm.functions.search.RecyclerViewSearchArtistChartViewModel.artistOnClick]

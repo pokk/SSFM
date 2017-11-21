@@ -18,7 +18,7 @@ class LoginActivityModule {
     /**
      * Providing a [MainViewModel] to the [MainActivity].
      *
-     * @param context  originally from activity module.
+     * @hashCode context  originally from activity module.
      * @return a important [MainViewModel] for binding view and viewmodel by activity.
      */
     @Provides

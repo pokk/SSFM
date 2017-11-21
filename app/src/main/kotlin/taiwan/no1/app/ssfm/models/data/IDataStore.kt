@@ -35,7 +35,7 @@ interface IDataStore {
     /**
      * Retrieve the musics or the artists information by the keyword.
      *
-     * @param keyword   keyword of the music or the artist.
+     * @hashCode keyword   keyword of the music or the artist.
      * @return          the result of [SearchMusicEntity]
      */
     fun getSearchMusicRes(keyword: String,
@@ -45,7 +45,7 @@ interface IDataStore {
     /**
      * Retrieve the detail of a music information.
      *
-     * @param hash  the hash code of a music.
+     * @hashCode hash  the hash code of a music.
      * @return      the result of [DetailMusicEntity]
      */
     fun getDetailMusicRes(hash: String): Observable<DetailMusicEntity>

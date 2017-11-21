@@ -20,7 +20,7 @@ class PlaylistActivityModule {
     /**
      * Providing a [BaseUsecase] to the [PlaylistViewModel].
      *
-     * @param dataRepository get a repository object by dagger 2.
+     * @hashCode dataRepository get a repository object by dagger 2.
      * @return a [SearchMusicCase] but the data type is abstract class, we'd like to developer
      * to use the abstract method directly.
      */
@@ -32,7 +32,7 @@ class PlaylistActivityModule {
     /**
      * Providing a [PlaylistViewModel] to the [PlaylistActivity].
      *
-     * @param context originally from activity module.
+     * @hashCode context originally from activity module.
      * @return a important [PlaylistViewModel] for binding view and viewmodel by activity.
      */
     @Provides

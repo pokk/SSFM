@@ -37,7 +37,7 @@ abstract class BaseUsecase<T, R : RequestValues>(protected val repository: IData
     /**
      * Executes the current use case.
      *
-     * @param observer a reaction of [Observer] from viewmodel, the data are omitted from database or remote.
+     * @hashCode observer a reaction of [Observer] from viewmodel, the data are omitted from database or remote.
      */
     fun execute(lifecycleProvider: LifecycleProvider<*>? = null,
                 observer: Observer<T>) = lifecycleProvider?.let {
@@ -47,8 +47,8 @@ abstract class BaseUsecase<T, R : RequestValues>(protected val repository: IData
     /**
      * Executes the current use case with request parameters.
      *
-     * @param parameter the parameter for retrieving data.
-     * @param observer a reaction of [Observer] from viewmodel, the data are omitted from database or remote.
+     * @hashCode parameter the parameter for retrieving data.
+     * @hashCode observer a reaction of [Observer] from viewmodel, the data are omitted from database or remote.
      */
     fun execute(parameter: R,
                 lifecycleProvider: LifecycleProvider<*>? = null,
@@ -60,7 +60,7 @@ abstract class BaseUsecase<T, R : RequestValues>(protected val repository: IData
     /**
      * Executes the current use case.
      *
-     * @param lifecycleProvider LifecycleProvider<*>?=null :
+     * @hashCode lifecycleProvider LifecycleProvider<*>?=null :
      */
     fun execute(lifecycleProvider: LifecycleProvider<*>? = null) = lifecycleProvider?.let {
         buildUsecase().bindToLifecycle(it)
@@ -69,8 +69,8 @@ abstract class BaseUsecase<T, R : RequestValues>(protected val repository: IData
     /**
      * Executes the current use case with request parameters.
      *
-     * @param parameter the parameter for retrieving data.
-     * @param lifecycleProvider an activity or a fragment of the [LifecycleProvider] object.
+     * @hashCode parameter the parameter for retrieving data.
+     * @hashCode lifecycleProvider an activity or a fragment of the [LifecycleProvider] object.
      */
     fun execute(parameter: R, lifecycleProvider: LifecycleProvider<*>? = null): Observable<T> {
         parameters = parameter
@@ -80,8 +80,8 @@ abstract class BaseUsecase<T, R : RequestValues>(protected val repository: IData
     /**
      * Executes the current use case.
      *
-     * @param lifecycleProvider an activity or a fragment of the [LifecycleProvider] object.
-     * @param observer a reaction of [ObserverPlugin] from viewmodel, the data are omitted from database or remote.
+     * @hashCode lifecycleProvider an activity or a fragment of the [LifecycleProvider] object.
+     * @hashCode observer a reaction of [ObserverPlugin] from viewmodel, the data are omitted from database or remote.
      */
     fun execute(lifecycleProvider: LifecycleProvider<*>? = null,
                 observer: ObserverPlugin<T>.() -> Unit) =
@@ -92,9 +92,9 @@ abstract class BaseUsecase<T, R : RequestValues>(protected val repository: IData
     /**
      * Executes the current use case with request parameters.
      *
-     * @param parameter the parameter for retrieving data.
-     * @param lifecycleProvider an activity or a fragment of the [LifecycleProvider] object.
-     * @param observer a reaction of [ObserverPlugin] from viewmodel, the data are omitted from database or remote.
+     * @hashCode parameter the parameter for retrieving data.
+     * @hashCode lifecycleProvider an activity or a fragment of the [LifecycleProvider] object.
+     * @hashCode observer a reaction of [ObserverPlugin] from viewmodel, the data are omitted from database or remote.
      */
     fun execute(parameter: R,
                 lifecycleProvider: LifecycleProvider<*>? = null,

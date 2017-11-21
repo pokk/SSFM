@@ -37,7 +37,7 @@ class ChartViewModel(private val context: Context) :
     /**
      * The action of opening the search view.
      *
-     * @param view
+     * @hashCode view
      */
     fun openSearchView(view: View?) {
         collapseSearchView(false)
@@ -46,7 +46,7 @@ class ChartViewModel(private val context: Context) :
     /**
      * The action of submitting the search query.
      *
-     * @param query the query of song's or singer's name for searching a music.
+     * @hashCode query the query of song's or singer's name for searching a music.
      *
      * @event_to [taiwan.no1.app.ssfm.functions.chart.ChartActivity.navigateToArtistDetail]
      */
@@ -62,7 +62,7 @@ class ChartViewModel(private val context: Context) :
     /**
      * The action of the search query's newText is changed.
      *
-     * @param newText inputting by the user in the search view.
+     * @hashCode newText inputting by the user in the search view.
      */
     fun textChanged(newText: String): Boolean {
         return true

@@ -19,6 +19,10 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.TopAlbumEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.TopArtistEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.TopTagEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.TopTrackEntity
+import taiwan.no1.app.ssfm.models.entities.v2.HotPlaylistEntity
+import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
+import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
+import taiwan.no1.app.ssfm.models.entities.v2.SongListEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemUsecase
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistUsecase
 import taiwan.no1.app.ssfm.models.usecases.BaseUsecase
@@ -42,6 +46,9 @@ import taiwan.no1.app.ssfm.models.usecases.RemoveKeywordHistoriesCase
 import taiwan.no1.app.ssfm.models.usecases.RemovePlaylistItemUsecase
 import taiwan.no1.app.ssfm.models.usecases.RemovePlaylistUsecase
 import taiwan.no1.app.ssfm.models.usecases.SearchMusicCase
+import taiwan.no1.app.ssfm.models.usecases.v2.GetHotPlaylistCase
+import taiwan.no1.app.ssfm.models.usecases.v2.GetMusicRankCase
+import taiwan.no1.app.ssfm.models.usecases.v2.GetSongListCase
 import javax.inject.Named
 
 /**
@@ -113,15 +120,15 @@ class UseCaseModule {
         GetTagTopTracksCase(dataRepository)
     //endregion
 
-    //region Search music
+    //region Search music V1
     @Provides
     @PerFragment
-    fun provideGetUsecase(dataRepository: DataRepository): BaseUsecase<List<KeywordEntity>, GetKeywordHistoriesCase.RequestValue> =
+    fun provideGetKeywordHistoryUsecase(dataRepository: DataRepository): BaseUsecase<List<KeywordEntity>, GetKeywordHistoriesCase.RequestValue> =
         GetKeywordHistoriesCase(dataRepository)
 
     @Provides
     @PerFragment
-    fun provideSearchUsecase(dataRepository: DataRepository): BaseUsecase<SearchMusicEntity, SearchMusicCase.RequestValue> =
+    fun provideSearchMusicUsecase(dataRepository: DataRepository): BaseUsecase<SearchMusicEntity, SearchMusicCase.RequestValue> =
         SearchMusicCase(dataRepository)
 
     @Provides
@@ -129,6 +136,28 @@ class UseCaseModule {
     fun provideGetDetailMusicUsecase(dataRepository: DataRepository): BaseUsecase<DetailMusicEntity, GetDetailMusicCase.RequestValue> =
         GetDetailMusicCase(dataRepository)
     // endregion
+
+    //region Search music V2
+    @Provides
+    @PerFragment
+    fun provideSearchMusicV2Usecase(dataRepository: DataRepository): BaseUsecase<MusicEntity, taiwan.no1.app.ssfm.models.usecases.v2.SearchMusicCase.RequestValue> =
+        taiwan.no1.app.ssfm.models.usecases.v2.SearchMusicCase(dataRepository)
+
+    @Provides
+    @PerFragment
+    fun provideMusicRankUsecase(dataRepository: DataRepository): BaseUsecase<MusicRankEntity, GetMusicRankCase.RequestValue> =
+        GetMusicRankCase(dataRepository)
+
+    @Provides
+    @PerFragment
+    fun provideHotPlaylistUsecase(dataRepository: DataRepository): BaseUsecase<HotPlaylistEntity, GetHotPlaylistCase.RequestValue> =
+        GetHotPlaylistCase(dataRepository)
+
+    @Provides
+    @PerFragment
+    fun provideHotPlaylistDetailUsecase(dataRepository: DataRepository): BaseUsecase<SongListEntity, GetSongListCase.RequestValue> =
+        GetSongListCase(dataRepository)
+    //endregion
 
     //region For Database
     @Provides

@@ -41,7 +41,7 @@ class RecyclerViewChartSimilarArtistViewModel(val item: BaseEntity) : BaseViewMo
     /**
      * A callback event for clicking an artist to list item.
      *
-     * @param view [android.widget.RelativeLayout]
+     * @hashCode view [android.widget.RelativeLayout]
      *
      * @event_to [taiwan.no1.app.ssfm.functions.chart.ChartActivity.navigateToArtistDetail]
      */

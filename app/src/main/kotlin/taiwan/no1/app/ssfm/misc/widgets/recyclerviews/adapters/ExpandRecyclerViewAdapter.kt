@@ -49,8 +49,8 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
     /**
      * The action for expanding a main item.
      *
-     * @param position The index of the [dataList]'s item which is clicked.
-     * @param newIndex The index of the item which is clicked will be.
+     * @hashCode position The index of the [dataList]'s item which is clicked.
+     * @hashCode newIndex The index of the item which is clicked will be.
      */
     fun expand(position: Int, newIndex: Int) {
         updateList {
@@ -69,8 +69,8 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
     /**
      * The action for collapsing a main item.
      *
-     * @param position The index of the [dataList]'s item which is clicked.
-     * @param newIndex The index of the original item position.
+     * @hashCode position The index of the [dataList]'s item which is clicked.
+     * @hashCode newIndex The index of the original item position.
      */
     fun collapse(position: Int, newIndex: Int) {
         updateList {
@@ -89,7 +89,7 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
     /**
      * Calculating the new index of the clicked item.
      *
-     * @param oldPos The original position of an item is clicked.
+     * @hashCode oldPos The original position of an item is clicked.
      * @return A new index after an item is clicked.
      */
     fun calculateIndex(oldPos: Int): Int = (0..(oldPos - 1)).sumBy { originalParentPosition[it] } + oldPos
@@ -98,7 +98,7 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
      * Checking whether an item state is collapsed or not by checking the [originalParentPosition]. If
      * the value of the [dataList] is non-zero, that means the item is expanded.
      *
-     * @param position The index in [dataList] of an item.
+     * @hashCode position The index in [dataList] of an item.
      * @return value is true → expanded; otherwise, collapsed.
      */
     fun isExpanded(position: Int): Boolean = dataList[position].isExpanded
@@ -106,7 +106,7 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
     /**
      * Get the parent index of an expanded child item.
      *
-     * @param childIndex The index of a child item was clicked.
+     * @hashCode childIndex The index of a child item was clicked.
      * @return The index of the parent.
      */
     fun findParentIndex(childIndex: Int): Int {
@@ -120,8 +120,8 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
      * Connect a child item's [Observable] (the click event) to the parent's [Observer]. i.e. Let
      * click event be able to transmit to the parent.
      *
-     * @param parentIndex The index of a child item's parent.
-     * @param getChildObservable The click observable in a child item.
+     * @hashCode parentIndex The index of a child item's parent.
+     * @hashCode getChildObservable The click observable in a child item.
      */
     fun connectParentItem(parentIndex: Int, getChildObservable: Observable<String>) {
         getChildObservable.subscribe((dataList[parentIndex] as PreferenceEntity).observer!!)
@@ -130,7 +130,7 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
     /**
      * Refresh the [dataList].
      *
-     * @param getNewListBlock
+     * @hashCode getNewListBlock
      */
     private fun updateList(getNewListBlock: () -> MutableList<IExpandVisitable>) {
         val newList = getNewListBlock()
@@ -141,8 +141,8 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
     /**
      * Change the visible items of the children quantity on the [originalParentPosition].
      *
-     * @param index The index of a main item.
-     * @param size The main item's children quantity.
+     * @hashCode index The index of a main item.
+     * @hashCode size The main item's children quantity.
      */
     private fun changeVisibleChildNumber(index: Int, size: Int) {
         originalParentPosition[index] = size
