@@ -6,6 +6,7 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchResultBinding
 import taiwan.no1.app.ssfm.databinding.ItemSearchMusicType1Binding
 import taiwan.no1.app.ssfm.functions.base.AdvancedFragment
+import taiwan.no1.app.ssfm.misc.extension.gColor
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
@@ -22,20 +23,39 @@ import javax.inject.Inject
 class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, FragmentSearchResultBinding>() {
     //region Static initialization
     companion object Factory {
+        // The key name of the fragment initialization parameters.
+        private const val ARG_PARAM_KEYWORD: String = "param_music_keyword"
+        private const val ARG_PARAM_BACKGROUND_IMAGE_URL: String = "param_background_image_url"
+        private const val ARG_PARAM_FOREGROUND_BLUR_COLOR: String = "param_foreground_blur_color"
+
         /**
          * Use this factory method to create a new instance of this fragment using the
          * provided parameters.
          *
          * @return A new instance of [android.app.Fragment] SearchResultFragment.
          */
-        fun newInstance() = SearchResultFragment()
+        fun newInstance(keyword: String = "",
+                        imageUrl: String = "",
+                        fgColor: Int = gColor(R.color.colorSimilarPrimaryDark)) = SearchResultFragment().apply {
+            arguments = Bundle().apply {
+                putString(ARG_PARAM_KEYWORD, keyword)
+                putString(ARG_PARAM_BACKGROUND_IMAGE_URL, imageUrl)
+                putInt(ARG_PARAM_FOREGROUND_BLUR_COLOR, fgColor)
+            }
+        }
     }
     //endregion
 
     @Inject override lateinit var viewModel: SearchResultFragmentViewModel
     var keyword: String = ""
+    var image: String = ""
+    var backgroundColor: Int = gColor(R.color.colorPrimaryDark)
     private var res = mutableListOf<BaseEntity>()
     private val resInfo by lazy { DataInfo() }
+    // Get the arguments from the bundle here.
+//    private val keyword by lazy { arguments.getString(ARG_PARAM_KEYWORD) }
+//    private val bkgImageUrl by lazy { arguments.getString(ARG_PARAM_KEYWORD) }
+//    private val fgFogColor by lazy { arguments.getString(ARG_PARAM_KEYWORD) }
 
     //region Fragment lifecycle
     override fun onResume() {
@@ -64,6 +84,8 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
                     }
                 }
             }
+            pBkgImageUrl = image
+            fogViewColor = backgroundColor
         }
     }
 

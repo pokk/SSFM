@@ -34,7 +34,7 @@ class RecyclerViewChartSimilarArtistViewModel(val item: BaseEntity) : BaseViewMo
     init {
         (item as ArtistEntity.Artist).let {
             artistName.set(it.name)
-            thumbnail.set(it.images?.get(LARGE)?.text ?: "")
+            thumbnail.set(it.images?.get(LARGE)?.text.orEmpty())
         }
     }
 

@@ -9,6 +9,9 @@ import com.devrapid.kotlinknifer.logi
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivitySearchBinding
 import taiwan.no1.app.ssfm.functions.base.AdvancedActivity
+import taiwan.no1.app.ssfm.misc.constants.Constant.CALLBACK_SPARSE_INDEX_FOG_COLOR
+import taiwan.no1.app.ssfm.misc.constants.Constant.CALLBACK_SPARSE_INDEX_IMAGE_URL
+import taiwan.no1.app.ssfm.misc.constants.Constant.CALLBACK_SPARSE_INDEX_KEYWORD
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.FRAGMENT_SEARCH_HISTORY
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.FRAGMENT_SEARCH_INDEX
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.FRAGMENT_SEARCH_RESULT
@@ -58,8 +61,7 @@ class SearchActivity : AdvancedActivity<SearchViewModel, ActivitySearchBinding>(
 
     private fun navigate(fragmentTag: String, params: SparseArray<Any> = SparseArray()) {
         setFragmentParameters(fragmentTag, params)?.let { targetFragment ->
-            if (isSpecificTargetAction(fragmentTag) ||
-                fragmentStack.safePeek() is SearchResultFragment) {
+            if (isSpecificTargetAction(fragmentTag) || fragmentStack.safePeek() is SearchResultFragment) {
                 if (popFragment(FRAGMENT_SEARCH_HISTORY))
                     return@let
             }
@@ -71,10 +73,16 @@ class SearchActivity : AdvancedActivity<SearchViewModel, ActivitySearchBinding>(
     private fun isSpecificTargetAction(fragmentTag: String): Boolean =
         FRAGMENT_SEARCH_HISTORY == fragmentTag && (fragmentStack.safePeek() is SearchHistoryFragment || fragmentStack.safePeek() is SearchResultFragment)
 
-    private fun setFragmentParameters(tag: String,
-                                      params: SparseArray<Any>) = searchFragments[tag].also {
+    private fun setFragmentParameters(tag: String, params: SparseArray<Any>) = searchFragments[tag].also {
         when (tag) {
-            FRAGMENT_SEARCH_RESULT -> (it as SearchResultFragment).keyword = params[0] as? String ?: ""
+            FRAGMENT_SEARCH_RESULT -> {
+                (it as SearchResultFragment).apply {
+                    // OPTIMIZE(jieyi): 11/22/17 The fragments shouldn't be created in advanced.
+                    keyword = params[CALLBACK_SPARSE_INDEX_KEYWORD] as String
+                    image = params[CALLBACK_SPARSE_INDEX_IMAGE_URL] as String
+                    backgroundColor = params[CALLBACK_SPARSE_INDEX_FOG_COLOR] as Int
+                }
+            }
             FRAGMENT_SEARCH_HISTORY -> Unit
             FRAGMENT_SEARCH_INDEX -> Unit
             else -> Unit

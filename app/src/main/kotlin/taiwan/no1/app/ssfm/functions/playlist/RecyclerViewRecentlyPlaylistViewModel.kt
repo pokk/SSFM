@@ -24,7 +24,7 @@ class RecyclerViewRecentlyPlaylistViewModel(val item: BaseEntity) : BaseViewMode
     }
 
     /**
-     * A callback event for clicking a item to list item.
+     * A callback event for clicking a item to list track.
      *
      * @hashCode view [android.widget.RelativeLayout]
      *

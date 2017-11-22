@@ -27,7 +27,7 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 class RecyclerViewUniversal1ViewModel(val item: BaseEntity) : BaseViewModel() {
     val artistName by lazy { ObservableField<String>((item as AlbumEntity.AlbumWithArtist).name) }
     val thumbnail by lazy {
-        ObservableField<String>((item as AlbumEntity.AlbumWithArtist).images?.get(ImageSizes.LARGE)?.text ?: "")
+        ObservableField<String>((item as AlbumEntity.AlbumWithArtist).images?.get(ImageSizes.LARGE)?.text.orEmpty())
     }
     val textBackground by lazy { ObservableInt() }
     val textColor by lazy { ObservableInt() }

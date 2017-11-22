@@ -31,9 +31,9 @@ class ChartAlbumDetailFragmentViewModel(private val albumInfoCase: FetchAlbumInf
         lifecycleProvider.execute(albumInfoCase,
             GetAlbumInfoUsecase.RequestValue(artistName, albumName)) {
             onNext {
-                this@ChartAlbumDetailFragmentViewModel.albumName.set(it.album?.name ?: "")
-                albumSummary.set(it.album?.wiki?.content ?: "")
-                albumImage.set(it.album?.images?.get(EXTRA_LARGE)?.text ?: "")
+                this@ChartAlbumDetailFragmentViewModel.albumName.set(it.album?.name.orEmpty())
+                albumSummary.set(it.album?.wiki?.content.orEmpty())
+                albumImage.set(it.album?.images?.get(EXTRA_LARGE)?.text.orEmpty())
                 albumTags.addAll(it.album?.tags?.tags?.map { it.name } ?: arrayListOf())
                 it.album?.let(callback)
             }

@@ -38,12 +38,13 @@ fun ImageView.loadImage(url: String?,
     if (!url.isNullOrBlank()) {
         Glide.with(context).asBitmap().load(url).apply(RequestOptions().apply {
             centerCrop()
-            holderDrawable?.let { placeholder(it) }
-            errorDrawable?.let { error(it) }
+            holderDrawable?.let(this::placeholder)
+            errorDrawable?.let(this::error)
             priority(Priority.HIGH)
             diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-        }).listener(listener).
-            into(this)
+        }).apply {
+            listener?.let(this::listener)
+        }.into(this)
     }
 }
 

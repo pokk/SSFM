@@ -31,7 +31,6 @@
             android:placeHolder="@{@drawable/loading_placeholder}"
             android:scaleType="fitXY"
             android:src="@drawable/image09"/>
-        <!--android:imageUrl="@{avm.thumbnail}"-->
 
         <LinearLayout
             android:layout_width="wrap_content"

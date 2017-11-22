@@ -27,20 +27,23 @@ class RecyclerViewSearchArtistChartViewModel(val item: BaseEntity) : BaseViewMod
 
             artistName.set(it.name)
             playCount.set("${count.toString().formatToMoneyKarma()}K")
-            thumbnail.set(it.images?.get(EXTRA_LARGE)?.text ?: "")
+            thumbnail.set(it.images?.get(EXTRA_LARGE)?.text.orEmpty())
         }
     }
 
     /**
-     * A callback event for clicking a item to list item.
+     * A callback event for clicking a item to list track.
      *
      * @hashCode view [android.widget.RelativeLayout]
      *
      * @event_to [taiwan.no1.app.ssfm.functions.search.SearchViewModel.receiveClickHistoryEvent]
      */
     fun artistOnClick(view: View) {
+        item as ArtistEntity.Artist
+
+
         // For `searching activity`.
-        RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_HISTORY, (item as ArtistEntity.Artist).name)
+        RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_HISTORY, item.name)
         // For `top chart activity`.
         clickItemListener?.invoke(item)
     }

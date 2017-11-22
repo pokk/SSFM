@@ -11,6 +11,12 @@ import com.hwangjr.rxbus.annotation.Tag
 import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
+import taiwan.no1.app.ssfm.misc.constants.Constant.CALLBACK_SPARSE_INDEX_FOG_COLOR
+import taiwan.no1.app.ssfm.misc.constants.Constant.CALLBACK_SPARSE_INDEX_IMAGE_URL
+import taiwan.no1.app.ssfm.misc.constants.Constant.CALLBACK_SPARSE_INDEX_KEYWORD
+import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_FOG_COLOR
+import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_IMAGE_URL
+import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_KEYWORD
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.FRAGMENT_SEARCH_HISTORY
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.FRAGMENT_SEARCH_INDEX
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.FRAGMENT_SEARCH_RESULT
@@ -24,13 +30,13 @@ import taiwan.no1.app.ssfm.models.usecases.SaveSearchHistoryCase
  * @author  jieyi
  * @since   9/13/17
  */
-class SearchViewModel(private val context: Context,
-                      private val addHistoryUsecase: SaveSearchHistoryCase) :
+class SearchViewModel(private val context: Context, private val addHistoryUsecase: SaveSearchHistoryCase) :
     BaseViewModel() {
     /** For navigating to other fragments from the parent activity */
     lateinit var navigateListener: (fragmentTag: String, params: SparseArray<Any>?) -> Unit
     /** For pop the current fragment listener */
     lateinit var popFragment: (popToFragmentTag: String) -> Unit
+
     /** Menu Title */
     val title by lazy { ObservableField<String>(context.getString(R.string.menu_search)) }
     /** The keyword of a song or singer's name */
@@ -38,6 +44,9 @@ class SearchViewModel(private val context: Context,
     /** Check search view is clicked or un-clicked */
     val isSearching by lazy { ObservableBoolean() }
     val collapseView by lazy { ObservableBoolean() }
+
+    private var pBkgImageUrl: String? = null
+    private var pFgBlurColor: Int? = null
 
     //region Lifecycle
     override fun <E> onAttach(lifecycleProvider: LifecycleProvider<E>) {
@@ -76,8 +85,12 @@ class SearchViewModel(private val context: Context,
      * @hashCode query the query of song's or singer's name for searching a music.
      */
     fun querySubmit(query: String): Boolean {
-        query.takeIf { it.isNotBlank() }?.let {
-            navigateListener(FRAGMENT_SEARCH_RESULT, SparseArray<Any>().apply { put(0, it) })
+        query.takeIf(String::isNotBlank)?.let {
+            navigateListener(FRAGMENT_SEARCH_RESULT, SparseArray<Any>().apply {
+                put(CALLBACK_SPARSE_INDEX_KEYWORD, it)
+                put(CALLBACK_SPARSE_INDEX_IMAGE_URL, pBkgImageUrl.orEmpty())
+                put(CALLBACK_SPARSE_INDEX_FOG_COLOR, pFgBlurColor ?: -1)
+            })
             lifecycleProvider.execute(addHistoryUsecase, SaveKeywordHistoryUsecase.RequestValue(it)) {
                 // For ensuring that the search view focus is canceled.
                 onComplete { keyword.set(it) }
@@ -123,5 +136,9 @@ class SearchViewModel(private val context: Context,
      * @event_from [taiwan.no1.app.ssfm.functions.search.RecyclerViewSearchTrackChartViewModel.trackOnClick]
      */
     @Subscribe(tags = arrayOf(Tag(VIEWMODEL_CLICK_HISTORY)))
-    fun receiveClickHistoryEvent(keyword: String) = querySubmit(keyword)
+    fun receiveClickHistoryEvent(params: HashMap<String, String>) {
+        pBkgImageUrl = params[VIEWMODEL_PARAMS_IMAGE_URL]
+        pFgBlurColor = params[VIEWMODEL_PARAMS_FOG_COLOR]?.toInt()
+        querySubmit(params[VIEWMODEL_PARAMS_KEYWORD].orEmpty())
+    }
 }

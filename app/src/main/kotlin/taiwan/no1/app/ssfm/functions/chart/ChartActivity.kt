@@ -58,7 +58,7 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
      */
     @Subscribe(tags = arrayOf(Tag(RxBusTag.VIEWMODEL_CLICK_ALBUM)))
     fun navigateToAlbumDetail(params: HashMap<String, String>) {
-        val (artistName, artistAlbum) = (params["Artist Name"] ?: "") to (params["Artist Album Name"] ?: "")
+        val (artistName, artistAlbum) = (params["Artist Name"].orEmpty()) to (params["Artist Album Name"].orEmpty())
         navigate(ChartAlbumDetailFragment.newInstance(artistAlbum, artistName), true)
     }
 

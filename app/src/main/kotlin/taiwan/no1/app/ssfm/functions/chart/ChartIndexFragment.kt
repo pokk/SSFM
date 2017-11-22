@@ -79,8 +79,8 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
                     onAttach(this@ChartIndexFragment)
                     clickItemListener = {
                         // TODO(jieyi): 10/22/17 Change fragment to create instance method.
-                        (act as ChartActivity).navigate(ChartArtistDetailFragment.newInstance(it.mbid ?: "",
-                            it.name ?: ""), true)
+                        (act as ChartActivity).navigate(ChartArtistDetailFragment.newInstance(it.mbid.orEmpty(),
+                            it.name.orEmpty()), true)
                     }
                 }
                 val sd = App.compactContext.scaledDrawable(R.drawable.ic_pause_circle, 0.5f, 0.5f)
@@ -99,7 +99,7 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
                     onAttach(this@ChartIndexFragment)
                     clickItemListener = {
                         // TODO(jieyi): 10/22/17 Change fragment to create instance method.
-                        (act as ChartActivity).navigate(ChartTagDetailFragment.newInstance(it.name ?: ""),
+                        (act as ChartActivity).navigate(ChartTagDetailFragment.newInstance(it.name.orEmpty()),
                             true)
                     }
                 }

@@ -32,9 +32,9 @@ class ChartArtistDetailFragmentViewModel(private val artistsInfoUsecase: FetchAr
         lifecycleProvider.execute(artistsInfoUsecase, GetArtistInfoUsecase.RequestValue(name, mbid)) {
             onNext {
                 it.artist.let {
-                    artistImage.set(it?.images?.get(EXTRA_LARGE)?.text ?: "")
-                    artistName.set(it?.name ?: "")
-                    artistSummary.set(it?.bio?.content ?: "")
+                    artistImage.set(it?.images?.get(EXTRA_LARGE)?.text.orEmpty())
+                    artistName.set(it?.name.orEmpty())
+                    artistSummary.set(it?.bio?.content.orEmpty())
                 }
                 callback(it)
             }

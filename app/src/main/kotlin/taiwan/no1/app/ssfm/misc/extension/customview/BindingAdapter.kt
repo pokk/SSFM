@@ -1,6 +1,7 @@
 package taiwan.no1.app.ssfm.misc.extension.customview
 
 import android.databinding.BindingAdapter
+import com.github.mmin18.widget.RealtimeBlurView
 import me.gujun.android.taggroup.TagGroup
 
 /**
@@ -9,3 +10,6 @@ import me.gujun.android.taggroup.TagGroup
  */
 @BindingAdapter("android:tags")
 fun TagGroup.setSrc(tags: ArrayList<String>) = setTags(tags)
+
+@BindingAdapter("android:blurBackground")
+fun RealtimeBlurView.setBackground(color: Int) = setOverlayColor(color)

@@ -18,7 +18,7 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
     AdaptiveAdapter<ExpandableViewTypeFactory, IExpandVisitable, AdaptiveViewHolder<ExpandableViewTypeFactory, IExpandVisitable>>() {
     override var typeFactory: ExpandableViewTypeFactory = ExpandableViewTypeFactory()
     /**
-     *  This is for keeping the item position of the first layer. After a main item
+     *  This is for keeping the item position of the first layer. After a main track
      *  was expanded, the children quantity of the main item will be recorded to
      *  this list.
      *

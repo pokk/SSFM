@@ -23,12 +23,12 @@ class RecyclerViewChartTopArtistViewModel(val item: BaseEntity) : BaseViewModel(
         (item as ArtistEntity.Artist).let {
             artistName.set(it.name)
             playCount.set(it.playCount)
-            thumbnail.set(it.images?.get(EXTRA_LARGE)?.text ?: "")
+            thumbnail.set(it.images?.get(EXTRA_LARGE)?.text.orEmpty())
         }
     }
 
     /**
-     * A callback event for clicking a item to list item.
+     * A callback event for clicking a item to list track.
      *
      * @hashCode view [android.widget.RelativeLayout]
      *

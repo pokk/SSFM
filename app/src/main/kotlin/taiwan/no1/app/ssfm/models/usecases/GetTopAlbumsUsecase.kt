@@ -11,7 +11,7 @@ import taiwan.no1.app.ssfm.models.usecases.GetTopAlbumsUsecase.RequestValue
  */
 class GetTopAlbumsUsecase(repository: IDataStore) :
     BaseUsecase<TopAlbumEntity, RequestValue>(repository) {
-    override fun fetchUsecase(): Observable<TopAlbumEntity> = repository.getTagTopAlbums(parameters?.name ?: "")
+    override fun fetchUsecase(): Observable<TopAlbumEntity> = repository.getTagTopAlbums(parameters?.name.orEmpty())
 
     data class RequestValue(val name: String = "") : RequestValues
 }

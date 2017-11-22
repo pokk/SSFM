@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        tools:context=".mvvm.views.activities.SearchActivity">
+        tools:context=".functions.search.SearchActivity">
 
     <data>
 
@@ -20,15 +21,42 @@
         <variable
             name="loadmore"
             type="taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback"/>
+
+        <variable
+            name="pBkgImageUrl"
+            type="String"/>
+
+        <variable
+            name="fogViewColor"
+            type="Integer"/>
     </data>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_music_result"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:adapter="@{adapter}"
-        android:layoutManager="@{layoutManager}"
-        android:loadMore="@{loadmore}"
-        android:scrollbars="vertical"
-        tools:listitem="@layout/item_search_music_type_1"/>
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:imageUrl="@{pBkgImageUrl}"
+            tools:src="@drawable/sample_lady_gaga"/>
+
+        <com.github.mmin18.widget.RealtimeBlurView
+            android:id="@+id/blur_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:blurBackground="@{fogViewColor}"
+            app:realtimeBlurRadius="20dp"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_music_result"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adapter="@{adapter}"
+            android:layoutManager="@{layoutManager}"
+            android:loadMore="@{loadmore}"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/item_search_music_type_1"/>
+    </FrameLayout>
 </layout>

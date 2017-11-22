@@ -12,6 +12,10 @@ import com.bumptech.glide.request.target.Target
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
+import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_FOG_COLOR
+import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_IMAGE_URL
+import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_KEYWORD
+import taiwan.no1.app.ssfm.misc.constants.ImageSizes.EXTRA_LARGE
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.LARGE
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.misc.extension.gAlphaIntColor
@@ -19,13 +23,14 @@ import taiwan.no1.app.ssfm.misc.extension.gColor
 import taiwan.no1.app.ssfm.misc.extension.palette
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
+import kotlin.properties.Delegates
 
 /**
  *
  * @author  jieyi
  * @since   9/20/17
  */
-class RecyclerViewSearchTrackChartViewModel(val item: BaseEntity) : BaseViewModel() {
+class RecyclerViewSearchTrackChartViewModel(val track: BaseEntity) : BaseViewModel() {
     val trackName by lazy { ObservableField<String>() }
     val artistName by lazy { ObservableField<String>() }
     val thumbnail by lazy { ObservableField<String>() }
@@ -43,35 +48,42 @@ class RecyclerViewSearchTrackChartViewModel(val item: BaseEntity) : BaseViewMode
                                      isFirstResource: Boolean): Boolean =
             resource.palette().maximumColorCount(24).generate().let { palette ->
                 val start = gAlphaIntColor(palette.vibrantSwatch?.rgb ?:
-                    gColor(R.color.colorSimilarPrimaryDark), 0.5f)
-                val end = gAlphaIntColor(palette.darkVibrantSwatch?.rgb ?:
-                    gColor(R.color.colorPrimaryDark), 0.5f)
-                val background = GradientDrawable(GradientDrawable.Orientation.BR_TL, intArrayOf(end, start))
+                    gColor(R.color.colorSimilarPrimaryDark), 0.65f)
+                darkColor = gAlphaIntColor(palette.darkVibrantSwatch?.rgb ?:
+                    gColor(R.color.colorPrimaryDark), 0.65f)
+                val background = GradientDrawable(GradientDrawable.Orientation.TL_BR, intArrayOf(start, darkColor))
 
                 layoutBackground.set(background)
                 false
             }
     }
+    private var darkColor by Delegates.notNull<Int>()
 
     init {
-        (item as TrackEntity.Track).let {
+        (track as TrackEntity.Track).let {
             trackName.set(it.name)
-            artistName.set(it.artist?.name ?: "")
-            thumbnail.set(it.images?.get(LARGE)?.text ?: "")
+            artistName.set(it.artist?.name.orEmpty())
+            thumbnail.set(it.images?.get(LARGE)?.text.orEmpty())
         }
     }
 
     /**
-     * A callback event for clicking a item to list item.
+     * A callback event for clicking a item to list track.
      *
      * @hashCode view [android.widget.RelativeLayout]
      *
      * @event_to [taiwan.no1.app.ssfm.functions.search.SearchViewModel.receiveClickHistoryEvent]
      */
     fun trackOnClick(view: View) {
-        item as TrackEntity.Track
-        val keyword = item.artist?.let { "${it.name} ${item.name}" } ?: item.name
+        val (keyword, imageUrl) = (track as TrackEntity.Track).let {
+            val k = it.artist?.let { artist -> "${it.name} ${artist.name}" } ?: it.name.orEmpty()
+            val u = it.images?.get(EXTRA_LARGE)?.text.orEmpty()
+            k to u
+        }
 
-        RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_HISTORY, keyword)
+        RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_HISTORY,
+            hashMapOf(VIEWMODEL_PARAMS_KEYWORD to keyword,
+                VIEWMODEL_PARAMS_IMAGE_URL to imageUrl,
+                VIEWMODEL_PARAMS_FOG_COLOR to darkColor.toString()))
     }
 }
