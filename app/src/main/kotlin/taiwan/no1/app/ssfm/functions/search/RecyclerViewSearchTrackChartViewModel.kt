@@ -36,15 +36,10 @@ class RecyclerViewSearchTrackChartViewModel(val track: BaseEntity) : BaseViewMod
     val thumbnail by lazy { ObservableField<String>() }
     val layoutBackground by lazy { ObservableField<Drawable>() }
     val imageCallback = object : RequestListener<Bitmap> {
-        override fun onLoadFailed(e: GlideException?,
-                                  model: Any?,
-                                  target: Target<Bitmap>?,
-                                  isFirstResource: Boolean): Boolean = false
+        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean) =
+            false
 
-        override fun onResourceReady(resource: Bitmap,
-                                     model: Any?,
-                                     target: Target<Bitmap>?,
-                                     dataSource: DataSource?,
+        override fun onResourceReady(resource: Bitmap, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?,
                                      isFirstResource: Boolean): Boolean =
             resource.palette().maximumColorCount(24).generate().let { palette ->
                 val start = gAlphaIntColor(palette.vibrantSwatch?.rgb ?:

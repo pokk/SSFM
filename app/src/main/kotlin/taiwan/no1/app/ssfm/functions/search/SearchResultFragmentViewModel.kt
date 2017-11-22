@@ -1,5 +1,6 @@
 package taiwan.no1.app.ssfm.functions.search
 
+import com.devrapid.kotlinknifer.loge
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
@@ -19,6 +20,10 @@ class SearchResultFragmentViewModel(private val searchUsecase: SearchMusicV2Case
                 onNext {
                     // Raise the stop loading more data flag.
                     resultCallback(keyword, it.data.items.toMutableList(), it.data.has_more)
+                }
+                onError {
+                    loge(it.message)
+                    loge(it)
                 }
             }
         }

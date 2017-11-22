@@ -27,6 +27,7 @@
                 style="@style/RecyclerViewItem.Artist.Image"
                 android:error="@{@drawable/sample_jieyi_icon}"
                 android:imageUrl="@{avm.thumbnail}"
+                android:imgCallback="@{avm.imageCallback}"
                 android:placeHolder="@{@drawable/loading_placeholder}"
                 tools:src="@drawable/sample_lady_gaga"/>
         </android.support.v7.widget.CardView>
