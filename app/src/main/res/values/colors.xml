@@ -9,9 +9,11 @@
     <color name="colorThickDark">#547D7C</color>
     <color name="colorMainThemeBackground">#1A1A1C</color>
 
+    <!-- Special color -->
     <color name="colorSimilarPrimaryDark">#664DC3FF</color>
 
     <!-- Basic color -->
+    <color name="colorTransparent">#00000000</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorIvory">#FFFFF0</color>
     <color name="colorSnow">#FFFAFA</color>

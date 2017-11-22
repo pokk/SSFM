@@ -6,6 +6,7 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchResultBinding
 import taiwan.no1.app.ssfm.databinding.ItemSearchMusicType1Binding
 import taiwan.no1.app.ssfm.functions.base.AdvancedFragment
+import taiwan.no1.app.ssfm.misc.constants.Constant.SPECIAL_NUMBER
 import taiwan.no1.app.ssfm.misc.extension.gColor
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback
@@ -36,26 +37,27 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
          */
         fun newInstance(keyword: String = "",
                         imageUrl: String = "",
-                        fgColor: Int = gColor(R.color.colorSimilarPrimaryDark)) = SearchResultFragment().apply {
+                        fgColor: Int = gColor(R.color.colorTransparent)) = SearchResultFragment().apply {
             arguments = Bundle().apply {
                 putString(ARG_PARAM_KEYWORD, keyword)
                 putString(ARG_PARAM_BACKGROUND_IMAGE_URL, imageUrl)
-                putInt(ARG_PARAM_FOREGROUND_BLUR_COLOR, fgColor)
+                putInt(ARG_PARAM_FOREGROUND_BLUR_COLOR,
+                    fgColor.takeIf { SPECIAL_NUMBER != it }.let { it } ?: gColor(R.color.colorTransparent))
             }
         }
     }
     //endregion
 
     @Inject override lateinit var viewModel: SearchResultFragmentViewModel
-    var keyword: String = ""
-    var image: String = ""
-    var backgroundColor: Int = gColor(R.color.colorPrimaryDark)
+    //    var keyword: String = ""
+//    var imageUrl: String = ""
+//    var fgFogColor: Int = gColor(R.color.colorPrimaryDark)
     private var res = mutableListOf<BaseEntity>()
     private val resInfo by lazy { DataInfo() }
     // Get the arguments from the bundle here.
-//    private val keyword by lazy { arguments.getString(ARG_PARAM_KEYWORD) }
-//    private val bkgImageUrl by lazy { arguments.getString(ARG_PARAM_KEYWORD) }
-//    private val fgFogColor by lazy { arguments.getString(ARG_PARAM_KEYWORD) }
+    private val keyword by lazy { arguments.getString(ARG_PARAM_KEYWORD) }
+    private val bkgImageUrl by lazy { arguments.getString(ARG_PARAM_BACKGROUND_IMAGE_URL) }
+    private val fgFogColor by lazy { arguments.getInt(ARG_PARAM_FOREGROUND_BLUR_COLOR) }
 
     //region Fragment lifecycle
     override fun onResume() {
@@ -84,8 +86,8 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
                     }
                 }
             }
-            pBkgImageUrl = image
-            fogViewColor = backgroundColor
+            pBkgImageUrl = bkgImageUrl
+            fogViewColor = fgFogColor
         }
     }
 
@@ -97,7 +99,7 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
      * from the viewholder of the loading more event.
      */
     private val updateListInfo = { keyword: String, musics: MutableList<MusicEntity.Music>, canLoadMore: Boolean ->
-        this.keyword = keyword
+        //        this.keyword = keyword
         res = (binding?.adapter as BaseDataBindingAdapter<ItemSearchMusicType1Binding, BaseEntity>).
             refresh(res, ArrayList(res).apply { addAll(musics) }).toMutableList()
         // TODO(jieyi): 9/28/17 Close the loading item or view.

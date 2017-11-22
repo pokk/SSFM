@@ -14,6 +14,7 @@ import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.Constant.CALLBACK_SPARSE_INDEX_FOG_COLOR
 import taiwan.no1.app.ssfm.misc.constants.Constant.CALLBACK_SPARSE_INDEX_IMAGE_URL
 import taiwan.no1.app.ssfm.misc.constants.Constant.CALLBACK_SPARSE_INDEX_KEYWORD
+import taiwan.no1.app.ssfm.misc.constants.Constant.SPECIAL_NUMBER
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_FOG_COLOR
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_IMAGE_URL
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_KEYWORD
@@ -89,7 +90,7 @@ class SearchViewModel(private val context: Context, private val addHistoryUsecas
             navigateListener(FRAGMENT_SEARCH_RESULT, SparseArray<Any>().apply {
                 put(CALLBACK_SPARSE_INDEX_KEYWORD, it)
                 put(CALLBACK_SPARSE_INDEX_IMAGE_URL, pBkgImageUrl.orEmpty())
-                put(CALLBACK_SPARSE_INDEX_FOG_COLOR, pFgBlurColor ?: -1)
+                put(CALLBACK_SPARSE_INDEX_FOG_COLOR, pFgBlurColor ?: SPECIAL_NUMBER)
             })
             lifecycleProvider.execute(addHistoryUsecase, SaveKeywordHistoryUsecase.RequestValue(it)) {
                 // For ensuring that the search view focus is canceled.

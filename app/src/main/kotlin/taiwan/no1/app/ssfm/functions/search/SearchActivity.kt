@@ -1,11 +1,9 @@
 package taiwan.no1.app.ssfm.functions.search
 
-import android.app.Activity
 import android.app.Fragment
 import android.os.Bundle
 import android.util.SparseArray
 import com.devrapid.kotlinknifer.addFragment
-import com.devrapid.kotlinknifer.logi
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivitySearchBinding
 import taiwan.no1.app.ssfm.functions.base.AdvancedActivity
@@ -25,28 +23,24 @@ import javax.inject.Inject
  */
 class SearchActivity : AdvancedActivity<SearchViewModel, ActivitySearchBinding>() {
     @Inject override lateinit var viewModel: SearchViewModel
+    /** For judging a fragment should be pushed or popped. */
     private val fragmentStack by lazy { Stack<Fragment>() }
-    private val searchFragments by lazy {
-        hashMapOf<String, Fragment>(FRAGMENT_SEARCH_RESULT to SearchResultFragment.newInstance(),
-            FRAGMENT_SEARCH_HISTORY to SearchHistoryFragment.newInstance(),
-            FRAGMENT_SEARCH_INDEX to SearchIndexFragment.newInstance())
-    }
 
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        addFragment(searchFragments[FRAGMENT_SEARCH_INDEX] as Fragment)
+        addFragmentAndToStack(SearchIndexFragment.newInstance())
         viewModel.apply {
             navigateListener = { fragmentTag, params ->
                 params?.let { navigate(fragmentTag, params) } ?: navigate(fragmentTag)
             }
-            popFragment = { toFragmentTag -> this@SearchActivity.popFragment(toFragmentTag) }
+            popFragment = { toFragmentTag -> this@SearchActivity.popFragmentAndFromStack(toFragmentTag) }
         }
     }
     //endregion
 
     //region Base activity implement
-    override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_search)
+    override fun provideBindingLayoutId() = this to R.layout.activity_search
     //endregion
 
     override fun onBackPressed() {
@@ -60,42 +54,56 @@ class SearchActivity : AdvancedActivity<SearchViewModel, ActivitySearchBinding>(
     }
 
     private fun navigate(fragmentTag: String, params: SparseArray<Any> = SparseArray()) {
-        setFragmentParameters(fragmentTag, params)?.let { targetFragment ->
+        runNewFragment(fragmentTag, params).let { targetFragment ->
             if (isSpecificTargetAction(fragmentTag) || fragmentStack.safePeek() is SearchResultFragment) {
-                if (popFragment(FRAGMENT_SEARCH_HISTORY))
+                if (popFragmentAndFromStack(FRAGMENT_SEARCH_HISTORY))
                     return@let
             }
-
-            addFragment(targetFragment, true)
+            addFragmentAndToStack(targetFragment, true)
         }
     }
 
+    /**
+     * Check the specific fragment. The following of the specific fragment are
+     * 1. When search some tracks in the [SearchHistoryFragment], we don't want to add a same fragment
+     *    again and again.
+     *
+     * @param fragmentTag the tag of a fragment.
+     * @return [true] if the fragment is a specific fragment; otherwise [false].
+     */
     private fun isSpecificTargetAction(fragmentTag: String): Boolean =
         FRAGMENT_SEARCH_HISTORY == fragmentTag && (fragmentStack.safePeek() is SearchHistoryFragment || fragmentStack.safePeek() is SearchResultFragment)
 
-    private fun setFragmentParameters(tag: String, params: SparseArray<Any>) = searchFragments[tag].also {
-        when (tag) {
-            FRAGMENT_SEARCH_RESULT -> {
-                (it as SearchResultFragment).apply {
-                    // OPTIMIZE(jieyi): 11/22/17 The fragments shouldn't be created in advanced.
-                    keyword = params[CALLBACK_SPARSE_INDEX_KEYWORD] as String
-                    image = params[CALLBACK_SPARSE_INDEX_IMAGE_URL] as String
-                    backgroundColor = params[CALLBACK_SPARSE_INDEX_FOG_COLOR] as Int
-                }
-            }
-            FRAGMENT_SEARCH_HISTORY -> Unit
-            FRAGMENT_SEARCH_INDEX -> Unit
-            else -> Unit
+    /**
+     * According to the [tag] to adding a new [Fragment] with the parameters.
+     *
+     * @param tag the tag of a fragment.
+     * @param params the parameters for the new fragment.
+     */
+    private fun runNewFragment(tag: String, params: SparseArray<Any>) = when (tag) {
+        FRAGMENT_SEARCH_RESULT -> {
+            val keyword = params[CALLBACK_SPARSE_INDEX_KEYWORD] as String
+            val imageUrl = params[CALLBACK_SPARSE_INDEX_IMAGE_URL] as String
+            val fgFogColor = params[CALLBACK_SPARSE_INDEX_FOG_COLOR] as Int
+            SearchResultFragment.newInstance(keyword, imageUrl, fgFogColor)
         }
+        FRAGMENT_SEARCH_HISTORY -> SearchHistoryFragment.newInstance()
+        FRAGMENT_SEARCH_INDEX -> SearchIndexFragment.newInstance()
+        else -> error("There's no kind of the fragment tag.")
     }
 
-    private fun addFragment(fragment: Fragment, needBack: Boolean = false) {
+    /**
+     * Add a fragment to the [getFragmentManager] and [fragmentStack].
+     *
+     * @param fragment [Fragment]
+     * @param needBack when the use clicks the return button, the page will transfer to the previous one.
+     */
+    private fun addFragmentAndToStack(fragment: Fragment, needBack: Boolean = false) {
         fragmentManager.addFragment(R.id.fl_container, fragment, needBack)
         fragmentStack.push(fragment)
     }
 
-    private fun popFragment(toFragmentTag: String): Boolean {
-        fragmentStack.forEach { logi(it) }
+    private fun popFragmentAndFromStack(toFragmentTag: String): Boolean {
         // For staying the same history fragment.
         if (FRAGMENT_SEARCH_HISTORY == toFragmentTag && fragmentStack.safePeek() is SearchHistoryFragment)
             return true
