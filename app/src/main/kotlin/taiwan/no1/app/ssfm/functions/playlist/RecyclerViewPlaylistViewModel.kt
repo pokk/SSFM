@@ -39,13 +39,14 @@ class RecyclerViewPlaylistViewModel(val item: BaseEntity) : BaseViewModel() {
      * @event_to [taiwan.no1.app.ssfm.functions.playlist.PlaylistActivity.navigateToPlaylistDetail]
      */
     fun playlistOnClick(view: View) {
-        item as PlaylistEntity
-        val sharedElements =
-            listOf(Pair(view.iv_playlist_image, "transition_image_${item.id}"),
-                Pair(view.tv_playlist_name, "transition_name_${item.id}"))
+        (item as PlaylistEntity).let {
+            val sharedElements =
+                listOf(Pair(view.iv_playlist_image, "transition_image_${it.id}"),
+                    Pair(view.tv_playlist_name, "transition_name_${it.id}"))
 
-        sharedElements.forEach { it.first.transitionName = it.second }
+            sharedElements.forEach { it.first.transitionName = it.second }
 
-        RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_PLAYLIST, Pair(item, sharedElements))
+            RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_PLAYLIST, Pair(it, sharedElements))
+        }
     }
 }

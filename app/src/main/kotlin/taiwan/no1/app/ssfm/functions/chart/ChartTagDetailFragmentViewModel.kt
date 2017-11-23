@@ -31,28 +31,21 @@ class ChartTagDetailFragmentViewModel(
         }
     }
 
-    fun fetchHotAlbum(name: String, page: Int, limit: Int,
-                      callback: (List<BaseEntity>, total: Int) -> Unit) {
+    fun fetchHotAlbum(name: String, page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit) {
         lifecycleProvider.execute(topAlbumsUsecase,
             GetTagTopAlbumsUsecase.RequestValue(name, page, limit)) {
             onNext { callback(it.albums.albums, it.albums.attr?.total?.toInt() ?: 0) }
         }
     }
 
-    fun fetchHotArtist(name: String,
-                       page: Int,
-                       limit: Int,
-                       callback: (List<BaseEntity>, total: Int) -> Unit) {
+    fun fetchHotArtist(name: String, page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit) {
         lifecycleProvider.execute(topArtistsUsecase,
             GetTagTopArtistsUsecase.RequestValue(name, page, limit)) {
             onNext { callback(it.topartists.artists, it.topartists.attr?.total?.toInt() ?: 0) }
         }
     }
 
-    fun fetchHotTrack(name: String,
-                      page: Int,
-                      limit: Int,
-                      callback: (List<BaseEntity>, total: Int) -> Unit) {
+    fun fetchHotTrack(name: String, page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit) {
         lifecycleProvider.execute(topTracksUsecase,
             GetTagTopTracksUsecase.RequestValue(name, page, limit)) {
             onNext { callback(it.track.tracks, it.track.attr?.total?.toInt() ?: 0) }

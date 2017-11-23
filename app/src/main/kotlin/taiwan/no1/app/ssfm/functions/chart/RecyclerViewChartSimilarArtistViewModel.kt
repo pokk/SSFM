@@ -5,16 +5,12 @@ import android.databinding.ObservableInt
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.view.View
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
-import com.devrapid.kotlinknifer.getColorWithAlpha
 import com.hwangjr.rxbus.RxBus
-import taiwan.no1.app.ssfm.App
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.LARGE
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
+import taiwan.no1.app.ssfm.misc.extension.gAlphaIntColor
+import taiwan.no1.app.ssfm.misc.extension.glideListener
 import taiwan.no1.app.ssfm.misc.extension.palette
 import taiwan.no1.app.ssfm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
@@ -49,24 +45,13 @@ class RecyclerViewChartSimilarArtistViewModel(val item: BaseEntity) : BaseViewMo
         RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_SIMILAR, (item as ArtistEntity.Artist).name)
     }
 
-    val imageCallback = object : RequestListener<Bitmap> {
-        override fun onLoadFailed(e: GlideException?,
-                                  model: Any?,
-                                  target: Target<Bitmap>?,
-                                  isFirstResource: Boolean) =
-            false
-
-        override fun onResourceReady(resource: Bitmap,
-                                     model: Any?,
-                                     target: Target<Bitmap>?,
-                                     dataSource: DataSource?,
-                                     isFirstResource: Boolean) =
-            resource.palette().maximumColorCount(24).generate().let {
-                App.appComponent.context().
-                    getColorWithAlpha(it.vibrantSwatch?.rgb ?: Color.BLACK, 0.5f).
-                    let(textBackground::set)
+    val imageCallback = glideListener<Bitmap> {
+        onResourceReady = { resource, _, _, _, _ ->
+            resource.palette(24).let {
+                gAlphaIntColor(it.vibrantSwatch?.rgb ?: Color.BLACK, 0.5f).let(textBackground::set)
                 textColor.set(it.vibrantSwatch?.bodyTextColor ?: Color.GRAY)
-                false
             }
+            false
+        }
     }
 }
