@@ -9,7 +9,7 @@ import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.LARGE
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
-import taiwan.no1.app.ssfm.misc.extension.gAlphaColor
+import taiwan.no1.app.ssfm.misc.extension.gAlphaIntColor
 import taiwan.no1.app.ssfm.misc.extension.glideListener
 import taiwan.no1.app.ssfm.misc.extension.palette
 import taiwan.no1.app.ssfm.models.entities.lastfm.AlbumEntity
@@ -29,7 +29,7 @@ class RecyclerViewUniversal1ViewModel(val item: BaseEntity) : BaseViewModel() {
     val imageCallback = glideListener<Bitmap> {
         onResourceReady = { resource, _, _, _, _ ->
             resource.palette(24).let {
-                gAlphaColor(it.vibrantSwatch?.rgb ?: Color.BLACK, 0.5f).let(textBackground::set)
+                gAlphaIntColor(it.vibrantSwatch?.rgb ?: Color.BLACK, 0.5f).let(textBackground::set)
                 shadowColor.set(it.vibrantSwatch?.rgb ?: Color.BLACK)
                 textColor.set(it.vibrantSwatch?.bodyTextColor ?: Color.GRAY)
             }

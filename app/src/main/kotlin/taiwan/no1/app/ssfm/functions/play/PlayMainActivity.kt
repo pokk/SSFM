@@ -42,7 +42,7 @@ class PlayMainActivity : AdvancedActivity<PlayMainViewModel, ActivityMusicBindin
         var bufferPercentageListener: (percentage: Int) -> Unit = { percentage ->
         }
 
-        musicPlayer = ExoPlayerWrapper(this.applicationContext, durationListener, bufferPercentageListener)
+        musicPlayer = ExoPlayerWrapper(this.applicationContext, durationListener, bufferPercentageListener, {})
 
         /*mediaPlayerAdapter = MediaPlayerAdapter(rcii_album)
         mediaPlayerAdapter.setDurationListener { duration ->

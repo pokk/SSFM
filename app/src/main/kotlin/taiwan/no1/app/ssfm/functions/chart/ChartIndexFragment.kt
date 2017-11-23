@@ -7,13 +7,14 @@ import android.widget.GridLayout.VERTICAL
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.GridSpacingItemDecorator
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.HorizontalItemDecorator
 import org.jetbrains.anko.act
-import taiwan.no1.app.ssfm.App
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentChartIndexBinding
 import taiwan.no1.app.ssfm.databinding.ItemArtistType1Binding
+import taiwan.no1.app.ssfm.databinding.ItemRankType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemTagType1Binding
 import taiwan.no1.app.ssfm.functions.base.AdvancedFragment
 import taiwan.no1.app.ssfm.functions.search.RecyclerViewSearchArtistChartViewModel
+import taiwan.no1.app.ssfm.misc.extension.gContext
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.ArtistAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RVCustomScrollCallback
@@ -46,8 +47,10 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
     //endregion
 
     @Inject override lateinit var viewModel: ChartIndexFragmentViewModel
+    private val rankInfo by lazy { DataInfo() }
     private val artistInfo by lazy { DataInfo(limit = 30) }
     private val tagInfo by lazy { DataInfo() }
+    private var rankRes = mutableListOf<BaseEntity>()
     private var artistRes = mutableListOf<BaseEntity>()
     private var tagRes = mutableListOf<BaseEntity>()
 
@@ -70,9 +73,16 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
     //region Base fragment implement
     override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
-            artistLayoutManager = WrapContentLinearLayoutManager(activity,
-                LinearLayoutManager.HORIZONTAL,
-                false)
+            rankLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            rankAdapter = BaseDataBindingAdapter<ItemRankType1Binding, BaseEntity>(R.layout.item_rank_type_1,
+                rankRes) { holder, item ->
+                holder.binding.avm = RecyclerViewChartRankChartViewModel(item).apply {
+                    onAttach(this@ChartIndexFragment)
+                }
+            }
+            rankDecoration = HorizontalItemDecorator(20)
+
+            artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             artistAdapter = BaseDataBindingAdapter<ItemArtistType1Binding, BaseEntity>(R.layout.item_artist_type_1,
                 artistRes) { holder, item ->
                 holder.binding.avm = RecyclerViewSearchArtistChartViewModel(item).apply {
@@ -83,13 +93,11 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
                             it.name.orEmpty()), true)
                     }
                 }
-                val sd = App.compactContext.scaledDrawable(R.drawable.ic_pause_circle, 0.5f, 0.5f)
+                val sd = gContext().scaledDrawable(R.drawable.ic_pause_circle, 0.5f, 0.5f)
                 holder.binding.tvPlayCount.setCompoundDrawables(sd, null, null, null)
             }
-            artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as ArtistAdapter,
-                artistInfo,
-                artistRes,
-                viewModel::fetchArtistList)
+            artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as ArtistAdapter, artistInfo,
+                artistRes, viewModel::fetchArtistList)
             artistDecoration = HorizontalItemDecorator(20)
 
             tagLayoutManager = StaggeredGridLayoutManager(3, VERTICAL)
@@ -99,8 +107,7 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
                     onAttach(this@ChartIndexFragment)
                     clickItemListener = {
                         // TODO(jieyi): 10/22/17 Change fragment to create instance method.
-                        (act as ChartActivity).navigate(ChartTagDetailFragment.newInstance(it.name.orEmpty()),
-                            true)
+                        (act as ChartActivity).navigate(ChartTagDetailFragment.newInstance(it.name.orEmpty()), true)
                     }
                 }
             }
@@ -109,10 +116,7 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
         // First time showing this fragment.
         artistInfo.firstFetch {
             viewModel.fetchArtistList(it.page, it.limit) { resList, total ->
-                artistRes.refreshAndChangeList(resList,
-                    total,
-                    binding?.artistAdapter as ArtistAdapter,
-                    it)
+                artistRes.refreshAndChangeList(resList, total, binding?.artistAdapter as ArtistAdapter, it)
             }
         }
         tagInfo.firstFetch {

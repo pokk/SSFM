@@ -86,7 +86,7 @@ dependencies {
     // sdk15, sdk19, sdk21, sdk23 are also available
     implementation "org.jetbrains.anko:anko-sdk25-coroutines:$anko_version"
     // Kotlin DataBinding
-    kapt "com.android.databinding:compiler:3.0.0"
+    kapt "com.android.databinding:compiler:3.0.1"
 
     /* For architecture */
     // Dagger 2

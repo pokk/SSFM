@@ -1,6 +1,6 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices
 
-import taiwan.no1.app.ssfm.App
+import taiwan.no1.app.ssfm.misc.extension.gContext
 
 /**
  * @author  jieyi
@@ -8,7 +8,7 @@ import taiwan.no1.app.ssfm.App
  */
 class MusicPlayer private constructor() {
     private object Holder {
-        val INSTANCE = ExoPlayerWrapper(App.appComponent.context(), {}, {})
+        val INSTANCE = ExoPlayerWrapper(gContext(), {}, {}, {})
     }
 
     companion object {

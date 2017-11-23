@@ -36,58 +36,104 @@
         <variable
             name="tagDecoration"
             type="android.support.v7.widget.RecyclerView.ItemDecoration"/>
+
+        <variable
+            name="rankLayoutManager"
+            type="android.support.v7.widget.RecyclerView.LayoutManager"/>
+
+        <variable
+            name="rankAdapter"
+            type="android.support.v7.widget.RecyclerView.Adapter"/>
+
+        <variable
+            name="rankDecoration"
+            type="android.support.v7.widget.RecyclerView.ItemDecoration"/>
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_top_artists"
-            style="@style/RecyclerView.Horizontal"
-            android:layout_height="190dp"
-            android:adapter="@{artistAdapter}"
-            android:itemDecoration="@{artistDecoration}"
-            android:layoutManager="@{artistLayoutManager}"
-            app:layout_constraintBottom_toTopOf="@+id/tv_new_song"
-            app:layout_constraintTop_toBottomOf="@+id/tv_popular"
-            tools:listitem="@layout/item_artist_type_1"/>
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_top_tags"
-            style="@style/RecyclerView.Basic"
-            android:adapter="@{tagAdapter}"
-            android:itemDecoration="@{tagDecoration}"
-            android:layoutManager="@{tagLayoutManager}"
-            android:scrollbars="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_new_song"
-            tools:listitem="@layout/item_tag_type_1"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_top_chart"
+                style="@style/RecyclerView.Horizontal"
+                android:layout_height="150dp"
+                android:adapter="@{rankAdapter}"
+                android:itemDecoration="@{rankDecoration}"
+                android:layoutManager="@{rankLayoutManager}"
+                app:layout_constraintBottom_toTopOf="@+id/tv_popular"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_chart"
+                tools:listitem="@layout/item_rank_type_1"/>
 
-        <TextView
-            android:id="@+id/tv_popular"
-            style="@style/RecyclerView.Title"
-            android:text="@string/tv_title_rank_artists"
-            app:layout_constraintBottom_toTopOf="@+id/rv_top_artists"
-            app:layout_constraintTop_toTopOf="parent"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_top_artists"
+                style="@style/RecyclerView.Horizontal"
+                android:layout_height="190dp"
+                android:adapter="@{artistAdapter}"
+                android:itemDecoration="@{artistDecoration}"
+                android:layoutManager="@{artistLayoutManager}"
+                app:layout_constraintBottom_toTopOf="@+id/tv_new_song"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_popular"
+                tools:listitem="@layout/item_artist_type_1"/>
 
-        <View
-            style="@style/RecyclerView.SeparateLine"
-            app:layout_constraintBottom_toBottomOf="@id/tv_popular"
-            app:layout_constraintStart_toEndOf="@id/tv_popular"
-            app:layout_constraintTop_toTopOf="@id/tv_popular"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_top_tags"
+                style="@style/RecyclerView.Basic"
+                android:layout_height="300dp"
+                android:adapter="@{tagAdapter}"
+                android:itemDecoration="@{tagDecoration}"
+                android:layoutManager="@{tagLayoutManager}"
+                android:scrollbars="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_new_song"
+                tools:listitem="@layout/item_tag_type_1"/>
 
-        <TextView
-            android:id="@+id/tv_new_song"
-            style="@style/RecyclerView.Title"
-            android:text="@string/rv_title_rank_genres"
-            app:layout_constraintBottom_toTopOf="@+id/rv_top_tags"
-            app:layout_constraintTop_toBottomOf="@+id/rv_top_artists"/>
+            <TextView
+                android:id="@+id/tv_chart"
+                style="@style/RecyclerView.Title"
+                android:text="Chart"
+                app:layout_constraintBottom_toTopOf="@id/rv_top_chart"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-        <View
-            style="@style/RecyclerView.SeparateLine"
-            app:layout_constraintBottom_toBottomOf="@id/tv_new_song"
-            app:layout_constraintStart_toEndOf="@id/tv_new_song"
-            app:layout_constraintTop_toTopOf="@id/tv_new_song"/>
-    </android.support.constraint.ConstraintLayout>
+            <View
+                style="@style/RecyclerView.SeparateLine"
+                app:layout_constraintBottom_toBottomOf="@id/tv_chart"
+                app:layout_constraintStart_toEndOf="@id/tv_chart"
+                app:layout_constraintTop_toTopOf="@id/tv_chart"/>
+
+            <TextView
+                android:id="@+id/tv_popular"
+                style="@style/RecyclerView.Title"
+                android:text="@string/tv_title_rank_artists"
+                app:layout_constraintBottom_toTopOf="@+id/rv_top_artists"
+                app:layout_constraintTop_toBottomOf="@+id/rv_top_chart"/>
+
+            <View
+                style="@style/RecyclerView.SeparateLine"
+                app:layout_constraintBottom_toBottomOf="@id/tv_popular"
+                app:layout_constraintStart_toEndOf="@id/tv_popular"
+                app:layout_constraintTop_toTopOf="@id/tv_popular"/>
+
+            <TextView
+                android:id="@+id/tv_new_song"
+                style="@style/RecyclerView.Title"
+                android:text="@string/rv_title_rank_genres"
+                app:layout_constraintBottom_toTopOf="@+id/rv_top_tags"
+                app:layout_constraintTop_toBottomOf="@+id/rv_top_artists"/>
+
+            <View
+                style="@style/RecyclerView.SeparateLine"
+                app:layout_constraintBottom_toBottomOf="@id/tv_new_song"
+                app:layout_constraintStart_toEndOf="@id/tv_new_song"
+                app:layout_constraintTop_toTopOf="@id/tv_new_song"/>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
 </layout>
