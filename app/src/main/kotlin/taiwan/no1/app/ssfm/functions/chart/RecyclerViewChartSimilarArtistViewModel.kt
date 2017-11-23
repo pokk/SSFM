@@ -47,7 +47,7 @@ class RecyclerViewChartSimilarArtistViewModel(val item: BaseEntity) : BaseViewMo
 
     val imageCallback = glideListener<Bitmap> {
         onResourceReady = { resource, _, _, _, _ ->
-            resource.palette().maximumColorCount(24).generate().let {
+            resource.palette(24).let {
                 gAlphaIntColor(it.vibrantSwatch?.rgb ?: Color.BLACK, 0.5f).let(textBackground::set)
                 textColor.set(it.vibrantSwatch?.bodyTextColor ?: Color.GRAY)
             }

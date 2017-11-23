@@ -32,8 +32,8 @@ class RecyclerViewSearchArtistChartViewModel(private val artist: BaseEntity) : B
     var clickItemListener: ((item: ArtistEntity.Artist) -> Unit)? = null
     val imageCallback = glideListener<Bitmap> {
         onResourceReady = { resource, _, _, _, _ ->
-            resource.palette().maximumColorCount(24).generate().let { palette ->
-                color = gAlphaIntColor(palette.darkVibrantSwatch?.rgb ?: gColor(R.color.colorPrimaryDark), 0.65f)
+            resource.palette(24).let {
+                color = gAlphaIntColor(it.darkVibrantSwatch?.rgb ?: gColor(R.color.colorPrimaryDark), 0.65f)
                 false
             }
         }

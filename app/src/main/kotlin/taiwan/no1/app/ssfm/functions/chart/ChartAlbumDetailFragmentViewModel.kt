@@ -28,8 +28,7 @@ class ChartAlbumDetailFragmentViewModel(private val albumInfoCase: FetchAlbumInf
     fun fetchDetailInfo(albumName: String,
                         artistName: String,
                         callback: (albumDetailCallback: AlbumEntity.Album) -> Unit) {
-        lifecycleProvider.execute(albumInfoCase,
-            GetAlbumInfoUsecase.RequestValue(artistName, albumName)) {
+        lifecycleProvider.execute(albumInfoCase, GetAlbumInfoUsecase.RequestValue(artistName, albumName)) {
             onNext {
                 this@ChartAlbumDetailFragmentViewModel.albumName.set(it.album?.name.orEmpty())
                 albumSummary.set(it.album?.wiki?.content.orEmpty())

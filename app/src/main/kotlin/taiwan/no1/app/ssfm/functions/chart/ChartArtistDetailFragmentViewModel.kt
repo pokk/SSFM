@@ -26,9 +26,7 @@ class ChartArtistDetailFragmentViewModel(private val artistsInfoUsecase: FetchAr
     val artistImage by lazy { ObservableField<String>() }
     val artistSummary by lazy { ObservableField<String>() }
 
-    fun fetchDetailInfo(mbid: String,
-                        name: String,
-                        callback: (artistDetailInfo: ArtistEntity) -> Unit) {
+    fun fetchDetailInfo(mbid: String, name: String, callback: (artistDetailInfo: ArtistEntity) -> Unit) {
         lifecycleProvider.execute(artistsInfoUsecase, GetArtistInfoUsecase.RequestValue(name, mbid)) {
             onNext {
                 it.artist.let {
@@ -41,8 +39,7 @@ class ChartArtistDetailFragmentViewModel(private val artistsInfoUsecase: FetchAr
         }
     }
 
-    fun fetchHotTracks(name: String,
-                       callback: (entity: List<TrackEntity.TrackWithStreamableString>) -> Unit) {
+    fun fetchHotTracks(name: String, callback: (entity: List<TrackEntity.TrackWithStreamableString>) -> Unit) {
         lifecycleProvider.execute(artistTopTracksUsecase,
             GetArtistTopTracksUsecase.RequestValue(name)) {
             onNext { callback(it.toptracks.tracks) }

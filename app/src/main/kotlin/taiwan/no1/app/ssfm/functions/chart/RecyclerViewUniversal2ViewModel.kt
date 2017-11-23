@@ -27,7 +27,7 @@ class RecyclerViewUniversal2ViewModel(val item: BaseEntity) : BaseViewModel() {
     val textColor by lazy { ObservableInt() }
     val imageCallback = glideListener<Bitmap> {
         onResourceReady = { resource, _, _, _, _ ->
-            resource.palette().maximumColorCount(24).generate().let {
+            resource.palette(24).let {
                 gAlphaIntColor(it.vibrantSwatch?.rgb ?: Color.BLACK, 0.5f).let(textBackground::set)
                 textColor.set(it.vibrantSwatch?.bodyTextColor ?: Color.GRAY)
             }

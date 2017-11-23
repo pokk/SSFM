@@ -34,11 +34,9 @@ class RecyclerViewSearchTrackChartViewModel(val track: BaseEntity) : BaseViewMod
     val layoutBackground by lazy { ObservableField<Drawable>() }
     val imageCallback = glideListener<Bitmap> {
         onResourceReady = { resource, _, _, _, _ ->
-            resource.palette().maximumColorCount(24).generate().let { palette ->
-                val start = gAlphaIntColor(palette.vibrantSwatch?.rgb ?:
-                    gColor(R.color.colorSimilarPrimaryDark), 0.65f)
-                darkColor = gAlphaIntColor(palette.darkVibrantSwatch?.rgb ?:
-                    gColor(R.color.colorPrimaryDark), 0.65f)
+            resource.palette(24).let {
+                val start = gAlphaIntColor(it.vibrantSwatch?.rgb ?: gColor(R.color.colorSimilarPrimaryDark), 0.65f)
+                darkColor = gAlphaIntColor(it.darkVibrantSwatch?.rgb ?: gColor(R.color.colorPrimaryDark), 0.65f)
                 val background = GradientDrawable(GradientDrawable.Orientation.TL_BR, intArrayOf(start, darkColor))
 
                 layoutBackground.set(background)

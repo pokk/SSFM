@@ -28,7 +28,7 @@ class RecyclerViewUniversal1ViewModel(val item: BaseEntity) : BaseViewModel() {
     val shadowColor by lazy { ObservableInt() }
     val imageCallback = glideListener<Bitmap> {
         onResourceReady = { resource, _, _, _, _ ->
-            resource.palette().maximumColorCount(24).generate().let {
+            resource.palette(24).let {
                 gAlphaColor(it.vibrantSwatch?.rgb ?: Color.BLACK, 0.5f).let(textBackground::set)
                 shadowColor.set(it.vibrantSwatch?.rgb ?: Color.BLACK)
                 textColor.set(it.vibrantSwatch?.bodyTextColor ?: Color.GRAY)

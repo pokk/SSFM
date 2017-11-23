@@ -24,4 +24,5 @@ fun Context.scaledDrawable(@DrawableRes drawableId: Int, scaleWidth: Float,
     return ScaleDrawable(drawable, 0, scaleWidth, scaleHeight).drawable
 }
 
-fun Bitmap.palette() = Palette.from(this)
+fun Bitmap.palette(maxColorCount: Int) =
+    Palette.from(this).maximumColorCount(maxColorCount).generate()
