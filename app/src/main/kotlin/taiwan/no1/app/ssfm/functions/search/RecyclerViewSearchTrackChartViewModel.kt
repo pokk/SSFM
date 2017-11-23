@@ -5,10 +5,6 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.view.View
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
@@ -20,6 +16,7 @@ import taiwan.no1.app.ssfm.misc.constants.ImageSizes.LARGE
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.misc.extension.gAlphaIntColor
 import taiwan.no1.app.ssfm.misc.extension.gColor
+import taiwan.no1.app.ssfm.misc.extension.glideListener
 import taiwan.no1.app.ssfm.misc.extension.palette
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
@@ -35,12 +32,8 @@ class RecyclerViewSearchTrackChartViewModel(val track: BaseEntity) : BaseViewMod
     val artistName by lazy { ObservableField<String>() }
     val thumbnail by lazy { ObservableField<String>() }
     val layoutBackground by lazy { ObservableField<Drawable>() }
-    val imageCallback = object : RequestListener<Bitmap> {
-        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean) =
-            false
-
-        override fun onResourceReady(resource: Bitmap, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?,
-                                     isFirstResource: Boolean): Boolean =
+    val imageCallback = glideListener<Bitmap> {
+        onResourceReady = { resource, _, _, _, _ ->
             resource.palette().maximumColorCount(24).generate().let { palette ->
                 val start = gAlphaIntColor(palette.vibrantSwatch?.rgb ?:
                     gColor(R.color.colorSimilarPrimaryDark), 0.65f)
@@ -49,8 +42,9 @@ class RecyclerViewSearchTrackChartViewModel(val track: BaseEntity) : BaseViewMod
                 val background = GradientDrawable(GradientDrawable.Orientation.TL_BR, intArrayOf(start, darkColor))
 
                 layoutBackground.set(background)
-                false
             }
+            false
+        }
     }
     private var darkColor by Delegates.notNull<Int>()
 

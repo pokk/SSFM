@@ -3,10 +3,6 @@ package taiwan.no1.app.ssfm.functions.search
 import android.databinding.ObservableField
 import android.graphics.Bitmap
 import android.view.View
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import com.devrapid.kotlinknifer.formatToMoneyKarma
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.R
@@ -18,6 +14,7 @@ import taiwan.no1.app.ssfm.misc.constants.ImageSizes.EXTRA_LARGE
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.misc.extension.gAlphaIntColor
 import taiwan.no1.app.ssfm.misc.extension.gColor
+import taiwan.no1.app.ssfm.misc.extension.glideListener
 import taiwan.no1.app.ssfm.misc.extension.palette
 import taiwan.no1.app.ssfm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
@@ -33,16 +30,13 @@ class RecyclerViewSearchArtistChartViewModel(private val artist: BaseEntity) : B
     val playCount by lazy { ObservableField<String>() }
     val thumbnail by lazy { ObservableField<String>() }
     var clickItemListener: ((item: ArtistEntity.Artist) -> Unit)? = null
-    val imageCallback = object : RequestListener<Bitmap> {
-        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean) =
-            false
-
-        override fun onResourceReady(resource: Bitmap, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?,
-                                     isFirstResource: Boolean): Boolean =
+    val imageCallback = glideListener<Bitmap> {
+        onResourceReady = { resource, _, _, _, _ ->
             resource.palette().maximumColorCount(24).generate().let { palette ->
                 color = gAlphaIntColor(palette.darkVibrantSwatch?.rgb ?: gColor(R.color.colorPrimaryDark), 0.65f)
                 false
             }
+        }
     }
     private var color by Delegates.notNull<Int>()
 
