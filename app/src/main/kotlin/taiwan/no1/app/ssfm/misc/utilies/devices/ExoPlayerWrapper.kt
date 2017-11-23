@@ -17,6 +17,7 @@ import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
+import taiwan.no1.app.ssfm.misc.utilies.PausableTimer
 
 /**
  * Created by weian on 2017/11/16.
@@ -24,18 +25,22 @@ import com.google.android.exoplayer2.util.Util
  */
 class ExoPlayerWrapper(context: Context,
                        durationListener: (duration: Int) -> Unit,
-                       bufferPercentage: (percentage: Int) -> Unit) {
+                       bufferPercentage: (percentage: Int) -> Unit,
+                       currentTime: (time: Int) -> Unit) {
 
     private var context: Context
     private var durationListener: (duration: Int) -> Unit = {}
     private var bufferPercentage: (percentage: Int) -> Unit = {}
+    private var currentTime: (time: Int) -> Unit = {}
     private var isPlaying = false
     private lateinit var exoPlayer: SimpleExoPlayer
+    private lateinit var timer: PausableTimer
 
     init {
         this.context = context
         this.durationListener = durationListener
         this.bufferPercentage = bufferPercentage
+        this.currentTime = currentTime
     }
 
     /**
@@ -47,6 +52,11 @@ class ExoPlayerWrapper(context: Context,
     }
 
     fun play() {
+        if (isPlaying) {
+            timer.pause()
+        } else {
+            timer.resume()
+        }
         exoPlayer.playWhenReady = !isPlaying
     }
 
@@ -56,6 +66,7 @@ class ExoPlayerWrapper(context: Context,
     fun stop() {
         exoPlayer.playWhenReady = false
         exoPlayer.release()
+        timer.stop()
     }
 
     /**
@@ -63,6 +74,7 @@ class ExoPlayerWrapper(context: Context,
      */
     fun pause() {
         exoPlayer.playWhenReady = false
+        timer.pause()
     }
 
     /**
@@ -70,6 +82,7 @@ class ExoPlayerWrapper(context: Context,
      */
     fun resume() {
         exoPlayer.playWhenReady = true
+        timer.resume()
     }
 
     /**
@@ -145,6 +158,15 @@ class ExoPlayerWrapper(context: Context,
             if (exoPlayer.duration > 0) {
                 musicPlayer.durationListener(exoPlayer.duration.div(1000).toInt())
             }
+
+            musicPlayer.timer = PausableTimer(exoPlayer.duration, 1)
+            musicPlayer.timer.onTick = { millisUntilFinished ->
+                musicPlayer.currentTime(millisUntilFinished.div(1000).toInt())
+            }
+            musicPlayer.timer.onFinish = {
+                musicPlayer.currentTime(exoPlayer.duration.div(1000).toInt())
+            }
+            musicPlayer.timer.start()
         }
     }
 }
