@@ -12,7 +12,8 @@ import taiwan.no1.app.ssfm.models.IExpandVisitable
  */
 data class PreferenceToggleEntity(val title: String,
                                   var isToggle: Boolean,
-                                  @DrawableRes val icon: Int = -1,
+                                  @DrawableRes
+                                  val icon: Int = -1,
                                   override var childItemList: List<IExpandVisitable> = mutableListOf(),
                                   override var isExpanded: Boolean = false) : IExpandVisitable {
     override fun type(typeFactory: ExpandableViewTypeFactory): Int = typeFactory.type(this)

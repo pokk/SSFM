@@ -14,7 +14,8 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
  */
 @Parcelize
 @Table(database = MusicDatabase::class, allFields = true)
-data class PlaylistEntity(@PrimaryKey(autoincrement = true) var id: Long = 0,
+data class PlaylistEntity(@PrimaryKey(autoincrement = true)
+                          var id: Long = 0,
                           var name: String = "",
                           var image_uri: String = "",
                           var track_quantity: Int = 0,

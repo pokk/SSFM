@@ -6,8 +6,6 @@ import android.support.v7.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.HorizontalItemDecorator
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailArtistBinding
-import taiwan.no1.app.ssfm.databinding.ItemArtistType2Binding
-import taiwan.no1.app.ssfm.databinding.ItemMusicType2Binding
 import taiwan.no1.app.ssfm.functions.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.ArtistTopTrackAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
@@ -17,7 +15,6 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.keepAllLastItemPosition
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.restoreAllLastItemPosition
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
-import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import javax.inject.Inject
 
@@ -82,11 +79,8 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
     //region Base fragment implement
     override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
-            artistLayoutManager = WrapContentLinearLayoutManager(activity,
-                LinearLayoutManager.HORIZONTAL,
-                false)
-            artistAdapter = BaseDataBindingAdapter<ItemArtistType2Binding, BaseEntity>(R.layout.item_artist_type_2,
-                artistRes) { holder, item ->
+            artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            artistAdapter = SimilarArtistAdapter(R.layout.item_artist_type_2, artistRes) { holder, item ->
                 holder.binding.avm = RecyclerViewChartSimilarArtistViewModel(item).apply {
                     onAttach(this@ChartArtistDetailFragment)
                     clickItemListener = {}
@@ -97,8 +91,7 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
             trackLayoutManager = WrapContentLinearLayoutManager(activity,
                 LinearLayoutManager.VERTICAL,
                 false)
-            trackAdapter = BaseDataBindingAdapter<ItemMusicType2Binding, BaseEntity>(R.layout.item_music_type_2,
-                trackRes) { holder, item ->
+            trackAdapter = ArtistTopTrackAdapter(R.layout.item_music_type_2, trackRes) { holder, item ->
                 holder.binding.avm = RecyclerViewChartArtistHotTrackViewModel(item).apply {
                     onAttach(this@ChartArtistDetailFragment)
                 }
@@ -108,16 +101,10 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
         artistInfo.firstFetch { info ->
             viewModel.fetchDetailInfo(mbid, artistName) {
                 it.artist?.similar?.artists?.let {
-                    artistRes.refreshAndChangeList(it,
-                        0,
-                        binding?.artistAdapter as SimilarArtistAdapter,
-                        info)
+                    artistRes.refreshAndChangeList(it, 0, binding?.artistAdapter as SimilarArtistAdapter, info)
                     // If the artist exists then we can find the artist's detail tracks and albums.
                     viewModel.fetchHotTracks(artistName) {
-                        trackRes.refreshAndChangeList(it,
-                            0,
-                            binding?.trackAdapter as ArtistTopTrackAdapter,
-                            trackInfo)
+                        trackRes.refreshAndChangeList(it, 0, binding?.trackAdapter as ArtistTopTrackAdapter, trackInfo)
                     }
                     viewModel.fetchHotAlbum(artistName)
                 }

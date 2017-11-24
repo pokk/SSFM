@@ -3,8 +3,11 @@ package taiwan.no1.app.ssfm.controllers.services
 import android.app.IntentService
 import android.content.Context
 import android.content.Intent
+import com.devrapid.kotlinknifer.SharedPrefs
 import com.raizlabs.android.dbflow.config.FlowConfig
 import com.raizlabs.android.dbflow.config.FlowManager
+import org.jetbrains.anko.defaultSharedPreferences
+import taiwan.no1.app.ssfm.functions.base.FirstInitFlow
 
 /**
  * Initialization service for optimizing the cold starting time.
@@ -22,15 +25,16 @@ class InitializeService : IntentService("InitializeService") {
     }
 
     override fun onHandleIntent(intent: Intent?) {
-        intent?.let {
-            if (ACTION_INIT_WHEN_APP_CREATE == intent.action) {
-                initial()
-            }
-        }
+        intent?.let { if (ACTION_INIT_WHEN_APP_CREATE == intent.action) initial() }
     }
 
     private fun initial() {
+        // Initial the shared preferences.
+        SharedPrefs.setPrefSettings(defaultSharedPreferences)
         // Initial the database.
         FlowManager.init(FlowConfig.Builder(this).build())
+
+        // OPTIMIZE(jieyi): 11/24/17 Temporally put init flow here, this should be in the first activity.
+        FirstInitFlow().init()
     }
 }

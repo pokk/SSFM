@@ -6,6 +6,7 @@ import taiwan.no1.app.ssfm.internal.di.annotations.qualifiers.Remote
 import taiwan.no1.app.ssfm.models.data.IDataStore
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
+import taiwan.no1.app.ssfm.models.entities.v2.RankChartEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -40,8 +41,9 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
 
     override fun getChartTopTracks(page: Int, limit: Int) = remote.getChartTopTracks(page, limit)
 
-    override fun getChartTopTags(page: Int, limit: Int) =
-        remote.getChartTopTags(page, limit)
+    override fun getChartTopTags(page: Int, limit: Int) = remote.getChartTopTags(page, limit)
+
+    override fun getChartTop(): Observable<List<RankChartEntity>> = local.getChartTop()
     //endregion
 
     //region Artist

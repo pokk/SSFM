@@ -45,8 +45,8 @@
         <item>Hito-Chinese</item>
         <item>Billboard charts</item>
         <item>UK charts</item>
-        <item>Oricon Japan charts</item>
-        <item>Korea M-net charts</item>
+        <item>Oricon Japan</item>
+        <item>Korea M-net</item>
         <item>Channel V Chinese</item>
         <item>Channel V US, UK</item>
         <item>Channel V JP, KOR</item>
@@ -55,11 +55,33 @@
         <item>Chinese TOP(HK, TW)</item>
         <item>Chinese TOP(China)</item>
         <item>HK charts</item>
-        <item>China Hip-Pop charts</item>
+        <item>China Hip-Pop</item>
         <item>Beatport Electronics</item>
         <item>Chinese</item>
         <item>US</item>
         <item>Japanese</item>
         <item>Korean</item>
+    </string-array>
+
+    <string-array name="UpdatePeriod">
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
     </string-array>
 </resources>

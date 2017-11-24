@@ -11,11 +11,14 @@ data class ArtistEntity(var artist: Artist?) {
                       var mbid: String?,
                       var match: String?,
                       var url: String?,
-                      @SerializedName("image") var images: List<Image>?,
+                      @SerializedName("image")
+                      var images: List<Image>?,
                       var streamable: String?,
                       var listeners: String?,
-                      @SerializedName("ontour") var onTour: String?,
-                      @SerializedName("playcount") var playCount: String?,
+                      @SerializedName("ontour")
+                      var onTour: String?,
+                      @SerializedName("playcount")
+                      var playCount: String?,
                       var stats: Stats?,
                       var similar: Similar?,
                       var tags: Tags?,
@@ -28,12 +31,15 @@ data class ArtistEntity(var artist: Artist?) {
 
     data class Links(var link: Link?)
 
-    data class Link(@SerializedName("#text") var text: String?,
+    data class Link(@SerializedName("#text")
+                    var text: String?,
                     var rel: String?,
                     var href: String?)
 
     data class Stats(var listeners: String?,
-                     @SerializedName("playcount") var playCount: String?)
+                     @SerializedName("playcount")
+                     var playCount: String?)
 
-    data class Similar(@SerializedName("artist") var artists: List<Artist>?)
+    data class Similar(@SerializedName("artist")
+                       var artists: List<Artist>?)
 }

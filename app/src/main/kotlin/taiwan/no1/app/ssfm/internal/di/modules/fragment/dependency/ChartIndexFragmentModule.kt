@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import taiwan.no1.app.ssfm.functions.chart.ChartIndexFragmentViewModel
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerFragment
+import taiwan.no1.app.ssfm.models.usecases.FetchRankChartCase
 import taiwan.no1.app.ssfm.models.usecases.FetchTopArtistCase
 import taiwan.no1.app.ssfm.models.usecases.FetchTopTagCase
 
@@ -17,6 +18,8 @@ import taiwan.no1.app.ssfm.models.usecases.FetchTopTagCase
 class ChartIndexFragmentModule {
     @Provides
     @PerFragment
-    fun provideViewModel(topArtistsUsecase: FetchTopArtistCase, topTagsUsecase: FetchTopTagCase) =
-        ChartIndexFragmentViewModel(topArtistsUsecase, topTagsUsecase)
+    fun provideViewModel(getTopChartsUsecase: FetchRankChartCase,
+                         topArtistsUsecase: FetchTopArtistCase,
+                         topTagsUsecase: FetchTopTagCase) =
+        ChartIndexFragmentViewModel(getTopChartsUsecase, topArtistsUsecase, topTagsUsecase)
 }

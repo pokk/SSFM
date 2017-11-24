@@ -9,15 +9,13 @@ import com.devrapid.kotlinknifer.recyclerview.itemdecorator.HorizontalItemDecora
 import org.jetbrains.anko.act
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentChartIndexBinding
-import taiwan.no1.app.ssfm.databinding.ItemArtistType1Binding
-import taiwan.no1.app.ssfm.databinding.ItemRankType1Binding
-import taiwan.no1.app.ssfm.databinding.ItemTagType1Binding
 import taiwan.no1.app.ssfm.functions.base.AdvancedFragment
 import taiwan.no1.app.ssfm.functions.search.RecyclerViewSearchArtistChartViewModel
 import taiwan.no1.app.ssfm.misc.extension.gContext
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.ArtistAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RVCustomScrollCallback
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.RankAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.TagAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.keepAllLastItemPosition
@@ -25,7 +23,6 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.restoreAllLastItemPosition
 import taiwan.no1.app.ssfm.misc.extension.scaledDrawable
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
-import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import javax.inject.Inject
 
@@ -74,8 +71,7 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
     override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
             rankLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            rankAdapter = BaseDataBindingAdapter<ItemRankType1Binding, BaseEntity>(R.layout.item_rank_type_1,
-                rankRes) { holder, item ->
+            rankAdapter = RankAdapter(R.layout.item_rank_type_1, rankRes) { holder, item ->
                 holder.binding.avm = RecyclerViewChartRankChartViewModel(item).apply {
                     onAttach(this@ChartIndexFragment)
                 }
@@ -83,8 +79,7 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
             rankDecoration = HorizontalItemDecorator(20)
 
             artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            artistAdapter = BaseDataBindingAdapter<ItemArtistType1Binding, BaseEntity>(R.layout.item_artist_type_1,
-                artistRes) { holder, item ->
+            artistAdapter = ArtistAdapter(R.layout.item_artist_type_1, artistRes) { holder, item ->
                 holder.binding.avm = RecyclerViewSearchArtistChartViewModel(item).apply {
                     onAttach(this@ChartIndexFragment)
                     clickItemListener = {
@@ -101,8 +96,7 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
             artistDecoration = HorizontalItemDecorator(20)
 
             tagLayoutManager = StaggeredGridLayoutManager(3, VERTICAL)
-            tagAdapter = BaseDataBindingAdapter<ItemTagType1Binding, BaseEntity>(R.layout.item_tag_type_1,
-                tagRes) { holder, item ->
+            tagAdapter = TagAdapter(R.layout.item_tag_type_1, tagRes) { holder, item ->
                 holder.binding.avm = RecyclerViewChartTagViewModel(item).apply {
                     onAttach(this@ChartIndexFragment)
                     clickItemListener = {
@@ -114,6 +108,11 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
             tagDecoration = GridSpacingItemDecorator(3, 20, false)
         }
         // First time showing this fragment.
+        rankInfo.firstFetch { info ->
+            viewModel.fetchRankList {
+                rankRes.refreshAndChangeList(it, 1, binding?.rankAdapter as RankAdapter, info)
+            }
+        }
         artistInfo.firstFetch {
             viewModel.fetchArtistList(it.page, it.limit) { resList, total ->
                 artistRes.refreshAndChangeList(resList, total, binding?.artistAdapter as ArtistAdapter, it)

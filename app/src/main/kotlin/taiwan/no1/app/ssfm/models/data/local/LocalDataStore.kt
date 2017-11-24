@@ -20,6 +20,7 @@ import taiwan.no1.app.ssfm.models.entities.PlaylistEntity_Table
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity_Table
 import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity
+import taiwan.no1.app.ssfm.models.entities.v2.RankChartEntity
 
 
 /**
@@ -54,6 +55,8 @@ class LocalDataStore : IDataStore {
     override fun getChartTopTracks(page: Int, limit: Int) = TODO()
 
     override fun getChartTopTags(page: Int, limit: Int) = TODO()
+
+    override fun getChartTop(): Observable<List<RankChartEntity>> = (select from RankChartEntity::class).rx().list.toObservable()
     //endregion
 
     //region Artist
@@ -122,11 +125,10 @@ class LocalDataStore : IDataStore {
         (select from KeywordEntity::class orderBy KeywordEntity_Table.searchTimes.asc() limit it).rx().list.toObservable()
     }
 
-    override fun removeKeywords(keyword: String?): Observable<Boolean> {
-        return (keyword?.let { (delete(KeywordEntity::class) where (KeywordEntity_Table.keyword eq keyword)).rx() } ?:
+    override fun removeKeywords(keyword: String?) =
+        (keyword?.let { (delete(KeywordEntity::class) where (KeywordEntity_Table.keyword eq keyword)).rx() } ?:
             delete(KeywordEntity::class).rx()).
             // The return value of `executeUpdateDelete` is the number of the deleted or updated items.
             executeUpdateDelete().map { 0 < it }.toObservable()
-    }
     //endregion
 }

@@ -3,12 +3,10 @@ package taiwan.no1.app.ssfm.functions.search
 import android.os.Bundle
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchHistoryBinding
-import taiwan.no1.app.ssfm.databinding.ItemSearchHistoryType1Binding
 import taiwan.no1.app.ssfm.functions.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.HistoryAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshRecyclerView
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
-import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.usecases.DeleteSearchHistoryCase
@@ -47,11 +45,8 @@ class SearchHistoryFragment : AdvancedFragment<SearchHistoryFragmentViewModel, F
     override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
             layoutManager = WrapContentLinearLayoutManager(activity)
-            adapter = BaseDataBindingAdapter<ItemSearchHistoryType1Binding, BaseEntity>(R.layout.item_search_history_type_1,
-                searchRes) { holder, item ->
-                holder.binding.avm = RecyclerViewSearchHistoryViewModel(item,
-                    activity,
-                    deleteUsecase).
+            adapter = HistoryAdapter(R.layout.item_search_history_type_1, searchRes) { holder, item ->
+                holder.binding.avm = RecyclerViewSearchHistoryViewModel(item, activity, deleteUsecase).
                     apply { deleteItemListener = deleteItem }
             }
         }
@@ -64,9 +59,7 @@ class SearchHistoryFragment : AdvancedFragment<SearchHistoryFragmentViewModel, F
 
     /** An anonymous callback function for a delete event from the viewholder. */
     private val deleteItem = { entity: KeywordEntity, isSuccess: Boolean ->
-        if (isSuccess) {
-            searchRes.refreshRecyclerView { remove(entity) }
-        }
+        if (isSuccess) searchRes.refreshRecyclerView { remove(entity) }
     }
 
     /**

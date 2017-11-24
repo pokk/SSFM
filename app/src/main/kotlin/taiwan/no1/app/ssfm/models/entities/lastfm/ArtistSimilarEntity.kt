@@ -6,4 +6,5 @@ import com.google.gson.annotations.SerializedName
  * @author  jieyi
  * @since   10/16/17
  */
-data class ArtistSimilarEntity(@SerializedName("similarartists") var similarartist: TopArtistEntity.Artists)
+data class ArtistSimilarEntity(@SerializedName("similarartists")
+                               var similarartist: TopArtistEntity.Artists)

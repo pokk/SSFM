@@ -19,6 +19,7 @@ import taiwan.no1.app.ssfm.models.usecases.FetchMusicRankCase
 import taiwan.no1.app.ssfm.models.usecases.FetchPlaylistCase
 import taiwan.no1.app.ssfm.models.usecases.FetchPlaylistDetailCase
 import taiwan.no1.app.ssfm.models.usecases.FetchPlaylistItemCase
+import taiwan.no1.app.ssfm.models.usecases.FetchRankChartCase
 import taiwan.no1.app.ssfm.models.usecases.FetchSearchHistoryCase
 import taiwan.no1.app.ssfm.models.usecases.FetchTagInfoCase
 import taiwan.no1.app.ssfm.models.usecases.FetchTopAlbumOfArtistCase
@@ -42,6 +43,7 @@ import taiwan.no1.app.ssfm.models.usecases.GetTagTopAlbumsUsecase
 import taiwan.no1.app.ssfm.models.usecases.GetTagTopArtistsUsecase
 import taiwan.no1.app.ssfm.models.usecases.GetTagTopTracksUsecase
 import taiwan.no1.app.ssfm.models.usecases.GetTopArtistsUsecase
+import taiwan.no1.app.ssfm.models.usecases.GetTopChartsUsecase
 import taiwan.no1.app.ssfm.models.usecases.GetTopTagsUsecase
 import taiwan.no1.app.ssfm.models.usecases.GetTopTracksUsecase
 import taiwan.no1.app.ssfm.models.usecases.RemoveKeywordHistoriesUsecase
@@ -76,6 +78,10 @@ class UseCaseModule {
     @Provides
     @PerFragment
     fun provideTopTagsUsecase(dataRepository: DataRepository): FetchTopTagCase = GetTopTagsUsecase(dataRepository)
+
+    @Provides
+    @PerFragment
+    fun provideRankChartUsecase(dataRepository: DataRepository): FetchRankChartCase = GetTopChartsUsecase(dataRepository)
     //endregion
 
     //region Artist

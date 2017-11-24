@@ -18,7 +18,9 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.TopTrackEntity
 import taiwan.no1.app.ssfm.models.entities.v2.HotPlaylistEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
+import taiwan.no1.app.ssfm.models.entities.v2.RankChartEntity
 import taiwan.no1.app.ssfm.models.entities.v2.SongListEntity
+import taiwan.no1.app.ssfm.models.usecases.AddPlaylistUsecase.RequestValue
 import taiwan.no1.app.ssfm.models.usecases.v2.GetHotPlaylistUsecase
 import taiwan.no1.app.ssfm.models.usecases.v2.GetMusicRankUsecase
 import taiwan.no1.app.ssfm.models.usecases.v2.GetSongListUsecase
@@ -38,6 +40,7 @@ typealias FetchTagInfoCase = BaseUsecase<TagEntity, GetTagInfoUsecase.RequestVal
 typealias FetchTopAlbumOfTagCase = BaseUsecase<TopAlbumEntity, GetTagTopAlbumsUsecase.RequestValue>
 typealias FetchTopArtistOfTagCase = BaseUsecase<TagTopArtistEntity, GetTagTopArtistsUsecase.RequestValue>
 typealias FetchTopTrackOfTagCase = BaseUsecase<TopTrackEntity, GetTagTopTracksUsecase.RequestValue>
+typealias FetchRankChartCase = BaseUsecase<List<RankChartEntity>, BaseUsecase.RequestValues>
 typealias FetchSearchHistoryCase = BaseUsecase<List<KeywordEntity>, GetKeywordHistoriesUsecase.RequestValue>
 typealias SearchMusicV1Case = BaseUsecase<SearchMusicEntity, SearchMusicUsecase.RequestValue>
 typealias FetchMusicDetailCase = BaseUsecase<DetailMusicEntity, GetDetailMusicUsecase.RequestValue>
@@ -47,10 +50,10 @@ typealias FetchHotPlaylistCase = BaseUsecase<HotPlaylistEntity, GetHotPlaylistUs
 typealias FetchPlaylistDetailCase = BaseUsecase<SongListEntity, GetSongListUsecase.RequestValue>
 typealias DeleteSearchHistoryCase = BaseUsecase<Boolean, RemoveKeywordHistoriesUsecase.RequestValue>
 typealias AddPlaylistItemCase = BaseUsecase<Boolean, AddPlaylistItemUsecase.RequestValue>
-typealias AddPlaylistCase = BaseUsecase<PlaylistEntity, AddPlaylistUsecase.RequestValue>
-typealias FetchPlaylistCase = BaseUsecase<List<PlaylistEntity>, AddPlaylistUsecase.RequestValue>
+typealias AddPlaylistCase = BaseUsecase<PlaylistEntity, RequestValue>
+typealias FetchPlaylistCase = BaseUsecase<List<PlaylistEntity>, RequestValue>
 typealias FetchPlaylistItemCase = BaseUsecase<List<PlaylistItemEntity>, GetPlaylistItemsUsecase.RequestValue>
 typealias SaveSearchHistoryCase = BaseUsecase<Boolean, SaveKeywordHistoryUsecase.RequestValue>
-typealias RemovePlaylistCase = BaseUsecase<Boolean, AddPlaylistUsecase.RequestValue>
+typealias RemovePlaylistCase = BaseUsecase<Boolean, RequestValue>
 typealias RemovePlaylistItemCase = BaseUsecase<Boolean, AddPlaylistItemUsecase.RequestValue>
-typealias EditPlaylistCase = BaseUsecase<Boolean, AddPlaylistUsecase.RequestValue>
+typealias EditPlaylistCase = BaseUsecase<Boolean, RequestValue>

@@ -4,14 +4,12 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailAlbumBinding
-import taiwan.no1.app.ssfm.databinding.ItemMusicType4Binding
 import taiwan.no1.app.ssfm.functions.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.AlbumTrackAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
-import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import javax.inject.Inject
 
@@ -56,11 +54,8 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
     //region Base fragment implement
     override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
-            trackLayoutManager = WrapContentLinearLayoutManager(activity,
-                LinearLayoutManager.VERTICAL,
-                false)
-            trackAdapter = BaseDataBindingAdapter<ItemMusicType4Binding, BaseEntity>(R.layout.item_music_type_4,
-                trackRes) { holder, item ->
+            trackLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+            trackAdapter = AlbumTrackAdapter(R.layout.item_music_type_4, trackRes) { holder, item ->
                 holder.binding.avm = RecyclerViewChartAlbumTrackViewModel(item).apply {
                     onAttach(this@ChartAlbumDetailFragment)
                 }
@@ -69,10 +64,7 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
         trackInfo.firstFetch { info ->
             viewModel.fetchDetailInfo(artistAlbumName, artistName) {
                 it.track?.tracks?.let {
-                    trackRes.refreshAndChangeList(it,
-                        0,
-                        binding?.trackAdapter as AlbumTrackAdapter,
-                        info)
+                    trackRes.refreshAndChangeList(it, 0, binding?.trackAdapter as AlbumTrackAdapter, info)
                 }
             }
         }

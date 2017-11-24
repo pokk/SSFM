@@ -12,6 +12,7 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
  */
 // TODO(jieyi): 9/28/17 Might add the `date`.
 @Table(database = MusicDatabase::class, allFields = true)
-data class KeywordEntity(@PrimaryKey(autoincrement = true) var id: Long = 0,
+data class KeywordEntity(@PrimaryKey(autoincrement = true)
+                         var id: Long = 0,
                          var keyword: String = "",
                          var searchTimes: Long = 1) : BaseRXModel(), BaseEntity

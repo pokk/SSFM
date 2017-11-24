@@ -22,6 +22,7 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.TrackSimilarEntity
 import taiwan.no1.app.ssfm.models.entities.v2.HotPlaylistEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
+import taiwan.no1.app.ssfm.models.entities.v2.RankChartEntity
 import taiwan.no1.app.ssfm.models.entities.v2.SongListEntity
 
 /**
@@ -69,6 +70,8 @@ interface IDataStore {
     fun getChartTopTracks(page: Int = 1, limit: Int = 20): Observable<TopTrackEntity>
 
     fun getChartTopTags(page: Int = 1, limit: Int = 30): Observable<TopTagEntity>
+
+    fun getChartTop(): Observable<List<RankChartEntity>>
     //endregion
 
     //region Artist

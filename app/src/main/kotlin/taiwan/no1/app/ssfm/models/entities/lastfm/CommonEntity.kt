@@ -7,12 +7,15 @@ import com.google.gson.annotations.SerializedName
  * @author  jieyi
  * @since   10/17/17
  */
-data class Tags(@SerializedName("tag") var tags: List<TagEntity.Tag>?)
+data class Tags(@SerializedName("tag")
+                var tags: List<TagEntity.Tag>?)
 
-data class Image(@SerializedName("#text") var text: String?,
+data class Image(@SerializedName("#text")
+                 var text: String?,
                  var size: String?)
 
-data class Streamable(@SerializedName("#text") var text: String?,
+data class Streamable(@SerializedName("#text")
+                      var text: String?,
                       var fulltrack: String?)
 
 data class Wiki(var published: String?,

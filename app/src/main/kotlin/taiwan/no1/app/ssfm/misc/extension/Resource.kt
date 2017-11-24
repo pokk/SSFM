@@ -1,3 +1,5 @@
+@file:Suppress("NOTHING_TO_INLINE")
+
 package taiwan.no1.app.ssfm.misc.extension
 
 import android.support.annotation.ArrayRes
@@ -15,18 +17,22 @@ import taiwan.no1.app.ssfm.App
  * @author  jieyi
  * @since   11/22/17
  */
-fun gContext() = App.appComponent.context()
+inline fun gContext() = App.compactContext
 
-fun gDimens(@DimenRes id: Int) = gContext().dimen(id)
+inline fun gDimens(@DimenRes id: Int) = gContext().dimen(id)
 
-fun gStrings(@StringRes id: Int) = gContext().getString(id)
+inline fun gStrings(@StringRes id: Int): String = gContext().getString(id)
 
-fun gText(@StringRes id: Int) = gContext().getText(id)
+inline fun gText(@StringRes id: Int): CharSequence = gContext().getText(id)
 
-fun gStringArray(@ArrayRes id: Int) = gContext().resources.getStringArray(id)
+inline fun gStringArray(@ArrayRes id: Int): Array<out String> = gContext().resources.getStringArray(id)
 
-fun gColor(@ColorRes id: Int) = gContext().getResColor(id)
+inline fun getTextArray(@ArrayRes id: Int): Array<out CharSequence> = gContext().resources.getTextArray(id)
 
-fun gAlphaColor(@ColorRes id: Int, ratio: Float) = gContext().getResColorWithAlpha(id, ratio)
+inline fun gIntArray(@ArrayRes id: Int): IntArray = gContext().resources.getIntArray(id)
 
-fun gAlphaIntColor(@ColorInt color: Int, ratio: Float) = gContext().getColorWithAlpha(color, ratio)
+inline fun gColor(@ColorRes id: Int) = gContext().getResColor(id)
+
+inline fun gAlphaColor(@ColorRes id: Int, ratio: Float) = gContext().getResColorWithAlpha(id, ratio)
+
+inline fun gAlphaIntColor(@ColorInt color: Int, ratio: Float) = gContext().getColorWithAlpha(color, ratio)

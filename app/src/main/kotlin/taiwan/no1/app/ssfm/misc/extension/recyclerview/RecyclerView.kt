@@ -9,8 +9,11 @@ import taiwan.no1.app.ssfm.databinding.ItemMusicType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType2Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType3Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType4Binding
+import taiwan.no1.app.ssfm.databinding.ItemMusicType5Binding
 import taiwan.no1.app.ssfm.databinding.ItemPlaylistType1Binding
+import taiwan.no1.app.ssfm.databinding.ItemRankType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemSearchHistoryType1Binding
+import taiwan.no1.app.ssfm.databinding.ItemSearchMusicType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemTagType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemUniversalType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemUniversalType2Binding
@@ -23,6 +26,7 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
  * @since   10/13/17
  */
 typealias BaseAdapter<V> = BaseDataBindingAdapter<V, BaseEntity>
+typealias RankAdapter = BaseDataBindingAdapter<ItemRankType1Binding, BaseEntity>
 typealias ArtistAdapter = BaseDataBindingAdapter<ItemArtistType1Binding, BaseEntity>
 typealias TrackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, BaseEntity>
 typealias TagAdapter = BaseDataBindingAdapter<ItemTagType1Binding, BaseEntity>
@@ -33,8 +37,11 @@ typealias AlbumTrackAdapter = BaseDataBindingAdapter<ItemMusicType4Binding, Base
 typealias Universal1Adapter = BaseDataBindingAdapter<ItemUniversalType1Binding, BaseEntity>
 typealias Universal2Adapter = BaseDataBindingAdapter<ItemUniversalType2Binding, BaseEntity>
 typealias Universal3Adapter = BaseDataBindingAdapter<ItemUniversalType3Binding, BaseEntity>
+typealias PlaylistItemAdapter = BaseDataBindingAdapter<ItemMusicType5Binding, BaseEntity>
 typealias PlaylistAdapter = BaseDataBindingAdapter<ItemPlaylistType1Binding, BaseEntity>
 typealias RecentlyAdapter = BaseDataBindingAdapter<ItemMusicType3Binding, BaseEntity>
+typealias SearchHistoryAdapter = BaseDataBindingAdapter<ItemSearchMusicType1Binding, BaseEntity>
+
 
 /**
  * The operation for updating the list result by the adapter. Including updating the original list

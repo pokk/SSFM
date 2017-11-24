@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.support.v7.widget.helper.ItemTouchHelper
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentMylistIndexBinding
-import taiwan.no1.app.ssfm.databinding.ItemMusicType3Binding
-import taiwan.no1.app.ssfm.databinding.ItemPlaylistType1Binding
 import taiwan.no1.app.ssfm.functions.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.PlaylistAdapter
@@ -14,7 +12,6 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.ItemTouchViewmodelCallback
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.SimpleItemTouchHelperCallback
-import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import javax.inject.Inject
@@ -57,30 +54,25 @@ class PlaylistIndexFragment : AdvancedFragment<PlaylistIndexFragmentViewModel, F
             playlistLayoutManager = WrapContentLinearLayoutManager(activity)
             recentlyLayoutManager = WrapContentLinearLayoutManager(activity)
 
-            playlistAdapter = BaseDataBindingAdapter<ItemPlaylistType1Binding, BaseEntity>(R.layout.item_playlist_type_1,
-                playlistRes) { holder, item ->
+            playlistAdapter = PlaylistAdapter(R.layout.item_playlist_type_1, playlistRes) { holder, item ->
                 holder.binding.avm = RecyclerViewPlaylistViewModel(item).apply {
                     onAttach(this@PlaylistIndexFragment)
                 }
             }
-            recentlyAdapter = BaseDataBindingAdapter<ItemMusicType3Binding, BaseEntity>(R.layout.item_music_type_3,
-                recentlyPlayedRes) { holder, item ->
+            recentlyAdapter = RecentlyAdapter(R.layout.item_music_type_3, recentlyPlayedRes) { holder, item ->
                 holder.binding.avm = RecyclerViewRecentlyPlaylistViewModel(item).apply {
                     onAttach(this@PlaylistIndexFragment)
                 }
             }
 
-            val callback = SimpleItemTouchHelperCallback(playlistAdapter as BaseDataBindingAdapter<ItemPlaylistType1Binding, BaseEntity>,
-                vmItemTouchCallback)
+            val callback = SimpleItemTouchHelperCallback(playlistAdapter as PlaylistAdapter, vmItemTouchCallback)
             ItemTouchHelper(callback).attachToRecyclerView(rvPlaylist)
         }
         // First time showing this fragment.
         viewModel.fetchPlaylistAndRecently({
             playlistRes.refreshAndChangeList(it, 1, binding?.playlistAdapter as PlaylistAdapter, playlistInfo)
         }, {
-            recentlyPlayedRes.refreshAndChangeList(it,
-                1,
-                binding?.recentlyAdapter as RecentlyAdapter,
+            recentlyPlayedRes.refreshAndChangeList(it, 1, binding?.recentlyAdapter as RecentlyAdapter,
                 recentlyPlayedInfo)
         })
     }

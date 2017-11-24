@@ -141,6 +141,8 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
 
         return musicService3.get().getChartTopTag(query)
     }
+
+    override fun getChartTop() = TODO()
     //endregion
 
     //region Artist

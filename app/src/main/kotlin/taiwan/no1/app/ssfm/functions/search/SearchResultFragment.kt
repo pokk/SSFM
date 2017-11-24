@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchResultBinding
-import taiwan.no1.app.ssfm.databinding.ItemSearchMusicType1Binding
 import taiwan.no1.app.ssfm.functions.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.constants.Constant.SPECIAL_NUMBER
 import taiwan.no1.app.ssfm.misc.extension.gColor
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.SearchHistoryAdapter
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
-import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
 import javax.inject.Inject
@@ -49,9 +48,6 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
     //endregion
 
     @Inject override lateinit var viewModel: SearchResultFragmentViewModel
-    //    var keyword: String = ""
-//    var imageUrl: String = ""
-//    var fgFogColor: Int = gColor(R.color.colorPrimaryDark)
     private var res = mutableListOf<BaseEntity>()
     private val resInfo by lazy { DataInfo() }
     // Get the arguments from the bundle here.
@@ -73,8 +69,7 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
     override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
             layoutManager = WrapContentLinearLayoutManager(activity)
-            adapter = BaseDataBindingAdapter<ItemSearchMusicType1Binding, BaseEntity>(R.layout.item_search_music_type_1,
-                res) { holder, item ->
+            adapter = SearchHistoryAdapter(R.layout.item_search_music_type_1, res) { holder, item ->
                 holder.binding.avm = RecyclerViewSearchMusicResultViewModel(item, activity.applicationContext)
             }
             loadmore = object : RecyclerViewScrollCallback {
@@ -99,9 +94,9 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
      * from the viewholder of the loading more event.
      */
     private val updateListInfo = { keyword: String, musics: MutableList<MusicEntity.Music>, canLoadMore: Boolean ->
-        //        this.keyword = keyword
-        res = (binding?.adapter as BaseDataBindingAdapter<ItemSearchMusicType1Binding, BaseEntity>).
-            refresh(res, ArrayList(res).apply { addAll(musics) }).toMutableList()
+        res = (binding?.adapter as SearchHistoryAdapter).
+            refresh(res, ArrayList(res).apply { addAll(musics) }).
+            toMutableList()
         // TODO(jieyi): 9/28/17 Close the loading item or view.
         resInfo.isLoading = false
         // Raise the stopping loading more data flag for avoiding to load again.

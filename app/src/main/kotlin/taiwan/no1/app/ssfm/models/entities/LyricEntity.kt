@@ -11,5 +11,6 @@ import taiwan.no1.app.ssfm.models.data.local.database.MusicDatabase
  * @since   8/16/17
  */
 @Table(database = MusicDatabase::class, allFields = true)
-data class LyricEntity(@PrimaryKey(autoincrement = true) var id: Long = 0,
+data class LyricEntity(@PrimaryKey(autoincrement = true)
+                       var id: Long = 0,
                        var lyric: String = "") : BaseRXModel()

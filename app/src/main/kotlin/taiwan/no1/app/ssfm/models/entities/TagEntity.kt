@@ -11,5 +11,6 @@ import taiwan.no1.app.ssfm.models.data.local.database.MusicDatabase
  * @since   8/17/17
  */
 @Table(database = MusicDatabase::class, allFields = true)
-data class TagEntity(@PrimaryKey(autoincrement = true) var id: Long = 0,
+data class TagEntity(@PrimaryKey(autoincrement = true)
+                     var id: Long = 0,
                      var name: String = "") : BaseRXModel()

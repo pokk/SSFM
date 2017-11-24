@@ -8,7 +8,7 @@ import taiwan.no1.app.ssfm.models.usecases.AddPlaylistUsecase.RequestValue
  * @author  jieyi
  * @since   11/8/17
  */
-class RemovePlaylistUsecase(repository: IDataStore) : BaseUsecase<Boolean, RequestValue>(repository) {
+class RemovePlaylistUsecase(repository: IDataStore) : RemovePlaylistCase(repository) {
     override fun fetchUsecase(): Observable<Boolean> =
         (parameters ?: RequestValue()).let { repository.removePlaylist(it.entity) }
 }

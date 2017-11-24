@@ -13,7 +13,8 @@ import taiwan.no1.app.ssfm.models.IExpandVisitable
  */
 data class PreferenceEntity(val title: String,
                             var attributes: String,
-                            @DrawableRes val icon: Int = -1,
+                            @DrawableRes
+                            val icon: Int = -1,
                             var observer: Observer<String>? = null,
                             override var childItemList: List<IExpandVisitable> = mutableListOf(),
                             override var isExpanded: Boolean = false) : IExpandVisitable {

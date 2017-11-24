@@ -6,4 +6,5 @@ import com.google.gson.annotations.SerializedName
  * @author  jieyi
  * @since   10/16/17
  */
-data class TrackSimilarEntity(@SerializedName("similartracks") var similartrack: TopTrackEntity.Tracks)
+data class TrackSimilarEntity(@SerializedName("similartracks")
+                              var similartrack: TopTrackEntity.Tracks)
