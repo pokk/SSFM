@@ -8,7 +8,7 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
  */
 
 data class MusicRankEntity(val status: String = "",
-                           val data: Data = Data()) : BaseEntity {
+                           val data: Data = Data()) {
     data class Data(val timestamp: Double = 0.0,
                     val songs: List<Song> = listOf())
 
@@ -28,7 +28,7 @@ data class MusicRankEntity(val status: String = "",
                     val uploader: String = "",
                     val sid: Int = 0,
                     val cdn_coverURL: String = "",
-                    val other_sources: List<Any> = listOf())
+                    val other_sources: List<Any> = listOf()) : BaseEntity
 
     data class Mv(val region_allowed: String = "",
                   val dislikes: Int = 0,

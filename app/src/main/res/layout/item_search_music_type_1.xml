@@ -27,7 +27,7 @@
             android:src="@drawable/ic_play_circle"/>
 
         <TextView
-            android:id="@+id/tv_track_name"
+            android:id="@+id/tv_artist_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/iv_cover"
@@ -43,9 +43,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/tv_track_name"
-            android:layout_alignStart="@+id/tv_track_name"
-            android:layout_below="@+id/tv_track_name"
+            android:layout_alignEnd="@+id/tv_artist_name"
+            android:layout_alignStart="@+id/tv_artist_name"
+            android:layout_below="@+id/tv_artist_name"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/one_unit"
             android:text="@{avm.singerName}"

@@ -61,7 +61,7 @@
                     android:background="@drawable/gradient_background"/>
 
                 <TextView
-                    android:id="@+id/tv_artist_name"
+                    android:id="@+id/tv_track_name"
                     style="@style/ChartDetail.Name"
                     android:layout_gravity="bottom"
                     android:layout_marginBottom="20dp"

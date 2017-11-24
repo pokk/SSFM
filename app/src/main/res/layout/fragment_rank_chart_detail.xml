@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="taiwan.no1.app.ssfm.functions.chart.ChartRankChartDetailFragmentViewModel"/>
+
+        <variable
+            name="trackLayoutManager"
+            type="android.support.v7.widget.RecyclerView.LayoutManager"/>
+
+        <variable
+            name="trackAdapter"
+            type="android.support.v7.widget.RecyclerView.Adapter"/>
+
+        <variable
+            name="trackDecoration"
+            type="android.support.v7.widget.RecyclerView.ItemDecoration"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adapter="@{trackAdapter}"
+            android:itemDecoration="@{trackDecoration}"
+            android:layoutManager="@{trackLayoutManager}"
+            tools:listitem="@layout/item_music_type_6"/>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

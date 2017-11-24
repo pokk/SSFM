@@ -32,7 +32,6 @@ class RecyclerViewChartArtistHotTrackViewModel(val item: BaseEntity) : BaseViewM
      * @event_to [taiwan.no1.app.ssfm.functions.search.SearchViewModel.receiveClickHistoryEvent]
      */
     fun trackOnClick(view: View) {
-        RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_HISTORY,
-            (item as TrackEntity.TrackWithStreamableString).name)
+        RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_HISTORY, (item as TrackEntity.TrackWithStreamableString).name)
     }
 }

@@ -2,7 +2,9 @@ package taiwan.no1.app.ssfm.functions.chart
 
 import android.databinding.ObservableField
 import android.view.View
+import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.RankChartEntity
 
@@ -24,6 +26,14 @@ class RecyclerViewChartRankChartViewModel(val item: BaseEntity) : BaseViewModel(
         }
     }
 
+    /**
+     * A callback event for clicking an artist to list item.
+     *
+     * @hashCode view [android.widget.RelativeLayout]
+     *
+     * @event_to [taiwan.no1.app.ssfm.functions.chart.ChartActivity.navigateToRankChartDetail]
+     */
     fun chartOnClick(view: View) {
+        RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_RANK_CHART, (item as RankChartEntity).rankType.toString())
     }
 }

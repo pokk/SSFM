@@ -62,6 +62,15 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
         navigate(ChartAlbumDetailFragment.newInstance(artistAlbum, artistName), true)
     }
 
+    /**
+     * @hashCode params
+     *
+     * @event_from [taiwan.no1.app.ssfm.functions.chart.RecyclerViewChartRankChartViewModel.chartOnClick]
+     */
+    @Subscribe(tags = arrayOf(Tag(RxBusTag.VIEWMODEL_CLICK_RANK_CHART)))
+    fun navigateToRankChartDetail(code: String) {
+        navigate(ChartRankChartDetailFragment.newInstance(code.toInt()), true)
+    }
 
     fun navigate(fragment: Fragment, needBack: Boolean) {
         fragmentManager.addFragment(R.id.fl_container, fragment, needBack)
