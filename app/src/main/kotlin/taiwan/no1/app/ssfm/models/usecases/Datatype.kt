@@ -41,6 +41,7 @@ typealias FetchTopAlbumOfTagCase = BaseUsecase<TopAlbumEntity, GetTagTopAlbumsUs
 typealias FetchTopArtistOfTagCase = BaseUsecase<TagTopArtistEntity, GetTagTopArtistsUsecase.RequestValue>
 typealias FetchTopTrackOfTagCase = BaseUsecase<TopTrackEntity, GetTagTopTracksUsecase.RequestValue>
 typealias FetchRankChartCase = BaseUsecase<List<RankChartEntity>, BaseUsecase.RequestValues>
+typealias EditRankChartCase = BaseUsecase<Boolean, AddRankChartUsecase.RequestValue>
 typealias FetchSearchHistoryCase = BaseUsecase<List<KeywordEntity>, GetKeywordHistoriesUsecase.RequestValue>
 typealias SearchMusicV1Case = BaseUsecase<SearchMusicEntity, SearchMusicUsecase.RequestValue>
 typealias FetchMusicDetailCase = BaseUsecase<DetailMusicEntity, GetDetailMusicUsecase.RequestValue>

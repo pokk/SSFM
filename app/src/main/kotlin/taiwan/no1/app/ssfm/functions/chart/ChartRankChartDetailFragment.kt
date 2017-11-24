@@ -13,6 +13,7 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.models.entities.v2.RankChartEntity
 import javax.inject.Inject
 
 /**
@@ -24,17 +25,20 @@ class ChartRankChartDetailFragment : AdvancedFragment<ChartRankChartDetailFragme
     companion object Factory {
         // The key name of the fragment initialization parameters.
         private const val ARG_PARAM_RANK_CODE: String = "param_music_rank_code"
+        private const val ARG_PARAM_CHART_ENTITY: String = "param_music_chart_entity"
 
         /**
          * Use this factory method to create a new instance of this fragment using the provided parameters.
          *
          * @return A new instance of [android.app.Fragment] ChartArtistDetailFragment.
          */
-        fun newInstance(code: Int = Constant.SPECIAL_NUMBER) = ChartRankChartDetailFragment().also {
-            it.arguments = Bundle().apply {
-                putInt(ARG_PARAM_RANK_CODE, code)
+        fun newInstance(code: Int = Constant.SPECIAL_NUMBER, chartEntity: RankChartEntity? = null) =
+            ChartRankChartDetailFragment().also {
+                it.arguments = Bundle().apply {
+                    putInt(ARG_PARAM_RANK_CODE, code)
+                    chartEntity?.let { putParcelable(ARG_PARAM_CHART_ENTITY, it) }
+                }
             }
-        }
     }
     //endregion
 
@@ -44,6 +48,7 @@ class ChartRankChartDetailFragment : AdvancedFragment<ChartRankChartDetailFragme
     private var nestViewLastPosition = 0
     // Get the arguments from the bundle here.
     private val rankCode by lazy { arguments.getInt(ARG_PARAM_RANK_CODE) }
+    private val chartEntity: RankChartEntity? by lazy { arguments.getParcelable<RankChartEntity>(ARG_PARAM_CHART_ENTITY) }
 
     //region Base fragment implement
     override fun rendered(savedInstanceState: Bundle?) {
@@ -60,7 +65,7 @@ class ChartRankChartDetailFragment : AdvancedFragment<ChartRankChartDetailFragme
         }
         // First time showing this fragment.
         trackInfo.firstFetch {
-            viewModel.fetchRankChartDetail(rankCode) {
+            viewModel.fetchRankChartDetail(rankCode, chartEntity) {
                 trackRes.refreshAndChangeList(it, 0, binding?.trackAdapter as RankChartDetailAdapter, trackInfo)
             }
         }

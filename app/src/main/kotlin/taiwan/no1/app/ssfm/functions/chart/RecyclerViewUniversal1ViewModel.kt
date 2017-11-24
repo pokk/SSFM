@@ -7,6 +7,8 @@ import android.graphics.Color
 import android.view.View
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
+import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME
+import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_NAME
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.LARGE
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.misc.extension.gAlphaIntColor
@@ -54,6 +56,7 @@ class RecyclerViewUniversal1ViewModel(val item: BaseEntity) : BaseViewModel() {
     fun itemOnClick(view: View) {
         item as AlbumEntity.AlbumWithArtist
         RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_ALBUM,
-            hashMapOf("Artist Name" to item.artist?.name, "Artist Album Name" to item.name))
+            hashMapOf(VIEWMODEL_PARAMS_ARTIST_NAME to item.artist?.name,
+                VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME to item.name))
     }
 }

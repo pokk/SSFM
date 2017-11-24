@@ -55,14 +55,16 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
     override fun onResume() {
         super.onResume()
         binding?.apply {
-            listOf(Pair(artistInfo, artistLayoutManager)).restoreAllLastItemPosition()
+            listOf(Pair(artistInfo, artistLayoutManager),
+                Pair(rankInfo, rankLayoutManager)).restoreAllLastItemPosition()
         }
     }
 
     override fun onPause() {
         super.onPause()
         binding?.apply {
-            listOf(Triple(artistInfo, rvTopArtists, artistLayoutManager)).keepAllLastItemPosition()
+            listOf(Triple(artistInfo, rvTopArtists, artistLayoutManager),
+                Triple(rankInfo, rvTopChart, rankLayoutManager)).keepAllLastItemPosition()
         }
     }
     //endregion

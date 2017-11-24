@@ -72,6 +72,10 @@ interface IDataStore {
     fun getChartTopTags(page: Int = 1, limit: Int = 30): Observable<TopTagEntity>
 
     fun getChartTop(): Observable<List<RankChartEntity>>
+
+    fun addRankChart(entity: RankChartEntity): Observable<Boolean>
+
+    fun editRankChart(entity: RankChartEntity): Observable<Boolean>
     //endregion
 
     //region Artist

@@ -34,6 +34,6 @@ class RecyclerViewChartRankChartViewModel(val item: BaseEntity) : BaseViewModel(
      * @event_to [taiwan.no1.app.ssfm.functions.chart.ChartActivity.navigateToRankChartDetail]
      */
     fun chartOnClick(view: View) {
-        RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_RANK_CHART, (item as RankChartEntity).rankType.toString())
+        RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_RANK_CHART, item)
     }
 }

@@ -11,6 +11,8 @@ import taiwan.no1.app.ssfm.models.usecases.AddPlaylistUsecase
 import taiwan.no1.app.ssfm.models.usecases.DeleteSearchHistoryCase
 import taiwan.no1.app.ssfm.models.usecases.EditPlaylistCase
 import taiwan.no1.app.ssfm.models.usecases.EditPlaylistUsecase
+import taiwan.no1.app.ssfm.models.usecases.EditRankChartCase
+import taiwan.no1.app.ssfm.models.usecases.EditRankChartUsecase
 import taiwan.no1.app.ssfm.models.usecases.FetchAlbumInfoCase
 import taiwan.no1.app.ssfm.models.usecases.FetchArtistInfoCase
 import taiwan.no1.app.ssfm.models.usecases.FetchHotPlaylistCase
@@ -82,6 +84,11 @@ class UseCaseModule {
     @Provides
     @PerFragment
     fun provideRankChartUsecase(dataRepository: DataRepository): FetchRankChartCase = GetTopChartsUsecase(dataRepository)
+
+    @Provides
+    @PerFragment
+    fun provideEditRankChartUsecase(dataRepository: DataRepository): EditRankChartCase = EditRankChartUsecase(
+        dataRepository)
     //endregion
 
     //region Artist

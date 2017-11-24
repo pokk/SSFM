@@ -32,6 +32,7 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.TrackSimilarEntity
 import taiwan.no1.app.ssfm.models.entities.v2.HotPlaylistEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
+import taiwan.no1.app.ssfm.models.entities.v2.RankChartEntity
 import taiwan.no1.app.ssfm.models.entities.v2.SongListEntity
 import javax.inject.Inject
 import javax.inject.Named
@@ -143,6 +144,11 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
     }
 
     override fun getChartTop() = TODO()
+
+    override fun addRankChart(entity: RankChartEntity) = TODO()
+
+    override fun editRankChart(entity: RankChartEntity) = TODO()
+
     //endregion
 
     //region Artist

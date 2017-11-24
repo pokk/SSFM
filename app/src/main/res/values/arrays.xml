@@ -52,36 +52,36 @@
         <item>Channel V JP, KOR</item>
         <item>Chinese single song</item>
         <item> </item>
-        <item>Chinese TOP(HK, TW)</item>
-        <item>Chinese TOP(China)</item>
+        <item>Chinese TOP (HK, TW)</item>
+        <item>Chinese TOP (China)</item>
         <item>HK charts</item>
         <item>China Hip-Pop</item>
         <item>Beatport Electronics</item>
         <item>Chinese</item>
         <item>US</item>
-        <item>Japanese</item>
-        <item>Korean</item>
+        <item>J-POP</item>
+        <item>K-POP</item>
     </string-array>
 
     <string-array name="UpdatePeriod">
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Tuesday</item>
+        <item>Monday</item>
+        <item>Monday</item>
+        <item>Monday</item>
+        <item>Friday</item>
+        <item>Monday</item>
+        <item>Monday</item>
+        <item>Monday</item>
+        <item>Friday</item>
+        <item>Friday</item>
+        <item>Friday</item>
+        <item>everyday</item>
+        <item>everyday</item>
+        <item>everyday</item>
+        <item>everyday</item>
     </string-array>
 </resources>

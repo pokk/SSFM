@@ -16,6 +16,8 @@ object Constant {
     const val VIEWMODEL_PARAMS_KEYWORD = "keyword"
     const val VIEWMODEL_PARAMS_IMAGE_URL = "image_url"
     const val VIEWMODEL_PARAMS_FOG_COLOR = "color"
+    const val VIEWMODEL_PARAMS_ARTIST_NAME = "artist name"
+    const val VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME = "artist album name"
 
     const val CALLBACK_SPARSE_INDEX_KEYWORD = 0
     const val CALLBACK_SPARSE_INDEX_IMAGE_URL = 1

@@ -10,7 +10,10 @@ import com.hwangjr.rxbus.annotation.Tag
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityChartBinding
 import taiwan.no1.app.ssfm.functions.base.AdvancedActivity
+import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME
+import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_NAME
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
+import taiwan.no1.app.ssfm.models.entities.v2.RankChartEntity
 import java.util.HashMap
 import javax.inject.Inject
 
@@ -58,7 +61,8 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
      */
     @Subscribe(tags = arrayOf(Tag(RxBusTag.VIEWMODEL_CLICK_ALBUM)))
     fun navigateToAlbumDetail(params: HashMap<String, String>) {
-        val (artistName, artistAlbum) = (params["Artist Name"].orEmpty()) to (params["Artist Album Name"].orEmpty())
+        val (artistName, artistAlbum) =
+            (params[VIEWMODEL_PARAMS_ARTIST_NAME].orEmpty()) to (params[VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME].orEmpty())
         navigate(ChartAlbumDetailFragment.newInstance(artistAlbum, artistName), true)
     }
 
@@ -68,8 +72,8 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
      * @event_from [taiwan.no1.app.ssfm.functions.chart.RecyclerViewChartRankChartViewModel.chartOnClick]
      */
     @Subscribe(tags = arrayOf(Tag(RxBusTag.VIEWMODEL_CLICK_RANK_CHART)))
-    fun navigateToRankChartDetail(code: String) {
-        navigate(ChartRankChartDetailFragment.newInstance(code.toInt()), true)
+    fun navigateToRankChartDetail(entity: RankChartEntity) {
+        navigate(ChartRankChartDetailFragment.newInstance(entity.rankType, entity), true)
     }
 
     fun navigate(fragment: Fragment, needBack: Boolean) {

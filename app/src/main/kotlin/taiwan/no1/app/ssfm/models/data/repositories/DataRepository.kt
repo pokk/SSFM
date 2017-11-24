@@ -44,6 +44,10 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
     override fun getChartTopTags(page: Int, limit: Int) = remote.getChartTopTags(page, limit)
 
     override fun getChartTop(): Observable<List<RankChartEntity>> = local.getChartTop()
+
+    override fun addRankChart(entity: RankChartEntity): Observable<Boolean> = local.addRankChart(entity)
+
+    override fun editRankChart(entity: RankChartEntity): Observable<Boolean> = local.editRankChart(entity)
     //endregion
 
     //region Artist

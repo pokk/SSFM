@@ -57,6 +57,10 @@ class LocalDataStore : IDataStore {
     override fun getChartTopTags(page: Int, limit: Int) = TODO()
 
     override fun getChartTop(): Observable<List<RankChartEntity>> = (select from RankChartEntity::class).rx().list.toObservable()
+
+    override fun addRankChart(entity: RankChartEntity): Observable<Boolean> = entity.save().toObservable()
+
+    override fun editRankChart(entity: RankChartEntity): Observable<Boolean> = entity.update().toObservable()
     //endregion
 
     //region Artist

@@ -1,5 +1,6 @@
 package taiwan.no1.app.ssfm.functions.chart
 
+import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -26,6 +27,7 @@ class RecyclerViewRankChartDetailViewModel(val item: BaseEntity) : BaseViewModel
     val trackIndex by lazy { ObservableField<String>() }
     val artistName by lazy { ObservableField<String>() }
     val trackCover by lazy { ObservableField<String>() }
+    val isplaying by lazy { ObservableBoolean(false) }
     val layoutBackground by lazy { ObservableField<Drawable>() }
     val imageCallback = glideListener<Bitmap> {
         onResourceReady = { resource, _, _, _, _ ->
@@ -51,9 +53,15 @@ class RecyclerViewRankChartDetailViewModel(val item: BaseEntity) : BaseViewModel
     }
 
     fun trackOnClick(view: View) {
-        MusicPlayer.instance.apply {
-            if (isPlaying()) stop()
-            play((item as MusicRankEntity.Song).url)
+        isplaying.set(!isplaying.get())
+        if (isplaying.get()) {
+            MusicPlayer.instance.apply {
+                if (isPlaying()) stop()
+                play((item as MusicRankEntity.Song).url)
+            }
+        }
+        else {
+            MusicPlayer.instance.pause()
         }
     }
 }
