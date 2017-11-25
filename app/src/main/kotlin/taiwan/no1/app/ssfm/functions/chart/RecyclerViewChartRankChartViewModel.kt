@@ -9,7 +9,6 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.RankChartEntity
 
 /**
- *
  * @author  jieyi
  * @since   11/1/17
  */
