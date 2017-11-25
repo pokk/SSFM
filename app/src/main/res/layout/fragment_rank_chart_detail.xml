@@ -53,6 +53,5 @@
             android:itemDecoration="@{trackDecoration}"
             android:layoutManager="@{trackLayoutManager}"
             tools:listitem="@layout/item_music_type_6"/>
-
     </android.support.constraint.ConstraintLayout>
 </layout>

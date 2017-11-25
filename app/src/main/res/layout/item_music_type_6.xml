@@ -34,7 +34,7 @@
                 android:layout_height="60dp"
                 android:imageUrl="@{avm.trackCover}"
                 android:imgCallback="@{avm.imageCallback}"
-                android:src="@drawable/sample_lady_gaga"/>
+                tools:src="@drawable/sample_lady_gaga"/>
         </android.support.v7.widget.CardView>
 
         <RelativeLayout

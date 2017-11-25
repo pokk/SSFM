@@ -74,7 +74,7 @@ class SearchIndexFragment : AdvancedFragment<SearchIndexFragmentViewModel, Fragm
                 holder.binding.avm = RecyclerViewSearchArtistChartViewModel(item).apply {
                     onAttach(this@SearchIndexFragment)
                 }
-                val sd = gContext().scaledDrawable(R.drawable.ic_pause_circle, 0.5f, 0.5f)
+                val sd = gContext().scaledDrawable(R.drawable.ic_feature, 0.5f, 0.5f)
                 holder.binding.tvPlayCount.setCompoundDrawables(sd, null, null, null)
             }
             trackAdapter = TrackAdapter(R.layout.item_music_type_1, trackRes) { holder, item ->

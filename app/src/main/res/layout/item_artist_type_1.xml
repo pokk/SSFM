@@ -47,7 +47,7 @@
                 android:id="@+id/tv_play_count"
                 style="@style/RecyclerViewItem.Artist.Linear.Follower"
                 android:text="@{avm.playCount}"
-                tools:drawableStart="@drawable/ic_favorite"
+                tools:drawableStart="@drawable/ic_feature"
                 tools:text="123,456K"/>
         </LinearLayout>
     </LinearLayout>

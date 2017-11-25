@@ -90,7 +90,7 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
                             it.name.orEmpty()), true)
                     }
                 }
-                val sd = gContext().scaledDrawable(R.drawable.ic_pause_circle, 0.5f, 0.5f)
+                val sd = gContext().scaledDrawable(R.drawable.ic_feature, 0.5f, 0.5f)
                 holder.binding.tvPlayCount.setCompoundDrawables(sd, null, null, null)
             }
             artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as ArtistAdapter, artistInfo,
