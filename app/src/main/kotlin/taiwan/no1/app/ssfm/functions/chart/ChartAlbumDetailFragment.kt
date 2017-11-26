@@ -11,6 +11,7 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
 import javax.inject.Inject
 
 /**
@@ -41,6 +42,7 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
     //endregion
 
     @Inject override lateinit var viewModel: ChartAlbumDetailFragmentViewModel
+    @Inject lateinit var fetchMusicCase: SearchMusicV2Case
     private val tagInfo by lazy { DataInfo() }
     private val trackInfo by lazy { DataInfo() }
     private var tagRes = mutableListOf<BaseEntity>()
@@ -56,7 +58,7 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
         binding?.apply {
             trackLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             trackAdapter = AlbumTrackAdapter(R.layout.item_music_type_4, trackRes) { holder, item ->
-                holder.binding.avm = RecyclerViewChartAlbumTrackViewModel(item).apply {
+                holder.binding.avm = RecyclerViewChartAlbumTrackViewModel(fetchMusicCase, item).apply {
                     onAttach(this@ChartAlbumDetailFragment)
                 }
             }

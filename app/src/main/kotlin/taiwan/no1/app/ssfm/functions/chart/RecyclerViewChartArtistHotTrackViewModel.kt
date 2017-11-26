@@ -2,18 +2,21 @@ package taiwan.no1.app.ssfm.functions.chart
 
 import android.databinding.ObservableField
 import android.view.View
-import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
-import taiwan.no1.app.ssfm.misc.constants.RxBusTag
+import taiwan.no1.app.ssfm.misc.extension.execute
+import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayer
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
+import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
+import taiwan.no1.app.ssfm.models.usecases.v2.SearchMusicUsecase
 
 /**
  *
  * @author  jieyi
  * @since   10/29/17
  */
-class RecyclerViewChartArtistHotTrackViewModel(val item: BaseEntity) : BaseViewModel() {
+class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: SearchMusicV2Case,
+                                               private val item: BaseEntity) : BaseViewModel() {
     val trackName by lazy { ObservableField<String>() }
     val trackNumber by lazy { ObservableField<String>() }
 
@@ -24,14 +27,21 @@ class RecyclerViewChartArtistHotTrackViewModel(val item: BaseEntity) : BaseViewM
         }
     }
 
-    /**
-     * A callback event for clicking a item to list track.
-     *
-     * @hashCode view [android.widget.RelativeLayout]
-     *
-     * @event_to [taiwan.no1.app.ssfm.functions.search.SearchViewModel.receiveClickHistoryEvent]
-     */
     fun trackOnClick(view: View) {
-        RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_HISTORY, (item as TrackEntity.TrackWithStreamableString).name)
+        (item as TrackEntity.TrackWithStreamableString).let {
+            val trackName = it.name
+            val artistName = it.artist?.name
+
+            (trackName to artistName).takeUnless { it.first.isNullOrBlank() || it.second.isNullOrBlank() }.let {
+                lifecycleProvider.execute(searchMusicCase, SearchMusicUsecase.RequestValue("$artistName $trackName")) {
+                    onNext {
+                        MusicPlayer.instance.apply {
+                            if (isPlaying()) stop()
+                            play(it.data.items.first().url)
+                        }
+                    }
+                }
+            }
+        }
     }
 }

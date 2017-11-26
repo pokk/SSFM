@@ -12,6 +12,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="36dp"
+        android:onClick="@{avm::trackOnClick}"
         android:orientation="horizontal"
         tool:background="@color/colorPrimary">
 
