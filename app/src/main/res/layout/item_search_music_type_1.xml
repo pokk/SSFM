@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tool="http://schemas.android.com/tools"
-    >
+    xmlns:tool="http://schemas.android.com/tools">
 
     <data>
 
@@ -70,6 +69,8 @@
             style="@style/ImageView.Shadow"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:imgCallback="@{avm.callback}"
+            android:background="@{avm.showBackground ? @drawable/shadow : null}"
             android:layout_centerVertical="true"
             android:layout_marginStart="8dp"
             android:layout_toEndOf="@+id/iv_action"

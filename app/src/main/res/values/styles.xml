@@ -169,7 +169,7 @@
     <style name="ImageView"/>
 
     <style name="ImageView.Shadow">
-        <item name="android:background">@drawable/shadow</item>
+        <item name="background">@drawable/shadow</item>
         <item name="android:paddingBottom">5dp</item>
         <item name="android:paddingEnd">5dp</item>
     </style>

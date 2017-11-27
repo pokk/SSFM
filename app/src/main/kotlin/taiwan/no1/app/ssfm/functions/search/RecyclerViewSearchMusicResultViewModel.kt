@@ -3,7 +3,10 @@ package taiwan.no1.app.ssfm.functions.search
 import android.content.Context
 import android.databinding.BaseObservable
 import android.databinding.ObservableField
+import android.graphics.Bitmap
 import android.view.View
+import com.devrapid.kotlinknifer.logw
+import taiwan.no1.app.ssfm.misc.extension.glideListener
 import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayer
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
@@ -17,6 +20,14 @@ class RecyclerViewSearchMusicResultViewModel(private val res: BaseEntity,
     val songName by lazy { ObservableField<String>() }
     val singerName by lazy { ObservableField<String>() }
     val coverUrl by lazy { ObservableField<String>() }
+    val showBackground by lazy { ObservableField<Boolean>() }
+    val callback = glideListener<Bitmap> {
+        onResourceReady = { _, _, _, _, _ ->
+            showBackground.set(true)
+            logw("????")
+            false
+        }
+    }
 
     init {
         (res as MusicEntity.Music).let {
