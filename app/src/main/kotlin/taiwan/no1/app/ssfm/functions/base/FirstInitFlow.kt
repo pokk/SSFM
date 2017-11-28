@@ -42,7 +42,7 @@ class FirstInitFlow {
     private fun addRankChartData() {
         gIntArray(R.array.TypeCode).
             zip(gStringArray(R.array.TypeCodeName)).
-            zip(gStringArray(R.array.UpdatePeriod), this::pairToTriple).
+            zip(gStringArray(R.array.UpdatePeriod), ::pairToTriple).
             forEach { (type, name, update) ->
                 // Get the image cover of each rank charts in the first time.
                 GetMusicRankUsecase(RemoteDataStore(gContext())).execute(GetMusicRankUsecase.RequestValue(type)) {
