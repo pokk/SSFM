@@ -69,7 +69,7 @@
             style="@style/ImageView.Shadow"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:imgCallback="@{avm.callback}"
+            android:imgCallback="@{avm.glideCallback}"
             android:background="@{avm.showBackground ? @drawable/shadow : null}"
             android:layout_centerVertical="true"
             android:layout_marginStart="8dp"

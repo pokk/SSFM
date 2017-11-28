@@ -1,12 +1,14 @@
 package taiwan.no1.app.ssfm.functions.playlist
 
 import android.databinding.ObservableField
+import android.graphics.Bitmap
 import android.view.View
 import com.hwangjr.rxbus.RxBus
 import kotlinx.android.synthetic.main.item_playlist_type_1.view.iv_playlist_image
 import kotlinx.android.synthetic.main.item_playlist_type_1.view.tv_playlist_name
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
+import taiwan.no1.app.ssfm.misc.extension.glideListener
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 
@@ -19,6 +21,13 @@ class RecyclerViewPlaylistViewModel(val item: BaseEntity) : BaseViewModel() {
     val playlistName by lazy { ObservableField<String>() }
     val playlistTrackNumber by lazy { ObservableField<String>() }
     val playlistThumbnail by lazy { ObservableField<String>() }
+    val showBackground by lazy { ObservableField<Boolean>() }
+    val glideCallback = glideListener<Bitmap> {
+        onResourceReady = { _, _, _, _, _ ->
+            showBackground.set(true)
+            false
+        }
+    }
 
     init {
         (item as PlaylistEntity).let {

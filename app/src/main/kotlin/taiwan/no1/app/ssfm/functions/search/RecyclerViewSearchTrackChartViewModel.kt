@@ -32,6 +32,7 @@ class RecyclerViewSearchTrackChartViewModel(val track: BaseEntity) : BaseViewMod
     val artistName by lazy { ObservableField<String>() }
     val thumbnail by lazy { ObservableField<String>() }
     val layoutBackground by lazy { ObservableField<Drawable>() }
+    val showBackground by lazy { ObservableField<Boolean>() }
     val imageCallback = glideListener<Bitmap> {
         onResourceReady = { resource, _, _, _, _ ->
             resource.palette(24).let {
@@ -40,6 +41,7 @@ class RecyclerViewSearchTrackChartViewModel(val track: BaseEntity) : BaseViewMod
                 val background = GradientDrawable(GradientDrawable.Orientation.TL_BR, intArrayOf(start, darkColor))
 
                 layoutBackground.set(background)
+                showBackground.set(true)
             }
             false
         }

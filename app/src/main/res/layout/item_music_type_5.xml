@@ -15,8 +15,8 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
         android:onClick="@{avm::trackOnClick}"
+        android:padding="5dp"
         tools:background="@color/colorPrimary">
 
         <RelativeLayout
@@ -96,8 +96,10 @@
             android:layout_height="60dp"
             android:layout_marginBottom="@dimen/one_unit"
             android:layout_marginStart="34dp"
+            android:background="@{avm.showBackground ? @drawable/shadow : null}"
             android:error="@{@drawable/sample_jieyi_icon}"
             android:imageUrl="@{avm.thumbnail}"
+            android:imgCallback="@{avm.glideCallback}"
             android:placeHolder="@{@drawable/loading_placeholder}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
