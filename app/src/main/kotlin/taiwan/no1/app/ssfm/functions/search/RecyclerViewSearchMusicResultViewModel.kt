@@ -5,7 +5,6 @@ import android.databinding.BaseObservable
 import android.databinding.ObservableField
 import android.graphics.Bitmap
 import android.view.View
-import com.devrapid.kotlinknifer.logw
 import taiwan.no1.app.ssfm.misc.extension.glideListener
 import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayer
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
@@ -24,7 +23,6 @@ class RecyclerViewSearchMusicResultViewModel(private val res: BaseEntity,
     val callback = glideListener<Bitmap> {
         onResourceReady = { _, _, _, _, _ ->
             showBackground.set(true)
-            logw("????")
             false
         }
     }
