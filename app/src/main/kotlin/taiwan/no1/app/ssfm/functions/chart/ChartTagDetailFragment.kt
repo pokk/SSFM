@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.HorizontalItemDecorator
+import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailTagBinding
 import taiwan.no1.app.ssfm.functions.base.AdvancedFragment
@@ -82,7 +83,7 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
         binding?.apply {
             albumLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            trackLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            trackLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
             albumAdapter = Universal1Adapter(R.layout.item_universal_type_1, albumRes) { holder, item ->
                 holder.binding.avm = RecyclerViewUniversal1ViewModel(item).apply {
@@ -115,7 +116,7 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
 
             albumDecoration = HorizontalItemDecorator(20)
             artistDecoration = HorizontalItemDecorator(20)
-            trackDecoration = HorizontalItemDecorator(20)
+            trackDecoration = VerticalItemDecorator(20)
         }
         // First time showing this fragment.
         viewModel.fetchTagDetailInfo(musicTag)

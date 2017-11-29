@@ -5,6 +5,8 @@ import android.databinding.ObservableInt
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.view.View
+import com.devrapid.kotlinknifer.logw
+import com.devrapid.kotlinknifer.toTimeString
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.LARGE
 import taiwan.no1.app.ssfm.misc.extension.glideListener
@@ -20,6 +22,9 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
 class RecyclerViewUniversal3ViewModel(val item: BaseEntity) : BaseViewModel() {
     val artistName by lazy { ObservableField<String>() }
     val thumbnail by lazy { ObservableField<String>() }
+    val trackName by lazy { ObservableField<String>() }
+    val playcount by lazy { ObservableField<String>() }
+    val duration by lazy { ObservableField<String>() }
     val textBackground by lazy { ObservableInt() }
     val textColor by lazy { ObservableInt() }
     val imageCallback = glideListener<Bitmap> {
@@ -34,7 +39,11 @@ class RecyclerViewUniversal3ViewModel(val item: BaseEntity) : BaseViewModel() {
 
     init {
         (item as TrackEntity.Track).let {
-            artistName.set(it.name)
+            logw(it)
+            artistName.set(it.artist?.name)
+            trackName.set(it.name)
+            playcount.set(it.playcount)
+            duration.set(it.duration?.toInt()?.toTimeString())
             thumbnail.set(item.images?.get(LARGE)?.text.orEmpty())
         }
     }

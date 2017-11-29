@@ -148,7 +148,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_top_track"
                 style="@style/RecyclerView.Horizontal"
-                android:layout_height="190dp"
+                android:layout_height="400dp"
                 android:layout_marginBottom="@dimen/one_unit"
                 android:adapter="@{trackAdapter}"
                 android:itemDecoration="@{trackDecoration}"

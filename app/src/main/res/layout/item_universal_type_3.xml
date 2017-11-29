@@ -11,22 +11,84 @@
             type="taiwan.no1.app.ssfm.functions.chart.RecyclerViewUniversal3ViewModel"/>
     </data>
 
-    <android.support.v7.widget.CardView
-        style="@style/RecyclerViewItem.Artist.Card"
-        android:onClick="@{avm::itemOnClick}">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
 
-        <ImageView
-            style="@style/RecyclerViewItem.Artist.Image"
-            android:error="@{@drawable/sample_jieyi_icon}"
-            android:imageUrl="@{avm.thumbnail}"
-            android:imgCallback="@{avm.imageCallback}"
-            tools:src="@drawable/sample_lady_gaga"/>
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_cover"
+            style="@style/RecyclerViewItem.Artist.Card"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:onClick="@{avm::itemOnClick}">
+
+            <ImageView
+                style="@style/RecyclerViewItem.Artist.Image"
+                android:error="@{@drawable/sample_jieyi_icon}"
+                android:imageUrl="@{avm.thumbnail}"
+                android:imgCallback="@{avm.imageCallback}"
+                tools:src="@drawable/sample_lady_gaga"/>
+        </android.support.v7.widget.CardView>
 
         <TextView
-            style="@style/RecyclerViewItem.Artist.Text"
+            android:id="@+id/tv_track_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/cv_cover"
             android:background="@{avm.textBackground}"
-            android:text="@{avm.artistName}"
+            android:text="@{avm.trackName}"
             android:textColor="@{avm.textColor}"
+            tools:text="The Cure"/>
+
+        <TextView
+            android:id="@+id/tv_artist_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tv_track_name"
+            android:layout_below="@+id/tv_track_name"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:text="@{avm.artistName}"
             tools:text="Lady Gaga"/>
-    </android.support.v7.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv_playcount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tv_track_name"
+            android:layout_below="@+id/tv_artist_name"
+            android:layout_marginTop="8dp"
+            android:drawableStart="@drawable/ic_play_arrow"
+            android:gravity="center_vertical"
+            android:text="@{avm.playcount}"
+            android:textSize="12sp"
+            tools:text="13,1230 K"/>
+
+        <ImageButton
+            android:id="@+id/ib_more"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_more_vert"/>
+
+        <TextView
+            android:id="@+id/tv_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="16dp"
+            android:text="@{avm.duration}"
+            tools:text="3:32"/>
+    </RelativeLayout>
 </layout>
