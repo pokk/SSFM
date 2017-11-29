@@ -86,6 +86,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginBottom="@dimen/one_unit"
+            android:background="@{avm.showBackground ? @drawable/shadow : null}"
             android:error="@{@drawable/sample_jieyi_icon}"
             android:imageUrl="@{avm.thumbnail}"
             android:imgCallback="@{avm.imageCallback}"

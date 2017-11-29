@@ -20,7 +20,7 @@ class RecyclerViewSearchMusicResultViewModel(private val res: BaseEntity,
     val singerName by lazy { ObservableField<String>() }
     val coverUrl by lazy { ObservableField<String>() }
     val showBackground by lazy { ObservableField<Boolean>() }
-    val callback = glideListener<Bitmap> {
+    val glideCallback = glideListener<Bitmap> {
         onResourceReady = { _, _, _, _, _ ->
             showBackground.set(true)
             false
