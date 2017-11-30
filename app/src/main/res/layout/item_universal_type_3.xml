@@ -13,7 +13,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="70dp">
 
         <android.support.v7.widget.CardView
             android:id="@+id/cv_cover"
@@ -21,6 +21,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:onClick="@{avm::itemOnClick}">
 
             <ImageView
@@ -38,7 +39,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:layout_toEndOf="@+id/cv_cover"
             android:background="@{avm.textBackground}"
             android:text="@{avm.trackName}"
@@ -52,7 +53,7 @@
             android:layout_alignStart="@+id/tv_track_name"
             android:layout_below="@+id/tv_track_name"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="2dp"
             android:text="@{avm.artistName}"
             tools:text="Lady Gaga"/>
 
@@ -62,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/tv_track_name"
             android:layout_below="@+id/tv_artist_name"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:drawableStart="@drawable/ic_play_arrow"
             android:gravity="center_vertical"
             android:text="@{avm.playcount}"
@@ -87,7 +88,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:layout_marginEnd="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="@{avm.duration}"
             tools:text="3:32"/>
     </RelativeLayout>

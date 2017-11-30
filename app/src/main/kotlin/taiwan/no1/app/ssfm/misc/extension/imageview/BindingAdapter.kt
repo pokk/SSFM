@@ -29,17 +29,24 @@ fun ImageView.setBackgroundDrawable(drawable: Drawable?) {
 @BindingAdapter("android:imageUrl",
     "android:placeHolder",
     "android:error",
+    "android:imgHeight",
+    "android:imgWidth",
+    "android:fitCenter",
     "android:imgCallback",
     requireAll = false)
 fun ImageView.loadImage(url: String?,
                         holderDrawable: Drawable?,
                         errorDrawable: Drawable?,
+                        imgHeight: Int?,
+                        imgWidth: Int?,
+                        isFitCenter: Boolean = false,
                         listener: RequestListener<Bitmap>?) {
     if (!url.isNullOrBlank()) {
         Glide.with(context).asBitmap().load(url).apply(RequestOptions().apply {
-            centerCrop()
+            if (isFitCenter) fitCenter() else centerCrop()
             holderDrawable?.let(this::placeholder)
             errorDrawable?.let(this::error)
+            if (null != imgHeight && null != imgWidth) override(imgWidth, imgHeight)
             priority(Priority.HIGH)
             diskCacheStrategy(DiskCacheStrategy.RESOURCE)
         }).apply {
