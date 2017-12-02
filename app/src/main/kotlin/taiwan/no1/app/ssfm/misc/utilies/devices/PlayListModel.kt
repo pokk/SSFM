@@ -1,10 +1,10 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices
 
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.LOOPALL
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.LOOPONE
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.NORMAL
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.RANDOM
+import android.support.annotation.IntRange
+import taiwan.no1.app.ssfm.misc.utilies.devices.MusicStateConstant.PLAYLIST_STATE_LOOP_ALL
+import taiwan.no1.app.ssfm.misc.utilies.devices.MusicStateConstant.PLAYLIST_STATE_LOOP_ONE
+import taiwan.no1.app.ssfm.misc.utilies.devices.MusicStateConstant.PLAYLIST_STATE_NORMAL
+import taiwan.no1.app.ssfm.misc.utilies.devices.MusicStateConstant.PLAYLIST_STATE_RANDOM
 import java.util.Stack
 
 /**
@@ -21,18 +21,15 @@ class PlayListModel : IPlayList {
     private var mIsLoopOne: Boolean = false
     private var mIsLoopAll: Boolean = false
     private var mIsNormal: Boolean = false
-    private var mState: EMusicState = NORMAL
+    @PlaylistState var mState = PLAYLIST_STATE_NORMAL
 
     private fun getNextIndex(): Int {
         val maps = mapOf(
-            Pair({ RANDOM }, (Math.random() * mTotal).toInt()),
-            Pair({ LOOPONE }, mCurrentIndex),
-            Pair({ LOOPALL }, (mCurrentIndex + 1).rem(mTotal)),
-            Pair({ NORMAL }, if (
-            mCurrentIndex.inc() == mTotal
-                || mCurrentIndex == -1)
-                -1
-            else mCurrentIndex.inc()))
+            Pair({ PLAYLIST_STATE_RANDOM }, (Math.random() * mTotal).toInt()),
+            Pair({ PLAYLIST_STATE_LOOP_ONE }, mCurrentIndex),
+            Pair({ PLAYLIST_STATE_LOOP_ALL }, (mCurrentIndex + 1).rem(mTotal)),
+            Pair({ PLAYLIST_STATE_NORMAL },
+                if (mCurrentIndex.inc() == mTotal || mCurrentIndex == -1) -1 else mCurrentIndex.inc()))
 
         return run {
             maps.forEach { (c, r) -> if (c() == mState) return@run r }
@@ -41,7 +38,7 @@ class PlayListModel : IPlayList {
         }
     }
 
-    override fun setList(total: Int) {
+    override fun setList(@IntRange total: Int) {
         mTotal = total
     }
 
@@ -68,27 +65,18 @@ class PlayListModel : IPlayList {
     override fun random(is_random: Boolean) {
         mIsRandom = is_random
         mIsNormal = !is_random
-        if (is_random)
-            mState = RANDOM
-        else
-            mState = NORMAL
+        mState = if (is_random) PLAYLIST_STATE_RANDOM else PLAYLIST_STATE_NORMAL
     }
 
     override fun loopOne(is_loop: Boolean) {
         mIsLoopOne = is_loop
-        if (is_loop)
-            mState = LOOPONE
-        else
-            mState = NORMAL
+        mState = if (is_loop) PLAYLIST_STATE_LOOP_ONE else PLAYLIST_STATE_NORMAL
     }
 
     override fun loopAll(is_loop: Boolean) {
         mIsLoopAll = is_loop
-        if (is_loop)
-            mState = LOOPALL
-        else
-            mState = NORMAL
+        mState = if (is_loop) PLAYLIST_STATE_LOOP_ALL else PLAYLIST_STATE_NORMAL
     }
 
-    override fun getState(): EMusicState = mState
+    override fun getState(): Long = mState
 }

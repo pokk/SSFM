@@ -54,7 +54,8 @@ class ExoPlayerWrapper(context: Context,
     fun play() {
         if (isPlaying) {
             timer.pause()
-        } else {
+        }
+        else {
             timer.resume()
         }
         exoPlayer.playWhenReady = !isPlaying
@@ -116,9 +117,7 @@ class ExoPlayerWrapper(context: Context,
         exoPlayer.prepare(extractorMediaSource)
     }
 
-    private class LocalPlayerEventListener(player: ExoPlayerWrapper,
-                                           exoplayer: ExoPlayer): Player.EventListener {
-
+    private class LocalPlayerEventListener(player: ExoPlayerWrapper, exoplayer: ExoPlayer) : Player.EventListener {
         private var exoPlayer: ExoPlayer
         private var musicPlayer: ExoPlayerWrapper
 

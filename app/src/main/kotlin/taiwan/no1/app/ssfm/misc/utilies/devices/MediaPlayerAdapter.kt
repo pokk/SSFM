@@ -9,10 +9,9 @@ import com.devrapid.kotlinknifer.logi
 import com.devrapid.musicdiskplayer.RotatedCircleWithIconImageView
 import io.reactivex.Observable
 import io.reactivex.Observer
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPlayerState
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPlayerState.PAUSE
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPlayerState.PLAYING
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler.EPlayerState.STOP
+import taiwan.no1.app.ssfm.misc.utilies.devices.MusicStateConstant.MUSIC_STATE_PAUSE
+import taiwan.no1.app.ssfm.misc.utilies.devices.MusicStateConstant.MUSIC_STATE_PLAY
+import taiwan.no1.app.ssfm.misc.utilies.devices.MusicStateConstant.MUSIC_STATE_STOP
 import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
@@ -34,7 +33,7 @@ class MediaPlayerAdapter(imageView: RotatedCircleWithIconImageView) :
     MediaPlayer.OnCompletionListener {
     private var mImageView: RotatedCircleWithIconImageView
     private var mMediaPlayer = MediaPlayer()
-    private var mState: EPlayerState = STOP
+    private var mState: Long = MUSIC_STATE_STOP
     private var getStreamingBufferPercentage: (percentage: Int) -> Unit = {}
     private lateinit var downloadModel: IMediaDownloader
     private var mObserver: Observer<Unit>? = null
@@ -55,7 +54,7 @@ class MediaPlayerAdapter(imageView: RotatedCircleWithIconImageView) :
         logd("start playing")
         mMediaPlayer.start()
         mImageView.start()
-        mState = PLAYING
+        mState = MUSIC_STATE_PLAY
         durationListener(mp?.let { it.duration } ?: 0)
     }
 
@@ -145,21 +144,21 @@ class MediaPlayerAdapter(imageView: RotatedCircleWithIconImageView) :
         mMediaPlayer.stop()
         mImageView.stop()
         mMediaPlayer.reset()
-        mState = STOP
+        mState = MUSIC_STATE_STOP
     }
 
     override fun pause() {
         logd("pause player")
         mMediaPlayer.pause()
         mImageView.stop()
-        mState = PAUSE
+        mState = MUSIC_STATE_PAUSE
     }
 
     override fun resume() {
         logd("resume player")
         mMediaPlayer.start()
         mImageView.start()
-        mState = PLAYING
+        mState = MUSIC_STATE_PLAY
     }
 
     override fun replay(is_replay: Boolean) {
@@ -192,9 +191,7 @@ class MediaPlayerAdapter(imageView: RotatedCircleWithIconImageView) :
         callback(mMediaPlayer.currentPosition.div(1000))
     }
 
-    override fun getState(): EPlayerState {
-        return mState
-    }
+    override fun getState() = mState
 
     override fun writeToFile(path: String) {
         if (!mMediaPlayer.isPlaying) return

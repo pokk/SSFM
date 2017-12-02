@@ -4,8 +4,8 @@ import android.util.Log
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import taiwan.no1.app.ssfm.misc.utilies.PausableTimer
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.LOOPONE
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList.EMusicState.RANDOM
+import taiwan.no1.app.ssfm.misc.utilies.devices.MusicStateConstant.PLAYLIST_STATE_LOOP_ONE
+import taiwan.no1.app.ssfm.misc.utilies.devices.MusicStateConstant.PLAYLIST_STATE_RANDOM
 
 /**
  * For controlling media player.
@@ -87,8 +87,7 @@ class PlayerHandler(player: IMultiMediaPlayer, playList: IPlayList) :
         timer?.start()
     }
 
-    override fun isLooping(): Boolean =
-        mPlayIndex.getState() == LOOPONE
+    override fun isLooping() = PLAYLIST_STATE_LOOP_ONE == mPlayIndex.getState()
 
     override fun loopOne(is_loop: Boolean) {
         mPlayIndex.loopOne(is_loop)
@@ -118,10 +117,9 @@ class PlayerHandler(player: IMultiMediaPlayer, playList: IPlayList) :
 
     override fun playerState() = mPlayer.getState()
 
-    override fun nowPlaying(): Int = mPlayIndex.nowPlaying()
+    override fun nowPlaying() = mPlayIndex.nowPlaying()
 
-    override fun isRandom(): Boolean =
-        mPlayIndex.getState() == RANDOM
+    override fun isRandom() = PLAYLIST_STATE_RANDOM == mPlayIndex.getState()
 
     override fun setPlayList(list: Array<String>) {
         mPlayList = list
