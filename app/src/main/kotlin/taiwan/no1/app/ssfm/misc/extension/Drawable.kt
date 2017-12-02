@@ -13,8 +13,7 @@ import android.support.v7.graphics.Palette
  * @author  jieyi
  * @since   10/21/17
  */
-fun Context.scaledDrawable(@DrawableRes drawableId: Int, scaleWidth: Float,
-                           scaleHeight: Float): Drawable {
+fun Context.scaledDrawable(@DrawableRes drawableId: Int, scaleWidth: Float, scaleHeight: Float): Drawable {
     val drawable = ContextCompat.getDrawable(this, drawableId).apply {
         bounds = Rect(0,
             0,

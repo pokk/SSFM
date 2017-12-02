@@ -3,11 +3,14 @@ package taiwan.no1.app.ssfm.functions.chart
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.widget.LinearLayout
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.HorizontalItemDecorator
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
+import org.jetbrains.anko.act
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailTagBinding
 import taiwan.no1.app.ssfm.functions.base.AdvancedFragment
+import taiwan.no1.app.ssfm.misc.extension.gContext
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RVCustomScrollCallback
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.Universal1Adapter
@@ -17,7 +20,9 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.keepAllLastItemPosition
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.restoreAllLastItemPosition
+import taiwan.no1.app.ssfm.misc.extension.scaledDrawable
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.decorators.TrackDividerDecorator
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import javax.inject.Inject
 
@@ -99,6 +104,8 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
                 holder.binding.avm = RecyclerViewUniversal3ViewModel(item).apply {
                     onAttach(this@ChartTagDetailFragment)
                 }
+                val sd = gContext().scaledDrawable(R.drawable.ic_play_arrow, 0.5f, 0.5f)
+                holder.binding.tvPlaycount.setCompoundDrawables(sd, null, null, null)
             }
 
             albumLoadmore = RVCustomScrollCallback(binding?.albumAdapter as Universal1Adapter, albumInfo,
@@ -116,7 +123,8 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
 
             albumDecoration = HorizontalItemDecorator(20)
             artistDecoration = HorizontalItemDecorator(20)
-            trackDecoration = VerticalItemDecorator(20)
+            trackDecoration = VerticalItemDecorator(40)
+            trackDecoration = TrackDividerDecorator(act, LinearLayout.VERTICAL)
         }
         // First time showing this fragment.
         viewModel.fetchTagDetailInfo(musicTag)

@@ -5,7 +5,6 @@ import android.databinding.ObservableInt
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.view.View
-import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.toTimeString
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.LARGE
@@ -39,7 +38,6 @@ class RecyclerViewUniversal3ViewModel(val item: BaseEntity) : BaseViewModel() {
 
     init {
         (item as TrackEntity.Track).let {
-            logw(it)
             artistName.set(it.artist?.name)
             trackName.set(it.name)
             playcount.set(it.playcount)
