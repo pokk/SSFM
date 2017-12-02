@@ -4,8 +4,11 @@ import android.util.Log
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import taiwan.no1.app.ssfm.misc.utilies.PausableTimer
-import taiwan.no1.app.ssfm.misc.utilies.devices.MusicStateConstant.PLAYLIST_STATE_LOOP_ONE
-import taiwan.no1.app.ssfm.misc.utilies.devices.MusicStateConstant.PLAYLIST_STATE_RANDOM
+import taiwan.no1.app.ssfm.misc.utilies.devices.constants.MusicStateConstant.PLAYLIST_STATE_LOOP_ONE
+import taiwan.no1.app.ssfm.misc.utilies.devices.constants.MusicStateConstant.PLAYLIST_STATE_RANDOM
+import taiwan.no1.app.ssfm.misc.utilies.devices.interfaces.IMultiMediaPlayer
+import taiwan.no1.app.ssfm.misc.utilies.devices.interfaces.IPlayList
+import taiwan.no1.app.ssfm.misc.utilies.devices.interfaces.IPlayerHandler
 
 /**
  * For controlling media player.

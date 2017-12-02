@@ -1,6 +1,7 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices
 
 import android.media.MediaDataSource
+import taiwan.no1.app.ssfm.misc.utilies.devices.interfaces.IMediaDownloader
 import java.io.ByteArrayOutputStream
 import java.io.FileOutputStream
 import java.io.IOException

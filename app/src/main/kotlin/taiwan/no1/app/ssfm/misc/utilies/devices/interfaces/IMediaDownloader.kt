@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.misc.utilies.devices
+package taiwan.no1.app.ssfm.misc.utilies.devices.interfaces
 
 /**
  * Created by weian on 2017/10/21.

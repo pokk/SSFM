@@ -9,9 +9,11 @@ import com.devrapid.kotlinknifer.logi
 import com.devrapid.musicdiskplayer.RotatedCircleWithIconImageView
 import io.reactivex.Observable
 import io.reactivex.Observer
-import taiwan.no1.app.ssfm.misc.utilies.devices.MusicStateConstant.MUSIC_STATE_PAUSE
-import taiwan.no1.app.ssfm.misc.utilies.devices.MusicStateConstant.MUSIC_STATE_PLAY
-import taiwan.no1.app.ssfm.misc.utilies.devices.MusicStateConstant.MUSIC_STATE_STOP
+import taiwan.no1.app.ssfm.misc.utilies.devices.constants.MusicStateConstant.MUSIC_STATE_PAUSE
+import taiwan.no1.app.ssfm.misc.utilies.devices.constants.MusicStateConstant.MUSIC_STATE_PLAY
+import taiwan.no1.app.ssfm.misc.utilies.devices.constants.MusicStateConstant.MUSIC_STATE_STOP
+import taiwan.no1.app.ssfm.misc.utilies.devices.interfaces.IMediaDownloader
+import taiwan.no1.app.ssfm.misc.utilies.devices.interfaces.IMultiMediaPlayer
 import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL

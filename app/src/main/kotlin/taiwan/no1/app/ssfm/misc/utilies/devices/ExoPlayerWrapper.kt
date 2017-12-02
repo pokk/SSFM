@@ -23,25 +23,13 @@ import taiwan.no1.app.ssfm.misc.utilies.PausableTimer
  * Created by weian on 2017/11/16.
  *
  */
-class ExoPlayerWrapper(context: Context,
-                       durationListener: (duration: Int) -> Unit,
-                       bufferPercentage: (percentage: Int) -> Unit,
-                       currentTime: (time: Int) -> Unit) {
-
-    private var context: Context
-    private var durationListener: (duration: Int) -> Unit = {}
-    private var bufferPercentage: (percentage: Int) -> Unit = {}
-    private var currentTime: (time: Int) -> Unit = {}
+class ExoPlayerWrapper(private val context: Context,
+                       private var durationListener: (duration: Int) -> Unit,
+                       private var bufferPercentage: (percentage: Int) -> Unit,
+                       private var currentTime: (time: Int) -> Unit) {
     private var isPlaying = false
     private lateinit var exoPlayer: SimpleExoPlayer
     private lateinit var timer: PausableTimer
-
-    init {
-        this.context = context
-        this.durationListener = durationListener
-        this.bufferPercentage = bufferPercentage
-        this.currentTime = currentTime
-    }
 
     /**
      * start playing a music. When the music is playing, user is calling again, then music will be paused.
@@ -90,10 +78,7 @@ class ExoPlayerWrapper(context: Context,
      * set the repeat mode: normal play, repeat one music, repeat the whole playlist
      */
     fun repeat(isRepeat: Boolean) {
-        if (isRepeat)
-            exoPlayer.repeatMode = Player.REPEAT_MODE_ONE
-        else
-            exoPlayer.repeatMode = Player.REPEAT_MODE_OFF
+        exoPlayer.repeatMode = if (isRepeat) Player.REPEAT_MODE_ONE else Player.REPEAT_MODE_OFF
     }
 
     /**
@@ -103,7 +88,7 @@ class ExoPlayerWrapper(context: Context,
         exoPlayer.seekTo(time.times(1000).toLong())
     }
 
-    fun isPlaying(): Boolean = isPlaying
+    fun isPlaying() = isPlaying
 
     private fun initExoPlayer(url: String) {
         val meter = DefaultBandwidthMeter()
@@ -117,15 +102,8 @@ class ExoPlayerWrapper(context: Context,
         exoPlayer.prepare(extractorMediaSource)
     }
 
-    private class LocalPlayerEventListener(player: ExoPlayerWrapper, exoplayer: ExoPlayer) : Player.EventListener {
-        private var exoPlayer: ExoPlayer
-        private var musicPlayer: ExoPlayerWrapper
-
-        init {
-            exoPlayer = exoplayer
-            musicPlayer = player
-        }
-
+    private class LocalPlayerEventListener(private val wrapper: ExoPlayerWrapper,
+                                           private val exoPlayer: ExoPlayer) : Player.EventListener {
         override fun onPlaybackParametersChanged(playbackParameters: PlaybackParameters?) {
             TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         }
@@ -138,11 +116,11 @@ class ExoPlayerWrapper(context: Context,
         }
 
         override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-            musicPlayer.isPlaying = playWhenReady
+            wrapper.isPlaying = playWhenReady
         }
 
         override fun onLoadingChanged(isLoading: Boolean) {
-            musicPlayer.bufferPercentage(exoPlayer.bufferedPercentage)
+            wrapper.bufferPercentage(exoPlayer.bufferedPercentage)
         }
 
         override fun onPositionDiscontinuity() {
@@ -155,17 +133,17 @@ class ExoPlayerWrapper(context: Context,
 
         override fun onTimelineChanged(timeline: Timeline?, manifest: Any?) {
             if (exoPlayer.duration > 0) {
-                musicPlayer.durationListener(exoPlayer.duration.div(1000).toInt())
+                wrapper.durationListener(exoPlayer.duration.div(1000).toInt())
             }
 
-            musicPlayer.timer = PausableTimer(exoPlayer.duration, 1)
-            musicPlayer.timer.onTick = { millisUntilFinished ->
-                musicPlayer.currentTime(millisUntilFinished.div(1000).toInt())
+            wrapper.timer = PausableTimer(exoPlayer.duration, 1)
+            wrapper.timer.onTick = { millisUntilFinished ->
+                wrapper.currentTime(millisUntilFinished.div(1000).toInt())
             }
-            musicPlayer.timer.onFinish = {
-                musicPlayer.currentTime(exoPlayer.duration.div(1000).toInt())
+            wrapper.timer.onFinish = {
+                wrapper.currentTime(exoPlayer.duration.div(1000).toInt())
             }
-            musicPlayer.timer.start()
+            wrapper.timer.start()
         }
     }
 }

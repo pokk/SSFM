@@ -1,8 +1,9 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices
 
-import taiwan.no1.app.ssfm.misc.utilies.devices.MusicStateConstant.MUSIC_STATE_PLAY
-import taiwan.no1.app.ssfm.misc.utilies.devices.MusicStateConstant.MUSIC_STATE_STOP
-import taiwan.no1.app.ssfm.misc.utilies.devices.MusicStateConstant.MUSIC_STATE_UNKNOWN
+import taiwan.no1.app.ssfm.misc.utilies.devices.annotations.MusicState
+import taiwan.no1.app.ssfm.misc.utilies.devices.constants.MusicStateConstant.MUSIC_STATE_PLAY
+import taiwan.no1.app.ssfm.misc.utilies.devices.constants.MusicStateConstant.MUSIC_STATE_STOP
+import taiwan.no1.app.ssfm.misc.utilies.devices.constants.MusicStateConstant.MUSIC_STATE_UNKNOWN
 
 /**
  * @author  jieyi

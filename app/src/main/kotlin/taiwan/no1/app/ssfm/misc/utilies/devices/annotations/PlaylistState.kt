@@ -1,6 +1,7 @@
-package taiwan.no1.app.ssfm.misc.utilies.devices
+package taiwan.no1.app.ssfm.misc.utilies.devices.annotations
 
 import android.support.annotation.IntDef
+import taiwan.no1.app.ssfm.misc.utilies.devices.constants.MusicStateConstant
 
 /**
  * @author  jieyi

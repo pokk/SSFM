@@ -10,9 +10,9 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityMusicBinding
 import taiwan.no1.app.ssfm.functions.base.AdvancedActivity
 import taiwan.no1.app.ssfm.misc.utilies.devices.ExoPlayerWrapper
-import taiwan.no1.app.ssfm.misc.utilies.devices.IMultiMediaPlayer
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayList
-import taiwan.no1.app.ssfm.misc.utilies.devices.IPlayerHandler
+import taiwan.no1.app.ssfm.misc.utilies.devices.interfaces.IMultiMediaPlayer
+import taiwan.no1.app.ssfm.misc.utilies.devices.interfaces.IPlayList
+import taiwan.no1.app.ssfm.misc.utilies.devices.interfaces.IPlayerHandler
 import javax.inject.Inject
 
 /**

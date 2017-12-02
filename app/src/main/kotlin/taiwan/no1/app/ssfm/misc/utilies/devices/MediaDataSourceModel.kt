@@ -1,6 +1,7 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices
 
 import android.media.MediaDataSource
+import taiwan.no1.app.ssfm.misc.utilies.devices.interfaces.IMediaDownloader
 import java.io.ByteArrayOutputStream
 import java.io.FileOutputStream
 import java.io.IOException
@@ -14,8 +15,7 @@ import kotlin.concurrent.thread
  */
 
 class MediaDataSourceModel(private var url: String,
-                           private var listener: IMediaDownloader.DownloadListener) :
-    MediaDataSource(),
+                           private var listener: IMediaDownloader.DownloadListener) : MediaDataSource(),
     IMediaDownloader {
     @Volatile lateinit var mediaBuffer: ByteArray
     var percentage: Double = .0

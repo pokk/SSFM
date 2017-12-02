@@ -1,4 +1,6 @@
-package taiwan.no1.app.ssfm.misc.utilies.devices
+package taiwan.no1.app.ssfm.misc.utilies.devices.interfaces
+
+import taiwan.no1.app.ssfm.misc.utilies.devices.annotations.PlaylistState
 
 /**
  * For handling music list.

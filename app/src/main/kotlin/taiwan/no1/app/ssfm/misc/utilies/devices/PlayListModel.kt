@@ -1,10 +1,12 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices
 
 import android.support.annotation.IntRange
-import taiwan.no1.app.ssfm.misc.utilies.devices.MusicStateConstant.PLAYLIST_STATE_LOOP_ALL
-import taiwan.no1.app.ssfm.misc.utilies.devices.MusicStateConstant.PLAYLIST_STATE_LOOP_ONE
-import taiwan.no1.app.ssfm.misc.utilies.devices.MusicStateConstant.PLAYLIST_STATE_NORMAL
-import taiwan.no1.app.ssfm.misc.utilies.devices.MusicStateConstant.PLAYLIST_STATE_RANDOM
+import taiwan.no1.app.ssfm.misc.utilies.devices.annotations.PlaylistState
+import taiwan.no1.app.ssfm.misc.utilies.devices.constants.MusicStateConstant.PLAYLIST_STATE_LOOP_ALL
+import taiwan.no1.app.ssfm.misc.utilies.devices.constants.MusicStateConstant.PLAYLIST_STATE_LOOP_ONE
+import taiwan.no1.app.ssfm.misc.utilies.devices.constants.MusicStateConstant.PLAYLIST_STATE_NORMAL
+import taiwan.no1.app.ssfm.misc.utilies.devices.constants.MusicStateConstant.PLAYLIST_STATE_RANDOM
+import taiwan.no1.app.ssfm.misc.utilies.devices.interfaces.IPlayList
 import java.util.Stack
 
 /**

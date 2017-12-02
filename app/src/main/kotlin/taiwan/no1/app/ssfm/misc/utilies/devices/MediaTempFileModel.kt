@@ -2,7 +2,8 @@ package taiwan.no1.app.ssfm.misc.utilies.devices
 
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
-import taiwan.no1.app.ssfm.misc.utilies.devices.IMediaDownloader.DownloadListener
+import taiwan.no1.app.ssfm.misc.utilies.devices.interfaces.IMediaDownloader
+import taiwan.no1.app.ssfm.misc.utilies.devices.interfaces.IMediaDownloader.DownloadListener
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
