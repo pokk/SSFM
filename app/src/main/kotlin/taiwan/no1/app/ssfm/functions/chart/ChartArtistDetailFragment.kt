@@ -4,9 +4,13 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.HorizontalItemDecorator
+import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
+import kotlinx.android.synthetic.main.fragment_detail_artist.rv_album
+import org.jetbrains.anko.act
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailArtistBinding
 import taiwan.no1.app.ssfm.functions.base.AdvancedFragment
+import taiwan.no1.app.ssfm.misc.constants.ImageSizes.EXTRA_LARGE
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.ArtistTopTrackAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.SimilarArtistAdapter
@@ -97,6 +101,8 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
                 }
             }
         }
+        // FIXME(jieyi): 2017/12/03 Change to MVVM binding.
+        val horizontalInfiniteCycleViewPager = rv_album as HorizontalInfiniteCycleViewPager
         // First time showing this fragment.
         artistInfo.firstFetch { info ->
             viewModel.fetchDetailInfo(mbid, artistName) {
@@ -106,7 +112,10 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
                     viewModel.fetchHotTracks(artistName) {
                         trackRes.refreshAndChangeList(it, 0, binding?.trackAdapter as ArtistTopTrackAdapter, trackInfo)
                     }
-                    viewModel.fetchHotAlbum(artistName)
+                    viewModel.fetchHotAlbum(artistName) {
+                        horizontalInfiniteCycleViewPager.adapter = HorizontalPagerAdapter(act,
+                            it.map { it.images?.get(EXTRA_LARGE)?.text.orEmpty() })
+                    }
                 }
             }
         }

@@ -5,6 +5,7 @@ import com.devrapid.kotlinknifer.loge
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.EXTRA_LARGE
 import taiwan.no1.app.ssfm.misc.extension.execute
+import taiwan.no1.app.ssfm.models.entities.lastfm.AlbumEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
 import taiwan.no1.app.ssfm.models.usecases.FetchArtistInfoCase
@@ -46,12 +47,10 @@ class ChartArtistDetailFragmentViewModel(private val artistsInfoUsecase: FetchAr
         }
     }
 
-    fun fetchHotAlbum(name: String) {
+    fun fetchHotAlbum(name: String, callback: (entity: List<AlbumEntity.AlbumWithPlaycount>) -> Unit) {
         lifecycleProvider.execute(artistTopAlbumsUsecase,
             GetArtistTopAlbumsUsecase.RequestValue(name)) {
-            onNext {
-                it.topalbums.albums.forEach { }
-            }
+            onNext { callback(it.topalbums.albums) }
             onError { loge(it.message) }
         }
     }
