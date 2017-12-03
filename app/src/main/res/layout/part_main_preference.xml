@@ -1,17 +1,32 @@
-<android.support.v7.widget.RecyclerView
-    android:id="@+id/rv_preference"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:layout_alignParentTop="true"
-    android:layout_centerHorizontal="true"
-    android:layout_marginEnd="@dimen/one_unit"
-    android:layout_marginStart="@dimen/one_unit"
-    android:scrollbars="vertical"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/tb_toolbar"
-    tools:listitem="@layout/item_preference_first_layer_title"/>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="layoutManager"
+            type="android.support.v7.widget.RecyclerView.LayoutManager"/>
+
+        <variable
+            name="adapter"
+            type="android.support.v7.widget.RecyclerView.Adapter"/>
+    </data>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_preference"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="@dimen/one_unit"
+        android:layout_marginStart="@dimen/one_unit"
+        android:adapter="@{adapter}"
+        android:layoutManager="@{layoutManager}"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tb_toolbar"
+        tools:listitem="@layout/item_preference_first_layer_title"/>
+</layout>

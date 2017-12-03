@@ -3,7 +3,7 @@ package taiwan.no1.app.ssfm.functions.preference
 import android.app.Activity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.part_main_preference.rv_preference
+import com.devrapid.kotlinknifer.SharedPrefs
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityPreferenceBinding
 import taiwan.no1.app.ssfm.functions.base.AdvancedActivity
@@ -22,16 +22,22 @@ import javax.inject.Inject
  */
 class PreferenceActivity : AdvancedActivity<PreferenceViewModel, ActivityPreferenceBinding>() {
     @Inject override lateinit var viewModel: PreferenceViewModel
+    private var theme by SharedPrefs(false)
+    private var isAutoPlay by SharedPrefs(false)
+    private var isAutoDownload by SharedPrefs(false)
+    private var isDownloadByWifi by SharedPrefs(false)
+    private var isLockScreenLyrics by SharedPrefs(false)
+    private var isLastSelectedChannel by SharedPrefs(false)
 
     private val preferenceList: MutableList<IExpandVisitable> = mutableListOf(
         PreferenceEntity("Theme", "Dark", R.drawable.ic_theme, childItemList = mutableListOf(
             PreferenceOptionEntity("Dark"),
             PreferenceOptionEntity("Light"))),
-        PreferenceToggleEntity("Auto Play", true, R.drawable.ic_music_disk),
-        PreferenceToggleEntity("Auto Download", false, R.drawable.ic_download),
-        PreferenceToggleEntity("Download Only Wifi", false, R.drawable.ic_wifi),
-        PreferenceToggleEntity("Lock Screen Lyrics Display", true, R.drawable.ic_queue_music),
-        PreferenceToggleEntity("Last Selected Channel", false),
+        PreferenceToggleEntity("Auto Play", isAutoPlay, R.drawable.ic_music_disk),
+        PreferenceToggleEntity("Auto Download", isAutoDownload, R.drawable.ic_download),
+        PreferenceToggleEntity("Download Only Wifi", isDownloadByWifi, R.drawable.ic_wifi),
+        PreferenceToggleEntity("Lock Screen Lyrics Display", isLockScreenLyrics, R.drawable.ic_queue_music),
+        PreferenceToggleEntity("Last Selected Channel", isLastSelectedChannel, R.drawable.ic_chart),
         PreferenceEntity("About Us", "", R.drawable.ic_info_outline),
         PreferenceEntity("Feedback", "", R.drawable.ic_feedback))
 
@@ -40,13 +46,14 @@ class PreferenceActivity : AdvancedActivity<PreferenceViewModel, ActivityPrefere
         super.onCreate(savedInstanceState)
 
         // Initial the recycler view.
-        rv_preference.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        rv_preference.adapter = ExpandRecyclerViewAdapter(preferenceList)
+        binding.apply {
+            layoutManager = LinearLayoutManager(this@PreferenceActivity, LinearLayoutManager.VERTICAL, false)
+            adapter = ExpandRecyclerViewAdapter(preferenceList)
+        }
     }
     //endregion
 
     //region Base activity implement
-    override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this,
-        R.layout.activity_preference)
+    override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_preference)
     //endregion
 }

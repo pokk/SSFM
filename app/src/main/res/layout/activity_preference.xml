@@ -10,6 +10,14 @@
         <variable
             name="vm"
             type="taiwan.no1.app.ssfm.functions.preference.PreferenceViewModel"/>
+
+        <variable
+            name="layoutManager"
+            type="android.support.v7.widget.RecyclerView.LayoutManager"/>
+
+        <variable
+            name="adapter"
+            type="android.support.v7.widget.RecyclerView.Adapter"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -29,6 +37,8 @@
 
         <include
             style="@style/Template.Activity"
-            layout="@layout/part_main_preference"/>
+            layout="@layout/part_main_preference"
+            app:adapter="@{adapter}"
+            app:layoutManager="@{layoutManager}"/>
     </android.support.constraint.ConstraintLayout>
 </layout>
