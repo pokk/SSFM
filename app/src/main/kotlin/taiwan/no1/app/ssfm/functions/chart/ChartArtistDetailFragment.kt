@@ -6,11 +6,9 @@ import android.support.v7.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.HorizontalItemDecorator
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
 import kotlinx.android.synthetic.main.fragment_detail_artist.rv_album
-import org.jetbrains.anko.act
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailArtistBinding
 import taiwan.no1.app.ssfm.functions.base.AdvancedFragment
-import taiwan.no1.app.ssfm.misc.constants.ImageSizes.EXTRA_LARGE
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.ArtistTopTrackAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.SimilarArtistAdapter
@@ -113,8 +111,9 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
                         trackRes.refreshAndChangeList(it, 0, binding?.trackAdapter as ArtistTopTrackAdapter, trackInfo)
                     }
                     viewModel.fetchHotAlbum(artistName) {
-                        horizontalInfiniteCycleViewPager.adapter = HorizontalPagerAdapter(act,
-                            it.map { it.images?.get(EXTRA_LARGE)?.text.orEmpty() })
+                        // TODO(jieyi): 2017/12/04 這邊是要丟view進去而不是list data.
+//                        horizontalInfiniteCycleViewPager.adapter = HorizontalPagerAdapter(
+//                            act.applicationContext, it.map { it.images?.get(LARGE)?.text.orEmpty() })
                     }
                 }
             }
