@@ -1,6 +1,5 @@
 package taiwan.no1.app.ssfm.functions.preference
 
-import android.app.Activity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.SharedPrefs
@@ -54,6 +53,6 @@ class PreferenceActivity : AdvancedActivity<PreferenceViewModel, ActivityPrefere
     //endregion
 
     //region Base activity implement
-    override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_preference)
+    override fun provideBindingLayoutId() = this to R.layout.activity_preference
     //endregion
 }

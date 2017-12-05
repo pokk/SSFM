@@ -18,7 +18,8 @@ data class AlbumEntity(var album: Album?) {
 
     data class AlbumWithPlaycount(var artist: ArtistEntity.Artist?,
                                   @SerializedName("playcount")
-                                  var playCount: Int?) : BaseAlbum()
+                                  var playCount: Int?,
+                                  var index: Int = -1) : BaseAlbum()
 
     open class BaseAlbum(@SerializedName("@attr")
                          var attr: Attr? = null,

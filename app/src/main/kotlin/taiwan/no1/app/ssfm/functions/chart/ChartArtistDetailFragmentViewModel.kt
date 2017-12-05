@@ -50,7 +50,13 @@ class ChartArtistDetailFragmentViewModel(private val artistsInfoUsecase: FetchAr
     fun fetchHotAlbum(name: String, callback: (entity: List<AlbumEntity.AlbumWithPlaycount>) -> Unit) {
         lifecycleProvider.execute(artistTopAlbumsUsecase,
             GetArtistTopAlbumsUsecase.RequestValue(name)) {
-            onNext { callback(it.topalbums.albums) }
+            onNext {
+                it.topalbums.albums.apply {
+                    forEachIndexed { index, albumWithPlaycount ->
+                        albumWithPlaycount.index = index
+                    }
+                }.let(callback)
+            }
             onError { loge(it.message) }
         }
     }
