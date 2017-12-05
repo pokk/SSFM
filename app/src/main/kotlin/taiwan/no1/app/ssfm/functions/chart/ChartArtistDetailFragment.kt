@@ -11,6 +11,8 @@ import org.jetbrains.anko.ctx
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailArtistBinding
 import taiwan.no1.app.ssfm.functions.base.AdvancedFragment
+import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME
+import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_NAME
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.ArtistTopAlbumAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.ArtistTopTrackAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
@@ -115,7 +117,20 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
                 holder.binding.avm = RecyclerViewChartArtistHotAlbumViewModel(item).apply {
                     onAttach(this@ChartArtistDetailFragment)
                     clickItemListener = {
-                        (albumLayoutManager as FanLayoutManager).switchItem(rvAlbum, it.index)
+                        (albumLayoutManager as FanLayoutManager).run {
+                            when {
+                                isItemSelected && selectedItemPosition == it.index -> {
+                                    val params = hashMapOf(
+                                        VIEWMODEL_PARAMS_ARTIST_NAME to it.artist?.name.orEmpty(),
+                                        VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME to it.name.orEmpty())
+                                    (act as ChartActivity).navigateToAlbumDetail(params)
+                                }
+                                else -> {
+                                    deselectItem()
+                                    switchItem(rvAlbum, it.index)
+                                }
+                            }
+                        }
                     }
                 }
             }
