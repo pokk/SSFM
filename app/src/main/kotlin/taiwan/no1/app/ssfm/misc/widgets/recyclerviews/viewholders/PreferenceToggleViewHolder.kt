@@ -16,7 +16,7 @@ import taiwan.no1.app.ssfm.models.entities.PreferenceToggleEntity
  * @author  jieyi
  * @since   9/8/17
  */
-class PreferenceToggleViewHolder(view: View) : AdaptiveViewHolder<ExpandableViewTypeFactory, PreferenceToggleEntity>(
+class PreferenceToggleViewHolder(private val view: View) : AdaptiveViewHolder<ExpandableViewTypeFactory, PreferenceToggleEntity>(
     view) {
     override fun initView(model: PreferenceToggleEntity, position: Int, adapter: Any) {
         adapter as ExpandRecyclerViewAdapter
