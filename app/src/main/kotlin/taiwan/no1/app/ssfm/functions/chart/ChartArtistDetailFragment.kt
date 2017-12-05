@@ -3,12 +3,15 @@ package taiwan.no1.app.ssfm.functions.chart
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import com.cleveroad.fanlayoutmanager.FanLayoutManager
+import com.cleveroad.fanlayoutmanager.FanLayoutManagerSettings
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.HorizontalItemDecorator
-import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
-import kotlinx.android.synthetic.main.fragment_detail_artist.rv_album
+import org.jetbrains.anko.act
+import org.jetbrains.anko.ctx
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailArtistBinding
 import taiwan.no1.app.ssfm.functions.base.AdvancedFragment
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.ArtistTopAlbumAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.ArtistTopTrackAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.SimilarArtistAdapter
@@ -20,6 +23,7 @@ import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
 import javax.inject.Inject
+
 
 /**
  *
@@ -52,8 +56,10 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
     @Inject lateinit var searchMusicCase: SearchMusicV2Case
     private val artistInfo by lazy { DataInfo() }
     private val trackInfo by lazy { DataInfo() }
+    private val albumInfo by lazy { DataInfo() }
     private var artistRes = mutableListOf<BaseEntity>()
     private var trackRes = mutableListOf<BaseEntity>()
+    private var albumRes = mutableListOf<BaseEntity>()
     private var nestViewLastPosition = 0
     // Get the arguments from the bundle here.
     private val mbid: String by lazy { this.arguments.getString(ARG_PARAM_MBID) }
@@ -98,9 +104,22 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
                     onAttach(this@ChartArtistDetailFragment)
                 }
             }
+
+            albumLayoutManager = FanLayoutManager(act, FanLayoutManagerSettings.newBuilder(ctx).apply {
+                withFanRadius(true)
+                withAngleItemBounce(5f)
+                withViewHeightDp(190f)
+                withViewWidthDp(150f)
+            }.build())
+            albumAdapter = ArtistTopAlbumAdapter(R.layout.item_album_type_1, albumRes) { holder, item ->
+                holder.binding.avm = RecyclerViewChartArtistHotAlbumViewModel(item).apply {
+                    onAttach(this@ChartArtistDetailFragment)
+                    clickItemListener = {
+                        (albumLayoutManager as FanLayoutManager).switchItem(rvAlbum, it.index)
+                    }
+                }
+            }
         }
-        // FIXME(jieyi): 2017/12/03 Change to MVVM binding.
-        val horizontalInfiniteCycleViewPager = rv_album as HorizontalInfiniteCycleViewPager
         // First time showing this fragment.
         artistInfo.firstFetch { info ->
             viewModel.fetchDetailInfo(mbid, artistName) {
@@ -111,9 +130,7 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
                         trackRes.refreshAndChangeList(it, 0, binding?.trackAdapter as ArtistTopTrackAdapter, trackInfo)
                     }
                     viewModel.fetchHotAlbum(artistName) {
-                        // TODO(jieyi): 2017/12/04 這邊是要丟view進去而不是list data.
-//                        horizontalInfiniteCycleViewPager.adapter = HorizontalPagerAdapter(
-//                            act.applicationContext, it.map { it.images?.get(LARGE)?.text.orEmpty() })
+                        albumRes.refreshAndChangeList(it, 0, binding?.albumAdapter as ArtistTopAlbumAdapter, albumInfo)
                     }
                 }
             }

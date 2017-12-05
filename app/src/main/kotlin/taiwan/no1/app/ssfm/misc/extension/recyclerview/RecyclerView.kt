@@ -3,6 +3,7 @@ package taiwan.no1.app.ssfm.misc.extension.recyclerview
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.LinearLayout.HORIZONTAL
+import taiwan.no1.app.ssfm.databinding.ItemAlbumType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemArtistType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemArtistType2Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType1Binding
@@ -34,6 +35,7 @@ typealias TagAdapter = BaseDataBindingAdapter<ItemTagType1Binding, BaseEntity>
 typealias HistoryAdapter = BaseDataBindingAdapter<ItemSearchHistoryType1Binding, BaseEntity>
 typealias SimilarArtistAdapter = BaseDataBindingAdapter<ItemArtistType2Binding, BaseEntity>
 typealias ArtistTopTrackAdapter = BaseDataBindingAdapter<ItemMusicType2Binding, BaseEntity>
+typealias ArtistTopAlbumAdapter = BaseDataBindingAdapter<ItemAlbumType1Binding, BaseEntity>
 typealias AlbumTrackAdapter = BaseDataBindingAdapter<ItemMusicType4Binding, BaseEntity>
 typealias Universal1Adapter = BaseDataBindingAdapter<ItemUniversalType1Binding, BaseEntity>
 typealias Universal2Adapter = BaseDataBindingAdapter<ItemUniversalType2Binding, BaseEntity>

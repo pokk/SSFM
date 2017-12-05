@@ -1,18 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="avm"
+            type="taiwan.no1.app.ssfm.functions.chart.RecyclerViewChartArtistHotAlbumViewModel"/>
+    </data>
 
     <android.support.v7.widget.CardView
-        android:layout_width="190dp"
+        android:layout_width="150dp"
+        app:cardElevation="5dp"
+        app:cardBackgroundColor="@{avm.background}"
         android:layout_height="190dp"
+        android:onClick="@{avm::albumOnClick}"
         android:layout_gravity="center_vertical|center_horizontal">
 
         <ImageView
-            android:id="@+id/iv_album_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"/>
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:imgCallback="@{avm.imageCallback}"
+            android:imageUrl="@{avm.imageUrl}"
+            android:scaleType="centerCrop"
+            android:src="@drawable/sample_lady_gaga"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:gravity="center"
+            android:textColor="@{avm.textColor}"
+            android:text="@{avm.albumName}"
+            tools:text="The Cure"/>
     </android.support.v7.widget.CardView>
-</FrameLayout>
+</layout>

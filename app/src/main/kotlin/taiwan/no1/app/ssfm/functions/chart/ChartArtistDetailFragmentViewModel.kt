@@ -51,7 +51,11 @@ class ChartArtistDetailFragmentViewModel(private val artistsInfoUsecase: FetchAr
         lifecycleProvider.execute(artistTopAlbumsUsecase,
             GetArtistTopAlbumsUsecase.RequestValue(name)) {
             onNext {
-                callback(it.topalbums.albums)
+                it.topalbums.albums.apply {
+                    forEachIndexed { index, albumWithPlaycount ->
+                        albumWithPlaycount.index = index
+                    }
+                }.let(callback)
             }
             onError { loge(it.message) }
         }
