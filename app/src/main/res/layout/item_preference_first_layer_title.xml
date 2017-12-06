@@ -1,45 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:background="@color/colorMainThemeBackground">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/iv_title_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="@dimen/one_unit"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="@dimen/one_unit"
-        android:contentDescription="@string/todo"
-        android:src="@drawable/ic_mail"/>
+    <data>
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_toEndOf="@+id/iv_title_icon"
-        android:layout_toStartOf="@+id/tv_selected"
-        android:textColor="@color/colorWhite"
-        tools:text="Theme Setting"/>
+        <variable
+            name="avm"
+            type="taiwan.no1.app.ssfm.functions.preference.PreferenceItemViewModel"/>
+    </data>
 
-    <TextView
-        android:id="@+id/tv_selected"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="24dp"
-        android:textColor="#9A9A9A"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Dark Theme"/>
-</RelativeLayout>
+        android:onClick="@{avm::onClick}"
+        tools:background="@color/colorMainThemeBackground">
+
+        <ImageView
+            android:id="@+id/iv_title_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="@dimen/one_unit"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="@dimen/one_unit"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/ic_mail"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_toEndOf="@+id/iv_title_icon"
+            android:layout_toStartOf="@+id/tv_selected"
+            android:text="@{avm.title}"
+            android:textColor="@color/colorWhite"
+            tools:text="Theme Setting"/>
+
+        <TextView
+            android:id="@+id/tv_selected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="24dp"
+            android:text="@{avm.selected}"
+            android:textColor="#9A9A9A"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Dark Theme"/>
+    </RelativeLayout>
+</layout>

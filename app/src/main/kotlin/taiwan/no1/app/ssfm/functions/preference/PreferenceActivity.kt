@@ -1,12 +1,17 @@
 package taiwan.no1.app.ssfm.functions.preference
 
+import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.SharedPrefs
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityPreferenceBinding
+import taiwan.no1.app.ssfm.databinding.ItemPreferenceFirstLayerTitleBinding
+import taiwan.no1.app.ssfm.databinding.ItemPreferenceFirstLayerToggleBinding
+import taiwan.no1.app.ssfm.databinding.ItemPreferenceSecondLayerTitleBinding
 import taiwan.no1.app.ssfm.functions.base.AdvancedActivity
-import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.ExpandRecyclerViewAdapter
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseMultipleTypeDataBindingAdapter
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.viewholders.BindingHolder
 import taiwan.no1.app.ssfm.models.IExpandVisitable
 import taiwan.no1.app.ssfm.models.entities.PreferenceEntity
 import taiwan.no1.app.ssfm.models.entities.PreferenceOptionEntity
@@ -47,7 +52,25 @@ class PreferenceActivity : AdvancedActivity<PreferenceViewModel, ActivityPrefere
         // Initial the recycler view.
         binding.apply {
             layoutManager = LinearLayoutManager(this@PreferenceActivity, LinearLayoutManager.VERTICAL, false)
-            adapter = ExpandRecyclerViewAdapter(preferenceList)
+//            adapter = ExpandRecyclerViewAdapter(preferenceList)
+            adapter = BaseMultipleTypeDataBindingAdapter<ViewDataBinding, IExpandVisitable>(preferenceList) { holder, item ->
+                when (item) {
+                    is PreferenceEntity -> {
+                        (holder as BindingHolder<ItemPreferenceFirstLayerTitleBinding>).binding.avm =
+                            PreferenceItemViewModel(item)
+                    }
+                    is PreferenceOptionEntity -> {
+                        (holder as BindingHolder<ItemPreferenceSecondLayerTitleBinding>).binding.avm =
+                            PreferenceOptionViewModel(item)
+                    }
+                    is PreferenceToggleEntity -> {
+                        (holder as BindingHolder<ItemPreferenceFirstLayerToggleBinding>).binding.avm =
+                            PreferenceToggleViewModel(item)
+                    }
+                    else -> {
+                    }
+                }
+            }
         }
     }
     //endregion

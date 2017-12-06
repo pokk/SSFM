@@ -1,22 +1,32 @@
 package taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters
 
+import android.databinding.DataBindingUtil
+import android.databinding.ViewDataBinding
 import android.support.v7.util.DiffUtil
-import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
-import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import io.reactivex.Observable
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.viewholders.BindingHolder
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.viewtype.ExpandableViewTypeFactory
 import taiwan.no1.app.ssfm.models.IExpandVisitable
 import taiwan.no1.app.ssfm.models.entities.PreferenceEntity
 
 /**
- * An adapter for expandable recycler view .
  *
  * @author  jieyi
- * @since   9/6/17
+ * @since   9/20/17
  */
-class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisitable>) :
-    AdaptiveAdapter<ExpandableViewTypeFactory, IExpandVisitable, AdaptiveViewHolder<ExpandableViewTypeFactory, IExpandVisitable>>() {
-    override var typeFactory: ExpandableViewTypeFactory = ExpandableViewTypeFactory()
+class BaseMultipleTypeDataBindingAdapter<BH : ViewDataBinding, D>(private var dataList: MutableList<D>,
+                                                                  bindVHBlock: (holder: BindingHolder<BH>, item: D) -> Unit) :
+    BaseDataBindingAdapter<BH, D>(-1, dataList, bindVHBlock) {
+    private var typeFactory: ExpandableViewTypeFactory = ExpandableViewTypeFactory()
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingHolder<BH> =
+        DataBindingUtil.inflate<BH>(LayoutInflater.from(parent.context),
+            typeFactory.getLayoutResource(viewType), parent, false).let { BindingHolder(it) }
+
+    override fun getItemViewType(position: Int): Int = (dataList[position] as IExpandVisitable).type(typeFactory)
+
     /**
      *  This is for keeping the item position of the first layer. After a main track
      *  was expanded, the children quantity of the main item will be recorded to
@@ -54,12 +64,12 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
      */
     fun expand(position: Int, newIndex: Int) {
         updateList {
-            val subList = dataList[newIndex].let {
+            val subList = (dataList[newIndex] as IExpandVisitable).let {
                 changeVisibleChildNumber(position, it.childItemList.size)
                 it.isExpanded = true
                 it.childItemList
             }
-            ArrayList(dataList).toMutableList().apply {
+            ArrayList(dataList as MutableList<IExpandVisitable>).toMutableList().apply {
                 addAll(newIndex + 1, subList as Collection<IExpandVisitable>)
             }
         }
@@ -73,12 +83,12 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
      */
     fun collapse(position: Int, newIndex: Int) {
         updateList {
-            val subList = dataList[newIndex].let {
+            val subList = (dataList[newIndex] as IExpandVisitable).let {
                 changeVisibleChildNumber(position, 0)
                 it.isExpanded = false
                 it.childItemList
             }
-            ArrayList(dataList).toMutableList().apply {
+            ArrayList(dataList as MutableList<IExpandVisitable>).toMutableList().apply {
                 subList(newIndex + 1, newIndex + 1 + subList.size).clear()
             }
         }
@@ -99,7 +109,7 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
      * @hashCode position The index in [dataList] of an item.
      * @return value is true → expanded; otherwise, collapsed.
      */
-    fun isExpanded(position: Int): Boolean = dataList[position].isExpanded
+    fun isExpanded(position: Int): Boolean = (dataList[position] as IExpandVisitable).isExpanded
 
     /**
      * Get the parent index of an expanded child item.
@@ -132,8 +142,10 @@ class ExpandRecyclerViewAdapter(override var dataList: MutableList<IExpandVisita
      */
     private fun updateList(getNewListBlock: () -> MutableList<IExpandVisitable>) {
         val newList = getNewListBlock()
-        DiffUtil.calculateDiff(ExpandDiffUtil(dataList, newList)).dispatchUpdatesTo(this)
-        dataList = newList
+
+        DiffUtil.calculateDiff(ExpandDiffUtil(dataList as MutableList<IExpandVisitable>, newList)).dispatchUpdatesTo(
+            this)
+        dataList = newList as MutableList<D>
     }
 
     /**

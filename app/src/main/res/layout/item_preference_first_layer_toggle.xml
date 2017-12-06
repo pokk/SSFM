@@ -1,40 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:background="@color/colorMainThemeBackground">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/iv_title_icon"
-        android:layout_width="wrap_content"
+    <data>
+
+        <variable
+            name="avm"
+            type="taiwan.no1.app.ssfm.functions.preference.PreferenceToggleViewModel"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="@dimen/one_unit"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="@dimen/one_unit"
-        android:contentDescription="@string/todo"
-        android:src="@drawable/ic_mail"/>
+        tools:background="@color/colorMainThemeBackground">
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_toEndOf="@id/iv_title_icon"
-        android:layout_toStartOf="@+id/st_switch"
-        android:textColor="@color/colorWhite"
-        tools:text="Theme Setting"/>
+        <ImageView
+            android:id="@+id/iv_title_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="@dimen/one_unit"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="@dimen/one_unit"
+            android:contentDescription="@string/todo"
+            android:src="@{avm.icon}"/>
 
-    <Switch
-        android:id="@+id/st_switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="24dp"/>
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="24dp"
+            android:text="@{avm.title}"
+            android:layout_toEndOf="@id/iv_title_icon"
+            android:layout_toStartOf="@+id/st_switch"
+            android:textColor="@color/colorWhite"
+            tools:text="Theme Setting"/>
 
-</RelativeLayout>
+        <Switch
+            android:id="@+id/st_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@{avm.selected}"
+            android:onCheckedChanged="@{avm::onCheckedChange}"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="24dp"/>
+    </RelativeLayout>
+</layout>
