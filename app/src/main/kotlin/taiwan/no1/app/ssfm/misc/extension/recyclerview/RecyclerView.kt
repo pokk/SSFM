@@ -1,5 +1,6 @@
 package taiwan.no1.app.ssfm.misc.extension.recyclerview
 
+import android.databinding.ViewDataBinding
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.LinearLayout.HORIZONTAL
@@ -21,6 +22,8 @@ import taiwan.no1.app.ssfm.databinding.ItemUniversalType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemUniversalType2Binding
 import taiwan.no1.app.ssfm.databinding.ItemUniversalType3Binding
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseMultipleTypeDataBindingAdapter
+import taiwan.no1.app.ssfm.models.IExpandVisitable
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 
 /**
@@ -45,7 +48,7 @@ typealias PlaylistItemAdapter = BaseDataBindingAdapter<ItemMusicType5Binding, Ba
 typealias PlaylistAdapter = BaseDataBindingAdapter<ItemPlaylistType1Binding, BaseEntity>
 typealias RecentlyAdapter = BaseDataBindingAdapter<ItemMusicType3Binding, BaseEntity>
 typealias SearchHistoryAdapter = BaseDataBindingAdapter<ItemSearchMusicType1Binding, BaseEntity>
-
+typealias MultipleTypeAdapter = BaseMultipleTypeDataBindingAdapter<ViewDataBinding, IExpandVisitable>
 
 /**
  * The operation for updating the list result by the adapter. Including updating the original list

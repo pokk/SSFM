@@ -5,6 +5,7 @@ import android.databinding.ObservableInt
 import android.view.View
 import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.MultipleTypeAdapter
 import taiwan.no1.app.ssfm.models.entities.PreferenceEntity
 
 /**
@@ -13,7 +14,9 @@ import taiwan.no1.app.ssfm.models.entities.PreferenceEntity
  * @author  jieyi
  * @since   9/8/17
  */
-class PreferenceItemViewModel(entity: PreferenceEntity) : BaseViewModel() {
+class PreferenceItemViewModel(private val adapter: MultipleTypeAdapter,
+                              private val position: Int,
+                              private val entity: PreferenceEntity) : BaseViewModel() {
     val title by lazy { ObservableField<String>() }
     val icon by lazy { ObservableInt() }
     val selected by lazy { ObservableField<String>() }
@@ -25,13 +28,16 @@ class PreferenceItemViewModel(entity: PreferenceEntity) : BaseViewModel() {
     }
 
     fun onClick(view: View) {
+        val newPosition by lazy { adapter.calculateIndex(position) }
 
+        if (adapter.isExpanded(newPosition)) {
+            adapter.collapse(position, newPosition)
+        }
+        else {
+            adapter.expand(position, newPosition)
+        }
     }
 
-//    override fun initView(model: PreferenceEntity, position: Int, adapter: Any) {
-//        adapter as ExpandRecyclerViewAdapter
-//        val newPosition by lazy { adapter.calculateIndex(position) }
-//
 //        // Create an observer for the click event of children.
 //        if (null == model.observer) {
 //            model.observer = observer {
