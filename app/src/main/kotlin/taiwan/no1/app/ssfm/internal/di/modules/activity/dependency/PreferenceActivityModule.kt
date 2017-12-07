@@ -16,7 +16,7 @@ class PreferenceActivityModule {
     /**
      * Providing a [PreferenceViewModel] to the [PreferenceActivity].
      *
-     * @hashCode context originally from activity module.
+     * @param context originally from activity module.
      * @return a important [PreferenceViewModel] for binding view and viewmodel by activity.
      */
     @Provides

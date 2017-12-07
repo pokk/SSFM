@@ -18,7 +18,7 @@ class PlayMainActivityModule {
     /**
      * Providing a [MainViewModel] to the [MainActivity].
      *
-     * @hashCode context originally from activity module.
+     * @param context originally from activity module.
      * @return a important [MainViewModel] for binding view and viewmodel by activity.
      */
     @Provides

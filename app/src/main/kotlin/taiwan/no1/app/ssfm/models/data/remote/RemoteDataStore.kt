@@ -284,7 +284,7 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
     /**
      * Wrapping the [Observable.create] with [Schedulers.IO].
      *
-     * @hashCode block for processing program.
+     * @param block for processing program.
      * @return an [Observable] reference.
      */
     private fun <O> observableCreateWrapper(block: (emitter: ObservableEmitter<O>) -> Unit): Observable<O> =
@@ -293,7 +293,7 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
     /**
      * Wrapping the [Observable.just] with [Schedulers.IO]
      *
-     * @hashCode data Omit data.
+     * @param data Omit data.
      * @return an [Observable] reference.
      */
     private fun <O> observableJustWrapper(data: O): Observable<O> = ObservableJust(data)

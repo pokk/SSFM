@@ -53,7 +53,7 @@ class RecyclerViewSearchArtistChartViewModel(private val artist: BaseEntity) : B
     /**
      * A callback event for clicking a item to list track.
      *
-     * @hashCode view [android.widget.RelativeLayout]
+     * @param view [android.widget.RelativeLayout]
      *
      * @event_to [taiwan.no1.app.ssfm.functions.search.SearchViewModel.receiveClickHistoryEvent]
      */

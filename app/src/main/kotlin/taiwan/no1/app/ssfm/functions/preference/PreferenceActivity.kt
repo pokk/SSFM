@@ -32,7 +32,6 @@ class PreferenceActivity : AdvancedActivity<PreferenceViewModel, ActivityPrefere
     private var isDownloadByWifi by SharedPrefs(false)
     private var isLockScreenLyrics by SharedPrefs(false)
     private var isLastSelectedChannel by SharedPrefs(false)
-
     private val preferenceList: MutableList<IExpandVisitable> = mutableListOf(
         PreferenceEntity("Theme", "Dark", R.drawable.ic_theme, childItemList = mutableListOf(
             PreferenceOptionEntity("Dark"),
@@ -65,7 +64,17 @@ class PreferenceActivity : AdvancedActivity<PreferenceViewModel, ActivityPrefere
                     }
                     is PreferenceToggleEntity -> {
                         (holder as BindingHolder<ItemPreferenceFirstLayerToggleBinding>).binding.avm =
-                            PreferenceToggleViewModel(item)
+                            PreferenceToggleViewModel(item).apply {
+                                setBack = { entityName, checked ->
+                                    when (entityName) {
+                                        "Auto Play" -> isAutoPlay = checked
+                                        "Auto Download" -> isAutoDownload = checked
+                                        "Download Only Wifi" -> isDownloadByWifi = checked
+                                        "Lock Screen Lyrics Display" -> isLockScreenLyrics = checked
+                                        "Last Selected Channel" -> isLastSelectedChannel = checked
+                                    }
+                                }
+                            }
                     }
                 }
             }

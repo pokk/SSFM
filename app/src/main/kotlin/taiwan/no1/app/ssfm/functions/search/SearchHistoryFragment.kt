@@ -66,7 +66,7 @@ class SearchHistoryFragment : AdvancedFragment<SearchHistoryFragmentViewModel, F
      * The operation for updating the list searchResult by the adapter. Including updating
      * the original list and the showing list on the recycler view.
      *
-     * @hashCode block the block operation for new data list.
+     * @param block the block operation for new data list.
      * @return a new updated list.
      */
     private fun MutableList<BaseEntity>.refreshRecyclerView(block: ArrayList<BaseEntity>.() -> Unit) =

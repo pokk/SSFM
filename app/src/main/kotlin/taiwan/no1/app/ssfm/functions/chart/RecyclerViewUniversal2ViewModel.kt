@@ -45,7 +45,7 @@ class RecyclerViewUniversal2ViewModel(val item: BaseEntity) : BaseViewModel() {
     /**
      * A callback event for clicking an artist to list item.
      *
-     * @hashCode view [android.widget.RelativeLayout]
+     * @param view [android.widget.RelativeLayout]
      *
      * @event_to [taiwan.no1.app.ssfm.functions.chart.ChartActivity.navigateToArtistDetail]
      */

@@ -23,7 +23,7 @@ class PlaylistViewModel(private val context: Context,
     val title by lazy { ObservableField<String>(context.getString(R.string.menu_my_playlist)) }
 
     /**
-     * @hashCode view
+     * @param view
      *
      * @event_to [taiwan.no1.app.ssfm.functions.playlist.PlaylistActivity.navigateToPlaylistDetail]
      */

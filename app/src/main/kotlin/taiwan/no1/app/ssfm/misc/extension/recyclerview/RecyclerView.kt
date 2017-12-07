@@ -54,7 +54,7 @@ typealias MultipleTypeAdapter = BaseMultipleTypeDataBindingAdapter<ViewDataBindi
  * The operation for updating the list result by the adapter. Including updating the original list
  * and the showing list on the recycler view.
  *
- * @hashCode block the block operation for new data list.
+ * @param block the block operation for new data list.
  * @return a new updated list.
  */
 fun <T> Pair<BaseDataBindingAdapter<*, T>, MutableList<T>>.refreshRecyclerView(block: ArrayList<T>.() -> Unit) {
@@ -69,10 +69,10 @@ fun <T> Pair<BaseDataBindingAdapter<*, T>, MutableList<T>>.refreshRecyclerView(b
  * data list into temp list for keeping the data.
  * Also controlling the fetching timer for avoiding that fetching a lots times in the same time.
  *
- * @hashCode resList the data of fetching from remote data base.
- * @hashCode total the quantity of the data.
- * @hashCode adapter [RecyclerView]'s adapter.
- * @hashCode info the [DataInfo] information of the current data where we fetched.
+ * @param resList the data of fetching from remote data base.
+ * @param total the quantity of the data.
+ * @param adapter [RecyclerView]'s adapter.
+ * @param info the [DataInfo] information of the current data where we fetched.
  */
 fun <T> MutableList<T>.refreshAndChangeList(resList: Collection<T>,
                                             total: Int,
@@ -100,8 +100,8 @@ data class DataInfo(var page: Int = 1,
 /**
  * For keeping the last item position when the [Activity] or [Fragment] is going to pause state.
  *
- * @hashCode recyclerview the item in the [RecyclerView].
- * @hashCode layoutManager the [recyclerview]'s [RecyclerView.LayoutManager].
+ * @param recyclerview the item in the [RecyclerView].
+ * @param layoutManager the [recyclerview]'s [RecyclerView.LayoutManager].
  */
 fun DataInfo.keepLastItemPosition(recyclerview: RecyclerView,
                                   layoutManager: LinearLayoutManager?) = apply {
@@ -115,7 +115,7 @@ fun DataInfo.keepLastItemPosition(recyclerview: RecyclerView,
 /**
  * For restoring the last item position when the [Activity] or [Fragment] resumes.
  *
- * @hashCode layoutManager the recyclerview's [RecyclerView.LayoutManager].
+ * @param layoutManager the recyclerview's [RecyclerView.LayoutManager].
  */
 fun DataInfo.restoreLastItemPosition(layoutManager: LinearLayoutManager?) =
     takeIf { 0 <= lastPosition }?.let { layoutManager?.scrollToPositionWithOffset(0, -lastOffset) }

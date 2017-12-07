@@ -18,6 +18,7 @@ class PreferenceToggleViewModel(private val entity: PreferenceToggleEntity) : Ba
     val title by lazy { ObservableField<String>() }
     val selected by lazy { ObservableBoolean() }
     val icon by lazy { ObservableInt() }
+    var setBack: ((entityName: String, checked: Boolean) -> Unit)? = null
 
     init {
         title.set(entity.title)
@@ -27,5 +28,6 @@ class PreferenceToggleViewModel(private val entity: PreferenceToggleEntity) : Ba
 
     fun onCheckedChange(view: View, checked: Boolean) {
         entity.isToggle = checked
+        setBack?.invoke(entity.title, checked)
     }
 }

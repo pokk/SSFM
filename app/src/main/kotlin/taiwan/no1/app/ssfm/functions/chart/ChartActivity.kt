@@ -43,7 +43,7 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     //endregion
 
     /**
-     * @hashCode artistName
+     * @param artistName
      *
      * @event_from [taiwan.no1.app.ssfm.functions.chart.ChartViewModel.querySubmit]
      * @event_from [taiwan.no1.app.ssfm.functions.chart.RecyclerViewChartSimilarArtistViewModel.artistOnClick]
@@ -55,7 +55,7 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     }
 
     /**
-     * @hashCode params
+     * @param params
      *
      * @event_from [taiwan.no1.app.ssfm.functions.chart.RecyclerViewUniversal1ViewModel.itemOnClick]
      */
@@ -67,7 +67,7 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     }
 
     /**
-     * @hashCode params
+     * @param params
      *
      * @event_from [taiwan.no1.app.ssfm.functions.chart.RecyclerViewChartRankChartViewModel.chartOnClick]
      */

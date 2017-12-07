@@ -17,7 +17,7 @@ class ChartActivityModule {
     /**
      * Providing a [ChartViewModel] to the [ChartActivity].
      *
-     * @hashCode context originally from activity module.
+     * @param context originally from activity module.
      * @return a important [ChartViewModel] for binding view and viewmodel by activity.
      */
     @Provides

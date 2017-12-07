@@ -37,22 +37,4 @@ class PreferenceItemViewModel(private val adapter: MultipleTypeAdapter,
             adapter.expand(position, newPosition)
         }
     }
-
-//        // Create an observer for the click event of children.
-//        if (null == model.observer) {
-//            model.observer = observer {
-//                itemView.tv_selected.text = it
-//                adapter.collapse(position, newPosition)
-//                // TODO(jieyi): 9/10/17 Changing app theme processing.
-//            }
-//        }
-//
-//        itemView.onClick {
-//            if (adapter.isExpanded(newPosition)) {
-//                adapter.collapse(position, newPosition)
-//            }
-//            else {
-//                adapter.expand(position, newPosition)
-//            }
-//        }
 }
