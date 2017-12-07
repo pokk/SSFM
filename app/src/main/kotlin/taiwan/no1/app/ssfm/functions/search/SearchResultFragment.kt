@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.functions.search
 
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
+import org.jetbrains.anko.act
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchResultBinding
 import taiwan.no1.app.ssfm.functions.base.AdvancedFragment
@@ -13,7 +14,9 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.SearchHistoryAdapter
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
+import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import javax.inject.Inject
+import javax.inject.Named
 
 /**
  *
@@ -48,6 +51,7 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
     //endregion
 
     @Inject override lateinit var viewModel: SearchResultFragmentViewModel
+    @field:[Inject Named("add_playlist_item")] lateinit var addPlaylistItemCase: AddPlaylistItemCase
     private var res = mutableListOf<BaseEntity>()
     private val resInfo by lazy { DataInfo() }
     // Get the arguments from the bundle here.
@@ -68,9 +72,12 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
     //region Base fragment implement
     override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
-            layoutManager = WrapContentLinearLayoutManager(activity)
+            layoutManager = WrapContentLinearLayoutManager(act)
             adapter = SearchHistoryAdapter(R.layout.item_search_music_type_1, res) { holder, item ->
-                holder.binding.avm = RecyclerViewSearchMusicResultViewModel(item, activity.applicationContext)
+                holder.binding.avm = RecyclerViewSearchMusicResultViewModel(item,
+                    addPlaylistItemCase, act.applicationContext).apply {
+                    onAttach(this@SearchResultFragment)
+                }
             }
             loadmore = object : RecyclerViewScrollCallback {
                 override fun loadMoreEvent(recyclerView: RecyclerView, total: Int) {

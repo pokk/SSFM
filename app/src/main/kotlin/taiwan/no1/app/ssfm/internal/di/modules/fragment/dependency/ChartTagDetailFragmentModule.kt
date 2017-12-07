@@ -15,7 +15,7 @@ import taiwan.no1.app.ssfm.models.usecases.FetchTopTrackOfTagCase
  * @author  jieyi
  * @since   10/26/17
  */
-@Module(includes = arrayOf(UseCaseModule::class))
+@Module(includes = [UseCaseModule::class])
 class ChartTagDetailFragmentModule {
     @Provides
     @PerFragment

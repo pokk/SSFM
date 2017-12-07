@@ -17,18 +17,19 @@ import taiwan.no1.app.ssfm.models.usecases.RemovePlaylistCase
  */
 class PlaylistIndexFragmentViewModel(private val getPlaylistsUsecase: FetchPlaylistCase,
                                      private val getPlaylistItemsUsecase: FetchPlaylistItemCase,
-                                     private val removePlaylistUsecase: RemovePlaylistCase) :
-    BaseViewModel() {
+                                     private val removePlaylistUsecase: RemovePlaylistCase) : BaseViewModel() {
     fun fetchPlaylistAndRecently(playlistCallback: (List<PlaylistEntity>) -> Unit,
                                  recentlyCallback: (List<PlaylistItemEntity>) -> Unit) {
         lifecycleProvider.execute(getPlaylistsUsecase) {
             onNext {
-                // All playlist without the history playlist.
-                playlistCallback(it.toMutableList())
+                // All playlist without the history `index 0` playlist.
+                it.toMutableList().apply { removeAt(0) }.let(playlistCallback)
             }
-            lifecycleProvider.execute(getPlaylistItemsUsecase,
-                GetPlaylistItemsUsecase.RequestValue(DATABASE_PLAYLIST_HISTORY_ID.toLong())) {
-                onNext(recentlyCallback)
+            onComplete {
+                lifecycleProvider.execute(getPlaylistItemsUsecase,
+                    GetPlaylistItemsUsecase.RequestValue(DATABASE_PLAYLIST_HISTORY_ID.toLong())) {
+                    onNext(recentlyCallback)
+                }
             }
         }
     }

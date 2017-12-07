@@ -136,7 +136,7 @@ class SearchViewModel(private val context: Context, private val addHistoryUsecas
      * @event_from [taiwan.no1.app.ssfm.functions.search.RecyclerViewSearchArtistChartViewModel.artistOnClick]
      * @event_from [taiwan.no1.app.ssfm.functions.search.RecyclerViewSearchTrackChartViewModel.trackOnClick]
      */
-    @Subscribe(tags = arrayOf(Tag(VIEWMODEL_CLICK_HISTORY)))
+    @Subscribe(tags = [Tag(VIEWMODEL_CLICK_HISTORY)])
     fun receiveClickHistoryEvent(params: HashMap<String, String>) {
         pBkgImageUrl = params[VIEWMODEL_PARAMS_IMAGE_URL]
         pFgBlurColor = params[VIEWMODEL_PARAMS_FOG_COLOR]?.toInt()

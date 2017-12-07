@@ -49,7 +49,7 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
      * @event_from [taiwan.no1.app.ssfm.functions.chart.RecyclerViewChartSimilarArtistViewModel.artistOnClick]
      * @event_from [taiwan.no1.app.ssfm.functions.chart.RecyclerViewUniversal2ViewModel.itemOnClick]
      */
-    @Subscribe(tags = arrayOf(Tag(RxBusTag.VIEWMODEL_CLICK_SIMILAR)))
+    @Subscribe(tags = [Tag(RxBusTag.VIEWMODEL_CLICK_SIMILAR)])
     fun navigateToArtistDetail(artistName: String) {
         navigate(ChartArtistDetailFragment.newInstance(artistName = artistName), true)
     }
@@ -59,7 +59,7 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
      *
      * @event_from [taiwan.no1.app.ssfm.functions.chart.RecyclerViewUniversal1ViewModel.itemOnClick]
      */
-    @Subscribe(tags = arrayOf(Tag(RxBusTag.VIEWMODEL_CLICK_ALBUM)))
+    @Subscribe(tags = [Tag(RxBusTag.VIEWMODEL_CLICK_ALBUM)])
     fun navigateToAlbumDetail(params: HashMap<String, String>) {
         val (artistName, artistAlbum) =
             (params[VIEWMODEL_PARAMS_ARTIST_NAME].orEmpty()) to (params[VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME].orEmpty())
@@ -71,7 +71,7 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
      *
      * @event_from [taiwan.no1.app.ssfm.functions.chart.RecyclerViewChartRankChartViewModel.chartOnClick]
      */
-    @Subscribe(tags = arrayOf(Tag(RxBusTag.VIEWMODEL_CLICK_RANK_CHART)))
+    @Subscribe(tags = [Tag(RxBusTag.VIEWMODEL_CLICK_RANK_CHART)])
     fun navigateToRankChartDetail(entity: RankChartEntity) {
         navigate(ChartRankChartDetailFragment.newInstance(entity.rankType, entity), true)
     }

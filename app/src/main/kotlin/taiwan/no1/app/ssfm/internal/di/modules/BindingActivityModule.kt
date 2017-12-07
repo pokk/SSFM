@@ -33,34 +33,34 @@ abstract class BindingActivityModule {
      * the children fragment can obtain the parent's fragment injector.
      */
     @PerActivity
-    @ContributesAndroidInjector(modules = arrayOf(MainActivityModule::class))
+    @ContributesAndroidInjector(modules = [MainActivityModule::class])
     abstract fun contributeMainActivityInjector(): MainActivity
 
     @PerActivity
-    @ContributesAndroidInjector(modules = arrayOf(LoginActivityModule::class))
+    @ContributesAndroidInjector(modules = [LoginActivityModule::class])
     abstract fun contributeLoginActivityInjector(): LoginActivity
 
     @PerActivity
-    @ContributesAndroidInjector(modules = arrayOf(PlayMainActivityModule::class))
+    @ContributesAndroidInjector(modules = [PlayMainActivityModule::class])
     abstract fun contributePlayMainActivityInjector(): PlayMainActivity
 
     @PerActivity
-    @ContributesAndroidInjector(modules = arrayOf(PlaylistActivityModule::class, BindingFragmentModule::class))
+    @ContributesAndroidInjector(modules = [PlaylistActivityModule::class, BindingFragmentModule::class])
     abstract fun contributePlaylistActivityInjector(): PlaylistActivity
 
     @PerActivity
-    @ContributesAndroidInjector(modules = arrayOf(ChartActivityModule::class, BindingFragmentModule::class))
+    @ContributesAndroidInjector(modules = [ChartActivityModule::class, BindingFragmentModule::class])
     abstract fun contributeChartActivityInjector(): ChartActivity
 
     @PerActivity
-    @ContributesAndroidInjector(modules = arrayOf(SearchActivityModule::class, BindingFragmentModule::class))
+    @ContributesAndroidInjector(modules = [SearchActivityModule::class, BindingFragmentModule::class])
     abstract fun contributeSearchActivityInjector(): SearchActivity
 
     @PerActivity
-    @ContributesAndroidInjector(modules = arrayOf(PreferenceActivityModule::class))
+    @ContributesAndroidInjector(modules = [PreferenceActivityModule::class])
     abstract fun contributePreferencesActivityInjector(): PreferenceActivity
 
     @PerActivity
-    @ContributesAndroidInjector(modules = arrayOf(ActivityModule::class))
+    @ContributesAndroidInjector(modules = [ActivityModule::class])
     abstract fun contributeTestActivityInjector(): TestActivity
 }

@@ -13,7 +13,7 @@ import taiwan.no1.app.ssfm.models.usecases.FetchArtistInfoCase
  * @author  jieyi
  * @since   11/1/17
  */
-@Module(includes = arrayOf(UseCaseModule::class))
+@Module(includes = [UseCaseModule::class])
 class ChartAlbumDetailFragmentModule {
     @Provides
     @PerFragment

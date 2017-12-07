@@ -13,7 +13,7 @@ import taiwan.no1.app.ssfm.models.usecases.FetchSearchHistoryCase
  * @author  jieyi
  * @since   8/11/17
  */
-@Module(includes = arrayOf(UseCaseModule::class))
+@Module(includes = [UseCaseModule::class])
 class SearchHistoriesFragmentModule {
     @Provides
     @PerFragment

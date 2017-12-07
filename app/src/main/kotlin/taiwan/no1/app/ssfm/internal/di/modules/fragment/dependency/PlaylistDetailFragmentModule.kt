@@ -15,7 +15,7 @@ import javax.inject.Named
  * @author  jieyi
  * @since   11/14/17
  */
-@Module(includes = arrayOf(UseCaseModule::class))
+@Module(includes = [UseCaseModule::class])
 class PlaylistDetailFragmentModule {
     @Provides
     @PerFragment

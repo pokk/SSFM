@@ -35,47 +35,47 @@ import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.SearchMusicFr
 abstract class BindingFragmentModule {
     //region Playlist
     @PerFragment
-    @ContributesAndroidInjector(modules = arrayOf(PlaylistIndexFragmentModule::class))
+    @ContributesAndroidInjector(modules = [PlaylistIndexFragmentModule::class])
     abstract fun contributePlaylistIndexFragmentInjector(): PlaylistIndexFragment
 
     @PerFragment
-    @ContributesAndroidInjector(modules = arrayOf(PlaylistDetailFragmentModule::class))
+    @ContributesAndroidInjector(modules = [PlaylistDetailFragmentModule::class])
     abstract fun contributePlaylistDetailFragmentInjector(): PlaylistDetailFragment
     //endregion
 
     //region Search
     @PerFragment
-    @ContributesAndroidInjector(modules = arrayOf(SearchIndexFragmentModule::class))
+    @ContributesAndroidInjector(modules = [SearchIndexFragmentModule::class])
     abstract fun contributeSearchIndexFragmentInjector(): SearchIndexFragment
 
     @PerFragment
-    @ContributesAndroidInjector(modules = arrayOf(SearchHistoriesFragmentModule::class))
+    @ContributesAndroidInjector(modules = [SearchHistoriesFragmentModule::class])
     abstract fun contributeSearchHistoryFragmentInjector(): SearchHistoryFragment
 
     @PerFragment
-    @ContributesAndroidInjector(modules = arrayOf(SearchMusicFragmentModule::class))
+    @ContributesAndroidInjector(modules = [SearchMusicFragmentModule::class])
     abstract fun contributeSearchResuletFragmentInjector(): SearchResultFragment
     //endregion
 
     //region Chart
     @PerFragment
-    @ContributesAndroidInjector(modules = arrayOf(ChartIndexFragmentModule::class))
+    @ContributesAndroidInjector(modules = [ChartIndexFragmentModule::class])
     abstract fun contributeChartIndexFragmentInjector(): ChartIndexFragment
 
     @PerFragment
-    @ContributesAndroidInjector(modules = arrayOf(ChartRankChartDetailFragmentModule::class))
+    @ContributesAndroidInjector(modules = [ChartRankChartDetailFragmentModule::class])
     abstract fun contributeChartRankChartFragmentInjector(): ChartRankChartDetailFragment
 
     @PerFragment
-    @ContributesAndroidInjector(modules = arrayOf(ChartArtistDetailFragmentModule::class))
+    @ContributesAndroidInjector(modules = [ChartArtistDetailFragmentModule::class])
     abstract fun contributeChartArtistDetailFragmentInjector(): ChartArtistDetailFragment
 
     @PerFragment
-    @ContributesAndroidInjector(modules = arrayOf(ChartTagDetailFragmentModule::class))
+    @ContributesAndroidInjector(modules = [ChartTagDetailFragmentModule::class])
     abstract fun contributeChartTagDetailFragmentInjector(): ChartTagDetailFragment
 
     @PerFragment
-    @ContributesAndroidInjector(modules = arrayOf(ChartAlbumDetailFragmentModule::class))
+    @ContributesAndroidInjector(modules = [ChartAlbumDetailFragmentModule::class])
     abstract fun contributeChartAlbumDetailFragmentInjector(): ChartAlbumDetailFragment
     //endregion
 }

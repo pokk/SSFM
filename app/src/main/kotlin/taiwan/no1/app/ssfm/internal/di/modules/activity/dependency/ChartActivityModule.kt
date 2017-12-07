@@ -12,7 +12,7 @@ import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.UseCaseModule
  * @author  jieyi
  * @since   8/9/17
  */
-@Module(includes = arrayOf(UseCaseModule::class))
+@Module(includes = [UseCaseModule::class])
 class ChartActivityModule {
     /**
      * Providing a [ChartViewModel] to the [ChartActivity].

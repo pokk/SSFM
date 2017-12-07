@@ -55,7 +55,7 @@ abstract class BaseActivity : RxActivity(), HasFragmentInjector, HasSupportFragm
     }
     // FIXED(jieyi): 9/23/17 Register it in the parent class that it will be not reflected.
     protected var busEvent = object {
-        @Subscribe(tags = arrayOf(Tag("testTag")))
+        @Subscribe(tags = [Tag("testTag")])
         fun receive(str: String) {
         }
     }

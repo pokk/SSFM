@@ -13,7 +13,7 @@ import taiwan.no1.app.ssfm.models.data.remote.RemoteDataStore
  * @since   12/8/16
  */
 @Network
-@Component(dependencies = arrayOf(AppComponent::class), modules = arrayOf(NetModule::class))
+@Component(dependencies = [AppComponent::class], modules = [NetModule::class])
 interface NetComponent {
     object Initializer {
         fun init(): NetComponent = DaggerNetComponent.builder()
