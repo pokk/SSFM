@@ -20,12 +20,14 @@ class BaseMultipleTypeDataBindingAdapter<BH : ViewDataBinding, D>(private var da
                                                                   bindVHBlock: (holder: BindingHolder<BH>, item: D) -> Unit) :
     BaseDataBindingAdapter<BH, D>(-1, dataList, bindVHBlock) {
     private var typeFactory: ExpandableViewTypeFactory = ExpandableViewTypeFactory()
-
+    // FIXME(jieyi): 2017/12/07 When using the `DiffUtil`, the layout cannot be correct.
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingHolder<BH> =
         DataBindingUtil.inflate<BH>(LayoutInflater.from(parent.context),
             typeFactory.getLayoutResource(viewType), parent, false).let { BindingHolder(it) }
 
     override fun getItemViewType(position: Int): Int = (dataList[position] as IExpandVisitable).type(typeFactory)
+
+    override fun getItemCount(): Int = dataList.size
 
     /**
      *  This is for keeping the item position of the first layer. After a main track
@@ -143,8 +145,9 @@ class BaseMultipleTypeDataBindingAdapter<BH : ViewDataBinding, D>(private var da
     private fun updateList(getNewListBlock: () -> MutableList<IExpandVisitable>) {
         val newList = getNewListBlock()
 
-        DiffUtil.calculateDiff(ExpandDiffUtil(dataList as MutableList<IExpandVisitable>, newList)).dispatchUpdatesTo(
-            this)
+        DiffUtil.calculateDiff(ExpandDiffUtil(dataList as MutableList<IExpandVisitable>, newList)).
+            dispatchUpdatesTo(this)
+
         dataList = newList as MutableList<D>
     }
 

@@ -10,6 +10,7 @@ import taiwan.no1.app.ssfm.databinding.ItemPreferenceFirstLayerToggleBinding
 import taiwan.no1.app.ssfm.databinding.ItemPreferenceSecondLayerTitleBinding
 import taiwan.no1.app.ssfm.functions.base.AdvancedActivity
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.MultipleTypeAdapter
+import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.viewholders.BindingHolder
 import taiwan.no1.app.ssfm.models.IExpandVisitable
 import taiwan.no1.app.ssfm.models.entities.PreferenceEntity
@@ -50,7 +51,7 @@ class PreferenceActivity : AdvancedActivity<PreferenceViewModel, ActivityPrefere
 
         // Initial the recycler view.
         binding.apply {
-            layoutManager = LinearLayoutManager(this@PreferenceActivity, LinearLayoutManager.VERTICAL, false)
+            layoutManager = WrapContentLinearLayoutManager(this@PreferenceActivity, LinearLayoutManager.VERTICAL, false)
             adapter = MultipleTypeAdapter(preferenceList) { holder, item ->
                 when (item) {
                     is PreferenceEntity -> {
