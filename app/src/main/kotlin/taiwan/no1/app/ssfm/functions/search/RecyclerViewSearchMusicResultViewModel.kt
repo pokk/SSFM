@@ -52,10 +52,14 @@ class RecyclerViewSearchMusicResultViewModel(private val res: BaseEntity,
                     artist_name = artist,
                     cover_url = coverURL,
                     lyric_url = lyricURL,
-                    duration = length))) { onNext { logw(it) } }
-            MusicPlayer.instance.apply {
-                if (isPlaying()) stop()
-                play(url)
+                    duration = length))) {
+                onNext { logw(it) }
+                onComplete {
+                    MusicPlayer.instance.apply {
+                        if (isPlaying()) stop()
+                        play(url)
+                    }
+                }
             }
         }
     }

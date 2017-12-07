@@ -23,8 +23,10 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.restoreAllLastItemPosition
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
 import javax.inject.Inject
+import javax.inject.Named
 
 
 /**
@@ -56,6 +58,7 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
 
     @Inject override lateinit var viewModel: ChartArtistDetailFragmentViewModel
     @Inject lateinit var searchMusicCase: SearchMusicV2Case
+    @field:[Inject Named("add_playlist_item")] lateinit var addPlaylistItemCase: AddPlaylistItemCase
     private val artistInfo by lazy { DataInfo() }
     private val trackInfo by lazy { DataInfo() }
     private val albumInfo by lazy { DataInfo() }
@@ -102,9 +105,10 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
 
             trackLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             trackAdapter = ArtistTopTrackAdapter(R.layout.item_music_type_2, trackRes) { holder, item ->
-                holder.binding.avm = RecyclerViewChartArtistHotTrackViewModel(searchMusicCase, item).apply {
-                    onAttach(this@ChartArtistDetailFragment)
-                }
+                holder.binding.avm =
+                    RecyclerViewChartArtistHotTrackViewModel(searchMusicCase, addPlaylistItemCase, item).apply {
+                        onAttach(this@ChartArtistDetailFragment)
+                    }
             }
 
             albumLayoutManager = FanLayoutManager(act, FanLayoutManagerSettings.newBuilder(ctx).apply {

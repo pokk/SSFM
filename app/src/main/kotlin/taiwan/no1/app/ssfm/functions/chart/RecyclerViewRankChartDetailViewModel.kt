@@ -6,22 +6,29 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.view.View
+import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.toTimeString
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
+import taiwan.no1.app.ssfm.misc.constants.Constant
+import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.misc.extension.gAlphaIntColor
 import taiwan.no1.app.ssfm.misc.extension.gColor
 import taiwan.no1.app.ssfm.misc.extension.glideListener
 import taiwan.no1.app.ssfm.misc.extension.palette
 import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayer
+import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
+import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
+import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemUsecase
 
 /**
  * @author  jieyi
  * @since   11/24/17
  */
-class RecyclerViewRankChartDetailViewModel(val item: BaseEntity) : BaseViewModel() {
+class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddPlaylistItemCase,
+                                           private val item: BaseEntity) : BaseViewModel() {
     val trackName by lazy { ObservableField<String>() }
     val trackDuration by lazy { ObservableField<String>() }
     val trackIndex by lazy { ObservableField<String>() }
@@ -54,14 +61,29 @@ class RecyclerViewRankChartDetailViewModel(val item: BaseEntity) : BaseViewModel
 
     fun trackOnClick(view: View) {
         isplaying.set(!isplaying.get())
-        if (isplaying.get()) {
-            MusicPlayer.instance.apply {
-                if (isPlaying()) stop()
-                play((item as MusicRankEntity.Song).url)
+        (item as MusicRankEntity.Song).run {
+            if (isplaying.get()) {
+                lifecycleProvider.execute(addPlaylistItemCase,
+                    AddPlaylistItemUsecase.RequestValue(PlaylistItemEntity(playlist_id = Constant.DATABASE_PLAYLIST_HISTORY_ID.toLong(),
+                        track_uri = url,
+                        track_name = title,
+                        artist_name = artist,
+                        cover_url = coverURL,
+                        lyric_url = lyricURL,
+                        duration = length))) {
+                    onNext { logw(it) }
+                    onComplete {
+                        MusicPlayer.instance.apply {
+                            if (isPlaying()) stop()
+                            play(url)
+                        }
+                    }
+                }
             }
-        }
-        else {
-            MusicPlayer.instance.pause()
+            else {
+                MusicPlayer.instance.pause()
+            }
+
         }
     }
 }

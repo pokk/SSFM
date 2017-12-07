@@ -14,7 +14,9 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.RankChartEntity
+import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * @author  jieyi
@@ -43,6 +45,7 @@ class ChartRankChartDetailFragment : AdvancedFragment<ChartRankChartDetailFragme
     //endregion
 
     @Inject override lateinit var viewModel: ChartRankChartDetailFragmentViewModel
+    @field:[Inject Named("add_playlist_item")] lateinit var addPlaylistItemCase: AddPlaylistItemCase
     private val trackInfo by lazy { DataInfo() }
     private var trackRes = mutableListOf<BaseEntity>()
     private var nestViewLastPosition = 0
@@ -56,7 +59,7 @@ class ChartRankChartDetailFragment : AdvancedFragment<ChartRankChartDetailFragme
             trackLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
             trackAdapter = RankChartDetailAdapter(R.layout.item_music_type_6, trackRes) { holder, item ->
-                holder.binding.avm = RecyclerViewRankChartDetailViewModel(item).apply {
+                holder.binding.avm = RecyclerViewRankChartDetailViewModel(addPlaylistItemCase, item).apply {
                     onAttach(this@ChartRankChartDetailFragment)
                 }
             }
