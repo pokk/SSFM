@@ -28,7 +28,7 @@ class PlaylistIndexFragmentViewModel(private val getPlaylistsUsecase: FetchPlayl
             onComplete {
                 lifecycleProvider.execute(getPlaylistItemsUsecase,
                     GetPlaylistItemsUsecase.RequestValue(DATABASE_PLAYLIST_HISTORY_ID.toLong())) {
-                    onNext(recentlyCallback)
+                    onNext { it.reversed().let(recentlyCallback) }
                 }
             }
         }

@@ -31,10 +31,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/one_unit"
-            android:text="@{avm.trackName}"
             android:layout_marginStart="@dimen/one_unit"
             android:layout_toEndOf="@+id/iv_action"
             android:layout_toStartOf="@+id/tv_total_time"
+            android:text="@{avm.trackName}"
             android:textColor="@color/colorWhite"
             tool:text="The Cure"/>
 
@@ -44,12 +44,12 @@
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/tv_track_name"
             android:layout_alignStart="@+id/tv_track_name"
-            android:text="@{avm.albumName}"
             android:layout_below="@+id/tv_track_name"
             android:layout_gravity="center"
+            android:text="@{avm.artistName}"
             android:textColor="@color/colorWhite"
-            tool:text="New album"/>
-
+            android:textSize="12sp"
+            tool:text="Lady Gaga"/>
 
         <TextView
             android:id="@+id/tv_total_time"
@@ -57,6 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:text="@{avm.trackDuration}"
             android:textColor="@color/colorWhite"
             tool:text="4:14"/>
     </RelativeLayout>

@@ -13,13 +13,14 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 @Table(database = MusicDatabase::class, allFields = true)
 data class PlaylistItemEntity(@PrimaryKey(autoincrement = true)
                               var id: Long = 0,
-                              var playlist_id: Long = -1,  // History list id is 'DATABASE_PLAYLIST_HISTORY_ID'.
-                              var music_id: Int = -1,
-                              var is_offline: Boolean = false,  // If the item is offline, fill up as following below.
-                              var track_uri: String = "",
-                              var track_name: String = "",
-                              var artist_name: String = "",
-                              var album_name: String = "",
-                              var lyric_url: String = "",
-                              var cover_url: String = "",
-                              var duration: Int = 0) : BaseRXModel(), BaseEntity
+                              var playlistId: Long = -1,  // History list id is 'DATABASE_PLAYLIST_HISTORY_ID'.
+                              var musicId: Int = -1,
+                              var isOffline: Boolean = false,  // If the item is offline, fill up as following below.
+                              var trackUri: String = "",
+                              var trackName: String = "",
+                              var artistName: String = "",
+                              var albumName: String = "",
+                              var lyricUrl: String = "",
+                              var coverUrl: String = "",
+                              var duration: Int = 0,
+                              var clickTimes: Long = 1) : BaseRXModel(), BaseEntity

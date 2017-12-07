@@ -12,6 +12,7 @@ import com.raizlabs.android.dbflow.rx2.kotlinextensions.rx
 import com.raizlabs.android.dbflow.sql.language.BaseModelQueriable
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.toSingle
+import taiwan.no1.app.ssfm.misc.constants.Constant.DATABASE_PLAYLIST_HISTORY_ID
 import taiwan.no1.app.ssfm.models.data.IDataStore
 import taiwan.no1.app.ssfm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.models.entities.KeywordEntity_Table
@@ -101,7 +102,7 @@ class LocalDataStore : IDataStore {
         return sqlQuery.rx().list.toObservable()
     }
 
-    override fun addPlaylist(entity: PlaylistEntity): Observable<PlaylistEntity> = entity.save().toObservable().flatMap {
+    override fun addPlaylist(entity: PlaylistEntity) = entity.save().toObservable().flatMap {
         // If adding a new data is success then return the new data; otherwise, an empty object.
         if (it) getPlaylists().flatMap { it.last().toSingle().toObservable() } else PlaylistEntity().toSingle().toObservable()
     }
@@ -111,9 +112,25 @@ class LocalDataStore : IDataStore {
     override fun removePlaylist(entity: PlaylistEntity) = entity.delete().toObservable()
 
     override fun getPlaylistItems(playlistId: Long) =
-        (select from PlaylistItemEntity::class where (PlaylistItemEntity_Table.playlist_id eq playlistId)).rx().list.toObservable()
+        // TODO(jieyi): 12/8/17 Order by click times.
+        (select from
+            PlaylistItemEntity::class
+            where
+            (PlaylistItemEntity_Table.playlistId eq playlistId)
+            orderBy
+            PlaylistItemEntity_Table.clickTimes.asc()).rx().list.toObservable()
 
-    override fun addPlaylistItem(entity: PlaylistItemEntity) = entity.save().toObservable()
+    private fun getPlaylistItem(playlistItemId: Long) =
+        (select from PlaylistItemEntity::class where (PlaylistItemEntity_Table.id eq playlistItemId)).querySingle()
+
+    override fun addPlaylistItem(entity: PlaylistItemEntity): Observable<Boolean> {
+        if (DATABASE_PLAYLIST_HISTORY_ID.toLong() == entity.playlistId) {
+            return getPlaylistItem(entity.id)?.let { it.apply { it.clickTimes++ }.save().toObservable() } ?:
+                entity.save().toObservable()
+        }
+
+        return entity.save().toObservable()
+    }
 
     override fun removePlaylistItem(entity: PlaylistItemEntity) = entity.delete().toObservable()
     //endregion

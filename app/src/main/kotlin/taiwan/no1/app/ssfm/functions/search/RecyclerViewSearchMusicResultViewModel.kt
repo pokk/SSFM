@@ -46,12 +46,12 @@ class RecyclerViewSearchMusicResultViewModel(private val res: BaseEntity,
     fun playOrStopMusicClick(view: View) {
         (res as MusicEntity.Music).run {
             lifecycleProvider.execute(addPlaylistItemCase,
-                AddPlaylistItemUsecase.RequestValue(PlaylistItemEntity(playlist_id = DATABASE_PLAYLIST_HISTORY_ID.toLong(),
-                    track_uri = url,
-                    track_name = title,
-                    artist_name = artist,
-                    cover_url = coverURL,
-                    lyric_url = lyricURL,
+                AddPlaylistItemUsecase.RequestValue(PlaylistItemEntity(playlistId = DATABASE_PLAYLIST_HISTORY_ID.toLong(),
+                    trackUri = url,
+                    trackName = title,
+                    artistName = artist,
+                    coverUrl = coverURL,
+                    lyricUrl = lyricURL,
                     duration = length))) {
                 onNext { logw(it) }
                 onComplete {

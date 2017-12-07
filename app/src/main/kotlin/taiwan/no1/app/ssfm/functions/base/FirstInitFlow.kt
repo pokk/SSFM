@@ -32,7 +32,7 @@ class FirstInitFlow {
 
     private fun addHistoryData() {
         AddPlaylistUsecase(LocalDataStore()).
-            execute(AddPlaylistUsecase.RequestValue(PlaylistEntity(name = "history", is_history = true))) {
+            execute(AddPlaylistUsecase.RequestValue(PlaylistEntity(name = "history", isHistory = true))) {
                 onNext { logd("Create the history playlist!") }
                 onError { loge("Fail to create the history playlist :(") }
                 onComplete { isFirstStartApp = true }

@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.functions.playlist
 
 import android.databinding.ObservableField
 import android.view.View
+import com.devrapid.kotlinknifer.toTimeString
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
@@ -14,12 +15,13 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 class RecyclerViewRecentlyPlaylistViewModel(val item: BaseEntity) : BaseViewModel() {
     val trackName by lazy { ObservableField<String>() }
     val trackDuration by lazy { ObservableField<String>() }
-    val albumName by lazy { ObservableField<String>() }
+    val artistName by lazy { ObservableField<String>() }
 
     init {
         (item as PlaylistItemEntity).let {
-            trackName.set(it.track_name)
-            albumName.set(it.album_name)
+            trackName.set(it.trackName)
+            artistName.set(it.artistName)
+            trackDuration.set(it.duration.toTimeString())
         }
     }
 

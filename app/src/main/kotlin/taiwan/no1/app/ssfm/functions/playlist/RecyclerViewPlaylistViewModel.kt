@@ -31,12 +31,12 @@ class RecyclerViewPlaylistViewModel(val item: BaseEntity) : BaseViewModel() {
 
     init {
         (item as PlaylistEntity).let {
-            val pluralOfAlbum = if (it.album_quantity > 1) "s" else ""
-            val pluralOfTrack = if (it.track_quantity > 1) "s" else ""
+            val pluralOfAlbum = if (it.albumQuantity > 1) "s" else ""
+            val pluralOfTrack = if (it.trackQuantity > 1) "s" else ""
 
             playlistName.set(it.name)
-            playlistTrackNumber.set("${it.album_quantity} album$pluralOfAlbum, ${it.track_quantity} track$pluralOfTrack")
-            playlistThumbnail.set(it.image_uri)
+            playlistTrackNumber.set("${it.albumQuantity} album$pluralOfAlbum, ${it.trackQuantity} track$pluralOfTrack")
+            playlistThumbnail.set(it.imageUri)
         }
     }
 

@@ -40,8 +40,8 @@ class PlaylistDetailFragmentViewModel(private val editPlaylistUsecase: EditPlayl
         playlist.let {
             playlistItem = it
             playlistName.set(it.name)
-            trackQuantity.set(it.track_quantity.toString())
-            thumbnail.set(it.image_uri)
+            trackQuantity.set(it.trackQuantity.toString())
+            thumbnail.set(it.imageUri)
         }
     }
 
