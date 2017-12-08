@@ -5,6 +5,7 @@ import com.raizlabs.android.dbflow.annotation.Table
 import com.raizlabs.android.dbflow.rx2.structure.BaseRXModel
 import taiwan.no1.app.ssfm.models.data.local.database.MusicDatabase
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
+import java.util.Date
 
 /**
  * @author  jieyi
@@ -23,4 +24,4 @@ data class PlaylistItemEntity(@PrimaryKey(autoincrement = true)
                               var lyricUrl: String = "",
                               var coverUrl: String = "",
                               var duration: Int = 0,
-                              var clickTimes: Long = 1) : BaseRXModel(), BaseEntity
+                              var timestamp: Date = Date()) : BaseRXModel(), BaseEntity

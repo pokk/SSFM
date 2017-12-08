@@ -1,5 +1,6 @@
 package taiwan.no1.app.ssfm.models.data.local
 
+import com.raizlabs.android.dbflow.kotlinextensions.and
 import com.raizlabs.android.dbflow.kotlinextensions.delete
 import com.raizlabs.android.dbflow.kotlinextensions.eq
 import com.raizlabs.android.dbflow.kotlinextensions.from
@@ -22,6 +23,7 @@ import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity_Table
 import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.models.entities.v2.RankChartEntity
+import java.util.Date
 
 
 /**
@@ -118,17 +120,27 @@ class LocalDataStore : IDataStore {
             where
             (PlaylistItemEntity_Table.playlistId eq playlistId)
             orderBy
-            PlaylistItemEntity_Table.clickTimes.asc()).rx().list.toObservable()
+            PlaylistItemEntity_Table.timestamp.asc()).rx().list.toObservable()
 
-    private fun getPlaylistItem(playlistItemId: Long) =
-        (select from PlaylistItemEntity::class where (PlaylistItemEntity_Table.id eq playlistItemId)).querySingle()
+    private fun getPlaylistItem(playlistItemId: Long, artistName: String = "", trackName: String = "") =
+        if (artistName.isBlank() || trackName.isBlank())
+            (select from PlaylistItemEntity::class where (PlaylistItemEntity_Table.playlistId eq playlistItemId)).querySingle()
+        else {
+            (select from
+                PlaylistItemEntity::class
+                where
+                ((PlaylistItemEntity_Table.playlistId eq playlistItemId) and
+                    (PlaylistItemEntity_Table.trackName eq trackName) and
+                    (PlaylistItemEntity_Table.artistName eq artistName))).querySingle().apply {
+            }
+        }
 
     override fun addPlaylistItem(entity: PlaylistItemEntity): Observable<Boolean> {
         if (DATABASE_PLAYLIST_HISTORY_ID.toLong() == entity.playlistId) {
-            return getPlaylistItem(entity.id)?.let { it.apply { it.clickTimes++ }.save().toObservable() } ?:
-                entity.save().toObservable()
+            return getPlaylistItem(entity.playlistId, entity.artistName, entity.trackName)?.let {
+                it.apply { it.timestamp = Date() }.save().toObservable()
+            } ?: entity.save().toObservable()
         }
-
         return entity.save().toObservable()
     }
 
