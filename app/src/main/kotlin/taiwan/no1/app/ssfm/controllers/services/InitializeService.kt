@@ -8,6 +8,8 @@ import com.raizlabs.android.dbflow.config.FlowConfig
 import com.raizlabs.android.dbflow.config.FlowManager
 import org.jetbrains.anko.defaultSharedPreferences
 import taiwan.no1.app.ssfm.functions.base.FirstInitFlow
+import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayerHelper
+import weian.cheng.mediaplayerwithexoplayer.ExoPlayerWrapper
 
 /**
  * Initialization service for optimizing the cold starting time.
@@ -33,6 +35,8 @@ class InitializeService : IntentService("InitializeService") {
         SharedPrefs.setPrefSettings(defaultSharedPreferences)
         // Initial the database.
         FlowManager.init(FlowConfig.Builder(this).build())
+        // Initial the player helper.
+        MusicPlayerHelper.instance.hold(ExoPlayerWrapper(this.applicationContext))
 
         // OPTIMIZE(jieyi): 11/24/17 Temporally put init flow here, this should be in the first activity.
         FirstInitFlow().init()

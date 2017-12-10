@@ -1,31 +1,52 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices
 
-import taiwan.no1.app.ssfm.misc.utilies.devices.annotations.MusicState
-import taiwan.no1.app.ssfm.misc.utilies.devices.constants.MusicStateConstant.MUSIC_STATE_PLAY
-import taiwan.no1.app.ssfm.misc.utilies.devices.constants.MusicStateConstant.MUSIC_STATE_STOP
-import taiwan.no1.app.ssfm.misc.utilies.devices.constants.MusicStateConstant.MUSIC_STATE_UNKNOWN
+import weian.cheng.mediaplayerwithexoplayer.ExoPlayerWrapper
 
 /**
  * @author  jieyi
  * @since   2017/12/02
  */
 class MusicPlayerHelper private constructor() {
-    lateinit var player: ExoPlayerWrapper
-    var state = MUSIC_STATE_STOP
-        @MusicState get() = when {
-            player.isPlaying() -> MUSIC_STATE_PLAY
-            else -> MUSIC_STATE_UNKNOWN
-        }
+    private object Holder {
+        val INSTANCE = MusicPlayerHelper()
+    }
+
+    private lateinit var player: ExoPlayerWrapper
+    private lateinit var musicUri: String
 
     companion object {
         val instance: MusicPlayerHelper by lazy { Holder.INSTANCE }
     }
 
-    private object Holder {
-        val INSTANCE = MusicPlayerHelper()
-    }
-
     fun hold(player: ExoPlayerWrapper) {
         this.player = player
     }
+
+    fun play(uri: String, callback: ((state: ExoPlayerWrapper.PlayerState) -> Unit)? = null) {
+        if (this::musicUri.isInitialized && uri == musicUri) {
+            when {
+                isPlaying() -> player.pause()
+                isPause() -> player.resume()
+                isStop() -> {
+                    player.seekTo(0)
+                    callback?.invoke(getState())
+                }
+            }
+        }
+        else {
+            if (!this::player.isInitialized) player.stop()
+            player.play(uri)
+            callback?.invoke(getState())
+            musicUri = uri
+        }
+    }
+
+    fun getState() = player.getPlayerState()
+
+    fun isPlaying() = ExoPlayerWrapper.PlayerState.Play == getState()
+
+    fun isPause() = ExoPlayerWrapper.PlayerState.Pause == getState()
+
+    fun isStop() = ExoPlayerWrapper.PlayerState.Standby == getState()
+
 }

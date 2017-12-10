@@ -16,7 +16,7 @@ import taiwan.no1.app.ssfm.misc.extension.gAlphaIntColor
 import taiwan.no1.app.ssfm.misc.extension.gColor
 import taiwan.no1.app.ssfm.misc.extension.glideListener
 import taiwan.no1.app.ssfm.misc.extension.palette
-import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayer
+import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayerHelper
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
@@ -62,7 +62,7 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
     fun trackOnClick(view: View) {
         isplaying.set(!isplaying.get())
         (item as MusicRankEntity.Song).run {
-            if (isplaying.get()) {
+            MusicPlayerHelper.instance.play(url) {
                 lifecycleProvider.execute(addPlaylistItemCase,
                     AddPlaylistItemUsecase.RequestValue(PlaylistItemEntity(playlistId = Constant.DATABASE_PLAYLIST_HISTORY_ID.toLong(),
                         trackUri = url,
@@ -70,20 +70,8 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
                         artistName = artist,
                         coverUrl = coverURL,
                         lyricUrl = lyricURL,
-                        duration = length))) {
-                    onNext { logw(it) }
-                    onComplete {
-                        MusicPlayer.instance.apply {
-                            if (isPlaying()) stop()
-                            play(url)
-                        }
-                    }
-                }
+                        duration = length))) { onNext { logw(it) } }
             }
-            else {
-                MusicPlayer.instance.pause()
-            }
-
         }
     }
 }

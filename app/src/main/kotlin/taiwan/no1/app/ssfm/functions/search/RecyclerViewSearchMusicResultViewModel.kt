@@ -9,7 +9,7 @@ import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.Constant.DATABASE_PLAYLIST_HISTORY_ID
 import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.misc.extension.glideListener
-import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayer
+import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayerHelper
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
@@ -45,21 +45,15 @@ class RecyclerViewSearchMusicResultViewModel(private val res: BaseEntity,
     //region Action from View
     fun playOrStopMusicClick(view: View) {
         (res as MusicEntity.Music).run {
-            lifecycleProvider.execute(addPlaylistItemCase,
-                AddPlaylistItemUsecase.RequestValue(PlaylistItemEntity(playlistId = DATABASE_PLAYLIST_HISTORY_ID.toLong(),
-                    trackUri = url,
-                    trackName = title,
-                    artistName = artist,
-                    coverUrl = coverURL,
-                    lyricUrl = lyricURL,
-                    duration = length))) {
-                onNext { logw(it) }
-                onComplete {
-                    MusicPlayer.instance.apply {
-                        if (isPlaying()) stop()
-                        play(url)
-                    }
-                }
+            MusicPlayerHelper.instance.play(url) {
+                lifecycleProvider.execute(addPlaylistItemCase,
+                    AddPlaylistItemUsecase.RequestValue(PlaylistItemEntity(playlistId = DATABASE_PLAYLIST_HISTORY_ID.toLong(),
+                        trackUri = url,
+                        trackName = title,
+                        artistName = artist,
+                        coverUrl = coverURL,
+                        lyricUrl = lyricURL,
+                        duration = length))) { onNext { logw(it) } }
             }
         }
     }
