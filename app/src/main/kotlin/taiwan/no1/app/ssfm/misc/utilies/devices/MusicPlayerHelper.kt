@@ -23,7 +23,7 @@ class MusicPlayerHelper private constructor() {
     }
 
     fun play(uri: String, callback: ((state: ExoPlayerWrapper.PlayerState) -> Unit)? = null) {
-        if (this::musicUri.isInitialized && uri == musicUri) {
+        if (::musicUri.isInitialized && uri == musicUri) {
             when {
                 isPlaying() -> player.pause()
                 isPause() -> player.resume()
@@ -34,7 +34,7 @@ class MusicPlayerHelper private constructor() {
             }
         }
         else {
-            if (!this::player.isInitialized) player.stop()
+            if (::player.isInitialized && isPlaying()) player.stop()
             player.play(uri)
             callback?.invoke(getState())
             musicUri = uri
@@ -43,10 +43,11 @@ class MusicPlayerHelper private constructor() {
 
     fun getState() = player.getPlayerState()
 
+    fun getCurrentUri() = if (::musicUri.isInitialized) musicUri else ""
+
     fun isPlaying() = ExoPlayerWrapper.PlayerState.Play == getState()
 
     fun isPause() = ExoPlayerWrapper.PlayerState.Pause == getState()
 
     fun isStop() = ExoPlayerWrapper.PlayerState.Standby == getState()
-
 }

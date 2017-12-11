@@ -32,7 +32,7 @@ class PlaylistViewModel(private val context: Context,
 //        ToolbarHelper(view).getCurrentFragment {
 //        }
         lifecycleProvider.execute(addPlaylistUsecase, AddPlaylistUsecase.RequestValue(PlaylistEntity())) {
-            onNext { RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_ADDP_LAYLIST, Pair(it, listOf<Pair<View, String>>())) }
+            onNext { RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_ADD_LAYLIST, Pair(it, listOf<Pair<View, String>>())) }
         }
     }
 }

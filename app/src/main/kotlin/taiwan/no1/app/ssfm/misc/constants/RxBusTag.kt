@@ -17,5 +17,7 @@ object RxBusTag {
     const val VIEWMODEL_CLICK_SIMILAR = "Viewmodel Click Similar Artist Music"
     const val VIEWMODEL_CLICK_TAG = "Viewmodel Click Tag Music"
     const val VIEWMODEL_CLICK_PLAYLIST = "Viewmodel Click Playlist"
-    const val VIEWMODEL_CLICK_ADDP_LAYLIST = "Viewmodel Click Add Playlist"
+    const val VIEWMODEL_CLICK_ADD_LAYLIST = "Viewmodel Click Add Playlist"
+
+    const val VIEWMODEL_CHART_DETAIL_CLICK = "Viewmodel Click A Track"
 }

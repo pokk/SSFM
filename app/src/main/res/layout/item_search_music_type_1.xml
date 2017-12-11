@@ -23,7 +23,7 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:background="@null"
-            android:src="@drawable/ic_play_circle"/>
+            android:src="@{avm.isplaying ? @drawable/ic_pause_circle : @drawable/ic_play_circle}"/>
 
         <TextView
             android:id="@+id/tv_track_name"
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:background="@null"
+            android:background="@drawable/ripple_background"
             android:onClick="@{avm::optionClick}"
             android:padding="@dimen/one_unit"
             android:src="@drawable/ic_more_vert"/>
@@ -69,12 +69,12 @@
             style="@style/ImageView.Shadow"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:imgCallback="@{avm.glideCallback}"
-            android:background="@{avm.showBackground ? @drawable/shadow : null}"
             android:layout_centerVertical="true"
             android:layout_marginStart="8dp"
             android:layout_toEndOf="@+id/iv_action"
+            android:background="@{avm.showBackground ? @drawable/shadow : null}"
             android:imageUrl="@{avm.coverUrl}"
+            android:imgCallback="@{avm.glideCallback}"
             android:src="@drawable/sample_lady_gaga"/>
     </RelativeLayout>
 </layout>
