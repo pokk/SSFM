@@ -29,7 +29,7 @@ class RecyclerViewUniversal3ViewModel(val item: BaseEntity) : BaseViewModel() {
     val artistName by lazy { ObservableField<String>() }
     val thumbnail by lazy { ObservableField<String>() }
     val trackName by lazy { ObservableField<String>() }
-    val playcount by lazy { ObservableField<String>() }
+    val ranking by lazy { ObservableField<String>() }
     val duration by lazy { ObservableField<String>() }
     val textBackground by lazy { ObservableInt() }
     val textColor by lazy { ObservableInt() }
@@ -49,7 +49,7 @@ class RecyclerViewUniversal3ViewModel(val item: BaseEntity) : BaseViewModel() {
             isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == item.url)
             artistName.set(it.artist?.name)
             trackName.set(it.name)
-            playcount.set(it.playcount)
+            ranking.set(it.attr?.rank.orEmpty())
             duration.set(it.duration?.toInt()?.toTimeString())
             thumbnail.set(item.images?.get(LARGE)?.text.orEmpty())
         }

@@ -40,6 +40,7 @@
             android:layout_toEndOf="@id/v_play">
 
             <ImageView
+                android:id="@+id/iv_album_image"
                 style="@style/RecyclerViewItem.Artist.Image"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -56,14 +57,15 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
-            android:layout_toEndOf="@+id/cv_cover"
+            android:layout_toEndOf="@+id/tv_ranking"
+            android:layout_toStartOf="@+id/ib_more"
             android:background="@{avm.textBackground}"
             android:fontFamily="sans-serif-smallcaps"
             android:text="@{avm.trackName}"
             android:textColor="@{avm.textColor}"
-            android:textSize="16sp"
+            android:textSize="18sp"
             tools:text="The Cure"/>
 
         <TextView
@@ -73,24 +75,22 @@
             android:layout_alignStart="@+id/tv_track_name"
             android:layout_below="@+id/tv_track_name"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="4dp"
             android:fontFamily="sans-serif-smallcaps"
             android:text="@{avm.artistName}"
             tools:text="Lady Gaga"/>
 
         <TextView
-            android:id="@+id/tv_playcount"
+            android:id="@+id/tv_ranking"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/tv_track_name"
-            android:layout_below="@+id/tv_artist_name"
-            android:layout_marginTop="4dp"
-            android:drawableStart="@drawable/ic_play_arrow"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@id/cv_cover"
             android:fontFamily="sans-serif-smallcaps"
-            android:gravity="center_vertical"
-            android:text="@{avm.playcount}"
-            android:textSize="12sp"
-            tools:text="13,1230 K"/>
+            android:text="@{avm.ranking}"
+            android:textSize="16sp"
+            tools:text="1"/>
 
         <ImageButton
             android:id="@+id/ib_more"
