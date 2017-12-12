@@ -27,5 +27,6 @@ data class TrackEntity(var track: Track?) {
                          @SerializedName("toptags")
                          var topTag: Tags? = null,
                          var url: String? = null,
+                         var realUrl: String? = null,
                          var wiki: Wiki? = null) : BaseEntity
 }

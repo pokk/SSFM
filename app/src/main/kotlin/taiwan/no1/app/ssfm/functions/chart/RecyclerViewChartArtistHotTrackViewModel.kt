@@ -32,12 +32,12 @@ class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: Sear
     val trackName by lazy { ObservableField<String>() }
     val trackNumber by lazy { ObservableField<String>() }
     val isPlaying by lazy { ObservableBoolean() }
-    private var musicUrl: String = ""
 
     init {
-        (item as TrackEntity.TrackWithStreamableString).let {
-            trackName.set(it.name)
-            trackNumber.set(it.attr?.rank ?: 0.toString())
+        (item as TrackEntity.TrackWithStreamableString).apply {
+            trackName.set(name)
+            trackNumber.set(attr?.rank ?: 0.toString())
+            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == realUrl.orEmpty())
         }
     }
 
@@ -54,27 +54,27 @@ class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: Sear
     //endregion
 
     fun trackOnClick(view: View) {
-        (item as TrackEntity.TrackWithStreamableString).let {
-            val trackName = it.name
-            val artistName = it.artist?.name
-
-            (trackName to artistName).takeUnless { it.first.isNullOrBlank() || it.second.isNullOrBlank() }.let {
-                lifecycleProvider.execute(searchMusicCase, SearchMusicUsecase.RequestValue("$artistName $trackName")) {
-                    onNext {
-                        it.data.items.first().run {
-                            isPlaying.set(!isPlaying.get())
-                            musicUrl = url
-                            RxBus.get().post(VIEWMODEL_CHART_DETAIL_CLICK, url)
-                            MusicPlayerHelper.instance.play(url) {
-                                lifecycleProvider.execute(addPlaylistItemCase,
-                                    AddPlaylistItemUsecase.RequestValue(PlaylistItemEntity(playlistId = DATABASE_PLAYLIST_HISTORY_ID.toLong(),
-                                        trackUri = url,
-                                        trackName = title,
-                                        artistName = artist,
-                                        coverUrl = coverURL,
-                                        lyricUrl = lyricURL,
-                                        duration = length))) { onNext { logw(it) } }
-                            }
+        (item as TrackEntity.TrackWithStreamableString).run track@ {
+            val trackName = name.orEmpty()
+            val artistName = artist?.name.orEmpty()
+            // Search the music first.
+            lifecycleProvider.execute(searchMusicCase, SearchMusicUsecase.RequestValue("$artistName $trackName")) {
+                onNext {
+                    // Pickup the first result, because it's the most correct.
+                    it.data.items.first().run {
+                        isPlaying.set(!isPlaying.get())
+                        this@track.realUrl = url
+                        RxBus.get().post(VIEWMODEL_CHART_DETAIL_CLICK, url)
+                        MusicPlayerHelper.instance.play(url) {
+                            // Add this history to database.
+                            lifecycleProvider.execute(addPlaylistItemCase,
+                                AddPlaylistItemUsecase.RequestValue(PlaylistItemEntity(playlistId = DATABASE_PLAYLIST_HISTORY_ID.toLong(),
+                                    trackUri = url,
+                                    trackName = title,
+                                    artistName = artist,
+                                    coverUrl = coverURL,
+                                    lyricUrl = lyricURL,
+                                    duration = length))) { onNext { logw(it) } }
                         }
                     }
                 }
@@ -84,6 +84,6 @@ class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: Sear
 
     @Subscribe(tags = [(Tag(VIEWMODEL_CHART_DETAIL_CLICK))])
     fun changeToStopIcon(uri: String) {
-        if (uri != musicUrl) isPlaying.set(false)
+        if (uri != (item as TrackEntity.TrackWithStreamableString).realUrl) isPlaying.set(false)
     }
 }

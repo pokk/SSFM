@@ -22,7 +22,10 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.restoreAllLastItemPositio
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.decorators.TrackDividerDecorator
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
+import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
 import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * @author  jieyi
@@ -48,6 +51,8 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
     //endregion
 
     @Inject override lateinit var viewModel: ChartTagDetailFragmentViewModel
+    @Inject lateinit var searchMusicCase: SearchMusicV2Case
+    @field:[Inject Named("add_playlist_item")] lateinit var addPlaylistItemCase: AddPlaylistItemCase
     private val albumInfo by lazy { DataInfo() }
     private val artistInfo by lazy { DataInfo() }
     private val trackInfo by lazy { DataInfo() }
@@ -99,7 +104,7 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
                 }
             }
             trackAdapter = Universal3Adapter(R.layout.item_universal_type_3, trackRes) { holder, item ->
-                holder.binding.avm = RecyclerViewUniversal3ViewModel(item).apply {
+                holder.binding.avm = RecyclerViewUniversal3ViewModel(searchMusicCase, addPlaylistItemCase, item).apply {
                     onAttach(this@ChartTagDetailFragment)
                 }
             }
