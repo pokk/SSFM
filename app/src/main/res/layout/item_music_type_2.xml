@@ -24,7 +24,7 @@
             android:layout_centerVertical="true"
             android:layout_margin="3dp"
             android:gravity="center"
-            android:src="@drawable/ic_play_circle"/>
+            android:src="@{avm.isPlaying ? @drawable/ic_pause_circle : @drawable/ic_play_circle}"/>
 
         <TextView
             android:id="@+id/tv_number"

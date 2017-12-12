@@ -39,7 +39,7 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
     val trackIndex by lazy { ObservableField<String>() }
     val artistName by lazy { ObservableField<String>() }
     val trackCover by lazy { ObservableField<String>() }
-    val isplaying by lazy { ObservableBoolean(false) }
+    val isPlaying by lazy { ObservableBoolean(false) }
     val layoutBackground by lazy { ObservableField<Drawable>() }
     val imageCallback = glideListener<Bitmap> {
         onResourceReady = { resource, _, _, _, _ ->
@@ -56,7 +56,7 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
 
     init {
         (item as MusicRankEntity.Song).let {
-            isplaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.url)
+            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.url)
             trackName.set(it.title)
             trackDuration.set(it.length.toTimeString())
             trackIndex.set(1.toString())
@@ -78,7 +78,7 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
     //endregion
 
     fun trackOnClick(view: View) {
-        isplaying.set(!isplaying.get())
+        isPlaying.set(!isPlaying.get())
         (item as MusicRankEntity.Song).run {
             RxBus.get().post(VIEWMODEL_CHART_DETAIL_CLICK, url)
             MusicPlayerHelper.instance.play(url) {
@@ -96,6 +96,6 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
 
     @Subscribe(tags = [Tag(VIEWMODEL_CHART_DETAIL_CLICK)])
     fun changeToStopIcon(uri: String) {
-        if (uri != (item as MusicRankEntity.Song).url) isplaying.set(false)
+        if (uri != (item as MusicRankEntity.Song).url) isPlaying.set(false)
     }
 }

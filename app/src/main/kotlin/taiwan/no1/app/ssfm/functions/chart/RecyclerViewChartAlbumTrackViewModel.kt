@@ -1,11 +1,17 @@
 package taiwan.no1.app.ssfm.functions.chart
 
+import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.view.View
 import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.toTimeString
+import com.hwangjr.rxbus.RxBus
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.annotation.Tag
+import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.functions.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.Constant.DATABASE_PLAYLIST_HISTORY_ID
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayerHelper
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
@@ -27,6 +33,8 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
     val trackName by lazy { ObservableField<String>() }
     val trackNumber by lazy { ObservableField<String>() }
     val trackDuration by lazy { ObservableField<String>() }
+    val isPlaying by lazy { ObservableBoolean() }
+    private var musicUrl: String = ""
 
     init {
         (item as TrackEntity.Track).let {
@@ -35,6 +43,18 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
             trackDuration.set(it.duration?.toInt()?.toTimeString())
         }
     }
+
+    //region Lifecycle
+    override fun <E> onAttach(lifecycleProvider: LifecycleProvider<E>) {
+        super.onAttach(lifecycleProvider)
+        RxBus.get().register(this)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        RxBus.get().unregister(this)
+    }
+    //endregion
 
     fun trackOnClick(view: View) {
         (item as TrackEntity.Track).let {
@@ -46,6 +66,9 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
                     onNext {
                         it.data.items.first().run {
                             MusicPlayerHelper.instance.play(url) {
+                                isPlaying.set(!isPlaying.get())
+                                musicUrl = url
+                                RxBus.get().post(RxBusTag.VIEWMODEL_CHART_DETAIL_CLICK, url)
                                 lifecycleProvider.execute(addPlaylistItemCase,
                                     AddPlaylistItemUsecase.RequestValue(PlaylistItemEntity(playlistId = DATABASE_PLAYLIST_HISTORY_ID.toLong(),
                                         trackUri = url,
@@ -60,5 +83,10 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
                 }
             }
         }
+    }
+
+    @Subscribe(tags = [(Tag(RxBusTag.VIEWMODEL_CHART_DETAIL_CLICK))])
+    fun changeToStopIcon(uri: String) {
+        if (uri != musicUrl) isPlaying.set(false)
     }
 }

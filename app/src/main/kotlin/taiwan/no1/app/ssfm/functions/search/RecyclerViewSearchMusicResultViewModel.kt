@@ -33,7 +33,7 @@ class RecyclerViewSearchMusicResultViewModel(private val res: BaseEntity,
     val singerName by lazy { ObservableField<String>() }
     val coverUrl by lazy { ObservableField<String>() }
     val showBackground by lazy { ObservableBoolean() }
-    val isplaying by lazy { ObservableBoolean() }
+    val isPlaying by lazy { ObservableBoolean() }
     val glideCallback = glideListener<Bitmap> {
         onResourceReady = { _, _, _, _, _ ->
             showBackground.set(true)
@@ -43,7 +43,7 @@ class RecyclerViewSearchMusicResultViewModel(private val res: BaseEntity,
 
     init {
         (res as MusicEntity.Music).let {
-            isplaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.url)
+            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.url)
             songName.set(it.title)
             singerName.set(it.artist)
             coverUrl.set(it.coverURL)
@@ -64,7 +64,7 @@ class RecyclerViewSearchMusicResultViewModel(private val res: BaseEntity,
 
     //region Action from View
     fun playOrStopMusicClick(view: View) {
-        isplaying.set(!isplaying.get())
+        isPlaying.set(!isPlaying.get())
         (res as MusicEntity.Music).run {
             RxBus.get().post(VIEWMODEL_CHART_DETAIL_CLICK, url)
             MusicPlayerHelper.instance.play(url) {
@@ -85,7 +85,7 @@ class RecyclerViewSearchMusicResultViewModel(private val res: BaseEntity,
 
     @Subscribe(tags = [(Tag(VIEWMODEL_CHART_DETAIL_CLICK))])
     fun changeToStopIcon(uri: String) {
-        if (uri != (res as MusicEntity.Music).url) isplaying.set(false)
+        if (uri != (res as MusicEntity.Music).url) isPlaying.set(false)
     }
     //endregion
 }

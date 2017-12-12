@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="android.view.View"/>
+
         <variable
             name="avm"
             type="taiwan.no1.app.ssfm.functions.chart.RecyclerViewUniversal3ViewModel"/>
@@ -15,17 +17,27 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="8dp"
+        android:onClick="@{avm::itemOnClick}">
+
+        <View
+            android:id="@+id/v_play"
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/colorDarkTurquoise"
+            android:visibility="@{avm.isPlaying ? View.VISIBLE : View.INVISIBLE}"/>
 
         <android.support.v7.widget.CardView
             android:id="@+id/cv_cover"
             style="@style/RecyclerViewItem.Artist.Card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:onClick="@{avm::itemOnClick}">
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@id/v_play">
 
             <ImageView
                 style="@style/RecyclerViewItem.Artist.Image"
@@ -45,12 +57,13 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="24dp"
-            android:textSize="16sp"
             android:layout_marginTop="4dp"
             android:layout_toEndOf="@+id/cv_cover"
             android:background="@{avm.textBackground}"
+            android:fontFamily="sans-serif-smallcaps"
             android:text="@{avm.trackName}"
             android:textColor="@{avm.textColor}"
+            android:textSize="16sp"
             tools:text="The Cure"/>
 
         <TextView
@@ -61,6 +74,7 @@
             android:layout_below="@+id/tv_track_name"
             android:layout_marginStart="8dp"
             android:layout_marginTop="2dp"
+            android:fontFamily="sans-serif-smallcaps"
             android:text="@{avm.artistName}"
             tools:text="Lady Gaga"/>
 
@@ -72,6 +86,7 @@
             android:layout_below="@+id/tv_artist_name"
             android:layout_marginTop="4dp"
             android:drawableStart="@drawable/ic_play_arrow"
+            android:fontFamily="sans-serif-smallcaps"
             android:gravity="center_vertical"
             android:text="@{avm.playcount}"
             android:textSize="12sp"
@@ -95,7 +110,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:layout_marginEnd="24dp"
-            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-smallcaps"
             android:text="@{avm.duration}"
             tools:text="3:32"/>
     </RelativeLayout>
