@@ -15,8 +15,7 @@
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:paddingEnd="@dimen/two_unit"
-        android:paddingStart="@dimen/two_unit"
-        tool:background="@color/colorPrimary">
+        android:paddingStart="@dimen/two_unit">
 
         <ImageView
             android:id="@+id/iv_action"

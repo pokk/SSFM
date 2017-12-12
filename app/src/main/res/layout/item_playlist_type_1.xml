@@ -24,8 +24,8 @@
         <ImageView
             android:id="@+id/iv_playlist_image"
             style="@style/ImageView.Shadow"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_alignParentStart="true"
             android:background="@{avm.showBackground ? @drawable/shadow : null}"
             android:error="@{@drawable/sample_jieyi_icon}"

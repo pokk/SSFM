@@ -43,7 +43,7 @@ class MusicPlayerHelper private constructor() {
 
     fun getState() = player.getPlayerState()
 
-    fun getCurrentUri() = if (::musicUri.isInitialized) musicUri else ""
+    fun getCurrentUri() = if (::musicUri.isInitialized) musicUri else "None"
 
     fun isPlaying() = ExoPlayerWrapper.PlayerState.Play == getState()
 
