@@ -53,6 +53,7 @@ class RecyclerViewUniversal3ViewModel(private val searchMusicCase: SearchMusicV2
             false
         }
     }
+    var clickEvent: (track: BaseEntity) -> Unit = {}
 
     init {
         (item as TrackEntity.Track).let {
@@ -110,5 +111,9 @@ class RecyclerViewUniversal3ViewModel(private val searchMusicCase: SearchMusicV2
                 }
             }
         }
+    }
+
+    fun trackOptionalOnClick(view: View) {
+        clickEvent(item)
     }
 }

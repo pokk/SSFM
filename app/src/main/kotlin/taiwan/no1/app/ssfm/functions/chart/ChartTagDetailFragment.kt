@@ -106,6 +106,7 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
             trackAdapter = Universal3Adapter(R.layout.item_universal_type_3, trackRes) { holder, item ->
                 holder.binding.avm = RecyclerViewUniversal3ViewModel(searchMusicCase, addPlaylistItemCase, item).apply {
                     onAttach(this@ChartTagDetailFragment)
+                    clickEvent = { (activity as ChartActivity).openBottomSheet(item) }
                 }
             }
 

@@ -32,6 +32,7 @@ class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: Sear
     val trackName by lazy { ObservableField<String>() }
     val trackNumber by lazy { ObservableField<String>() }
     val isPlaying by lazy { ObservableBoolean() }
+    var clickEvent: (track: BaseEntity) -> Unit = {}
 
     init {
         (item as TrackEntity.TrackWithStreamableString).apply {
@@ -80,6 +81,10 @@ class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: Sear
                 }
             }
         }
+    }
+
+    fun trackOptionalOnClick(view: View) {
+        clickEvent(item)
     }
 
     @Subscribe(tags = [(Tag(VIEWMODEL_CHART_DETAIL_CLICK))])

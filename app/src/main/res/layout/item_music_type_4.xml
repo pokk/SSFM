@@ -84,6 +84,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="8dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:onClick="@{avm::trackOptionalOnClick}"
             android:src="@drawable/ic_more_vert"/>
     </RelativeLayout>
 </layout>

@@ -71,5 +71,15 @@
             android:layout_margin="3dp"
             android:textColor="@color/colorWhite"
             tool:text="4:14"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:onClick="@{avm::trackOptionalOnClick}"
+            android:src="@drawable/ic_more_vert"/>
     </RelativeLayout>
 </layout>

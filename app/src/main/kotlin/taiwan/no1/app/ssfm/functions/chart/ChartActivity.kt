@@ -39,7 +39,8 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
         super.onCreate(savedInstanceState)
         navigate(ChartIndexFragment.newInstance(), false)
         RxBus.get().register(this)
-        BottomSheetBehavior.from(rl_bottom_sheet).state = BottomSheetBehavior.STATE_COLLAPSED
+        BottomSheetBehavior.from(rl_bottom_sheet).state = BottomSheetBehavior.STATE_HIDDEN
+        // TODO(jieyi): 2017/12/15 This should be in viewmodel.
         rl_bottom_sheet.onBottomSheetClickItem { _, which ->
             when (which) {
                 BOTTOMSHEET_DOWNLOAD -> {
@@ -58,6 +59,14 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     //region Base activity implement
     override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_chart)
     //endregion
+
+    override fun onBackPressed() {
+        if (BottomSheetBehavior.STATE_EXPANDED == BottomSheetBehavior.from(rl_bottom_sheet).state) {
+            BottomSheetBehavior.from(rl_bottom_sheet).state = BottomSheetBehavior.STATE_HIDDEN
+            return
+        }
+        super.onBackPressed()
+    }
 
     /**
      * @param artistName

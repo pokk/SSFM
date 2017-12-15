@@ -34,6 +34,7 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
     val trackNumber by lazy { ObservableField<String>() }
     val trackDuration by lazy { ObservableField<String>() }
     val isPlaying by lazy { ObservableBoolean() }
+    var clickEvent: (track: BaseEntity) -> Unit = {}
 
     init {
         (item as TrackEntity.Track).let {
@@ -81,6 +82,10 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
                 }
             }
         }
+    }
+
+    fun trackOptionalOnClick(view: View) {
+        clickEvent(item)
     }
 
     @Subscribe(tags = [(Tag(RxBusTag.VIEWMODEL_CHART_DETAIL_CLICK))])

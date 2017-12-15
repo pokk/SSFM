@@ -108,6 +108,7 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
                 holder.binding.avm =
                     RecyclerViewChartArtistHotTrackViewModel(searchMusicCase, addPlaylistItemCase, item).apply {
                         onAttach(this@ChartArtistDetailFragment)
+                        clickEvent = { (activity as ChartActivity).openBottomSheet(item) }
                     }
             }
 

@@ -64,6 +64,7 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
                 holder.binding.avm =
                     RecyclerViewChartAlbumTrackViewModel(fetchMusicCase, addPlaylistItemCase, item).apply {
                         onAttach(this@ChartAlbumDetailFragment)
+                        clickEvent = { (activity as ChartActivity).openBottomSheet(item) }
                     }
             }
         }
