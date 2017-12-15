@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:foreground="?android:attr/selectableItemBackgroundBorderless"
         android:onClick="@{avm::trackOnClick}"
+        android:onLongClick="@{avm::trackOnLongClick}"
         android:paddingBottom="4dp"
         android:paddingTop="4dp">
 

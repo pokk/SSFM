@@ -20,34 +20,25 @@
             type="android.support.v7.widget.RecyclerView.Adapter"/>
     </data>
 
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/cl_root"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/root"
+        style="@style/Template.MainView">
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/root"
-            style="@style/Template.MainView">
+        <View
+            android:id="@+id/view"
+            style="@style/Template.TopBar.HideView"/>
 
-            <View
-                android:id="@+id/view"
-                style="@style/Template.TopBar.HideView"/>
+        <!-- Menu ToolBar -->
+        <include
+            android:id="@+id/include_toolbar"
+            style="@style/Template.TopBar.Toolbar"
+            layout="@layout/part_toolbar_view"
+            app:title="@{vm.title}"/>
 
-            <!-- Menu ToolBar -->
-            <include
-                android:id="@+id/include_toolbar"
-                style="@style/Template.TopBar.Toolbar"
-                layout="@layout/part_toolbar_view"
-                app:title="@{vm.title}"/>
-
-            <include
-                style="@style/Template.Activity"
-                layout="@layout/part_main_preference"
-                app:adapter="@{adapter}"
-                app:layoutManager="@{layoutManager}"/>
-        </android.support.constraint.ConstraintLayout>
-
-        <include layout="@layout/bottomsheet_track"/>
-    </android.support.design.widget.CoordinatorLayout>
+        <include
+            style="@style/Template.Activity"
+            layout="@layout/part_main_preference"
+            app:adapter="@{adapter}"
+            app:layoutManager="@{layoutManager}"/>
+    </android.support.constraint.ConstraintLayout>
 </layout>

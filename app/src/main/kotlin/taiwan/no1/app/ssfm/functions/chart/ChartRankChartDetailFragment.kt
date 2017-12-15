@@ -61,6 +61,7 @@ class ChartRankChartDetailFragment : AdvancedFragment<ChartRankChartDetailFragme
             trackAdapter = RankChartDetailAdapter(R.layout.item_music_type_6, trackRes) { holder, item ->
                 holder.binding.avm = RecyclerViewRankChartDetailViewModel(addPlaylistItemCase, item).apply {
                     onAttach(this@ChartRankChartDetailFragment)
+                    longClickEvent = { (activity as ChartActivity).openBottomSheet(item) }
                 }
             }
 

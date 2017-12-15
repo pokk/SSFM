@@ -53,6 +53,7 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
             false
         }
     }
+    var longClickEvent: (track: BaseEntity) -> Unit = {}
 
     init {
         (item as MusicRankEntity.Song).let {
@@ -92,6 +93,11 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
                         duration = length))) { onNext { logw(it) } }
             }
         }
+    }
+
+    fun trackOnLongClick(view: View): Boolean {
+        longClickEvent.invoke(item)
+        return true
     }
 
     @Subscribe(tags = [Tag(VIEWMODEL_CHART_DETAIL_CLICK)])

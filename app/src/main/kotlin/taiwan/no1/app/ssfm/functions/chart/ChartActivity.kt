@@ -3,16 +3,24 @@ package taiwan.no1.app.ssfm.functions.chart
 import android.app.Activity
 import android.app.Fragment
 import android.os.Bundle
+import android.support.design.widget.BottomSheetBehavior
+import com.devrapid.kotlinknifer.WeakRef
 import com.devrapid.kotlinknifer.addFragment
+import com.devrapid.kotlinknifer.logw
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
+import kotlinx.android.synthetic.main.bottomsheet_track.rl_bottom_sheet
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityChartBinding
 import taiwan.no1.app.ssfm.functions.base.AdvancedActivity
+import taiwan.no1.app.ssfm.misc.BOTTOMSHEET_DOWNLOAD
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_NAME
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
+import taiwan.no1.app.ssfm.misc.onBottomSheetClickItem
+import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
 import taiwan.no1.app.ssfm.models.entities.v2.RankChartEntity
 import java.util.HashMap
 import javax.inject.Inject
@@ -24,12 +32,21 @@ import javax.inject.Inject
  */
 class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     @Inject override lateinit var viewModel: ChartViewModel
+    private var track by WeakRef<BaseEntity>()
 
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         navigate(ChartIndexFragment.newInstance(), false)
         RxBus.get().register(this)
+        BottomSheetBehavior.from(rl_bottom_sheet).state = BottomSheetBehavior.STATE_COLLAPSED
+        rl_bottom_sheet.onBottomSheetClickItem { _, which ->
+            when (which) {
+                BOTTOMSHEET_DOWNLOAD -> {
+                    logw((track as? MusicRankEntity.Song))
+                }
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -78,5 +95,10 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
 
     fun navigate(fragment: Fragment, needBack: Boolean) {
         fragmentManager.addFragment(R.id.fl_container, fragment, needBack)
+    }
+
+    fun openBottomSheet(entity: BaseEntity) {
+        track = entity
+        BottomSheetBehavior.from(rl_bottom_sheet).state = BottomSheetBehavior.STATE_EXPANDED
     }
 }
