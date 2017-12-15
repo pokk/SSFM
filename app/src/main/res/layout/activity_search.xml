@@ -12,28 +12,37 @@
             type="taiwan.no1.app.ssfm.functions.search.SearchViewModel"/>
     </data>
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/root"
-        style="@style/Template.MainView">
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/cl_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
-        <View
-            android:id="@+id/view"
-            style="@style/Template.TopBar.HideView"/>
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/root"
+            style="@style/Template.MainView">
 
-        <!-- Menu ToolBar -->
-        <include
-            android:id="@+id/include_toolbar"
-            style="@style/Template.TopBar.Toolbar"
-            layout="@layout/part_toolbar_search_music"
-            app:svm="@{vm}"/>
+            <View
+                android:id="@+id/view"
+                style="@style/Template.TopBar.HideView"/>
 
-        <FrameLayout
-            android:id="@+id/fl_container"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/include_toolbar"/>
-    </android.support.constraint.ConstraintLayout>
+            <!-- Menu ToolBar -->
+            <include
+                android:id="@+id/include_toolbar"
+                style="@style/Template.TopBar.Toolbar"
+                layout="@layout/part_toolbar_search_music"
+                app:svm="@{vm}"/>
+
+            <FrameLayout
+                android:id="@+id/fl_container"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/include_toolbar"/>
+        </android.support.constraint.ConstraintLayout>
+
+        <include layout="@layout/bottomsheet_track"/>
+    </android.support.design.widget.CoordinatorLayout>
 </layout>

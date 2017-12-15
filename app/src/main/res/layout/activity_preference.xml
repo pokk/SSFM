@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".mvvm.views.activities.PreferenceActivity">
+    tools:context=".functions.preference.PreferenceActivity">
 
     <data>
 
@@ -20,25 +20,34 @@
             type="android.support.v7.widget.RecyclerView.Adapter"/>
     </data>
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/root"
-        style="@style/Template.MainView">
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/cl_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
-        <View
-            android:id="@+id/view"
-            style="@style/Template.TopBar.HideView"/>
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/root"
+            style="@style/Template.MainView">
 
-        <!-- Menu ToolBar -->
-        <include
-            android:id="@+id/include_toolbar"
-            style="@style/Template.TopBar.Toolbar"
-            layout="@layout/part_toolbar_view"
-            app:title="@{vm.title}"/>
+            <View
+                android:id="@+id/view"
+                style="@style/Template.TopBar.HideView"/>
 
-        <include
-            style="@style/Template.Activity"
-            layout="@layout/part_main_preference"
-            app:adapter="@{adapter}"
-            app:layoutManager="@{layoutManager}"/>
-    </android.support.constraint.ConstraintLayout>
+            <!-- Menu ToolBar -->
+            <include
+                android:id="@+id/include_toolbar"
+                style="@style/Template.TopBar.Toolbar"
+                layout="@layout/part_toolbar_view"
+                app:title="@{vm.title}"/>
+
+            <include
+                style="@style/Template.Activity"
+                layout="@layout/part_main_preference"
+                app:adapter="@{adapter}"
+                app:layoutManager="@{layoutManager}"/>
+        </android.support.constraint.ConstraintLayout>
+
+        <include layout="@layout/bottomsheet_track"/>
+    </android.support.design.widget.CoordinatorLayout>
 </layout>
