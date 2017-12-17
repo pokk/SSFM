@@ -25,28 +25,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".functions.splash.SplashActivity"
+            android:name=".features.splash.SplashActivity"
             android:theme="@style/AppTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".functions.main.MainActivity">
+        <activity android:name=".features.main.MainActivity">
         </activity>
-        <activity android:name=".functions.login.LoginActivity">
+        <activity android:name=".features.login.LoginActivity">
         </activity>
-        <activity android:name=".functions.playlist.PlaylistActivity">
+        <activity android:name=".features.playlist.PlaylistActivity">
         </activity>
-        <activity android:name=".functions.play.PlayMainActivity">
+        <activity android:name=".features.play.PlayMainActivity">
         </activity>
-        <activity android:name=".functions.chart.ChartActivity">
+        <activity android:name=".features.chart.ChartActivity">
         </activity>
-        <activity android:name=".functions.search.SearchActivity">
+        <activity android:name=".features.search.SearchActivity">
         </activity>
-        <activity android:name=".functions.preference.PreferenceActivity">
+        <activity android:name=".features.preference.PreferenceActivity">
         </activity>
-        <activity android:name=".functions.main.TestActivity">
+        <activity android:name=".features.main.TestActivity">
         </activity>
 
         <service android:name=".controllers.services.InitializeService"/>

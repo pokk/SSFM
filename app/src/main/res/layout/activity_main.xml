@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="taiwan.no1.app.ssfm.functions.main.MainViewModel"/>
+            type="taiwan.no1.app.ssfm.features.main.MainViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout

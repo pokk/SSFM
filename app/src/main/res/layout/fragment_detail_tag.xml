@@ -8,7 +8,7 @@
 
         <variable
             name="vm"
-            type="taiwan.no1.app.ssfm.functions.chart.ChartTagDetailFragmentViewModel"/>
+            type="taiwan.no1.app.ssfm.features.chart.ChartTagDetailFragmentViewModel"/>
 
         <variable
             name="albumLayoutManager"

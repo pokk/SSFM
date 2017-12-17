@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="taiwan.no1.app.ssfm.functions.playlist.PlaylistDetailFragmentViewModel"/>
+            type="taiwan.no1.app.ssfm.features.playlist.PlaylistDetailFragmentViewModel"/>
 
         <variable
             name="itemLayoutManager"

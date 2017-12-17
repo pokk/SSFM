@@ -11,7 +11,7 @@
 
         <variable
             name="svm"
-            type="taiwan.no1.app.ssfm.functions.chart.ChartViewModel"/>
+            type="taiwan.no1.app.ssfm.features.chart.ChartViewModel"/>
     </data>
 
     <android.support.v7.widget.Toolbar

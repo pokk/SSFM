@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        tools:context=".functions.search.SearchActivity">
+        tools:context=".features.search.SearchActivity">
 
     <data>
 
         <variable
             name="vm"
-            type="taiwan.no1.app.ssfm.functions.search.SearchResultFragmentViewModel"/>
+            type="taiwan.no1.app.ssfm.features.search.SearchResultFragmentViewModel"/>
 
         <variable
             name="layoutManager"

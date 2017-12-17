@@ -8,7 +8,7 @@
 
         <variable
             name="avm"
-            type="taiwan.no1.app.ssfm.functions.chart.RecyclerViewChartSimilarArtistViewModel"/>
+            type="taiwan.no1.app.ssfm.features.chart.RecyclerViewChartSimilarArtistViewModel"/>
     </data>
 
     <android.support.v7.widget.CardView

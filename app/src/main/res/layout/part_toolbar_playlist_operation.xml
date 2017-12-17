@@ -3,13 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".functions.playlist.PlaylistActivity">
+    tools:context=".features.playlist.PlaylistActivity">
 
     <data>
 
         <variable
             name="svm"
-            type="taiwan.no1.app.ssfm.functions.playlist.PlaylistViewModel"/>
+            type="taiwan.no1.app.ssfm.features.playlist.PlaylistViewModel"/>
     </data>
 
     <android.support.v7.widget.Toolbar

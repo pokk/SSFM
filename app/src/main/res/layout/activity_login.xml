@@ -10,7 +10,7 @@
 
         <variable
             name="vm"
-            type="taiwan.no1.app.ssfm.functions.login.LoginViewModel"/>
+            type="taiwan.no1.app.ssfm.features.login.LoginViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout

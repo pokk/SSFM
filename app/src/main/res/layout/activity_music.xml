@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="taiwan.no1.app.ssfm.functions.play.PlayMainViewModel"/>
+            type="taiwan.no1.app.ssfm.features.play.PlayMainViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout

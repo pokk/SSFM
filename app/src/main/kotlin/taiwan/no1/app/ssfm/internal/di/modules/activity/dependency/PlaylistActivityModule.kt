@@ -3,7 +3,7 @@ package taiwan.no1.app.ssfm.internal.di.modules.activity.dependency
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import taiwan.no1.app.ssfm.functions.playlist.PlaylistViewModel
+import taiwan.no1.app.ssfm.features.playlist.PlaylistViewModel
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerActivity
 import taiwan.no1.app.ssfm.models.data.repositories.DataRepository
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistCase

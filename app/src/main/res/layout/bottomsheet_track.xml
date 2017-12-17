@@ -6,7 +6,7 @@
 
         <variable
             name="svm"
-            type="taiwan.no1.app.ssfm.functions.base.BaseViewModel"/>
+            type="taiwan.no1.app.ssfm.features.base.BaseViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout

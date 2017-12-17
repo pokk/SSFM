@@ -9,7 +9,7 @@
 
         <variable
             name="avm"
-            type="taiwan.no1.app.ssfm.functions.playlist.RecyclerViewPlaylistDetailViewModel"/>
+            type="taiwan.no1.app.ssfm.features.playlist.RecyclerViewPlaylistDetailViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout

@@ -3,7 +3,7 @@ package taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import taiwan.no1.app.ssfm.functions.search.SearchHistoryFragmentViewModel
+import taiwan.no1.app.ssfm.features.search.SearchHistoryFragmentViewModel
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerFragment
 import taiwan.no1.app.ssfm.models.usecases.FetchSearchHistoryCase
 

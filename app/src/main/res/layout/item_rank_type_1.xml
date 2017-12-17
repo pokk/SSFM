@@ -7,7 +7,7 @@
 
         <variable
             name="avm"
-            type="taiwan.no1.app.ssfm.functions.chart.RecyclerViewChartRankChartViewModel"/>
+            type="taiwan.no1.app.ssfm.features.chart.RecyclerViewChartRankChartViewModel"/>
     </data>
 
     <android.support.v7.widget.CardView

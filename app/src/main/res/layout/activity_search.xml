@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="taiwan.no1.app.ssfm.functions.search.SearchViewModel"/>
+            type="taiwan.no1.app.ssfm.features.search.SearchViewModel"/>
     </data>
 
     <android.support.design.widget.CoordinatorLayout

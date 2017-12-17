@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bkg_login"
-    tools:context=".functions.main.TestActivity">
+    tools:context=".features.main.TestActivity">
 
     <ImageView
         android:id="@+id/iv_bkg_fog"

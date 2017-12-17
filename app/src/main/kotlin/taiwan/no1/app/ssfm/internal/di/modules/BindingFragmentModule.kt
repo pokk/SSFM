@@ -2,16 +2,16 @@ package taiwan.no1.app.ssfm.internal.di.modules
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import taiwan.no1.app.ssfm.functions.chart.ChartAlbumDetailFragment
-import taiwan.no1.app.ssfm.functions.chart.ChartArtistDetailFragment
-import taiwan.no1.app.ssfm.functions.chart.ChartIndexFragment
-import taiwan.no1.app.ssfm.functions.chart.ChartRankChartDetailFragment
-import taiwan.no1.app.ssfm.functions.chart.ChartTagDetailFragment
-import taiwan.no1.app.ssfm.functions.playlist.PlaylistDetailFragment
-import taiwan.no1.app.ssfm.functions.playlist.PlaylistIndexFragment
-import taiwan.no1.app.ssfm.functions.search.SearchHistoryFragment
-import taiwan.no1.app.ssfm.functions.search.SearchIndexFragment
-import taiwan.no1.app.ssfm.functions.search.SearchResultFragment
+import taiwan.no1.app.ssfm.features.chart.ChartAlbumDetailFragment
+import taiwan.no1.app.ssfm.features.chart.ChartArtistDetailFragment
+import taiwan.no1.app.ssfm.features.chart.ChartIndexFragment
+import taiwan.no1.app.ssfm.features.chart.ChartRankChartDetailFragment
+import taiwan.no1.app.ssfm.features.chart.ChartTagDetailFragment
+import taiwan.no1.app.ssfm.features.playlist.PlaylistDetailFragment
+import taiwan.no1.app.ssfm.features.playlist.PlaylistIndexFragment
+import taiwan.no1.app.ssfm.features.search.SearchHistoryFragment
+import taiwan.no1.app.ssfm.features.search.SearchIndexFragment
+import taiwan.no1.app.ssfm.features.search.SearchResultFragment
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerFragment
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.ChartAlbumDetailFragmentModule
 import taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency.ChartArtistDetailFragmentModule

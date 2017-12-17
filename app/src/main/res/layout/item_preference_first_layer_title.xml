@@ -7,7 +7,7 @@
 
         <variable
             name="avm"
-            type="taiwan.no1.app.ssfm.functions.preference.PreferenceItemViewModel"/>
+            type="taiwan.no1.app.ssfm.features.preference.PreferenceItemViewModel"/>
     </data>
 
     <RelativeLayout

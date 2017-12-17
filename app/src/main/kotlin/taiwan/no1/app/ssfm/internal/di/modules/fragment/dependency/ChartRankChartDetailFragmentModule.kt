@@ -2,7 +2,7 @@ package taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency
 
 import dagger.Module
 import dagger.Provides
-import taiwan.no1.app.ssfm.functions.chart.ChartRankChartDetailFragmentViewModel
+import taiwan.no1.app.ssfm.features.chart.ChartRankChartDetailFragmentViewModel
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerFragment
 import taiwan.no1.app.ssfm.models.usecases.EditRankChartCase
 import taiwan.no1.app.ssfm.models.usecases.FetchMusicRankCase

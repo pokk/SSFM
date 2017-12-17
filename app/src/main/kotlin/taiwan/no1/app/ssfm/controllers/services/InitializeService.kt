@@ -7,7 +7,7 @@ import com.devrapid.kotlinknifer.SharedPrefs
 import com.raizlabs.android.dbflow.config.FlowConfig
 import com.raizlabs.android.dbflow.config.FlowManager
 import org.jetbrains.anko.defaultSharedPreferences
-import taiwan.no1.app.ssfm.functions.base.FirstInitFlow
+import taiwan.no1.app.ssfm.features.base.FirstInitFlow
 import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayerHelper
 import weian.cheng.mediaplayerwithexoplayer.ExoPlayerWrapper
 

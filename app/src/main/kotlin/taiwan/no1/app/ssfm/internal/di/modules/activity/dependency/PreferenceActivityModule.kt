@@ -3,7 +3,7 @@ package taiwan.no1.app.ssfm.internal.di.modules.activity.dependency
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import taiwan.no1.app.ssfm.functions.preference.PreferenceViewModel
+import taiwan.no1.app.ssfm.features.preference.PreferenceViewModel
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerActivity
 
 /**

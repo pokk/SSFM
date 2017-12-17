@@ -2,7 +2,7 @@ package taiwan.no1.app.ssfm.internal.di.modules.fragment.dependency
 
 import dagger.Module
 import dagger.Provides
-import taiwan.no1.app.ssfm.functions.chart.ChartArtistDetailFragmentViewModel
+import taiwan.no1.app.ssfm.features.chart.ChartArtistDetailFragmentViewModel
 import taiwan.no1.app.ssfm.internal.di.annotations.scopes.PerFragment
 import taiwan.no1.app.ssfm.models.usecases.FetchArtistInfoCase
 import taiwan.no1.app.ssfm.models.usecases.FetchTopAlbumOfArtistCase
