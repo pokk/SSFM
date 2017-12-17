@@ -1,8 +1,6 @@
 package taiwan.no1.app.ssfm.features.base
 
 import android.databinding.BaseObservable
-import android.support.design.widget.BottomSheetBehavior
-import android.view.View
 import com.trello.rxlifecycle2.LifecycleProvider
 
 /**
@@ -22,23 +20,23 @@ abstract class BaseViewModel : BaseObservable(), IViewModel {
 
     override fun onDetach() {}
 
-    protected fun onBottomSheetDownloadClick(view: View) {
-        hideBottomSheet(view)
-    }
-
-    protected fun onBottomSheetAddToPlaylist(view: View) {
-        hideBottomSheet(view)
-    }
-
-    protected fun onBottomSheetShare(view: View) {
-        hideBottomSheet(view)
-    }
-
-    protected fun onBottomSheetCancel(view: View) {
-        hideBottomSheet(view)
-    }
-
-    private fun hideBottomSheet(view: View) {
-        BottomSheetBehavior.from(view).state = BottomSheetBehavior.STATE_HIDDEN
-    }
+//    protected fun onBottomSheetDownloadClick(view: View) {
+//        hideBottomSheet(view)
+//    }
+//
+//    protected fun onBottomSheetAddToPlaylist(view: View) {
+//        hideBottomSheet(view)
+//    }
+//
+//    protected fun onBottomSheetShare(view: View) {
+//        hideBottomSheet(view)
+//    }
+//
+//    protected fun onBottomSheetCancel(view: View) {
+//        hideBottomSheet(view)
+//    }
+//
+//    private fun hideBottomSheet(view: View) {
+//        BottomSheetBehavior.from(view).state = BottomSheetBehavior.STATE_HIDDEN
+//    }
 }

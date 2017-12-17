@@ -10,6 +10,10 @@
         <variable
             name="vm"
             type="taiwan.no1.app.ssfm.features.chart.ChartViewModel"/>
+
+        <variable
+            name="bottom_sheet_vm"
+            type="taiwan.no1.app.ssfm.features.bottomsheet.BottomSheetViewModel"/>
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -45,6 +49,6 @@
 
         <include
             layout="@layout/bottomsheet_track"
-            app:svm="@{vm}"/>
+            app:bsvm="@{bottom_sheet_vm}"/>
     </android.support.design.widget.CoordinatorLayout>
 </layout>

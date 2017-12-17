@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="svm"
-            type="taiwan.no1.app.ssfm.features.base.BaseViewModel"/>
+            name="bsvm"
+            type="taiwan.no1.app.ssfm.features.bottomsheet.BottomSheetViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -20,12 +20,12 @@
         <TextView
             android:id="@+id/tv_download"
             style="@style/BottomSheet.Selection"
+            android:onClick="@{bsvm::onBottomSheetDownloadClick}"
             android:text="Download"
             app:layout_constraintBottom_toTopOf="@+id/view2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
-        <!--android:onClick="@{svm::onBottomSheetDownloadClick}"-->
 
         <View
             android:id="@+id/view2"
@@ -38,12 +38,12 @@
         <TextView
             android:id="@+id/tv_add_playlist"
             style="@style/BottomSheet.Selection"
+            android:onClick="@{bsvm::onBottomSheetAddToPlaylist}"
             android:text="Add to a playlist"
             app:layout_constraintBottom_toTopOf="@+id/view3"
             app:layout_constraintEnd_toEndOf="@+id/tv_download"
             app:layout_constraintStart_toStartOf="@+id/tv_download"
             app:layout_constraintTop_toBottomOf="@+id/view2"/>
-        <!--android:onClick="@{svm::onBottomSheetAddToPlaylist}"-->
 
         <View
             android:id="@+id/view3"
@@ -56,12 +56,12 @@
         <TextView
             android:id="@+id/tv_share"
             style="@style/BottomSheet.Selection"
+            android:onClick="@{bsvm::onBottomSheetShare}"
             android:text="Share"
             app:layout_constraintBottom_toTopOf="@+id/view4"
             app:layout_constraintEnd_toEndOf="@+id/tv_download"
             app:layout_constraintStart_toStartOf="@+id/tv_download"
             app:layout_constraintTop_toBottomOf="@+id/view3"/>
-        <!--android:onClick="@{svm::onBottomSheetShare}"-->
 
         <View
             android:id="@+id/view4"
@@ -74,11 +74,11 @@
         <TextView
             android:id="@+id/tv_cancel"
             style="@style/BottomSheet.Selection"
+            android:onClick="@{bsvm::onBottomSheetCancel}"
             android:text="Cancel"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/tv_download"
             app:layout_constraintStart_toStartOf="@+id/tv_download"
             app:layout_constraintTop_toBottomOf="@+id/view4"/>
-        <!--android:onClick="@{svm::onBottomSheetCancel}"-->
     </android.support.constraint.ConstraintLayout>
 </layout>

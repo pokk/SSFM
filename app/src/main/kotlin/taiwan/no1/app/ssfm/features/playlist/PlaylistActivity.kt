@@ -3,16 +3,20 @@ package taiwan.no1.app.ssfm.features.playlist
 import android.app.Activity
 import android.app.Fragment
 import android.os.Bundle
+import android.support.design.widget.BottomSheetBehavior
 import android.view.View
 import com.devrapid.kotlinknifer.addFragment
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
+import kotlinx.android.synthetic.main.bottomsheet_track.rl_bottom_sheet
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityPlaylistBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedActivity
+import taiwan.no1.app.ssfm.features.bottomsheet.BottomSheetViewModel
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
+import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import javax.inject.Inject
 
 /**
@@ -22,10 +26,12 @@ import javax.inject.Inject
  */
 class PlaylistActivity : AdvancedActivity<PlaylistViewModel, ActivityPlaylistBinding>() {
     @Inject override lateinit var viewModel: PlaylistViewModel
+    @Inject lateinit var addPlaylistItemCase: AddPlaylistItemCase
 
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding.bottomSheetVm = BottomSheetViewModel(BottomSheetBehavior.from(rl_bottom_sheet), addPlaylistItemCase)
         RxBus.get().register(this)
         fragmentManager.addFragment(R.id.fl_container, PlaylistIndexFragment.newInstance(), false)
     }
@@ -33,6 +39,7 @@ class PlaylistActivity : AdvancedActivity<PlaylistViewModel, ActivityPlaylistBin
     override fun onDestroy() {
         RxBus.get().unregister(this)
         super.onDestroy()
+        binding.bottomSheetVm = null
     }
     //endregion
 

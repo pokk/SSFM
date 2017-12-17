@@ -2,17 +2,21 @@ package taiwan.no1.app.ssfm.features.search
 
 import android.app.Fragment
 import android.os.Bundle
+import android.support.design.widget.BottomSheetBehavior
 import android.util.SparseArray
 import com.devrapid.kotlinknifer.addFragment
+import kotlinx.android.synthetic.main.bottomsheet_track.rl_bottom_sheet
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivitySearchBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedActivity
+import taiwan.no1.app.ssfm.features.bottomsheet.BottomSheetViewModel
 import taiwan.no1.app.ssfm.misc.constants.Constant.CALLBACK_SPARSE_INDEX_FOG_COLOR
 import taiwan.no1.app.ssfm.misc.constants.Constant.CALLBACK_SPARSE_INDEX_IMAGE_URL
 import taiwan.no1.app.ssfm.misc.constants.Constant.CALLBACK_SPARSE_INDEX_KEYWORD
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.FRAGMENT_SEARCH_HISTORY
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.FRAGMENT_SEARCH_INDEX
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.FRAGMENT_SEARCH_RESULT
+import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import java.util.Stack
 import javax.inject.Inject
 
@@ -23,12 +27,14 @@ import javax.inject.Inject
  */
 class SearchActivity : AdvancedActivity<SearchViewModel, ActivitySearchBinding>() {
     @Inject override lateinit var viewModel: SearchViewModel
+    @Inject lateinit var addPlaylistItemCase: AddPlaylistItemCase
     /** For judging a fragment should be pushed or popped. */
     private val fragmentStack by lazy { Stack<Fragment>() }
 
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding.bottomSheetVm = BottomSheetViewModel(BottomSheetBehavior.from(rl_bottom_sheet), addPlaylistItemCase)
         addFragmentAndToStack(SearchIndexFragment.newInstance())
         viewModel.apply {
             navigateListener = { fragmentTag, params ->
@@ -36,6 +42,11 @@ class SearchActivity : AdvancedActivity<SearchViewModel, ActivitySearchBinding>(
             }
             popFragment = { toFragmentTag -> this@SearchActivity.popFragmentAndFromStack(toFragmentTag) }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.bottomSheetVm = null
     }
     //endregion
 
