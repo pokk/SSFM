@@ -4,6 +4,8 @@ import android.app.Fragment
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
 import android.util.SparseArray
+import android.view.View
+import com.devrapid.kotlinknifer.WeakRef
 import com.devrapid.kotlinknifer.addFragment
 import kotlinx.android.synthetic.main.bottomsheet_track.rl_bottom_sheet
 import taiwan.no1.app.ssfm.R
@@ -16,6 +18,7 @@ import taiwan.no1.app.ssfm.misc.constants.Constant.CALLBACK_SPARSE_INDEX_KEYWORD
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.FRAGMENT_SEARCH_HISTORY
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.FRAGMENT_SEARCH_INDEX
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.FRAGMENT_SEARCH_RESULT
+import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import java.util.Stack
 import javax.inject.Inject
@@ -30,11 +33,14 @@ class SearchActivity : AdvancedActivity<SearchViewModel, ActivitySearchBinding>(
     @Inject lateinit var addPlaylistItemCase: AddPlaylistItemCase
     /** For judging a fragment should be pushed or popped. */
     private val fragmentStack by lazy { Stack<Fragment>() }
+    private var track by WeakRef<BaseEntity>()
 
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.bottomSheetVm = BottomSheetViewModel(BottomSheetBehavior.from(rl_bottom_sheet), addPlaylistItemCase)
+        binding.bottomSheetVm = BottomSheetViewModel(BottomSheetBehavior.from(rl_bottom_sheet).apply {
+            state = BottomSheetBehavior.STATE_HIDDEN
+        } as BottomSheetBehavior<View>, addPlaylistItemCase)
         addFragmentAndToStack(SearchIndexFragment.newInstance())
         viewModel.apply {
             navigateListener = { fragmentTag, params ->
@@ -55,6 +61,10 @@ class SearchActivity : AdvancedActivity<SearchViewModel, ActivitySearchBinding>(
     //endregion
 
     override fun onBackPressed() {
+        if (BottomSheetBehavior.STATE_EXPANDED == BottomSheetBehavior.from(rl_bottom_sheet).state) {
+            BottomSheetBehavior.from(rl_bottom_sheet).state = BottomSheetBehavior.STATE_HIDDEN
+            return
+        }
         super.onBackPressed()
         when (fragmentStack.safePeek()) {
             is SearchHistoryFragment -> viewModel.collapseSearchView()
@@ -129,6 +139,11 @@ class SearchActivity : AdvancedActivity<SearchViewModel, ActivitySearchBinding>(
         fragmentManager.popBackStackImmediate()
         fragmentStack.safePop()
         return true
+    }
+
+    fun openBottomSheet(entity: BaseEntity) {
+        track = entity
+        BottomSheetBehavior.from(rl_bottom_sheet).state = BottomSheetBehavior.STATE_EXPANDED
     }
 
     private fun <E> Stack<E>.safePop() = lastOrNull()?.let { pop() }

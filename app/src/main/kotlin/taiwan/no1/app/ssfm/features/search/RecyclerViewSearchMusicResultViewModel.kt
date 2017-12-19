@@ -40,6 +40,7 @@ class RecyclerViewSearchMusicResultViewModel(private val res: BaseEntity,
             false
         }
     }
+    var clickEvent: (track: BaseEntity) -> Unit = {}
 
     init {
         (res as MusicEntity.Music).let {
@@ -81,6 +82,7 @@ class RecyclerViewSearchMusicResultViewModel(private val res: BaseEntity,
     }
 
     fun optionClick(view: View) {
+        clickEvent(res)
     }
 
     @Subscribe(tags = [(Tag(VIEWMODEL_CHART_DETAIL_CLICK))])

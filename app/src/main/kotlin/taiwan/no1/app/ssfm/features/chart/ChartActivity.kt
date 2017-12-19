@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Fragment
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
+import android.view.View
 import com.devrapid.kotlinknifer.WeakRef
 import com.devrapid.kotlinknifer.addFragment
 import com.hwangjr.rxbus.RxBus
@@ -36,7 +37,9 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.bottomSheetVm = BottomSheetViewModel(BottomSheetBehavior.from(rl_bottom_sheet), addPlaylistItemCase)
+        binding.bottomSheetVm = BottomSheetViewModel(BottomSheetBehavior.from(rl_bottom_sheet).apply {
+            state = BottomSheetBehavior.STATE_HIDDEN
+        } as BottomSheetBehavior<View>, addPlaylistItemCase)
         navigate(ChartIndexFragment.newInstance(), false)
         RxBus.get().register(this)
     }

@@ -31,7 +31,9 @@ class PlaylistActivity : AdvancedActivity<PlaylistViewModel, ActivityPlaylistBin
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.bottomSheetVm = BottomSheetViewModel(BottomSheetBehavior.from(rl_bottom_sheet), addPlaylistItemCase)
+        binding.bottomSheetVm = BottomSheetViewModel(BottomSheetBehavior.from(rl_bottom_sheet).apply {
+            state = BottomSheetBehavior.STATE_HIDDEN
+        } as BottomSheetBehavior<View>, addPlaylistItemCase)
         RxBus.get().register(this)
         fragmentManager.addFragment(R.id.fl_container, PlaylistIndexFragment.newInstance(), false)
     }

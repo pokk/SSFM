@@ -77,6 +77,7 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
                 holder.binding.avm = RecyclerViewSearchMusicResultViewModel(item,
                     addPlaylistItemCase, act.applicationContext).apply {
                     onAttach(this@SearchResultFragment)
+                    clickEvent = { (activity as SearchActivity).openBottomSheet(it) }
                 }
             }
             loadmore = object : RecyclerViewScrollCallback {
