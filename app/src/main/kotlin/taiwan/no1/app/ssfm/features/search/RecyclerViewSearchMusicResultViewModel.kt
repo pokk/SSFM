@@ -21,6 +21,7 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemUsecase
+import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
 
 /**
  * @author  jieyi
@@ -41,6 +42,7 @@ class RecyclerViewSearchMusicResultViewModel(private val res: BaseEntity,
         }
     }
     var clickEvent: (track: BaseEntity) -> Unit = {}
+    val stateEventListener = { state: MusicPlayerState -> if (MusicPlayerState.Standby == state) isPlaying.set(false) }
 
     init {
         (res as MusicEntity.Music).let {
@@ -68,15 +70,18 @@ class RecyclerViewSearchMusicResultViewModel(private val res: BaseEntity,
         isPlaying.set(!isPlaying.get())
         (res as MusicEntity.Music).run {
             RxBus.get().post(VIEWMODEL_CHART_DETAIL_CLICK, url)
-            MusicPlayerHelper.instance.play(url) {
-                lifecycleProvider.execute(addPlaylistItemCase,
-                    AddPlaylistItemUsecase.RequestValue(PlaylistItemEntity(playlistId = DATABASE_PLAYLIST_HISTORY_ID.toLong(),
-                        trackUri = url,
-                        trackName = title,
-                        artistName = artist,
-                        coverUrl = coverURL,
-                        lyricUrl = lyricURL,
-                        duration = length))) { onNext { logw(it) } }
+            MusicPlayerHelper.instance.run {
+                play(url) {
+                    lifecycleProvider.execute(addPlaylistItemCase,
+                        AddPlaylistItemUsecase.RequestValue(PlaylistItemEntity(playlistId = DATABASE_PLAYLIST_HISTORY_ID.toLong(),
+                            trackUri = url,
+                            trackName = title,
+                            artistName = artist,
+                            coverUrl = coverURL,
+                            lyricUrl = lyricURL,
+                            duration = length))) { onNext { logw(it) } }
+                    addStateChangedListeners(stateEventListener)
+                }
             }
         }
     }

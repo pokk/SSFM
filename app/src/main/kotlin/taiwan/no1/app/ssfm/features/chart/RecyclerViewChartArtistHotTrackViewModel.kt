@@ -20,6 +20,7 @@ import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemUsecase
 import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
 import taiwan.no1.app.ssfm.models.usecases.v2.SearchMusicUsecase
+import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
 
 /**
  *
@@ -33,6 +34,7 @@ class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: Sear
     val trackNumber by lazy { ObservableField<String>() }
     val isPlaying by lazy { ObservableBoolean() }
     var clickEvent: (track: BaseEntity) -> Unit = {}
+    val stateEventListener = { state: MusicPlayerState -> if (MusicPlayerState.Standby == state) isPlaying.set(false) }
 
     init {
         (item as TrackEntity.TrackWithStreamableString).apply {
@@ -66,16 +68,19 @@ class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: Sear
                         isPlaying.set(!isPlaying.get())
                         this@track.realUrl = url
                         RxBus.get().post(VIEWMODEL_CHART_DETAIL_CLICK, url)
-                        MusicPlayerHelper.instance.play(url) {
-                            // Add this history to database.
-                            lifecycleProvider.execute(addPlaylistItemCase,
-                                AddPlaylistItemUsecase.RequestValue(PlaylistItemEntity(playlistId = DATABASE_PLAYLIST_HISTORY_ID.toLong(),
-                                    trackUri = url,
-                                    trackName = title,
-                                    artistName = artist,
-                                    coverUrl = coverURL,
-                                    lyricUrl = lyricURL,
-                                    duration = length))) { onNext { logw(it) } }
+                        MusicPlayerHelper.instance.run {
+                            play(url) {
+                                // Add this history to database.
+                                lifecycleProvider.execute(addPlaylistItemCase,
+                                    AddPlaylistItemUsecase.RequestValue(PlaylistItemEntity(playlistId = DATABASE_PLAYLIST_HISTORY_ID.toLong(),
+                                        trackUri = url,
+                                        trackName = title,
+                                        artistName = artist,
+                                        coverUrl = coverURL,
+                                        lyricUrl = lyricURL,
+                                        duration = length))) { onNext { logw(it) } }
+                            }
+                            addStateChangedListeners(stateEventListener)
                         }
                     }
                 }

@@ -27,6 +27,7 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemUsecase
+import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
 
 /**
  * @author  jieyi
@@ -54,6 +55,7 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
         }
     }
     var longClickEvent: (track: BaseEntity) -> Unit = {}
+    val stateEventListener = { state: MusicPlayerState -> if (MusicPlayerState.Standby == state) isPlaying.set(false) }
 
     init {
         (item as MusicRankEntity.Song).let {
@@ -82,15 +84,18 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
         isPlaying.set(!isPlaying.get())
         (item as MusicRankEntity.Song).run {
             RxBus.get().post(VIEWMODEL_CHART_DETAIL_CLICK, url)
-            MusicPlayerHelper.instance.play(url) {
-                lifecycleProvider.execute(addPlaylistItemCase,
-                    AddPlaylistItemUsecase.RequestValue(PlaylistItemEntity(playlistId = Constant.DATABASE_PLAYLIST_HISTORY_ID.toLong(),
-                        trackUri = url,
-                        trackName = title,
-                        artistName = artist,
-                        coverUrl = coverURL,
-                        lyricUrl = lyricURL,
-                        duration = length))) { onNext { logw(it) } }
+            MusicPlayerHelper.instance.run {
+                play(url) {
+                    lifecycleProvider.execute(addPlaylistItemCase,
+                        AddPlaylistItemUsecase.RequestValue(PlaylistItemEntity(playlistId = Constant.DATABASE_PLAYLIST_HISTORY_ID.toLong(),
+                            trackUri = url,
+                            trackName = title,
+                            artistName = artist,
+                            coverUrl = coverURL,
+                            lyricUrl = lyricURL,
+                            duration = length))) { onNext { logw(it) } }
+                }
+                addStateChangedListeners(stateEventListener)
             }
         }
     }
