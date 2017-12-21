@@ -1,6 +1,10 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices
 
-import weian.cheng.mediaplayerwithexoplayer.ExoPlayerWrapper
+import weian.cheng.mediaplayerwithexoplayer.IMusicPlayer
+import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
+import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState.Play
+import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState.Pause
+import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState.Standby
 
 /**
  * @author  jieyi
@@ -11,18 +15,18 @@ class MusicPlayerHelper private constructor() {
         val INSTANCE = MusicPlayerHelper()
     }
 
-    private lateinit var player: ExoPlayerWrapper
+    private lateinit var player: IMusicPlayer
     private lateinit var musicUri: String
 
     companion object {
         val instance: MusicPlayerHelper by lazy { Holder.INSTANCE }
     }
 
-    fun hold(player: ExoPlayerWrapper) {
+    fun hold(player: IMusicPlayer) {
         this.player = player
     }
 
-    fun play(uri: String, callback: ((state: ExoPlayerWrapper.PlayerState) -> Unit)? = null) {
+    fun play(uri: String, callback: ((state: MusicPlayerState) -> Unit)? = null) {
         if (::musicUri.isInitialized && uri == musicUri) {
             when {
                 isPlaying() -> player.pause()
@@ -45,9 +49,9 @@ class MusicPlayerHelper private constructor() {
 
     fun getCurrentUri() = if (::musicUri.isInitialized) musicUri else "None"
 
-    fun isPlaying() = ExoPlayerWrapper.PlayerState.Play == getState()
+    fun isPlaying() = Play == getState()
 
-    fun isPause() = ExoPlayerWrapper.PlayerState.Pause == getState()
+    fun isPause() = Pause == getState()
 
-    fun isStop() = ExoPlayerWrapper.PlayerState.Standby == getState()
+    fun isStop() = Standby == getState()
 }
