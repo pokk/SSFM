@@ -61,6 +61,8 @@ class MusicPlayerHelper private constructor() {
 
     fun isStop() = Standby == getState()
 
+    fun downloadMusic(uri: String) = player.writeToFile(uri)
+
     //region MusicPlayer collection operations.
     fun addDurationChangedListeners(listener: (Int) -> Unit) = durationChangedListeners.add(listener)
 
