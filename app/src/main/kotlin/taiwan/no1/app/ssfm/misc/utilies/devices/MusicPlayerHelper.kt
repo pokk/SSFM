@@ -16,25 +16,12 @@ class MusicPlayerHelper private constructor() {
         val INSTANCE = MusicPlayerHelper()
     }
 
-    var durationChanged: ((Int) -> Unit) = {}
-        set(value) {
-            setPlayerListener()
-        }
-    var currentTime: ((Int) -> Unit) = {}
-        set(value) {
-            setPlayerListener()
-        }
-    var bufferPrecentage: ((Int) -> Unit) = {}
-        set(value) {
-            setPlayerListener()
-        }
-    var stateChanged: ((MusicPlayerState) -> Unit) = {}
-        set(value) {
-            setPlayerListener()
-        }
+    private val durationChangedListeners = mutableListOf<(Int) -> Unit>()
+    private val currentTimeListeners = mutableListOf<(Int) -> Unit>()
+    private val bufferPercentageListeners = mutableListOf<(Int) -> Unit>()
+    private val stateChangedListeners = mutableListOf<(MusicPlayerState) -> Unit>()
     private lateinit var player: IMusicPlayer
     private lateinit var musicUri: String
-    private var playerListener: PlayerEventListenerImpl? = null
 
     companion object {
         val instance by lazy { Holder.INSTANCE }
@@ -42,6 +29,7 @@ class MusicPlayerHelper private constructor() {
 
     fun hold(player: IMusicPlayer) {
         this.player = player
+        setPlayerListener()
     }
 
     fun play(uri: String, callback: ((state: MusicPlayerState) -> Unit)? = null) {
@@ -73,20 +61,45 @@ class MusicPlayerHelper private constructor() {
 
     fun isStop() = Standby == getState()
 
-    private fun setPlayerListener() {
-        releasePlayerListener()
-        playerListener = PlayerEventListenerImpl {
-            onDurationChanged = durationChanged
-            onBufferPercentage = bufferPrecentage
-            onCurrentTime = currentTime
-            onPlayerStateChanged = stateChanged
-        }
-        player.setEventListener(playerListener ?: PlayerEventListenerImpl { })
-    }
+    //region MusicPlayer collection operations.
+    fun addDurationChangedListeners(listener: (Int) -> Unit) = durationChangedListeners.add(listener)
 
-    private fun releasePlayerListener() {
-        playerListener = null
-        // OPTIMIZE(jieyi): 2017/12/21 Hope here can be released.
-        // playerListener.release()
+    fun addBufferPercentageListeners(listener: (Int) -> Unit) = bufferPercentageListeners.add(listener)
+
+    fun addCurrentTimeListeners(listener: (Int) -> Unit) = currentTimeListeners.add(listener)
+
+    fun addStateChangedListeners(listener: (MusicPlayerState) -> Unit) = stateChangedListeners.add(listener)
+
+    fun removeDurationChangedListeners(listener: (Int) -> Unit) = durationChangedListeners.remove(listener)
+
+    fun removeBufferPercentageListeners(listener: (Int) -> Unit) = bufferPercentageListeners.remove(listener)
+
+    fun removeCurrentTimeListeners(listener: (Int) -> Unit) = currentTimeListeners.remove(listener)
+
+    fun removeStateChangedListeners(listener: (MusicPlayerState) -> Unit) = stateChangedListeners.remove(listener)
+
+    fun removeAllDurationChangedListeners() = durationChangedListeners.clear()
+
+    fun removeAllBufferPercentageListeners() = bufferPercentageListeners.clear()
+
+    fun removeAllCurrentTimeListeners() = currentTimeListeners.clear()
+
+    fun removeAllStateChangedListeners() = stateChangedListeners.clear()
+
+    fun clearAllListener() {
+        removeAllDurationChangedListeners()
+        removeAllBufferPercentageListeners()
+        removeAllCurrentTimeListeners()
+        removeAllStateChangedListeners()
+    }
+    //endregion
+
+    private fun setPlayerListener() {
+        player.setEventListener(PlayerEventListenerImpl {
+            onDurationChanged = { duration -> durationChangedListeners.forEach { it.invoke(duration) } }
+            onCurrentTime = { second -> currentTimeListeners.forEach { it.invoke(second) } }
+            onBufferPercentage = { percent -> bufferPercentageListeners.forEach { it.invoke(percent) } }
+            onPlayerStateChanged = { state -> stateChangedListeners.forEach { it.invoke(state) } }
+        })
     }
 }
