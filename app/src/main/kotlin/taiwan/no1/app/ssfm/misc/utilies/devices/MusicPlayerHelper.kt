@@ -3,8 +3,8 @@ package taiwan.no1.app.ssfm.misc.utilies.devices
 import weian.cheng.mediaplayerwithexoplayer.ExoPlayerEventListener.PlayerEventListenerImpl
 import weian.cheng.mediaplayerwithexoplayer.IMusicPlayer
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
-import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState.Play
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState.Pause
+import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState.Play
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState.Standby
 
 /**
@@ -16,16 +16,32 @@ class MusicPlayerHelper private constructor() {
         val INSTANCE = MusicPlayerHelper()
     }
 
+    var durationChanged: ((Int) -> Unit) = {}
+        set(value) {
+            setPlayerListener()
+        }
+    var currentTime: ((Int) -> Unit) = {}
+        set(value) {
+            setPlayerListener()
+        }
+    var bufferPrecentage: ((Int) -> Unit) = {}
+        set(value) {
+            setPlayerListener()
+        }
+    var stateChanged: ((MusicPlayerState) -> Unit) = {}
+        set(value) {
+            setPlayerListener()
+        }
     private lateinit var player: IMusicPlayer
     private lateinit var musicUri: String
+    private var playerListener: PlayerEventListenerImpl? = null
 
     companion object {
-        val instance: MusicPlayerHelper by lazy { Holder.INSTANCE }
+        val instance by lazy { Holder.INSTANCE }
     }
 
     fun hold(player: IMusicPlayer) {
         this.player = player
-        this.player.setEventListener(eventListener)
     }
 
     fun play(uri: String, callback: ((state: MusicPlayerState) -> Unit)? = null) {
@@ -57,22 +73,20 @@ class MusicPlayerHelper private constructor() {
 
     fun isStop() = Standby == getState()
 
-    private val eventListener = PlayerEventListenerImpl {
-
-        onDurationChanged = {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    private fun setPlayerListener() {
+        releasePlayerListener()
+        playerListener = PlayerEventListenerImpl {
+            onDurationChanged = durationChanged
+            onBufferPercentage = bufferPrecentage
+            onCurrentTime = currentTime
+            onPlayerStateChanged = stateChanged
         }
+        player.setEventListener(playerListener ?: PlayerEventListenerImpl { })
+    }
 
-        onCurrentTime = {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
-
-        onBufferPercentage = {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
-
-        onPlayerStateChanged = {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
+    private fun releasePlayerListener() {
+        playerListener = null
+        // OPTIMIZE(jieyi): 2017/12/21 Hope here can be released.
+        // playerListener.release()
     }
 }
