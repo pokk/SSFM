@@ -9,7 +9,7 @@ import weian.cheng.mediaplayerwithexoplayer.ExoPlayerWrapper
  */
 class MusicPlayer private constructor() {
     companion object {
-        val instance: ExoPlayerWrapper by lazy { Holder.INSTANCE }
+        val instance by lazy {}
     }
 
     private object Holder {

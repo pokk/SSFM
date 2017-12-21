@@ -1,5 +1,6 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices
 
+import weian.cheng.mediaplayerwithexoplayer.ExoPlayerEventListener.PlayerEventListenerImpl
 import weian.cheng.mediaplayerwithexoplayer.IMusicPlayer
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState.Play
@@ -24,6 +25,7 @@ class MusicPlayerHelper private constructor() {
 
     fun hold(player: IMusicPlayer) {
         this.player = player
+        this.player.setEventListener(eventListener)
     }
 
     fun play(uri: String, callback: ((state: MusicPlayerState) -> Unit)? = null) {
@@ -54,4 +56,23 @@ class MusicPlayerHelper private constructor() {
     fun isPause() = Pause == getState()
 
     fun isStop() = Standby == getState()
+
+    private val eventListener = PlayerEventListenerImpl {
+
+        onDurationChanged = {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
+        onCurrentTime = {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
+        onBufferPercentage = {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
+        onPlayerStateChanged = {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+    }
 }
