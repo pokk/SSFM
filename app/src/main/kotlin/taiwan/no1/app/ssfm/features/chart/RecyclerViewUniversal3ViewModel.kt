@@ -55,7 +55,9 @@ class RecyclerViewUniversal3ViewModel(private val searchMusicCase: SearchMusicV2
         }
     }
     var clickEvent: (track: BaseEntity) -> Unit = {}
-    val stateEventListener = { state: MusicPlayerState -> if (MusicPlayerState.Standby == state) isPlaying.set(false) }
+    val stateEventListener = { state: MusicPlayerState ->
+        if (MusicPlayerState.Standby == state) isPlaying.set(false)
+    }
 
     init {
         (item as TrackEntity.Track).let {

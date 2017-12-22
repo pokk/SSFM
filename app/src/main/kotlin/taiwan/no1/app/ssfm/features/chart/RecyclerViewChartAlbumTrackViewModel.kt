@@ -35,7 +35,9 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
     val trackNumber by lazy { ObservableField<String>() }
     val trackDuration by lazy { ObservableField<String>() }
     val isPlaying by lazy { ObservableBoolean() }
-    val stateEventListener = { state: MusicPlayerState -> if (MusicPlayerState.Standby == state) isPlaying.set(false) }
+    val stateEventListener = { state: MusicPlayerState ->
+        if (MusicPlayerState.Standby == state) isPlaying.set(false)
+    }
     var clickEvent: (track: BaseEntity) -> Unit = {}
 
     init {

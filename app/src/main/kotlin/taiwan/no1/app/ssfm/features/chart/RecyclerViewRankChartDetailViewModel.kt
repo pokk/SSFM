@@ -55,7 +55,9 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
         }
     }
     var longClickEvent: (track: BaseEntity) -> Unit = {}
-    val stateEventListener = { state: MusicPlayerState -> if (MusicPlayerState.Standby == state) isPlaying.set(false) }
+    val stateEventListener = { state: MusicPlayerState ->
+        if (MusicPlayerState.Standby == state) isPlaying.set(false)
+    }
 
     init {
         (item as MusicRankEntity.Song).let {
