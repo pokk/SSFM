@@ -93,6 +93,7 @@ class RecyclerViewUniversal3ViewModel(private val searchMusicCase: SearchMusicV2
             val trackName = name.orEmpty()
             val artistName = artist?.name.orEmpty()
             // Search the music first.
+
             lifecycleProvider.execute(searchMusicCase, SearchMusicUsecase.RequestValue("$artistName $trackName")) {
                 onNext {
                     // Pickup the first result, because it's the most correct.

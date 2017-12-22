@@ -17,3 +17,6 @@ fun <T, V : RequestValues, E> LifecycleProvider<E>.execute(usecase: BaseUsecase<
 fun <T, V : RequestValues, E> LifecycleProvider<E>.execute(usecase: BaseUsecase<T, V>,
                                                            observer: ObserverPlugin<T>.() -> Unit) =
     usecase.execute(this, observer)
+
+fun <T, V : RequestValues, E> LifecycleProvider<E>.obtainObservable(usecase: BaseUsecase<T, V>, parameter: V) =
+    usecase.obtainObservable(parameter, this)
