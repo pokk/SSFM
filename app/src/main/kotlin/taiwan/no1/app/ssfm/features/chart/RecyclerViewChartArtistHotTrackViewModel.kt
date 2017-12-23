@@ -63,6 +63,21 @@ class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: Sear
             val trackName = name.orEmpty()
             val artistName = artist?.name.orEmpty()
             // Search the music first.
+            // TODO(jieyi): 12/23/17 using rxjava flatmap to change the observable.
+//            val a = lifecycleProvider.
+//                obtainObservable(searchMusicCase, SearchMusicUsecase.RequestValue("$artistName $trackName")).
+//                flatMap { music -> observable<MusicEntity.Music> { music.data.items.first() } }.
+//                doOnNext {
+//                    isPlaying.set(!isPlaying.get())
+//                    realUrl = it.url
+//                    RxBus.get().post(VIEWMODEL_CHART_DETAIL_CLICK, url)
+//                }.
+//                subscribe {
+//                    MusicPlayerHelper.instance.run {
+//                        play(it.url)
+//                        addStateChangedListeners(stateEventListener)
+//                    }
+//                }
             lifecycleProvider.execute(searchMusicCase, SearchMusicUsecase.RequestValue("$artistName $trackName")) {
                 onNext {
                     // Pickup the first result, because it's the most correct.
