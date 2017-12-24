@@ -6,7 +6,6 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.view.View
-import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.toTimeString
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
@@ -16,17 +15,16 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.Constant
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CHART_DETAIL_CLICK
-import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.misc.extension.gAlphaIntColor
 import taiwan.no1.app.ssfm.misc.extension.gColor
 import taiwan.no1.app.ssfm.misc.extension.glideListener
 import taiwan.no1.app.ssfm.misc.extension.palette
 import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayerHelper
+import taiwan.no1.app.ssfm.misc.utilies.devices.playThenToPlaylist
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
-import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemUsecase
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
 
 /**
@@ -83,22 +81,19 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
     //endregion
 
     fun trackOnClick(view: View) {
-        isPlaying.set(!isPlaying.get())
-        (item as MusicRankEntity.Song).run {
-            RxBus.get().post(VIEWMODEL_CHART_DETAIL_CLICK, url)
-            MusicPlayerHelper.instance.run {
-                play(url) {
-                    lifecycleProvider.execute(addPlaylistItemCase,
-                        AddPlaylistItemUsecase.RequestValue(PlaylistItemEntity(playlistId = Constant.DATABASE_PLAYLIST_HISTORY_ID.toLong(),
-                            trackUri = url,
-                            trackName = title,
-                            artistName = artist,
-                            coverUrl = coverURL,
-                            lyricUrl = lyricURL,
-                            duration = length))) { onNext { logw(it) } }
-                }
-                addStateChangedListeners(stateEventListener)
-            }
+        val playlistEntity = (item as MusicRankEntity.Song).run {
+            PlaylistItemEntity(playlistId = Constant.DATABASE_PLAYLIST_HISTORY_ID.toLong(),
+                trackUri = url,
+                trackName = title,
+                artistName = artist,
+                coverUrl = coverURL,
+                lyricUrl = lyricURL,
+                duration = length)
+        }
+
+        lifecycleProvider.playThenToPlaylist(addPlaylistItemCase, playlistEntity, stateEventListener) {
+            isPlaying.set(!isPlaying.get())
+            RxBus.get().post(VIEWMODEL_CHART_DETAIL_CLICK, playlistEntity.trackUri)
         }
     }
 
