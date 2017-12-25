@@ -57,20 +57,13 @@ abstract class BaseUsecase<T, R : RequestValues>(protected val repository: IData
         execute(lifecycleProvider, observer)
     }
 
-    fun obtainObservable(parameter: R,
-                         lifecycleProvider: LifecycleProvider<*>? = null): Observable<T> {
-        parameters = parameter
-        return lifecycleProvider?.let { buildUsecase().bindToLifecycle(it) } ?: buildUsecase()
-    }
-
     /**
      * Executes the current use case.
      *
-     * @param lifecycleProvider LifecycleProvider<*>?=null :
+     * @param lifecycleProvider
      */
-    fun execute(lifecycleProvider: LifecycleProvider<*>? = null) = lifecycleProvider?.let {
-        buildUsecase().bindToLifecycle(it)
-    } ?: buildUsecase()
+    fun execute(lifecycleProvider: LifecycleProvider<*>? = null) =
+        lifecycleProvider?.let { buildUsecase().bindToLifecycle(it) } ?: buildUsecase()
 
     /**
      * Executes the current use case with request parameters.
