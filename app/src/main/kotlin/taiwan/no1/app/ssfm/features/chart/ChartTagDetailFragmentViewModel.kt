@@ -17,12 +17,10 @@ import taiwan.no1.app.ssfm.models.usecases.GetTagTopTracksUsecase
  * @author  jieyi
  * @since   10/26/17
  */
-class ChartTagDetailFragmentViewModel(
-    private val tagInfoUsecase: FetchTagInfoCase,
-    private val topAlbumsUsecase: FetchTopAlbumOfTagCase,
-    private val topArtistsUsecase: FetchTopArtistOfTagCase,
-    private val topTracksUsecase: FetchTopTrackOfTagCase) :
-    BaseViewModel() {
+class ChartTagDetailFragmentViewModel(private val tagInfoUsecase: FetchTagInfoCase,
+                                      private val topAlbumsUsecase: FetchTopAlbumOfTagCase,
+                                      private val topArtistsUsecase: FetchTopArtistOfTagCase,
+                                      private val topTracksUsecase: FetchTopTrackOfTagCase) : BaseViewModel() {
     val tagSummary by lazy { ObservableField<String>() }
 
     fun fetchTagDetailInfo(tag: String) {
@@ -32,22 +30,19 @@ class ChartTagDetailFragmentViewModel(
     }
 
     fun fetchHotAlbum(name: String, page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit) {
-        lifecycleProvider.execute(topAlbumsUsecase,
-            GetTagTopAlbumsUsecase.RequestValue(name, page, limit)) {
+        lifecycleProvider.execute(topAlbumsUsecase, GetTagTopAlbumsUsecase.RequestValue(name, page, limit)) {
             onNext { callback(it.albums.albums, it.albums.attr?.total?.toInt() ?: 0) }
         }
     }
 
     fun fetchHotArtist(name: String, page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit) {
-        lifecycleProvider.execute(topArtistsUsecase,
-            GetTagTopArtistsUsecase.RequestValue(name, page, limit)) {
+        lifecycleProvider.execute(topArtistsUsecase, GetTagTopArtistsUsecase.RequestValue(name, page, limit)) {
             onNext { callback(it.topartists.artists, it.topartists.attr?.total?.toInt() ?: 0) }
         }
     }
 
     fun fetchHotTrack(name: String, page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit) {
-        lifecycleProvider.execute(topTracksUsecase,
-            GetTagTopTracksUsecase.RequestValue(name, page, limit)) {
+        lifecycleProvider.execute(topTracksUsecase, GetTagTopTracksUsecase.RequestValue(name, page, limit)) {
             onNext { callback(it.track.tracks, it.track.attr?.total?.toInt() ?: 0) }
         }
     }
