@@ -5,7 +5,6 @@ import android.app.Fragment
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
 import android.view.View
-import com.devrapid.kotlinknifer.WeakRef
 import com.devrapid.kotlinknifer.addFragment
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
@@ -19,6 +18,8 @@ import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_ALBUM
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_NAME
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
+import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
 import taiwan.no1.app.ssfm.models.entities.v2.RankChartEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import java.util.HashMap
@@ -32,7 +33,6 @@ import javax.inject.Inject
 class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     @Inject override lateinit var viewModel: ChartViewModel
     @Inject lateinit var addPlaylistItemCase: AddPlaylistItemCase
-    private var track by WeakRef<BaseEntity>()
 
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -102,7 +102,13 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     }
 
     fun openBottomSheet(entity: BaseEntity) {
-        track = entity
+        binding.bottomSheetVm?.run {
+            obtainMusicUri = when (entity) {
+                is MusicEntity.Music -> entity.url
+                is MusicRankEntity.Song -> entity.url
+                else -> ""
+            }
+        }
         BottomSheetBehavior.from(rl_bottom_sheet).state = BottomSheetBehavior.STATE_EXPANDED
     }
 }

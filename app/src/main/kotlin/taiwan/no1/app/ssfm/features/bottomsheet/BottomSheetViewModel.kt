@@ -17,10 +17,6 @@ class BottomSheetViewModel(private val bsHelper: BottomSheetBehavior<View>,
 
     fun onBottomSheetDownloadClick(view: View) {
         hideBottomSheet(view)
-    }
-
-    fun onBottomSheetAddToPlaylist(view: View) {
-        hideBottomSheet(view)
         obtainMusicUri?.let {
             MusicPlayerHelper.instance.run {
                 downloadMusic(it)
@@ -28,6 +24,10 @@ class BottomSheetViewModel(private val bsHelper: BottomSheetBehavior<View>,
                 addBufferPercentageListeners { }
             }
         } ?: throw Exception("Please Implement Correct Music Uri...")
+    }
+
+    fun onBottomSheetAddToPlaylist(view: View) {
+        hideBottomSheet(view)
     }
 
     fun onBottomSheetShare(view: View) {

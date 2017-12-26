@@ -98,7 +98,7 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
     }
 
     fun trackOnLongClick(view: View): Boolean {
-        longClickEvent.invoke(item)
+        longClickEvent(item)
         return true
     }
 

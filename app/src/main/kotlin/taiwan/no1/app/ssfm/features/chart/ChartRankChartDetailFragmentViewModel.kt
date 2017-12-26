@@ -1,5 +1,6 @@
 package taiwan.no1.app.ssfm.features.chart
 
+import android.annotation.SuppressLint
 import android.databinding.ObservableField
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.extension.compose
@@ -18,10 +19,11 @@ class ChartRankChartDetailFragmentViewModel(private val getMusicRankUsecase: Fet
                                             private val editRankChartUsecase: EditRankChartCase) : BaseViewModel() {
     val backgroundImageUrl by lazy { ObservableField<String>() }
 
+    @SuppressLint("CheckResult")
     fun fetchRankChartDetail(code: Int,
                              entity: RankChartEntity?,
                              callback: (entity: List<MusicRankEntity.Song>) -> Unit) {
-        val a = lifecycleProvider.
+        lifecycleProvider.
             compose(getMusicRankUsecase, GetMusicRankUsecase.RequestValue(code)).
             doOnNext { callback(it.data.songs) }.
             map { it.data.songs.first() }.

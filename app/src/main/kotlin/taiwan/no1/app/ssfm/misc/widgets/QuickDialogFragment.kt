@@ -1,13 +1,13 @@
 package taiwan.no1.app.ssfm.misc.widgets
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.Dialog
-import android.app.DialogFragment
-import android.app.Fragment
 import android.os.Bundle
 import android.support.annotation.LayoutRes
+import android.support.v4.app.DialogFragment
+import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
+import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +19,7 @@ import org.jetbrains.anko.sdk25.coroutines.onClick
  * @since   11/14/17
  */
 @SuppressLint("ValidFragment")
-class QuickDialogFragment private constructor(val mActivity: Activity?,
+class QuickDialogFragment private constructor(val mActivity: AppCompatActivity?,
                                               val mFragment: Fragment?,
                                               val btnPositive: DialogFragmentBtn?,
                                               val btnNegative: DialogFragmentBtn?,
@@ -27,9 +27,11 @@ class QuickDialogFragment private constructor(val mActivity: Activity?,
                                               val mCancelable: Boolean,
                                               val mTag: String,
     // TODO(jieyi): 7/12/17 Implement the request code function.
-                                              val requestCode: Int, @LayoutRes val viewCustom: Int,
-                                              var fetchComponents: ((View) -> Unit)?,
-                                              var message: String?,
+                                              val requestCode: Int,
+                                              @LayoutRes
+                                              val viewCustom: Int,
+                                              var fetchComponents: ((View) -> Unit)? = {},
+                                              var message: String = "",
                                               var title: String?) : DialogFragment() {
     private val viewList by lazy { mutableListOf<View>() }
 
@@ -47,14 +49,14 @@ class QuickDialogFragment private constructor(val mActivity: Activity?,
         builder.requestCode,
         builder.viewCustom,
         builder.fetchComponents,
-        builder.message,
+        builder.message.orEmpty(),
         builder.title)
 
     /**
      * A builder of [QuickDialogFragment].
      */
     class Builder {
-        constructor(activity: Activity, block: Builder.() -> Unit) {
+        constructor(activity: AppCompatActivity, block: Builder.() -> Unit) {
             this.activity = activity
             parentFragment = null
             apply(block)
@@ -66,7 +68,7 @@ class QuickDialogFragment private constructor(val mActivity: Activity?,
             apply(block)
         }
 
-        val activity: Activity?
+        val activity: AppCompatActivity?
         val parentFragment: Fragment?
         var fetchComponents: ((View) -> Unit)? = null
         var btnNegativeText: DialogFragmentBtn? = null
@@ -82,9 +84,7 @@ class QuickDialogFragment private constructor(val mActivity: Activity?,
         fun build() = QuickDialogFragment(this)
     }
 
-    @SuppressLint("CommitTransaction")
-    fun show(): Int = show(mFragment?.fragmentManager?.beginTransaction() ?: mActivity?.fragmentManager?.beginTransaction(),
-        mTag)
+    fun show() = show((mFragment?.fragmentManager ?: mActivity?.supportFragmentManager), mTag)
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?) =
         if (0 < viewCustom) {
@@ -107,14 +107,14 @@ class QuickDialogFragment private constructor(val mActivity: Activity?,
         }
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog? {
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         // If viewCustom is set then create a custom fragment; otherwise, just using simple AlertDialog.
         val dialog = if (0 < viewCustom) {
             super.onCreateDialog(savedInstanceState)
         }
         else {
             AlertDialog.Builder(activity).create().also {
-                message?.let(it::setMessage)
+                message.takeIf { it.isNotBlank() }.let(it::setMessage)
                 btnPositive?.let { (text, listener) ->
                     it.setButton(Dialog.BUTTON_POSITIVE, text, listener)
                 }

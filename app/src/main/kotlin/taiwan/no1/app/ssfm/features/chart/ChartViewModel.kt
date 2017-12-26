@@ -15,8 +15,7 @@ import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CLICK_SIMILAR
  * @author  jieyi
  * @since   9/13/17
  */
-class ChartViewModel(private val context: Context) :
-    BaseViewModel() {
+class ChartViewModel(private val context: Context) : BaseViewModel() {
     /** Menu Title */
     val title by lazy { ObservableField<String>(context.getString(R.string.menu_charts)) }
     /** The keyword of a song or singer's name */
