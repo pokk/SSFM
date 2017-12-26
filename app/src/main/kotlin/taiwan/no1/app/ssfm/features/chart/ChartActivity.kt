@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
 import android.view.View
 import com.devrapid.kotlinknifer.addFragment
-import com.devrapid.kotlinknifer.logw
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
@@ -43,7 +42,7 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
             state = BottomSheetBehavior.STATE_HIDDEN
         } as BottomSheetBehavior<View>, addPlaylistItemCase).apply {
             openDialog = {
-                logw()
+                // TODO(jieyi): 12/27/17 Change to interface, not only callback function.
                 openPlaylistDialog()
             }
         }
@@ -121,6 +120,7 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
 
     fun openPlaylistDialog() {
         QuickDialogFragment.Builder(this) {
+            // TODO(jieyi): 12/27/17 Add new custom mvvm style.
             viewCustom = R.layout.fragment_dialog_playlist
         }.build().show()
     }
