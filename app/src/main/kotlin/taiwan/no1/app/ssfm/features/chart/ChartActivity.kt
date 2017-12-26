@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
 import android.view.View
 import com.devrapid.kotlinknifer.addFragment
+import com.devrapid.kotlinknifer.logw
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
@@ -17,6 +18,7 @@ import taiwan.no1.app.ssfm.features.bottomsheet.BottomSheetViewModel
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_NAME
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
+import taiwan.no1.app.ssfm.misc.widgets.QuickDialogFragment
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
@@ -39,7 +41,12 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
         super.onCreate(savedInstanceState)
         binding.bottomSheetVm = BottomSheetViewModel(BottomSheetBehavior.from(rl_bottom_sheet).apply {
             state = BottomSheetBehavior.STATE_HIDDEN
-        } as BottomSheetBehavior<View>, addPlaylistItemCase)
+        } as BottomSheetBehavior<View>, addPlaylistItemCase).apply {
+            openDialog = {
+                logw()
+                openPlaylistDialog()
+            }
+        }
         navigate(ChartIndexFragment.newInstance(), false)
         RxBus.get().register(this)
     }
@@ -110,5 +117,11 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
             }
         }
         BottomSheetBehavior.from(rl_bottom_sheet).state = BottomSheetBehavior.STATE_EXPANDED
+    }
+
+    fun openPlaylistDialog() {
+        QuickDialogFragment.Builder(this) {
+            viewCustom = R.layout.fragment_dialog_playlist
+        }.build().show()
     }
 }

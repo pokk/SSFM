@@ -14,6 +14,7 @@ import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 class BottomSheetViewModel(private val bsHelper: BottomSheetBehavior<View>,
                            private val addPlaylistItemCase: AddPlaylistItemCase) : BaseViewModel() {
     var obtainMusicUri: String? = null
+    var openDialog = {}
 
     fun onBottomSheetDownloadClick(view: View) {
         hideBottomSheet(view)
@@ -28,6 +29,7 @@ class BottomSheetViewModel(private val bsHelper: BottomSheetBehavior<View>,
 
     fun onBottomSheetAddToPlaylist(view: View) {
         hideBottomSheet(view)
+        openDialog()
     }
 
     fun onBottomSheetShare(view: View) {
