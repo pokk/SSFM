@@ -29,9 +29,9 @@ import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
  * @author  jieyi
  * @since   10/26/17
  */
-class RecyclerViewUniversal3ViewModel(private val searchMusicCase: SearchMusicV2Case,
-                                      private val addPlaylistItemCase: AddPlaylistItemCase,
-                                      private val item: BaseEntity) : BaseViewModel() {
+class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV2Case,
+                                       private val addPlaylistItemCase: AddPlaylistItemCase,
+                                       private val item: BaseEntity) : BaseViewModel() {
     val artistName by lazy { ObservableField<String>() }
     val thumbnail by lazy { ObservableField<String>() }
     val trackName by lazy { ObservableField<String>() }

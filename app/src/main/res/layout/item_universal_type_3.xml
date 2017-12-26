@@ -10,7 +10,7 @@
 
         <variable
             name="avm"
-            type="taiwan.no1.app.ssfm.features.chart.RecyclerViewUniversal3ViewModel"/>
+            type="taiwan.no1.app.ssfm.features.chart.RecyclerViewTagTopTrackViewModel"/>
     </data>
 
     <RelativeLayout

@@ -94,17 +94,19 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
             trackLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
             albumAdapter = Universal1Adapter(R.layout.item_universal_type_1, albumRes) { holder, item ->
-                holder.binding.avm = RecyclerViewUniversal1ViewModel(item).apply {
+                holder.binding.avm = RecyclerViewTagTopAlbumViewModel(item).apply {
                     onAttach(this@ChartTagDetailFragment)
                 }
             }
             artistAdapter = Universal2Adapter(R.layout.item_universal_type_2, artistRes) { holder, item ->
-                holder.binding.avm = RecyclerViewUniversal2ViewModel(item).apply {
+                holder.binding.avm = RecyclerViewTagTopArtistViewModel(item).apply {
                     onAttach(this@ChartTagDetailFragment)
                 }
             }
             trackAdapter = Universal3Adapter(R.layout.item_universal_type_3, trackRes) { holder, item ->
-                holder.binding.avm = RecyclerViewUniversal3ViewModel(searchMusicCase, addPlaylistItemCase, item).apply {
+                holder.binding.avm = RecyclerViewTagTopTrackViewModel(searchMusicCase,
+                    addPlaylistItemCase,
+                    item).apply {
                     onAttach(this@ChartTagDetailFragment)
                     clickEvent = { (activity as ChartActivity).openBottomSheet(item) }
                 }

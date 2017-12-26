@@ -68,7 +68,7 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
      *
      * @event_from [taiwan.no1.app.ssfm.features.chart.ChartViewModel.querySubmit]
      * @event_from [taiwan.no1.app.ssfm.features.chart.RecyclerViewChartSimilarArtistViewModel.artistOnClick]
-     * @event_from [taiwan.no1.app.ssfm.features.chart.RecyclerViewUniversal2ViewModel.itemOnClick]
+     * @event_from [taiwan.no1.app.ssfm.features.chart.RecyclerViewTagTopArtistViewModel.itemOnClick]
      */
     @Subscribe(tags = [Tag(RxBusTag.VIEWMODEL_CLICK_SIMILAR)])
     fun navigateToArtistDetail(artistName: String) {
@@ -78,7 +78,7 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     /**
      * @param params
      *
-     * @event_from [taiwan.no1.app.ssfm.features.chart.RecyclerViewUniversal1ViewModel.itemOnClick]
+     * @event_from [taiwan.no1.app.ssfm.features.chart.RecyclerViewTagTopAlbumViewModel.itemOnClick]
      */
     @Subscribe(tags = [Tag(RxBusTag.VIEWMODEL_CLICK_ALBUM)])
     fun navigateToAlbumDetail(params: HashMap<String, String>) {
