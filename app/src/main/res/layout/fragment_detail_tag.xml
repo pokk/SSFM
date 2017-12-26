@@ -104,7 +104,7 @@
                 android:loadMore="@{albumLoadmore}"
                 app:layout_constraintBottom_toTopOf="@+id/tv_title_artist"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title_album"
-                tools:listitem="@layout/item_universal_type_1">
+                tools:listitem="@layout/item_album_type_2">
             </android.support.v7.widget.RecyclerView>
 
             <TextView
@@ -130,7 +130,7 @@
                 android:loadMore="@{artistLoadmore}"
                 app:layout_constraintBottom_toTopOf="@+id/tv_title_track"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title_artist"
-                tools:listitem="@layout/item_universal_type_2"/>
+                tools:listitem="@layout/item_artist_type_3"/>
 
             <TextView
                 android:id="@+id/tv_title_track"
@@ -156,7 +156,7 @@
                 android:loadMore="@{trackLoadmore}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title_track"
-                tools:listitem="@layout/item_universal_type_3"/>
+                tools:listitem="@layout/item_music_type_7"/>
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>
 </layout>

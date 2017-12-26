@@ -12,9 +12,9 @@ import taiwan.no1.app.ssfm.databinding.FragmentDetailTagBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RVCustomScrollCallback
-import taiwan.no1.app.ssfm.misc.extension.recyclerview.Universal1Adapter
-import taiwan.no1.app.ssfm.misc.extension.recyclerview.Universal2Adapter
-import taiwan.no1.app.ssfm.misc.extension.recyclerview.Universal3Adapter
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.TagTopAlbumAdapter
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.TagTopArtistAdapter
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.TagTopTrackAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.keepAllLastItemPosition
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
@@ -93,17 +93,17 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
             artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             trackLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
-            albumAdapter = Universal1Adapter(R.layout.item_universal_type_1, albumRes) { holder, item ->
+            albumAdapter = TagTopAlbumAdapter(R.layout.item_album_type_2, albumRes) { holder, item ->
                 holder.binding.avm = RecyclerViewTagTopAlbumViewModel(item).apply {
                     onAttach(this@ChartTagDetailFragment)
                 }
             }
-            artistAdapter = Universal2Adapter(R.layout.item_universal_type_2, artistRes) { holder, item ->
+            artistAdapter = TagTopArtistAdapter(R.layout.item_artist_type_3, artistRes) { holder, item ->
                 holder.binding.avm = RecyclerViewTagTopArtistViewModel(item).apply {
                     onAttach(this@ChartTagDetailFragment)
                 }
             }
-            trackAdapter = Universal3Adapter(R.layout.item_universal_type_3, trackRes) { holder, item ->
+            trackAdapter = TagTopTrackAdapter(R.layout.item_music_type_7, trackRes) { holder, item ->
                 holder.binding.avm = RecyclerViewTagTopTrackViewModel(searchMusicCase,
                     addPlaylistItemCase,
                     item).apply {
@@ -112,15 +112,15 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
                 }
             }
 
-            albumLoadmore = RVCustomScrollCallback(binding?.albumAdapter as Universal1Adapter, albumInfo,
+            albumLoadmore = RVCustomScrollCallback(binding?.albumAdapter as TagTopAlbumAdapter, albumInfo,
                 albumRes) { page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit ->
                 viewModel.fetchHotAlbum(musicTag, page, limit, callback)
             }
-            artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as Universal2Adapter, artistInfo,
+            artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as TagTopArtistAdapter, artistInfo,
                 artistRes) { page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit ->
                 viewModel.fetchHotArtist(musicTag, page, limit, callback)
             }
-            trackLoadmore = RVCustomScrollCallback(binding?.trackAdapter as Universal3Adapter, trackInfo,
+            trackLoadmore = RVCustomScrollCallback(binding?.trackAdapter as TagTopTrackAdapter, trackInfo,
                 trackRes) { page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit ->
                 viewModel.fetchHotTrack(musicTag, page, limit, callback)
             }
@@ -134,17 +134,17 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
         viewModel.fetchTagDetailInfo(musicTag)
         albumInfo.firstFetch {
             viewModel.fetchHotAlbum(musicTag, it.page, it.limit) { resList, total ->
-                albumRes.refreshAndChangeList(resList, total, binding?.albumAdapter as Universal1Adapter, it)
+                albumRes.refreshAndChangeList(resList, total, binding?.albumAdapter as TagTopAlbumAdapter, it)
             }
         }
         artistInfo.firstFetch {
             viewModel.fetchHotArtist(musicTag, it.page, it.limit) { resList, total ->
-                artistRes.refreshAndChangeList(resList, total, binding?.artistAdapter as Universal2Adapter, it)
+                artistRes.refreshAndChangeList(resList, total, binding?.artistAdapter as TagTopArtistAdapter, it)
             }
         }
         trackInfo.firstFetch {
             viewModel.fetchHotTrack(musicTag, it.page, it.limit) { resList, total ->
-                trackRes.refreshAndChangeList(resList, total, binding?.trackAdapter as Universal3Adapter, it)
+                trackRes.refreshAndChangeList(resList, total, binding?.trackAdapter as TagTopTrackAdapter, it)
             }
         }
     }

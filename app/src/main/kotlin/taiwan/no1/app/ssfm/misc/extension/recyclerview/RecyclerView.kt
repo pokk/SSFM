@@ -5,22 +5,22 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.LinearLayout.HORIZONTAL
 import taiwan.no1.app.ssfm.databinding.ItemAlbumType1Binding
+import taiwan.no1.app.ssfm.databinding.ItemAlbumType2Binding
 import taiwan.no1.app.ssfm.databinding.ItemArtistType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemArtistType2Binding
+import taiwan.no1.app.ssfm.databinding.ItemArtistType3Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType2Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType3Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType4Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType5Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType6Binding
+import taiwan.no1.app.ssfm.databinding.ItemMusicType7Binding
 import taiwan.no1.app.ssfm.databinding.ItemPlaylistType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemRankType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemSearchHistoryType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemSearchMusicType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemTagType1Binding
-import taiwan.no1.app.ssfm.databinding.ItemUniversalType1Binding
-import taiwan.no1.app.ssfm.databinding.ItemUniversalType2Binding
-import taiwan.no1.app.ssfm.databinding.ItemUniversalType3Binding
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseMultipleTypeDataBindingAdapter
 import taiwan.no1.app.ssfm.models.IExpandVisitable
@@ -40,9 +40,9 @@ typealias SimilarArtistAdapter = BaseDataBindingAdapter<ItemArtistType2Binding, 
 typealias ArtistTopTrackAdapter = BaseDataBindingAdapter<ItemMusicType2Binding, BaseEntity>
 typealias ArtistTopAlbumAdapter = BaseDataBindingAdapter<ItemAlbumType1Binding, BaseEntity>
 typealias AlbumTrackAdapter = BaseDataBindingAdapter<ItemMusicType4Binding, BaseEntity>
-typealias Universal1Adapter = BaseDataBindingAdapter<ItemUniversalType1Binding, BaseEntity>
-typealias Universal2Adapter = BaseDataBindingAdapter<ItemUniversalType2Binding, BaseEntity>
-typealias Universal3Adapter = BaseDataBindingAdapter<ItemUniversalType3Binding, BaseEntity>
+typealias TagTopAlbumAdapter = BaseDataBindingAdapter<ItemAlbumType2Binding, BaseEntity>
+typealias TagTopArtistAdapter = BaseDataBindingAdapter<ItemArtistType3Binding, BaseEntity>
+typealias TagTopTrackAdapter = BaseDataBindingAdapter<ItemMusicType7Binding, BaseEntity>
 typealias RankChartDetailAdapter = BaseDataBindingAdapter<ItemMusicType6Binding, BaseEntity>
 typealias PlaylistItemAdapter = BaseDataBindingAdapter<ItemMusicType5Binding, BaseEntity>
 typealias PlaylistAdapter = BaseDataBindingAdapter<ItemPlaylistType1Binding, BaseEntity>
