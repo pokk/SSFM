@@ -34,8 +34,7 @@ import javax.inject.Named
  * @author  jieyi
  * @since   8/20/17
  */
-class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentViewModel, FragmentDetailArtistBinding>(),
-    ChartArtistDetailNavigator {
+class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentViewModel, FragmentDetailArtistBinding>() {
     //region Static initialization
     companion object Factory {
         // The key name of the fragment initialization parameters.
