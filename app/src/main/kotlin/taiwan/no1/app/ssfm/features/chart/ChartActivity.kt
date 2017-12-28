@@ -123,7 +123,7 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
             // TODO(jieyi): 12/27/17 Add new custom mvvm style.
             viewCustom = R.layout.fragment_dialog_playlist
         }.build().apply {
-            bind = { binding.vm = ChartDialogViewModel(applicationContext) }
+            bind = { it.vm = ChartDialogViewModel(applicationContext) }
         }.show()
     }
 }
