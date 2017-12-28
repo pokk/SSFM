@@ -16,8 +16,7 @@ import taiwan.no1.app.ssfm.models.usecases.GetArtistInfoUsecase
  * @since   8/20/17
  */
 class ChartAlbumDetailFragmentViewModel(private val albumInfoCase: FetchAlbumInfoCase,
-                                        private val artistInfoCase: FetchArtistInfoCase) :
-    BaseViewModel() {
+                                        private val artistInfoCase: FetchArtistInfoCase) : BaseViewModel() {
     val artistImage by lazy { ObservableField<String>() }
     val artistName by lazy { ObservableField<String>() }
     val albumName by lazy { ObservableField<String>() }

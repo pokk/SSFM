@@ -21,8 +21,7 @@ import taiwan.no1.app.ssfm.models.usecases.GetArtistTopTracksUsecase
  */
 class ChartArtistDetailFragmentViewModel(private val artistsInfoUsecase: FetchArtistInfoCase,
                                          private val artistTopTracksUsecase: FetchTopTrackOfArtistCase,
-                                         private val artistTopAlbumsUsecase: FetchTopAlbumOfArtistCase) :
-    BaseViewModel() {
+                                         private val artistTopAlbumsUsecase: FetchTopAlbumOfArtistCase) : BaseViewModel() {
     val artistName by lazy { ObservableField<String>() }
     val artistImage by lazy { ObservableField<String>() }
     val artistSummary by lazy { ObservableField<String>() }

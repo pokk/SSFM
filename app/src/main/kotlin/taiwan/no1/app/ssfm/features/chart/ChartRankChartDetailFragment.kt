@@ -3,6 +3,7 @@ package taiwan.no1.app.ssfm.features.chart
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
+import org.jetbrains.anko.bundleOf
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentRankChartDetailBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedFragment
@@ -35,10 +36,9 @@ class ChartRankChartDetailFragment : AdvancedFragment<ChartRankChartDetailFragme
          * @return A new instance of [android.app.Fragment] ChartArtistDetailFragment.
          */
         fun newInstance(code: Int = Constant.SPECIAL_NUMBER, chartEntity: RankChartEntity? = null) =
-            ChartRankChartDetailFragment().also {
-                it.arguments = Bundle().apply {
-                    putInt(ARG_PARAM_RANK_CODE, code)
-                    chartEntity?.let { putParcelable(ARG_PARAM_CHART_ENTITY, it) }
+            ChartRankChartDetailFragment().apply {
+                arguments = bundleOf(ARG_PARAM_RANK_CODE to code,
+                    ARG_PARAM_CHART_ENTITY to (chartEntity ?: RankChartEntity())).apply {
                 }
             }
     }

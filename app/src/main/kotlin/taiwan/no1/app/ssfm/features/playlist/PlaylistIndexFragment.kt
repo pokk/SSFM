@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.features.playlist
 
 import android.os.Bundle
 import android.support.v7.widget.helper.ItemTouchHelper
+import org.jetbrains.anko.bundleOf
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentMylistIndexBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedFragment
@@ -28,8 +29,8 @@ class PlaylistIndexFragment : AdvancedFragment<PlaylistIndexFragmentViewModel, F
          *
          * @return A new instance of [android.app.Fragment] PlaylistIndexFragment.
          */
-        fun newInstance() = PlaylistIndexFragment().also {
-            it.arguments = Bundle().also {}
+        fun newInstance() = PlaylistIndexFragment().apply {
+            arguments = bundleOf()
         }
     }
     //endregion

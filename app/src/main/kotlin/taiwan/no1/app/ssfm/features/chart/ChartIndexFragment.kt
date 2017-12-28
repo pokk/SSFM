@@ -7,6 +7,7 @@ import android.widget.GridLayout.VERTICAL
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.GridSpacingItemDecorator
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.HorizontalItemDecorator
 import org.jetbrains.anko.act
+import org.jetbrains.anko.bundleOf
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentChartIndexBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedFragment
@@ -39,7 +40,9 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
          *
          * @return A new instance of [android.app.Fragment] ChartIndexFragment.
          */
-        fun newInstance() = ChartIndexFragment()
+        fun newInstance() = ChartIndexFragment().apply {
+            arguments = bundleOf()
+        }
     }
     //endregion
 

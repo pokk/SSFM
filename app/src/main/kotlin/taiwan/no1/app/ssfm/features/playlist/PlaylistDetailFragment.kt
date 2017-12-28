@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.transition.TransitionInflater
 import com.devrapid.kotlinknifer.logw
+import org.jetbrains.anko.bundleOf
 import taiwan.no1.app.ssfm.App
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentPlaylistDetailBinding
@@ -37,10 +38,8 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
          */
         fun newInstance(playlist: PlaylistEntity, transition: List<String>) =
             PlaylistDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(ARG_PARAM_PLAYLIST_OBJECT, playlist)
-                    putStringArrayList(ARG_PARAM_PLAYLIST_TRANSITION, ArrayList(transition))
-                }
+                arguments = bundleOf(ARG_PARAM_PLAYLIST_OBJECT to playlist,
+                    ARG_PARAM_PLAYLIST_TRANSITION to ArrayList(transition))
                 if (transition.isNotEmpty()) {
                     sharedElementEnterTransition = TransitionInflater.from(App.appComponent.context()).inflateTransition(
                         R.transition.change_bound_and_fade)

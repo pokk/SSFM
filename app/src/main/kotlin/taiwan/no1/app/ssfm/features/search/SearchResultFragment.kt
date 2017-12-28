@@ -3,6 +3,7 @@ package taiwan.no1.app.ssfm.features.search
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import org.jetbrains.anko.act
+import org.jetbrains.anko.bundleOf
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchResultBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedFragment
@@ -37,16 +38,12 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
          *
          * @return A new instance of [android.app.Fragment] SearchResultFragment.
          */
-        fun newInstance(keyword: String = "",
-                        imageUrl: String = "",
-                        fgColor: Int = gColor(R.color.colorTransparent)) = SearchResultFragment().apply {
-            arguments = Bundle().apply {
-                putString(ARG_PARAM_KEYWORD, keyword)
-                putString(ARG_PARAM_BACKGROUND_IMAGE_URL, imageUrl)
-                putInt(ARG_PARAM_FOREGROUND_BLUR_COLOR,
-                    fgColor.takeIf { SPECIAL_NUMBER != it }.let { it } ?: gColor(R.color.colorTransparent))
+        fun newInstance(keyword: String = "", imageUrl: String = "", fgColor: Int = gColor(R.color.colorTransparent)) =
+            SearchResultFragment().apply {
+                arguments = bundleOf(ARG_PARAM_KEYWORD to keyword,
+                    ARG_PARAM_BACKGROUND_IMAGE_URL to imageUrl,
+                    ARG_PARAM_FOREGROUND_BLUR_COLOR to (fgColor.takeIf { SPECIAL_NUMBER != it }.let { it } ?: gColor(R.color.colorTransparent)))
             }
-        }
     }
     //endregion
 

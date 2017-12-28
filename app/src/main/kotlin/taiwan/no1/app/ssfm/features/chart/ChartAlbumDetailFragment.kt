@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.features.chart
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import org.jetbrains.anko.bundleOf
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailAlbumBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedFragment
@@ -33,13 +34,11 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
          *
          * @return A new instance of [android.app.Fragment] ChartArtistDetailFragment.
          */
-        fun newInstance(artistAlbumName: String = "",
-                        artistName: String = "") = ChartAlbumDetailFragment().also {
-            it.arguments = Bundle().apply {
-                putString(ARG_PARAM_ARTIST_ALBUM_NAME, artistAlbumName)
-                putString(ARG_PARAM_ARTIST_NAME, artistName)
+        fun newInstance(artistAlbumName: String = "", artistName: String = "") =
+            ChartAlbumDetailFragment().apply {
+                arguments = bundleOf(ARG_PARAM_ARTIST_ALBUM_NAME to artistAlbumName,
+                    ARG_PARAM_ARTIST_NAME to artistName)
             }
-        }
     }
     //endregion
 

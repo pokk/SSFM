@@ -7,6 +7,7 @@ import com.cleveroad.fanlayoutmanager.FanLayoutManager
 import com.cleveroad.fanlayoutmanager.FanLayoutManagerSettings
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.HorizontalItemDecorator
 import org.jetbrains.anko.act
+import org.jetbrains.anko.bundleOf
 import org.jetbrains.anko.ctx
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailArtistBinding
@@ -28,13 +29,13 @@ import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
 import javax.inject.Inject
 import javax.inject.Named
 
-
 /**
  *
  * @author  jieyi
  * @since   8/20/17
  */
-class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentViewModel, FragmentDetailArtistBinding>() {
+class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentViewModel, FragmentDetailArtistBinding>(),
+    ChartArtistDetailNavigator {
     //region Static initialization
     companion object Factory {
         // The key name of the fragment initialization parameters.
@@ -46,13 +47,11 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
          *
          * @return A new instance of [android.app.Fragment] ChartArtistDetailFragment.
          */
-        fun newInstance(mbid: String = "",
-                        artistName: String = "") = ChartArtistDetailFragment().also {
-            it.arguments = Bundle().apply {
-                putString(ARG_PARAM_MBID, mbid)
-                putString(ARG_PARAM_ARTIST_NAME, artistName)
+        fun newInstance(mbid: String = "", artistName: String = "") =
+            ChartArtistDetailFragment().apply {
+                arguments = bundleOf(ARG_PARAM_MBID to mbid,
+                    ARG_PARAM_ARTIST_NAME to artistName)
             }
-        }
     }
     //endregion
 

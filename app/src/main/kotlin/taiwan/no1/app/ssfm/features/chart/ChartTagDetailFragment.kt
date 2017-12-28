@@ -7,6 +7,7 @@ import android.widget.LinearLayout
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.HorizontalItemDecorator
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
 import org.jetbrains.anko.act
+import org.jetbrains.anko.bundleOf
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailTagBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedFragment
@@ -42,10 +43,8 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
          *
          * @return A new instance of [android.app.Fragment] ChartArtistDetailFragment.
          */
-        fun newInstance(tag: String = "") = ChartTagDetailFragment().also {
-            it.arguments = Bundle().apply {
-                putString(ARG_PARAM_TAG, tag)
-            }
+        fun newInstance(tag: String = "") = ChartTagDetailFragment().apply {
+            arguments = bundleOf(ARG_PARAM_TAG to tag)
         }
     }
     //endregion

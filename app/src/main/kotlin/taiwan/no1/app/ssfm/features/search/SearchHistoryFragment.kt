@@ -1,6 +1,7 @@
 package taiwan.no1.app.ssfm.features.search
 
 import android.os.Bundle
+import org.jetbrains.anko.bundleOf
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchHistoryBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedFragment
@@ -25,7 +26,9 @@ class SearchHistoryFragment : AdvancedFragment<SearchHistoryFragmentViewModel, F
          *
          * @return A new instance of [android.app.Fragment] SearchHistoryFragment.
          */
-        fun newInstance() = SearchHistoryFragment()
+        fun newInstance() = SearchHistoryFragment().apply {
+            arguments = bundleOf()
+        }
     }
     //endregion
 

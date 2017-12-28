@@ -3,6 +3,7 @@ package taiwan.no1.app.ssfm.features.search
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.HorizontalItemDecorator
+import org.jetbrains.anko.bundleOf
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchIndexBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedFragment
@@ -34,7 +35,9 @@ class SearchIndexFragment : AdvancedFragment<SearchIndexFragmentViewModel, Fragm
          *
          * @return A new instance of [android.app.Fragment] SearchIndexFragment.
          */
-        fun newInstance() = SearchIndexFragment()
+        fun newInstance() = SearchIndexFragment().apply {
+            arguments = bundleOf()
+        }
     }
     //endregion
 
