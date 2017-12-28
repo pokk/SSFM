@@ -23,7 +23,7 @@ class QuickSupportDialogFragment private constructor(val mActivity: AppCompatAct
                                                      val mFragment: Fragment?,
                                                      val btnPositive: DialogFragmentBtn?,
                                                      val btnNegative: DialogFragmentBtn?,
-                                                     val clickListeners: DialogSupportFragmentListeners?,
+                                                     val clickListeners: DSFListeners?,
                                                      val mCancelable: Boolean,
                                                      val mTag: String,
     // TODO(jieyi): 7/12/17 Implement the request code function.
@@ -74,7 +74,7 @@ class QuickSupportDialogFragment private constructor(val mActivity: AppCompatAct
         var btnNegativeText: DialogFragmentBtn? = null
         var btnPositiveText: DialogFragmentBtn? = null
         var cancelable: Boolean = true
-        var clickListener: DialogSupportFragmentListeners? = null
+        var clickListener: DSFListeners? = null
         var message: String? = null
         var requestCode: Int = -1
         var tag: String = "default"

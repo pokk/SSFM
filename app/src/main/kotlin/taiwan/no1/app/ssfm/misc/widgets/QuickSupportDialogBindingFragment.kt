@@ -1,13 +1,15 @@
 package taiwan.no1.app.ssfm.misc.widgets
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.app.AlertDialog
 import android.app.Dialog
-import android.app.DialogFragment
-import android.app.Fragment
+import android.databinding.DataBindingUtil
+import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.annotation.LayoutRes
+import android.support.v4.app.DialogFragment
+import android.support.v4.app.Fragment
+import android.support.v7.app.AlertDialog
+import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,27 +21,29 @@ import org.jetbrains.anko.sdk25.coroutines.onClick
  * @since   11/14/17
  */
 @SuppressLint("ValidFragment")
-class QuickDialogFragment private constructor(val mActivity: Activity?,
-                                              val mFragment: Fragment?,
-                                              val btnPositive: DialogFragmentBtn?,
-                                              val btnNegative: DialogFragmentBtn?,
-                                              val clickListeners: DFListeners?,
-                                              val mCancelable: Boolean,
-                                              val mTag: String,
+class QuickSupportDialogBindingFragment<B : ViewDataBinding> private constructor(val mActivity: AppCompatActivity?,
+                                                                                 val mFragment: Fragment?,
+                                                                                 val btnPositive: DialogFragmentBtn?,
+                                                                                 val btnNegative: DialogFragmentBtn?,
+                                                                                 val clickListeners: DSFBListeners<B>?,
+                                                                                 val mCancelable: Boolean,
+                                                                                 val mTag: String,
     // TODO(jieyi): 7/12/17 Implement the request code function.
-                                              val requestCode: Int,
-                                              @LayoutRes
-                                              val viewCustom: Int,
-                                              var fetchComponents: ((View) -> Unit)? = {},
-                                              var message: String = "",
-                                              var title: String?) : DialogFragment() {
+                                                                                 val requestCode: Int,
+                                                                                 @LayoutRes
+                                                                                 val viewCustom: Int,
+                                                                                 var fetchComponents: ((View) -> Unit)? = {},
+                                                                                 var message: String = "",
+                                                                                 var title: String?) : DialogFragment() {
+    var bind: (binding: B) -> Unit = {}
     private val viewList by lazy { mutableListOf<View>() }
+    lateinit private var binding: B
 
     init {
         isCancelable = mCancelable
     }
 
-    private constructor(builder: Builder) : this(builder.activity,
+    private constructor(builder: Builder<B>) : this(builder.activity,
         builder.parentFragment,
         builder.btnPositiveText,
         builder.btnNegativeText,
@@ -53,28 +57,28 @@ class QuickDialogFragment private constructor(val mActivity: Activity?,
         builder.title)
 
     /**
-     * A builder of [QuickDialogFragment].
+     * A builder of [QuickSupportDialogBindingFragment].
      */
-    class Builder {
-        constructor(activity: Activity, block: Builder.() -> Unit) {
+    class Builder<B : ViewDataBinding> {
+        constructor(activity: AppCompatActivity, block: Builder<B>.() -> Unit) {
             this.activity = activity
             parentFragment = null
             apply(block)
         }
 
-        constructor(fragment: Fragment, block: Builder.() -> Unit) {
+        constructor(fragment: Fragment, block: Builder<B>.() -> Unit) {
             activity = null
             parentFragment = fragment
             apply(block)
         }
 
-        val activity: Activity?
+        val activity: AppCompatActivity?
         val parentFragment: Fragment?
         var fetchComponents: ((View) -> Unit)? = null
         var btnNegativeText: DialogFragmentBtn? = null
         var btnPositiveText: DialogFragmentBtn? = null
         var cancelable: Boolean = true
-        var clickListener: DFListeners? = null
+        var clickListener: DSFBListeners<B>? = null
         var message: String? = null
         var requestCode: Int = -1
         var tag: String = "default"
@@ -82,16 +86,15 @@ class QuickDialogFragment private constructor(val mActivity: Activity?,
         @LayoutRes
         var viewCustom: Int = -1
 
-        fun build() = QuickDialogFragment(this)
+        fun build() = QuickSupportDialogBindingFragment(this)
     }
 
-    fun show() = show((mFragment?.fragmentManager ?: mActivity?.fragmentManager), mTag)
+    fun show() = show((mFragment?.fragmentManager ?: mActivity?.supportFragmentManager), mTag)
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?) =
         if (0 < viewCustom) {
-            LayoutInflater.from(activity.applicationContext).inflate(viewCustom, null).also {
-                onCreateDialogView(it)
-            }
+            binding = DataBindingUtil.inflate(LayoutInflater.from(activity.applicationContext), viewCustom, null, false)
+            binding.root
         }
         else {
             super.onCreateView(inflater, container, savedInstanceState)
@@ -103,8 +106,13 @@ class QuickDialogFragment private constructor(val mActivity: Activity?,
             fetchComponents?.let { self -> self(it) }
             // Set the listener into each of views.
             clickListeners?.forEach { (id, listener) ->
-                viewList.add(it.findViewById<View>(id).apply { onClick { listener(this@QuickDialogFragment, it) } })
+                viewList.add(it.findViewById<View>(id).apply {
+                    onClick {
+                        listener(this@QuickSupportDialogBindingFragment, it)
+                    }
+                })
             }
+            bind(binding)
         }
     }
 
@@ -136,7 +144,8 @@ class QuickDialogFragment private constructor(val mActivity: Activity?,
         super.onResume()
 
         if (0 < viewCustom) {
-            dialog.window.setLayout(resources.displayMetrics.widthPixels, resources.displayMetrics.heightPixels)
+            dialog.window.setLayout(resources.displayMetrics.widthPixels,
+                resources.displayMetrics.heightPixels)
         }
     }
 

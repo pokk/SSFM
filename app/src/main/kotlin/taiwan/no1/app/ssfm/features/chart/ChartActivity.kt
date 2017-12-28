@@ -12,12 +12,13 @@ import com.hwangjr.rxbus.annotation.Tag
 import kotlinx.android.synthetic.main.bottomsheet_track.rl_bottom_sheet
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityChartBinding
+import taiwan.no1.app.ssfm.databinding.FragmentDialogPlaylistBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedActivity
 import taiwan.no1.app.ssfm.features.bottomsheet.BottomSheetViewModel
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_NAME
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
-import taiwan.no1.app.ssfm.misc.widgets.QuickDialogFragment
+import taiwan.no1.app.ssfm.misc.widgets.QuickDialogBindingFragment
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
@@ -42,7 +43,6 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
             state = BottomSheetBehavior.STATE_HIDDEN
         } as BottomSheetBehavior<View>, addPlaylistItemCase).apply {
             openDialog = {
-                // TODO(jieyi): 12/27/17 Change to interface, not only callback function.
                 openPlaylistDialog()
             }
         }
@@ -119,9 +119,11 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     }
 
     fun openPlaylistDialog() {
-        QuickDialogFragment.Builder(this) {
+        QuickDialogBindingFragment.Builder<FragmentDialogPlaylistBinding>(this) {
             // TODO(jieyi): 12/27/17 Add new custom mvvm style.
             viewCustom = R.layout.fragment_dialog_playlist
-        }.build().show()
+        }.build().apply {
+            bind = { binding.vm = ChartDialogViewModel(applicationContext) }
+        }.show()
     }
 }
