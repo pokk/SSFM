@@ -4,8 +4,11 @@ import android.app.Activity
 import android.app.Fragment
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.devrapid.dialogbuilder.QuickDialogBindingFragment
 import com.devrapid.kotlinknifer.addFragment
+import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
@@ -18,7 +21,10 @@ import taiwan.no1.app.ssfm.features.bottomsheet.BottomSheetViewModel
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_NAME
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
-import taiwan.no1.app.ssfm.misc.widgets.QuickDialogBindingFragment
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.DFPlaylistAdapter
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
+import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
+import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
@@ -35,6 +41,22 @@ import javax.inject.Inject
 class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     @Inject override lateinit var viewModel: ChartViewModel
     @Inject lateinit var addPlaylistItemCase: AddPlaylistItemCase
+    private val playlistItemInfo by lazy { DataInfo() }
+    private var playlistItemRes = mutableListOf<BaseEntity>(PlaylistEntity(),
+        PlaylistEntity(),
+        PlaylistEntity(),
+        PlaylistEntity(),
+        PlaylistEntity(),
+        PlaylistEntity(),
+        PlaylistEntity(),
+        PlaylistEntity(),
+        PlaylistEntity(),
+        PlaylistEntity(),
+        PlaylistEntity(),
+        PlaylistEntity(),
+        PlaylistEntity(),
+        PlaylistEntity(),
+        PlaylistEntity())
 
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -118,12 +140,20 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
         BottomSheetBehavior.from(rl_bottom_sheet).state = BottomSheetBehavior.STATE_EXPANDED
     }
 
-    fun openPlaylistDialog() {
+    private fun openPlaylistDialog() {
         QuickDialogBindingFragment.Builder<FragmentDialogPlaylistBinding>(this) {
-            // TODO(jieyi): 12/27/17 Add new custom mvvm style.
             viewCustom = R.layout.fragment_dialog_playlist
         }.build().apply {
-            bind = { it.vm = ChartDialogViewModel(applicationContext) }
+            bind = {
+                it.vm = ChartDialogViewModel(applicationContext)
+                it.layoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+                it.decoration = VerticalItemDecorator(20)
+                it.adapter = DFPlaylistAdapter(R.layout.item_playlist_type_2, playlistItemRes) { holder, item ->
+                    holder.binding.avm = RecyclerViewDialogPlaylistViewModel(item).apply {
+                        onAttach(this@ChartActivity)
+                    }
+                }
+            }
         }.show()
     }
 }

@@ -17,6 +17,7 @@ import taiwan.no1.app.ssfm.databinding.ItemMusicType5Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType6Binding
 import taiwan.no1.app.ssfm.databinding.ItemMusicType7Binding
 import taiwan.no1.app.ssfm.databinding.ItemPlaylistType1Binding
+import taiwan.no1.app.ssfm.databinding.ItemPlaylistType2Binding
 import taiwan.no1.app.ssfm.databinding.ItemRankType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemSearchHistoryType1Binding
 import taiwan.no1.app.ssfm.databinding.ItemSearchMusicType1Binding
@@ -49,6 +50,7 @@ typealias PlaylistAdapter = BaseDataBindingAdapter<ItemPlaylistType1Binding, Bas
 typealias RecentlyAdapter = BaseDataBindingAdapter<ItemMusicType3Binding, BaseEntity>
 typealias SearchHistoryAdapter = BaseDataBindingAdapter<ItemSearchMusicType1Binding, BaseEntity>
 typealias MultipleTypeAdapter = BaseMultipleTypeDataBindingAdapter<ViewDataBinding, IExpandVisitable>
+typealias DFPlaylistAdapter = BaseDataBindingAdapter<ItemPlaylistType2Binding, BaseEntity>
 
 /**
  * The operation for updating the list result by the adapter. Including updating the original list

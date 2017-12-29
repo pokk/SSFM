@@ -8,25 +8,31 @@
         <variable
             name="vm"
             type="taiwan.no1.app.ssfm.features.chart.ChartDialogViewModel"/>
+
+        <variable
+            name="layoutManager"
+            type="android.support.v7.widget.RecyclerView.LayoutManager"/>
+
+        <variable
+            name="adapter"
+            type="android.support.v7.widget.RecyclerView.Adapter"/>
+
+        <variable
+            name="decoration"
+            type="android.support.v7.widget.RecyclerView.ItemDecoration"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{vm.test}"
-            android:background="#ffffff"
-            app:layout_constraintStart_toStartOf="@+id/recyclerView2"
-            app:layout_constraintTop_toTopOf="@+id/recyclerView2"/>
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView2"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:adapter="@{adapter}"
+            android:itemDecoration="@{decoration}"
+            android:layoutManager="@{layoutManager}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

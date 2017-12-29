@@ -5,16 +5,19 @@
 
     <data>
 
+        <variable
+            name="avm"
+            type="taiwan.no1.app.ssfm.features.chart.RecyclerViewDialogPlaylistViewModel"/>
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
+        android:onClick="@{avm::playlistOnClick}"
         android:orientation="horizontal"
         android:paddingEnd="@dimen/three_unit"
         android:paddingStart="@dimen/three_unit">
-        <!--android:onClick="@{avm::playlistOnClick}"-->
 
         <ImageView
             android:id="@+id/iv_playlist_image"
@@ -43,18 +46,18 @@
                 android:id="@+id/tv_playlist_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{avm.playlistName}"
                 android:textSize="18sp"
                 tools:text="My First Playlist"/>
-            <!--android:text="@{avm.playlistName}"-->
 
             <TextView
                 android:id="@+id/tv_playlist_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/one_unit"
+                android:text="@{avm.playlistTrackNumber}"
                 android:textSize="14sp"
                 tools:text="1 album, 24 tracks"/>
-            <!--android:text="@{avm.playlistTrackNumber}"-->
         </LinearLayout>
     </RelativeLayout>
 </layout>

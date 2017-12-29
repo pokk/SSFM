@@ -73,6 +73,7 @@ dependencies {
     // My own tool library
     implementation 'com.devrapid.jieyi:adaptiverecyclerview:0.0.6'
     implementation 'com.devrapid.jieyi:musicdiskplayer:0.1.3'
+    implementation 'com.devrapid.jieyi:dialogbuilder:0.0.4'
     // Library is including Gson, RxKotlin, RxJava.
     implementation 'com.devrapid.jieyi:kotlinknifer:1.0.18'
     implementation 'com.github.weiancheng:MediaPlayerWithExoPlayer:v1.3'
