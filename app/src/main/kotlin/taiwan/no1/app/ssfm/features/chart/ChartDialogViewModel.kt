@@ -1,14 +1,20 @@
 package taiwan.no1.app.ssfm.features.chart
 
-import android.content.Context
-import android.databinding.ObservableField
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
+import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
+import taiwan.no1.app.ssfm.models.usecases.FetchPlaylistCase
 
 /**
  *
  * @author  jieyi
  * @since   9/13/17
  */
-class ChartDialogViewModel(private val context: Context) : BaseViewModel() {
-    val test by lazy { ObservableField<String>("Hello World") }
+class ChartDialogViewModel(fetchPlaylistCase: FetchPlaylistCase) : BaseViewModel() {
+    var fetchedPlaylistCallback: (List<PlaylistEntity>) -> Unit = {}
+
+    init {
+//        lifecycleProvider.execute(fetchPlaylistCase) {
+//            onNext(fetchedPlaylistCallback)
+//        }
+    }
 }

@@ -22,14 +22,13 @@ import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_ALBUM
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_NAME
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DFPlaylistAdapter
-import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
-import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
 import taiwan.no1.app.ssfm.models.entities.v2.RankChartEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
+import taiwan.no1.app.ssfm.models.usecases.FetchPlaylistCase
 import java.util.HashMap
 import javax.inject.Inject
 
@@ -41,22 +40,7 @@ import javax.inject.Inject
 class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     @Inject override lateinit var viewModel: ChartViewModel
     @Inject lateinit var addPlaylistItemCase: AddPlaylistItemCase
-    private val playlistItemInfo by lazy { DataInfo() }
-    private var playlistItemRes = mutableListOf<BaseEntity>(PlaylistEntity(),
-        PlaylistEntity(),
-        PlaylistEntity(),
-        PlaylistEntity(),
-        PlaylistEntity(),
-        PlaylistEntity(),
-        PlaylistEntity(),
-        PlaylistEntity(),
-        PlaylistEntity(),
-        PlaylistEntity(),
-        PlaylistEntity(),
-        PlaylistEntity(),
-        PlaylistEntity(),
-        PlaylistEntity(),
-        PlaylistEntity())
+    @Inject lateinit var fetchPlaylistCase: FetchPlaylistCase
 
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -144,13 +128,19 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
         QuickDialogBindingFragment.Builder<FragmentDialogPlaylistBinding>(this) {
             viewCustom = R.layout.fragment_dialog_playlist
         }.build().apply {
-            bind = {
-                it.vm = ChartDialogViewModel(applicationContext)
-                it.layoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-                it.decoration = VerticalItemDecorator(20)
-                it.adapter = DFPlaylistAdapter(R.layout.item_playlist_type_2, playlistItemRes) { holder, item ->
-                    holder.binding.avm = RecyclerViewDialogPlaylistViewModel(item).apply {
-                        onAttach(this@ChartActivity)
+            bind = { binding ->
+                binding.vm = ChartDialogViewModel(fetchPlaylistCase).apply {
+                    fetchedPlaylistCallback = {
+                        binding.layoutManager = WrapContentLinearLayoutManager(activity,
+                            LinearLayoutManager.VERTICAL,
+                            false)
+                        binding.decoration = VerticalItemDecorator(20)
+                        binding.adapter = DFPlaylistAdapter(R.layout.item_playlist_type_2,
+                            it.toMutableList()) { holder, item ->
+                            holder.binding.avm = RecyclerViewDialogPlaylistViewModel(item).apply {
+                                onAttach(this@ChartActivity)
+                            }
+                        }
                     }
                 }
             }
