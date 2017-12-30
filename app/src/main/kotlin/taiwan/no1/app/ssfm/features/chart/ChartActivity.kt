@@ -31,6 +31,7 @@ import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import taiwan.no1.app.ssfm.models.usecases.FetchPlaylistCase
 import java.util.HashMap
 import javax.inject.Inject
+import javax.inject.Named
 
 /**
  *
@@ -40,7 +41,7 @@ import javax.inject.Inject
 class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     @Inject override lateinit var viewModel: ChartViewModel
     @Inject lateinit var addPlaylistItemCase: AddPlaylistItemCase
-    @Inject lateinit var fetchPlaylistCase: FetchPlaylistCase
+    @field:[Inject Named("activity_playlist_usecase")] lateinit var fetchPlaylistCase: FetchPlaylistCase
 
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
