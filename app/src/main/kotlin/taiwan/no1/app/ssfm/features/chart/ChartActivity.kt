@@ -22,6 +22,8 @@ import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_ALBUM
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_NAME
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DFPlaylistAdapter
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
@@ -42,6 +44,8 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     @Inject override lateinit var viewModel: ChartViewModel
     @Inject lateinit var addPlaylistItemCase: AddPlaylistItemCase
     @field:[Inject Named("activity_playlist_usecase")] lateinit var fetchPlaylistCase: FetchPlaylistCase
+    private val playlistInfo by lazy { DataInfo() }
+    private var playlistRes = mutableListOf<BaseEntity>()
 
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,12 +53,15 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
         binding.bottomSheetVm = BottomSheetViewModel(BottomSheetBehavior.from(rl_bottom_sheet).apply {
             state = BottomSheetBehavior.STATE_HIDDEN
         } as BottomSheetBehavior<View>, addPlaylistItemCase).apply {
-            openDialog = {
-                openPlaylistDialog()
-            }
+            openDialog = { openPlaylistDialog() }
         }
         navigate(ChartIndexFragment.newInstance(), false)
         RxBus.get().register(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        playlistRes.clear()
     }
 
     override fun onDestroy() {
@@ -131,16 +138,21 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
         }.build().apply {
             bind = { binding ->
                 binding.vm = ChartDialogViewModel(fetchPlaylistCase).apply {
+                    onAttach(this@ChartActivity)
                     fetchedPlaylistCallback = {
-                        binding.layoutManager = WrapContentLinearLayoutManager(activity,
-                            LinearLayoutManager.VERTICAL,
-                            false)
-                        binding.decoration = VerticalItemDecorator(20)
-                        binding.adapter = DFPlaylistAdapter(R.layout.item_playlist_type_2,
-                            it.toMutableList()) { holder, item ->
-                            holder.binding.avm = RecyclerViewDialogPlaylistViewModel(item).apply {
-                                onAttach(this@ChartActivity)
-                            }
+                        // FIXME(jieyi): 12/31/17 There are some reasons to add the playlist.
+                        if (0 == (binding.adapter as DFPlaylistAdapter).itemCount) {
+                            playlistRes.addAll(it)
+                            playlistRes.refreshAndChangeList(it, 1, binding.adapter as DFPlaylistAdapter, playlistInfo)
+                        }
+                    }
+                    binding.layoutManager = WrapContentLinearLayoutManager(activity,
+                        LinearLayoutManager.VERTICAL,
+                        false)
+                    binding.decoration = VerticalItemDecorator(20)
+                    binding.adapter = DFPlaylistAdapter(R.layout.item_playlist_type_2, playlistRes) { holder, item ->
+                        holder.binding.avm = RecyclerViewDialogPlaylistViewModel(item).apply {
+                            onAttach(this@ChartActivity)
                         }
                     }
                 }

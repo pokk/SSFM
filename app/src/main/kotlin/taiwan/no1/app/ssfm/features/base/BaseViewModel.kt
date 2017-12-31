@@ -19,24 +19,4 @@ abstract class BaseViewModel : BaseObservable(), IViewModel {
     }
 
     override fun onDetach() {}
-
-//    protected fun onBottomSheetDownloadClick(view: View) {
-//        hideBottomSheet(view)
-//    }
-//
-//    protected fun onBottomSheetAddToPlaylist(view: View) {
-//        hideBottomSheet(view)
-//    }
-//
-//    protected fun onBottomSheetShare(view: View) {
-//        hideBottomSheet(view)
-//    }
-//
-//    protected fun onBottomSheetCancel(view: View) {
-//        hideBottomSheet(view)
-//    }
-//
-//    private fun hideBottomSheet(view: View) {
-//        BottomSheetBehavior.from(view).state = BottomSheetBehavior.STATE_HIDDEN
-//    }
 }
