@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:onClick="@{avm::playlistOnClick}"
+        android:background="?android:attr/selectableItemBackground"
         android:orientation="horizontal"
         android:paddingEnd="@dimen/three_unit"
         android:paddingStart="@dimen/three_unit">

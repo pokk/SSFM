@@ -137,17 +137,15 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
             viewCustom = R.layout.fragment_dialog_playlist
         }.build().apply {
             bind = { binding ->
-                binding.vm = ChartDialogViewModel(fetchPlaylistCase).apply {
+                binding.vm = ChartDialogViewModel(playlistRes.isEmpty(), fetchPlaylistCase).apply {
                     onAttach(this@ChartActivity)
                     fetchedPlaylistCallback = {
-                        // FIXME(jieyi): 12/31/17 There are some reasons to add the playlist.
-                        if (0 == (binding.adapter as DFPlaylistAdapter).itemCount) {
-                            playlistRes.addAll(it)
-                            playlistRes.refreshAndChangeList(it, 1, binding.adapter as DFPlaylistAdapter, playlistInfo)
-                        }
+                        playlistRes.refreshAndChangeList(it.subList(1, it.size),
+                            1,
+                            binding.adapter as DFPlaylistAdapter,
+                            playlistInfo)
                     }
-                    binding.layoutManager = WrapContentLinearLayoutManager(activity,
-                        LinearLayoutManager.VERTICAL,
+                    binding.layoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.VERTICAL,
                         false)
                     binding.decoration = VerticalItemDecorator(20)
                     binding.adapter = DFPlaylistAdapter(R.layout.item_playlist_type_2, playlistRes) { holder, item ->

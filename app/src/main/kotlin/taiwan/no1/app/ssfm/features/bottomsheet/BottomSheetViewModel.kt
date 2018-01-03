@@ -28,6 +28,7 @@ class BottomSheetViewModel(private val bsHelper: BottomSheetBehavior<View>,
     }
 
     fun onBottomSheetAddToPlaylist(view: View) {
+        // TODO(jieyi): 2018/01/03 Add debounce method here.
         hideBottomSheet(view)
         openDialog()
     }
