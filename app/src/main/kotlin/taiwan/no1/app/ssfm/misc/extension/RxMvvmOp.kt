@@ -9,5 +9,5 @@ import java.util.concurrent.TimeUnit
  * @since   2018/01/03
  */
 @SuppressLint("CheckResult")
-fun <T> createDebounce(block: (param: T) -> Unit) =
-    PublishSubject.create<T>().apply { debounce(300, TimeUnit.MILLISECONDS).subscribe(block) }
+fun <T> createDebounce(interval: Long = 300, block: (param: T) -> Unit) =
+    PublishSubject.create<T>().apply { debounce(interval, TimeUnit.MILLISECONDS).subscribe(block) }

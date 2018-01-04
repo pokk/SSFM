@@ -54,13 +54,13 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
             false
         }
     }
-    val stateEventListener = { state: MusicPlayerState ->
+    private val stateEventListener = { state: MusicPlayerState ->
         if (MusicPlayerState.Standby == state) isPlaying.set(false)
     }
 
     init {
         (item as MusicRankEntity.Song).let {
-            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.url)
+            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.url && MusicPlayerHelper.instance.isPlaying())
             trackName.set(it.title)
             trackDuration.set(it.length.toTimeString())
             trackIndex.set(index.toString())

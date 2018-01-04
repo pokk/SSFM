@@ -108,7 +108,6 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
                                                                       item,
                                                                       index + 1).apply {
                     onAttach(this@ChartTagDetailFragment)
-                    clickEvent = { (activity as ChartActivity).openBottomSheet(item) }
                 }
             }
 

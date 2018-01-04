@@ -37,7 +37,7 @@ class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: Sear
         (item as TrackEntity.TrackWithStreamableString).apply {
             trackName.set(name)
             trackNumber.set(attr?.rank ?: 0.toString())
-            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == realUrl.orEmpty())
+            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == realUrl.orEmpty() && MusicPlayerHelper.instance.isPlaying())
         }
     }
 

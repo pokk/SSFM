@@ -48,7 +48,7 @@ class RecyclerViewSearchMusicResultViewModel(private val res: BaseEntity,
 
     init {
         (res as MusicEntity.Music).let {
-            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.url)
+            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.url && MusicPlayerHelper.instance.isPlaying())
             songName.set(it.title)
             singerName.set(it.artist)
             coverUrl.set(it.coverURL)

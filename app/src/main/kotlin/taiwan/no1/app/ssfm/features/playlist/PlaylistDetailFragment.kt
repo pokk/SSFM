@@ -18,6 +18,7 @@ import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.SimpleItemTouchHelperCallb
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import javax.inject.Inject
 
 /**
@@ -51,6 +52,7 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
     //endregion
 
     @Inject override lateinit var viewModel: PlaylistDetailFragmentViewModel
+    @Inject lateinit var addPlaylistItemCase: AddPlaylistItemCase
     private val playlistItemInfo by lazy { DataInfo() }
     private var playlistItemRes = mutableListOf<BaseEntity>()
     // Get the arguments from the bundle here.
@@ -67,7 +69,9 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
             itemLayoutManager = WrapContentLinearLayoutManager(activity)
 
             itemAdapter = PlaylistItemAdapter(R.layout.item_music_type_5, playlistItemRes) { holder, item, index ->
-                holder.binding.avm = RecyclerViewPlaylistDetailViewModel(item, index + 1).apply {
+                holder.binding.avm = RecyclerViewPlaylistDetailViewModel(addPlaylistItemCase,
+                                                                         item,
+                                                                         index + 1).apply {
                     onAttach(this@PlaylistDetailFragment)
                 }
             }

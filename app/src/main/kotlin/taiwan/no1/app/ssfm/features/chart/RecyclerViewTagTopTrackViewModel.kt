@@ -14,6 +14,7 @@ import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.LARGE
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CHART_DETAIL_CLICK
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_LONG_CLICK_RANK_CHART
 import taiwan.no1.app.ssfm.misc.extension.glideListener
 import taiwan.no1.app.ssfm.misc.extension.palette
 import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayerHelper
@@ -50,14 +51,13 @@ class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV
             false
         }
     }
-    var clickEvent: (track: BaseEntity) -> Unit = {}
-    val stateEventListener = { state: MusicPlayerState ->
+    private val stateEventListener = { state: MusicPlayerState ->
         if (MusicPlayerState.Standby == state) isPlaying.set(false)
     }
 
     init {
         (item as TrackEntity.Track).let {
-            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.realUrl.orEmpty())
+            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.realUrl.orEmpty() && MusicPlayerHelper.instance.isPlaying())
             artistName.set(it.artist?.name)
             trackName.set(it.name)
             ranking.set(index.toString())
@@ -99,7 +99,12 @@ class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV
         }
     }
 
+    /**
+     * @param view
+     *
+     * @event_to [taiwan.no1.app.ssfm.features.chart.ChartActivity.openBottomSheet]
+     */
     fun trackOptionalOnClick(view: View) {
-        clickEvent(item)
+        RxBus.get().post(VIEWMODEL_LONG_CLICK_RANK_CHART, item)
     }
 }

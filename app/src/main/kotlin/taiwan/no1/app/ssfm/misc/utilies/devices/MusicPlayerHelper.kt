@@ -64,13 +64,29 @@ class MusicPlayerHelper private constructor() {
     fun downloadMusic(uri: String) = player.writeToFile(uri)
 
     //region MusicPlayer collection operations.
-    fun addDurationChangedListeners(listener: (Int) -> Unit) = durationChangedListeners.add(listener)
+    fun addDurationChangedListeners(listener: (Int) -> Unit): Boolean {
+        if (listener !in durationChangedListeners) return durationChangedListeners.add(listener)
 
-    fun addBufferPercentageListeners(listener: (Int) -> Unit) = bufferPercentageListeners.add(listener)
+        return false
+    }
 
-    fun addCurrentTimeListeners(listener: (Int) -> Unit) = currentTimeListeners.add(listener)
+    fun addBufferPercentageListeners(listener: (Int) -> Unit): Boolean {
+        if (listener !in bufferPercentageListeners) return bufferPercentageListeners.add(listener)
 
-    fun addStateChangedListeners(listener: (MusicPlayerState) -> Unit) = stateChangedListeners.add(listener)
+        return false
+    }
+
+    fun addCurrentTimeListeners(listener: (Int) -> Unit): Boolean {
+        if (listener !in currentTimeListeners) return currentTimeListeners.add(listener)
+
+        return false
+    }
+
+    fun addStateChangedListeners(listener: (MusicPlayerState) -> Unit): Boolean {
+        if (listener !in stateChangedListeners) return stateChangedListeners.add(listener)
+
+        return false
+    }
 
     fun removeDurationChangedListeners(listener: (Int) -> Unit) = durationChangedListeners.remove(listener)
 

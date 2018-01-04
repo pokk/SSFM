@@ -40,7 +40,7 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
             trackName.set(it.name)
             trackNumber.set(it.attr?.rank ?: 0.toString())
             trackDuration.set(it.duration?.toInt()?.toTimeString())
-            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.realUrl)
+            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.realUrl && MusicPlayerHelper.instance.isPlaying())
         }
     }
 

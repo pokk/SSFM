@@ -133,6 +133,7 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
      * @param entity
      *
      * @event_from [taiwan.no1.app.ssfm.features.chart.RecyclerViewRankChartDetailViewModel.trackOnLongClick]
+     * @event_from [taiwan.no1.app.ssfm.features.chart.RecyclerViewTagTopTrackViewModel.trackOptionalOnClick]
      */
     @Subscribe(tags = [Tag(VIEWMODEL_LONG_CLICK_RANK_CHART)])
     fun openBottomSheet(entity: Any) {
