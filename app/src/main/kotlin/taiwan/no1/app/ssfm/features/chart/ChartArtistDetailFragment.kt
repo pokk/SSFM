@@ -93,7 +93,7 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
     override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
             artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            artistAdapter = SimilarArtistAdapter(R.layout.item_artist_type_2, artistRes) { holder, item, index ->
+            artistAdapter = SimilarArtistAdapter(R.layout.item_artist_type_2, artistRes) { holder, item, _ ->
                 holder.binding.avm = RecyclerViewChartSimilarArtistViewModel(item).apply {
                     onAttach(this@ChartArtistDetailFragment)
                     clickItemListener = {}
@@ -102,7 +102,7 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
             artistDecoration = HorizontalItemDecorator(20)
 
             trackLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-            trackAdapter = ArtistTopTrackAdapter(R.layout.item_music_type_2, trackRes) { holder, item, index ->
+            trackAdapter = ArtistTopTrackAdapter(R.layout.item_music_type_2, trackRes) { holder, item, _ ->
                 holder.binding.avm =
                     RecyclerViewChartArtistHotTrackViewModel(searchMusicCase, addPlaylistItemCase, item).apply {
                         onAttach(this@ChartArtistDetailFragment)
@@ -116,7 +116,7 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
                 withViewHeightDp(190f)
                 withViewWidthDp(150f)
             }.build())
-            albumAdapter = ArtistTopAlbumAdapter(R.layout.item_album_type_1, albumRes) { holder, item, index ->
+            albumAdapter = ArtistTopAlbumAdapter(R.layout.item_album_type_1, albumRes) { holder, item, _ ->
                 holder.binding.avm = RecyclerViewChartArtistHotAlbumViewModel(item).apply {
                     onAttach(this@ChartArtistDetailFragment)
                     clickItemListener = {

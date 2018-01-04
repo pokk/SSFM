@@ -71,7 +71,7 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
     override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
             layoutManager = WrapContentLinearLayoutManager(act)
-            adapter = SearchHistoryAdapter(R.layout.item_search_music_type_1, res) { holder, item, index ->
+            adapter = SearchHistoryAdapter(R.layout.item_search_music_type_1, res) { holder, item, _ ->
                 holder.binding.avm = RecyclerViewSearchMusicResultViewModel(item,
                                                                             addPlaylistItemCase,
                                                                             act.applicationContext).apply {

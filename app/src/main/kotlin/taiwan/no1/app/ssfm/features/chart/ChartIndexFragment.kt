@@ -101,7 +101,7 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
             artistDecoration = HorizontalItemDecorator(20)
 
             tagLayoutManager = StaggeredGridLayoutManager(3, VERTICAL)
-            tagAdapter = TagAdapter(R.layout.item_tag_type_1, tagRes) { holder, item, index ->
+            tagAdapter = TagAdapter(R.layout.item_tag_type_1, tagRes) { holder, item, _ ->
                 holder.binding.avm = RecyclerViewChartTagViewModel(item).apply {
                     onAttach(this@ChartIndexFragment)
                     clickItemListener = {

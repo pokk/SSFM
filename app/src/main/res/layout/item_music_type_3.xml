@@ -13,6 +13,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?android:selectableItemBackground"
+        android:onClick="@{avm::trackOnClick}"
         android:padding="5dp"
         android:paddingEnd="@dimen/two_unit"
         android:paddingStart="@dimen/two_unit">

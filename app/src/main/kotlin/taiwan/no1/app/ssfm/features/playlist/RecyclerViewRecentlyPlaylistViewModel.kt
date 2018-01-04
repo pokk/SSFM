@@ -4,6 +4,7 @@ import android.databinding.ObservableField
 import android.view.View
 import com.devrapid.kotlinknifer.toTimeString
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
+import taiwan.no1.app.ssfm.misc.extension.createDebounce
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 
@@ -16,6 +17,10 @@ class RecyclerViewRecentlyPlaylistViewModel(val item: BaseEntity) : BaseViewMode
     val trackName by lazy { ObservableField<String>() }
     val trackDuration by lazy { ObservableField<String>() }
     val artistName by lazy { ObservableField<String>() }
+    private val debounceTrackClick by lazy {
+        createDebounce<View> {
+        }
+    }
 
     init {
         (item as PlaylistItemEntity).let {
@@ -32,6 +37,5 @@ class RecyclerViewRecentlyPlaylistViewModel(val item: BaseEntity) : BaseViewMode
      *
      * @event_to [taiwan.no1.app.ssfm.features.search.SearchViewModel.receiveClickHistoryEvent]
      */
-    fun trackOnClick(view: View) {
-    }
+    fun trackOnClick(view: View) = debounceTrackClick.onNext(view)
 }

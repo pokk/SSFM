@@ -18,8 +18,7 @@ import taiwan.no1.app.ssfm.models.usecases.AddPlaylistUsecase
  * @since   9/13/17
  */
 class PlaylistViewModel(private val context: Context,
-                        private val addPlaylistUsecase: AddPlaylistCase) :
-    BaseViewModel() {
+                        private val addPlaylistUsecase: AddPlaylistCase) : BaseViewModel() {
     val title by lazy { ObservableField<String>(context.getString(R.string.menu_my_playlist)) }
 
     /**

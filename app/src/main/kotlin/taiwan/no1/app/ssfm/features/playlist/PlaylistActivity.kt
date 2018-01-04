@@ -50,7 +50,7 @@ class PlaylistActivity : AdvancedActivity<PlaylistViewModel, ActivityPlaylistBin
     /**
      * @param params
      *
-     * @event_from [taiwan.no1.app.ssfm.features.playlist.RecyclerViewPlaylistViewModel.playlistOnClick]
+     * @event_from [taiwan.no1.app.ssfm.features.playlist.RecyclerViewPlaylistViewModel.debouncePlaylistClick]
      * @event_from [taiwan.no1.app.ssfm.features.playlist.PlaylistViewModel.addPlaylistOnClick]
      */
     @Subscribe(tags = [Tag(RxBusTag.VIEWMODEL_CLICK_PLAYLIST), Tag(RxBusTag.VIEWMODEL_CLICK_ADD_PLAYLIST)])
