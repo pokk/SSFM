@@ -20,7 +20,7 @@ import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemUsecase
  * @author  jieyi
  * @since   12/29/17
  */
-class RecyclerViewDialogPlaylistViewModel(entity: BaseEntity,
+class RecyclerViewDialogPlaylistViewModel(private val entity: BaseEntity,
                                           private val musicEntity: BaseEntity,
                                           private val addPlaylistItemCase: AddPlaylistItemCase) : BaseViewModel() {
     val playlistName by lazy { ObservableField<String>() }
@@ -30,9 +30,11 @@ class RecyclerViewDialogPlaylistViewModel(entity: BaseEntity,
      */
     private val debounceAddToPlaylist by lazy {
         createDebounce<View> {
+            val playlistId = (entity as PlaylistEntity).id
             val playlistParam = when (musicEntity) {
                 is MusicEntity.Music -> {
-                    PlaylistItemEntity(trackUri = musicEntity.url,
+                    PlaylistItemEntity(playlistId = playlistId,
+                        trackUri = musicEntity.url,
                         trackName = musicEntity.title,
                         artistName = musicEntity.artist,
                         coverUrl = musicEntity.coverURL,
@@ -40,7 +42,8 @@ class RecyclerViewDialogPlaylistViewModel(entity: BaseEntity,
                         duration = musicEntity.length)
                 }
                 is MusicRankEntity.Song -> {
-                    PlaylistItemEntity(trackUri = musicEntity.url,
+                    PlaylistItemEntity(playlistId = playlistId,
+                        trackUri = musicEntity.url,
                         trackName = musicEntity.title,
                         artistName = musicEntity.artist,
                         coverUrl = musicEntity.coverURL,

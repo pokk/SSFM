@@ -3,7 +3,6 @@ package taiwan.no1.app.ssfm.features.playlist
 import android.os.Bundle
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.transition.TransitionInflater
-import com.devrapid.kotlinknifer.logw
 import org.jetbrains.anko.bundleOf
 import taiwan.no1.app.ssfm.App
 import taiwan.no1.app.ssfm.R
@@ -12,6 +11,7 @@ import taiwan.no1.app.ssfm.features.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.PlaylistItemAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.ItemTouchViewmodelCallback
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.SimpleItemTouchHelperCallback
@@ -52,12 +52,7 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
 
     @Inject override lateinit var viewModel: PlaylistDetailFragmentViewModel
     private val playlistItemInfo by lazy { DataInfo() }
-    private var playlistItemRes = mutableListOf<BaseEntity>(PlaylistItemEntity(),
-        PlaylistItemEntity(),
-        PlaylistItemEntity(),
-        PlaylistItemEntity(),
-        PlaylistItemEntity(),
-        PlaylistItemEntity())
+    private var playlistItemRes = mutableListOf<BaseEntity>()
     // Get the arguments from the bundle here.
     private val playlist by lazy { arguments.getParcelable<PlaylistEntity>(ARG_PARAM_PLAYLIST_OBJECT) }
     private val transition by lazy { arguments.getStringArrayList(ARG_PARAM_PLAYLIST_TRANSITION) }
@@ -81,7 +76,11 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
             ItemTouchHelper(callback).attachToRecyclerView(recyclerView)
         }
         viewModel.attachPlaylistInfo(playlist)
-        playlistItemInfo.firstFetch { info -> viewModel.fetchPlaylistItems(playlist.id) { logw(it) } }
+        playlistItemInfo.firstFetch { info ->
+            viewModel.fetchPlaylistItems(playlist.id) {
+                playlistItemRes.refreshAndChangeList(it, 0, binding?.itemAdapter as PlaylistItemAdapter, info)
+            }
+        }
     }
 
     override fun provideInflateView(): Int = R.layout.fragment_playlist_detail

@@ -55,7 +55,7 @@
                 tools:src="@drawable/sample_lady_gaga"/>
 
             <TextView
-                android:id="@+id/tv_album_name"
+                android:id="@+id/tv_track_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/one_unit"
@@ -76,9 +76,9 @@
                 android:layout_marginTop="@dimen/one_unit"
                 android:fontFamily="sans-serif-smallcaps"
                 android:text="@{vm.artistName}"
-                app:layout_constraintEnd_toEndOf="@+id/tv_album_name"
-                app:layout_constraintStart_toStartOf="@+id/tv_album_name"
-                app:layout_constraintTop_toBottomOf="@+id/tv_album_name"
+                app:layout_constraintEnd_toEndOf="@+id/tv_track_name"
+                app:layout_constraintStart_toStartOf="@+id/tv_track_name"
+                app:layout_constraintTop_toBottomOf="@+id/tv_track_name"
                 tools:text="Lady Gaga"/>
 
             <me.gujun.android.taggroup.TagGroup

@@ -149,5 +149,5 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
     }
 
     override fun provideInflateView(): Int = R.layout.fragment_detail_tag
-//endregion
+    //endregion
 }

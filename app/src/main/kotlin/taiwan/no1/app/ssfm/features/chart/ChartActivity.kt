@@ -69,7 +69,7 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
 
     override fun onStop() {
         super.onStop()
-        dialogFragment.dismiss()
+        dismissPlaylistDialog("")
     }
 
     override fun onDestroy() {

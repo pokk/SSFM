@@ -16,9 +16,7 @@ import com.devrapid.kotlinknifer.logw
  */
 class WrapContentLinearLayoutManager : LinearLayoutManager {
     constructor(context: Context) : super(context)
-    constructor(context: Context, orientation: Int, reverseLayout: Boolean) : super(context,
-        orientation,
-        reverseLayout)
+    constructor(context: Context, orientation: Int, reverseLayout: Boolean) : super(context, orientation, reverseLayout)
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) :
         super(context, attrs, defStyleAttr, defStyleRes)

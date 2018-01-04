@@ -1,5 +1,6 @@
 package taiwan.no1.app.ssfm.models.data.local
 
+import android.annotation.SuppressLint
 import com.raizlabs.android.dbflow.kotlinextensions.and
 import com.raizlabs.android.dbflow.kotlinextensions.delete
 import com.raizlabs.android.dbflow.kotlinextensions.eq
@@ -32,6 +33,7 @@ import java.util.Date
  * @author  jieyi
  * @since   5/10/17
  */
+@SuppressLint("CheckResult")
 class LocalDataStore : IDataStore {
     //region V1
     override fun getSearchMusicRes(keyword: String,

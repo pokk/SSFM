@@ -7,6 +7,8 @@
 
     <data>
 
+        <import type="android.view.View"/>
+
         <variable
             name="avm"
             type="taiwan.no1.app.ssfm.features.playlist.RecyclerViewPlaylistDetailViewModel"/>
@@ -19,6 +21,15 @@
         android:padding="5dp"
         tools:background="@color/colorPrimary">
 
+        <View
+            android:layout_width="2dp"
+            android:layout_height="0dp"
+            android:background="@color/colorDarkTurquoise"
+            android:visibility="@{avm.isPlaying ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@id/rl_content"
+            app:layout_constraintEnd_toStartOf="@id/rl_content"
+            app:layout_constraintTop_toTopOf="@id/rl_content"/>
+
         <RelativeLayout
             android:id="@+id/rl_content"
             android:layout_width="0dp"
@@ -27,7 +38,10 @@
             android:layout_marginTop="10dp"
             android:background="@color/colorPrimaryDark"
             android:orientation="vertical"
-            android:padding="8dp"
+            android:paddingBottom="12dp"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:paddingTop="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,31 +66,6 @@
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"
                 tools:text="2"/>
-
-            <TextView
-                android:id="@+id/tv_album_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="@dimen/one_unit"
-                android:layout_marginStart="78dp"
-                android:layout_toEndOf="@+id/tv_index"
-                android:layout_toStartOf="@id/tv_duration"
-                android:text="@{avm.trackName}"
-                android:textColor="@color/colorWhite"
-                android:textStyle="bold"
-                tools:text="The Cure"/>
-
-            <TextView
-                android:id="@+id/tv_singer_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/tv_album_name"
-                android:layout_alignStart="@+id/tv_album_name"
-                android:layout_below="@+id/tv_album_name"
-                android:text="@{avm.albumName}"
-                android:textColor="@color/colorWhite"
-                tools:text="Lady Gaga"/>
 
             <TextView
                 android:id="@+id/tv_duration"
@@ -106,5 +95,34 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.9"
             tools:src="@drawable/sample_lady_gaga"/>
+
+        <TextView
+            android:id="@+id/tv_track_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="2dp"
+            android:layout_toStartOf="@id/iv_music_icon"
+            android:text="@{avm.trackName}"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/tv_singer_name"
+            app:layout_constraintEnd_toEndOf="@id/tv_singer_name"
+            app:layout_constraintStart_toStartOf="@id/tv_singer_name"
+            tools:text="The Cure"/>
+
+        <TextView
+            android:id="@+id/tv_singer_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginEnd="64dp"
+            android:layout_marginStart="16dp"
+            android:text="@{avm.artistName}"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="@id/iv_music_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_music_icon"
+            tools:text="Lady Gaga"/>
     </android.support.constraint.ConstraintLayout>
 </layout>
