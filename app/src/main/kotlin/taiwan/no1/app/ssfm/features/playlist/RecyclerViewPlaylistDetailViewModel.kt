@@ -32,6 +32,7 @@ class RecyclerViewPlaylistDetailViewModel(val item: BaseEntity) : BaseViewModel(
 
     init {
         (item as PlaylistItemEntity).let {
+            index.set(it.id.toString())
             artistName.set(it.artistName)
             trackName.set(it.trackName)
             duration.set(it.duration.toTimeString())

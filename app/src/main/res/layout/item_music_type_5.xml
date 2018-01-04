@@ -84,7 +84,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginBottom="@dimen/one_unit"
-            android:layout_marginStart="34dp"
+            android:layout_marginStart="38dp"
             android:background="@{avm.showBackground ? @drawable/shadow : null}"
             android:error="@{@drawable/sample_jieyi_icon}"
             android:imageUrl="@{avm.thumbnail}"
@@ -93,7 +93,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.9"
+            app:layout_constraintVertical_bias="0.5"
             tools:src="@drawable/sample_lady_gaga"/>
 
         <TextView

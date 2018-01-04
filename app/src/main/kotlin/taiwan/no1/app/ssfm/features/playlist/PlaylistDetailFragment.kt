@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.transition.TransitionInflater
 import org.jetbrains.anko.bundleOf
+import org.jetbrains.anko.collections.forEachWithIndex
 import taiwan.no1.app.ssfm.App
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentPlaylistDetailBinding
@@ -78,6 +79,7 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
         viewModel.attachPlaylistInfo(playlist)
         playlistItemInfo.firstFetch { info ->
             viewModel.fetchPlaylistItems(playlist.id) {
+                it.forEachWithIndex { i, entity -> entity.id = (i + 1).toLong() }
                 playlistItemRes.refreshAndChangeList(it, 0, binding?.itemAdapter as PlaylistItemAdapter, info)
             }
         }
