@@ -27,8 +27,7 @@ import taiwan.no1.app.ssfm.models.usecases.GetPlaylistItemsUsecase
  */
 class PlaylistDetailFragmentViewModel(private val editPlaylistUsecase: EditPlaylistCase,
                                       private val getPlaylistItemsUsecase: FetchPlaylistItemCase,
-                                      private val removePlaylistItemUsecase: AddPlaylistItemCase) :
-    BaseViewModel() {
+                                      private val removePlaylistItemUsecase: AddPlaylistItemCase) : BaseViewModel() {
     val playlistName by lazy { ObservableField<String>() }
     val trackQuantity by lazy { ObservableField<String>() }
     val duration by lazy { ObservableField<String>() }
