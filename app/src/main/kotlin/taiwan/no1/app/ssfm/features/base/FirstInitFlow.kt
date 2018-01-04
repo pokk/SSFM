@@ -48,8 +48,11 @@ class FirstInitFlow {
                 GetMusicRankUsecase(RemoteDataStore(gContext())).execute(GetMusicRankUsecase.RequestValue(type)) {
                     onNext {
                         AddRankChartUsecase(LocalDataStore()).
-                            execute(AddRankChartUsecase.RequestValue(RankChartEntity(0, type,
-                                it.data.songs[0].coverURL, name, update))) { onNext { logd(it) } }
+                            execute(AddRankChartUsecase.RequestValue(RankChartEntity(0,
+                                                                                     type,
+                                                                                     it.data.songs[0].coverURL,
+                                                                                     name,
+                                                                                     update))) { onNext { logd(it) } }
                     }
                 }
             }

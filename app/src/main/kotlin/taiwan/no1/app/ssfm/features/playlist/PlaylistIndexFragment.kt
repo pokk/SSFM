@@ -71,11 +71,16 @@ class PlaylistIndexFragment : AdvancedFragment<PlaylistIndexFragmentViewModel, F
         }
         // First time showing this fragment.
         viewModel.fetchPlaylistAndRecently({
-            playlistRes.refreshAndChangeList(it, 1, binding?.playlistAdapter as PlaylistAdapter, playlistInfo)
-        }, {
-            recentlyPlayedRes.refreshAndChangeList(it, 1, binding?.recentlyAdapter as RecentlyAdapter,
-                recentlyPlayedInfo)
-        })
+                                               playlistRes.refreshAndChangeList(it,
+                                                                                1,
+                                                                                binding?.playlistAdapter as PlaylistAdapter,
+                                                                                playlistInfo)
+                                           }, {
+                                               recentlyPlayedRes.refreshAndChangeList(it,
+                                                                                      1,
+                                                                                      binding?.recentlyAdapter as RecentlyAdapter,
+                                                                                      recentlyPlayedInfo)
+                                           })
     }
 
     override fun provideInflateView(): Int = R.layout.fragment_mylist_index

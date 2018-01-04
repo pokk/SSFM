@@ -18,8 +18,7 @@ class ExpandableViewTypeFactory : ViewTypeFactory() {
     override var transformMap: MutableMap<Int, Pair<Int, (View) -> ViewHolder>> = mutableMapOf(
         3 to Pair(R.layout.item_preference_first_layer_title, { _ -> TODO() }),
         4 to Pair(R.layout.item_preference_first_layer_toggle, { _ -> TODO() }),
-        5 to Pair(R.layout.item_preference_second_layer_title, { _ -> TODO() })
-    )
+        5 to Pair(R.layout.item_preference_second_layer_title, { _ -> TODO() }))
 
     // NOTE(jieyi): 9/5/17 Add the new type here.
     fun type(entity: PreferenceEntity): Int = 3

@@ -33,8 +33,8 @@ class InitialHorizontalRVStrategy<V : ViewDataBinding, A : BaseAdapter<V>>(priva
     IInitialRecyclerViewStrategy {
     override fun initLayoutManager() {
         layoutManager?.invoke(WrapContentLinearLayoutManager(rxFragment.activity,
-            LinearLayoutManager.HORIZONTAL,
-            false))
+                                                             LinearLayoutManager.HORIZONTAL,
+                                                             false))
     }
 
     override fun initAdapter() {
@@ -48,8 +48,8 @@ class InitialHorizontalRVStrategy<V : ViewDataBinding, A : BaseAdapter<V>>(priva
 
     override fun initLoadMore() {
         callback?.invoke(RVCustomScrollCallback(adapter1 as BaseDataBindingAdapter<V, BaseEntity>,
-            dataInfo,
-            entity,
-            fetchFun))
+                                                dataInfo,
+                                                entity,
+                                                fetchFun))
     }
 }

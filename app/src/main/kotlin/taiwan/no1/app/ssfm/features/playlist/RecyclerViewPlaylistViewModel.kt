@@ -51,7 +51,7 @@ class RecyclerViewPlaylistViewModel(val item: BaseEntity) : BaseViewModel() {
         (item as PlaylistEntity).let {
             val sharedElements =
                 listOf(Pair(view.iv_playlist_image, "transition_image_${it.id}"),
-                    Pair(view.tv_playlist_name, "transition_name_${it.id}"))
+                       Pair(view.tv_playlist_name, "transition_name_${it.id}"))
 
             sharedElements.forEach { it.first.transitionName = it.second }
 

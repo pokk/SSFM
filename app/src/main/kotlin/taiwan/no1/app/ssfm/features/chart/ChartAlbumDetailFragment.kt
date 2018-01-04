@@ -37,7 +37,7 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
         fun newInstance(artistAlbumName: String = "", artistName: String = "") =
             ChartAlbumDetailFragment().apply {
                 arguments = bundleOf(ARG_PARAM_ARTIST_ALBUM_NAME to artistAlbumName,
-                    ARG_PARAM_ARTIST_NAME to artistName)
+                                     ARG_PARAM_ARTIST_NAME to artistName)
             }
     }
     //endregion

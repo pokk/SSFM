@@ -43,7 +43,7 @@ class NetModule {
     @Provides
     @Network
     fun provideOkHttpCache(context: Context) = Cache(context.cacheDir,
-        10 * 1024 * 1024 /* 10 MiB */)
+                                                     10 * 1024 * 1024 /* 10 MiB */)
 
     @Provides
     @Network

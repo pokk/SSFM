@@ -20,9 +20,9 @@ class RecyclerViewChartTagViewModel(val item: BaseEntity) : BaseViewModel() {
         fun randomColor(): Int =
             Random().let {
                 Color.argb(it.nextInt(256),
-                    it.nextInt(256),
-                    it.nextInt(256),
-                    it.nextInt(256))
+                           it.nextInt(256),
+                           it.nextInt(256),
+                           it.nextInt(256))
             }
 
         val background = GradientDrawable(GradientDrawable.Orientation.BR_TL, intArrayOf(randomColor(), randomColor()))

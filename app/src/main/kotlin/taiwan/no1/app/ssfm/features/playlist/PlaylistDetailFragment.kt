@@ -39,7 +39,7 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
         fun newInstance(playlist: PlaylistEntity, transition: List<String>) =
             PlaylistDetailFragment().apply {
                 arguments = bundleOf(ARG_PARAM_PLAYLIST_OBJECT to playlist,
-                    ARG_PARAM_PLAYLIST_TRANSITION to ArrayList(transition))
+                                     ARG_PARAM_PLAYLIST_TRANSITION to ArrayList(transition))
                 if (transition.isNotEmpty()) {
                     sharedElementEnterTransition = TransitionInflater.from(App.appComponent.context()).inflateTransition(
                         R.transition.change_bound_and_fade)

@@ -1,8 +1,7 @@
 package taiwan.no1.app.ssfm;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -11,7 +10,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class ExampleUnitTest {
     @Test
-    public void addition_isCorrect() throws Exception {
+    public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
     }
 }

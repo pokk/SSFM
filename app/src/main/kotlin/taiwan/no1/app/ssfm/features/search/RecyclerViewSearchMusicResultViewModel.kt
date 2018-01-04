@@ -20,7 +20,7 @@ import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
-import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemUsecase
+import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemUsecase.RequestValue
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
 
 /**
@@ -75,13 +75,17 @@ class RecyclerViewSearchMusicResultViewModel(private val res: BaseEntity,
             MusicPlayerHelper.instance.run {
                 play(url) {
                     lifecycleProvider.execute(addPlaylistItemCase,
-                        AddPlaylistItemUsecase.RequestValue(PlaylistItemEntity(playlistId = DATABASE_PLAYLIST_HISTORY_ID.toLong(),
-                            trackUri = url,
-                            trackName = title,
-                            artistName = artist,
-                            coverUrl = coverURL,
-                            lyricUrl = lyricURL,
-                            duration = length))) { onNext { logw(it) } }
+                                              RequestValue(PlaylistItemEntity(playlistId = DATABASE_PLAYLIST_HISTORY_ID.toLong(),
+                                                                              trackUri = url,
+                                                                              trackName = title,
+                                                                              artistName = artist,
+                                                                              coverUrl = coverURL,
+                                                                              lyricUrl = lyricURL,
+                                                                              duration = length))) {
+                        onNext {
+                            logw(it)
+                        }
+                    }
                     addStateChangedListeners(stateEventListener)
                 }
             }

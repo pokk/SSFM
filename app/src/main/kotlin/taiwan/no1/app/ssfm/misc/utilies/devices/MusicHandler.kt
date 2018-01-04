@@ -23,11 +23,11 @@ fun LifecycleProvider<*>.searchTheTopMusicAndPlayThenToPlaylist(searchMusicCase:
         onNext {
             it.data.items.first().run {
                 val playlistEntity = PlaylistItemEntity(trackUri = url,
-                    trackName = title,
-                    artistName = artist,
-                    coverUrl = coverURL,
-                    lyricUrl = lyricURL,
-                    duration = length)
+                                                        trackName = title,
+                                                        artistName = artist,
+                                                        coverUrl = coverURL,
+                                                        lyricUrl = lyricURL,
+                                                        duration = length)
 
                 playThenToPlaylist(addPlaylistItemCase, playlistEntity, stateEventListener, block)
             }
@@ -44,7 +44,7 @@ fun LifecycleProvider<*>.playThenToPlaylist(addPlaylistItemCase: AddPlaylistItem
         play(playlistEntity.trackUri) {
             // Add this history to database.
             execute(addPlaylistItemCase,
-                AddPlaylistItemUsecase.RequestValue(playlistEntity.apply { playlistId = Constant.DATABASE_PLAYLIST_HISTORY_ID.toLong() })) {}
+                    AddPlaylistItemUsecase.RequestValue(playlistEntity.apply { playlistId = Constant.DATABASE_PLAYLIST_HISTORY_ID.toLong() })) {}
         }
         addStateChangedListeners(stateEventListener)
     }

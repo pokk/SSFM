@@ -64,26 +64,26 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
     override fun getArtistTags(artist: String, session: Any) = remote.getArtistTags(artist, session)
 
     override fun getSimilarTracks(artist: String, track: String) = remote.getSimilarTracks(artist,
-        track)
+                                                                                           track)
     //endregion
 
     //region Album
     override fun getAlbumInfo(artist: String, albumOrMbid: String) = remote.getAlbumInfo(artist,
-        albumOrMbid)
+                                                                                         albumOrMbid)
     //endregion
 
     //region Tag
     override fun getTagTopAlbums(tag: String, page: Int, limit: Int) = remote.getTagTopAlbums(tag,
-        page,
-        limit)
+                                                                                              page,
+                                                                                              limit)
 
     override fun getTagTopArtists(tag: String, page: Int, limit: Int) = remote.getTagTopArtists(tag,
-        page,
-        limit)
+                                                                                                page,
+                                                                                                limit)
 
     override fun getTagTopTracks(tag: String, page: Int, limit: Int) = remote.getTagTopTracks(tag,
-        page,
-        limit)
+                                                                                              page,
+                                                                                              limit)
 
     override fun getTagInfo(tag: String) = remote.getTagInfo(tag)
     //endregion

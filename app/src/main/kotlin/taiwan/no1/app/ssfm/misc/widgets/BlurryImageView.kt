@@ -28,12 +28,12 @@ class BlurryImageView @JvmOverloads constructor(context: Context,
         this.bitmap = bitmap
 
         val shaderA = LinearGradient(0f,
-            0f,
-            0f,
-            bitmap.height.toFloat(),
-            -0x1,
-            0x00ffffff,
-            Shader.TileMode.CLAMP)
+                                     0f,
+                                     0f,
+                                     bitmap.height.toFloat(),
+                                     -0x1,
+                                     0x00ffffff,
+                                     Shader.TileMode.CLAMP)
         val shaderB = BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
         paint.shader = ComposeShader(shaderA, shaderB, PorterDuff.Mode.SRC_IN)
 
@@ -42,9 +42,9 @@ class BlurryImageView @JvmOverloads constructor(context: Context,
 
     override fun onDraw(canvas: Canvas) {
         canvas.drawRect(0f,
-            0f,
-            bitmap?.width?.toFloat() ?: 0f,
-            bitmap?.height?.toFloat() ?: 0f,
-            paint)
+                        0f,
+                        bitmap?.width?.toFloat() ?: 0f,
+                        bitmap?.height?.toFloat() ?: 0f,
+                        paint)
     }
 }

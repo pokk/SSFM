@@ -49,7 +49,6 @@ class SideMenu(context: Context, @LayoutRes resMenu: Int = -1) : FrameLayout(con
     var menuListener = MenuListener()
         private set
     var menuItems = mutableListOf<WeakReference<MenuItem>>()
-        get() = field
         set(value) {
             field = value
             rebuildMenu()
@@ -103,8 +102,8 @@ class SideMenu(context: Context, @LayoutRes resMenu: Int = -1) : FrameLayout(con
             it.inflate(R.layout.custom_menu_view_container, this)
 
             vScrollMenu = it.inflate(if (0 <= resMenu) resMenu else R.layout.custom_menu_scroll_view,
-                this,
-                false)
+                                     this,
+                                     false)
             rl_menu_holder.addView(vScrollMenu)
         }
     }
@@ -130,7 +129,7 @@ class SideMenu(context: Context, @LayoutRes resMenu: Int = -1) : FrameLayout(con
                 }
 
                 val (xOffset, yOffset) = Pair((ev.x - lastActionDownX).toInt(),
-                    (ev.y - lastActionDownY).toInt())
+                                              (ev.y - lastActionDownY).toInt())
 
                 if (PRESSED_DOWN == pressedState) {
                     if (25 < yOffset || -25 > yOffset) {
@@ -208,8 +207,8 @@ class SideMenu(context: Context, @LayoutRes resMenu: Int = -1) : FrameLayout(con
         // Scale down for the activity.
         buildScaleDownAnimation(viewActivity, mScaleValue, mScaleValue).also {
             val scaleDown_shadow = buildScaleDownAnimation(iv_shadow,
-                mScaleValue + shadowAdjustScaleX,
-                mScaleValue + shadowAdjustScaleY)
+                                                           mScaleValue + shadowAdjustScaleX,
+                                                           mScaleValue + shadowAdjustScaleY)
             val alpha_menu = buildMenuAnimation(vScrollMenu, 1.0f)
 
             it.addListener(animationListener)
@@ -291,14 +290,14 @@ class SideMenu(context: Context, @LayoutRes resMenu: Int = -1) : FrameLayout(con
         // scale down animation
         AnimatorSet().also {
             it.playTogether(ObjectAnimator.ofFloat(target, "scaleX", targetScaleX),
-                ObjectAnimator.ofFloat(target, "scaleY", targetScaleY))
+                            ObjectAnimator.ofFloat(target, "scaleY", targetScaleY))
 
             if (mUse3D) {
                 it.playTogether(ObjectAnimator.ofFloat(target, "rotationY", -1 * ROTATE_Y_ANGLE))
             }
 
             it.interpolator = AnimationUtils.loadInterpolator(activity,
-                android.R.anim.decelerate_interpolator)
+                                                              android.R.anim.decelerate_interpolator)
             it.duration = ANIMATION_DURATION
         }
 
@@ -308,7 +307,7 @@ class SideMenu(context: Context, @LayoutRes resMenu: Int = -1) : FrameLayout(con
         // scale animation
         AnimatorSet().also {
             it.playTogether(ObjectAnimator.ofFloat(target, "scaleX", targetScaleX),
-                ObjectAnimator.ofFloat(target, "scaleY", targetScaleY))
+                            ObjectAnimator.ofFloat(target, "scaleY", targetScaleY))
 
             if (mUse3D) {
                 it.playTogether(ObjectAnimator.ofFloat(target, "rotationY", 0f))

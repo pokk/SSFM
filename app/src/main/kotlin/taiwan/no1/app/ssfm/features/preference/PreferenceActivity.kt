@@ -56,7 +56,7 @@ class PreferenceActivity : AdvancedActivity<PreferenceViewModel, ActivityPrefere
                     is PreferenceEntity -> {
                         (holder as BindingHolder<ItemPreferenceFirstLayerTitleBinding>).binding.avm =
                             PreferenceItemViewModel(binding.adapter as MultipleTypeAdapter,
-                                preferenceList.indexOf(item), item)
+                                                    preferenceList.indexOf(item), item)
                     }
                     is PreferenceOptionEntity -> {
                         (holder as BindingHolder<ItemPreferenceSecondLayerTitleBinding>).binding.avm =

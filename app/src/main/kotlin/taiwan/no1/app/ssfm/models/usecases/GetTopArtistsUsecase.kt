@@ -4,6 +4,7 @@ import io.reactivex.Observable
 import taiwan.no1.app.ssfm.models.data.IDataStore
 import taiwan.no1.app.ssfm.models.entities.lastfm.TopArtistEntity
 import taiwan.no1.app.ssfm.models.usecases.GetTopArtistsUsecase.RequestValue
+
 /**
  * @author  jieyi
  * @since   10/11/17

@@ -84,12 +84,12 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
     fun trackOnClick(view: View) {
         val playlistEntity = (item as MusicRankEntity.Song).run {
             PlaylistItemEntity(playlistId = Constant.DATABASE_PLAYLIST_HISTORY_ID.toLong(),
-                trackUri = url,
-                trackName = title,
-                artistName = artist,
-                coverUrl = coverURL,
-                lyricUrl = lyricURL,
-                duration = length)
+                               trackUri = url,
+                               trackName = title,
+                               artistName = artist,
+                               coverUrl = coverURL,
+                               lyricUrl = lyricURL,
+                               duration = length)
         }
 
         lifecycleProvider.playThenToPlaylist(addPlaylistItemCase, playlistEntity, stateEventListener) {

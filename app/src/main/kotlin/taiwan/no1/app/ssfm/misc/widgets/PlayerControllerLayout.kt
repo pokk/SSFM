@@ -35,10 +35,10 @@ class PlayerControllerLayout
         padding = 20
     }
     val listImageButtons = listOf(imageButton(),
-        imageButton(),
-        imageButton(),
-        imageButton(),
-        imageButton())
+                                  imageButton(),
+                                  imageButton(),
+                                  imageButton(),
+                                  imageButton())
     val listBtnListeners = mutableListOf(
         { _: ImageButton -> },
         { _: ImageButton -> },
@@ -72,8 +72,8 @@ class PlayerControllerLayout
         listImageButtons.forEachWithIndex { index, _ ->
             val childWidth = if (2 == index) unitWidth.times(2) else unitWidth
             getChildAt(index).measure(MeasureSpec.makeMeasureSpec(childWidth, MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(childWidth - paddingTop - paddingBottom,
-                    MeasureSpec.EXACTLY))
+                                      MeasureSpec.makeMeasureSpec(childWidth - paddingTop - paddingBottom,
+                                                                  MeasureSpec.EXACTLY))
         }
         // Pick the highest component's height and plus left & right margin.
         val maxHeight = listImageButtons.map { it.height }.max()?.plus(paddingTop)?.plus(
@@ -103,7 +103,7 @@ class PlayerControllerLayout
             val (l, r) = when (index) {
                 0 -> Pair(paddingLeft, paddingLeft + btn.measuredWidth)
                 2 -> Pair(layoutWidth / 2 - btn.measuredWidth / 2,
-                    layoutWidth / 2 + btn.measuredWidth / 2)
+                          layoutWidth / 2 + btn.measuredWidth / 2)
                 1, 3, 4 -> Pair(prev.right, prev.right + btn.measuredWidth)
                 else -> Pair(0, 0)
             }

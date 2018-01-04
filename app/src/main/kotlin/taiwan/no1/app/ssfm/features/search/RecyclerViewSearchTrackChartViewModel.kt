@@ -71,8 +71,8 @@ class RecyclerViewSearchTrackChartViewModel(val track: BaseEntity) : BaseViewMod
         }
 
         RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_HISTORY,
-            hashMapOf(VIEWMODEL_PARAMS_KEYWORD to keyword,
-                VIEWMODEL_PARAMS_IMAGE_URL to imageUrl,
-                VIEWMODEL_PARAMS_FOG_COLOR to darkColor.toString()))
+                         hashMapOf(VIEWMODEL_PARAMS_KEYWORD to keyword,
+                                   VIEWMODEL_PARAMS_IMAGE_URL to imageUrl,
+                                   VIEWMODEL_PARAMS_FOG_COLOR to darkColor.toString()))
     }
 }

@@ -154,14 +154,17 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
                 binding.vm = ChartDialogViewModel(playlistRes.isEmpty(), fetchPlaylistCase).apply {
                     onAttach(this@ChartActivity)
                     fetchedPlaylistCallback = {
-                        playlistRes.refreshAndChangeList(it.subList(1, it.size), 1,
-                            binding.adapter as DFPlaylistAdapter, playlistInfo)
+                        playlistRes.refreshAndChangeList(it.subList(1, it.size),
+                                                         1,
+                                                         binding.adapter as DFPlaylistAdapter,
+                                                         playlistInfo)
                     }
-                    binding.layoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.VERTICAL,
-                        false)
+                    binding.layoutManager = WrapContentLinearLayoutManager(activity,
+                                                                           LinearLayoutManager.VERTICAL,
+                                                                           false)
                     binding.decoration = VerticalItemDecorator(20)
                     binding.adapter = DFPlaylistAdapter(R.layout.item_playlist_type_2,
-                        playlistRes) { holder, item, index ->
+                                                        playlistRes) { holder, item, _ ->
                         holder.binding.avm =
                             RecyclerViewDialogPlaylistViewModel(item, entity as BaseEntity, addPlaylistItemCase).apply {
                                 onAttach(this@ChartActivity)

@@ -38,7 +38,7 @@ class ChartRankChartDetailFragment : AdvancedFragment<ChartRankChartDetailFragme
         fun newInstance(code: Int = Constant.SPECIAL_NUMBER, chartEntity: RankChartEntity? = null) =
             ChartRankChartDetailFragment().apply {
                 arguments = bundleOf(ARG_PARAM_RANK_CODE to code,
-                    ARG_PARAM_CHART_ENTITY to (chartEntity ?: RankChartEntity())).apply {
+                                     ARG_PARAM_CHART_ENTITY to (chartEntity ?: RankChartEntity())).apply {
                 }
             }
     }

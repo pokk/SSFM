@@ -9,9 +9,9 @@ import android.support.v7.widget.RecyclerView
  * @since   10/1/17
  */
 @BindingAdapter("android:layoutManager",
-    "android:adapter",
-    "android:itemDecoration",
-    requireAll = false)
+                "android:adapter",
+                "android:itemDecoration",
+                requireAll = false)
 fun RecyclerView.setAdapter(layoutManager: RecyclerView.LayoutManager?,
                             adapter: RecyclerView.Adapter<*>?,
                             itemDecoration: RecyclerView.ItemDecoration?) {

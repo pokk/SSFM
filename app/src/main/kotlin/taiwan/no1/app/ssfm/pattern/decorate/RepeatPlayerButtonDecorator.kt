@@ -18,8 +18,8 @@ class RepeatPlayerButtonDecorator(btn: ImageButton) : PlayerButtonDecorator(btn)
     override fun changeNextState(imageBtn: ImageButton) {
         // TODO: 7/2/17 Here should be state pattern.
         val listImagesResource = listOf(R.drawable.selector_controller_repeat,
-            R.drawable.selector_controller_repeat_one,
-            R.drawable.selector_controller_shuffle)
+                                        R.drawable.selector_controller_repeat_one,
+                                        R.drawable.selector_controller_shuffle)
 
         state = state.plus(1).rem(listImagesResource.size)
         imageBtn.imageResource = listImagesResource[state]

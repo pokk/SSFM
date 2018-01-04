@@ -67,8 +67,8 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
         super.onResume()
         binding?.apply {
             listOf(Pair(albumInfo, albumLayoutManager),
-                Pair(artistInfo, artistLayoutManager),
-                Pair(trackInfo, trackLayoutManager)).restoreAllLastItemPosition()
+                   Pair(artistInfo, artistLayoutManager),
+                   Pair(trackInfo, trackLayoutManager)).restoreAllLastItemPosition()
             nsvContainer.scrollTo(0, nestViewLastPosition)
         }
     }
@@ -78,8 +78,8 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
         super.onPause()
         binding?.apply {
             listOf(Triple(albumInfo, rvTopAlbum, albumLayoutManager),
-                Triple(artistInfo, rvTopArtists, artistLayoutManager),
-                Triple(trackInfo, rvTopTrack, trackLayoutManager)).keepAllLastItemPosition()
+                   Triple(artistInfo, rvTopArtists, artistLayoutManager),
+                   Triple(trackInfo, rvTopTrack, trackLayoutManager)).keepAllLastItemPosition()
             nestViewLastPosition = nsvContainer.computeVerticalScrollOffset()
         }
     }
@@ -103,23 +103,28 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
                 }
             }
             trackAdapter = TagTopTrackAdapter(R.layout.item_music_type_7, trackRes) { holder, item, index ->
-                holder.binding.avm = RecyclerViewTagTopTrackViewModel(searchMusicCase, addPlaylistItemCase,
-                    item, index + 1).apply {
+                holder.binding.avm = RecyclerViewTagTopTrackViewModel(searchMusicCase,
+                                                                      addPlaylistItemCase,
+                                                                      item,
+                                                                      index + 1).apply {
                     onAttach(this@ChartTagDetailFragment)
                     clickEvent = { (activity as ChartActivity).openBottomSheet(item) }
                 }
             }
 
-            albumLoadmore = RVCustomScrollCallback(binding?.albumAdapter as TagTopAlbumAdapter, albumInfo,
-                albumRes) { page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit ->
+            albumLoadmore = RVCustomScrollCallback(binding?.albumAdapter as TagTopAlbumAdapter,
+                                                   albumInfo,
+                                                   albumRes) { page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit ->
                 viewModel.fetchHotAlbum(musicTag, page, limit, callback)
             }
-            artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as TagTopArtistAdapter, artistInfo,
-                artistRes) { page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit ->
+            artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as TagTopArtistAdapter,
+                                                    artistInfo,
+                                                    artistRes) { page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit ->
                 viewModel.fetchHotArtist(musicTag, page, limit, callback)
             }
-            trackLoadmore = RVCustomScrollCallback(binding?.trackAdapter as TagTopTrackAdapter, trackInfo,
-                trackRes) { page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit ->
+            trackLoadmore = RVCustomScrollCallback(binding?.trackAdapter as TagTopTrackAdapter,
+                                                   trackInfo,
+                                                   trackRes) { page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit ->
                 viewModel.fetchHotTrack(musicTag, page, limit, callback)
             }
 

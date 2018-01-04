@@ -52,7 +52,7 @@ class SearchIndexFragment : AdvancedFragment<SearchIndexFragmentViewModel, Fragm
         super.onResume()
         binding?.apply {
             listOf(Pair(artistInfo, artistLayoutManager),
-                Pair(trackInfo, trackLayoutManager)).restoreAllLastItemPosition()
+                   Pair(trackInfo, trackLayoutManager)).restoreAllLastItemPosition()
         }
     }
 
@@ -60,7 +60,7 @@ class SearchIndexFragment : AdvancedFragment<SearchIndexFragmentViewModel, Fragm
         super.onPause()
         binding?.apply {
             listOf(Triple(artistInfo, rvTopArtists, artistLayoutManager),
-                Triple(trackInfo, rvTopTracks, trackLayoutManager)).keepAllLastItemPosition()
+                   Triple(trackInfo, rvTopTracks, trackLayoutManager)).keepAllLastItemPosition()
         }
     }
     //endregion
@@ -69,8 +69,8 @@ class SearchIndexFragment : AdvancedFragment<SearchIndexFragmentViewModel, Fragm
     override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
             artistLayoutManager = WrapContentLinearLayoutManager(activity,
-                LinearLayoutManager.HORIZONTAL,
-                false)
+                                                                 LinearLayoutManager.HORIZONTAL,
+                                                                 false)
             trackLayoutManager = WrapContentLinearLayoutManager(activity)
 
             artistAdapter = ArtistAdapter(R.layout.item_artist_type_1, artistRes) { holder, item, index ->
@@ -87,9 +87,9 @@ class SearchIndexFragment : AdvancedFragment<SearchIndexFragmentViewModel, Fragm
             }
 
             artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as ArtistAdapter, artistInfo,
-                artistRes, viewModel::fetchArtistList)
+                                                    artistRes, viewModel::fetchArtistList)
             trackLoadmore = RVCustomScrollCallback(binding?.trackAdapter as TrackAdapter, trackInfo, trackRes,
-                viewModel::fetchTrackList)
+                                                   viewModel::fetchTrackList)
 
             artistDecoration = HorizontalItemDecorator(20)
         }

@@ -32,7 +32,7 @@ class RecyclerViewSearchHistoryViewModel(private val keywordEntity: BaseEntity,
 
     fun deleteHistoryClick(view: View) {
         deleteHistoriesUsecase.execute(RemoveKeywordHistoriesUsecase.RequestValue(keyword.get()),
-            observer = observer { deleteItemListener((keywordEntity as KeywordEntity), it) })
+                                       observer = observer { deleteItemListener((keywordEntity as KeywordEntity), it) })
     }
 
     /**
@@ -45,6 +45,6 @@ class RecyclerViewSearchHistoryViewModel(private val keywordEntity: BaseEntity,
     fun selectHistoryItem(view: View) {
         keywordEntity as KeywordEntity
         RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_HISTORY,
-            hashMapOf(VIEWMODEL_PARAMS_KEYWORD to keywordEntity.keyword))
+                         hashMapOf(VIEWMODEL_PARAMS_KEYWORD to keywordEntity.keyword))
     }
 }

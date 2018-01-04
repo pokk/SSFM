@@ -59,7 +59,7 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
         super.onResume()
         binding?.apply {
             listOf(Pair(artistInfo, artistLayoutManager),
-                Pair(rankInfo, rankLayoutManager)).restoreAllLastItemPosition()
+                   Pair(rankInfo, rankLayoutManager)).restoreAllLastItemPosition()
         }
     }
 
@@ -67,7 +67,7 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
         super.onPause()
         binding?.apply {
             listOf(Triple(artistInfo, rvTopArtists, artistLayoutManager),
-                Triple(rankInfo, rvTopChart, rankLayoutManager)).keepAllLastItemPosition()
+                   Triple(rankInfo, rvTopChart, rankLayoutManager)).keepAllLastItemPosition()
         }
     }
     //endregion
@@ -90,14 +90,14 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
                     clickItemListener = {
                         // TODO(jieyi): 10/22/17 Change fragment to create instance method.
                         (act as ChartActivity).navigate(ChartArtistDetailFragment.newInstance(it.mbid.orEmpty(),
-                            it.name.orEmpty()), true)
+                                                                                              it.name.orEmpty()), true)
                     }
                 }
                 val sd = gContext().scaledDrawable(R.drawable.ic_feature, 0.5f, 0.5f)
                 holder.binding.tvPlayCount.setCompoundDrawables(sd, null, null, null)
             }
             artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as ArtistAdapter, artistInfo,
-                artistRes, viewModel::fetchArtistList)
+                                                    artistRes, viewModel::fetchArtistList)
             artistDecoration = HorizontalItemDecorator(20)
 
             tagLayoutManager = StaggeredGridLayoutManager(3, VERTICAL)

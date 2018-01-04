@@ -56,7 +56,7 @@ class RecyclerViewTagTopAlbumViewModel(val item: BaseEntity) : BaseViewModel() {
     fun itemOnClick(view: View) {
         item as AlbumEntity.AlbumWithArtist
         RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_ALBUM,
-            hashMapOf(VIEWMODEL_PARAMS_ARTIST_NAME to item.artist?.name,
-                VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME to item.name))
+                         hashMapOf(VIEWMODEL_PARAMS_ARTIST_NAME to item.artist?.name,
+                                   VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME to item.name))
     }
 }

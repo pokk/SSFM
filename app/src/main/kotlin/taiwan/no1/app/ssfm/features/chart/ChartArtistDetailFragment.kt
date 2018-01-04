@@ -49,7 +49,7 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
         fun newInstance(mbid: String = "", artistName: String = "") =
             ChartArtistDetailFragment().apply {
                 arguments = bundleOf(ARG_PARAM_MBID to mbid,
-                    ARG_PARAM_ARTIST_NAME to artistName)
+                                     ARG_PARAM_ARTIST_NAME to artistName)
             }
     }
     //endregion
@@ -73,7 +73,7 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
         super.onResume()
         binding?.apply {
             listOf(Pair(artistInfo, artistLayoutManager),
-                Pair(trackInfo, trackLayoutManager)).restoreAllLastItemPosition()
+                   Pair(trackInfo, trackLayoutManager)).restoreAllLastItemPosition()
             nsvContainer.scrollTo(0, nestViewLastPosition)
         }
     }
@@ -83,7 +83,7 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
         super.onPause()
         binding?.apply {
             listOf(Triple(artistInfo, rvSimilar, artistLayoutManager),
-                Triple(trackInfo, rvTopTracks, trackLayoutManager)).keepAllLastItemPosition()
+                   Triple(trackInfo, rvTopTracks, trackLayoutManager)).keepAllLastItemPosition()
             nestViewLastPosition = nsvContainer.computeVerticalScrollOffset()
         }
     }

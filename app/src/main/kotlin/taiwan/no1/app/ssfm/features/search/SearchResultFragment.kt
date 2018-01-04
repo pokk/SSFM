@@ -41,8 +41,9 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
         fun newInstance(keyword: String = "", imageUrl: String = "", fgColor: Int = gColor(R.color.colorTransparent)) =
             SearchResultFragment().apply {
                 arguments = bundleOf(ARG_PARAM_KEYWORD to keyword,
-                    ARG_PARAM_BACKGROUND_IMAGE_URL to imageUrl,
-                    ARG_PARAM_FOREGROUND_BLUR_COLOR to (fgColor.takeIf { SPECIAL_NUMBER != it }.let { it } ?: gColor(R.color.colorTransparent)))
+                                     ARG_PARAM_BACKGROUND_IMAGE_URL to imageUrl,
+                                     ARG_PARAM_FOREGROUND_BLUR_COLOR to (fgColor.takeIf { SPECIAL_NUMBER != it }.let { it } ?: gColor(
+                                         R.color.colorTransparent)))
             }
     }
     //endregion
@@ -72,7 +73,8 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
             layoutManager = WrapContentLinearLayoutManager(act)
             adapter = SearchHistoryAdapter(R.layout.item_search_music_type_1, res) { holder, item, index ->
                 holder.binding.avm = RecyclerViewSearchMusicResultViewModel(item,
-                    addPlaylistItemCase, act.applicationContext).apply {
+                                                                            addPlaylistItemCase,
+                                                                            act.applicationContext).apply {
                     onAttach(this@SearchResultFragment)
                     clickEvent = { (activity as SearchActivity).openBottomSheet(it) }
                 }

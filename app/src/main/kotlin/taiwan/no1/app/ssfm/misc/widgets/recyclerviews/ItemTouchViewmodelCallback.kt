@@ -6,5 +6,5 @@ package taiwan.no1.app.ssfm.misc.widgets.recyclerviews
  */
 interface ItemTouchViewmodelCallback {
     fun onItemDismiss(position: Int, direction: Int)
-//    fun onItemMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder)
+    //    fun onItemMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder)
 }

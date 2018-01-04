@@ -34,21 +34,21 @@ class RecyclerViewDialogPlaylistViewModel(private val entity: BaseEntity,
             val playlistParam = when (musicEntity) {
                 is MusicEntity.Music -> {
                     PlaylistItemEntity(playlistId = playlistId,
-                        trackUri = musicEntity.url,
-                        trackName = musicEntity.title,
-                        artistName = musicEntity.artist,
-                        coverUrl = musicEntity.coverURL,
-                        lyricUrl = musicEntity.lyricURL,
-                        duration = musicEntity.length)
+                                       trackUri = musicEntity.url,
+                                       trackName = musicEntity.title,
+                                       artistName = musicEntity.artist,
+                                       coverUrl = musicEntity.coverURL,
+                                       lyricUrl = musicEntity.lyricURL,
+                                       duration = musicEntity.length)
                 }
                 is MusicRankEntity.Song -> {
                     PlaylistItemEntity(playlistId = playlistId,
-                        trackUri = musicEntity.url,
-                        trackName = musicEntity.title,
-                        artistName = musicEntity.artist,
-                        coverUrl = musicEntity.coverURL,
-                        lyricUrl = musicEntity.lyricURL,
-                        duration = musicEntity.length)
+                                       trackUri = musicEntity.url,
+                                       trackName = musicEntity.title,
+                                       artistName = musicEntity.artist,
+                                       coverUrl = musicEntity.coverURL,
+                                       lyricUrl = musicEntity.lyricURL,
+                                       duration = musicEntity.length)
                 }
                 else -> null
             }

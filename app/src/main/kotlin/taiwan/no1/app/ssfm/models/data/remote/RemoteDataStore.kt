@@ -88,10 +88,10 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
     override fun searchMusic(keyword: String, page: Int, lang: String): Observable<MusicEntity> {
         val query =
             mapOf(context.getString(R.string.s_pair1) to page.toString(),
-                context.getString(R.string.s_pair2) to keyword,
-                context.getString(R.string.s_pair3) to context.getString(R.string.s_pair4),
-                context.getString(R.string.s_pair5) to context.getString(R.string.s_pair6),
-                context.getString(R.string.s_pair7) to "en")
+                  context.getString(R.string.s_pair2) to keyword,
+                  context.getString(R.string.s_pair3) to context.getString(R.string.s_pair4),
+                  context.getString(R.string.s_pair5) to context.getString(R.string.s_pair6),
+                  context.getString(R.string.s_pair7) to "en")
 
         return musicV2Service.get().searchMusic(query)
     }
@@ -119,8 +119,8 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
     override fun getChartTopArtist(page: Int, limit: Int): Observable<TopArtistEntity> {
         val query =
             mutableMapOf("page" to page.toString(),
-                "limit" to limit.toString(),
-                "method" to "chart.getTopArtists").baseLastFmParams()
+                         "limit" to limit.toString(),
+                         "method" to "chart.getTopArtists").baseLastFmParams()
 
         return musicService3.get().getChartTopArtist(query)
     }
@@ -128,8 +128,8 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
     override fun getChartTopTracks(page: Int, limit: Int): Observable<TopTrackEntity> {
         val query =
             mutableMapOf("page" to page.toString(),
-                "limit" to limit.toString(),
-                "method" to "chart.getTopTracks").baseLastFmParams()
+                         "limit" to limit.toString(),
+                         "method" to "chart.getTopTracks").baseLastFmParams()
 
         return musicService3.get().getChartTopTrack(query)
     }
@@ -137,8 +137,8 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
     override fun getChartTopTags(page: Int, limit: Int): Observable<TopTagEntity> {
         val query =
             mutableMapOf("page" to page.toString(),
-                "limit" to limit.toString(),
-                "method" to "chart.getTopTags").baseLastFmParams()
+                         "limit" to limit.toString(),
+                         "method" to "chart.getTopTags").baseLastFmParams()
 
         return musicService3.get().getChartTopTag(query)
     }
@@ -155,7 +155,7 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
     override fun getArtistInfo(mbid: String, artist: String): Observable<ArtistEntity> {
         val query =
             mutableMapOf(mbid.takeIf { it.isNotBlank() }?.let { "mbid" to it } ?: "artist" to artist,
-                "method" to "artist.getInfo").baseLastFmParams()
+                         "method" to "artist.getInfo").baseLastFmParams()
 
         return musicService3.get().getArtistInfo(query)
     }
@@ -163,8 +163,8 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
     override fun getSimilarArtist(artist: String): Observable<ArtistSimilarEntity> {
         val query =
             mutableMapOf("artist" to artist,
-                "limit" to 10.toString(),
-                "method" to "artist.getSimilar").baseLastFmParams()
+                         "limit" to 10.toString(),
+                         "method" to "artist.getSimilar").baseLastFmParams()
 
         return musicService3.get().getSimilarArtistInfo(query)
     }
@@ -172,7 +172,7 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
     override fun getArtistTopAlbum(artist: String): Observable<ArtistTopAlbumEntity> {
         val query =
             mutableMapOf("artist" to artist,
-                "method" to "artist.getTopAlbums").baseLastFmParams()
+                         "method" to "artist.getTopAlbums").baseLastFmParams()
 
         return musicService3.get().getArtistTopAlbum(query)
     }
@@ -180,21 +180,21 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
     override fun getArtistTopTrack(artist: String): Observable<ArtistTopTrackEntity> {
         val query =
             mutableMapOf("artist" to artist,
-                "method" to "artist.getTopTracks").baseLastFmParams()
+                         "method" to "artist.getTopTracks").baseLastFmParams()
 
         return musicService3.get().getArtistTopTrack(query)
     }
 
     override fun getArtistTags(artist: String,
                                session: Any): Observable<Collection<String>> = TODO()
-//        ObservableJust(Artist.getTags(artist, session))
+    //        ObservableJust(Artist.getTags(artist, session))
 
     override fun getSimilarTracks(artist: String, track: String): Observable<TrackSimilarEntity> {
         val query =
             mutableMapOf("artist" to artist,
-                "track" to track,
-                "limit" to 10.toString(),
-                "method" to "track.getSimilar").baseLastFmParams()
+                         "track" to track,
+                         "limit" to 10.toString(),
+                         "method" to "track.getSimilar").baseLastFmParams()
 
         return musicService3.get().getSimilarTrackInfo(query)
     }
@@ -218,9 +218,9 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
     override fun getTagTopAlbums(tag: String, page: Int, limit: Int): Observable<TopAlbumEntity> {
         val query =
             mutableMapOf("tag" to tag,
-                "page" to page.toString(),
-                "limit" to limit.toString(),
-                "method" to "tag.getTopAlbums").baseLastFmParams()
+                         "page" to page.toString(),
+                         "limit" to limit.toString(),
+                         "method" to "tag.getTopAlbums").baseLastFmParams()
 
         return musicService3.get().getTagTopAlbum(query)
     }
@@ -230,9 +230,9 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
                                   limit: Int): Observable<TagTopArtistEntity> {
         val query =
             mutableMapOf("tag" to tag,
-                "page" to page.toString(),
-                "limit" to limit.toString(),
-                "method" to "tag.getTopArtists").baseLastFmParams()
+                         "page" to page.toString(),
+                         "limit" to limit.toString(),
+                         "method" to "tag.getTopArtists").baseLastFmParams()
 
         return musicService3.get().getTagTopArtist(query)
     }
@@ -240,9 +240,9 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
     override fun getTagTopTracks(tag: String, page: Int, limit: Int): Observable<TopTrackEntity> {
         val query =
             mutableMapOf("tag" to tag,
-                "page" to page.toString(),
-                "limit" to limit.toString(),
-                "method" to "tag.getTopTracks").baseLastFmParams()
+                         "page" to page.toString(),
+                         "limit" to limit.toString(),
+                         "method" to "tag.getTopTracks").baseLastFmParams()
 
         return musicService3.get().getTagTopTrack(query)
     }
@@ -250,7 +250,7 @@ class RemoteDataStore constructor(private val context: Context) : IDataStore {
     override fun getTagInfo(tag: String): Observable<TagEntity> {
         val query =
             mutableMapOf("tag" to tag,
-                "method" to "tag.getInfo").baseLastFmParams()
+                         "method" to "tag.getInfo").baseLastFmParams()
 
         return musicService3.get().getTagInfo(query)
     }

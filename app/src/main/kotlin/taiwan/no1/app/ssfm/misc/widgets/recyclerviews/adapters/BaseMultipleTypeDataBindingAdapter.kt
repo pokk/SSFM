@@ -23,7 +23,9 @@ class BaseMultipleTypeDataBindingAdapter<BH : ViewDataBinding, D>(private var da
     // FIXME(jieyi): 2017/12/07 When using the `DiffUtil`, the layout cannot be correct.
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingHolder<BH> =
         DataBindingUtil.inflate<BH>(LayoutInflater.from(parent.context),
-            typeFactory.getLayoutResource(viewType), parent, false).let { BindingHolder(it) }
+                                    typeFactory.getLayoutResource(viewType),
+                                    parent,
+                                    false).let { BindingHolder(it) }
 
     override fun getItemViewType(position: Int): Int = (dataList[position] as IExpandVisitable).type(typeFactory)
 

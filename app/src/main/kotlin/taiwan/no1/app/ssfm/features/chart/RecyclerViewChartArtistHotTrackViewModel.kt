@@ -59,9 +59,9 @@ class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: Sear
             val artistName = artist?.name.orEmpty()
             // Search the music first.
             lifecycleProvider.searchTheTopMusicAndPlayThenToPlaylist(searchMusicCase,
-                addPlaylistItemCase,
-                "$artistName $trackName",
-                stateEventListener) {
+                                                                     addPlaylistItemCase,
+                                                                     "$artistName $trackName",
+                                                                     stateEventListener) {
                 // Change the viewmodel state and view icon.
                 isPlaying.set(!isPlaying.get())
                 realUrl = it.trackUri

@@ -89,9 +89,9 @@ class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV
             val artistName = artist?.name.orEmpty()
             // Search the music first.
             lifecycleProvider.searchTheTopMusicAndPlayThenToPlaylist(searchMusicCase,
-                addPlaylistItemCase,
-                "$artistName $trackName",
-                stateEventListener) {
+                                                                     addPlaylistItemCase,
+                                                                     "$artistName $trackName",
+                                                                     stateEventListener) {
                 isPlaying.set(!isPlaying.get())
                 realUrl = it.trackUri
                 RxBus.get().post(VIEWMODEL_CHART_DETAIL_CLICK, it.trackUri)

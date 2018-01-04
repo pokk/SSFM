@@ -56,10 +56,9 @@ class PlaylistActivity : AdvancedActivity<PlaylistViewModel, ActivityPlaylistBin
     @Subscribe(tags = [Tag(RxBusTag.VIEWMODEL_CLICK_PLAYLIST), Tag(RxBusTag.VIEWMODEL_CLICK_ADD_PLAYLIST)])
     fun navigateToPlaylistDetail(params: Pair<PlaylistEntity, List<Pair<View, String>>>) {
         val sharedElements = params.second.takeIf { it.isNotEmpty() }?.let { HashMap(it.toMap()) } ?: HashMap()
-        navigate(PlaylistDetailFragment.newInstance(params.first,
-            sharedElements.map { it.value }.toList()),
-            true,
-            sharedElements)
+        navigate(PlaylistDetailFragment.newInstance(params.first, sharedElements.map { it.value }.toList()),
+                 true,
+                 sharedElements)
     }
 
     private fun navigate(fragment: Fragment, needBack: Boolean, sharedElements: HashMap<View, String>) {

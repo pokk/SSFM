@@ -26,10 +26,10 @@ class PlayMainActivity : AdvancedActivity<PlayMainViewModel, ActivityMusicBindin
     private lateinit var player: IPlayerHandler
     private val permissionsStorage: Array<String> = arrayOf(WRITE_EXTERNAL_STORAGE)
     private val path: Array<String> = arrayOf("https://soundsthatmatterblog.files.wordpress.com/2012/12/04-just-give-me-a-reason-feat-nate-ruess.mp3",
-        "/storage/emulated/0/Download/test.mp3")
+                                              "/storage/emulated/0/Download/test.mp3")
     private val permissionsRequestCode = 1
 
-//    private lateinit var musicPlayer: ExoPlayerWrapper
+    //    private lateinit var musicPlayer: ExoPlayerWrapper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +41,7 @@ class PlayMainActivity : AdvancedActivity<PlayMainViewModel, ActivityMusicBindin
         var bufferPercentageListener: (percentage: Int) -> Unit = { percentage ->
         }
 
-//        musicPlayer = ExoPlayerWrapper(this.applicationContext, durationListener, bufferPercentageListener, {})
+        //        musicPlayer = ExoPlayerWrapper(this.applicationContext, durationListener, bufferPercentageListener, {})
 
         /*mediaPlayerAdapter = MediaPlayerAdapter(rcii_album)
         mediaPlayerAdapter.setDurationListener { duration ->
@@ -79,7 +79,7 @@ class PlayMainActivity : AdvancedActivity<PlayMainViewModel, ActivityMusicBindin
             it == PackageManager.PERMISSION_DENIED
         }?.let {
             ActivityCompat.requestPermissions(this,
-                permissionsStorage, permissionsRequestCode)
+                                              permissionsStorage, permissionsRequestCode)
         }
     }
 
