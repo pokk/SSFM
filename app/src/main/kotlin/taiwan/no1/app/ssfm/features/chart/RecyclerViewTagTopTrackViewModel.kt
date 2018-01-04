@@ -31,7 +31,8 @@ import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
  */
 class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV2Case,
                                        private val addPlaylistItemCase: AddPlaylistItemCase,
-                                       private val item: BaseEntity) : BaseViewModel() {
+                                       private val item: BaseEntity,
+                                       private val index: Int) : BaseViewModel() {
     val artistName by lazy { ObservableField<String>() }
     val thumbnail by lazy { ObservableField<String>() }
     val trackName by lazy { ObservableField<String>() }
@@ -59,8 +60,7 @@ class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV
             isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.realUrl.orEmpty())
             artistName.set(it.artist?.name)
             trackName.set(it.name)
-            // FIXME(jieyi): 12/13/17 The attributes rank will be 1~10.
-            ranking.set(it.attr?.rank.orEmpty())
+            ranking.set(index.toString())
             duration.set(it.duration?.toInt()?.toTimeString())
             thumbnail.set(item.images?.get(LARGE)?.text.orEmpty())
         }

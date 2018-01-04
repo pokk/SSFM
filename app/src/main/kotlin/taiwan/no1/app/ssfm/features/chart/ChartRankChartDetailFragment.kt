@@ -48,7 +48,6 @@ class ChartRankChartDetailFragment : AdvancedFragment<ChartRankChartDetailFragme
     @field:[Inject Named("add_playlist_item")] lateinit var addPlaylistItemCase: AddPlaylistItemCase
     private val trackInfo by lazy { DataInfo() }
     private var trackRes = mutableListOf<BaseEntity>()
-    private var nestViewLastPosition = 0
     // Get the arguments from the bundle here.
     private val rankCode by lazy { arguments.getInt(ARG_PARAM_RANK_CODE) }
     private val chartEntity: RankChartEntity? by lazy { arguments.getParcelable<RankChartEntity>(ARG_PARAM_CHART_ENTITY) }
@@ -58,8 +57,8 @@ class ChartRankChartDetailFragment : AdvancedFragment<ChartRankChartDetailFragme
         binding?.apply {
             trackLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
-            trackAdapter = RankChartDetailAdapter(R.layout.item_music_type_6, trackRes) { holder, item ->
-                holder.binding.avm = RecyclerViewRankChartDetailViewModel(addPlaylistItemCase, item).apply {
+            trackAdapter = RankChartDetailAdapter(R.layout.item_music_type_6, trackRes) { holder, item, index ->
+                holder.binding.avm = RecyclerViewRankChartDetailViewModel(addPlaylistItemCase, item, index + 1).apply {
                     onAttach(this@ChartRankChartDetailFragment)
                 }
             }

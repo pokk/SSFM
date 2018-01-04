@@ -55,12 +55,12 @@ class PlaylistIndexFragment : AdvancedFragment<PlaylistIndexFragmentViewModel, F
             playlistLayoutManager = WrapContentLinearLayoutManager(activity)
             recentlyLayoutManager = WrapContentLinearLayoutManager(activity)
 
-            playlistAdapter = PlaylistAdapter(R.layout.item_playlist_type_1, playlistRes) { holder, item ->
+            playlistAdapter = PlaylistAdapter(R.layout.item_playlist_type_1, playlistRes) { holder, item, index ->
                 holder.binding.avm = RecyclerViewPlaylistViewModel(item).apply {
                     onAttach(this@PlaylistIndexFragment)
                 }
             }
-            recentlyAdapter = RecentlyAdapter(R.layout.item_music_type_3, recentlyPlayedRes) { holder, item ->
+            recentlyAdapter = RecentlyAdapter(R.layout.item_music_type_3, recentlyPlayedRes) { holder, item, index ->
                 holder.binding.avm = RecyclerViewRecentlyPlaylistViewModel(item).apply {
                     onAttach(this@PlaylistIndexFragment)
                 }

@@ -33,7 +33,8 @@ import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
  * @since   11/24/17
  */
 class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddPlaylistItemCase,
-                                           private val item: BaseEntity) : BaseViewModel() {
+                                           private val item: BaseEntity,
+                                           private val index: Int) : BaseViewModel() {
     val trackName by lazy { ObservableField<String>() }
     val trackDuration by lazy { ObservableField<String>() }
     val trackIndex by lazy { ObservableField<String>() }
@@ -62,7 +63,7 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
             isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.url)
             trackName.set(it.title)
             trackDuration.set(it.length.toTimeString())
-            trackIndex.set(1.toString())
+            trackIndex.set(index.toString())
             artistName.set(it.artist)
             trackCover.set(it.coverURL)
         }

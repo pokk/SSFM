@@ -17,7 +17,7 @@ import taiwan.no1.app.ssfm.models.entities.PreferenceEntity
  * @since   9/20/17
  */
 class BaseMultipleTypeDataBindingAdapter<BH : ViewDataBinding, D>(private var dataList: MutableList<D>,
-                                                                  bindVHBlock: (holder: BindingHolder<BH>, item: D) -> Unit) :
+                                                                  bindVHBlock: (holder: BindingHolder<BH>, item: D, index: Int) -> Unit) :
     BaseDataBindingAdapter<BH, D>(-1, dataList, bindVHBlock) {
     private var typeFactory: ExpandableViewTypeFactory = ExpandableViewTypeFactory()
     // FIXME(jieyi): 2017/12/07 When using the `DiffUtil`, the layout cannot be correct.

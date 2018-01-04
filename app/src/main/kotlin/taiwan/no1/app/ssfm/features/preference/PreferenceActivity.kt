@@ -51,7 +51,7 @@ class PreferenceActivity : AdvancedActivity<PreferenceViewModel, ActivityPrefere
         // Initial the recycler view.
         binding.apply {
             layoutManager = WrapContentLinearLayoutManager(this@PreferenceActivity, LinearLayoutManager.VERTICAL, false)
-            adapter = MultipleTypeAdapter(preferenceList) { holder, item ->
+            adapter = MultipleTypeAdapter(preferenceList) { holder, item, _ ->
                 when (item) {
                     is PreferenceEntity -> {
                         (holder as BindingHolder<ItemPreferenceFirstLayerTitleBinding>).binding.avm =

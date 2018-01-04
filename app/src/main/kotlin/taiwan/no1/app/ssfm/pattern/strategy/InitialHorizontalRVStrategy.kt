@@ -28,7 +28,7 @@ class InitialHorizontalRVStrategy<V : ViewDataBinding, A : BaseAdapter<V>>(priva
                                                                            private val dataInfo: DataInfo,
                                                                            private val entity: MutableList<BaseEntity>,
                                                                            private val fetchFun: (page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit) -> Unit,
-                                                                           private val bindingBlock: (holder: BindingHolder<ViewDataBinding>, item: BaseEntity) -> Unit,
+                                                                           private val bindingBlock: (holder: BindingHolder<ViewDataBinding>, item: BaseEntity, index: Int) -> Unit,
                                                                            private val viewId: Int) :
     IInitialRecyclerViewStrategy {
     override fun initLayoutManager() {

@@ -160,7 +160,8 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
                     binding.layoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.VERTICAL,
                         false)
                     binding.decoration = VerticalItemDecorator(20)
-                    binding.adapter = DFPlaylistAdapter(R.layout.item_playlist_type_2, playlistRes) { holder, item ->
+                    binding.adapter = DFPlaylistAdapter(R.layout.item_playlist_type_2,
+                        playlistRes) { holder, item, index ->
                         holder.binding.avm =
                             RecyclerViewDialogPlaylistViewModel(item, entity as BaseEntity, addPlaylistItemCase).apply {
                                 onAttach(this@ChartActivity)

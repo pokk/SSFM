@@ -22,8 +22,9 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
  * @author  jieyi
  * @since   11/14/17
  */
-class RecyclerViewPlaylistDetailViewModel(val item: BaseEntity) : BaseViewModel() {
-    val index by lazy { ObservableField<String>() }
+class RecyclerViewPlaylistDetailViewModel(private val item: BaseEntity,
+                                          private val index: Int) : BaseViewModel() {
+    val rank by lazy { ObservableField<String>() }
     val artistName by lazy { ObservableField<String>() }
     val trackName by lazy { ObservableField<String>() }
     val thumbnail by lazy { ObservableField<String>() }
@@ -51,7 +52,7 @@ class RecyclerViewPlaylistDetailViewModel(val item: BaseEntity) : BaseViewModel(
 
     init {
         (item as PlaylistItemEntity).let {
-            index.set(it.id.toString())
+            rank.set(index.toString())
             artistName.set(it.artistName)
             trackName.set(it.trackName)
             duration.set(it.duration.toTimeString())

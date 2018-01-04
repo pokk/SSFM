@@ -48,7 +48,7 @@ class SearchHistoryFragment : AdvancedFragment<SearchHistoryFragmentViewModel, F
     override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
             layoutManager = WrapContentLinearLayoutManager(activity)
-            adapter = HistoryAdapter(R.layout.item_search_history_type_1, searchRes) { holder, item ->
+            adapter = HistoryAdapter(R.layout.item_search_history_type_1, searchRes) { holder, item, index ->
                 holder.binding.avm = RecyclerViewSearchHistoryViewModel(item, activity, deleteUsecase).
                     apply { deleteItemListener = deleteItem }
             }

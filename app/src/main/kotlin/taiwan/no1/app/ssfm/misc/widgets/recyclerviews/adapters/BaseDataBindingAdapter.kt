@@ -17,14 +17,14 @@ import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.viewholders.BindingHolder
  */
 open class BaseDataBindingAdapter<BH : ViewDataBinding, D>(@LayoutRes private val layoutId: Int,
                                                            private var dataList: MutableList<D>,
-                                                           private val bindVHBlock: (holder: BindingHolder<BH>, item: D) -> Unit) :
+                                                           private val bindVHBlock: (holder: BindingHolder<BH>, item: D, position: Int) -> Unit) :
     RecyclerView.Adapter<BindingHolder<BH>>(), ItemTouchHelperAdapter {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingHolder<BH> =
         DataBindingUtil.inflate<BH>(LayoutInflater.from(parent.context), layoutId, parent, false).
             let { BindingHolder(it) }
 
     override fun onBindViewHolder(holder: BindingHolder<BH>, position: Int) =
-        bindVHBlock(holder, dataList[position])
+        bindVHBlock(holder, dataList[position], position)
 
     override fun getItemCount(): Int = dataList.size
 

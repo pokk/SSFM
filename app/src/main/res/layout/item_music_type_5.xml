@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:text="@{avm.index}"
+                android:text="@{avm.rank}"
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"
                 tools:text="2"/>

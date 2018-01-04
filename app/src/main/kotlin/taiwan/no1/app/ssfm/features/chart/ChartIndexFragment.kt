@@ -76,7 +76,7 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
     override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
             rankLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            rankAdapter = RankAdapter(R.layout.item_rank_type_1, rankRes) { holder, item ->
+            rankAdapter = RankAdapter(R.layout.item_rank_type_1, rankRes) { holder, item, _ ->
                 holder.binding.avm = RecyclerViewChartRankChartViewModel(item).apply {
                     onAttach(this@ChartIndexFragment)
                 }
@@ -84,7 +84,7 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
             rankDecoration = HorizontalItemDecorator(20)
 
             artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            artistAdapter = ArtistAdapter(R.layout.item_artist_type_1, artistRes) { holder, item ->
+            artistAdapter = ArtistAdapter(R.layout.item_artist_type_1, artistRes) { holder, item, _ ->
                 holder.binding.avm = RecyclerViewSearchArtistChartViewModel(item).apply {
                     onAttach(this@ChartIndexFragment)
                     clickItemListener = {
@@ -101,7 +101,7 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
             artistDecoration = HorizontalItemDecorator(20)
 
             tagLayoutManager = StaggeredGridLayoutManager(3, VERTICAL)
-            tagAdapter = TagAdapter(R.layout.item_tag_type_1, tagRes) { holder, item ->
+            tagAdapter = TagAdapter(R.layout.item_tag_type_1, tagRes) { holder, item, index ->
                 holder.binding.avm = RecyclerViewChartTagViewModel(item).apply {
                     onAttach(this@ChartIndexFragment)
                     clickItemListener = {
