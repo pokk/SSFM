@@ -7,7 +7,7 @@
 
         <variable
             name="avm"
-            type="taiwan.no1.app.ssfm.features.chart.RecyclerViewDialogPlaylistViewModel"/>
+            type="taiwan.no1.app.ssfm.features.bottomsheet.RecyclerViewDialogPlaylistViewModel"/>
     </data>
 
     <RelativeLayout

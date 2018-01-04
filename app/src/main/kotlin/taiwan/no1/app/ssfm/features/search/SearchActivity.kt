@@ -19,7 +19,6 @@ import taiwan.no1.app.ssfm.misc.constants.RxBusTag.FRAGMENT_SEARCH_HISTORY
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.FRAGMENT_SEARCH_INDEX
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.FRAGMENT_SEARCH_RESULT
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
-import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import java.util.Stack
 import javax.inject.Inject
 
@@ -30,7 +29,6 @@ import javax.inject.Inject
  */
 class SearchActivity : AdvancedActivity<SearchViewModel, ActivitySearchBinding>() {
     @Inject override lateinit var viewModel: SearchViewModel
-    @Inject lateinit var addPlaylistItemCase: AddPlaylistItemCase
     /** For judging a fragment should be pushed or popped. */
     private val fragmentStack by lazy { Stack<Fragment>() }
     private var track by WeakRef<BaseEntity>()
@@ -40,7 +38,7 @@ class SearchActivity : AdvancedActivity<SearchViewModel, ActivitySearchBinding>(
         super.onCreate(savedInstanceState)
         binding.bottomSheetVm = BottomSheetViewModel(BottomSheetBehavior.from(rl_bottom_sheet).apply {
             state = BottomSheetBehavior.STATE_HIDDEN
-        } as BottomSheetBehavior<View>, addPlaylistItemCase)
+        } as BottomSheetBehavior<View>)
         addFragmentAndToStack(SearchIndexFragment.newInstance())
         viewModel.apply {
             navigateListener = { fragmentTag, params ->

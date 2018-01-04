@@ -16,7 +16,6 @@ import taiwan.no1.app.ssfm.features.base.AdvancedActivity
 import taiwan.no1.app.ssfm.features.bottomsheet.BottomSheetViewModel
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
-import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import javax.inject.Inject
 
 /**
@@ -26,14 +25,13 @@ import javax.inject.Inject
  */
 class PlaylistActivity : AdvancedActivity<PlaylistViewModel, ActivityPlaylistBinding>() {
     @Inject override lateinit var viewModel: PlaylistViewModel
-    @Inject lateinit var addPlaylistItemCase: AddPlaylistItemCase
 
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.bottomSheetVm = BottomSheetViewModel(BottomSheetBehavior.from(rl_bottom_sheet).apply {
             state = BottomSheetBehavior.STATE_HIDDEN
-        } as BottomSheetBehavior<View>, addPlaylistItemCase)
+        } as BottomSheetBehavior<View>)
         RxBus.get().register(this)
         fragmentManager.addFragment(R.id.fl_container, PlaylistIndexFragment.newInstance(), false)
     }
@@ -55,7 +53,7 @@ class PlaylistActivity : AdvancedActivity<PlaylistViewModel, ActivityPlaylistBin
      * @event_from [taiwan.no1.app.ssfm.features.playlist.RecyclerViewPlaylistViewModel.playlistOnClick]
      * @event_from [taiwan.no1.app.ssfm.features.playlist.PlaylistViewModel.addPlaylistOnClick]
      */
-    @Subscribe(tags = [Tag(RxBusTag.VIEWMODEL_CLICK_PLAYLIST), Tag(RxBusTag.VIEWMODEL_CLICK_ADD_LAYLIST)])
+    @Subscribe(tags = [Tag(RxBusTag.VIEWMODEL_CLICK_PLAYLIST), Tag(RxBusTag.VIEWMODEL_CLICK_ADD_PLAYLIST)])
     fun navigateToPlaylistDetail(params: Pair<PlaylistEntity, List<Pair<View, String>>>) {
         val sharedElements = params.second.takeIf { it.isNotEmpty() }?.let { HashMap(it.toMap()) } ?: HashMap()
         navigate(PlaylistDetailFragment.newInstance(params.first,

@@ -15,6 +15,7 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.Constant
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CHART_DETAIL_CLICK
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_LONG_CLICK_RANK_CHART
 import taiwan.no1.app.ssfm.misc.extension.gAlphaIntColor
 import taiwan.no1.app.ssfm.misc.extension.gColor
 import taiwan.no1.app.ssfm.misc.extension.glideListener
@@ -52,7 +53,6 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
             false
         }
     }
-    var longClickEvent: (track: BaseEntity) -> Unit = {}
     val stateEventListener = { state: MusicPlayerState ->
         if (MusicPlayerState.Standby == state) isPlaying.set(false)
     }
@@ -97,8 +97,13 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
         }
     }
 
+    /**
+     * @param view
+     *
+     * @event_to [taiwan.no1.app.ssfm.features.chart.ChartActivity.openBottomSheet]
+     */
     fun trackOnLongClick(view: View): Boolean {
-        longClickEvent(item)
+        RxBus.get().post(VIEWMODEL_LONG_CLICK_RANK_CHART, item)
         return true
     }
 

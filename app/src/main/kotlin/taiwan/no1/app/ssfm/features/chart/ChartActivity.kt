@@ -18,16 +18,20 @@ import taiwan.no1.app.ssfm.databinding.ActivityChartBinding
 import taiwan.no1.app.ssfm.databinding.FragmentDialogPlaylistBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedActivity
 import taiwan.no1.app.ssfm.features.bottomsheet.BottomSheetViewModel
+import taiwan.no1.app.ssfm.features.bottomsheet.RecyclerViewDialogPlaylistViewModel
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_NAME
-import taiwan.no1.app.ssfm.misc.constants.RxBusTag
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CLICK_ALBUM
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CLICK_PLAYLIST_FRAGMENT_DIALOG
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CLICK_RANK_CHART
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CLICK_SIMILAR
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_DISSMISS_PLAYLIST_FRAGMENT_DIALOG
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_LONG_CLICK_RANK_CHART
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DFPlaylistAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
-import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
-import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
 import taiwan.no1.app.ssfm.models.entities.v2.RankChartEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import taiwan.no1.app.ssfm.models.usecases.FetchPlaylistCase
@@ -46,15 +50,14 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     @field:[Inject Named("activity_playlist_usecase")] lateinit var fetchPlaylistCase: FetchPlaylistCase
     private val playlistInfo by lazy { DataInfo() }
     private var playlistRes = mutableListOf<BaseEntity>()
+    private lateinit var dialogFragment: QuickDialogBindingFragment<FragmentDialogPlaylistBinding>
 
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.bottomSheetVm = BottomSheetViewModel(BottomSheetBehavior.from(rl_bottom_sheet).apply {
             state = BottomSheetBehavior.STATE_HIDDEN
-        } as BottomSheetBehavior<View>, addPlaylistItemCase).apply {
-            openDialog = { openPlaylistDialog() }
-        }
+        } as BottomSheetBehavior<View>)
         navigate(ChartIndexFragment.newInstance(), false)
         RxBus.get().register(this)
     }
@@ -62,6 +65,11 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     override fun onResume() {
         super.onResume()
         playlistRes.clear()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        dialogFragment.dismiss()
     }
 
     override fun onDestroy() {
@@ -90,7 +98,7 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
      * @event_from [taiwan.no1.app.ssfm.features.chart.RecyclerViewChartSimilarArtistViewModel.artistOnClick]
      * @event_from [taiwan.no1.app.ssfm.features.chart.RecyclerViewTagTopArtistViewModel.itemOnClick]
      */
-    @Subscribe(tags = [Tag(RxBusTag.VIEWMODEL_CLICK_SIMILAR)])
+    @Subscribe(tags = [Tag(VIEWMODEL_CLICK_SIMILAR)])
     fun navigateToArtistDetail(artistName: String) {
         navigate(ChartArtistDetailFragment.newInstance(artistName = artistName), true)
     }
@@ -100,7 +108,7 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
      *
      * @event_from [taiwan.no1.app.ssfm.features.chart.RecyclerViewTagTopAlbumViewModel.itemOnClick]
      */
-    @Subscribe(tags = [Tag(RxBusTag.VIEWMODEL_CLICK_ALBUM)])
+    @Subscribe(tags = [Tag(VIEWMODEL_CLICK_ALBUM)])
     fun navigateToAlbumDetail(params: HashMap<String, String>) {
         val (artistName, artistAlbum) =
             (params[VIEWMODEL_PARAMS_ARTIST_NAME].orEmpty()) to (params[VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME].orEmpty())
@@ -108,11 +116,11 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     }
 
     /**
-     * @param params
+     * @param entity
      *
      * @event_from [taiwan.no1.app.ssfm.features.chart.RecyclerViewChartRankChartViewModel.chartOnClick]
      */
-    @Subscribe(tags = [Tag(RxBusTag.VIEWMODEL_CLICK_RANK_CHART)])
+    @Subscribe(tags = [Tag(VIEWMODEL_CLICK_RANK_CHART)])
     fun navigateToRankChartDetail(entity: RankChartEntity) {
         navigate(ChartRankChartDetailFragment.newInstance(entity.rankType, entity), true)
     }
@@ -121,40 +129,57 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
         fragmentManager.addFragment(R.id.fl_container, fragment, needBack)
     }
 
-    fun openBottomSheet(entity: BaseEntity) {
-        binding.bottomSheetVm?.run {
-            obtainMusicUri = when (entity) {
-                is MusicEntity.Music -> entity.url
-                is MusicRankEntity.Song -> entity.url
-                else -> ""
-            }
-        }
+    /**
+     * @param entity
+     *
+     * @event_from [taiwan.no1.app.ssfm.features.chart.RecyclerViewRankChartDetailViewModel.trackOnLongClick]
+     */
+    @Subscribe(tags = [Tag(VIEWMODEL_LONG_CLICK_RANK_CHART)])
+    fun openBottomSheet(entity: Any) {
+        (entity as BaseEntity).let { binding.bottomSheetVm?.run { obtainMusicEntity = it } }
         BottomSheetBehavior.from(rl_bottom_sheet).state = BottomSheetBehavior.STATE_EXPANDED
     }
 
-    private fun openPlaylistDialog() {
-        QuickDialogBindingFragment.Builder<FragmentDialogPlaylistBinding>(this) {
+    /**
+     * @param entity
+     *
+     * @event_from [taiwan.no1.app.ssfm.features.bottomsheet.BottomSheetViewModel.debounceOpenDialog]
+     */
+    @Subscribe(tags = [Tag(VIEWMODEL_CLICK_PLAYLIST_FRAGMENT_DIALOG)])
+    fun openPlaylistDialog(entity: Any) {
+        dialogFragment = QuickDialogBindingFragment.Builder<FragmentDialogPlaylistBinding>(this) {
             viewCustom = R.layout.fragment_dialog_playlist
         }.build().apply {
             bind = { binding ->
                 binding.vm = ChartDialogViewModel(playlistRes.isEmpty(), fetchPlaylistCase).apply {
                     onAttach(this@ChartActivity)
                     fetchedPlaylistCallback = {
-                        playlistRes.refreshAndChangeList(it.subList(1, it.size),
-                            1,
-                            binding.adapter as DFPlaylistAdapter,
-                            playlistInfo)
+                        playlistRes.refreshAndChangeList(it.subList(1, it.size), 1,
+                            binding.adapter as DFPlaylistAdapter, playlistInfo)
                     }
                     binding.layoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.VERTICAL,
                         false)
                     binding.decoration = VerticalItemDecorator(20)
                     binding.adapter = DFPlaylistAdapter(R.layout.item_playlist_type_2, playlistRes) { holder, item ->
-                        holder.binding.avm = RecyclerViewDialogPlaylistViewModel(item).apply {
-                            onAttach(this@ChartActivity)
-                        }
+                        holder.binding.avm =
+                            RecyclerViewDialogPlaylistViewModel(item, entity as BaseEntity, addPlaylistItemCase).apply {
+                                onAttach(this@ChartActivity)
+                            }
                     }
                 }
             }
-        }.show()
+        }.apply { show() }
+    }
+
+    /**
+     * @param any
+     *
+     * @event_from [taiwan.no1.app.ssfm.features.bottomsheet.RecyclerViewDialogPlaylistViewModel.debounceAddToPlaylist]
+     */
+    @Subscribe(tags = [Tag(VIEWMODEL_DISSMISS_PLAYLIST_FRAGMENT_DIALOG)])
+    fun dismissPlaylistDialog(any: Any) {
+        if (::dialogFragment.isInitialized) {
+            dialogFragment.dismiss()
+        }
     }
 }
