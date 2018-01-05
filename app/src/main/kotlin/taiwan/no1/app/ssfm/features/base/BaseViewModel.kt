@@ -1,7 +1,6 @@
 package taiwan.no1.app.ssfm.features.base
 
 import android.databinding.BaseObservable
-import com.devrapid.kotlinknifer.logw
 import com.trello.rxlifecycle2.LifecycleProvider
 
 /**
@@ -13,13 +12,9 @@ import com.trello.rxlifecycle2.LifecycleProvider
 abstract class BaseViewModel : BaseObservable(), IViewModel {
     protected lateinit var lifecycleProvider: LifecycleProvider<*>
 
-    // OPTIMIZE(jieyi): 9/29/17 We might make a general callback listener object!?
-    // Ex: callbackListener: HashMap<String, (parameters) -> Unit>
     override fun <E> onAttach(lifecycleProvider: LifecycleProvider<E>) {
         this.lifecycleProvider = lifecycleProvider
     }
 
-    override fun onDetach() {
-        logw("????????????????")
-    }
+    override fun onDetach() {}
 }

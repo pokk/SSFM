@@ -6,7 +6,6 @@ import android.support.annotation.StringRes
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.devrapid.kotlinknifer.logw
 import kotlinx.android.synthetic.main.item_custom_menu.view.tv_title
 import taiwan.no1.app.ssfm.R
 
@@ -32,7 +31,6 @@ class MenuItem(context: Context) : LinearLayout(context) {
 
     constructor(context: Context, @DrawableRes resIcon: Int, title: String) : this(context) {
         tv_menu.text = title
-        logw(resIcon)
         tv_menu.setCompoundDrawablesWithIntrinsicBounds(resIcon, 0, 0, 0)
     }
 }

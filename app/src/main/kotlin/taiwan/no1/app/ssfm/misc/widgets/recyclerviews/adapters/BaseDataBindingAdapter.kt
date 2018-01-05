@@ -87,7 +87,6 @@ open class BaseDataBindingAdapter<BH : ViewDataBinding, D>(private val lifecycle
 
     private fun removeFromViewmodelKeeper(holder: BindingHolder<BH>) =
         (holder.binding.javaClass.getMethod("getAvm").invoke(bindingHolder.binding) as BaseViewModel).let {
-            it.onDetach()
-            viewmodels.remove(it)
+            if (viewmodels.remove(it)) it.onDetach()
         }
 }

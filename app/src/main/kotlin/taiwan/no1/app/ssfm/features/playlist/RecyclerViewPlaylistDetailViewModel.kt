@@ -74,12 +74,9 @@ class RecyclerViewPlaylistDetailViewModel(private val addPlaylistItemCase: AddPl
     override fun <E> onAttach(lifecycleProvider: LifecycleProvider<E>) {
         super.onAttach(lifecycleProvider)
         RxBus.get().register(this)
-        logw("............")
     }
 
     override fun onDetach() {
-        logw("!!!!!!!!!!!!!!!!!!!!!!!?????")
-        logw("?????????????????", index)
         RxBus.get().unregister(this)
     }
     //endregion
