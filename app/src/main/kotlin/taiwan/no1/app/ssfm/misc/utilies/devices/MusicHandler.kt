@@ -8,7 +8,6 @@ import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemUsecase
 import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
 import taiwan.no1.app.ssfm.models.usecases.v2.SearchMusicUsecase
-import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
 
 /**
  * @author  jieyi
@@ -17,7 +16,6 @@ import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
 fun LifecycleProvider<*>.searchTheTopMusicAndPlayThenToPlaylist(searchMusicCase: SearchMusicV2Case,
                                                                 addPlaylistItemCase: AddPlaylistItemCase,
                                                                 keyWord: String,
-                                                                stateEventListener: (MusicPlayerState) -> Unit = {},
                                                                 block: (PlaylistItemEntity) -> Unit = {}) {
     execute(searchMusicCase, SearchMusicUsecase.RequestValue(keyWord)) {
         onNext {
@@ -29,7 +27,7 @@ fun LifecycleProvider<*>.searchTheTopMusicAndPlayThenToPlaylist(searchMusicCase:
                                                         lyricUrl = lyricURL,
                                                         duration = length)
 
-                playThenToPlaylist(addPlaylistItemCase, playlistEntity, stateEventListener, block)
+                playThenToPlaylist(addPlaylistItemCase, playlistEntity, block)
             }
         }
     }
@@ -37,7 +35,6 @@ fun LifecycleProvider<*>.searchTheTopMusicAndPlayThenToPlaylist(searchMusicCase:
 
 fun LifecycleProvider<*>.playThenToPlaylist(addPlaylistItemCase: AddPlaylistItemCase,
                                             playlistEntity: PlaylistItemEntity,
-                                            stateEventListener: (MusicPlayerState) -> Unit = {},
                                             block: (PlaylistItemEntity) -> Unit = {}) {
     block(playlistEntity)
     MusicPlayerHelper.instance.run {
@@ -46,6 +43,5 @@ fun LifecycleProvider<*>.playThenToPlaylist(addPlaylistItemCase: AddPlaylistItem
             execute(addPlaylistItemCase,
                     AddPlaylistItemUsecase.RequestValue(playlistEntity.apply { playlistId = Constant.DATABASE_PLAYLIST_HISTORY_ID.toLong() })) {}
         }
-        addStateChangedListeners(stateEventListener)
     }
 }

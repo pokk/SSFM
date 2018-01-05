@@ -59,12 +59,15 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
     override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
             trackLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-            trackAdapter = AlbumTrackAdapter(R.layout.item_music_type_4, trackRes) { holder, item, _ ->
-                holder.binding.avm =
-                    RecyclerViewChartAlbumTrackViewModel(fetchMusicCase, addPlaylistItemCase, item).apply {
-                        onAttach(this@ChartAlbumDetailFragment)
-                        clickEvent = { (activity as ChartActivity).openBottomSheet(item) }
-                    }
+            trackAdapter = AlbumTrackAdapter(this@ChartAlbumDetailFragment,
+                                             R.layout.item_music_type_4,
+                                             trackRes) { holder, item, _ ->
+                if (null == holder.binding.avm) {
+                    holder.binding.avm =
+                        RecyclerViewChartAlbumTrackViewModel(fetchMusicCase, addPlaylistItemCase, item).apply {
+                            clickEvent = { (activity as ChartActivity).openBottomSheet(item) }
+                        }
+                }
             }
         }
         trackInfo.firstFetch { info ->

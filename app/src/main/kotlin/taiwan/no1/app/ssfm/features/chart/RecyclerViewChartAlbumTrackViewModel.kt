@@ -30,9 +30,6 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
     val trackNumber by lazy { ObservableField<String>() }
     val trackDuration by lazy { ObservableField<String>() }
     val isPlaying by lazy { ObservableBoolean() }
-    val stateEventListener = { state: MusicPlayerState ->
-        if (MusicPlayerState.Standby == state) isPlaying.set(false)
-    }
     var clickEvent: (track: BaseEntity) -> Unit = {}
 
     init {
@@ -63,8 +60,7 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
 
             lifecycleProvider.searchTheTopMusicAndPlayThenToPlaylist(searchMusicCase,
                                                                      addPlaylistItemCase,
-                                                                     "$artistName $trackName",
-                                                                     stateEventListener) {
+                                                                     "$artistName $trackName") {
                 isPlaying.set(!isPlaying.get())
                 realUrl = it.trackUri
                 RxBus.get().post(RxBusTag.VIEWMODEL_CHART_DETAIL_CLICK, it.trackUri)
@@ -79,5 +75,15 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
     @Subscribe(tags = [(Tag(RxBusTag.VIEWMODEL_CHART_DETAIL_CLICK))])
     fun changeToStopIcon(uri: String) {
         if (uri != (item as TrackEntity.Track).realUrl) isPlaying.set(false)
+    }
+
+    /**
+     * @param state
+     *
+     * @event_from [MusicPlayerHelper.setPlayerListener]
+     */
+    @Subscribe(tags = [(Tag(RxBusTag.MUSICPLAYER_STATE_CHANGED))])
+    fun playerStateChanged(state: MusicPlayerState) {
+        if (MusicPlayerState.Standby == state) isPlaying.set(false)
     }
 }

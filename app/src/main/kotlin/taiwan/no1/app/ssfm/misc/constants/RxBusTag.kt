@@ -23,5 +23,10 @@ object RxBusTag {
     const val VIEWMODEL_CHART_DETAIL_CLICK = "Viewmodel Click A Track"
 
     const val VIEWMODEL_CLICK_PLAYLIST_FRAGMENT_DIALOG = "Viewmodel Click Playlist Fragment Dialog"
-    const val VIEWMODEL_DISSMISS_PLAYLIST_FRAGMENT_DIALOG = "Viewmodel Dismiss Playlist Fragment Dialog"
+    const val VIEWMODEL_DISMISS_PLAYLIST_FRAGMENT_DIALOG = "Viewmodel Dismiss Playlist Fragment Dialog"
+
+    const val MUSICPLAYER_STATE_CHANGED = "Music Player State Changed"
+    const val MUSICPLAYER_BUFFER_PRECENT_CHANGED = "Music Player State Changed"
+    const val MUSICPLAYER_CURRENT_TIME = "Music Player State Changed"
+    const val MUSICPLAYER_DURATION_CHANGED = "Music Player State Changed"
 }

@@ -31,7 +31,6 @@ class BottomSheetViewModel(private val bsHelper: BottomSheetBehavior<View>) : Ba
                 MusicPlayerHelper.instance.run {
                     downloadMusic(it)
                     // TODO(jieyi): 2017/12/21 Add downloading task into the download activity.
-                    addBufferPercentageListeners { }
                 }
             }
         }

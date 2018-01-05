@@ -1,5 +1,10 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices
 
+import com.hwangjr.rxbus.RxBus
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_BUFFER_PRECENT_CHANGED
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_CURRENT_TIME
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_DURATION_CHANGED
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_STATE_CHANGED
 import weian.cheng.mediaplayerwithexoplayer.ExoPlayerEventListener.PlayerEventListenerImpl
 import weian.cheng.mediaplayerwithexoplayer.IMusicPlayer
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
@@ -16,10 +21,6 @@ class MusicPlayerHelper private constructor() {
         val INSTANCE = MusicPlayerHelper()
     }
 
-    private val durationChangedListeners = mutableListOf<(Int) -> Unit>()
-    private val currentTimeListeners = mutableListOf<(Int) -> Unit>()
-    private val bufferPercentageListeners = mutableListOf<(Int) -> Unit>()
-    private val stateChangedListeners = mutableListOf<(MusicPlayerState) -> Unit>()
     private lateinit var player: IMusicPlayer
     private lateinit var musicUri: String
 
@@ -63,61 +64,20 @@ class MusicPlayerHelper private constructor() {
 
     fun downloadMusic(uri: String) = player.writeToFile(uri)
 
-    //region MusicPlayer collection operations.
-    fun addDurationChangedListeners(listener: (Int) -> Unit): Boolean {
-        if (listener !in durationChangedListeners) return durationChangedListeners.add(listener)
-
-        return false
-    }
-
-    fun addBufferPercentageListeners(listener: (Int) -> Unit): Boolean {
-        if (listener !in bufferPercentageListeners) return bufferPercentageListeners.add(listener)
-
-        return false
-    }
-
-    fun addCurrentTimeListeners(listener: (Int) -> Unit): Boolean {
-        if (listener !in currentTimeListeners) return currentTimeListeners.add(listener)
-
-        return false
-    }
-
-    fun addStateChangedListeners(listener: (MusicPlayerState) -> Unit): Boolean {
-        if (listener !in stateChangedListeners) return stateChangedListeners.add(listener)
-
-        return false
-    }
-
-    fun removeDurationChangedListeners(listener: (Int) -> Unit) = durationChangedListeners.remove(listener)
-
-    fun removeBufferPercentageListeners(listener: (Int) -> Unit) = bufferPercentageListeners.remove(listener)
-
-    fun removeCurrentTimeListeners(listener: (Int) -> Unit) = currentTimeListeners.remove(listener)
-
-    fun removeStateChangedListeners(listener: (MusicPlayerState) -> Unit) = stateChangedListeners.remove(listener)
-
-    fun removeAllDurationChangedListeners() = durationChangedListeners.clear()
-
-    fun removeAllBufferPercentageListeners() = bufferPercentageListeners.clear()
-
-    fun removeAllCurrentTimeListeners() = currentTimeListeners.clear()
-
-    fun removeAllStateChangedListeners() = stateChangedListeners.clear()
-
-    fun clearAllListener() {
-        removeAllDurationChangedListeners()
-        removeAllBufferPercentageListeners()
-        removeAllCurrentTimeListeners()
-        removeAllStateChangedListeners()
-    }
-    //endregion
-
     private fun setPlayerListener() {
         player.setEventListener(PlayerEventListenerImpl {
-            onDurationChanged = { duration -> durationChangedListeners.forEach { it.invoke(duration) } }
-            onCurrentTime = { second -> currentTimeListeners.forEach { it.invoke(second) } }
-            onBufferPercentage = { percent -> bufferPercentageListeners.forEach { it.invoke(percent) } }
-            onPlayerStateChanged = { state -> stateChangedListeners.forEach { it.invoke(state) } }
+            onDurationChanged = { RxBus.get().post(MUSICPLAYER_DURATION_CHANGED, it) }
+            onCurrentTime = { RxBus.get().post(MUSICPLAYER_CURRENT_TIME, it) }
+            onBufferPercentage = { RxBus.get().post(MUSICPLAYER_BUFFER_PRECENT_CHANGED, it) }
+            /**
+             * @event_to [taiwan.no1.app.ssfm.features.playlist.RecyclerViewPlaylistDetailViewModel.playerStateChanged]
+             * @event_to [taiwan.no1.app.ssfm.features.search.RecyclerViewSearchMusicResultViewModel.playerStateChanged]
+             * @event_to [taiwan.no1.app.ssfm.features.chart.RecyclerViewChartArtistHotTrackViewModel.playerStateChanged]
+             * @event_to [taiwan.no1.app.ssfm.features.chart.RecyclerViewChartAlbumTrackViewModel.playerStateChanged]
+             * @event_to [taiwan.no1.app.ssfm.features.chart.RecyclerViewRankChartDetailViewModel.playerStateChanged]
+             * @event_to [taiwan.no1.app.ssfm.features.chart.RecyclerViewTagTopTrackViewModel.playerStateChanged]
+             */
+            onPlayerStateChanged = { RxBus.get().post(MUSICPLAYER_STATE_CHANGED, it) }
         })
     }
 }

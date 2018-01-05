@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.view.View
+import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.toTimeString
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
@@ -14,6 +15,7 @@ import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.Constant
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_STATE_CHANGED
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CHART_DETAIL_CLICK
 import taiwan.no1.app.ssfm.misc.extension.gAlphaIntColor
 import taiwan.no1.app.ssfm.misc.extension.gColor
@@ -56,9 +58,6 @@ class RecyclerViewPlaylistDetailViewModel(private val addPlaylistItemCase: AddPl
             false
         }
     }
-    private val stateEventListener = { state: MusicPlayerState ->
-        if (MusicPlayerState.Standby == state) isPlaying.set(false)
-    }
 
     init {
         (item as PlaylistItemEntity).let {
@@ -75,18 +74,15 @@ class RecyclerViewPlaylistDetailViewModel(private val addPlaylistItemCase: AddPl
     override fun <E> onAttach(lifecycleProvider: LifecycleProvider<E>) {
         super.onAttach(lifecycleProvider)
         RxBus.get().register(this)
+        logw("............")
     }
 
     override fun onDetach() {
-        super.onDetach()
+        logw("!!!!!!!!!!!!!!!!!!!!!!!?????")
+        logw("?????????????????", index)
         RxBus.get().unregister(this)
     }
     //endregion
-
-    @Subscribe(tags = [(Tag(VIEWMODEL_CHART_DETAIL_CLICK))])
-    fun changeToStopIcon(uri: String) {
-        if (uri != (item as PlaylistItemEntity).trackUri) isPlaying.set(false)
-    }
 
     fun trackOnClick(view: View) {
         (item as PlaylistItemEntity).let {
@@ -94,11 +90,27 @@ class RecyclerViewPlaylistDetailViewModel(private val addPlaylistItemCase: AddPl
             val playlistEntity = it.copy(id = 0,
                                          playlistId = Constant.DATABASE_PLAYLIST_HISTORY_ID.toLong(),
                                          timestamp = Date())
-            lifecycleProvider.playThenToPlaylist(addPlaylistItemCase, playlistEntity, stateEventListener) {
+            lifecycleProvider.playThenToPlaylist(addPlaylistItemCase, playlistEntity) {
                 // FIXME(jieyi): 1/5/18 There are some problems which the playing state is incorrect.
                 isPlaying.set(!isPlaying.get())
                 RxBus.get().post(VIEWMODEL_CHART_DETAIL_CLICK, playlistEntity.trackUri)
             }
         }
+    }
+
+    @Subscribe(tags = [(Tag(VIEWMODEL_CHART_DETAIL_CLICK))])
+    fun changeToStopIcon(uri: String) {
+        if (uri != (item as PlaylistItemEntity).trackUri) isPlaying.set(false)
+    }
+
+    /**
+     * @param state
+     *
+     * @event_from [MusicPlayerHelper.setPlayerListener]
+     */
+    @Subscribe(tags = [(Tag(MUSICPLAYER_STATE_CHANGED))])
+    fun playerStateChanged(state: MusicPlayerState) {
+        logw("!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@ $state")
+        if (MusicPlayerState.Standby == state) isPlaying.set(false)
     }
 }

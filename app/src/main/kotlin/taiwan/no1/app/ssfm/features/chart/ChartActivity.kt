@@ -25,7 +25,7 @@ import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CLICK_ALBUM
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CLICK_PLAYLIST_FRAGMENT_DIALOG
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CLICK_RANK_CHART
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CLICK_SIMILAR
-import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_DISSMISS_PLAYLIST_FRAGMENT_DIALOG
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_DISMISS_PLAYLIST_FRAGMENT_DIALOG
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_LONG_CLICK_RANK_CHART
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DFPlaylistAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
@@ -164,12 +164,13 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
                                                                            LinearLayoutManager.VERTICAL,
                                                                            false)
                     binding.decoration = VerticalItemDecorator(20)
-                    binding.adapter = DFPlaylistAdapter(R.layout.item_playlist_type_2,
+                    binding.adapter = DFPlaylistAdapter(this@ChartActivity,
+                                                        R.layout.item_playlist_type_2,
                                                         playlistRes) { holder, item, _ ->
-                        holder.binding.avm =
-                            RecyclerViewDialogPlaylistViewModel(item, entity as BaseEntity, addPlaylistItemCase).apply {
-                                onAttach(this@ChartActivity)
-                            }
+                        if (null == holder.binding.avm)
+                            holder.binding.avm = RecyclerViewDialogPlaylistViewModel(item,
+                                                                                     entity as BaseEntity,
+                                                                                     addPlaylistItemCase)
                     }
                 }
             }
@@ -181,7 +182,7 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
      *
      * @event_from [taiwan.no1.app.ssfm.features.bottomsheet.RecyclerViewDialogPlaylistViewModel.debounceAddToPlaylist]
      */
-    @Subscribe(tags = [Tag(VIEWMODEL_DISSMISS_PLAYLIST_FRAGMENT_DIALOG)])
+    @Subscribe(tags = [Tag(VIEWMODEL_DISMISS_PLAYLIST_FRAGMENT_DIALOG)])
     fun dismissPlaylistDialog(any: Any) {
         if (::dialogFragment.isInitialized) {
             dialogFragment.dismiss()

@@ -7,6 +7,8 @@ import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.trello.rxlifecycle2.LifecycleProvider
+import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.ItemTouchHelperAdapter
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.viewholders.BindingHolder
 
@@ -15,16 +17,28 @@ import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.viewholders.BindingHolder
  * @author  jieyi
  * @since   9/20/17
  */
-open class BaseDataBindingAdapter<BH : ViewDataBinding, D>(@LayoutRes private val layoutId: Int,
+open class BaseDataBindingAdapter<BH : ViewDataBinding, D>(private val lifecycleProvider: LifecycleProvider<*>,
+                                                           @LayoutRes private val layoutId: Int,
                                                            private var dataList: MutableList<D>,
                                                            private val bindVHBlock: (holder: BindingHolder<BH>, item: D, position: Int) -> Unit) :
     RecyclerView.Adapter<BindingHolder<BH>>(), ItemTouchHelperAdapter {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingHolder<BH> =
-        DataBindingUtil.inflate<BH>(LayoutInflater.from(parent.context), layoutId, parent, false).
-            let { BindingHolder(it) }
+    // For releasing the viewmodel.
+    private var viewmodels = mutableListOf<BaseViewModel>()
+    private lateinit var bindingHolder: BindingHolder<BH>
 
-    override fun onBindViewHolder(holder: BindingHolder<BH>, position: Int) =
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        DataBindingUtil.inflate<BH>(LayoutInflater.from(parent.context), layoutId, parent, false).
+            let { BindingHolder(it).apply { bindingHolder = this } }
+
+    override fun onBindViewHolder(holder: BindingHolder<BH>, position: Int) {
         bindVHBlock(holder, dataList[position], position)
+        addToViewmodelKeeper(holder)
+    }
+
+    override fun onViewDetachedFromWindow(holder: BindingHolder<BH>) {
+        removeFromViewmodelKeeper(holder)
+        super.onViewDetachedFromWindow(holder)
+    }
 
     override fun getItemCount(): Int = dataList.size
 
@@ -32,11 +46,17 @@ open class BaseDataBindingAdapter<BH : ViewDataBinding, D>(@LayoutRes private va
     }
 
     override fun onItemDismiss(position: Int) {
+        removeFromViewmodelKeeper(bindingHolder)
         dataList.removeAt(position)
         notifyItemRemoved(position)
     }
 
-    // TODO(jieyi): 9/28/17 Add footer layout!
+    fun detachAll() {
+        viewmodels.run {
+            forEach(BaseViewModel::onDetach)
+            clear()
+        }
+    }
 
     fun refresh(oldData: List<D>,
                 newData: List<D>,
@@ -56,4 +76,18 @@ open class BaseDataBindingAdapter<BH : ViewDataBinding, D>(@LayoutRes private va
 
         return newData
     }
+
+    private fun addToViewmodelKeeper(holder: BindingHolder<BH>) =
+        (holder.binding.javaClass.getMethod("getAvm").invoke(bindingHolder.binding) as BaseViewModel).
+            takeIf { it !in viewmodels }?.
+            let {
+                it.onAttach(lifecycleProvider)
+                viewmodels.add(it)
+            } ?: false
+
+    private fun removeFromViewmodelKeeper(holder: BindingHolder<BH>) =
+        (holder.binding.javaClass.getMethod("getAvm").invoke(bindingHolder.binding) as BaseViewModel).let {
+            it.onDetach()
+            viewmodels.remove(it)
+        }
 }

@@ -13,6 +13,7 @@ import com.hwangjr.rxbus.annotation.Tag
 import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.LARGE
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CHART_DETAIL_CLICK
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_LONG_CLICK_RANK_CHART
 import taiwan.no1.app.ssfm.misc.extension.glideListener
@@ -51,9 +52,6 @@ class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV
             false
         }
     }
-    private val stateEventListener = { state: MusicPlayerState ->
-        if (MusicPlayerState.Standby == state) isPlaying.set(false)
-    }
 
     init {
         (item as TrackEntity.Track).let {
@@ -90,8 +88,7 @@ class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV
             // Search the music first.
             lifecycleProvider.searchTheTopMusicAndPlayThenToPlaylist(searchMusicCase,
                                                                      addPlaylistItemCase,
-                                                                     "$artistName $trackName",
-                                                                     stateEventListener) {
+                                                                     "$artistName $trackName") {
                 isPlaying.set(!isPlaying.get())
                 realUrl = it.trackUri
                 RxBus.get().post(VIEWMODEL_CHART_DETAIL_CLICK, it.trackUri)
@@ -106,5 +103,15 @@ class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV
      */
     fun trackOptionalOnClick(view: View) {
         RxBus.get().post(VIEWMODEL_LONG_CLICK_RANK_CHART, item)
+    }
+
+    /**
+     * @param state
+     *
+     * @event_from [MusicPlayerHelper.setPlayerListener]
+     */
+    @Subscribe(tags = [(Tag(RxBusTag.MUSICPLAYER_STATE_CHANGED))])
+    fun playerStateChanged(state: MusicPlayerState) {
+        if (MusicPlayerState.Standby == state) isPlaying.set(false)
     }
 }

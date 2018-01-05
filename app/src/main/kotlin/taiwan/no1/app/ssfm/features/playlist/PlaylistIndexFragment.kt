@@ -55,15 +55,15 @@ class PlaylistIndexFragment : AdvancedFragment<PlaylistIndexFragmentViewModel, F
             playlistLayoutManager = WrapContentLinearLayoutManager(activity)
             recentlyLayoutManager = WrapContentLinearLayoutManager(activity)
 
-            playlistAdapter = PlaylistAdapter(R.layout.item_playlist_type_1, playlistRes) { holder, item, _ ->
-                holder.binding.avm = RecyclerViewPlaylistViewModel(item).apply {
-                    onAttach(this@PlaylistIndexFragment)
-                }
+            playlistAdapter = PlaylistAdapter(this@PlaylistIndexFragment,
+                                              R.layout.item_playlist_type_1,
+                                              playlistRes) { holder, item, _ ->
+                if (null == holder.binding.avm) holder.binding.avm = RecyclerViewPlaylistViewModel(item)
             }
-            recentlyAdapter = RecentlyAdapter(R.layout.item_music_type_3, recentlyPlayedRes) { holder, item, _ ->
-                holder.binding.avm = RecyclerViewRecentlyPlaylistViewModel(item).apply {
-                    onAttach(this@PlaylistIndexFragment)
-                }
+            recentlyAdapter = RecentlyAdapter(this@PlaylistIndexFragment,
+                                              R.layout.item_music_type_3,
+                                              recentlyPlayedRes) { holder, item, _ ->
+                if (null == holder.binding.avm) holder.binding.avm = RecyclerViewRecentlyPlaylistViewModel(item)
             }
 
             val callback = SimpleItemTouchHelperCallback(playlistAdapter as PlaylistAdapter, vmItemTouchCallback)

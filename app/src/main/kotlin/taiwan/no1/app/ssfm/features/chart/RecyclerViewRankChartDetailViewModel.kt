@@ -14,6 +14,7 @@ import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.Constant
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CHART_DETAIL_CLICK
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_LONG_CLICK_RANK_CHART
 import taiwan.no1.app.ssfm.misc.extension.gAlphaIntColor
@@ -54,9 +55,6 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
             false
         }
     }
-    private val stateEventListener = { state: MusicPlayerState ->
-        if (MusicPlayerState.Standby == state) isPlaying.set(false)
-    }
 
     init {
         (item as MusicRankEntity.Song).let {
@@ -92,7 +90,7 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
                                duration = length)
         }
 
-        lifecycleProvider.playThenToPlaylist(addPlaylistItemCase, playlistEntity, stateEventListener) {
+        lifecycleProvider.playThenToPlaylist(addPlaylistItemCase, playlistEntity) {
             isPlaying.set(!isPlaying.get())
             RxBus.get().post(VIEWMODEL_CHART_DETAIL_CLICK, playlistEntity.trackUri)
         }
@@ -111,5 +109,15 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
     @Subscribe(tags = [Tag(VIEWMODEL_CHART_DETAIL_CLICK)])
     fun changeToStopIcon(uri: String) {
         if (uri != (item as MusicRankEntity.Song).url) isPlaying.set(false)
+    }
+
+    /**
+     * @param state
+     *
+     * @event_from [MusicPlayerHelper.setPlayerListener]
+     */
+    @Subscribe(tags = [(Tag(RxBusTag.MUSICPLAYER_STATE_CHANGED))])
+    fun playerStateChanged(state: MusicPlayerState) {
+        if (MusicPlayerState.Standby == state) isPlaying.set(false)
     }
 }

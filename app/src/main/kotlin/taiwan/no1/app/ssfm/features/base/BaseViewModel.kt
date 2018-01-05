@@ -1,6 +1,7 @@
 package taiwan.no1.app.ssfm.features.base
 
 import android.databinding.BaseObservable
+import com.devrapid.kotlinknifer.logw
 import com.trello.rxlifecycle2.LifecycleProvider
 
 /**
@@ -18,5 +19,7 @@ abstract class BaseViewModel : BaseObservable(), IViewModel {
         this.lifecycleProvider = lifecycleProvider
     }
 
-    override fun onDetach() {}
+    override fun onDetach() {
+        logw("????????????????")
+    }
 }

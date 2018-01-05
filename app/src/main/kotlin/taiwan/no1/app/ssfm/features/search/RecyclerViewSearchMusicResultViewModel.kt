@@ -12,6 +12,7 @@ import com.hwangjr.rxbus.annotation.Tag
 import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.Constant.DATABASE_PLAYLIST_HISTORY_ID
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CHART_DETAIL_CLICK
 import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.misc.extension.glideListener
@@ -42,9 +43,6 @@ class RecyclerViewSearchMusicResultViewModel(private val res: BaseEntity,
         }
     }
     var clickEvent: (track: BaseEntity) -> Unit = {}
-    private val stateEventListener = { state: MusicPlayerState ->
-        if (MusicPlayerState.Standby == state) isPlaying.set(false)
-    }
 
     init {
         (res as MusicEntity.Music).let {
@@ -82,11 +80,8 @@ class RecyclerViewSearchMusicResultViewModel(private val res: BaseEntity,
                                                                               coverUrl = coverURL,
                                                                               lyricUrl = lyricURL,
                                                                               duration = length))) {
-                        onNext {
-                            logw(it)
-                        }
+                        onNext { logw(it) }
                     }
-                    addStateChangedListeners(stateEventListener)
                 }
             }
         }
@@ -99,6 +94,16 @@ class RecyclerViewSearchMusicResultViewModel(private val res: BaseEntity,
     @Subscribe(tags = [(Tag(VIEWMODEL_CHART_DETAIL_CLICK))])
     fun changeToStopIcon(uri: String) {
         if (uri != (res as MusicEntity.Music).url) isPlaying.set(false)
+    }
+
+    /**
+     * @param state
+     *
+     * @event_from [MusicPlayerHelper.setPlayerListener]
+     */
+    @Subscribe(tags = [(Tag(RxBusTag.MUSICPLAYER_STATE_CHANGED))])
+    fun playerStateChanged(state: MusicPlayerState) {
+        if (MusicPlayerState.Standby == state) isPlaying.set(false)
     }
     //endregion
 }

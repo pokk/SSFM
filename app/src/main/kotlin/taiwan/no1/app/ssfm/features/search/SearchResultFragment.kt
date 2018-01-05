@@ -71,13 +71,15 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
     override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
             layoutManager = WrapContentLinearLayoutManager(act)
-            adapter = SearchHistoryAdapter(R.layout.item_search_music_type_1, res) { holder, item, _ ->
-                holder.binding.avm = RecyclerViewSearchMusicResultViewModel(item,
-                                                                            addPlaylistItemCase,
-                                                                            act.applicationContext).apply {
-                    onAttach(this@SearchResultFragment)
-                    clickEvent = { (activity as SearchActivity).openBottomSheet(it) }
-                }
+            adapter = SearchHistoryAdapter(this@SearchResultFragment,
+                                           R.layout.item_search_music_type_1,
+                                           res) { holder, item, _ ->
+                if (null == holder.binding.avm)
+                    holder.binding.avm = RecyclerViewSearchMusicResultViewModel(item,
+                                                                                addPlaylistItemCase,
+                                                                                act.applicationContext).apply {
+                        clickEvent = { (activity as SearchActivity).openBottomSheet(it) }
+                    }
             }
             loadmore = object : RecyclerViewScrollCallback {
                 override fun loadMoreEvent(recyclerView: RecyclerView, total: Int) {

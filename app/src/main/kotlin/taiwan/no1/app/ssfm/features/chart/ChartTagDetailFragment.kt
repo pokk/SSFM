@@ -92,23 +92,23 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
             artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             trackLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
-            albumAdapter = TagTopAlbumAdapter(R.layout.item_album_type_2, albumRes) { holder, item, _ ->
-                holder.binding.avm = RecyclerViewTagTopAlbumViewModel(item).apply {
-                    onAttach(this@ChartTagDetailFragment)
-                }
+            albumAdapter = TagTopAlbumAdapter(this@ChartTagDetailFragment,
+                                              R.layout.item_album_type_2,
+                                              albumRes) { holder, item, _ ->
+                if (null == holder.binding.avm) holder.binding.avm = RecyclerViewTagTopAlbumViewModel(item)
             }
-            artistAdapter = TagTopArtistAdapter(R.layout.item_artist_type_3, artistRes) { holder, item, _ ->
-                holder.binding.avm = RecyclerViewTagTopArtistViewModel(item).apply {
-                    onAttach(this@ChartTagDetailFragment)
-                }
+            artistAdapter = TagTopArtistAdapter(this@ChartTagDetailFragment,
+                                                R.layout.item_artist_type_3,
+                                                artistRes) { holder, item, _ ->
+                if (null == holder.binding.avm) holder.binding.avm = RecyclerViewTagTopArtistViewModel(item)
             }
-            trackAdapter = TagTopTrackAdapter(R.layout.item_music_type_7, trackRes) { holder, item, index ->
-                holder.binding.avm = RecyclerViewTagTopTrackViewModel(searchMusicCase,
-                                                                      addPlaylistItemCase,
-                                                                      item,
-                                                                      index + 1).apply {
-                    onAttach(this@ChartTagDetailFragment)
-                }
+            trackAdapter = TagTopTrackAdapter(this@ChartTagDetailFragment,
+                                              R.layout.item_music_type_7,
+                                              trackRes) { holder, item, index ->
+                if (null == holder.binding.avm) holder.binding.avm = RecyclerViewTagTopTrackViewModel(searchMusicCase,
+                                                                                                      addPlaylistItemCase,
+                                                                                                      item,
+                                                                                                      index + 1)
             }
 
             albumLoadmore = RVCustomScrollCallback(binding?.albumAdapter as TagTopAlbumAdapter,

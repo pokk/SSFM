@@ -93,21 +93,27 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
     override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
             artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            artistAdapter = SimilarArtistAdapter(R.layout.item_artist_type_2, artistRes) { holder, item, _ ->
-                holder.binding.avm = RecyclerViewChartSimilarArtistViewModel(item).apply {
-                    onAttach(this@ChartArtistDetailFragment)
-                    clickItemListener = {}
+            artistAdapter = SimilarArtistAdapter(this@ChartArtistDetailFragment,
+                                                 R.layout.item_artist_type_2,
+                                                 artistRes) { holder, item, _ ->
+                if (null == holder.binding.avm) {
+                    holder.binding.avm = RecyclerViewChartSimilarArtistViewModel(item).apply {
+                        clickItemListener = {}
+                    }
                 }
             }
             artistDecoration = HorizontalItemDecorator(20)
 
             trackLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-            trackAdapter = ArtistTopTrackAdapter(R.layout.item_music_type_2, trackRes) { holder, item, _ ->
-                holder.binding.avm =
-                    RecyclerViewChartArtistHotTrackViewModel(searchMusicCase, addPlaylistItemCase, item).apply {
-                        onAttach(this@ChartArtistDetailFragment)
-                        clickEvent = { (activity as ChartActivity).openBottomSheet(item) }
-                    }
+            trackAdapter = ArtistTopTrackAdapter(this@ChartArtistDetailFragment,
+                                                 R.layout.item_music_type_2,
+                                                 trackRes) { holder, item, _ ->
+                if (null == holder.binding.avm) {
+                    holder.binding.avm =
+                        RecyclerViewChartArtistHotTrackViewModel(searchMusicCase, addPlaylistItemCase, item).apply {
+                            clickEvent = { (activity as ChartActivity).openBottomSheet(item) }
+                        }
+                }
             }
 
             albumLayoutManager = FanLayoutManager(act, FanLayoutManagerSettings.newBuilder(ctx).apply {
@@ -116,21 +122,24 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
                 withViewHeightDp(190f)
                 withViewWidthDp(150f)
             }.build())
-            albumAdapter = ArtistTopAlbumAdapter(R.layout.item_album_type_1, albumRes) { holder, item, _ ->
-                holder.binding.avm = RecyclerViewChartArtistHotAlbumViewModel(item).apply {
-                    onAttach(this@ChartArtistDetailFragment)
-                    clickItemListener = {
-                        (albumLayoutManager as FanLayoutManager).run {
-                            when {
-                                isItemSelected && selectedItemPosition == it.index -> {
-                                    val params = hashMapOf(
-                                        VIEWMODEL_PARAMS_ARTIST_NAME to it.artist?.name.orEmpty(),
-                                        VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME to it.name.orEmpty())
-                                    (act as ChartActivity).navigateToAlbumDetail(params)
-                                }
-                                else -> {
-                                    deselectItem()
-                                    switchItem(rvAlbum, it.index)
+            albumAdapter = ArtistTopAlbumAdapter(this@ChartArtistDetailFragment,
+                                                 R.layout.item_album_type_1,
+                                                 albumRes) { holder, item, _ ->
+                if (null == holder.binding.avm) {
+                    holder.binding.avm = RecyclerViewChartArtistHotAlbumViewModel(item).apply {
+                        clickItemListener = {
+                            (albumLayoutManager as FanLayoutManager).run {
+                                when {
+                                    isItemSelected && selectedItemPosition == it.index -> {
+                                        val params = hashMapOf(
+                                            VIEWMODEL_PARAMS_ARTIST_NAME to it.artist?.name.orEmpty(),
+                                            VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME to it.name.orEmpty())
+                                        (act as ChartActivity).navigateToAlbumDetail(params)
+                                    }
+                                    else -> {
+                                        deselectItem()
+                                        switchItem(rvAlbum, it.index)
+                                    }
                                 }
                             }
                         }

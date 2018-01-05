@@ -76,21 +76,23 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
     override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
             rankLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            rankAdapter = RankAdapter(R.layout.item_rank_type_1, rankRes) { holder, item, _ ->
-                holder.binding.avm = RecyclerViewChartRankChartViewModel(item).apply {
-                    onAttach(this@ChartIndexFragment)
-                }
+            rankAdapter = RankAdapter(this@ChartIndexFragment, R.layout.item_rank_type_1, rankRes) { holder, item, _ ->
+                if (null == holder.binding.avm) holder.binding.avm = RecyclerViewChartRankChartViewModel(item)
             }
             rankDecoration = HorizontalItemDecorator(20)
 
             artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            artistAdapter = ArtistAdapter(R.layout.item_artist_type_1, artistRes) { holder, item, _ ->
-                holder.binding.avm = RecyclerViewSearchArtistChartViewModel(item).apply {
-                    onAttach(this@ChartIndexFragment)
-                    clickItemListener = {
-                        // TODO(jieyi): 10/22/17 Change fragment to create instance method.
-                        (act as ChartActivity).navigate(ChartArtistDetailFragment.newInstance(it.mbid.orEmpty(),
-                                                                                              it.name.orEmpty()), true)
+            artistAdapter = ArtistAdapter(this@ChartIndexFragment,
+                                          R.layout.item_artist_type_1,
+                                          artistRes) { holder, item, _ ->
+                if (null == holder.binding.avm) {
+                    holder.binding.avm = RecyclerViewSearchArtistChartViewModel(item).apply {
+                        clickItemListener = {
+                            // TODO(jieyi): 10/22/17 Change fragment to create instance method.
+                            (act as ChartActivity).navigate(ChartArtistDetailFragment.newInstance(it.mbid.orEmpty(),
+                                                                                                  it.name.orEmpty()),
+                                                            true)
+                        }
                     }
                 }
                 val sd = gContext().scaledDrawable(R.drawable.ic_feature, 0.5f, 0.5f)
@@ -101,12 +103,13 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
             artistDecoration = HorizontalItemDecorator(20)
 
             tagLayoutManager = StaggeredGridLayoutManager(3, VERTICAL)
-            tagAdapter = TagAdapter(R.layout.item_tag_type_1, tagRes) { holder, item, _ ->
-                holder.binding.avm = RecyclerViewChartTagViewModel(item).apply {
-                    onAttach(this@ChartIndexFragment)
-                    clickItemListener = {
-                        // TODO(jieyi): 10/22/17 Change fragment to create instance method.
-                        (act as ChartActivity).navigate(ChartTagDetailFragment.newInstance(it.name.orEmpty()), true)
+            tagAdapter = TagAdapter(this@ChartIndexFragment, R.layout.item_tag_type_1, tagRes) { holder, item, _ ->
+                if (null == holder.binding.avm) {
+                    holder.binding.avm = RecyclerViewChartTagViewModel(item).apply {
+                        clickItemListener = {
+                            // TODO(jieyi): 10/22/17 Change fragment to create instance method.
+                            (act as ChartActivity).navigate(ChartTagDetailFragment.newInstance(it.name.orEmpty()), true)
+                        }
                     }
                 }
             }

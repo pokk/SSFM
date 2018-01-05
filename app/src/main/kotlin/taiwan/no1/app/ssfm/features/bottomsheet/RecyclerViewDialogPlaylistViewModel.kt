@@ -5,7 +5,7 @@ import android.view.View
 import com.devrapid.kotlinknifer.logw
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
-import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_DISSMISS_PLAYLIST_FRAGMENT_DIALOG
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_DISMISS_PLAYLIST_FRAGMENT_DIALOG
 import taiwan.no1.app.ssfm.misc.extension.createDebounce
 import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
@@ -55,7 +55,7 @@ class RecyclerViewDialogPlaylistViewModel(private val entity: BaseEntity,
             playlistParam?.let {
                 lifecycleProvider.execute(addPlaylistItemCase, AddPlaylistItemUsecase.RequestValue(it)) {
                     onNext { logw() }
-                    onComplete { RxBus.get().post(VIEWMODEL_DISSMISS_PLAYLIST_FRAGMENT_DIALOG, "") }
+                    onComplete { RxBus.get().post(VIEWMODEL_DISMISS_PLAYLIST_FRAGMENT_DIALOG, "") }
                 }
             }
         }

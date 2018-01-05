@@ -73,17 +73,17 @@ class SearchIndexFragment : AdvancedFragment<SearchIndexFragmentViewModel, Fragm
                                                                  false)
             trackLayoutManager = WrapContentLinearLayoutManager(activity)
 
-            artistAdapter = ArtistAdapter(R.layout.item_artist_type_1, artistRes) { holder, item, _ ->
-                holder.binding.avm = RecyclerViewSearchArtistChartViewModel(item).apply {
-                    onAttach(this@SearchIndexFragment)
-                }
+            artistAdapter = ArtistAdapter(this@SearchIndexFragment,
+                                          R.layout.item_artist_type_1,
+                                          artistRes) { holder, item, _ ->
+                if (null == holder.binding.avm) holder.binding.avm = RecyclerViewSearchArtistChartViewModel(item)
                 val sd = gContext().scaledDrawable(R.drawable.ic_feature, 0.5f, 0.5f)
                 holder.binding.tvPlayCount.setCompoundDrawables(sd, null, null, null)
             }
-            trackAdapter = TrackAdapter(R.layout.item_music_type_1, trackRes) { holder, item, _ ->
-                holder.binding.avm = RecyclerViewSearchTrackChartViewModel(item).apply {
-                    onAttach(this@SearchIndexFragment)
-                }
+            trackAdapter = TrackAdapter(this@SearchIndexFragment,
+                                        R.layout.item_music_type_1,
+                                        trackRes) { holder, item, _ ->
+                if (null == holder.binding.avm) holder.binding.avm = RecyclerViewSearchTrackChartViewModel(item)
             }
 
             artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as ArtistAdapter, artistInfo,

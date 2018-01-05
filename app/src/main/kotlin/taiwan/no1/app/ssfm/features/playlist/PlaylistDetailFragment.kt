@@ -15,6 +15,7 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.ItemTouchViewmodelCallback
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.SimpleItemTouchHelperCallback
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
@@ -59,6 +60,12 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
     private val playlist by lazy { arguments.getParcelable<PlaylistEntity>(ARG_PARAM_PLAYLIST_OBJECT) }
     private val transition by lazy { arguments.getStringArrayList(ARG_PARAM_PLAYLIST_TRANSITION) }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        (binding?.itemAdapter as BaseDataBindingAdapter<*, *>).detachAll()
+    }
+
+    //region Base fragment implement
     override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
             // TODO(jieyi): 11/19/17 Create a map for each elements.
@@ -68,11 +75,13 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
             }
             itemLayoutManager = WrapContentLinearLayoutManager(activity)
 
-            itemAdapter = PlaylistItemAdapter(R.layout.item_music_type_5, playlistItemRes) { holder, item, index ->
-                holder.binding.avm = RecyclerViewPlaylistDetailViewModel(addPlaylistItemCase,
-                                                                         item,
-                                                                         index + 1).apply {
-                    onAttach(this@PlaylistDetailFragment)
+            itemAdapter = PlaylistItemAdapter(this@PlaylistDetailFragment,
+                                              R.layout.item_music_type_5,
+                                              playlistItemRes) { holder, item, index ->
+                if (null == holder.binding.avm) {
+                    holder.binding.avm = RecyclerViewPlaylistDetailViewModel(addPlaylistItemCase,
+                                                                             item,
+                                                                             index + 1)
                 }
             }
 

@@ -8,6 +8,7 @@ import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CHART_DETAIL_CLICK
 import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayerHelper
 import taiwan.no1.app.ssfm.misc.utilies.devices.searchTheTopMusicAndPlayThenToPlaylist
@@ -29,9 +30,6 @@ class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: Sear
     val trackNumber by lazy { ObservableField<String>() }
     val isPlaying by lazy { ObservableBoolean() }
     var clickEvent: (track: BaseEntity) -> Unit = {}
-    val stateEventListener = { state: MusicPlayerState ->
-        if (MusicPlayerState.Standby == state) isPlaying.set(false)
-    }
 
     init {
         (item as TrackEntity.TrackWithStreamableString).apply {
@@ -60,8 +58,7 @@ class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: Sear
             // Search the music first.
             lifecycleProvider.searchTheTopMusicAndPlayThenToPlaylist(searchMusicCase,
                                                                      addPlaylistItemCase,
-                                                                     "$artistName $trackName",
-                                                                     stateEventListener) {
+                                                                     "$artistName $trackName") {
                 // Change the viewmodel state and view icon.
                 isPlaying.set(!isPlaying.get())
                 realUrl = it.trackUri
@@ -77,5 +74,15 @@ class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: Sear
     @Subscribe(tags = [(Tag(VIEWMODEL_CHART_DETAIL_CLICK))])
     fun changeToStopIcon(uri: String) {
         if (uri != (item as TrackEntity.TrackWithStreamableString).realUrl) isPlaying.set(false)
+    }
+
+    /**
+     * @param state
+     *
+     * @event_from [MusicPlayerHelper.setPlayerListener]
+     */
+    @Subscribe(tags = [(Tag(RxBusTag.MUSICPLAYER_STATE_CHANGED))])
+    fun playerStateChanged(state: MusicPlayerState) {
+        if (MusicPlayerState.Standby == state) isPlaying.set(false)
     }
 }

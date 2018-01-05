@@ -5,6 +5,7 @@ import android.databinding.ViewDataBinding
 import android.support.v7.util.DiffUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.trello.rxlifecycle2.LifecycleProvider
 import io.reactivex.Observable
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.viewholders.BindingHolder
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.viewtype.ExpandableViewTypeFactory
@@ -16,9 +17,10 @@ import taiwan.no1.app.ssfm.models.entities.PreferenceEntity
  * @author  jieyi
  * @since   9/20/17
  */
-class BaseMultipleTypeDataBindingAdapter<BH : ViewDataBinding, D>(private var dataList: MutableList<D>,
+class BaseMultipleTypeDataBindingAdapter<BH : ViewDataBinding, D>(lifecycleProvider: LifecycleProvider<*>,
+                                                                  private var dataList: MutableList<D>,
                                                                   bindVHBlock: (holder: BindingHolder<BH>, item: D, index: Int) -> Unit) :
-    BaseDataBindingAdapter<BH, D>(-1, dataList, bindVHBlock) {
+    BaseDataBindingAdapter<BH, D>(lifecycleProvider, -1, dataList, bindVHBlock) {
     private var typeFactory: ExpandableViewTypeFactory = ExpandableViewTypeFactory()
     // FIXME(jieyi): 2017/12/07 When using the `DiffUtil`, the layout cannot be correct.
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingHolder<BH> =

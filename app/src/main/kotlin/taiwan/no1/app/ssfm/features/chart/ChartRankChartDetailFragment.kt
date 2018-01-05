@@ -57,9 +57,13 @@ class ChartRankChartDetailFragment : AdvancedFragment<ChartRankChartDetailFragme
         binding?.apply {
             trackLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
-            trackAdapter = RankChartDetailAdapter(R.layout.item_music_type_6, trackRes) { holder, item, index ->
-                holder.binding.avm = RecyclerViewRankChartDetailViewModel(addPlaylistItemCase, item, index + 1).apply {
-                    onAttach(this@ChartRankChartDetailFragment)
+            trackAdapter = RankChartDetailAdapter(this@ChartRankChartDetailFragment,
+                                                  R.layout.item_music_type_6,
+                                                  trackRes) { holder, item, index ->
+                if (null == holder.binding.avm) {
+                    holder.binding.avm = RecyclerViewRankChartDetailViewModel(addPlaylistItemCase,
+                                                                              item,
+                                                                              index + 1)
                 }
             }
 
