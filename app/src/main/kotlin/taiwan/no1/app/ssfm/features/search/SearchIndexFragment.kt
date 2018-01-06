@@ -68,9 +68,7 @@ class SearchIndexFragment : AdvancedFragment<SearchIndexFragmentViewModel, Fragm
     //region Base fragment implement
     override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
-            artistLayoutManager = WrapContentLinearLayoutManager(activity,
-                                                                 LinearLayoutManager.HORIZONTAL,
-                                                                 false)
+            artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             trackLayoutManager = WrapContentLinearLayoutManager(activity)
 
             artistAdapter = ArtistAdapter(this@SearchIndexFragment,
