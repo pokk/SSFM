@@ -6,7 +6,6 @@ import android.support.v7.widget.StaggeredGridLayoutManager
 import android.widget.GridLayout.VERTICAL
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.GridSpacingItemDecorator
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.HorizontalItemDecorator
-import org.jetbrains.anko.act
 import org.jetbrains.anko.bundleOf
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentChartIndexBinding
@@ -85,16 +84,7 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
             artistAdapter = ArtistAdapter(this@ChartIndexFragment,
                                           R.layout.item_artist_type_1,
                                           artistRes) { holder, item, _ ->
-                if (null == holder.binding.avm) {
-                    holder.binding.avm = RecyclerViewSearchArtistChartViewModel(item).apply {
-                        clickItemListener = {
-                            // TODO(jieyi): 10/22/17 Change fragment to create instance method.
-                            (act as ChartActivity).navigate(ChartArtistDetailFragment.newInstance(it.mbid.orEmpty(),
-                                                                                                  it.name.orEmpty()),
-                                                            true)
-                        }
-                    }
-                }
+                if (null == holder.binding.avm) holder.binding.avm = RecyclerViewSearchArtistChartViewModel(item)
                 val sd = gContext().scaledDrawable(R.drawable.ic_feature, 0.5f, 0.5f)
                 holder.binding.tvPlayCount.setCompoundDrawables(sd, null, null, null)
             }
@@ -104,14 +94,7 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
 
             tagLayoutManager = StaggeredGridLayoutManager(3, VERTICAL)
             tagAdapter = TagAdapter(this@ChartIndexFragment, R.layout.item_tag_type_1, tagRes) { holder, item, _ ->
-                if (null == holder.binding.avm) {
-                    holder.binding.avm = RecyclerViewChartTagViewModel(item).apply {
-                        clickItemListener = {
-                            // TODO(jieyi): 10/22/17 Change fragment to create instance method.
-                            (act as ChartActivity).navigate(ChartTagDetailFragment.newInstance(it.name.orEmpty()), true)
-                        }
-                    }
-                }
+                if (null == holder.binding.avm) holder.binding.avm = RecyclerViewChartTagViewModel(item)
             }
             tagDecoration = GridSpacingItemDecorator(3, 20, false)
         }

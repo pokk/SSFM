@@ -11,6 +11,8 @@ object RxBusTag {
     const val FRAGMENT_SEARCH_INDEX = "Fragment Music Search Index"
     const val FRAGMENT_SEARCH_RESULT = "Fragment Music Search Result"
 
+    const val NAVIGATION_TO_FRAGMENT = "Fragment Navigator"
+
     const val VIEWMODEL_CLICK_ALBUM = "Viewmodel Click Album Music"
     const val VIEWMODEL_CLICK_HISTORY = "Viewmodel Click History Keyword Music"
     const val VIEWMODEL_CLICK_RANK_CHART = "Viewmodel Click Rank Chart Item"

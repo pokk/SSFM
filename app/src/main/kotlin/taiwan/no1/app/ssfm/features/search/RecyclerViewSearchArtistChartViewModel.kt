@@ -7,11 +7,15 @@ import com.devrapid.kotlinknifer.formatToMoneyKarma
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
+import taiwan.no1.app.ssfm.features.chart.ChartArtistDetailFragment
+import taiwan.no1.app.ssfm.misc.constants.Constant.RXBUS_PARAMETER_FRAGMENT
+import taiwan.no1.app.ssfm.misc.constants.Constant.RXBUS_PARAMETER_FRAGMENT_NEEDBACK
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_FOG_COLOR
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_IMAGE_URL
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_KEYWORD
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.EXTRA_LARGE
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.NAVIGATION_TO_FRAGMENT
 import taiwan.no1.app.ssfm.misc.extension.gAlphaIntColor
 import taiwan.no1.app.ssfm.misc.extension.gColor
 import taiwan.no1.app.ssfm.misc.extension.glideListener
@@ -71,5 +75,9 @@ class RecyclerViewSearchArtistChartViewModel(private val artist: BaseEntity) : B
                                    VIEWMODEL_PARAMS_FOG_COLOR to color.toString()))
         // For `top chart activity`.
         clickItemListener?.invoke(artist)
+        RxBus.get().post(NAVIGATION_TO_FRAGMENT,
+                         hashMapOf(RXBUS_PARAMETER_FRAGMENT to ChartArtistDetailFragment.newInstance(artist.mbid.orEmpty(),
+                                                                                                     artist.name.orEmpty()),
+                                   RXBUS_PARAMETER_FRAGMENT_NEEDBACK to true))
     }
 }

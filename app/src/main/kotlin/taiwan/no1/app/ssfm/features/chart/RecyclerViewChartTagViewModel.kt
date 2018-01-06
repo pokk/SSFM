@@ -5,7 +5,11 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.view.View
+import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
+import taiwan.no1.app.ssfm.misc.constants.Constant.RXBUS_PARAMETER_FRAGMENT
+import taiwan.no1.app.ssfm.misc.constants.Constant.RXBUS_PARAMETER_FRAGMENT_NEEDBACK
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.NAVIGATION_TO_FRAGMENT
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.TagEntity
 import java.util.Random
@@ -35,6 +39,8 @@ class RecyclerViewChartTagViewModel(val item: BaseEntity) : BaseViewModel() {
     }
 
     fun tagOnClick(view: View) {
-        clickItemListener?.invoke(item as TagEntity.Tag)
+        RxBus.get().post(NAVIGATION_TO_FRAGMENT,
+                         hashMapOf(RXBUS_PARAMETER_FRAGMENT to ChartTagDetailFragment.newInstance((item as TagEntity.Tag).name.orEmpty()),
+                                   RXBUS_PARAMETER_FRAGMENT_NEEDBACK to true))
     }
 }

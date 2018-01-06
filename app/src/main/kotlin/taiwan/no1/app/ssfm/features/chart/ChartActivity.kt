@@ -19,8 +19,11 @@ import taiwan.no1.app.ssfm.databinding.FragmentDialogPlaylistBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedActivity
 import taiwan.no1.app.ssfm.features.bottomsheet.BottomSheetViewModel
 import taiwan.no1.app.ssfm.features.bottomsheet.RecyclerViewDialogPlaylistViewModel
+import taiwan.no1.app.ssfm.misc.constants.Constant.RXBUS_PARAMETER_FRAGMENT
+import taiwan.no1.app.ssfm.misc.constants.Constant.RXBUS_PARAMETER_FRAGMENT_NEEDBACK
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_NAME
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.NAVIGATION_TO_FRAGMENT
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CLICK_ALBUM
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CLICK_PLAYLIST_FRAGMENT_DIALOG
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CLICK_RANK_CHART
@@ -58,7 +61,8 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
         binding.bottomSheetVm = BottomSheetViewModel(BottomSheetBehavior.from(rl_bottom_sheet).apply {
             state = BottomSheetBehavior.STATE_HIDDEN
         } as BottomSheetBehavior<View>)
-        navigate(ChartIndexFragment.newInstance(), false)
+        navigate(hashMapOf(RXBUS_PARAMETER_FRAGMENT to ChartIndexFragment.newInstance(),
+                           RXBUS_PARAMETER_FRAGMENT_NEEDBACK to false))
         RxBus.get().register(this)
     }
 
@@ -100,7 +104,8 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
      */
     @Subscribe(tags = [Tag(VIEWMODEL_CLICK_SIMILAR)])
     fun navigateToArtistDetail(artistName: String) {
-        navigate(ChartArtistDetailFragment.newInstance(artistName = artistName), true)
+        navigate(hashMapOf(RXBUS_PARAMETER_FRAGMENT to ChartArtistDetailFragment.newInstance(artistName = artistName),
+                           RXBUS_PARAMETER_FRAGMENT_NEEDBACK to true))
     }
 
     /**
@@ -112,7 +117,8 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     fun navigateToAlbumDetail(params: HashMap<String, String>) {
         val (artistName, artistAlbum) =
             (params[VIEWMODEL_PARAMS_ARTIST_NAME].orEmpty()) to (params[VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME].orEmpty())
-        navigate(ChartAlbumDetailFragment.newInstance(artistAlbum, artistName), true)
+        navigate(hashMapOf(RXBUS_PARAMETER_FRAGMENT to ChartAlbumDetailFragment.newInstance(artistAlbum, artistName),
+                           RXBUS_PARAMETER_FRAGMENT_NEEDBACK to true))
     }
 
     /**
@@ -122,10 +128,21 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
      */
     @Subscribe(tags = [Tag(VIEWMODEL_CLICK_RANK_CHART)])
     fun navigateToRankChartDetail(entity: RankChartEntity) {
-        navigate(ChartRankChartDetailFragment.newInstance(entity.rankType, entity), true)
+        navigate(hashMapOf(
+            RXBUS_PARAMETER_FRAGMENT to ChartRankChartDetailFragment.newInstance(entity.rankType, entity),
+            RXBUS_PARAMETER_FRAGMENT_NEEDBACK to true))
     }
 
-    fun navigate(fragment: Fragment, needBack: Boolean) {
+    /**
+     * @param fragParams
+     *
+     * @event_from []
+     */
+    @Subscribe(tags = [Tag(NAVIGATION_TO_FRAGMENT)])
+    fun navigate(fragParams: HashMap<String, Any>) {
+        val fragment = fragParams[RXBUS_PARAMETER_FRAGMENT] as Fragment
+        val needBack = fragParams[RXBUS_PARAMETER_FRAGMENT_NEEDBACK] as Boolean
+
         fragmentManager.addFragment(R.id.fl_container, fragment, needBack)
     }
 

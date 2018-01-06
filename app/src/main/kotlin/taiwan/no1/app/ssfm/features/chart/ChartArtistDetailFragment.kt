@@ -96,11 +96,7 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
             artistAdapter = SimilarArtistAdapter(this@ChartArtistDetailFragment,
                                                  R.layout.item_artist_type_2,
                                                  artistRes) { holder, item, _ ->
-                if (null == holder.binding.avm) {
-                    holder.binding.avm = RecyclerViewChartSimilarArtistViewModel(item).apply {
-                        clickItemListener = {}
-                    }
-                }
+                if (null == holder.binding.avm) holder.binding.avm = RecyclerViewChartSimilarArtistViewModel(item)
             }
             artistDecoration = HorizontalItemDecorator(20)
 

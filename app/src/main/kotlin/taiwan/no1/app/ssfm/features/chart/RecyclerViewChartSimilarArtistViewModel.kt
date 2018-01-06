@@ -25,7 +25,6 @@ class RecyclerViewChartSimilarArtistViewModel(val item: BaseEntity) : BaseViewMo
     val thumbnail by lazy { ObservableField<String>() }
     val textBackground by lazy { ObservableInt() }
     val textColor by lazy { ObservableInt() }
-    var clickItemListener: ((item: ArtistEntity.Artist) -> Unit)? = null
 
     init {
         (item as ArtistEntity.Artist).let {

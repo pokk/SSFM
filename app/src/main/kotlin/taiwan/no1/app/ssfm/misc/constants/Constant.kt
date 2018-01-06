@@ -19,6 +19,9 @@ object Constant {
     const val VIEWMODEL_PARAMS_ARTIST_NAME = "artist name"
     const val VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME = "artist album name"
 
+    const val RXBUS_PARAMETER_FRAGMENT = "fragment"
+    const val RXBUS_PARAMETER_FRAGMENT_NEEDBACK = "needback"
+
     const val CALLBACK_SPARSE_INDEX_KEYWORD = 0
     const val CALLBACK_SPARSE_INDEX_IMAGE_URL = 1
     const val CALLBACK_SPARSE_INDEX_FOG_COLOR = 2
