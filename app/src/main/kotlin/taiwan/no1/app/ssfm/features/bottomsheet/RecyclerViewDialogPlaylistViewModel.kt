@@ -3,7 +3,6 @@ package taiwan.no1.app.ssfm.features.bottomsheet
 import android.databinding.ObservableField
 import android.view.View
 import com.devrapid.kotlinknifer.loge
-import com.devrapid.kotlinknifer.logw
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes
@@ -54,7 +53,7 @@ class RecyclerViewDialogPlaylistViewModel(private val entity: BaseEntity,
                                        lyricUrl = musicEntity.lyricURL,
                                        duration = musicEntity.length)
                 }
-                is TrackEntity.Track -> {
+                is TrackEntity.BaseTrack -> {
                     PlaylistItemEntity(playlistId = playlistId,
                                        trackName = musicEntity.name.orEmpty(),
                                        artistName = musicEntity.artist?.name.orEmpty(),
@@ -70,11 +69,6 @@ class RecyclerViewDialogPlaylistViewModel(private val entity: BaseEntity,
             }
             playlistParam?.let {
                 lifecycleProvider.execute(addPlaylistItemCase, AddPlaylistItemUsecase.RequestValue(it)) {
-                    onNext { logw() }
-                    onError {
-                        loge(it.message)
-                        loge(it)
-                    }
                     onComplete { RxBus.get().post(VIEWMODEL_DISMISS_PLAYLIST_FRAGMENT_DIALOG, "") }
                 }
             }
@@ -89,7 +83,6 @@ class RecyclerViewDialogPlaylistViewModel(private val entity: BaseEntity,
     }
 
     fun playlistOnClick(view: View) {
-        logw("!!!!!!!!!!!!!!!!!!!!!!!")
         debounceAddToPlaylist.onNext(view)
     }
 }

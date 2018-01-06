@@ -42,6 +42,11 @@ class RecyclerViewChartTagViewModel(private var item: BaseEntity) : BaseViewMode
         refreshView()
     }
 
+    /**
+     * @param view View
+     *
+     * @event_to [taiwan.no1.app.ssfm.features.chart.ChartActivity.navigate]
+     */
     fun tagOnClick(view: View) {
         RxBus.get().post(NAVIGATION_TO_FRAGMENT,
                          hashMapOf(RXBUS_PARAMETER_FRAGMENT to ChartTagDetailFragment.newInstance((item as TagEntity.Tag).name.orEmpty()),
