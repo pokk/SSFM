@@ -10,6 +10,7 @@ import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CHART_DETAIL_CLICK
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_LONG_CLICK_RANK_CHART
 import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayerHelper
 import taiwan.no1.app.ssfm.misc.utilies.devices.searchTheTopMusicAndPlayThenToPlaylist
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
@@ -25,18 +26,13 @@ import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
  */
 class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: SearchMusicV2Case,
                                                private val addPlaylistItemCase: AddPlaylistItemCase,
-                                               private val item: BaseEntity) : BaseViewModel() {
+                                               private var item: BaseEntity) : BaseViewModel() {
     val trackName by lazy { ObservableField<String>() }
     val trackNumber by lazy { ObservableField<String>() }
     val isPlaying by lazy { ObservableBoolean() }
-    var clickEvent: (track: BaseEntity) -> Unit = {}
 
     init {
-        (item as TrackEntity.TrackWithStreamableString).apply {
-            trackName.set(name)
-            trackNumber.set(attr?.rank ?: 0.toString())
-            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == realUrl.orEmpty() && MusicPlayerHelper.instance.isPlaying())
-        }
+        refreshView()
     }
 
     //region Lifecycle
@@ -50,6 +46,11 @@ class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: Sear
         RxBus.get().unregister(this)
     }
     //endregion
+
+    fun setTrackItem(item: BaseEntity) {
+        this.item = item
+        refreshView()
+    }
 
     fun trackOnClick(view: View) {
         (item as TrackEntity.TrackWithStreamableString).run track@ {
@@ -67,8 +68,13 @@ class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: Sear
         }
     }
 
+    /**
+     * @param view
+     *
+     * @event_to [taiwan.no1.app.ssfm.features.chart.ChartActivity.openBottomSheet]
+     */
     fun trackOptionalOnClick(view: View) {
-        clickEvent(item)
+        RxBus.get().post(VIEWMODEL_LONG_CLICK_RANK_CHART, "")
     }
 
     @Subscribe(tags = [(Tag(VIEWMODEL_CHART_DETAIL_CLICK))])
@@ -84,5 +90,13 @@ class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: Sear
     @Subscribe(tags = [(Tag(RxBusTag.MUSICPLAYER_STATE_CHANGED))])
     fun playerStateChanged(state: MusicPlayerState) {
         if (MusicPlayerState.Standby == state) isPlaying.set(false)
+    }
+
+    private fun refreshView() {
+        (item as TrackEntity.TrackWithStreamableString).apply {
+            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == realUrl.orEmpty() && MusicPlayerHelper.instance.isPlaying())
+            trackName.set(name)
+            trackNumber.set(attr?.rank ?: 0.toString())
+        }
     }
 }

@@ -33,8 +33,8 @@ import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
  */
 class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV2Case,
                                        private val addPlaylistItemCase: AddPlaylistItemCase,
-                                       private val item: BaseEntity,
-                                       private val index: Int) : BaseViewModel() {
+                                       private var item: BaseEntity,
+                                       private var index: Int) : BaseViewModel() {
     val artistName by lazy { ObservableField<String>() }
     val thumbnail by lazy { ObservableField<String>() }
     val trackName by lazy { ObservableField<String>() }
@@ -54,14 +54,13 @@ class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV
     }
 
     init {
-        (item as TrackEntity.Track).let {
-            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.realUrl.orEmpty() && MusicPlayerHelper.instance.isPlaying())
-            artistName.set(it.artist?.name)
-            trackName.set(it.name)
-            ranking.set(index.toString())
-            duration.set(it.duration?.toInt()?.toTimeString())
-            thumbnail.set(item.images?.get(LARGE)?.text.orEmpty())
-        }
+        refreshView()
+    }
+
+    fun setTrackItem(item: BaseEntity, index: Int) {
+        this.item = item
+        this.index = index
+        refreshView()
     }
 
     //region Lifecycle
@@ -113,5 +112,16 @@ class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV
     @Subscribe(tags = [(Tag(RxBusTag.MUSICPLAYER_STATE_CHANGED))])
     fun playerStateChanged(state: MusicPlayerState) {
         if (MusicPlayerState.Standby == state) isPlaying.set(false)
+    }
+
+    private fun refreshView() {
+        (item as TrackEntity.Track).let {
+            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.realUrl.orEmpty() && MusicPlayerHelper.instance.isPlaying())
+            artistName.set(it.artist?.name)
+            trackName.set(it.name)
+            ranking.set(index.toString())
+            duration.set(it.duration?.toInt()?.toTimeString())
+            thumbnail.set(it.images?.get(LARGE)?.text.orEmpty())
+        }
     }
 }

@@ -76,7 +76,10 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
         binding?.apply {
             rankLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             rankAdapter = RankAdapter(this@ChartIndexFragment, R.layout.item_rank_type_1, rankRes) { holder, item, _ ->
-                if (null == holder.binding.avm) holder.binding.avm = RecyclerViewChartRankChartViewModel(item)
+                if (null == holder.binding.avm)
+                    holder.binding.avm = RecyclerViewChartRankChartViewModel(item)
+                else
+                    holder.binding.avm?.setChartItem(item)
             }
             rankDecoration = HorizontalItemDecorator(20)
 
@@ -84,7 +87,10 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
             artistAdapter = ArtistAdapter(this@ChartIndexFragment,
                                           R.layout.item_artist_type_1,
                                           artistRes) { holder, item, _ ->
-                if (null == holder.binding.avm) holder.binding.avm = RecyclerViewSearchArtistChartViewModel(item)
+                if (null == holder.binding.avm)
+                    holder.binding.avm = RecyclerViewSearchArtistChartViewModel(item)
+                else
+                    holder.binding.avm?.setArtistItem(item)
                 val sd = gContext().scaledDrawable(R.drawable.ic_feature, 0.5f, 0.5f)
                 holder.binding.tvPlayCount.setCompoundDrawables(sd, null, null, null)
             }
@@ -94,7 +100,10 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
 
             tagLayoutManager = StaggeredGridLayoutManager(3, VERTICAL)
             tagAdapter = TagAdapter(this@ChartIndexFragment, R.layout.item_tag_type_1, tagRes) { holder, item, _ ->
-                if (null == holder.binding.avm) holder.binding.avm = RecyclerViewChartTagViewModel(item)
+                if (null == holder.binding.avm)
+                    holder.binding.avm = RecyclerViewChartTagViewModel(item)
+                else
+                    holder.binding.avm?.setTagItem(item)
             }
             tagDecoration = GridSpacingItemDecorator(3, 20, false)
         }

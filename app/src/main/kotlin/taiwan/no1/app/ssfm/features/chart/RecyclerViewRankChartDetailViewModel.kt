@@ -34,8 +34,8 @@ import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
  * @since   11/24/17
  */
 class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddPlaylistItemCase,
-                                           private val item: BaseEntity,
-                                           private val index: Int) : BaseViewModel() {
+                                           private var item: BaseEntity,
+                                           private var index: Int) : BaseViewModel() {
     val trackName by lazy { ObservableField<String>() }
     val trackDuration by lazy { ObservableField<String>() }
     val trackIndex by lazy { ObservableField<String>() }
@@ -57,14 +57,7 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
     }
 
     init {
-        (item as MusicRankEntity.Song).let {
-            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.url && MusicPlayerHelper.instance.isPlaying())
-            trackName.set(it.title)
-            trackDuration.set(it.length.toTimeString())
-            trackIndex.set(index.toString())
-            artistName.set(it.artist)
-            trackCover.set(it.coverURL)
-        }
+        refreshView()
     }
 
     //region Lifecycle
@@ -78,6 +71,12 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
         RxBus.get().unregister(this)
     }
     //endregion
+
+    fun setMusicItem(item: BaseEntity, index: Int) {
+        this.item = item
+        this.index = index
+        refreshView()
+    }
 
     fun trackOnClick(view: View) {
         val playlistEntity = (item as MusicRankEntity.Song).run {
@@ -119,5 +118,16 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
     @Subscribe(tags = [(Tag(RxBusTag.MUSICPLAYER_STATE_CHANGED))])
     fun playerStateChanged(state: MusicPlayerState) {
         if (MusicPlayerState.Standby == state) isPlaying.set(false)
+    }
+
+    private fun refreshView() {
+        (item as MusicRankEntity.Song).let {
+            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.url && MusicPlayerHelper.instance.isPlaying())
+            trackName.set(it.title)
+            trackDuration.set(it.length.toTimeString())
+            trackIndex.set(index.toString())
+            artistName.set(it.artist)
+            trackCover.set(it.coverURL)
+        }
     }
 }

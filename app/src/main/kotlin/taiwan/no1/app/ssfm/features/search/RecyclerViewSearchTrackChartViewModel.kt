@@ -27,7 +27,7 @@ import kotlin.properties.Delegates
  * @author  jieyi
  * @since   9/20/17
  */
-class RecyclerViewSearchTrackChartViewModel(val track: BaseEntity) : BaseViewModel() {
+class RecyclerViewSearchTrackChartViewModel(private var track: BaseEntity) : BaseViewModel() {
     val trackName by lazy { ObservableField<String>() }
     val artistName by lazy { ObservableField<String>() }
     val thumbnail by lazy { ObservableField<String>() }
@@ -49,11 +49,12 @@ class RecyclerViewSearchTrackChartViewModel(val track: BaseEntity) : BaseViewMod
     private var darkColor by Delegates.notNull<Int>()
 
     init {
-        (track as TrackEntity.Track).let {
-            trackName.set(it.name)
-            artistName.set(it.artist?.name.orEmpty())
-            thumbnail.set(it.images?.get(LARGE)?.text.orEmpty())
-        }
+        refreshView()
+    }
+
+    fun setTrackItem(item: BaseEntity) {
+        this.track = item
+        refreshView()
     }
 
     /**
@@ -74,5 +75,13 @@ class RecyclerViewSearchTrackChartViewModel(val track: BaseEntity) : BaseViewMod
                          hashMapOf(VIEWMODEL_PARAMS_KEYWORD to keyword,
                                    VIEWMODEL_PARAMS_IMAGE_URL to imageUrl,
                                    VIEWMODEL_PARAMS_FOG_COLOR to darkColor.toString()))
+    }
+
+    private fun refreshView() {
+        (track as TrackEntity.Track).let {
+            trackName.set(it.name)
+            artistName.set(it.artist?.name.orEmpty())
+            thumbnail.set(it.images?.get(LARGE)?.text.orEmpty())
+        }
     }
 }

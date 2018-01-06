@@ -60,11 +60,12 @@ class ChartRankChartDetailFragment : AdvancedFragment<ChartRankChartDetailFragme
             trackAdapter = RankChartDetailAdapter(this@ChartRankChartDetailFragment,
                                                   R.layout.item_music_type_6,
                                                   trackRes) { holder, item, index ->
-                if (null == holder.binding.avm) {
+                if (null == holder.binding.avm)
                     holder.binding.avm = RecyclerViewRankChartDetailViewModel(addPlaylistItemCase,
                                                                               item,
                                                                               index + 1)
-                }
+                else
+                    holder.binding.avm?.setMusicItem(item, index + 1)
             }
 
             trackDecoration = VerticalItemDecorator(20)

@@ -13,7 +13,7 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
  * @author  jieyi
  * @since   9/20/17
  */
-class RecyclerViewRecentlyPlaylistViewModel(val item: BaseEntity) : BaseViewModel() {
+class RecyclerViewRecentlyPlaylistViewModel(private var item: BaseEntity) : BaseViewModel() {
     val trackName by lazy { ObservableField<String>() }
     val trackDuration by lazy { ObservableField<String>() }
     val artistName by lazy { ObservableField<String>() }
@@ -23,11 +23,12 @@ class RecyclerViewRecentlyPlaylistViewModel(val item: BaseEntity) : BaseViewMode
     }
 
     init {
-        (item as PlaylistItemEntity).let {
-            trackName.set(it.trackName)
-            artistName.set(it.artistName)
-            trackDuration.set(it.duration.toTimeString())
-        }
+        refreshView()
+    }
+
+    fun setPlaylistItemAndRefresh(item: BaseEntity) {
+        this.item = item
+        refreshView()
     }
 
     /**
@@ -38,4 +39,12 @@ class RecyclerViewRecentlyPlaylistViewModel(val item: BaseEntity) : BaseViewMode
      * @event_to [taiwan.no1.app.ssfm.features.search.SearchViewModel.receiveClickHistoryEvent]
      */
     fun trackOnClick(view: View) = debounceTrackClick.onNext(view)
+
+    private fun refreshView() {
+        (item as PlaylistItemEntity).let {
+            trackName.set(it.trackName)
+            artistName.set(it.artistName)
+            trackDuration.set(it.duration.toTimeString())
+        }
+    }
 }

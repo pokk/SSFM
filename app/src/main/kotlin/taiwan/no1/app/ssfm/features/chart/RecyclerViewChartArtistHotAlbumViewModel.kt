@@ -18,24 +18,13 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
  * @author  jieyi
  * @since   9/20/17
  */
-class RecyclerViewChartArtistHotAlbumViewModel(val item: BaseEntity) : BaseViewModel() {
+class RecyclerViewChartArtistHotAlbumViewModel(private var item: BaseEntity) : BaseViewModel() {
     val imageUrl by lazy { ObservableField<String>() }
     val albumName by lazy { ObservableField<String>() }
     val background by lazy { ObservableInt() }
     val textColor by lazy { ObservableInt() }
+    // OPTIMIZE(jieyi): 1/6/18 Fix this place!!!!!!!!!!!!!!!!!
     var clickItemListener: ((item: AlbumEntity.AlbumWithPlaycount) -> Unit)? = null
-
-    init {
-        (item as AlbumEntity.AlbumWithPlaycount).let {
-            imageUrl.set(it.images?.get(EXTRA_LARGE)?.text.orEmpty())
-            albumName.set(it.name.orEmpty())
-        }
-    }
-
-    fun albumOnClick(view: View) {
-        clickItemListener?.invoke(item as AlbumEntity.AlbumWithPlaycount)
-    }
-
     val imageCallback = glideListener<Bitmap> {
         onResourceReady = { resource, _, _, _, _ ->
             resource.palette(24).let {
@@ -43,6 +32,26 @@ class RecyclerViewChartArtistHotAlbumViewModel(val item: BaseEntity) : BaseViewM
                 textColor.set(it.mutedSwatch?.titleTextColor ?: Color.LTGRAY)
             }
             false
+        }
+    }
+
+    init {
+        refreshView()
+    }
+
+    fun setAlbumItem(item: BaseEntity) {
+        this.item = item
+        refreshView()
+    }
+
+    fun albumOnClick(view: View) {
+        clickItemListener?.invoke(item as AlbumEntity.AlbumWithPlaycount)
+    }
+
+    private fun refreshView() {
+        (item as AlbumEntity.AlbumWithPlaycount).let {
+            imageUrl.set(it.images?.get(EXTRA_LARGE)?.text.orEmpty())
+            albumName.set(it.name.orEmpty())
         }
     }
 }

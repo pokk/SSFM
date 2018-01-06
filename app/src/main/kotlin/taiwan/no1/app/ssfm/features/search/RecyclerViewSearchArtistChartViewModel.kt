@@ -29,11 +29,10 @@ import kotlin.properties.Delegates
  * @author  jieyi
  * @since   9/20/17
  */
-class RecyclerViewSearchArtistChartViewModel(private val artist: BaseEntity) : BaseViewModel() {
+class RecyclerViewSearchArtistChartViewModel(private var artist: BaseEntity) : BaseViewModel() {
     val artistName by lazy { ObservableField<String>() }
     val playCount by lazy { ObservableField<String>() }
     val thumbnail by lazy { ObservableField<String>() }
-    var clickItemListener: ((item: ArtistEntity.Artist) -> Unit)? = null
     val imageCallback = glideListener<Bitmap> {
         onResourceReady = { resource, _, _, _, _ ->
             resource.palette(24).let {
@@ -45,13 +44,12 @@ class RecyclerViewSearchArtistChartViewModel(private val artist: BaseEntity) : B
     private var color by Delegates.notNull<Int>()
 
     init {
-        (artist as ArtistEntity.Artist).let {
-            val count = (it.playCount?.toInt() ?: 0) / 1000
+        refreshView()
+    }
 
-            artistName.set(it.name)
-            playCount.set("${count.toString().formatToMoneyKarma()}K")
-            thumbnail.set(it.images?.get(EXTRA_LARGE)?.text.orEmpty())
-        }
+    fun setArtistItem(item: BaseEntity) {
+        this.artist = item
+        refreshView()
     }
 
     /**
@@ -74,10 +72,21 @@ class RecyclerViewSearchArtistChartViewModel(private val artist: BaseEntity) : B
                                    VIEWMODEL_PARAMS_IMAGE_URL to imageUrl,
                                    VIEWMODEL_PARAMS_FOG_COLOR to color.toString()))
         // For `top chart activity`.
-        clickItemListener?.invoke(artist)
-        RxBus.get().post(NAVIGATION_TO_FRAGMENT,
-                         hashMapOf(RXBUS_PARAMETER_FRAGMENT to ChartArtistDetailFragment.newInstance(artist.mbid.orEmpty(),
-                                                                                                     artist.name.orEmpty()),
-                                   RXBUS_PARAMETER_FRAGMENT_NEEDBACK to true))
+        (artist as ArtistEntity.Artist).let {
+            RxBus.get().post(NAVIGATION_TO_FRAGMENT,
+                             hashMapOf(RXBUS_PARAMETER_FRAGMENT to ChartArtistDetailFragment.newInstance(it.mbid.orEmpty(),
+                                                                                                         it.name.orEmpty()),
+                                       RXBUS_PARAMETER_FRAGMENT_NEEDBACK to true))
+        }
+    }
+
+    private fun refreshView() {
+        (artist as ArtistEntity.Artist).let {
+            val count = (it.playCount?.toInt() ?: 0) / 1000
+
+            artistName.set(it.name)
+            playCount.set("${count.toString().formatToMoneyKarma()}K")
+            thumbnail.set(it.images?.get(EXTRA_LARGE)?.text.orEmpty())
+        }
     }
 }

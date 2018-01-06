@@ -35,8 +35,8 @@ import java.util.Date
  * @since   11/14/17
  */
 class RecyclerViewPlaylistDetailViewModel(private val addPlaylistItemCase: AddPlaylistItemCase,
-                                          private val item: BaseEntity,
-                                          private val index: Int) : BaseViewModel() {
+                                          private var item: BaseEntity,
+                                          private var index: Int) : BaseViewModel() {
     val rank by lazy { ObservableField<String>() }
     val artistName by lazy { ObservableField<String>() }
     val trackName by lazy { ObservableField<String>() }
@@ -60,14 +60,7 @@ class RecyclerViewPlaylistDetailViewModel(private val addPlaylistItemCase: AddPl
     }
 
     init {
-        (item as PlaylistItemEntity).let {
-            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.trackUri && MusicPlayerHelper.instance.isPlaying())
-            rank.set(index.toString())
-            artistName.set(it.artistName)
-            trackName.set(it.trackName)
-            duration.set(it.duration.toTimeString())
-            thumbnail.set(it.coverUrl)
-        }
+        refreshView()
     }
 
     //region Lifecycle
@@ -80,6 +73,12 @@ class RecyclerViewPlaylistDetailViewModel(private val addPlaylistItemCase: AddPl
         RxBus.get().unregister(this)
     }
     //endregion
+
+    fun setPlaylistItem(item: BaseEntity, index: Int) {
+        this.item = item
+        this.index = index
+        refreshView()
+    }
 
     fun trackOnClick(view: View) {
         (item as PlaylistItemEntity).let {
@@ -109,5 +108,16 @@ class RecyclerViewPlaylistDetailViewModel(private val addPlaylistItemCase: AddPl
     fun playerStateChanged(state: MusicPlayerState) {
         logw("!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@ $state")
         if (MusicPlayerState.Standby == state) isPlaying.set(false)
+    }
+
+    private fun refreshView() {
+        (item as PlaylistItemEntity).let {
+            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.trackUri && MusicPlayerHelper.instance.isPlaying())
+            rank.set(index.toString())
+            artistName.set(it.artistName)
+            trackName.set(it.trackName)
+            duration.set(it.duration.toTimeString())
+            thumbnail.set(it.coverUrl)
+        }
     }
 }

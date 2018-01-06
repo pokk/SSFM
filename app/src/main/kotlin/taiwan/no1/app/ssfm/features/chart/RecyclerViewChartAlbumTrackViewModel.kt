@@ -25,7 +25,7 @@ import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
  */
 class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMusicV2Case,
                                            private val addPlaylistItemCase: AddPlaylistItemCase,
-                                           private val item: BaseEntity) : BaseViewModel() {
+                                           private var item: BaseEntity) : BaseViewModel() {
     val trackName by lazy { ObservableField<String>() }
     val trackNumber by lazy { ObservableField<String>() }
     val trackDuration by lazy { ObservableField<String>() }
@@ -33,12 +33,12 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
     var clickEvent: (track: BaseEntity) -> Unit = {}
 
     init {
-        (item as TrackEntity.Track).let {
-            trackName.set(it.name)
-            trackNumber.set(it.attr?.rank ?: 0.toString())
-            trackDuration.set(it.duration?.toInt()?.toTimeString())
-            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.realUrl && MusicPlayerHelper.instance.isPlaying())
-        }
+        refreshView()
+    }
+
+    fun setTrackItem(item: BaseEntity) {
+        this.item = item
+        refreshView()
     }
 
     //region Lifecycle
@@ -85,5 +85,14 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
     @Subscribe(tags = [(Tag(RxBusTag.MUSICPLAYER_STATE_CHANGED))])
     fun playerStateChanged(state: MusicPlayerState) {
         if (MusicPlayerState.Standby == state) isPlaying.set(false)
+    }
+
+    private fun refreshView() {
+        (item as TrackEntity.Track).let {
+            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.realUrl && MusicPlayerHelper.instance.isPlaying())
+            trackName.set(it.name)
+            trackNumber.set(it.attr?.rank ?: 0.toString())
+            trackDuration.set(it.duration?.toInt()?.toTimeString())
+        }
     }
 }

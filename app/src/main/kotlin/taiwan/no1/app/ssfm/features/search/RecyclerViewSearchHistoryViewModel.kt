@@ -18,16 +18,19 @@ import taiwan.no1.app.ssfm.models.usecases.RemoveKeywordHistoriesUsecase
  * @author  jieyi
  * @since   9/20/17
  */
-class RecyclerViewSearchHistoryViewModel(private val keywordEntity: BaseEntity,
+class RecyclerViewSearchHistoryViewModel(private var keywordEntity: BaseEntity,
                                          private val context: Context,
                                          private val deleteHistoriesUsecase: DeleteSearchHistoryCase) : BaseObservable() {
     lateinit var deleteItemListener: (entity: KeywordEntity, isSuccess: Boolean) -> Unit
     val keyword by lazy { ObservableField<String>() }
 
     init {
-        (keywordEntity as KeywordEntity).let {
-            keyword.set(it.keyword)
-        }
+        refreshView()
+    }
+
+    fun setKeywordItem(item: BaseEntity) {
+        this.keywordEntity = item
+        refreshView()
     }
 
     fun deleteHistoryClick(view: View) {
@@ -43,8 +46,13 @@ class RecyclerViewSearchHistoryViewModel(private val keywordEntity: BaseEntity,
      * @event_to [taiwan.no1.app.ssfm.features.search.SearchViewModel.receiveClickHistoryEvent]
      */
     fun selectHistoryItem(view: View) {
-        keywordEntity as KeywordEntity
-        RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_HISTORY,
-                         hashMapOf(VIEWMODEL_PARAMS_KEYWORD to keywordEntity.keyword))
+        (keywordEntity as KeywordEntity).let {
+            RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_HISTORY,
+                             hashMapOf(VIEWMODEL_PARAMS_KEYWORD to it.keyword))
+        }
+    }
+
+    private fun refreshView() {
+        (keywordEntity as KeywordEntity).let { keyword.set(it.keyword) }
     }
 }

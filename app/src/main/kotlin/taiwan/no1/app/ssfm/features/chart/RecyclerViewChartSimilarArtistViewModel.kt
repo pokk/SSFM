@@ -20,17 +20,19 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
  * @author  jieyi
  * @since   9/20/17
  */
-class RecyclerViewChartSimilarArtistViewModel(val item: BaseEntity) : BaseViewModel() {
+class RecyclerViewChartSimilarArtistViewModel(private var item: BaseEntity) : BaseViewModel() {
     val artistName by lazy { ObservableField<String>() }
     val thumbnail by lazy { ObservableField<String>() }
     val textBackground by lazy { ObservableInt() }
     val textColor by lazy { ObservableInt() }
 
     init {
-        (item as ArtistEntity.Artist).let {
-            artistName.set(it.name)
-            thumbnail.set(it.images?.get(LARGE)?.text.orEmpty())
-        }
+        refreshView()
+    }
+
+    fun setArtistItem(item: BaseEntity) {
+        this.item = item
+        refreshView()
     }
 
     /**
@@ -51,6 +53,13 @@ class RecyclerViewChartSimilarArtistViewModel(val item: BaseEntity) : BaseViewMo
                 textColor.set(it.vibrantSwatch?.bodyTextColor ?: Color.GRAY)
             }
             false
+        }
+    }
+
+    private fun refreshView() {
+        (item as ArtistEntity.Artist).let {
+            artistName.set(it.name)
+            thumbnail.set(it.images?.get(LARGE)?.text.orEmpty())
         }
     }
 }

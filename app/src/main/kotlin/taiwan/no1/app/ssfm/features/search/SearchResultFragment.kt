@@ -80,6 +80,8 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
                                                                                 act.applicationContext).apply {
                         clickEvent = { (activity as SearchActivity).openBottomSheet(it) }
                     }
+                else
+                    holder.binding.avm?.setSearchResItem(item)
             }
             loadmore = object : RecyclerViewScrollCallback {
                 override fun loadMoreEvent(recyclerView: RecyclerView, total: Int) {

@@ -95,20 +95,29 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
             albumAdapter = TagTopAlbumAdapter(this@ChartTagDetailFragment,
                                               R.layout.item_album_type_2,
                                               albumRes) { holder, item, _ ->
-                if (null == holder.binding.avm) holder.binding.avm = RecyclerViewTagTopAlbumViewModel(item)
+                if (null == holder.binding.avm)
+                    holder.binding.avm = RecyclerViewTagTopAlbumViewModel(item)
+                else
+                    holder.binding.avm?.setAlbumItem(item)
             }
             artistAdapter = TagTopArtistAdapter(this@ChartTagDetailFragment,
                                                 R.layout.item_artist_type_3,
                                                 artistRes) { holder, item, _ ->
-                if (null == holder.binding.avm) holder.binding.avm = RecyclerViewTagTopArtistViewModel(item)
+                if (null == holder.binding.avm)
+                    holder.binding.avm = RecyclerViewTagTopArtistViewModel(item)
+                else
+                    holder.binding.avm?.setArtistItem(item)
             }
             trackAdapter = TagTopTrackAdapter(this@ChartTagDetailFragment,
                                               R.layout.item_music_type_7,
                                               trackRes) { holder, item, index ->
-                if (null == holder.binding.avm) holder.binding.avm = RecyclerViewTagTopTrackViewModel(searchMusicCase,
-                                                                                                      addPlaylistItemCase,
-                                                                                                      item,
-                                                                                                      index + 1)
+                if (null == holder.binding.avm)
+                    holder.binding.avm = RecyclerViewTagTopTrackViewModel(searchMusicCase,
+                                                                          addPlaylistItemCase,
+                                                                          item,
+                                                                          index + 1)
+                else
+                    holder.binding.avm?.setTrackItem(item, index + 1)
             }
 
             albumLoadmore = RVCustomScrollCallback(binding?.albumAdapter as TagTopAlbumAdapter,

@@ -12,17 +12,18 @@ import taiwan.no1.app.ssfm.models.entities.v2.RankChartEntity
  * @author  jieyi
  * @since   11/1/17
  */
-class RecyclerViewChartRankChartViewModel(val item: BaseEntity) : BaseViewModel() {
+class RecyclerViewChartRankChartViewModel(private var item: BaseEntity) : BaseViewModel() {
     val coverUrl by lazy { ObservableField<String>() }
     val name by lazy { ObservableField<String>() }
     val update by lazy { ObservableField<String>() }
 
     init {
-        (item as RankChartEntity).let {
-            coverUrl.set(it.coverUrl)
-            name.set(it.chartName)
-            update.set(it.updateTime)
-        }
+        refreshView()
+    }
+
+    fun setChartItem(item: BaseEntity) {
+        this.item = item
+        refreshView()
     }
 
     /**
@@ -34,5 +35,13 @@ class RecyclerViewChartRankChartViewModel(val item: BaseEntity) : BaseViewModel(
      */
     fun chartOnClick(view: View) {
         RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_RANK_CHART, item)
+    }
+
+    private fun refreshView() {
+        (item as RankChartEntity).let {
+            coverUrl.set(it.coverUrl)
+            name.set(it.chartName)
+            update.set(it.updateTime)
+        }
     }
 }

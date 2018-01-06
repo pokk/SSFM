@@ -28,7 +28,7 @@ import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
  * @author  jieyi
  * @since   9/20/17
  */
-class RecyclerViewSearchMusicResultViewModel(private val res: BaseEntity,
+class RecyclerViewSearchMusicResultViewModel(private var res: BaseEntity,
                                              private val addPlaylistItemCase: AddPlaylistItemCase,
                                              private val context: Context) : BaseViewModel() {
     val songName by lazy { ObservableField<String>() }
@@ -45,12 +45,12 @@ class RecyclerViewSearchMusicResultViewModel(private val res: BaseEntity,
     var clickEvent: (track: BaseEntity) -> Unit = {}
 
     init {
-        (res as MusicEntity.Music).let {
-            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.url && MusicPlayerHelper.instance.isPlaying())
-            songName.set(it.title)
-            singerName.set(it.artist)
-            coverUrl.set(it.coverURL)
-        }
+        refreshView()
+    }
+
+    fun setSearchResItem(item: BaseEntity) {
+        this.res = item
+        refreshView()
     }
 
     //region Lifecycle
@@ -106,4 +106,13 @@ class RecyclerViewSearchMusicResultViewModel(private val res: BaseEntity,
         if (MusicPlayerState.Standby == state) isPlaying.set(false)
     }
     //endregion
+
+    private fun refreshView() {
+        (res as MusicEntity.Music).let {
+            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.url && MusicPlayerHelper.instance.isPlaying())
+            songName.set(it.title)
+            singerName.set(it.artist)
+            coverUrl.set(it.coverURL)
+        }
+    }
 }

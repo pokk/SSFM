@@ -18,7 +18,7 @@ import java.util.Random
  * @author  jieyi
  * @since   9/20/17
  */
-class RecyclerViewChartTagViewModel(val item: BaseEntity) : BaseViewModel() {
+class RecyclerViewChartTagViewModel(private var item: BaseEntity) : BaseViewModel() {
     val tagName by lazy { ObservableField<String>() }
     val background by lazy {
         fun randomColor(): Int =
@@ -32,15 +32,23 @@ class RecyclerViewChartTagViewModel(val item: BaseEntity) : BaseViewModel() {
         val background = GradientDrawable(GradientDrawable.Orientation.BR_TL, intArrayOf(randomColor(), randomColor()))
         ObservableField<Drawable>(background)
     }
-    var clickItemListener: ((item: TagEntity.Tag) -> Unit)? = null
 
     init {
-        (item as TagEntity.Tag).let { tagName.set(it.name?.apply { this[0].toUpperCase() }) }
+        refreshView()
+    }
+
+    fun setTagItem(item: BaseEntity) {
+        this.item = item
+        refreshView()
     }
 
     fun tagOnClick(view: View) {
         RxBus.get().post(NAVIGATION_TO_FRAGMENT,
                          hashMapOf(RXBUS_PARAMETER_FRAGMENT to ChartTagDetailFragment.newInstance((item as TagEntity.Tag).name.orEmpty()),
                                    RXBUS_PARAMETER_FRAGMENT_NEEDBACK to true))
+    }
+
+    private fun refreshView() {
+        (item as TagEntity.Tag).let { tagName.set(it.name?.apply { this[0].toUpperCase() }) }
     }
 }

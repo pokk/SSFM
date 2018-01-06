@@ -78,11 +78,12 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
             itemAdapter = PlaylistItemAdapter(this@PlaylistDetailFragment,
                                               R.layout.item_music_type_5,
                                               playlistItemRes) { holder, item, index ->
-                if (null == holder.binding.avm) {
+                if (null == holder.binding.avm)
                     holder.binding.avm = RecyclerViewPlaylistDetailViewModel(addPlaylistItemCase,
                                                                              item,
                                                                              index + 1)
-                }
+                else
+                    holder.binding.avm?.setPlaylistItem(item, index + 1)
             }
 
             val callback = SimpleItemTouchHelperCallback(itemAdapter as PlaylistItemAdapter, vmItemTouchCallback)

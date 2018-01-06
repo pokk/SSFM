@@ -96,7 +96,10 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
             artistAdapter = SimilarArtistAdapter(this@ChartArtistDetailFragment,
                                                  R.layout.item_artist_type_2,
                                                  artistRes) { holder, item, _ ->
-                if (null == holder.binding.avm) holder.binding.avm = RecyclerViewChartSimilarArtistViewModel(item)
+                if (null == holder.binding.avm)
+                    holder.binding.avm = RecyclerViewChartSimilarArtistViewModel(item)
+                else
+                    holder.binding.avm?.setArtistItem(item)
             }
             artistDecoration = HorizontalItemDecorator(20)
 
@@ -104,12 +107,12 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
             trackAdapter = ArtistTopTrackAdapter(this@ChartArtistDetailFragment,
                                                  R.layout.item_music_type_2,
                                                  trackRes) { holder, item, _ ->
-                if (null == holder.binding.avm) {
-                    holder.binding.avm =
-                        RecyclerViewChartArtistHotTrackViewModel(searchMusicCase, addPlaylistItemCase, item).apply {
-                            clickEvent = { (activity as ChartActivity).openBottomSheet(item) }
-                        }
-                }
+                if (null == holder.binding.avm)
+                    holder.binding.avm = RecyclerViewChartArtistHotTrackViewModel(searchMusicCase,
+                                                                                  addPlaylistItemCase,
+                                                                                  item)
+                else
+                    holder.binding.avm?.setTrackItem(item)
             }
 
             albumLayoutManager = FanLayoutManager(act, FanLayoutManagerSettings.newBuilder(ctx).apply {
@@ -140,6 +143,9 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
                             }
                         }
                     }
+                }
+                else {
+                    holder.binding.avm?.setAlbumItem(item)
                 }
             }
         }

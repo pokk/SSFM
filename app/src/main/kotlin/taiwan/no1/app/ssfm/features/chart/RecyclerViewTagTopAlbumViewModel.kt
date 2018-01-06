@@ -22,7 +22,7 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
  * @author  jieyi
  * @since   10/26/17
  */
-class RecyclerViewTagTopAlbumViewModel(val item: BaseEntity) : BaseViewModel() {
+class RecyclerViewTagTopAlbumViewModel(private var item: BaseEntity) : BaseViewModel() {
     val artistName by lazy { ObservableField<String>() }
     val thumbnail by lazy { ObservableField<String>() }
     val textBackground by lazy { ObservableInt() }
@@ -40,10 +40,12 @@ class RecyclerViewTagTopAlbumViewModel(val item: BaseEntity) : BaseViewModel() {
     }
 
     init {
-        (item as AlbumEntity.AlbumWithArtist).let {
-            artistName.set(it.name)
-            thumbnail.set(item.images?.get(LARGE)?.text.orEmpty())
-        }
+        refreshView()
+    }
+
+    fun setAlbumItem(item: BaseEntity) {
+        this.item = item
+        refreshView()
     }
 
     /**
@@ -54,9 +56,17 @@ class RecyclerViewTagTopAlbumViewModel(val item: BaseEntity) : BaseViewModel() {
      * @event_to [taiwan.no1.app.ssfm.features.chart.ChartActivity.navigateToAlbumDetail]
      */
     fun itemOnClick(view: View) {
-        item as AlbumEntity.AlbumWithArtist
-        RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_ALBUM,
-                         hashMapOf(VIEWMODEL_PARAMS_ARTIST_NAME to item.artist?.name,
-                                   VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME to item.name))
+        (item as AlbumEntity.AlbumWithArtist).let {
+            RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_ALBUM,
+                             hashMapOf(VIEWMODEL_PARAMS_ARTIST_NAME to it.artist?.name,
+                                       VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME to it.name))
+        }
+    }
+
+    private fun refreshView() {
+        (item as AlbumEntity.AlbumWithArtist).let {
+            artistName.set(it.name)
+            thumbnail.set(it.images?.get(LARGE)?.text.orEmpty())
+        }
     }
 }

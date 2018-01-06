@@ -20,7 +20,7 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
  * @author  jieyi
  * @since   10/26/17
  */
-class RecyclerViewTagTopArtistViewModel(val item: BaseEntity) : BaseViewModel() {
+class RecyclerViewTagTopArtistViewModel(private var item: BaseEntity) : BaseViewModel() {
     val artistName by lazy { ObservableField<String>() }
     val thumbnail by lazy { ObservableField<String>() }
     val textBackground by lazy { ObservableInt() }
@@ -36,10 +36,12 @@ class RecyclerViewTagTopArtistViewModel(val item: BaseEntity) : BaseViewModel() 
     }
 
     init {
-        (item as ArtistEntity.Artist).let {
-            artistName.set(it.name)
-            thumbnail.set(item.images?.get(ImageSizes.LARGE)?.text.orEmpty())
-        }
+        refreshView()
+    }
+
+    fun setArtistItem(item: BaseEntity) {
+        this.item = item
+        refreshView()
     }
 
     /**
@@ -51,5 +53,12 @@ class RecyclerViewTagTopArtistViewModel(val item: BaseEntity) : BaseViewModel() 
      */
     fun itemOnClick(view: View) {
         RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_SIMILAR, (item as ArtistEntity.Artist).name)
+    }
+
+    private fun refreshView() {
+        (item as ArtistEntity.Artist).let {
+            artistName.set(it.name)
+            thumbnail.set(it.images?.get(ImageSizes.LARGE)?.text.orEmpty())
+        }
     }
 }
