@@ -50,6 +50,7 @@
         </activity>
 
         <service android:name=".controllers.services.InitializeService"/>
+        <service android:name=".misc.notification.NotificationService"/>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts"/>
