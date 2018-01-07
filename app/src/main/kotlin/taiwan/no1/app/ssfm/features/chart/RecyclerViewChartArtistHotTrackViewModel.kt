@@ -74,7 +74,7 @@ class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: Sear
      * @event_to [taiwan.no1.app.ssfm.features.chart.ChartActivity.openBottomSheet]
      */
     fun trackOptionalOnClick(view: View) {
-        RxBus.get().post(VIEWMODEL_LONG_CLICK_RANK_CHART, "")
+        RxBus.get().post(VIEWMODEL_LONG_CLICK_RANK_CHART, item)
     }
 
     @Subscribe(tags = [(Tag(VIEWMODEL_CHART_DETAIL_CLICK))])

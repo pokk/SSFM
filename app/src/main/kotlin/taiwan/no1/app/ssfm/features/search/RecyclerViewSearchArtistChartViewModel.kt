@@ -58,6 +58,7 @@ class RecyclerViewSearchArtistChartViewModel(private var artist: BaseEntity) : B
      * @param view [android.widget.RelativeLayout]
      *
      * @event_to [taiwan.no1.app.ssfm.features.search.SearchViewModel.receiveClickHistoryEvent]
+     * @event_to [taiwan.no1.app.ssfm.features.chart.ChartActivity.navigate]
      */
     fun artistOnClick(view: View) {
         val (keyword, imageUrl) = (artist as ArtistEntity.Artist).let {

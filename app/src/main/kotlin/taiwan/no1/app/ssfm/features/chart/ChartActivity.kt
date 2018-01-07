@@ -134,9 +134,12 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     }
 
     /**
-     * @param fragParams
+     * @param fragParams A hash map for storing
+     * 1. [Fragment] a fragment
+     * 2. [Boolean] a boolean value for return
      *
-     * @event_from []
+     * @event_from [taiwan.no1.app.ssfm.features.search.RecyclerViewSearchArtistChartViewModel.artistOnClick]
+     * @event_from [taiwan.no1.app.ssfm.features.chart.RecyclerViewChartTagViewModel.tagOnClick]
      */
     @Subscribe(tags = [Tag(NAVIGATION_TO_FRAGMENT)])
     fun navigate(fragParams: HashMap<String, Any>) {

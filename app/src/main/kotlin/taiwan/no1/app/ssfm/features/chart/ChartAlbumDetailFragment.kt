@@ -50,9 +50,7 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
     private var tagRes = mutableListOf<BaseEntity>()
     private var trackRes = mutableListOf<BaseEntity>()
     // Get the arguments from the bundle here.
-    private val artistAlbumName: String by lazy {
-        this.arguments.getString(ARG_PARAM_ARTIST_ALBUM_NAME)
-    }
+    private val artistAlbumName: String by lazy { this.arguments.getString(ARG_PARAM_ARTIST_ALBUM_NAME) }
     private val artistName: String by lazy { this.arguments.getString(ARG_PARAM_ARTIST_NAME) }
 
     //region Base fragment implement
