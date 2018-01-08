@@ -77,8 +77,10 @@ class RecyclerViewDialogPlaylistViewModel(private val entity: BaseEntity,
 
     init {
         (entity as PlaylistEntity).let {
+            val pluralOfTrack = if (it.trackQuantity > 1) "s" else ""
+
             playlistName.set(it.name)
-            playlistTrackNumber.set(it.trackQuantity.toString())
+            playlistTrackNumber.set("- ${it.trackQuantity} track$pluralOfTrack")
         }
     }
 

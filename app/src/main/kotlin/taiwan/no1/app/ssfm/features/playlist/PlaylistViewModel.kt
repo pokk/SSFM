@@ -6,7 +6,7 @@ import android.view.View
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
-import taiwan.no1.app.ssfm.misc.constants.RxBusTag
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CLICK_ADD_PLAYLIST
 import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistCase
@@ -31,7 +31,7 @@ class PlaylistViewModel(private val context: Context,
 //        ToolbarHelper(view).getCurrentFragment {
 //        }
         lifecycleProvider.execute(addPlaylistUsecase, AddPlaylistUsecase.RequestValue(PlaylistEntity())) {
-            onNext { RxBus.get().post(RxBusTag.VIEWMODEL_CLICK_ADD_PLAYLIST, Pair(it, listOf<Pair<View, String>>())) }
+            onNext { RxBus.get().post(VIEWMODEL_CLICK_ADD_PLAYLIST, Pair(it, listOf<Pair<View, String>>())) }
         }
     }
 }

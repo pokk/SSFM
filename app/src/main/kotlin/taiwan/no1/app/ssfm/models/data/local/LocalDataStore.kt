@@ -138,6 +138,12 @@ class LocalDataStore : IDataStore {
         }
 
     override fun addPlaylistItem(entity: PlaylistItemEntity): Observable<Boolean> {
+        // Increasing the track quantity.
+        getPlaylists(entity.playlistId).flatMap {
+            it.first().trackQuantity += 1
+            editPlaylist(it.first())
+        }.subscribe()
+
         if (DATABASE_PLAYLIST_HISTORY_ID.toLong() == entity.playlistId) {
             return getPlaylistItem(entity.playlistId, entity.artistName, entity.trackName)?.let {
                 it.apply { it.timestamp = Date() }.save().toObservable()
