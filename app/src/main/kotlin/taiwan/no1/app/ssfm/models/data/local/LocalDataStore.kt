@@ -14,7 +14,6 @@ import com.raizlabs.android.dbflow.rx2.kotlinextensions.rx
 import com.raizlabs.android.dbflow.sql.language.BaseModelQueriable
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.toSingle
-import taiwan.no1.app.ssfm.misc.constants.Constant.DATABASE_PLAYLIST_HISTORY_ID
 import taiwan.no1.app.ssfm.models.data.IDataStore
 import taiwan.no1.app.ssfm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.models.entities.KeywordEntity_Table
@@ -137,20 +136,13 @@ class LocalDataStore : IDataStore {
             }
         }
 
-    override fun addPlaylistItem(entity: PlaylistItemEntity): Observable<Boolean> {
-        // Increasing the track quantity.
-        getPlaylists(entity.playlistId).flatMap {
+    override fun addPlaylistItem(entity: PlaylistItemEntity) =
+        getPlaylistItem(entity.playlistId, entity.artistName, entity.trackName)?.let {
+            it.apply { it.timestamp = Date() }.save().toObservable()
+        } ?: getPlaylists(entity.playlistId).flatMap {
             it.first().trackQuantity += 1
             editPlaylist(it.first())
-        }.subscribe()
-
-        if (DATABASE_PLAYLIST_HISTORY_ID.toLong() == entity.playlistId) {
-            return getPlaylistItem(entity.playlistId, entity.artistName, entity.trackName)?.let {
-                it.apply { it.timestamp = Date() }.save().toObservable()
-            } ?: entity.save().toObservable()
-        }
-        return entity.save().toObservable()
-    }
+        }.flatMap { entity.save().toObservable() }
 
     override fun removePlaylistItem(entity: PlaylistItemEntity) = entity.delete().toObservable()
     //endregion
