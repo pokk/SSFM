@@ -37,9 +37,11 @@ class PlaylistDetailFragmentViewModel(private val editPlaylistUsecase: EditPlayl
 
     fun attachPlaylistInfo(playlist: PlaylistEntity) {
         playlist.let {
+            val pluralOfTrack = if (it.trackQuantity > 1) "s" else ""
+
             playlistItem = it
             playlistName.set(it.name)
-            trackQuantity.set(it.trackQuantity.toString())
+            trackQuantity.set("${it.trackQuantity} track$pluralOfTrack")
             thumbnail.set(it.imageUri)
         }
     }
