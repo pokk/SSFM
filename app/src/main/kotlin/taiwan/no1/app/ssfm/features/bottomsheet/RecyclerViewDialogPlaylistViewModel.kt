@@ -22,7 +22,7 @@ import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemUsecase
  * @author  jieyi
  * @since   12/29/17
  */
-class RecyclerViewDialogPlaylistViewModel(private val entity: BaseEntity,
+class RecyclerViewDialogPlaylistViewModel(private var entity: BaseEntity,
                                           private val musicEntity: BaseEntity,
                                           private val addPlaylistItemCase: AddPlaylistItemCase) : BaseViewModel() {
     val playlistName by lazy { ObservableField<String>() }
@@ -76,11 +76,20 @@ class RecyclerViewDialogPlaylistViewModel(private val entity: BaseEntity,
     }
 
     init {
+        refreshView()
+    }
+
+    fun setPlaylistItem(item: BaseEntity) {
+        entity = item
+        refreshView()
+    }
+
+    private fun refreshView() {
         (entity as PlaylistEntity).let {
             val pluralOfTrack = if (it.trackQuantity > 1) "s" else ""
 
             playlistName.set(it.name)
-            playlistTrackNumber.set("- ${it.trackQuantity} track$pluralOfTrack")
+            playlistTrackNumber.set("${it.trackQuantity} track$pluralOfTrack")
         }
     }
 

@@ -169,6 +169,7 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
      */
     @Subscribe(tags = [Tag(VIEWMODEL_CLICK_PLAYLIST_FRAGMENT_DIALOG)])
     fun openPlaylistDialog(entity: Any) {
+        playlistRes.clear()
         dialogFragment = QuickDialogBindingFragment.Builder<FragmentDialogPlaylistBinding>(this) {
             viewCustom = R.layout.fragment_dialog_playlist
         }.build().apply {
@@ -192,6 +193,8 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
                             holder.binding.avm = RecyclerViewDialogPlaylistViewModel(item,
                                                                                      entity as BaseEntity,
                                                                                      addPlaylistItemCase)
+                        else
+                            (holder.binding.avm as RecyclerViewDialogPlaylistViewModel).setPlaylistItem(item)
                     }
                 }
             }

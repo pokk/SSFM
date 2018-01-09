@@ -19,7 +19,6 @@ import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
 @SuppressLint("CheckResult")
 class BottomSheetViewModel(private val bsHelper: BottomSheetBehavior<View>) : BaseViewModel() {
     var obtainMusicEntity: BaseEntity? = null
-    var openDialog = {}
     private val debounceDownload by lazy {
         createDebounce<View> {
             hideBottomSheet(it)
