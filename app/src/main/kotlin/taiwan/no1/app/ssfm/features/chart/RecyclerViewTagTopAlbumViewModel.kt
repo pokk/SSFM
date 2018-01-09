@@ -5,6 +5,8 @@ import android.databinding.ObservableInt
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.view.View
+import com.devrapid.kotlinknifer.glideListener
+import com.devrapid.kotlinknifer.palette
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME
@@ -12,8 +14,6 @@ import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_NAME
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.LARGE
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.misc.extension.gAlphaIntColor
-import taiwan.no1.app.ssfm.misc.extension.glideListener
-import taiwan.no1.app.ssfm.misc.extension.palette
 import taiwan.no1.app.ssfm.models.entities.lastfm.AlbumEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 

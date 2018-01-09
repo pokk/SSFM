@@ -25,7 +25,6 @@ import taiwan.no1.app.ssfm.models.entities.SearchMusicEntity
 import taiwan.no1.app.ssfm.models.entities.v2.RankChartEntity
 import java.util.Date
 
-
 /**
  * Retrieving the data from local storage. All return objects are [Observable] to viewmodels.
  *
@@ -160,7 +159,7 @@ class LocalDataStore : IDataStore {
 
     override fun removeKeywords(keyword: String?) =
         (keyword?.let { (delete(KeywordEntity::class) where (KeywordEntity_Table.keyword eq keyword)).rx() } ?:
-            delete(KeywordEntity::class).rx()).
+         delete(KeywordEntity::class).rx()).
             // The return value of `executeUpdateDelete` is the number of the deleted or updated items.
             executeUpdateDelete().map { 0 < it }.toObservable()
     //endregion

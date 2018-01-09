@@ -4,6 +4,8 @@ import android.databinding.ObservableField
 import android.graphics.Bitmap
 import android.view.View
 import com.devrapid.kotlinknifer.formatToMoneyKarma
+import com.devrapid.kotlinknifer.glideListener
+import com.devrapid.kotlinknifer.palette
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
@@ -18,8 +20,6 @@ import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.NAVIGATION_TO_FRAGMENT
 import taiwan.no1.app.ssfm.misc.extension.gAlphaIntColor
 import taiwan.no1.app.ssfm.misc.extension.gColor
-import taiwan.no1.app.ssfm.misc.extension.glideListener
-import taiwan.no1.app.ssfm.misc.extension.palette
 import taiwan.no1.app.ssfm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import kotlin.properties.Delegates

@@ -3,6 +3,7 @@ package taiwan.no1.app.ssfm.features.playlist
 import android.os.Bundle
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.transition.TransitionInflater
+import com.devrapid.kotlinknifer.recyclerview.WrapContentLinearLayoutManager
 import org.jetbrains.anko.bundleOf
 import taiwan.no1.app.ssfm.App
 import taiwan.no1.app.ssfm.R
@@ -12,7 +13,6 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.PlaylistItemAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
-import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.ItemTouchViewmodelCallback
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.SimpleItemTouchHelperCallback
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter

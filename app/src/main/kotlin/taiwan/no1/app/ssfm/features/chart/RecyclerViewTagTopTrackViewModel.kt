@@ -6,6 +6,8 @@ import android.databinding.ObservableInt
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.view.View
+import com.devrapid.kotlinknifer.glideListener
+import com.devrapid.kotlinknifer.palette
 import com.devrapid.kotlinknifer.toTimeString
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
@@ -16,8 +18,6 @@ import taiwan.no1.app.ssfm.misc.constants.ImageSizes.LARGE
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CHART_DETAIL_CLICK
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_LONG_CLICK_RANK_CHART
-import taiwan.no1.app.ssfm.misc.extension.glideListener
-import taiwan.no1.app.ssfm.misc.extension.palette
 import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayerHelper
 import taiwan.no1.app.ssfm.misc.utilies.devices.searchTheTopMusicAndPlayThenToPlaylist
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity

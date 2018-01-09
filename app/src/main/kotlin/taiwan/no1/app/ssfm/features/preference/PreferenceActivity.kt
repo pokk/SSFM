@@ -3,6 +3,7 @@ package taiwan.no1.app.ssfm.features.preference
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.SharedPrefs
+import com.devrapid.kotlinknifer.recyclerview.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityPreferenceBinding
 import taiwan.no1.app.ssfm.databinding.ItemPreferenceFirstLayerTitleBinding
@@ -10,7 +11,6 @@ import taiwan.no1.app.ssfm.databinding.ItemPreferenceFirstLayerToggleBinding
 import taiwan.no1.app.ssfm.databinding.ItemPreferenceSecondLayerTitleBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedActivity
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.MultipleTypeAdapter
-import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.viewholders.BindingHolder
 import taiwan.no1.app.ssfm.models.IExpandVisitable
 import taiwan.no1.app.ssfm.models.entities.PreferenceEntity

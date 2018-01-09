@@ -9,7 +9,6 @@ import taiwan.no1.app.ssfm.models.usecases.FetchTopTrackCase
 import taiwan.no1.app.ssfm.models.usecases.GetTopArtistsUsecase
 import taiwan.no1.app.ssfm.models.usecases.GetTopTracksUsecase
 
-
 /**
  * @author  jieyi
  * @since   8/20/17

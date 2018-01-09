@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.features.search
 
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
+import com.devrapid.kotlinknifer.recyclerview.WrapContentLinearLayoutManager
 import org.jetbrains.anko.act
 import org.jetbrains.anko.bundleOf
 import taiwan.no1.app.ssfm.R
@@ -12,7 +13,6 @@ import taiwan.no1.app.ssfm.misc.extension.gColor
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.SearchHistoryAdapter
-import taiwan.no1.app.ssfm.misc.utilies.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase

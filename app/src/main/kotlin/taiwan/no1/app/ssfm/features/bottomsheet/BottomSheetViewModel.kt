@@ -3,10 +3,10 @@ package taiwan.no1.app.ssfm.features.bottomsheet
 import android.annotation.SuppressLint
 import android.support.design.widget.BottomSheetBehavior
 import android.view.View
+import com.devrapid.kotlinknifer.mvvm.createDebounce
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CLICK_PLAYLIST_FRAGMENT_DIALOG
-import taiwan.no1.app.ssfm.misc.extension.createDebounce
 import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayerHelper
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity

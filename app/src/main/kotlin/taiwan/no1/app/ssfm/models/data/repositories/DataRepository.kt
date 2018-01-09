@@ -60,7 +60,6 @@ class DataRepository @Inject constructor(@Local private var local: IDataStore,
 
     override fun getArtistTopTrack(artist: String) = remote.getArtistTopTrack(artist)
 
-
     override fun getArtistTags(artist: String, session: Any) = remote.getArtistTags(artist, session)
 
     override fun getSimilarTracks(artist: String, track: String) = remote.getSimilarTracks(artist,

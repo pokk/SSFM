@@ -22,7 +22,6 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import java.util.Stack
 import javax.inject.Inject
 
-
 /**
  * @author  jieyi
  * @since   9/16/17

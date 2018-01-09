@@ -7,7 +7,6 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.RecyclerView
 import taiwan.no1.app.ssfm.R
 
-
 /**
  * @author  jieyi
  * @since   2017/12/02

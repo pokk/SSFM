@@ -25,7 +25,6 @@ import org.jetbrains.anko.sdk25.coroutines.onClick
 import taiwan.no1.app.ssfm.R
 import java.lang.ref.WeakReference
 
-
 /**
  *
  * @author  jieyi

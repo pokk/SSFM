@@ -16,7 +16,7 @@ import taiwan.no1.app.ssfm.R
  * This class is a controller which shows and controls the states of music player.
  */
 
-class NotificationService: Service() {
+class NotificationService : Service() {
 
     companion object {
         private const val ACTION_PLAY = "ACTION_PLAY"
@@ -44,27 +44,27 @@ class NotificationService: Service() {
 
         // action play
         val intentPlay = Intent(this, NotificationService::class.java)
-        intentPlay.setAction(ACTION_PLAY)
+        intentPlay.action = ACTION_PLAY
         val pendingIntentPlay = PendingIntent.getService(this, 0, intentPlay, 0)
         actionPlay = NotificationCompat.Action(ICON_PLAY, "Play", pendingIntentPlay)
 
         // action pause
         val intentPause = Intent(this, NotificationService::class.java)
-        intentPause.setAction(ACTION_PAUSE)
+        intentPause.action = ACTION_PAUSE
         val pendingIntentPause = PendingIntent.getService(this, 0, intentPause, 0)
         actionPause = NotificationCompat.Action(ICON_PAUSE, "Pause", pendingIntentPause)
 
         // action forward
         val intentForward = Intent(this, NotificationService::class.java)
-        intentForward.setAction(ACTION_NEXT)
+        intentForward.action = ACTION_NEXT
         val pendingIntentForward = PendingIntent.getService(this, 0, intentForward, 0)
         actionNext = NotificationCompat.Action(ICON_NEXT, "Next", pendingIntentForward)
 
         notificationBuilder = NotificationCompat.Builder(applicationContext).
-                setSmallIcon(ICON_MUSIC_PLAYER).
-                setContentTitle(appName).
-                addAction(actionPause).
-                addAction(actionNext)
+            setSmallIcon(ICON_MUSIC_PLAYER).
+            setContentTitle(appName).
+            addAction(actionPause).
+            addAction(actionNext)
 
         manager.notify(notifyID, notificationBuilder.build())
     }

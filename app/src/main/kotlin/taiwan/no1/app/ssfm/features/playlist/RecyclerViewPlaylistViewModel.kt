@@ -3,13 +3,13 @@ package taiwan.no1.app.ssfm.features.playlist
 import android.databinding.ObservableField
 import android.graphics.Bitmap
 import android.view.View
+import com.devrapid.kotlinknifer.glideListener
+import com.devrapid.kotlinknifer.mvvm.createDebounce
 import com.hwangjr.rxbus.RxBus
 import kotlinx.android.synthetic.main.item_playlist_type_1.view.iv_playlist_image
 import kotlinx.android.synthetic.main.item_playlist_type_1.view.tv_playlist_name
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
-import taiwan.no1.app.ssfm.misc.extension.createDebounce
-import taiwan.no1.app.ssfm.misc.extension.glideListener
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 
@@ -35,6 +35,7 @@ class RecyclerViewPlaylistViewModel(val item: BaseEntity) : BaseViewModel() {
     private val debouncePlaylistClick by lazy {
         createDebounce<View> { view ->
             (item as PlaylistEntity).let {
+                // FIXME(jieyi): 2018/01/09 View's variable shouldn't appear here.
                 val sharedElements =
                     listOf(Pair(view.iv_playlist_image, "transition_image_${it.id}"),
                            Pair(view.tv_playlist_name, "transition_name_${it.id}"))

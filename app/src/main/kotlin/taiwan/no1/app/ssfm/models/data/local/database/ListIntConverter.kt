@@ -2,7 +2,6 @@ package taiwan.no1.app.ssfm.models.data.local.database
 
 import com.raizlabs.android.dbflow.converter.TypeConverter
 
-
 /**
  *
  * @author  jieyi
