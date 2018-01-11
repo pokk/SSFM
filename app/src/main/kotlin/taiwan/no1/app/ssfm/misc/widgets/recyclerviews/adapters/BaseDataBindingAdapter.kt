@@ -7,6 +7,7 @@ import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.devrapid.kotlinknifer.loge
 import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.ItemTouchHelperAdapter
@@ -37,6 +38,7 @@ open class BaseDataBindingAdapter<BH : ViewDataBinding, D>(private val lifecycle
 
     override fun onViewDetachedFromWindow(holder: BindingHolder<BH>) {
         removeFromViewmodelKeeper(holder)
+        loge(holder, "????")
         super.onViewDetachedFromWindow(holder)
     }
 
@@ -47,6 +49,7 @@ open class BaseDataBindingAdapter<BH : ViewDataBinding, D>(private val lifecycle
 
     override fun onItemDismiss(position: Int) {
         removeFromViewmodelKeeper(bindingHolder)
+        loge(position)
         dataList.removeAt(position)
         notifyItemRemoved(position)
     }
@@ -87,6 +90,7 @@ open class BaseDataBindingAdapter<BH : ViewDataBinding, D>(private val lifecycle
 
     private fun removeFromViewmodelKeeper(holder: BindingHolder<BH>) =
         (holder.binding.javaClass.getMethod("getAvm").invoke(bindingHolder.binding) as? BaseViewModel).let {
+            loge(holder.binding)
             if (viewmodels.remove(it)) it?.onDetach()
         }
 }
