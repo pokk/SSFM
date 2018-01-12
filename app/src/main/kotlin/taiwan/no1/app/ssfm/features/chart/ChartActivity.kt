@@ -4,12 +4,9 @@ import android.app.Activity
 import android.app.Fragment
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.devrapid.dialogbuilder.QuickDialogBindingFragment
 import com.devrapid.kotlinknifer.addFragment
-import com.devrapid.kotlinknifer.recyclerview.WrapContentLinearLayoutManager
-import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
@@ -19,7 +16,7 @@ import taiwan.no1.app.ssfm.databinding.ActivityChartBinding
 import taiwan.no1.app.ssfm.databinding.FragmentDialogPlaylistBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedActivity
 import taiwan.no1.app.ssfm.features.bottomsheet.BottomSheetViewModel
-import taiwan.no1.app.ssfm.features.bottomsheet.RecyclerViewDialogPlaylistViewModel
+import taiwan.no1.app.ssfm.features.bottomsheet.quickDialogBindingFragment
 import taiwan.no1.app.ssfm.misc.constants.Constant.RXBUS_PARAMETER_FRAGMENT
 import taiwan.no1.app.ssfm.misc.constants.Constant.RXBUS_PARAMETER_FRAGMENT_NEEDBACK
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME
@@ -30,10 +27,8 @@ import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CLICK_PLAYLIST_FRAG
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CLICK_RANK_CHART
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CLICK_SIMILAR
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_DISMISS_PLAYLIST_FRAGMENT_DIALOG
-import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_LONG_CLICK_RANK_CHART
-import taiwan.no1.app.ssfm.misc.extension.recyclerview.DFPlaylistAdapter
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_LONG_CLICK
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
-import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.RankChartEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
@@ -157,7 +152,7 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
      * @event_from [taiwan.no1.app.ssfm.features.chart.RecyclerViewTagTopTrackViewModel.trackOptionalOnClick]
      * @event_from [taiwan.no1.app.ssfm.features.chart.RecyclerViewChartArtistHotTrackViewModel.trackOptionalOnClick]
      */
-    @Subscribe(tags = [Tag(VIEWMODEL_LONG_CLICK_RANK_CHART)])
+    @Subscribe(tags = [Tag(VIEWMODEL_TRACK_LONG_CLICK)])
     fun openBottomSheet(entity: Any) {
         (entity as BaseEntity).let { binding.bottomSheetVm?.run { obtainMusicEntity = it } }
         BottomSheetBehavior.from(rl_bottom_sheet).state = BottomSheetBehavior.STATE_EXPANDED
@@ -171,35 +166,11 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     @Subscribe(tags = [Tag(VIEWMODEL_CLICK_PLAYLIST_FRAGMENT_DIALOG)])
     fun openPlaylistDialog(entity: Any) {
         playlistRes.clear()
-        dialogFragment = QuickDialogBindingFragment.Builder<FragmentDialogPlaylistBinding>(this) {
-            viewCustom = R.layout.fragment_dialog_playlist
-        }.build().apply {
-            bind = { binding ->
-                binding.vm = ChartDialogViewModel(playlistRes.isEmpty(), fetchPlaylistCase).apply {
-                    onAttach(this@ChartActivity)
-                    fetchedPlaylistCallback = {
-                        playlistRes.refreshAndChangeList(it.subList(1, it.size),
-                                                         1,
-                                                         binding.adapter as DFPlaylistAdapter,
-                                                         playlistInfo)
-                    }
-                    binding.layoutManager = WrapContentLinearLayoutManager(activity,
-                                                                           LinearLayoutManager.VERTICAL,
-                                                                           false)
-                    binding.decoration = VerticalItemDecorator(20)
-                    binding.adapter = DFPlaylistAdapter(this@ChartActivity,
-                                                        R.layout.item_playlist_type_2,
-                                                        playlistRes) { holder, item, _ ->
-                        if (null == holder.binding.avm)
-                            holder.binding.avm = RecyclerViewDialogPlaylistViewModel(item,
-                                                                                     entity as BaseEntity,
-                                                                                     addPlaylistItemCase)
-                        else
-                            (holder.binding.avm as RecyclerViewDialogPlaylistViewModel).setPlaylistItem(item)
-                    }
-                }
-            }
-        }.apply { show() }
+        dialogFragment = this@ChartActivity.quickDialogBindingFragment(entity,
+                                                                       playlistRes,
+                                                                       playlistInfo,
+                                                                       fetchPlaylistCase,
+                                                                       addPlaylistItemCase)
     }
 
     /**

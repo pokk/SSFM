@@ -42,7 +42,6 @@ class RecyclerViewSearchMusicResultViewModel(private var res: BaseEntity,
             false
         }
     }
-    var clickEvent: (track: BaseEntity) -> Unit = {}
     private var clickedIndex = -1
 
     init {
@@ -84,9 +83,12 @@ class RecyclerViewSearchMusicResultViewModel(private var res: BaseEntity,
         }
     }
 
-    fun optionClick(view: View) {
-        clickEvent(res)
-    }
+    /**
+     * @param view
+     *
+     * @event_to [taiwan.no1.app.ssfm.features.search.SearchActivity.openBottomSheet]
+     */
+    fun optionClick(view: View) = RxBus.get().post(RxBusTag.VIEWMODEL_TRACK_LONG_CLICK, res)
 
     @Subscribe(tags = [(Tag(VIEWMODEL_TRACK_CLICK))])
     fun changeToStopIcon(uri: String) {

@@ -1,7 +1,6 @@
 package taiwan.no1.app.ssfm.features.preference
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.SharedPrefs
 import com.devrapid.kotlinknifer.recyclerview.WrapContentLinearLayoutManager
 import taiwan.no1.app.ssfm.R
@@ -58,7 +57,7 @@ class PreferenceActivity : AdvancedActivity<PreferenceViewModel, ActivityPrefere
 
         // Initial the recycler view.
         binding.apply {
-            layoutManager = WrapContentLinearLayoutManager(this@PreferenceActivity, LinearLayoutManager.VERTICAL, false)
+            layoutManager = WrapContentLinearLayoutManager(this@PreferenceActivity)
             adapter = MultipleTypeAdapter(this@PreferenceActivity, preferenceList) { holder, item, _ ->
                 when (item) {
                     is PreferenceEntity -> {

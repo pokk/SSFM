@@ -5,22 +5,35 @@ import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
 import android.util.SparseArray
 import android.view.View
+import com.devrapid.dialogbuilder.QuickDialogBindingFragment
 import com.devrapid.kotlinknifer.WeakRef
 import com.devrapid.kotlinknifer.addFragment
+import com.hwangjr.rxbus.RxBus
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.annotation.Tag
 import kotlinx.android.synthetic.main.bottomsheet_track.rl_bottom_sheet
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivitySearchBinding
+import taiwan.no1.app.ssfm.databinding.FragmentDialogPlaylistBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedActivity
 import taiwan.no1.app.ssfm.features.bottomsheet.BottomSheetViewModel
+import taiwan.no1.app.ssfm.features.bottomsheet.quickDialogBindingFragment
 import taiwan.no1.app.ssfm.misc.constants.Constant.CALLBACK_SPARSE_INDEX_FOG_COLOR
 import taiwan.no1.app.ssfm.misc.constants.Constant.CALLBACK_SPARSE_INDEX_IMAGE_URL
 import taiwan.no1.app.ssfm.misc.constants.Constant.CALLBACK_SPARSE_INDEX_KEYWORD
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.FRAGMENT_SEARCH_HISTORY
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.FRAGMENT_SEARCH_INDEX
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.FRAGMENT_SEARCH_RESULT
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CLICK_PLAYLIST_FRAGMENT_DIALOG
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_DISMISS_PLAYLIST_FRAGMENT_DIALOG
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_LONG_CLICK
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
+import taiwan.no1.app.ssfm.models.usecases.FetchPlaylistCase
 import java.util.Stack
 import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * @author  jieyi
@@ -28,13 +41,19 @@ import javax.inject.Inject
  */
 class SearchActivity : AdvancedActivity<SearchViewModel, ActivitySearchBinding>() {
     @Inject override lateinit var viewModel: SearchViewModel
+    @Inject lateinit var addPlaylistItemCase: AddPlaylistItemCase
+    @field:[Inject Named("activity_playlist_usecase")] lateinit var fetchPlaylistCase: FetchPlaylistCase
     /** For judging a fragment should be pushed or popped. */
     private val fragmentStack by lazy { Stack<Fragment>() }
+    private val playlistInfo by lazy { DataInfo() }
+    private var playlistRes = mutableListOf<BaseEntity>()
     private var track by WeakRef<BaseEntity>()
+    private lateinit var dialogFragment: QuickDialogBindingFragment<FragmentDialogPlaylistBinding>
 
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        RxBus.get().register(this)
         binding.bottomSheetVm = BottomSheetViewModel(BottomSheetBehavior.from(rl_bottom_sheet).apply {
             state = BottomSheetBehavior.STATE_HIDDEN
         } as BottomSheetBehavior<View>)
@@ -47,7 +66,13 @@ class SearchActivity : AdvancedActivity<SearchViewModel, ActivitySearchBinding>(
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        dismissPlaylistDialog("")
+    }
+
     override fun onDestroy() {
+        RxBus.get().unregister(this)
         super.onDestroy()
         binding.bottomSheetVm = null
     }
@@ -138,9 +163,41 @@ class SearchActivity : AdvancedActivity<SearchViewModel, ActivitySearchBinding>(
         return true
     }
 
-    fun openBottomSheet(entity: BaseEntity) {
-        track = entity
+    /**
+     * @param entity
+     *
+     * @event_from [taiwan.no1.app.ssfm.features.search.RecyclerViewSearchMusicResultViewModel.optionClick]
+     */
+    @Subscribe(tags = [Tag(VIEWMODEL_TRACK_LONG_CLICK)])
+    fun openBottomSheet(entity: Any) {
+        (entity as BaseEntity).let { binding.bottomSheetVm?.run { obtainMusicEntity = it } }
         BottomSheetBehavior.from(rl_bottom_sheet).state = BottomSheetBehavior.STATE_EXPANDED
+    }
+
+    /**
+     * @param entity
+     *
+     * @event_from [taiwan.no1.app.ssfm.features.bottomsheet.BottomSheetViewModel.debounceOpenDialog]
+     */
+    @Subscribe(tags = [Tag(VIEWMODEL_CLICK_PLAYLIST_FRAGMENT_DIALOG)])
+    fun openPlaylistDialog(entity: Any) {
+        playlistRes.clear()
+        dialogFragment = this@SearchActivity.quickDialogBindingFragment(entity,
+                                                                        playlistRes,
+                                                                        playlistInfo,
+                                                                        fetchPlaylistCase,
+                                                                        addPlaylistItemCase)
+    }
+
+    /**
+     * @param any
+     *
+     * @event_from [taiwan.no1.app.ssfm.features.bottomsheet.RecyclerViewDialogPlaylistViewModel.debounceAddToPlaylist]
+     */
+    @Subscribe(tags = [Tag(VIEWMODEL_DISMISS_PLAYLIST_FRAGMENT_DIALOG)])
+    fun dismissPlaylistDialog(any: Any) {
+        if (::dialogFragment.isInitialized) dialogFragment.dismiss()
+
     }
 
     private fun <E> Stack<E>.safePop() = lastOrNull()?.let { pop() }

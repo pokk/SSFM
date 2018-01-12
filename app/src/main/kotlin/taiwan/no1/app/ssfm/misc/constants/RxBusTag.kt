@@ -16,13 +16,13 @@ object RxBusTag {
     const val VIEWMODEL_CLICK_ALBUM = "Viewmodel Click Album Music"
     const val VIEWMODEL_CLICK_HISTORY = "Viewmodel Click History Keyword Music"
     const val VIEWMODEL_CLICK_RANK_CHART = "Viewmodel Click Rank Chart Item"
-    const val VIEWMODEL_LONG_CLICK_RANK_CHART = "Viewmodel Long Click Rank Chart Item"
     const val VIEWMODEL_CLICK_SIMILAR = "Viewmodel Click Similar Artist Music"
     const val VIEWMODEL_CLICK_TAG = "Viewmodel Click Tag Music"
     const val VIEWMODEL_CLICK_PLAYLIST = "Viewmodel Click Playlist"
     const val VIEWMODEL_CLICK_ADD_PLAYLIST = "Viewmodel Click Add Playlist"
 
     const val VIEWMODEL_TRACK_CLICK = "Viewmodel Click A Track"
+    const val VIEWMODEL_TRACK_LONG_CLICK = "Viewmodel Long Click A Track"
 
     const val VIEWMODEL_CLICK_PLAYLIST_FRAGMENT_DIALOG = "Viewmodel Click Playlist Fragment Dialog"
     const val VIEWMODEL_DISMISS_PLAYLIST_FRAGMENT_DIALOG = "Viewmodel Dismiss Playlist Fragment Dialog"

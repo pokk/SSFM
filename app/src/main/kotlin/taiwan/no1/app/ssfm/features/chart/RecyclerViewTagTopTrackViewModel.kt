@@ -16,8 +16,8 @@ import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.LARGE
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
-import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_LONG_CLICK_RANK_CHART
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_LONG_CLICK
 import taiwan.no1.app.ssfm.misc.extension.changeState
 import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayerHelper
 import taiwan.no1.app.ssfm.misc.utilies.devices.searchTheTopMusicAndPlayThenToPlaylist
@@ -109,7 +109,7 @@ class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV
      * @event_to [taiwan.no1.app.ssfm.features.chart.ChartActivity.openBottomSheet]
      */
     fun trackOptionalOnClick(view: View) {
-        RxBus.get().post(VIEWMODEL_LONG_CLICK_RANK_CHART, item)
+        RxBus.get().post(VIEWMODEL_TRACK_LONG_CLICK, item)
     }
 
     /**

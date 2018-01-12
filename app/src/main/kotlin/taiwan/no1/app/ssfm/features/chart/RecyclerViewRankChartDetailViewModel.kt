@@ -17,8 +17,8 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.Constant.DATABASE_PLAYLIST_HISTORY_ID
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
-import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_LONG_CLICK_RANK_CHART
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_LONG_CLICK
 import taiwan.no1.app.ssfm.misc.extension.changeState
 import taiwan.no1.app.ssfm.misc.extension.gAlphaIntColor
 import taiwan.no1.app.ssfm.misc.extension.gColor
@@ -103,7 +103,7 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
      * @event_to [taiwan.no1.app.ssfm.features.chart.ChartActivity.openBottomSheet]
      */
     fun trackOnLongClick(view: View): Boolean {
-        RxBus.get().post(VIEWMODEL_LONG_CLICK_RANK_CHART, item)
+        RxBus.get().post(VIEWMODEL_TRACK_LONG_CLICK, item)
         return true
     }
 

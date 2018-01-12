@@ -83,9 +83,8 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
                 if (null == holder.binding.avm)
                     holder.binding.avm = RecyclerViewSearchMusicResultViewModel(item,
                                                                                 addPlaylistItemCase,
-                                                                                act.applicationContext, index).apply {
-                        clickEvent = { (activity as SearchActivity).openBottomSheet(it) }
-                    }
+                                                                                act.applicationContext,
+                                                                                index)
                 else
                     holder.binding.avm?.setSearchResItem(item, index)
             }
