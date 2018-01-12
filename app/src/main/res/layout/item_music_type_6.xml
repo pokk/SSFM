@@ -14,7 +14,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:foreground="?android:attr/selectableItemBackgroundBorderless"
+        android:background="@drawable/ripple_background_rect"
         android:onClick="@{avm::trackOnClick}"
         android:onLongClick="@{avm::trackOnLongClick}"
         android:paddingBottom="4dp"
