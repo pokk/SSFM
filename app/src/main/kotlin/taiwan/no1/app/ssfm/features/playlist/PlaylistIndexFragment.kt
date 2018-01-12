@@ -69,11 +69,11 @@ class PlaylistIndexFragment : AdvancedFragment<PlaylistIndexFragmentViewModel, F
             }
             recentlyAdapter = RecentlyAdapter(this@PlaylistIndexFragment,
                                               R.layout.item_music_type_3,
-                                              recentlyPlayedRes) { holder, item, _ ->
+                                              recentlyPlayedRes) { holder, item, index ->
                 if (null == holder.binding.avm)
-                    holder.binding.avm = RecyclerViewRecentlyPlaylistViewModel(item)
+                    holder.binding.avm = RecyclerViewRecentlyPlaylistViewModel(item, index)
                 else
-                    holder.binding.avm?.setPlaylistItemAndRefresh(item)
+                    holder.binding.avm?.setPlaylistItemAndRefresh(item, index)
             }
 
             val callback = SimpleItemTouchHelperCallback(playlistAdapter as PlaylistAdapter, vmItemTouchCallback)

@@ -31,7 +31,7 @@
             app:layout_constraintStart_toStartOf="@+id/include"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:src="@drawable/sample_lady_gaga"/>
+            tools:src="@drawable/sample_lady_gaga"/>
 
         <TextView
             android:id="@+id/tv_song_name"

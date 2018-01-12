@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_play_circle"/>
+            android:src="@{avm.isPlaying ? @drawable/ic_pause_circle : @drawable/ic_play_circle}"/>
 
         <TextView
             android:id="@+id/tv_track_name"

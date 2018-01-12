@@ -27,7 +27,7 @@ class BottomSheetViewModel(private val bsHelper: BottomSheetBehavior<View>) : Ba
                 is MusicRankEntity.Song -> (obtainMusicEntity as MusicRankEntity.Song).url
                 else -> ""
             }.let {
-                MusicPlayerHelper.instance.run {
+                MusicPlayerHelper.instance.apply {
                     downloadMusic(it)
                     // TODO(jieyi): 2017/12/21 Add downloading task into the download activity.
                 }
