@@ -17,8 +17,9 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.Constant.DATABASE_PLAYLIST_HISTORY_ID
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
-import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CHART_DETAIL_CLICK
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_LONG_CLICK_RANK_CHART
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
+import taiwan.no1.app.ssfm.misc.extension.changeState
 import taiwan.no1.app.ssfm.misc.extension.gAlphaIntColor
 import taiwan.no1.app.ssfm.misc.extension.gColor
 import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayerHelper
@@ -28,8 +29,6 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
-import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState.Play
-import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState.Standby
 
 /**
  * @author  jieyi
@@ -92,10 +91,9 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
                                duration = length)
         }
 
-        RxBus.get().post(VIEWMODEL_CHART_DETAIL_CLICK, index)
+        RxBus.get().post(VIEWMODEL_TRACK_CLICK, index)
         lifecycleProvider.playThenToPlaylist(addPlaylistItemCase, playlistEntity) {
-            //            isPlaying.set(!isPlaying.get())
-            RxBus.get().post(VIEWMODEL_CHART_DETAIL_CLICK, playlistEntity.trackUri)
+            RxBus.get().post(VIEWMODEL_TRACK_CLICK, playlistEntity.trackUri)
         }
     }
 
@@ -109,12 +107,12 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
         return true
     }
 
-    @Subscribe(tags = [Tag(VIEWMODEL_CHART_DETAIL_CLICK)])
+    @Subscribe(tags = [Tag(VIEWMODEL_TRACK_CLICK)])
     fun changeToStopIcon(uri: String) {
         if (uri != (item as MusicRankEntity.Song).url) isPlaying.set(false)
     }
 
-    @Subscribe(tags = [Tag(VIEWMODEL_CHART_DETAIL_CLICK)])
+    @Subscribe(tags = [Tag(VIEWMODEL_TRACK_CLICK)])
     fun notifyClickIndex(index: Integer) {
         clickedIndex = index.toInt()
     }
@@ -126,11 +124,7 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
      */
     @Subscribe(tags = [(Tag(RxBusTag.MUSICPLAYER_STATE_CHANGED))])
     fun playerStateChanged(state: MusicPlayerState) {
-        when (state) {
-            Standby -> if (index != clickedIndex) isPlaying.set(false)
-            Play -> if (index == clickedIndex) isPlaying.set(true)
-            else -> null
-        }
+        isPlaying.changeState(state, index, clickedIndex)
     }
 
     private fun refreshView() {

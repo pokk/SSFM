@@ -6,7 +6,6 @@ import android.databinding.ObservableField
 import android.graphics.Bitmap
 import android.view.View
 import com.devrapid.kotlinknifer.glideListener
-import com.devrapid.kotlinknifer.logw
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
@@ -14,14 +13,14 @@ import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.Constant.DATABASE_PLAYLIST_HISTORY_ID
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
-import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CHART_DETAIL_CLICK
-import taiwan.no1.app.ssfm.misc.extension.execute
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
+import taiwan.no1.app.ssfm.misc.extension.changeState
 import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayerHelper
+import taiwan.no1.app.ssfm.misc.utilies.devices.playThenToPlaylist
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
-import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemUsecase.RequestValue
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
 
 /**
@@ -30,7 +29,8 @@ import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
  */
 class RecyclerViewSearchMusicResultViewModel(private var res: BaseEntity,
                                              private val addPlaylistItemCase: AddPlaylistItemCase,
-                                             private val context: Context) : BaseViewModel() {
+                                             private val context: Context,
+                                             private var index: Int) : BaseViewModel() {
     val songName by lazy { ObservableField<String>() }
     val singerName by lazy { ObservableField<String>() }
     val coverUrl by lazy { ObservableField<String>() }
@@ -43,13 +43,15 @@ class RecyclerViewSearchMusicResultViewModel(private var res: BaseEntity,
         }
     }
     var clickEvent: (track: BaseEntity) -> Unit = {}
+    private var clickedIndex = -1
 
     init {
         refreshView()
     }
 
-    fun setSearchResItem(item: BaseEntity) {
+    fun setSearchResItem(item: BaseEntity, index: Int) {
         this.res = item
+        this.index = index
         refreshView()
     }
 
@@ -67,23 +69,18 @@ class RecyclerViewSearchMusicResultViewModel(private var res: BaseEntity,
 
     //region Action from View
     fun playOrStopMusicClick(view: View) {
-        isPlaying.set(!isPlaying.get())
-        (res as MusicEntity.Music).run {
-            RxBus.get().post(VIEWMODEL_CHART_DETAIL_CLICK, url)
-            MusicPlayerHelper.instance.run {
-                play(url) {
-                    lifecycleProvider.execute(addPlaylistItemCase,
-                                              RequestValue(PlaylistItemEntity(playlistId = DATABASE_PLAYLIST_HISTORY_ID.toLong(),
-                                                                              trackUri = url,
-                                                                              trackName = title,
-                                                                              artistName = artist,
-                                                                              coverUrl = coverURL,
-                                                                              lyricUrl = lyricURL,
-                                                                              duration = length))) {
-                        onNext { logw(it) }
-                    }
-                }
-            }
+        val playlistEntity = (res as MusicEntity.Music).run {
+            PlaylistItemEntity(playlistId = DATABASE_PLAYLIST_HISTORY_ID.toLong(),
+                               trackUri = url,
+                               trackName = title,
+                               artistName = artist,
+                               coverUrl = coverURL,
+                               lyricUrl = lyricURL,
+                               duration = length)
+        }
+        RxBus.get().post(VIEWMODEL_TRACK_CLICK, index)
+        lifecycleProvider.playThenToPlaylist(addPlaylistItemCase, playlistEntity) {
+            RxBus.get().post(VIEWMODEL_TRACK_CLICK, (res as MusicEntity.Music).url)
         }
     }
 
@@ -91,9 +88,14 @@ class RecyclerViewSearchMusicResultViewModel(private var res: BaseEntity,
         clickEvent(res)
     }
 
-    @Subscribe(tags = [(Tag(VIEWMODEL_CHART_DETAIL_CLICK))])
+    @Subscribe(tags = [(Tag(VIEWMODEL_TRACK_CLICK))])
     fun changeToStopIcon(uri: String) {
         if (uri != (res as MusicEntity.Music).url) isPlaying.set(false)
+    }
+
+    @Subscribe(tags = [Tag(VIEWMODEL_TRACK_CLICK)])
+    fun notifyClickIndex(index: Integer) {
+        clickedIndex = index.toInt()
     }
 
     /**
@@ -103,7 +105,7 @@ class RecyclerViewSearchMusicResultViewModel(private var res: BaseEntity,
      */
     @Subscribe(tags = [(Tag(RxBusTag.MUSICPLAYER_STATE_CHANGED))])
     fun playerStateChanged(state: MusicPlayerState) {
-        if (MusicPlayerState.Standby == state) isPlaying.set(false)
+        isPlaying.changeState(state, index, clickedIndex)
     }
     //endregion
 

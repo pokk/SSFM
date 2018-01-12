@@ -79,15 +79,15 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
             layoutManager = WrapContentLinearLayoutManager(act)
             adapter = SearchHistoryAdapter(this@SearchResultFragment,
                                            R.layout.item_search_music_type_1,
-                                           res) { holder, item, _ ->
+                                           res) { holder, item, index ->
                 if (null == holder.binding.avm)
                     holder.binding.avm = RecyclerViewSearchMusicResultViewModel(item,
                                                                                 addPlaylistItemCase,
-                                                                                act.applicationContext).apply {
+                                                                                act.applicationContext, index).apply {
                         clickEvent = { (activity as SearchActivity).openBottomSheet(it) }
                     }
                 else
-                    holder.binding.avm?.setSearchResItem(item)
+                    holder.binding.avm?.setSearchResItem(item, index)
             }
             loadmore = object : RecyclerViewScrollCallback {
                 override fun loadMoreEvent(recyclerView: RecyclerView, total: Int) {

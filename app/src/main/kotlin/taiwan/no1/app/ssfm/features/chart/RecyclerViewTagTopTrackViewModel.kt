@@ -16,8 +16,9 @@ import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.LARGE
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
-import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CHART_DETAIL_CLICK
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_LONG_CLICK_RANK_CHART
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
+import taiwan.no1.app.ssfm.misc.extension.changeState
 import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayerHelper
 import taiwan.no1.app.ssfm.misc.utilies.devices.searchTheTopMusicAndPlayThenToPlaylist
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
@@ -52,6 +53,7 @@ class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV
             false
         }
     }
+    private var clickedIndex = -1
 
     init {
         refreshView()
@@ -75,22 +77,28 @@ class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV
     }
     //endregion
 
-    @Subscribe(tags = [(Tag(VIEWMODEL_CHART_DETAIL_CLICK))])
+    @Subscribe(tags = [(Tag(VIEWMODEL_TRACK_CLICK))])
     fun changeToStopIcon(uri: String) {
         if (uri != (item as TrackEntity.Track).realUrl.orEmpty()) isPlaying.set(false)
+    }
+
+    @Subscribe(tags = [Tag(VIEWMODEL_TRACK_CLICK)])
+    fun notifyClickIndex(index: Integer) {
+        clickedIndex = index.toInt()
     }
 
     fun itemOnClick(view: View) {
         (item as TrackEntity.Track).run track@ {
             val trackName = name.orEmpty()
             val artistName = artist?.name.orEmpty()
+
+            RxBus.get().post(VIEWMODEL_TRACK_CLICK, index)
             // Search the music first.
             lifecycleProvider.searchTheTopMusicAndPlayThenToPlaylist(searchMusicCase,
                                                                      addPlaylistItemCase,
                                                                      "$artistName $trackName") {
-                isPlaying.set(!isPlaying.get())
                 realUrl = it.trackUri
-                RxBus.get().post(VIEWMODEL_CHART_DETAIL_CLICK, it.trackUri)
+                RxBus.get().post(VIEWMODEL_TRACK_CLICK, it.trackUri)
             }
         }
     }
@@ -111,7 +119,7 @@ class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV
      */
     @Subscribe(tags = [(Tag(RxBusTag.MUSICPLAYER_STATE_CHANGED))])
     fun playerStateChanged(state: MusicPlayerState) {
-        if (MusicPlayerState.Standby == state) isPlaying.set(false)
+        isPlaying.changeState(state, index, clickedIndex)
     }
 
     private fun refreshView() {

@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.view.View
 import com.devrapid.kotlinknifer.glideListener
-import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.palette
 import com.devrapid.kotlinknifer.toTimeString
 import com.hwangjr.rxbus.RxBus
@@ -18,7 +17,8 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.Constant
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_STATE_CHANGED
-import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CHART_DETAIL_CLICK
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
+import taiwan.no1.app.ssfm.misc.extension.changeState
 import taiwan.no1.app.ssfm.misc.extension.gAlphaIntColor
 import taiwan.no1.app.ssfm.misc.extension.gColor
 import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayerHelper
@@ -58,6 +58,7 @@ class RecyclerViewPlaylistDetailViewModel(private val addPlaylistItemCase: AddPl
             false
         }
     }
+    private var clickedIndex = -1
 
     init {
         refreshView()
@@ -86,17 +87,21 @@ class RecyclerViewPlaylistDetailViewModel(private val addPlaylistItemCase: AddPl
             val playlistEntity = it.copy(id = 0,
                                          playlistId = Constant.DATABASE_PLAYLIST_HISTORY_ID.toLong(),
                                          timestamp = Date())
+            RxBus.get().post(VIEWMODEL_TRACK_CLICK, index)
             lifecycleProvider.playThenToPlaylist(addPlaylistItemCase, playlistEntity) {
-                // FIXME(jieyi): 1/5/18 There are some problems which the playing state is incorrect.
-                isPlaying.set(!isPlaying.get())
-                RxBus.get().post(VIEWMODEL_CHART_DETAIL_CLICK, playlistEntity.trackUri)
+                RxBus.get().post(VIEWMODEL_TRACK_CLICK, playlistEntity.trackUri)
             }
         }
     }
 
-    @Subscribe(tags = [(Tag(VIEWMODEL_CHART_DETAIL_CLICK))])
+    @Subscribe(tags = [(Tag(VIEWMODEL_TRACK_CLICK))])
     fun changeToStopIcon(uri: String) {
         if (uri != (item as PlaylistItemEntity).trackUri) isPlaying.set(false)
+    }
+
+    @Subscribe(tags = [Tag(VIEWMODEL_TRACK_CLICK)])
+    fun notifyClickIndex(index: Integer) {
+        clickedIndex = index.toInt()
     }
 
     /**
@@ -106,8 +111,7 @@ class RecyclerViewPlaylistDetailViewModel(private val addPlaylistItemCase: AddPl
      */
     @Subscribe(tags = [(Tag(MUSICPLAYER_STATE_CHANGED))])
     fun playerStateChanged(state: MusicPlayerState) {
-        logw("!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@ $state")
-        if (MusicPlayerState.Standby == state) isPlaying.set(false)
+        isPlaying.changeState(state, index, clickedIndex)
     }
 
     private fun refreshView() {
