@@ -60,10 +60,12 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
     private val playlist by lazy { arguments.getParcelable<PlaylistEntity>(ARG_PARAM_PLAYLIST_OBJECT) }
     private val transition by lazy { arguments.getStringArrayList(ARG_PARAM_PLAYLIST_TRANSITION) }
 
+    //region Fragment lifecycle
     override fun onDestroy() {
-        super.onDestroy()
         (binding?.itemAdapter as BaseDataBindingAdapter<*, *>).detachAll()
+        super.onDestroy()
     }
+    //endregion
 
     //region Base fragment implement
     override fun rendered(savedInstanceState: Bundle?) {

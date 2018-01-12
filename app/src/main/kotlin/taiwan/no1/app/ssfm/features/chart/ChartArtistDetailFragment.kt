@@ -23,6 +23,7 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.keepAllLastItemPosition
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.restoreAllLastItemPosition
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
@@ -87,12 +88,27 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
             nestViewLastPosition = nsvContainer.computeVerticalScrollOffset()
         }
     }
+
+    override fun onDestroy() {
+        listOf((binding?.artistAdapter as BaseDataBindingAdapter<*, *>),
+               (binding?.trackAdapter as BaseDataBindingAdapter<*, *>),
+               (binding?.albumAdapter as BaseDataBindingAdapter<*, *>)).forEach { it.detachAll() }
+        super.onDestroy()
+    }
     //endregion
 
     //region Base fragment implement
     override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
             artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            albumLayoutManager = FanLayoutManager(act, FanLayoutManagerSettings.newBuilder(ctx).apply {
+                withFanRadius(true)
+                withAngleItemBounce(5f)
+                withViewHeightDp(190f)
+                withViewWidthDp(150f)
+            }.build())
+            trackLayoutManager = WrapContentLinearLayoutManager(activity)
+
             artistAdapter = SimilarArtistAdapter(this@ChartArtistDetailFragment,
                                                  R.layout.item_artist_type_2,
                                                  artistRes) { holder, item, _ ->
@@ -101,26 +117,6 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
                 else
                     holder.binding.avm?.setArtistItem(item)
             }
-            artistDecoration = HorizontalItemDecorator(20)
-
-            trackLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-            trackAdapter = ArtistTopTrackAdapter(this@ChartArtistDetailFragment,
-                                                 R.layout.item_music_type_2,
-                                                 trackRes) { holder, item, _ ->
-                if (null == holder.binding.avm)
-                    holder.binding.avm = RecyclerViewChartArtistHotTrackViewModel(searchMusicCase,
-                                                                                  addPlaylistItemCase,
-                                                                                  item)
-                else
-                    holder.binding.avm?.setTrackItem(item)
-            }
-
-            albumLayoutManager = FanLayoutManager(act, FanLayoutManagerSettings.newBuilder(ctx).apply {
-                withFanRadius(true)
-                withAngleItemBounce(5f)
-                withViewHeightDp(190f)
-                withViewWidthDp(150f)
-            }.build())
             albumAdapter = ArtistTopAlbumAdapter(this@ChartArtistDetailFragment,
                                                  R.layout.item_album_type_1,
                                                  albumRes) { holder, item, _ ->
@@ -148,6 +144,18 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
                     holder.binding.avm?.setAlbumItem(item)
                 }
             }
+            trackAdapter = ArtistTopTrackAdapter(this@ChartArtistDetailFragment,
+                                                 R.layout.item_music_type_2,
+                                                 trackRes) { holder, item, _ ->
+                if (null == holder.binding.avm)
+                    holder.binding.avm = RecyclerViewChartArtistHotTrackViewModel(searchMusicCase,
+                                                                                  addPlaylistItemCase,
+                                                                                  item)
+                else
+                    holder.binding.avm?.setTrackItem(item)
+            }
+
+            artistDecoration = HorizontalItemDecorator(20)
         }
         // First time showing this fragment.
         artistInfo.firstFetch { info ->

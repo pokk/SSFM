@@ -1,7 +1,6 @@
 package taiwan.no1.app.ssfm.features.chart
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.recyclerview.WrapContentLinearLayoutManager
 import org.jetbrains.anko.bundleOf
 import taiwan.no1.app.ssfm.R
@@ -11,6 +10,7 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.AlbumTrackAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
@@ -53,10 +53,17 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
     private val artistAlbumName: String by lazy { this.arguments.getString(ARG_PARAM_ARTIST_ALBUM_NAME) }
     private val artistName: String by lazy { this.arguments.getString(ARG_PARAM_ARTIST_NAME) }
 
+    //region Fragment lifecycle
+    override fun onDestroy() {
+        (binding?.trackAdapter as BaseDataBindingAdapter<*, *>).detachAll()
+        super.onDestroy()
+    }
+    //endregion
+
     //region Base fragment implement
     override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
-            trackLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+            trackLayoutManager = WrapContentLinearLayoutManager(activity)
             trackAdapter = AlbumTrackAdapter(this@ChartAlbumDetailFragment,
                                              R.layout.item_music_type_4,
                                              trackRes) { holder, item, _ ->

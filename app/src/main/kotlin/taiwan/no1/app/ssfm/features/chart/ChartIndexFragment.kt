@@ -23,6 +23,7 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.keepAllLastItemPosition
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.restoreAllLastItemPosition
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import javax.inject.Inject
 
@@ -68,21 +69,28 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
                    Triple(rankInfo, rvTopChart, rankLayoutManager)).keepAllLastItemPosition()
         }
     }
+
+    override fun onDestroy() {
+        listOf((binding?.rankAdapter as BaseDataBindingAdapter<*, *>),
+               (binding?.artistAdapter as BaseDataBindingAdapter<*, *>),
+               (binding?.tagAdapter as BaseDataBindingAdapter<*, *>)).forEach { it.detachAll() }
+        super.onDestroy()
+    }
     //endregion
 
     //region Base fragment implement
     override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
             rankLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            tagLayoutManager = StaggeredGridLayoutManager(3, VERTICAL)
+
             rankAdapter = RankAdapter(this@ChartIndexFragment, R.layout.item_rank_type_1, rankRes) { holder, item, _ ->
                 if (null == holder.binding.avm)
                     holder.binding.avm = RecyclerViewChartRankChartViewModel(item)
                 else
                     holder.binding.avm?.setChartItem(item)
             }
-            rankDecoration = HorizontalItemDecorator(20)
-
-            artistLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             artistAdapter = ArtistAdapter(this@ChartIndexFragment,
                                           R.layout.item_artist_type_1,
                                           artistRes) { holder, item, _ ->
@@ -93,18 +101,19 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
                 val sd = gContext().scaledDrawable(R.drawable.ic_feature, 0.5f, 0.5f)
                 holder.binding.tvPlayCount.setCompoundDrawables(sd, null, null, null)
             }
-            artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as ArtistAdapter, artistInfo,
-                                                    artistRes, viewModel::fetchArtistList)
-            artistDecoration = HorizontalItemDecorator(20)
-
-            tagLayoutManager = StaggeredGridLayoutManager(3, VERTICAL)
             tagAdapter = TagAdapter(this@ChartIndexFragment, R.layout.item_tag_type_1, tagRes) { holder, item, _ ->
                 if (null == holder.binding.avm)
                     holder.binding.avm = RecyclerViewChartTagViewModel(item)
                 else
                     holder.binding.avm?.setTagItem(item)
             }
+
+            rankDecoration = HorizontalItemDecorator(20)
+            artistDecoration = HorizontalItemDecorator(20)
             tagDecoration = GridSpacingItemDecorator(3, 20, false)
+
+            artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as ArtistAdapter, artistInfo,
+                                                    artistRes, viewModel::fetchArtistList)
         }
         // First time showing this fragment.
         rankInfo.firstFetch { info ->

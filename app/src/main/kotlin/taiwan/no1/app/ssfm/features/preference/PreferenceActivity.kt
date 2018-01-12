@@ -11,6 +11,7 @@ import taiwan.no1.app.ssfm.databinding.ItemPreferenceFirstLayerToggleBinding
 import taiwan.no1.app.ssfm.databinding.ItemPreferenceSecondLayerTitleBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedActivity
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.MultipleTypeAdapter
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.viewholders.BindingHolder
 import taiwan.no1.app.ssfm.models.IExpandVisitable
 import taiwan.no1.app.ssfm.models.entities.PreferenceEntity
@@ -43,6 +44,13 @@ class PreferenceActivity : AdvancedActivity<PreferenceViewModel, ActivityPrefere
         PreferenceToggleEntity("Last Selected Channel", isLastSelectedChannel, R.drawable.ic_chart),
         PreferenceEntity("About Us", "", R.drawable.ic_info_outline),
         PreferenceEntity("Feedback", "", R.drawable.ic_feedback))
+
+    //region Fragment lifecycle
+    override fun onDestroy() {
+        (binding.adapter as BaseDataBindingAdapter<*, *>).detachAll()
+        super.onDestroy()
+    }
+    //endregion
 
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {

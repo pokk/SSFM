@@ -13,6 +13,7 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.RecentlyAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.ItemTouchViewmodelCallback
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.SimpleItemTouchHelperCallback
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import javax.inject.Inject
@@ -46,6 +47,12 @@ class PlaylistIndexFragment : AdvancedFragment<PlaylistIndexFragmentViewModel, F
         super.onResume()
         playlistRes.clear()
         recentlyPlayedRes.clear()
+    }
+
+    override fun onDestroy() {
+        listOf((binding?.playlistAdapter as BaseDataBindingAdapter<*, *>),
+               (binding?.recentlyAdapter as BaseDataBindingAdapter<*, *>)).forEach { it.detachAll() }
+        super.onDestroy()
     }
     //endregion
 

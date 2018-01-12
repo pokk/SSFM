@@ -23,7 +23,6 @@ object RxBusTag {
     const val VIEWMODEL_CLICK_ADD_PLAYLIST = "Viewmodel Click Add Playlist"
 
     const val VIEWMODEL_CHART_DETAIL_CLICK = "Viewmodel Click A Track"
-    const val VIEWMODEL_CHART_DETAIL_CLICK_INDEX = "Viewmodel Click A Track Index"
 
     const val VIEWMODEL_CLICK_PLAYLIST_FRAGMENT_DIALOG = "Viewmodel Click Playlist Fragment Dialog"
     const val VIEWMODEL_DISMISS_PLAYLIST_FRAGMENT_DIALOG = "Viewmodel Dismiss Playlist Fragment Dialog"
