@@ -93,9 +93,7 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
      * @event_from [MusicPlayerHelper.setPlayerListener]
      */
     @Subscribe(tags = [(Tag(RxBusTag.MUSICPLAYER_STATE_CHANGED))])
-    fun playerStateChanged(state: MusicPlayerState) {
-        isPlaying.changeState(state, index, clickedIndex)
-    }
+    fun playerStateChanged(state: MusicPlayerState) = isPlaying.changeState(state, index, clickedIndex)
 
     private fun refreshView() {
         (item as TrackEntity.Track).let {

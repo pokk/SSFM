@@ -104,9 +104,7 @@ class RecyclerViewSearchMusicResultViewModel(private var res: BaseEntity,
      * @event_from [MusicPlayerHelper.setPlayerListener]
      */
     @Subscribe(tags = [(Tag(RxBusTag.MUSICPLAYER_STATE_CHANGED))])
-    fun playerStateChanged(state: MusicPlayerState) {
-        isPlaying.changeState(state, index, clickedIndex)
-    }
+    fun playerStateChanged(state: MusicPlayerState) = isPlaying.changeState(state, index, clickedIndex)
     //endregion
 
     private fun refreshView() {
