@@ -8,6 +8,7 @@ import taiwan.no1.app.ssfm.databinding.FragmentSearchHistoryBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.HistoryAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshRecyclerView
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.KeywordEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.usecases.DeleteSearchHistoryCase
@@ -41,6 +42,11 @@ class SearchHistoryFragment : AdvancedFragment<SearchHistoryFragmentViewModel, F
     override fun onResume() {
         super.onResume()
         searchRes.clear()
+    }
+
+    override fun onDestroy() {
+        (binding?.adapter as BaseDataBindingAdapter<*, *>).detachAll()
+        super.onDestroy()
     }
     //endregion
 

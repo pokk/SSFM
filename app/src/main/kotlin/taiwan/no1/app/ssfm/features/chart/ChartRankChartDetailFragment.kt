@@ -1,7 +1,6 @@
 package taiwan.no1.app.ssfm.features.chart
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.recyclerview.WrapContentLinearLayoutManager
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
 import org.jetbrains.anko.bundleOf
@@ -13,6 +12,7 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RankChartDetailAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.RankChartEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
@@ -52,10 +52,17 @@ class ChartRankChartDetailFragment : AdvancedFragment<ChartRankChartDetailFragme
     private val rankCode by lazy { arguments.getInt(ARG_PARAM_RANK_CODE) }
     private val chartEntity: RankChartEntity? by lazy { arguments.getParcelable<RankChartEntity>(ARG_PARAM_CHART_ENTITY) }
 
+    //region Fragment lifecycle
+    override fun onDestroy() {
+        (binding?.trackAdapter as BaseDataBindingAdapter<*, *>).detachAll()
+        super.onDestroy()
+    }
+    //endregion
+
     //region Base fragment implement
     override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
-            trackLayoutManager = WrapContentLinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+            trackLayoutManager = WrapContentLinearLayoutManager(activity)
 
             trackAdapter = RankChartDetailAdapter(this@ChartRankChartDetailFragment,
                                                   R.layout.item_music_type_6,

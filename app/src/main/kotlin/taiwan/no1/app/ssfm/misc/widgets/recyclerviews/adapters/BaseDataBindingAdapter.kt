@@ -35,11 +35,6 @@ open class BaseDataBindingAdapter<BH : ViewDataBinding, D>(private val lifecycle
         addToViewmodelKeeper(holder)
     }
 
-    override fun onViewDetachedFromWindow(holder: BindingHolder<BH>) {
-        removeFromViewmodelKeeper(holder)
-        super.onViewDetachedFromWindow(holder)
-    }
-
     override fun getItemCount(): Int = dataList.size
 
     override fun onItemMove(fromPosition: Int, toPosition: Int) {

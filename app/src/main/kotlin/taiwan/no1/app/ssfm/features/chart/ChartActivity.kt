@@ -95,6 +95,7 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
         super.onBackPressed()
     }
 
+    //region RxBus Response
     /**
      * @param artistName
      *
@@ -212,4 +213,5 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
             dialogFragment.dismiss()
         }
     }
+    //endregion
 }

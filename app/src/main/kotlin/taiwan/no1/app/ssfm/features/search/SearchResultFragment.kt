@@ -13,6 +13,7 @@ import taiwan.no1.app.ssfm.misc.extension.gColor
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.SearchHistoryAdapter
+import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
@@ -64,6 +65,11 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
         res.clear()
         resInfo.isLoading = true
         viewModel.sendSearchRequest(keyword, resultCallback = updateListInfo)
+    }
+
+    override fun onDestroy() {
+        (binding?.adapter as BaseDataBindingAdapter<*, *>).detachAll()
+        super.onDestroy()
     }
     //endregion
 

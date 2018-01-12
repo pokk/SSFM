@@ -18,6 +18,7 @@ class ChartDialogViewModel(private val doFetch: Boolean,
     override fun <E> onAttach(lifecycleProvider: LifecycleProvider<E>) {
         super.onAttach(lifecycleProvider)
 
+        // OPTIMIZE(jieyi): 2018/01/10 Refresh all playlists and a specific playlist are the same!?!
         if (doFetch) {
             lifecycleProvider.execute(fetchPlaylistCase) { onNext { fetchedPlaylistCallback(it.toMutableList()) } }
         }
