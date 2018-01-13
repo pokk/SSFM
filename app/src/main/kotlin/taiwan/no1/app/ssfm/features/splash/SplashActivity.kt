@@ -3,7 +3,7 @@ package taiwan.no1.app.ssfm.features.splash
 import android.app.Activity
 import android.os.Bundle
 import org.jetbrains.anko.startActivity
-import taiwan.no1.app.ssfm.features.search.SearchActivity
+import taiwan.no1.app.ssfm.features.play.PlayMainActivity
 import kotlin.concurrent.timer
 
 /**
@@ -23,7 +23,7 @@ class SplashActivity : Activity() {
         // Delay 0.5 second for showing the splash view.
         timer(initialDelay = SPLASH_DELAY_TIME, period = 1) {
             // Transfer to your main activity after delay 0.5 second.
-            startActivity<SearchActivity>()
+            startActivity<PlayMainActivity>()
             finish()
             cancel()
         }

@@ -152,6 +152,7 @@ dependencies {
     implementation "me.gujun.android.taggroup:library:1.4@aar"
     implementation "com.sdsmdg.harjot:materialshadows:1.2.5"
     implementation "com.cleveroad:fan-layout-manager:1.0.5"
+    implementation "com.github.takusemba:multisnaprecyclerview:1.1.1"
     //noinspection GradleCompatible
     implementation "com.android.support:appcompat-v7:$android_support_version"
     implementation "com.android.support:palette-v7:$android_support_version"

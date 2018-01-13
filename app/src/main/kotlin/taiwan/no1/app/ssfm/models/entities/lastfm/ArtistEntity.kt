@@ -7,22 +7,22 @@ import com.google.gson.annotations.SerializedName
  * @since   10/16/17
  */
 data class ArtistEntity(var artist: Artist?) {
-    data class Artist(var name: String?,
-                      var mbid: String?,
-                      var match: String?,
-                      var url: String?,
+    data class Artist(var name: String? = "",
+                      var mbid: String? = "",
+                      var match: String? = "",
+                      var url: String? = "",
                       @SerializedName("image")
-                      var images: List<Image>?,
-                      var streamable: String?,
-                      var listeners: String?,
+                      var images: List<Image>? = listOf(),
+                      var streamable: String? = "",
+                      var listeners: String? = "",
                       @SerializedName("ontour")
-                      var onTour: String?,
+                      var onTour: String? = "",
                       @SerializedName("playcount")
-                      var playCount: String?,
-                      var stats: Stats?,
-                      var similar: Similar?,
-                      var tags: Tags?,
-                      var bio: Bio?) : BaseEntity
+                      var playCount: String? = "",
+                      var stats: Stats? = null,
+                      var similar: Similar? = null,
+                      var tags: Tags? = null,
+                      var bio: Bio? = null) : BaseEntity
 
     data class Bio(var links: Links?,
                    var published: String?,

@@ -30,6 +30,7 @@
         <include
             style="@style/Template.Activity"
             layout="@layout/part_main_play_music"
+            app:layout_constraintTop_toBottomOf="@+id/include_toolbar"
             app:pmvm="@{vm}"/>
     </android.support.constraint.ConstraintLayout>
 </layout>

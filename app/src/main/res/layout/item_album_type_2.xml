@@ -29,7 +29,7 @@
             app:civ_border="false"
             app:civ_shadow="true"
             app:civ_shadow_radius="10"
-            tools:src="@drawable/sample_lady_gaga"/>
+            android:src="@drawable/sample_lady_gaga"/>
 
         <TextView
             style="@style/RecyclerViewItem.Artist.Text"
