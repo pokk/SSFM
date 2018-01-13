@@ -13,7 +13,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
@@ -25,19 +25,20 @@
             android:layout_marginEnd="64dp"
             android:layout_marginStart="64dp"
             android:layout_marginTop="48dp"
-            android:src="@drawable/sample_lady_gaga"
             app:end_time="120"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"/>
+            app:layout_constraintVertical_bias="0.0"
+            app:src="@drawable/sample_lady_gaga"/>
 
         <TextView
             android:id="@+id/tv_song_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/one_unit"
+            android:layout_marginTop="@dimen/two_unit"
+            android:text="@{pmvm.trackName}"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -49,72 +50,11 @@
             android:id="@+id/tv_singer_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
+            android:text="@{pmvm.artistName}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_song_name"
             tools:text="Lady Gaga"/>
-
-        <ImageButton
-            android:id="@+id/ib_repeat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:padding="8dp"
-            android:src="@drawable/ic_repeat"
-            app:layout_constraintBottom_toBottomOf="@+id/ib_lyrics"
-            app:layout_constraintEnd_toStartOf="@+id/ib_previous"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/ib_lyrics"/>
-
-        <ImageButton
-            android:id="@+id/ib_previous"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:padding="8dp"
-            android:src="@drawable/ic_skip_previous"
-            app:layout_constraintBottom_toBottomOf="@+id/ib_lyrics"
-            app:layout_constraintEnd_toStartOf="@+id/ib_lyrics"
-            app:layout_constraintStart_toEndOf="@+id/ib_repeat"
-            app:layout_constraintTop_toTopOf="@+id/ib_lyrics"/>
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/ib_lyrics"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginBottom="32dp"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/ic_lyrics"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ib_next"
-            app:layout_constraintStart_toEndOf="@+id/ib_previous"
-            app:layout_constraintTop_toBottomOf="@+id/tv_singer_name"
-            app:layout_constraintVertical_bias="0.26"/>
-
-        <ImageButton
-            android:id="@+id/ib_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:padding="8dp"
-            android:src="@drawable/ic_skip_next"
-            app:layout_constraintBottom_toBottomOf="@+id/ib_lyrics"
-            app:layout_constraintEnd_toStartOf="@+id/ib_shuffle"
-            app:layout_constraintStart_toEndOf="@+id/ib_lyrics"
-            app:layout_constraintTop_toTopOf="@+id/ib_lyrics"/>
-
-        <ImageButton
-            android:id="@+id/ib_shuffle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:padding="8dp"
-            android:src="@drawable/ic_shuffle"
-            app:layout_constraintBottom_toBottomOf="@+id/ib_lyrics"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ib_next"
-            app:layout_constraintTop_toTopOf="@+id/ib_lyrics"/>
     </android.support.constraint.ConstraintLayout>
 </layout>

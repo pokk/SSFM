@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".mvvm.views.activities.PlayMainActivity">
 
@@ -11,26 +12,76 @@
             type="taiwan.no1.app.ssfm.features.play.PlayMainViewModel"/>
     </data>
 
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_previous"
+        <ImageButton
+            android:id="@+id/ib_repeat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:onClick="@{pmvm::prevClick}"
-            android:text="PREVIOUS"/>
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:onClick="@{pmvm::repeatOnClick}"
+            android:padding="8dp"
+            android:src="@drawable/ic_repeat"
+            app:layout_constraintBottom_toBottomOf="@+id/ib_lyrics"
+            app:layout_constraintEnd_toStartOf="@+id/ib_previous"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ib_lyrics"/>
 
-        <Button
-            android:id="@+id/btn_next"
+        <ImageButton
+            android:id="@+id/ib_previous"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:onClick="@{pmvm::nextClick}"
-            android:text="NEXT"/>
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:onClick="@{pmvm::prevOnClick}"
+            android:padding="8dp"
+            android:src="@drawable/ic_skip_previous"
+            app:layout_constraintBottom_toBottomOf="@+id/ib_lyrics"
+            app:layout_constraintEnd_toStartOf="@+id/ib_lyrics"
+            app:layout_constraintStart_toEndOf="@+id/ib_repeat"
+            app:layout_constraintTop_toTopOf="@+id/ib_lyrics"/>
 
-    </RelativeLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/ib_lyrics"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:onClick="@{pmvm::lyricsOnClick}"
+            android:src="@drawable/ic_lyrics"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ib_next"
+            app:layout_constraintStart_toEndOf="@+id/ib_previous"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.26"/>
+
+        <ImageButton
+            android:id="@+id/ib_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:onClick="@{pmvm::nextOnClick}"
+            android:padding="8dp"
+            android:src="@drawable/ic_skip_next"
+            app:layout_constraintBottom_toBottomOf="@+id/ib_lyrics"
+            app:layout_constraintEnd_toStartOf="@+id/ib_shuffle"
+            app:layout_constraintStart_toEndOf="@+id/ib_lyrics"
+            app:layout_constraintTop_toTopOf="@+id/ib_lyrics"/>
+
+        <ImageButton
+            android:id="@+id/ib_shuffle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:onClick="@{pmvm::shuffleOnClick}"
+            android:padding="8dp"
+            android:src="@drawable/ic_shuffle"
+            app:layout_constraintBottom_toBottomOf="@+id/ib_lyrics"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ib_next"
+            app:layout_constraintTop_toTopOf="@+id/ib_lyrics"/>
+    </android.support.constraint.ConstraintLayout>
 </layout>
