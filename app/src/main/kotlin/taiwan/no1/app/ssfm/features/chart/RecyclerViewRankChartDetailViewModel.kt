@@ -127,7 +127,7 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
 
     private fun refreshView() {
         (item as MusicRankEntity.Song).let {
-            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.url && MusicPlayerHelper.instance.isPlaying())
+            isPlaying.set(MusicPlayerHelper.instance.currentUri == it.url && MusicPlayerHelper.instance.isPlaying)
             trackName.set(it.title)
             trackDuration.set(it.length.toTimeString())
             trackIndex.set(index.toString())

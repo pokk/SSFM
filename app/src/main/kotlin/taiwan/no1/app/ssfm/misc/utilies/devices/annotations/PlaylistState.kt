@@ -13,5 +13,6 @@ import taiwan.no1.app.ssfm.misc.utilies.devices.constants.MusicStateConstant
         MusicStateConstant.PLAYLIST_STATE_LOOP_ONE,
         MusicStateConstant.PLAYLIST_STATE_LOOP_ALL)
 @Retention(AnnotationRetention.SOURCE)
+@Target(AnnotationTarget.TYPE, AnnotationTarget.FIELD, AnnotationTarget.VALUE_PARAMETER)
 @MustBeDocumented
 annotation class PlaylistState

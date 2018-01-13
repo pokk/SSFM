@@ -101,7 +101,7 @@ class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: Sear
 
     private fun refreshView() {
         (item as TrackEntity.TrackWithStreamableString).apply {
-            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == realUrl.orEmpty() && MusicPlayerHelper.instance.isPlaying())
+            isPlaying.set(MusicPlayerHelper.instance.currentUri == realUrl.orEmpty() && MusicPlayerHelper.instance.isPlaying)
             trackName.set(name)
             trackNumber.set(attr?.rank ?: 0.toString())
         }

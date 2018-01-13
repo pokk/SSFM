@@ -122,7 +122,7 @@ class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV
 
     private fun refreshView() {
         (item as TrackEntity.Track).let {
-            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.realUrl.orEmpty() && MusicPlayerHelper.instance.isPlaying())
+            isPlaying.set(MusicPlayerHelper.instance.currentUri == it.realUrl.orEmpty() && MusicPlayerHelper.instance.isPlaying)
             artistName.set(it.artist?.name)
             trackName.set(it.name)
             ranking.set(index.toString())

@@ -5,6 +5,8 @@ import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_BUFFER_PRECENT_CH
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_CURRENT_TIME
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_DURATION_CHANGED
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_STATE_CHANGED
+import taiwan.no1.app.ssfm.misc.utilies.devices.annotations.PlaylistState
+import taiwan.no1.app.ssfm.misc.utilies.devices.constants.MusicStateConstant.PLAYLIST_STATE_NORMAL
 import weian.cheng.mediaplayerwithexoplayer.ExoPlayerEventListener.PlayerEventListenerImpl
 import weian.cheng.mediaplayerwithexoplayer.IMusicPlayer
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
@@ -21,46 +23,53 @@ class MusicPlayerHelper private constructor() {
         val INSTANCE = MusicPlayerHelper()
     }
 
-    private lateinit var player: IMusicPlayer
-    private lateinit var musicUri: String
-
     companion object {
         val instance by lazy { Holder.INSTANCE }
     }
 
-    fun hold(player: IMusicPlayer) {
+    @PlaylistState var mode = PLAYLIST_STATE_NORMAL
+    val state get() = player.getPlayerState()
+    val currentUri get() = if (::musicUri.isInitialized) musicUri else "None"
+    val isPlaying get() = Play == state
+    val isPause get() = Pause == state
+    val isStop get() = Standby == state
+    private var playlistManager: PlaylistManager<String>? = null
+    private lateinit var player: IMusicPlayer
+    private lateinit var musicUri: String
+
+    fun hold(player: IMusicPlayer, playlistManager: PlaylistManager<String>? = null) {
         this.player = player
+        this.playlistManager = playlistManager
         setPlayerListener()
     }
 
     fun play(uri: String, callback: ((state: MusicPlayerState) -> Unit)? = null) {
+        // TODO(jieyi): 1/13/18 Change to state pattern!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         if (::musicUri.isInitialized && uri == musicUri) {
             when {
-                isPlaying() -> player.pause()
-                isPause() -> player.resume()
-                isStop() -> {
+                isPlaying -> player.pause()
+                isPause -> player.resume()
+                isStop -> {
                     player.seekTo(0)
-                    callback?.invoke(getState())
+                    callback?.invoke(state)
                 }
             }
         }
         else {
-            if (::player.isInitialized && isPlaying()) player.stop()
+            if (::player.isInitialized && isPlaying) player.stop()
             player.play(uri)
-            callback?.invoke(getState())
+            callback?.invoke(state)
             musicUri = uri
         }
     }
 
-    fun getState() = player.getPlayerState()
+    fun next() {
 
-    fun getCurrentUri() = if (::musicUri.isInitialized) musicUri else "None"
+    }
 
-    fun isPlaying() = Play == getState()
+    fun previous() {
 
-    fun isPause() = Pause == getState()
-
-    fun isStop() = Standby == getState()
+    }
 
     fun downloadMusic(uri: String) = player.writeToFile(uri)
 

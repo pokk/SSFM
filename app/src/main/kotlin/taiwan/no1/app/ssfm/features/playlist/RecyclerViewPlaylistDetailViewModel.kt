@@ -114,7 +114,7 @@ class RecyclerViewPlaylistDetailViewModel(private val addPlaylistItemCase: AddPl
 
     private fun refreshView() {
         (item as PlaylistItemEntity).let {
-            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.trackUri && MusicPlayerHelper.instance.isPlaying())
+            isPlaying.set(MusicPlayerHelper.instance.currentUri == it.trackUri && MusicPlayerHelper.instance.isPlaying)
             rank.set(index.toString())
             artistName.set(it.artistName)
             trackName.set(it.trackName)

@@ -97,7 +97,7 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
 
     private fun refreshView() {
         (item as TrackEntity.Track).let {
-            isPlaying.set(MusicPlayerHelper.instance.getCurrentUri() == it.realUrl && MusicPlayerHelper.instance.isPlaying())
+            isPlaying.set(MusicPlayerHelper.instance.currentUri == it.realUrl && MusicPlayerHelper.instance.isPlaying)
             trackName.set(it.name)
             trackNumber.set(it.attr?.rank ?: 0.toString())
             trackDuration.set(it.duration?.toInt()?.toTimeString())
