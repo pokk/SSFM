@@ -5,12 +5,12 @@ import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_BUFFER_PRECENT_CH
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_CURRENT_TIME
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_DURATION_CHANGED
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_STATE_CHANGED
-import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.annotation.PlaylistState
-import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.constants.MusicStateConstant.PLAYLIST_STATE_LOOP_ALL
-import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.constants.MusicStateConstant.PLAYLIST_STATE_LOOP_ONE
-import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.constants.MusicStateConstant.PLAYLIST_STATE_NORMAL
-import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.constants.MusicStateConstant.PLAYLIST_STATE_RANDOM
-import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.constants.MusicStateConstant.PLAYLIST_STATE_UNKNOWN
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.EMusicMode
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.LoopAll
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.LoopOne
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.Normal
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.Random
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.Unknown
 import taiwan.no1.app.ssfm.misc.utilies.devices.manager.PlaylistManager
 import weian.cheng.mediaplayerwithexoplayer.ExoPlayerEventListener.PlayerEventListenerImpl
 import weian.cheng.mediaplayerwithexoplayer.IMusicPlayer
@@ -31,8 +31,7 @@ class MusicPlayerHelper private constructor() {
         val instance by lazy { Holder.INSTANCE }
     }
 
-    @PlaylistState
-    var mode = PLAYLIST_STATE_NORMAL
+    var mode = EMusicMode.PLAYLIST_STATE_NORMAL
     val state get() = player.getPlayerState()
     val currentUri get() = if (::musicUri.isInitialized) musicUri else "None"
     val isPlaying get() = Play == state
@@ -45,6 +44,13 @@ class MusicPlayerHelper private constructor() {
     fun hold(player: IMusicPlayer, playlistManager: PlaylistManager<String>? = null) {
         this.player = player
         this.playlistManager = playlistManager
+        playlistManager.takeIf { null != it }?.let {
+            LoopAll.instance.hold(it)
+            LoopOne.instance.hold(it)
+            Normal.instance.hold(it)
+            Random.instance.hold(it)
+            Unknown.instance.hold(it)
+        }
         setPlayerListener()
     }
 
@@ -68,29 +74,11 @@ class MusicPlayerHelper private constructor() {
         }
     }
 
-    fun next(callback: stateChangedListener = null) {
-        playlistManager?.run {
-            when (mode) {
-                PLAYLIST_STATE_LOOP_ALL -> loopingNext
-                PLAYLIST_STATE_LOOP_ONE -> again
-                PLAYLIST_STATE_NORMAL -> next
-                PLAYLIST_STATE_RANDOM -> random
-                PLAYLIST_STATE_UNKNOWN -> NoSuchElementException("There is no kind of state")
-                else -> NoSuchElementException("There is no kind of state")
-            }.toString()
-        }?.let { trackUri -> play(trackUri, callback) }
-    }
+    fun next(callback: stateChangedListener = null) =
+        mode.playerMode.next?.let { trackUri -> play(trackUri, callback) } ?: throw Exception()
 
-    fun previous(callback: stateChangedListener = null) {
-        playlistManager?.run {
-            when (mode) {
-                PLAYLIST_STATE_LOOP_ALL, PLAYLIST_STATE_LOOP_ONE, PLAYLIST_STATE_NORMAL -> previous
-                PLAYLIST_STATE_RANDOM -> random
-                PLAYLIST_STATE_UNKNOWN -> NoSuchElementException("There is no kind of state")
-                else -> NoSuchElementException("There is no kind of state")
-            }.toString()
-        }?.let { trackUri -> play(trackUri, callback) }
-    }
+    fun previous(callback: stateChangedListener = null) =
+        mode.playerMode.previous?.let { trackUri -> play(trackUri, callback) } ?: throw Exception()
 
     fun downloadMusic(uri: String) = player.writeToFile(uri)
 

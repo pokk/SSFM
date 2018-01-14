@@ -21,11 +21,6 @@ abstract class PlaylistManager<T> {
             currentIndex++
             playlist[it]
         }
-    val previous
-        get() = (currentIndex - 1).takeIf { 0 <= it }?.let {
-            currentIndex--
-            playlist[it]
-        }
     val loopingNext
         get() = (currentIndex + 1).rem(playlistSize).let {
             currentIndex = it
@@ -33,6 +28,13 @@ abstract class PlaylistManager<T> {
         }
     val again get() = playlist[currentIndex]
     val random get() = Random().nextInt(playlistSize).let(playlist::get)
+    val previous
+        get() = (currentIndex - 1).takeIf { 0 <= it }?.let {
+            currentIndex--
+            playlist[it]
+        }
+
+    val loopingPrevious get() = (currentIndex - 1).let { if (it < 0) playlistSize - it else it }.let(playlist::get)
 
     fun append(newPlaylist: List<T>) = addPlaylist(newPlaylist, ADD_OPTIONAL_BACK)
 
