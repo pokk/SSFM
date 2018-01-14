@@ -81,7 +81,7 @@ class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: Sear
         RxBus.get().post(VIEWMODEL_TRACK_LONG_CLICK, item)
     }
 
-    @Subscribe(tags = [(Tag(VIEWMODEL_TRACK_CLICK))])
+    @Subscribe(tags = [Tag(VIEWMODEL_TRACK_CLICK)])
     fun changeToStopIcon(uri: String) {
         if (uri != (item as TrackEntity.TrackWithStreamableString).realUrl) isPlaying.set(false)
     }
@@ -101,7 +101,7 @@ class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: Sear
 
     private fun refreshView() {
         (item as TrackEntity.TrackWithStreamableString).apply {
-            isPlaying.set(MusicPlayerHelper.instance.currentUri == realUrl.orEmpty() && MusicPlayerHelper.instance.isPlaying)
+            isPlaying.set(MusicPlayerHelper.instance.isCurrentUri(realUrl.orEmpty()) && MusicPlayerHelper.instance.isPlaying)
             trackName.set(name)
             trackNumber.set(attr?.rank ?: 0.toString())
         }

@@ -5,7 +5,7 @@ import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_BUFFER_PRECENT_CH
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_CURRENT_TIME
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_DURATION_CHANGED
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_STATE_CHANGED
-import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.EMusicMode
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.EPlayerMode.PLAYLIST_STATE_NORMAL
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.LoopAll
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.LoopOne
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.Normal
@@ -31,7 +31,8 @@ class MusicPlayerHelper private constructor() {
         val instance by lazy { Holder.INSTANCE }
     }
 
-    var mode = EMusicMode.PLAYLIST_STATE_NORMAL
+    var mode = PLAYLIST_STATE_NORMAL
+    var playInObject = "???"
     val state get() = player.getPlayerState()
     val currentUri get() = if (::musicUri.isInitialized) musicUri else "None"
     val isPlaying get() = Play == state
@@ -54,9 +55,14 @@ class MusicPlayerHelper private constructor() {
         setPlayerListener()
     }
 
+    // TODO(jieyi): 1/14/18 Added the current uri `index` which the player is playing.
+
+    fun isCurrentUri(uri: String) = uri == currentUri
+
+    fun isFirstTimePlayHere(objectName: String) = objectName != playInObject
+
     fun play(uri: String, callback: stateChangedListener = null) {
-        // TODO(jieyi): 1/13/18 Change to state pattern!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        if (::musicUri.isInitialized && uri == musicUri) {
+        if (::musicUri.isInitialized && isCurrentUri(musicUri)) {
             when {
                 isPlaying -> player.pause()
                 isPause -> player.resume()
@@ -74,6 +80,10 @@ class MusicPlayerHelper private constructor() {
         }
     }
 
+    fun pause() = player.pause()
+
+    fun stop() = player.stop()
+
     fun next(callback: stateChangedListener = null) =
         mode.playerMode.next?.let { trackUri -> play(trackUri, callback) } ?: throw Exception()
 
@@ -81,6 +91,14 @@ class MusicPlayerHelper private constructor() {
         mode.playerMode.previous?.let { trackUri -> play(trackUri, callback) } ?: throw Exception()
 
     fun downloadMusic(uri: String) = player.writeToFile(uri)
+
+    fun addList(list: List<String>) = playlistManager?.append(list) ?: false
+
+    fun removeTrack(uri: String) = playlistManager?.remove(uri) ?: false
+
+    fun removeTrack(index: Int) = playlistManager?.remove(index).orEmpty()
+
+    fun clearList() = playlistManager?.clearPlaylist() ?: Unit
 
     private fun setPlayerListener() {
         player.setEventListener(PlayerEventListenerImpl {

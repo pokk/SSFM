@@ -31,4 +31,6 @@ object RxBusTag {
     const val MUSICPLAYER_BUFFER_PRECENT_CHANGED = "Music Player State Changed"
     const val MUSICPLAYER_CURRENT_TIME = "Music Player State Changed"
     const val MUSICPLAYER_DURATION_CHANGED = "Music Player State Changed"
+
+    const val HELPER_ADD_TO_PLAYLIST = "Music Helper To Add Playlist"
 }

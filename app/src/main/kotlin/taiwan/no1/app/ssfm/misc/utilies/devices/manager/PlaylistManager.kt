@@ -42,6 +42,13 @@ abstract class PlaylistManager<T> {
 
     fun add(newPlaylist: List<T>, index: Int) = addPlaylist(newPlaylist, ADD_OPTIONAL_MIDDLE, index)
 
+    fun remove(index: Int) = if (index < playlistSize)
+        playlist.removeAt(index)
+    else
+        throw IndexOutOfBoundsException()
+
+    fun remove(element: T) = playlist.remove(element)
+
     fun clearPlaylist() = playlist.clear()
 
     private fun addPlaylist(newPlaylist: List<T>, optional: Int, index: Int = 0) =

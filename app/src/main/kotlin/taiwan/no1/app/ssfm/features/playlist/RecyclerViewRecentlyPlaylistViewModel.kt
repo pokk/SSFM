@@ -87,7 +87,7 @@ class RecyclerViewRecentlyPlaylistViewModel(private var item: BaseEntity,
 
     private fun refreshView() {
         (item as PlaylistItemEntity).let {
-            isPlaying.set(MusicPlayerHelper.instance.currentUri == it.trackUri && MusicPlayerHelper.instance.isPlaying)
+            isPlaying.set(MusicPlayerHelper.instance.isCurrentUri(it.trackUri) && MusicPlayerHelper.instance.isPlaying)
             trackName.set(it.trackName)
             artistName.set(it.artistName)
             trackDuration.set(it.duration.toTimeString())

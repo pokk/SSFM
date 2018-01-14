@@ -1,19 +1,26 @@
 package taiwan.no1.app.ssfm.features.chart
 
 import android.os.Bundle
+import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.recyclerview.WrapContentLinearLayoutManager
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
+import com.hwangjr.rxbus.RxBus
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.annotation.Tag
 import org.jetbrains.anko.bundleOf
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentRankChartDetailBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.constants.Constant
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.HELPER_ADD_TO_PLAYLIST
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RankChartDetailAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.MusicPlayerHelper
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
 import taiwan.no1.app.ssfm.models.entities.v2.RankChartEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import javax.inject.Inject
@@ -53,7 +60,13 @@ class ChartRankChartDetailFragment : AdvancedFragment<ChartRankChartDetailFragme
     private val chartEntity: RankChartEntity? by lazy { arguments.getParcelable<RankChartEntity>(ARG_PARAM_CHART_ENTITY) }
 
     //region Fragment lifecycle
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        RxBus.get().register(this)
+    }
+
     override fun onDestroy() {
+        RxBus.get().unregister(this)
         (binding?.trackAdapter as BaseDataBindingAdapter<*, *>).detachAll()
         super.onDestroy()
     }
@@ -87,4 +100,16 @@ class ChartRankChartDetailFragment : AdvancedFragment<ChartRankChartDetailFragme
 
     override fun provideInflateView(): Int = R.layout.fragment_rank_chart_detail
     //endregion
+
+    // FIXME(jieyi): 1/14/18 Cannot add the list to playlist manager.
+    @Subscribe(tags = [Tag(HELPER_ADD_TO_PLAYLIST)])
+    fun addToPlaylist(any: String) {
+        logw("111111111111111")
+        MusicPlayerHelper.instance.also {
+            if (it.isFirstTimePlayHere(toString())) {
+                it.playInObject = toString()
+                it.addList(trackRes.map { (it as MusicRankEntity.Song).url })
+            }
+        }
+    }
 }

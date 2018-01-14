@@ -111,7 +111,7 @@ class RecyclerViewSearchMusicResultViewModel(private var res: BaseEntity,
 
     private fun refreshView() {
         (res as MusicEntity.Music).let {
-            isPlaying.set(MusicPlayerHelper.instance.currentUri == it.url && MusicPlayerHelper.instance.isPlaying)
+            isPlaying.set(MusicPlayerHelper.instance.isCurrentUri(it.url) && MusicPlayerHelper.instance.isPlaying)
             songName.set(it.title)
             singerName.set(it.artist)
             coverUrl.set(it.coverURL)

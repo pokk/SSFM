@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.view.View
 import com.devrapid.kotlinknifer.glideListener
+import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.palette
 import com.devrapid.kotlinknifer.toTimeString
 import com.hwangjr.rxbus.RxBus
@@ -17,6 +18,7 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.Constant.DATABASE_PLAYLIST_HISTORY_ID
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.HELPER_ADD_TO_PLAYLIST
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_LONG_CLICK
 import taiwan.no1.app.ssfm.misc.extension.changeState
@@ -24,6 +26,7 @@ import taiwan.no1.app.ssfm.misc.extension.gAlphaIntColor
 import taiwan.no1.app.ssfm.misc.extension.gColor
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.MusicPlayerHelper
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playThenToPlaylist
+import taiwan.no1.app.ssfm.misc.utilies.devices.manager.PlaylistTrackUriManager
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
@@ -95,6 +98,9 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
         lifecycleProvider.playThenToPlaylist(addPlaylistItemCase, playlistEntity) {
             RxBus.get().post(VIEWMODEL_TRACK_CLICK, playlistEntity.trackUri)
         }
+        RxBus.get().post(HELPER_ADD_TO_PLAYLIST, "")
+
+        logw(PlaylistTrackUriManager.instance.playlist)
     }
 
     /**
@@ -127,7 +133,7 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
 
     private fun refreshView() {
         (item as MusicRankEntity.Song).let {
-            isPlaying.set(MusicPlayerHelper.instance.currentUri == it.url && MusicPlayerHelper.instance.isPlaying)
+            isPlaying.set(MusicPlayerHelper.instance.isCurrentUri(it.url) && MusicPlayerHelper.instance.isPlaying)
             trackName.set(it.title)
             trackDuration.set(it.length.toTimeString())
             trackIndex.set(index.toString())
