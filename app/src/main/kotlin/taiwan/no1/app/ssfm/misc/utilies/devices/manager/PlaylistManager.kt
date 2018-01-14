@@ -1,4 +1,6 @@
-package taiwan.no1.app.ssfm.misc.utilies.devices
+package taiwan.no1.app.ssfm.misc.utilies.devices.manager
+
+import java.util.Random
 
 /**
  * @author  jieyi
@@ -24,6 +26,13 @@ abstract class PlaylistManager<T> {
             currentIndex--
             playlist[it]
         }
+    val loopingNext
+        get() = (currentIndex + 1).rem(playlistSize).let {
+            currentIndex = it
+            playlist[it]
+        }
+    val again get() = playlist[currentIndex]
+    val random get() = Random().nextInt(playlistSize).let(playlist::get)
 
     fun append(newPlaylist: List<T>) = addPlaylist(newPlaylist, ADD_OPTIONAL_BACK)
 

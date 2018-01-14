@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.misc.utilies.devices
+package taiwan.no1.app.ssfm.misc.utilies.devices.helper.music
 
 import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.misc.constants.Constant

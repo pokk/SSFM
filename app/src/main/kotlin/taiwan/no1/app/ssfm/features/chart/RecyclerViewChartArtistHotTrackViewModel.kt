@@ -12,8 +12,8 @@ import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_LONG_CLICK
 import taiwan.no1.app.ssfm.misc.extension.changeState
-import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayerHelper
-import taiwan.no1.app.ssfm.misc.utilies.devices.searchTheTopMusicAndPlayThenToPlaylist
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.MusicPlayerHelper
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.searchTheTopMusicAndPlayThenToPlaylist
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase

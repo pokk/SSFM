@@ -1,4 +1,4 @@
-package taiwan.no1.app.ssfm.misc.utilies.devices.constants
+package taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.constants
 
 /**
  * @author  jieyi

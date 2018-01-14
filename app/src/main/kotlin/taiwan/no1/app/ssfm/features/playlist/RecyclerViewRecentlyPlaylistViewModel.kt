@@ -12,7 +12,7 @@ import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
 import taiwan.no1.app.ssfm.misc.extension.changeState
-import taiwan.no1.app.ssfm.misc.utilies.devices.MusicPlayerHelper
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.MusicPlayerHelper
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
