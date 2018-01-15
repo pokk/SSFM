@@ -20,6 +20,7 @@ import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_LONG_CLICK
 import taiwan.no1.app.ssfm.misc.extension.changeState
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.MusicPlayerHelper
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.searchTheTopMusicAndPlayThenToPlaylist
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
@@ -122,7 +123,7 @@ class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV
 
     private fun refreshView() {
         (item as TrackEntity.Track).let {
-            isPlaying.set(MusicPlayerHelper.instance.isCurrentUri(it.realUrl.orEmpty()) && MusicPlayerHelper.instance.isPlaying)
+            isPlaying.set(playerHelper.isCurrentUri(it.realUrl.orEmpty()) && playerHelper.isPlaying)
             artistName.set(it.artist?.name)
             trackName.set(it.name)
             ranking.set(index.toString())

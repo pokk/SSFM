@@ -23,6 +23,7 @@ import taiwan.no1.app.ssfm.misc.extension.gAlphaIntColor
 import taiwan.no1.app.ssfm.misc.extension.gColor
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.MusicPlayerHelper
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playThenToPlaylist
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
@@ -114,7 +115,7 @@ class RecyclerViewPlaylistDetailViewModel(private val addPlaylistItemCase: AddPl
 
     private fun refreshView() {
         (item as PlaylistItemEntity).let {
-            isPlaying.set(MusicPlayerHelper.instance.isCurrentUri(it.trackUri) && MusicPlayerHelper.instance.isPlaying)
+            isPlaying.set(playerHelper.isCurrentUri(it.trackUri) && playerHelper.isPlaying)
             rank.set(index.toString())
             artistName.set(it.artistName)
             trackName.set(it.trackName)

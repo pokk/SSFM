@@ -17,6 +17,7 @@ import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
 import taiwan.no1.app.ssfm.misc.extension.changeState
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.MusicPlayerHelper
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playThenToPlaylist
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
@@ -111,7 +112,7 @@ class RecyclerViewSearchMusicResultViewModel(private var res: BaseEntity,
 
     private fun refreshView() {
         (res as MusicEntity.Music).let {
-            isPlaying.set(MusicPlayerHelper.instance.isCurrentUri(it.url) && MusicPlayerHelper.instance.isPlaying)
+            isPlaying.set(playerHelper.isCurrentUri(it.url) && playerHelper.isPlaying)
             songName.set(it.title)
             singerName.set(it.artist)
             coverUrl.set(it.coverURL)

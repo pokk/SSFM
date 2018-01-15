@@ -13,6 +13,7 @@ import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
 import taiwan.no1.app.ssfm.misc.extension.changeState
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.MusicPlayerHelper
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
@@ -63,7 +64,7 @@ class RecyclerViewRecentlyPlaylistViewModel(private var item: BaseEntity,
         (item as PlaylistItemEntity).let {
             RxBus.get().post(VIEWMODEL_TRACK_CLICK, index)
             RxBus.get().post(VIEWMODEL_TRACK_CLICK, it.trackUri)
-            MusicPlayerHelper.instance.apply { play(it.trackUri) }
+            playerHelper.apply { play(it.trackUri) }
         }
     }
 
@@ -87,7 +88,7 @@ class RecyclerViewRecentlyPlaylistViewModel(private var item: BaseEntity,
 
     private fun refreshView() {
         (item as PlaylistItemEntity).let {
-            isPlaying.set(MusicPlayerHelper.instance.isCurrentUri(it.trackUri) && MusicPlayerHelper.instance.isPlaying)
+            isPlaying.set(playerHelper.isCurrentUri(it.trackUri) && playerHelper.isPlaying)
             trackName.set(it.trackName)
             artistName.set(it.artistName)
             trackDuration.set(it.duration.toTimeString())

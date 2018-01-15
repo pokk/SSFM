@@ -7,7 +7,7 @@ import com.devrapid.kotlinknifer.mvvm.createDebounce
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CLICK_PLAYLIST_FRAGMENT_DIALOG
-import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.MusicPlayerHelper
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
@@ -27,7 +27,7 @@ class BottomSheetViewModel(private val bsHelper: BottomSheetBehavior<View>) : Ba
                 is MusicRankEntity.Song -> (obtainMusicEntity as MusicRankEntity.Song).url
                 else -> ""
             }.let {
-                MusicPlayerHelper.instance.apply {
+                playerHelper.apply {
                     downloadMusic(it)
                     // TODO(jieyi): 2017/12/21 Add downloading task into the download activity.
                 }

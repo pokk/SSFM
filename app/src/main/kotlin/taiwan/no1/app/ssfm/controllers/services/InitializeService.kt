@@ -8,7 +8,8 @@ import com.raizlabs.android.dbflow.config.FlowConfig
 import com.raizlabs.android.dbflow.config.FlowManager
 import org.jetbrains.anko.defaultSharedPreferences
 import taiwan.no1.app.ssfm.features.base.FirstInitFlow
-import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.MusicPlayerHelper
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playlistManager
 import weian.cheng.mediaplayerwithexoplayer.ExoPlayerWrapper
 
 /**
@@ -36,7 +37,7 @@ class InitializeService : IntentService("InitializeService") {
         // Initial the database.
         FlowManager.init(FlowConfig.Builder(this).build())
         // Initial the player helper.
-        MusicPlayerHelper.instance.hold(ExoPlayerWrapper(this.applicationContext))
+        playerHelper.hold(ExoPlayerWrapper(this.applicationContext), playlistManager)
 
         // OPTIMIZE(jieyi): 11/24/17 Temporally put init flow here, this should be in the first activity.
         FirstInitFlow().init()

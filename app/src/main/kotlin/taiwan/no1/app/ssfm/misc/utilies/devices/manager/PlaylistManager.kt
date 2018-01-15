@@ -14,7 +14,7 @@ abstract class PlaylistManager<T> {
     }
 
     abstract val playlist: MutableList<T>
-    var currentIndex: Int = 0
+    var currentIndex = -1
     val playlistSize get() = playlist.size
     val next
         get() = (currentIndex + 1).takeIf { it >= playlistSize }?.let {
@@ -33,8 +33,19 @@ abstract class PlaylistManager<T> {
             currentIndex--
             playlist[it]
         }
-
     val loopingPrevious get() = (currentIndex - 1).let { if (it < 0) playlistSize - it else it }.let(playlist::get)
+
+    fun setIndex(element: T): Boolean {
+        playlist.forEachIndexed { index, item ->
+            if (item == element) {
+                currentIndex = index
+                return true
+            }
+        }
+
+        currentIndex = -1
+        return false
+    }
 
     fun append(newPlaylist: List<T>) = addPlaylist(newPlaylist, ADD_OPTIONAL_BACK)
 
@@ -54,7 +65,7 @@ abstract class PlaylistManager<T> {
     private fun addPlaylist(newPlaylist: List<T>, optional: Int, index: Int = 0) =
         when (optional) {
             ADD_OPTIONAL_FRONT -> playlist.addAll(0, newPlaylist)
-            ADD_OPTIONAL_BACK -> playlist.addAll(playlist.size - 1, newPlaylist)
+            ADD_OPTIONAL_BACK -> (playlistSize.takeIf { 0 < it } ?: 1).let { playlist.addAll(it - 1, newPlaylist) }
             ADD_OPTIONAL_MIDDLE -> playlist.addAll(index, newPlaylist)
             else -> false
         }

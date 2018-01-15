@@ -1,5 +1,7 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices.helper.music
 
+import com.devrapid.kotlinknifer.logi
+import com.devrapid.kotlinknifer.logw
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_BUFFER_PRECENT_CHANGED
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_CURRENT_TIME
@@ -32,9 +34,13 @@ class MusicPlayerHelper private constructor() {
     }
 
     var mode = PLAYLIST_STATE_NORMAL
+    var currentObject = "!!!"
     var playInObject = "???"
+    val isFirstTimePlayHere get() = currentObject != playInObject
     val state get() = player.getPlayerState()
+    val playlistSize get() = playlistManager?.playlistSize ?: 0
     val currentUri get() = if (::musicUri.isInitialized) musicUri else "None"
+    val currentPlaylistIndex get() = playlistManager?.currentIndex ?: -1
     val isPlaying get() = Play == state
     val isPause get() = Pause == state
     val isStop get() = Standby == state
@@ -45,7 +51,7 @@ class MusicPlayerHelper private constructor() {
     fun hold(player: IMusicPlayer, playlistManager: PlaylistManager<String>? = null) {
         this.player = player
         this.playlistManager = playlistManager
-        playlistManager.takeIf { null != it }?.let {
+        this.playlistManager.takeIf { null != it }?.let {
             LoopAll.instance.hold(it)
             LoopOne.instance.hold(it)
             Normal.instance.hold(it)
@@ -55,14 +61,12 @@ class MusicPlayerHelper private constructor() {
         setPlayerListener()
     }
 
-    // TODO(jieyi): 1/14/18 Added the current uri `index` which the player is playing.
-
     fun isCurrentUri(uri: String) = uri == currentUri
 
     fun isFirstTimePlayHere(objectName: String) = objectName != playInObject
 
     fun play(uri: String, callback: stateChangedListener = null) {
-        if (::musicUri.isInitialized && isCurrentUri(musicUri)) {
+        if (::musicUri.isInitialized && isCurrentUri(uri)) {
             when {
                 isPlaying -> player.pause()
                 isPause -> player.resume()
@@ -77,6 +81,7 @@ class MusicPlayerHelper private constructor() {
             player.play(uri)
             callback?.invoke(state)
             musicUri = uri
+            playlistManager?.setIndex(uri)
         }
     }
 
@@ -114,7 +119,17 @@ class MusicPlayerHelper private constructor() {
              * @event_to [taiwan.no1.app.ssfm.features.chart.RecyclerViewTagTopTrackViewModel.playerStateChanged]
              * @event_to [taiwan.no1.app.ssfm.features.playlist.RecyclerViewRecentlyPlaylistViewModel.playerStateChanged]
              */
-            onPlayerStateChanged = { RxBus.get().post(MUSICPLAYER_STATE_CHANGED, it) }
+            onPlayerStateChanged = {
+                if (it == Standby) {
+                    logw(playlistManager?.currentIndex)
+                    logw(mode.playerMode, mode.playerMode.next)
+                    mode.playerMode.next?.let {
+                        logi("let's go next music!!!!!!!!!", it)
+                        play(it)
+                    }
+                }
+                RxBus.get().post(MUSICPLAYER_STATE_CHANGED, it)
+            }
         })
     }
 }

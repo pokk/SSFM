@@ -37,7 +37,7 @@ fun LifecycleProvider<*>.playThenToPlaylist(addPlaylistItemCase: AddPlaylistItem
                                             playlistEntity: PlaylistItemEntity,
                                             block: (PlaylistItemEntity) -> Unit = {}) {
     block(playlistEntity)
-    MusicPlayerHelper.instance.apply {
+    playerHelper.apply {
         play(playlistEntity.trackUri) {
             // Add this history to database.
             execute(addPlaylistItemCase,

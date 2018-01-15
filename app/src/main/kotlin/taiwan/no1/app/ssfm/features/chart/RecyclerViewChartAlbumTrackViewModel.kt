@@ -13,6 +13,7 @@ import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
 import taiwan.no1.app.ssfm.misc.extension.changeState
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.MusicPlayerHelper
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.searchTheTopMusicAndPlayThenToPlaylist
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
@@ -97,7 +98,7 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
 
     private fun refreshView() {
         (item as TrackEntity.Track).let {
-            isPlaying.set(MusicPlayerHelper.instance.isCurrentUri(it.realUrl.orEmpty()) && MusicPlayerHelper.instance.isPlaying)
+            isPlaying.set(playerHelper.isCurrentUri(it.realUrl.orEmpty()) && playerHelper.isPlaying)
             trackName.set(it.name)
             trackNumber.set(it.attr?.rank ?: 0.toString())
             trackDuration.set(it.duration?.toInt()?.toTimeString())
