@@ -1,7 +1,6 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices.helper.music
 
-import com.devrapid.kotlinknifer.logi
-import com.devrapid.kotlinknifer.logw
+import com.devrapid.kotlinknifer.loge
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_BUFFER_PRECENT_CHANGED
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_CURRENT_TIME
@@ -71,7 +70,12 @@ class MusicPlayerHelper private constructor() {
                 isPlaying -> player.pause()
                 isPause -> player.resume()
                 isStop -> {
-                    player.seekTo(0)
+                    try {
+                        player.seekTo(0)
+                    }
+                    catch (e: Exception) {
+                        loge("Library is wrong = =")
+                    }
                     callback?.invoke(state)
                 }
             }
@@ -81,7 +85,6 @@ class MusicPlayerHelper private constructor() {
             player.play(uri)
             callback?.invoke(state)
             musicUri = uri
-            playlistManager?.setIndex(uri)
         }
     }
 
@@ -105,11 +108,21 @@ class MusicPlayerHelper private constructor() {
 
     fun clearList() = playlistManager?.clearPlaylist() ?: Unit
 
+    fun setCurrentIndex(uri: String) = playlistManager?.setIndex(uri) ?: false
+
     private fun setPlayerListener() {
         player.setEventListener(PlayerEventListenerImpl {
-            onDurationChanged = { RxBus.get().post(MUSICPLAYER_DURATION_CHANGED, it) }
-            onCurrentTime = { RxBus.get().post(MUSICPLAYER_CURRENT_TIME, it) }
-            onBufferPercentage = { RxBus.get().post(MUSICPLAYER_BUFFER_PRECENT_CHANGED, it) }
+            onDurationChanged = {
+                RxBus.get().post(MUSICPLAYER_DURATION_CHANGED, it)
+            }
+            onCurrentTime = {
+                RxBus.get().post(MUSICPLAYER_CURRENT_TIME, it)
+                // TODO(jieyi): 2018/01/16 I can judge this music is finish or not here.
+//                if (it == Standby) { mode.playerMode.next?.let { play(it) } }
+            }
+            onBufferPercentage = {
+                RxBus.get().post(MUSICPLAYER_BUFFER_PRECENT_CHANGED, it)
+            }
             /**
              * @event_to [taiwan.no1.app.ssfm.features.playlist.RecyclerViewPlaylistDetailViewModel.playerStateChanged]
              * @event_to [taiwan.no1.app.ssfm.features.search.RecyclerViewSearchMusicResultViewModel.playerStateChanged]
@@ -120,14 +133,6 @@ class MusicPlayerHelper private constructor() {
              * @event_to [taiwan.no1.app.ssfm.features.playlist.RecyclerViewRecentlyPlaylistViewModel.playerStateChanged]
              */
             onPlayerStateChanged = {
-                if (it == Standby) {
-                    logw(playlistManager?.currentIndex)
-                    logw(mode.playerMode, mode.playerMode.next)
-                    mode.playerMode.next?.let {
-                        logi("let's go next music!!!!!!!!!", it)
-                        play(it)
-                    }
-                }
                 RxBus.get().post(MUSICPLAYER_STATE_CHANGED, it)
             }
         })

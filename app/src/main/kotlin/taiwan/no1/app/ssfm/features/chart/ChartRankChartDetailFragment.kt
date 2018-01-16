@@ -102,12 +102,13 @@ class ChartRankChartDetailFragment : AdvancedFragment<ChartRankChartDetailFragme
     //endregion
 
     @Subscribe(tags = [Tag(HELPER_ADD_TO_PLAYLIST)])
-    fun addToPlaylist(any: String) {
+    fun addToPlaylist(trackUri: String) {
         playerHelper.also {
             if (it.isFirstTimePlayHere) {
                 it.clearList()
                 it.playInObject = this.javaClass.name
                 it.addList(trackRes.map { (it as MusicRankEntity.Song).url })
+                it.setCurrentIndex(trackUri)
             }
         }
     }

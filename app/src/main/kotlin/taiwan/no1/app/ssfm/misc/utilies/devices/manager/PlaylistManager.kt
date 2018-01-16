@@ -17,7 +17,7 @@ abstract class PlaylistManager<T> {
     var currentIndex = -1
     val playlistSize get() = playlist.size
     val next
-        get() = (currentIndex + 1).takeIf { it >= playlistSize }?.let {
+        get() = (currentIndex + 1).takeIf { it < playlistSize }?.let {
             currentIndex++
             playlist[it]
         }

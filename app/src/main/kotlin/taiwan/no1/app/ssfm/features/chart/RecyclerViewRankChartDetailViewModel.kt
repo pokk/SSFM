@@ -97,7 +97,7 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
         lifecycleProvider.playThenToPlaylist(addPlaylistItemCase, playlistEntity) {
             RxBus.get().post(VIEWMODEL_TRACK_CLICK, playlistEntity.trackUri)
         }
-        RxBus.get().post(HELPER_ADD_TO_PLAYLIST, "")
+        RxBus.get().post(HELPER_ADD_TO_PLAYLIST, playlistEntity.trackUri)
     }
 
     /**
