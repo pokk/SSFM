@@ -111,7 +111,7 @@ class MusicPlayerHelper private constructor() {
     fun setCurrentIndex(uri: String) = playlistManager?.setIndex(uri) ?: false
 
     private fun setPlayerListener() {
-        player.setEventListener(PlayerEventListenerImpl {
+        player.setEventListener(PlayerEventListener {
             onDurationChanged = {
                 RxBus.get().post(MUSICPLAYER_DURATION_CHANGED, it)
             }
