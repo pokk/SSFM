@@ -13,7 +13,7 @@ import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.Normal
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.Random
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.Unknown
 import taiwan.no1.app.ssfm.misc.utilies.devices.manager.PlaylistManager
-import weian.cheng.mediaplayerwithexoplayer.ExoPlayerEventListener.PlayerEventListenerImpl
+import weian.cheng.mediaplayerwithexoplayer.ExoPlayerEventListener.PlayerEventListener
 import weian.cheng.mediaplayerwithexoplayer.IMusicPlayer
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState.Pause
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState.Play
@@ -35,10 +35,15 @@ class MusicPlayerHelper private constructor() {
     var mode = PLAYLIST_STATE_NORMAL
     var currentObject = "!!!"
     var playInObject = "???"
+    var trackDuration = -1
+        private set
+    var currentTime = -1
+        private set
     val isFirstTimePlayHere get() = currentObject != playInObject
     val state get() = player.getPlayerState()
     val playlistSize get() = playlistManager?.playlistSize ?: 0
     val currentUri get() = if (::musicUri.isInitialized) musicUri else "None"
+    val isPlayedTrack get() = currentTime == trackDuration
     val currentPlaylistIndex get() = playlistManager?.currentIndex ?: -1
     val isPlaying get() = Play == state
     val isPause get() = Pause == state
@@ -113,12 +118,12 @@ class MusicPlayerHelper private constructor() {
     private fun setPlayerListener() {
         player.setEventListener(PlayerEventListener {
             onDurationChanged = {
+                trackDuration = it
                 RxBus.get().post(MUSICPLAYER_DURATION_CHANGED, it)
             }
             onCurrentTime = {
+                currentTime = it
                 RxBus.get().post(MUSICPLAYER_CURRENT_TIME, it)
-                // TODO(jieyi): 2018/01/16 I can judge this music is finish or not here.
-//                if (it == Standby) { mode.playerMode.next?.let { play(it) } }
             }
             onBufferPercentage = {
                 RxBus.get().post(MUSICPLAYER_BUFFER_PRECENT_CHANGED, it)
@@ -133,8 +138,11 @@ class MusicPlayerHelper private constructor() {
              * @event_to [taiwan.no1.app.ssfm.features.playlist.RecyclerViewRecentlyPlaylistViewModel.playerStateChanged]
              */
             onPlayerStateChanged = {
+                autoPlayNext()
                 RxBus.get().post(MUSICPLAYER_STATE_CHANGED, it)
             }
         })
     }
+
+    private fun autoPlayNext() = if (state == Standby && isPlayedTrack) mode.playerMode.next?.let { play(it) } else Unit
 }
