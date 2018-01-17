@@ -49,10 +49,10 @@ class PlaylistIndexFragment : AdvancedFragment<PlaylistIndexFragmentViewModel, F
         recentlyPlayedRes.clear()
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         listOf((binding?.playlistAdapter as BaseDataBindingAdapter<*, *>),
                (binding?.recentlyAdapter as BaseDataBindingAdapter<*, *>)).forEach { it.detachAll() }
-        super.onDestroy()
+        super.onDestroyView()
     }
     //endregion
 

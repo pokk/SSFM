@@ -70,11 +70,11 @@ class ChartIndexFragment : AdvancedFragment<ChartIndexFragmentViewModel, Fragmen
         }
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         listOf((binding?.rankAdapter as BaseDataBindingAdapter<*, *>),
                (binding?.artistAdapter as BaseDataBindingAdapter<*, *>),
                (binding?.tagAdapter as BaseDataBindingAdapter<*, *>)).forEach { it.detachAll() }
-        super.onDestroy()
+        super.onDestroyView()
     }
     //endregion
 

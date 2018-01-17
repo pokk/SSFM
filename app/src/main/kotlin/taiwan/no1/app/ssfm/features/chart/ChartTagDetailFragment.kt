@@ -89,11 +89,11 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
         }
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         listOf((binding?.albumAdapter as BaseDataBindingAdapter<*, *>),
                (binding?.artistAdapter as BaseDataBindingAdapter<*, *>),
                (binding?.trackAdapter as BaseDataBindingAdapter<*, *>)).forEach { it.detachAll() }
-        super.onDestroy()
+        super.onDestroyView()
     }
     //endregion
 

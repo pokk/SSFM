@@ -44,9 +44,9 @@ class SearchHistoryFragment : AdvancedFragment<SearchHistoryFragmentViewModel, F
         searchRes.clear()
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         (binding?.adapter as BaseDataBindingAdapter<*, *>).detachAll()
-        super.onDestroy()
+        super.onDestroyView()
     }
     //endregion
 

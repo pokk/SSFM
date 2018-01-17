@@ -64,9 +64,13 @@ class ChartRankChartDetailFragment : AdvancedFragment<ChartRankChartDetailFragme
         RxBus.get().register(this)
     }
 
+    override fun onDestroyView() {
+        (binding?.trackAdapter as BaseDataBindingAdapter<*, *>).detachAll()
+        super.onDestroyView()
+    }
+
     override fun onDestroy() {
         RxBus.get().unregister(this)
-        (binding?.trackAdapter as BaseDataBindingAdapter<*, *>).detachAll()
         super.onDestroy()
     }
     //endregion

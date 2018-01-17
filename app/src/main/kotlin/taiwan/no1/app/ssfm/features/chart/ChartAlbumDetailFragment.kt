@@ -58,9 +58,9 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
     private val artistName: String by lazy { this.arguments.getString(ARG_PARAM_ARTIST_NAME) }
 
     //region Fragment lifecycle
-    override fun onDestroy() {
+    override fun onDestroyView() {
         (binding?.trackAdapter as BaseDataBindingAdapter<*, *>).detachAll()
-        super.onDestroy()
+        super.onDestroyView()
     }
     //endregion
 

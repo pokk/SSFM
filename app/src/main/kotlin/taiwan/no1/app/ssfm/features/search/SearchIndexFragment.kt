@@ -65,10 +65,10 @@ class SearchIndexFragment : AdvancedFragment<SearchIndexFragmentViewModel, Fragm
         }
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         listOf((binding?.artistAdapter as BaseDataBindingAdapter<*, *>),
                (binding?.trackAdapter as BaseDataBindingAdapter<*, *>)).forEach { it.detachAll() }
-        super.onDestroy()
+        super.onDestroyView()
     }
     //endregion
 

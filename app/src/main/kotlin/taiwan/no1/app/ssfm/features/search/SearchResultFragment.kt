@@ -71,9 +71,9 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
         viewModel.sendSearchRequest(keyword, resultCallback = updateListInfo)
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         (binding?.adapter as BaseDataBindingAdapter<*, *>).detachAll()
-        super.onDestroy()
+        super.onDestroyView()
     }
     //endregion
 
