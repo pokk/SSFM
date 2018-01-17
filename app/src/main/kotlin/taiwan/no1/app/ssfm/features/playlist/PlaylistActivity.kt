@@ -2,10 +2,13 @@ package taiwan.no1.app.ssfm.features.playlist
 
 import android.app.Activity
 import android.app.Fragment
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
+import android.support.v4.app.ActivityCompat
 import android.view.View
 import com.devrapid.kotlinknifer.addFragment
+import com.devrapid.kotlinknifer.logw
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
@@ -15,6 +18,7 @@ import taiwan.no1.app.ssfm.databinding.ActivityPlaylistBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedActivity
 import taiwan.no1.app.ssfm.features.bottomsheet.BottomSheetViewModel
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.OPEN_SERVICE
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
 import javax.inject.Inject
 
@@ -59,6 +63,16 @@ class PlaylistActivity : AdvancedActivity<PlaylistViewModel, ActivityPlaylistBin
         navigate(PlaylistDetailFragment.newInstance(params.first, sharedElements.map { it.value }.toList()),
                  true,
                  sharedElements)
+    }
+
+    @Subscribe(tags = [Tag(OPEN_SERVICE)])
+    fun openService(any: String) {
+        logw("@@@@@@@@@@@@@")
+        val intent = Intent().apply {
+            type = "image/*"
+            action = Intent.ACTION_GET_CONTENT
+        }
+        ActivityCompat.startActivityForResult(this, Intent.createChooser(intent, "Select Picture"), 32, null)
     }
 
     private fun navigate(fragment: Fragment, needBack: Boolean, sharedElements: HashMap<View, String>) {

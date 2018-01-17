@@ -8,8 +8,10 @@ import com.devrapid.kotlinknifer.hideSoftKeyboard
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.showSoftKeyboard
+import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.OPEN_SERVICE
 import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.misc.extension.imageview.setSrc
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
@@ -75,5 +77,9 @@ class PlaylistDetailFragmentViewModel(private val editPlaylistUsecase: EditPlayl
         }
         isEditMode.set(!isEditMode.get())
         (view as ImageButton).setSrc(if (isEditMode.get()) R.drawable.ic_check else R.drawable.ic_edit)
+    }
+
+    fun takePhoto(view: View) {
+        RxBus.get().post(OPEN_SERVICE, "")
     }
 }
