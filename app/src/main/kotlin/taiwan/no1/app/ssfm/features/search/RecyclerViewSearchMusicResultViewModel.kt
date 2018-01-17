@@ -13,6 +13,7 @@ import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.Constant.DATABASE_PLAYLIST_HISTORY_ID
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.HELPER_ADD_TO_PLAYLIST
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
 import taiwan.no1.app.ssfm.misc.extension.changeState
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.MusicPlayerHelper
@@ -82,6 +83,7 @@ class RecyclerViewSearchMusicResultViewModel(private var res: BaseEntity,
         lifecycleProvider.playThenToPlaylist(addPlaylistItemCase, playlistEntity) {
             RxBus.get().post(VIEWMODEL_TRACK_CLICK, (res as MusicEntity.Music).url)
         }
+        RxBus.get().post(HELPER_ADD_TO_PLAYLIST, playlistEntity.trackUri)
     }
 
     /**

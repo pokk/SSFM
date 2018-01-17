@@ -7,6 +7,8 @@ import com.cleveroad.fanlayoutmanager.FanLayoutManager
 import com.cleveroad.fanlayoutmanager.FanLayoutManagerSettings
 import com.devrapid.kotlinknifer.recyclerview.WrapContentLinearLayoutManager
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.HorizontalItemDecorator
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.annotation.Tag
 import org.jetbrains.anko.act
 import org.jetbrains.anko.bundleOf
 import org.jetbrains.anko.ctx
@@ -15,6 +17,7 @@ import taiwan.no1.app.ssfm.databinding.FragmentDetailArtistBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_NAME
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.HELPER_ADD_TO_PLAYLIST
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.ArtistTopAlbumAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.ArtistTopTrackAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
@@ -23,6 +26,7 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.keepAllLastItemPosition
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.restoreAllLastItemPosition
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
@@ -176,4 +180,17 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
 
     override fun provideInflateView(): Int = R.layout.fragment_detail_artist
     //endregion
+
+    @Subscribe(tags = [(Tag(HELPER_ADD_TO_PLAYLIST))])
+    fun addToPlaylist(trackUri: String) {
+        playerHelper.also {
+            if (it.isFirstTimePlayHere) {
+                it.clearList()
+                it.playInObject = this.javaClass.name
+                // TODO(jieyi): 2018/01/17 We can't get the track url so we need to search once then get the real url.
+//                it.addList(trackRes.map { (it as MusicRankEntity.Song).url })
+                it.setCurrentIndex(trackUri)
+            }
+        }
+    }
 }

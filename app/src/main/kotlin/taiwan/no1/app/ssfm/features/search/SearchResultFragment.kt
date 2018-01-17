@@ -3,16 +3,20 @@ package taiwan.no1.app.ssfm.features.search
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import com.devrapid.kotlinknifer.recyclerview.WrapContentLinearLayoutManager
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.annotation.Tag
 import org.jetbrains.anko.act
 import org.jetbrains.anko.bundleOf
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentSearchResultBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.constants.Constant.SPECIAL_NUMBER
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.HELPER_ADD_TO_PLAYLIST
 import taiwan.no1.app.ssfm.misc.extension.gColor
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.SearchHistoryAdapter
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
@@ -105,6 +109,18 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
     override fun provideInflateView(): Int = R.layout.fragment_search_result
     //endregion
 
+    @Subscribe(tags = [(Tag(HELPER_ADD_TO_PLAYLIST))])
+    fun addToPlaylist(trackUri: String) {
+        playerHelper.also {
+            if (it.isFirstTimePlayHere) {
+                it.clearList()
+                it.playInObject = this.javaClass.name
+                it.addList(res.map { (it as MusicEntity.Music).url })
+                it.setCurrentIndex(trackUri)
+            }
+        }
+    }
+
     /**
      * An anonymous callback function for updating the recyclerview list and the item lists
      * from the viewholder of the loading more event.
@@ -113,6 +129,8 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
         res = (binding?.adapter as SearchHistoryAdapter).
             refresh(res, ArrayList(res).apply { addAll(musics) }).
             toMutableList()
+        // Update the playlist's tracks.
+        playerHelper.addList(musics.map { it.url })
         // TODO(jieyi): 9/28/17 Close the loading item or view.
         resInfo.isLoading = false
         // Raise the stopping loading more data flag for avoiding to load again.

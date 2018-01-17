@@ -7,11 +7,14 @@ import android.widget.LinearLayout
 import com.devrapid.kotlinknifer.recyclerview.WrapContentLinearLayoutManager
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.HorizontalItemDecorator
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.annotation.Tag
 import org.jetbrains.anko.act
 import org.jetbrains.anko.bundleOf
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailTagBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedFragment
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.HELPER_ADD_TO_PLAYLIST
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RVCustomScrollCallback
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.TagTopAlbumAdapter
@@ -21,6 +24,7 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.keepAllLastItemPosition
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.restoreAllLastItemPosition
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.decorators.TrackDividerDecorator
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
@@ -170,4 +174,17 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
 
     override fun provideInflateView(): Int = R.layout.fragment_detail_tag
     //endregion
+
+    @Subscribe(tags = [(Tag(HELPER_ADD_TO_PLAYLIST))])
+    fun addToPlaylist(trackUri: String) {
+        playerHelper.also {
+            if (it.isFirstTimePlayHere) {
+                it.clearList()
+                it.playInObject = this.javaClass.name
+                // TODO(jieyi): 2018/01/17 We can't get the track url so we need to search once then get the real url.
+//                it.addList(trackRes.map { (it as MusicRankEntity.Song).url })
+                it.setCurrentIndex(trackUri)
+            }
+        }
+    }
 }

@@ -86,10 +86,15 @@ class MusicPlayerHelper private constructor() {
             }
         }
         else {
-            if (::player.isInitialized && isPlaying) player.stop()
-            player.play(uri)
-            callback?.invoke(state)
-            musicUri = uri
+            try {
+                if (::player.isInitialized && isPlaying) player.stop()
+                player.play(uri)
+                callback?.invoke(state)
+                musicUri = uri
+            }
+            catch (e: Exception) {
+                loge("Now is playing the music...Just wait a moment!")
+            }
         }
     }
 
