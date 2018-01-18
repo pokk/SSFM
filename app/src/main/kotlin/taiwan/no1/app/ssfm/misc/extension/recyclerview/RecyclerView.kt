@@ -25,6 +25,7 @@ import taiwan.no1.app.ssfm.databinding.ItemTagType1Binding
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseMultipleTypeDataBindingAdapter
 import taiwan.no1.app.ssfm.models.IExpandVisitable
+import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 
 /**
@@ -40,7 +41,7 @@ typealias HistoryAdapter = BaseDataBindingAdapter<ItemSearchHistoryType1Binding,
 typealias SimilarArtistAdapter = BaseDataBindingAdapter<ItemArtistType2Binding, BaseEntity>
 typealias ArtistTopTrackAdapter = BaseDataBindingAdapter<ItemMusicType2Binding, BaseEntity>
 typealias ArtistTopAlbumAdapter = BaseDataBindingAdapter<ItemAlbumType1Binding, BaseEntity>
-typealias AlbumTrackAdapter = BaseDataBindingAdapter<ItemMusicType4Binding, BaseEntity>
+typealias AlbumTrackAdapter = BaseDataBindingAdapter<ItemMusicType4Binding, PlaylistItemEntity>
 typealias TagTopAlbumAdapter = BaseDataBindingAdapter<ItemAlbumType2Binding, BaseEntity>
 typealias TagTopArtistAdapter = BaseDataBindingAdapter<ItemArtistType3Binding, BaseEntity>
 typealias TagTopTrackAdapter = BaseDataBindingAdapter<ItemMusicType7Binding, BaseEntity>

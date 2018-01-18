@@ -16,6 +16,8 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
+import taiwan.no1.app.ssfm.models.entities.transforms.tToPlaylist
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
 import javax.inject.Inject
@@ -85,7 +87,9 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
         trackInfo.firstFetch { info ->
             viewModel.fetchDetailInfo(artistAlbumName, artistName) {
                 it.track?.tracks?.let {
-                    trackRes.refreshAndChangeList(it, 0, binding?.trackAdapter as AlbumTrackAdapter, info)
+                    (trackRes as List<TrackEntity.BaseTrack>).tToPlaylist().subscribe { list ->
+                        list.refreshAndChangeList(it, 0, binding?.trackAdapter as AlbumTrackAdapter, info)
+                    }
                 }
             }
         }
