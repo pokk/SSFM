@@ -43,7 +43,7 @@ class MusicPlayerHelper private constructor() {
     val state get() = player.getPlayerState()
     val playlistSize get() = playlistManager?.playlistSize ?: 0
     val currentUri get() = if (::musicUri.isInitialized) musicUri else "None"
-    val isPlayedTrack get() = currentTime == trackDuration
+    val isPlayedTrack get() = 0 == currentTime
     val currentPlaylistIndex get() = playlistManager?.currentIndex ?: -1
     val isPlaying get() = Play == state
     val isPause get() = Pause == state
