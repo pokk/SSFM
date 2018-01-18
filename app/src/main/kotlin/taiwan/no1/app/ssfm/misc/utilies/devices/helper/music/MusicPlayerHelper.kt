@@ -1,11 +1,13 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices.helper.music
 
+import com.devrapid.kotlinknifer.WeakRef
 import com.devrapid.kotlinknifer.loge
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_BUFFER_PRECENT_CHANGED
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_CURRENT_TIME
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_DURATION_CHANGED
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_STATE_CHANGED
+import taiwan.no1.app.ssfm.misc.extension.gContext
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.EPlayerMode.PLAYLIST_STATE_NORMAL
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.LoopAll
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.LoopOne
@@ -14,6 +16,7 @@ import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.Random
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.Unknown
 import taiwan.no1.app.ssfm.misc.utilies.devices.manager.PlaylistManager
 import weian.cheng.mediaplayerwithexoplayer.ExoPlayerEventListener.PlayerEventListener
+import weian.cheng.mediaplayerwithexoplayer.ExoPlayerWrapper
 import weian.cheng.mediaplayerwithexoplayer.IMusicPlayer
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState.Pause
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState.Play
@@ -30,6 +33,33 @@ class MusicPlayerHelper private constructor() {
 
     companion object {
         val instance by lazy { Holder.INSTANCE }
+
+        //region A new ExoPlayer for obtaining the information.
+        private var lock = false
+        private val instanceForInfo by lazy { ExoPlayerWrapper(gContext()) }
+        private var durationCallback by WeakRef<(Int) -> Unit>()
+
+        fun obtainDuration(uri: String, callback: (Int) -> Unit) {
+            if (Standby != instanceForInfo.getPlayerState()) {
+                callback(-1)
+                loge("The player doesn't ready!")
+                return
+            }
+
+            instanceForInfo.play(uri)
+            if (!lock) {
+                lock = true
+                durationCallback = callback
+                instanceForInfo.setEventListener(PlayerEventListener {
+                    onDurationChanged = durationCallback
+                    instanceForInfo.stop()
+                    lock = false
+                })
+            }
+            else
+                callback(-1)
+        }
+        //endregion
     }
 
     var mode = PLAYLIST_STATE_NORMAL
