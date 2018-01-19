@@ -76,9 +76,7 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
     }
 
     @Subscribe(tags = [(Tag(RxBusTag.VIEWMODEL_TRACK_CLICK))])
-    fun changeToStopIcon(uri: String) {
-        if (uri != item.trackUri) isPlaying.set(false)
-    }
+    fun changeToStopIcon(uri: String) = isPlaying.set(uri == item.trackUri)
 
     @Subscribe(tags = [Tag(RxBusTag.VIEWMODEL_TRACK_CLICK)])
     fun notifyClickIndex(index: Integer) {

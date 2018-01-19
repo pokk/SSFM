@@ -2,11 +2,13 @@ package taiwan.no1.app.ssfm.misc.utilies.devices.helper.music
 
 import com.devrapid.kotlinknifer.WeakRef
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.logw
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_BUFFER_PRECENT_CHANGED
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_CURRENT_TIME
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_DURATION_CHANGED
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_STATE_CHANGED
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
 import taiwan.no1.app.ssfm.misc.extension.gContext
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.EPlayerMode.PLAYLIST_STATE_NORMAL
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.LoopAll
@@ -123,7 +125,11 @@ class MusicPlayerHelper private constructor() {
                 musicUri = uri
             }
             catch (e: Exception) {
+                logw("catch", musicUri)
                 loge("Now is playing the music...Just wait a moment!")
+            }
+            finally {
+                RxBus.get().post(VIEWMODEL_TRACK_CLICK, musicUri)
             }
         }
     }
@@ -179,5 +185,13 @@ class MusicPlayerHelper private constructor() {
         })
     }
 
-    private fun autoPlayNext() = if (state == Standby && isPlayedTrack) mode.playerMode.next?.let { play(it) } else Unit
+    private fun autoPlayNext() =
+        if (state == Standby && isPlayedTrack) {
+            mode.playerMode.next?.let {
+                play(it)
+                RxBus.get().post(VIEWMODEL_TRACK_CLICK, it)
+            }
+        }
+        else
+            Unit
 }

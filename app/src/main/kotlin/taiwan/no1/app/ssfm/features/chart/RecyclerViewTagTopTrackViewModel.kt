@@ -77,9 +77,7 @@ class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV
     //endregion
 
     @Subscribe(tags = [(Tag(VIEWMODEL_TRACK_CLICK))])
-    fun changeToStopIcon(uri: String) {
-        if (uri != item.trackUri) isPlaying.set(false)
-    }
+    fun changeToStopIcon(uri: String) = isPlaying.set(uri == item.trackUri)
 
     @Subscribe(tags = [Tag(VIEWMODEL_TRACK_CLICK)])
     fun notifyClickIndex(index: Integer) {

@@ -85,9 +85,7 @@ class RecyclerViewSearchMusicResultViewModel(private var res: PlaylistItemEntity
     fun optionClick(view: View) = RxBus.get().post(RxBusTag.VIEWMODEL_TRACK_LONG_CLICK, res)
 
     @Subscribe(tags = [(Tag(VIEWMODEL_TRACK_CLICK))])
-    fun changeToStopIcon(uri: String) {
-        if (uri != res.trackUri) isPlaying.set(false)
-    }
+    fun changeToStopIcon(uri: String) = isPlaying.set(uri == res.trackUri)
 
     @Subscribe(tags = [Tag(VIEWMODEL_TRACK_CLICK)])
     fun notifyClickIndex(index: Integer) {
