@@ -15,6 +15,7 @@ import taiwan.no1.app.ssfm.misc.extension.changeState
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.MusicPlayerHelper
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.searchTheTopMusicAndPlayThenToPlaylist
+import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
@@ -28,7 +29,7 @@ import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
  */
 class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMusicV2Case,
                                            private val addPlaylistItemCase: AddPlaylistItemCase,
-                                           private var item: BaseEntity,
+                                           private var item: PlaylistItemEntity,
                                            private var index: Int) : BaseViewModel() {
     val trackName by lazy { ObservableField<String>() }
     val trackNumber by lazy { ObservableField<String>() }
@@ -41,7 +42,7 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
         refreshView()
     }
 
-    fun setTrackItem(item: BaseEntity, index: Int) {
+    fun setTrackItem(item: PlaylistItemEntity, index: Int) {
         this.item = item
         this.index = index
         refreshView()
@@ -80,7 +81,7 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
 
     @Subscribe(tags = [(Tag(RxBusTag.VIEWMODEL_TRACK_CLICK))])
     fun changeToStopIcon(uri: String) {
-        if (uri != (item as TrackEntity.Track).realUrl) isPlaying.set(false)
+        if (uri != item.trackUri) isPlaying.set(false)
     }
 
     @Subscribe(tags = [Tag(RxBusTag.VIEWMODEL_TRACK_CLICK)])
@@ -97,11 +98,11 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
     fun playerStateChanged(state: MusicPlayerState) = isPlaying.changeState(state, index, clickedIndex)
 
     private fun refreshView() {
-        (item as TrackEntity.Track).let {
-            isPlaying.set(playerHelper.isCurrentUri(it.realUrl.orEmpty()) && playerHelper.isPlaying)
-            trackName.set(it.name)
-            trackNumber.set(it.attr?.rank ?: 0.toString())
-            trackDuration.set(it.duration?.toInt()?.toTimeString())
+        item.let {
+            isPlaying.set(playerHelper.isCurrentUri(it.trackUri) && playerHelper.isPlaying)
+            trackName.set(it.trackName)
+//            trackNumber.set(it.attr?.rank ?: 0.toString())
+            trackDuration.set(it.duration.toTimeString())
         }
     }
 }

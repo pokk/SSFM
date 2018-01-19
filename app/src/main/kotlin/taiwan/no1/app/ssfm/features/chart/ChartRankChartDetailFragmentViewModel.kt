@@ -23,17 +23,17 @@ class ChartRankChartDetailFragmentViewModel(private val getMusicRankUsecase: Fet
     fun fetchRankChartDetail(code: Int,
                              entity: RankChartEntity?,
                              callback: (entity: List<MusicRankEntity.Song>) -> Unit) {
-        lifecycleProvider.
-            compose(getMusicRankUsecase, GetMusicRankUsecase.RequestValue(code)).
-            doOnNext { callback(it.data.songs) }.
-            map { it.data.songs.first() }.
-            map { song ->
+        lifecycleProvider
+            .compose(getMusicRankUsecase, GetMusicRankUsecase.RequestValue(code))
+            .doOnNext { callback(it.data.songs) }
+            .map { it.data.songs.first() }
+            .map { song ->
                 entity?.apply {
                     coverUrl = song.coverURL
                     backgroundImageUrl.set(song.coverURL)
                 } ?: RankChartEntity()
-            }.
-            flatMap { editRankChartUsecase.execute(AddRankChartUsecase.RequestValue(it)) }.
-            subscribe {}
+            }
+            .flatMap { editRankChartUsecase.execute(AddRankChartUsecase.RequestValue(it)) }
+            .subscribe {}
     }
 }

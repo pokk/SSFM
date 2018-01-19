@@ -18,9 +18,10 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallbac
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.SearchHistoryAdapter
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
-import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
+import java.util.Collections.addAll
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -47,15 +48,16 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
             SearchResultFragment().apply {
                 arguments = bundleOf(ARG_PARAM_KEYWORD to keyword,
                                      ARG_PARAM_BACKGROUND_IMAGE_URL to imageUrl,
-                                     ARG_PARAM_FOREGROUND_BLUR_COLOR to (fgColor.takeIf { SPECIAL_NUMBER != it }.let { it } ?: gColor(
-                                         R.color.colorTransparent)))
+                                     ARG_PARAM_FOREGROUND_BLUR_COLOR to (fgColor.takeIf { SPECIAL_NUMBER != it }.let { it }
+                                                                         ?: gColor(
+                                                                             R.color.colorTransparent)))
             }
     }
     //endregion
 
     @Inject override lateinit var viewModel: SearchResultFragmentViewModel
     @field:[Inject Named("add_playlist_item")] lateinit var addPlaylistItemCase: AddPlaylistItemCase
-    private var res = mutableListOf<BaseEntity>()
+    private var res = mutableListOf<PlaylistItemEntity>()
     private val resInfo by lazy { DataInfo() }
     // Get the arguments from the bundle here.
     private val keyword by lazy { arguments.getString(ARG_PARAM_KEYWORD) }
@@ -115,7 +117,7 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
             if (it.isFirstTimePlayHere) {
                 it.clearList()
                 it.playInObject = this.javaClass.name
-                it.addList(res.map { (it as MusicEntity.Music).url })
+                it.addList(res.map { it.trackUri })
                 it.setCurrentIndex(trackUri)
             }
         }
@@ -126,9 +128,9 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
      * from the viewholder of the loading more event.
      */
     private val updateListInfo = { keyword: String, musics: MutableList<MusicEntity.Music>, canLoadMore: Boolean ->
-        res = (binding?.adapter as SearchHistoryAdapter).
-            refresh(res, ArrayList(res).apply { addAll(musics) }).
-            toMutableList()
+        res = (binding?.adapter as SearchHistoryAdapter)
+            .refresh(res, ArrayList(res).apply { addAll(musics) })
+            .toMutableList()
         // Update the playlist's tracks.
         playerHelper.addList(musics.map { it.url })
         // TODO(jieyi): 9/28/17 Close the loading item or view.

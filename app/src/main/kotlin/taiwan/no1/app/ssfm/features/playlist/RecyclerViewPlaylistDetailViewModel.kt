@@ -25,7 +25,6 @@ import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.MusicPlayerHelper
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playThenToPlaylist
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
-import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
 import java.util.Date
@@ -36,7 +35,7 @@ import java.util.Date
  * @since   11/14/17
  */
 class RecyclerViewPlaylistDetailViewModel(private val addPlaylistItemCase: AddPlaylistItemCase,
-                                          private var item: BaseEntity,
+                                          private var item: PlaylistItemEntity,
                                           private var index: Int) : BaseViewModel() {
     val rank by lazy { ObservableField<String>() }
     val artistName by lazy { ObservableField<String>() }
@@ -76,14 +75,14 @@ class RecyclerViewPlaylistDetailViewModel(private val addPlaylistItemCase: AddPl
     }
     //endregion
 
-    fun setPlaylistItem(item: BaseEntity, index: Int) {
+    fun setPlaylistItem(item: PlaylistItemEntity, index: Int) {
         this.item = item
         this.index = index
         refreshView()
     }
 
     fun trackOnClick(view: View) {
-        (item as PlaylistItemEntity).let {
+        item.let {
             // Copy a same object. There are some variables need to modify only.
             val playlistEntity = it.copy(id = 0,
                                          playlistId = Constant.DATABASE_PLAYLIST_HISTORY_ID.toLong(),
@@ -97,7 +96,7 @@ class RecyclerViewPlaylistDetailViewModel(private val addPlaylistItemCase: AddPl
 
     @Subscribe(tags = [(Tag(VIEWMODEL_TRACK_CLICK))])
     fun changeToStopIcon(uri: String) {
-        if (uri != (item as PlaylistItemEntity).trackUri) isPlaying.set(false)
+        if (uri != item.trackUri) isPlaying.set(false)
     }
 
     @Subscribe(tags = [Tag(VIEWMODEL_TRACK_CLICK)])
@@ -114,7 +113,7 @@ class RecyclerViewPlaylistDetailViewModel(private val addPlaylistItemCase: AddPl
     fun playerStateChanged(state: MusicPlayerState) = isPlaying.changeState(state, index, clickedIndex)
 
     private fun refreshView() {
-        (item as PlaylistItemEntity).let {
+        item.let {
             isPlaying.set(playerHelper.isCurrentUri(it.trackUri) && playerHelper.isPlaying)
             rank.set(index.toString())
             artistName.set(it.artistName)

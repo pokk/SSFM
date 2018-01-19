@@ -15,12 +15,12 @@ kapt {
 }
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.1'
     defaultConfig {
         applicationId "taiwan.no1.app"
         minSdkVersion 21
-        targetSdkVersion 26
+        targetSdkVersion 27
         multiDexEnabled true
         versionCode buildDateTime
         versionName "1.0"
@@ -90,7 +90,7 @@ dependencies {
     // sdk15, sdk19, sdk21, sdk23 are also available
     implementation "org.jetbrains.anko:anko-sdk25-coroutines:$anko_version"
     // Kotlin DataBinding
-    kapt "com.android.databinding:compiler:3.0.1"
+//    kapt "com.android.databinding:compiler:3.0.1"
 
     /* For architecture */
     // Dagger 2

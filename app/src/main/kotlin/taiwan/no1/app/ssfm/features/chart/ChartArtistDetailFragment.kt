@@ -28,6 +28,7 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.restoreAllLastItemPosition
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
+import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
@@ -66,7 +67,7 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
     private val trackInfo by lazy { DataInfo() }
     private val albumInfo by lazy { DataInfo() }
     private var artistRes = mutableListOf<BaseEntity>()
-    private var trackRes = mutableListOf<BaseEntity>()
+    private var trackRes = mutableListOf<PlaylistItemEntity>()
     private var albumRes = mutableListOf<BaseEntity>()
     private var nestViewLastPosition = 0
     // Get the arguments from the bundle here.
@@ -154,7 +155,8 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
                 if (null == holder.binding.avm)
                     holder.binding.avm = RecyclerViewChartArtistHotTrackViewModel(searchMusicCase,
                                                                                   addPlaylistItemCase,
-                                                                                  item, index)
+                                                                                  item,
+                                                                                  index)
                 else
                     holder.binding.avm?.setTrackItem(item, index)
             }

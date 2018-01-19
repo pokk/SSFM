@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.features.chart
 
 import android.os.Bundle
 import com.devrapid.kotlinknifer.recyclerview.WrapContentLinearLayoutManager
+import com.devrapid.kotlinknifer.toInstance
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import org.jetbrains.anko.bundleOf
@@ -9,11 +10,16 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailAlbumBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.HELPER_ADD_TO_PLAYLIST
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.AlbumTrackAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
+import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
+import taiwan.no1.app.ssfm.models.entities.transforms.tToPlaylist
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
 import javax.inject.Inject
@@ -50,7 +56,7 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
     private val tagInfo by lazy { DataInfo() }
     private val trackInfo by lazy { DataInfo() }
     private var tagRes = mutableListOf<BaseEntity>()
-    private var trackRes = mutableListOf<BaseEntity>()
+    private var trackRes = mutableListOf<PlaylistItemEntity>()
     // Get the arguments from the bundle here.
     private val artistAlbumName: String by lazy { this.arguments.getString(ARG_PARAM_ARTIST_ALBUM_NAME) }
     private val artistName: String by lazy { this.arguments.getString(ARG_PARAM_ARTIST_NAME) }
@@ -66,26 +72,24 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
     override fun rendered(savedInstanceState: Bundle?) {
         binding?.apply {
             trackLayoutManager = WrapContentLinearLayoutManager(activity)
-//            trackAdapter = AlbumTrackAdapter(this@ChartAlbumDetailFragment,
-//                                             R.layout.item_music_type_4,
-//                                             trackRes) { holder, item, index ->
-//                if (null == holder.binding.avm)
-//                    holder.binding.avm = RecyclerViewChartAlbumTrackViewModel(fetchMusicCase,
-//                                                                              addPlaylistItemCase,
-//                                                                              item,
-//                                                                              index).apply {
-//                        clickEvent = { (activity as ChartActivity).openBottomSheet(item) }
-//                    }
-//                else
-//                    holder.binding.avm?.setTrackItem(item, index)
-//            }
+            trackAdapter = AlbumTrackAdapter(this@ChartAlbumDetailFragment,
+                                             R.layout.item_music_type_4,
+                                             trackRes) { holder, item, index ->
+                if (null == holder.binding.avm)
+                    holder.binding.avm = RecyclerViewChartAlbumTrackViewModel(fetchMusicCase,
+                                                                              addPlaylistItemCase,
+                                                                              item,
+                                                                              index).apply {
+                        clickEvent = { (activity as ChartActivity).openBottomSheet(item) }
+                    }
+                else
+                    holder.binding.avm?.setTrackItem(item, index)
+            }
         }
         trackInfo.firstFetch { info ->
-            viewModel.fetchDetailInfo(artistAlbumName, artistName) {
-                it.track?.tracks?.let {
-                    //                    (trackRes.toinstance).tToPlaylist().subscribe { list ->
-//                        list.refreshAndChangeList(it, 0, binding?.trackAdapter as AlbumTrackAdapter, info)
-//                    }
+            viewModel.fetchDetailInfo(artistAlbumName, artistName) { album ->
+                album.track?.tracks?.toInstance<TrackEntity.BaseTrack>()?.tToPlaylist()?.subscribe { tracks ->
+                    trackRes.refreshAndChangeList(tracks, 0, binding?.trackAdapter as AlbumTrackAdapter, info)
                 }
             }
         }

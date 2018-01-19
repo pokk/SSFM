@@ -27,6 +27,7 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.restoreAllLastItemPositio
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.decorators.TrackDividerDecorator
+import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
@@ -62,7 +63,7 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
     private val trackInfo by lazy { DataInfo() }
     private var albumRes = mutableListOf<BaseEntity>()
     private var artistRes = mutableListOf<BaseEntity>()
-    private var trackRes = mutableListOf<BaseEntity>()
+    private var trackRes = mutableListOf<PlaylistItemEntity>()
     private var nestViewLastPosition = 0
     // Get the arguments from the bundle here.
     private val musicTag: String by lazy { this.arguments.getString(ARG_PARAM_TAG) }
@@ -134,17 +135,17 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
 
             albumLoadmore = RVCustomScrollCallback(binding?.albumAdapter as TagTopAlbumAdapter,
                                                    albumInfo,
-                                                   albumRes) { page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit ->
+                                                   albumRes) { page, limit, callback: (List<BaseEntity>, Int) -> Unit ->
                 viewModel.fetchHotAlbum(musicTag, page, limit, callback)
             }
             artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as TagTopArtistAdapter,
                                                     artistInfo,
-                                                    artistRes) { page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit ->
+                                                    artistRes) { page, limit, callback: (List<BaseEntity>, Int) -> Unit ->
                 viewModel.fetchHotArtist(musicTag, page, limit, callback)
             }
             trackLoadmore = RVCustomScrollCallback(binding?.trackAdapter as TagTopTrackAdapter,
                                                    trackInfo,
-                                                   trackRes) { page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit ->
+                                                   trackRes) { page, limit, callback: (List<PlaylistItemEntity>, Int) -> Unit ->
                 viewModel.fetchHotTrack(musicTag, page, limit, callback)
             }
 

@@ -74,6 +74,6 @@ class PlaylistActivity : AdvancedActivity<PlaylistViewModel, ActivityPlaylistBin
     }
 
     private fun navigate(fragment: Fragment, needBack: Boolean, sharedElements: HashMap<View, String>) {
-        fragmentManager.addFragment(R.id.fl_container, fragment, needBack, sharedElements)
+        fragmentManager.addFragment(R.id.fl_container, fragment, needBack, null, sharedElements)
     }
 }

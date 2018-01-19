@@ -15,7 +15,6 @@ import taiwan.no1.app.ssfm.misc.extension.changeState
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.MusicPlayerHelper
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
-import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
 
 /**
@@ -23,7 +22,7 @@ import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
  * @author  jieyi
  * @since   9/20/17
  */
-class RecyclerViewRecentlyPlaylistViewModel(private var item: BaseEntity,
+class RecyclerViewRecentlyPlaylistViewModel(private var item: PlaylistItemEntity,
                                             private var index: Int) : BaseViewModel() {
     val trackName by lazy { ObservableField<String>() }
     val trackDuration by lazy { ObservableField<String>() }
@@ -47,7 +46,7 @@ class RecyclerViewRecentlyPlaylistViewModel(private var item: BaseEntity,
     }
     //endregion
 
-    fun setPlaylistItemAndRefresh(item: BaseEntity, index: Int) {
+    fun setPlaylistItemAndRefresh(item: PlaylistItemEntity, index: Int) {
         this.item = item
         this.index = index
         refreshView()
@@ -61,7 +60,7 @@ class RecyclerViewRecentlyPlaylistViewModel(private var item: BaseEntity,
      * @event_to [taiwan.no1.app.ssfm.features.search.SearchViewModel.receiveClickHistoryEvent]
      */
     fun trackOnClick(view: View) {
-        (item as PlaylistItemEntity).let {
+        item.let {
             RxBus.get().post(VIEWMODEL_TRACK_CLICK, index)
             RxBus.get().post(VIEWMODEL_TRACK_CLICK, it.trackUri)
             playerHelper.apply { play(it.trackUri) }
@@ -70,7 +69,7 @@ class RecyclerViewRecentlyPlaylistViewModel(private var item: BaseEntity,
 
     @Subscribe(tags = [Tag(VIEWMODEL_TRACK_CLICK)])
     fun changeToStopIcon(uri: String) {
-        if (uri != (item as PlaylistItemEntity).trackUri) isPlaying.set(false)
+        if (uri != item.trackUri) isPlaying.set(false)
     }
 
     @Subscribe(tags = [Tag(VIEWMODEL_TRACK_CLICK)])
@@ -87,7 +86,7 @@ class RecyclerViewRecentlyPlaylistViewModel(private var item: BaseEntity,
     fun playerStateChanged(state: MusicPlayerState) = isPlaying.changeState(state, index, clickedIndex)
 
     private fun refreshView() {
-        (item as PlaylistItemEntity).let {
+        item.let {
             isPlaying.set(playerHelper.isCurrentUri(it.trackUri) && playerHelper.isPlaying)
             trackName.set(it.trackName)
             artistName.set(it.artistName)
