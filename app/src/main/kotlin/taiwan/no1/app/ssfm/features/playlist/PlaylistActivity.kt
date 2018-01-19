@@ -8,7 +8,6 @@ import android.support.design.widget.BottomSheetBehavior
 import android.support.v4.app.ActivityCompat
 import android.view.View
 import com.devrapid.kotlinknifer.addFragment
-import com.devrapid.kotlinknifer.logw
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
@@ -67,7 +66,6 @@ class PlaylistActivity : AdvancedActivity<PlaylistViewModel, ActivityPlaylistBin
 
     @Subscribe(tags = [Tag(OPEN_SERVICE)])
     fun openService(any: String) {
-        logw("@@@@@@@@@@@@@")
         val intent = Intent().apply {
             type = "image/*"
             action = Intent.ACTION_GET_CONTENT
