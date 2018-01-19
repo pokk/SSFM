@@ -18,8 +18,7 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
-import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
-import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
+import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.v2.RankChartEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import javax.inject.Inject
@@ -53,7 +52,7 @@ class ChartRankChartDetailFragment : AdvancedFragment<ChartRankChartDetailFragme
     @Inject override lateinit var viewModel: ChartRankChartDetailFragmentViewModel
     @field:[Inject Named("add_playlist_item")] lateinit var addPlaylistItemCase: AddPlaylistItemCase
     private val trackInfo by lazy { DataInfo() }
-    private var trackRes = mutableListOf<BaseEntity>()
+    private var trackRes = mutableListOf<PlaylistItemEntity>()
     // Get the arguments from the bundle here.
     private val rankCode by lazy { arguments.getInt(ARG_PARAM_RANK_CODE) }
     private val chartEntity: RankChartEntity? by lazy { arguments.getParcelable<RankChartEntity>(ARG_PARAM_CHART_ENTITY) }
@@ -111,7 +110,7 @@ class ChartRankChartDetailFragment : AdvancedFragment<ChartRankChartDetailFragme
             if (it.isFirstTimePlayHere) {
                 it.clearList()
                 it.playInObject = this.javaClass.name
-                it.addList(trackRes.map { (it as MusicRankEntity.Song).url })
+                it.addList(trackRes.map { it.trackUri })
                 it.setCurrentIndex(trackUri)
             }
         }

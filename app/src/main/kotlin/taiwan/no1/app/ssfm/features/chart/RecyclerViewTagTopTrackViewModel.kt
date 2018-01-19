@@ -93,7 +93,6 @@ class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV
             lifecycleProvider.searchTheTopMusicAndPlayThenToPlaylist(searchMusicCase,
                                                                      addPlaylistItemCase,
                                                                      "$artistName $trackName") {
-                // OPTIMIZE(jieyi): 2018/01/19 We might save back to playlist item here!!!!!!!!!
                 trackUri = it.trackUri
                 RxBus.get().post(VIEWMODEL_TRACK_CLICK, it.trackUri)
             }
@@ -122,7 +121,7 @@ class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV
             isPlaying.set(playerHelper.isCurrentUri(it.trackUri) && playerHelper.isPlaying)
             artistName.set(it.artistName)
             trackName.set(it.trackName)
-//            ranking.set(index.toString())
+            ranking.set(index.toString())
             duration.set(it.duration.toTimeString())
             thumbnail.set(it.coverUrl)
         }

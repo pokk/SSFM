@@ -1,6 +1,8 @@
 package taiwan.no1.app.ssfm.features.chart
 
 import android.databinding.ObservableField
+import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.toInstance
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.extension.execute
@@ -52,8 +54,9 @@ class ChartTagDetailFragmentViewModel(private val tagInfoUsecase: FetchTagInfoCa
         lifecycleProvider.execute(topTracksUsecase, GetTagTopTracksUsecase.RequestValue(name, page, limit)) {
             onNext {
                 it.track.tracks.toInstance<TrackEntity.BaseTrack>()?.tToPlaylist()?.subscribe { tracks ->
+                    logw(tracks)
                     callback(tracks, it.track.attr?.total?.toInt() ?: 0)
-                }
+                } ?: loge("!~!!!!!!!!!!!!!!!!!!!!!!!!!")
             }
         }
     }

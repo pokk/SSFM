@@ -4,7 +4,8 @@ import android.annotation.SuppressLint
 import android.databinding.ObservableField
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.extension.compose
-import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
+import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
+import taiwan.no1.app.ssfm.models.entities.transforms.sToPlaylist
 import taiwan.no1.app.ssfm.models.entities.v2.RankChartEntity
 import taiwan.no1.app.ssfm.models.usecases.AddRankChartUsecase
 import taiwan.no1.app.ssfm.models.usecases.EditRankChartCase
@@ -22,10 +23,10 @@ class ChartRankChartDetailFragmentViewModel(private val getMusicRankUsecase: Fet
     @SuppressLint("CheckResult")
     fun fetchRankChartDetail(code: Int,
                              entity: RankChartEntity?,
-                             callback: (entity: List<MusicRankEntity.Song>) -> Unit) {
+                             callback: (entity: List<PlaylistItemEntity>) -> Unit) {
         lifecycleProvider
             .compose(getMusicRankUsecase, GetMusicRankUsecase.RequestValue(code))
-            .doOnNext { callback(it.data.songs) }
+            .doOnNext { it.data.songs.sToPlaylist().subscribe(callback) }
             .map { it.data.songs.first() }
             .map { song ->
                 entity?.apply {

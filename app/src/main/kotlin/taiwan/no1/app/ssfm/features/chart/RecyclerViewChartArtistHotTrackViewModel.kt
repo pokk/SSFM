@@ -16,7 +16,6 @@ import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.MusicPlayerHelper
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.searchTheTopMusicAndPlayThenToPlaylist
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
-import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
@@ -82,7 +81,7 @@ class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: Sear
 
     @Subscribe(tags = [Tag(VIEWMODEL_TRACK_CLICK)])
     fun changeToStopIcon(uri: String) {
-        if (uri != (item as TrackEntity.TrackWithStreamableString).realUrl) isPlaying.set(false)
+        if (uri != item.trackUri) isPlaying.set(false)
     }
 
     @Subscribe(tags = [Tag(VIEWMODEL_TRACK_CLICK)])
@@ -102,7 +101,7 @@ class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: Sear
         item.also {
             isPlaying.set(playerHelper.isCurrentUri(it.trackUri) && playerHelper.isPlaying)
             trackName.set(it.trackName)
-//            trackNumber.set(attr?.rank ?: 0.toString())
+            trackNumber.set(index.toString())
         }
     }
 }

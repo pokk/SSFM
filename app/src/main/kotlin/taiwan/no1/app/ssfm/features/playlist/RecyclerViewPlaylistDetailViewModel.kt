@@ -15,7 +15,6 @@ import com.hwangjr.rxbus.annotation.Tag
 import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
-import taiwan.no1.app.ssfm.misc.constants.Constant
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_STATE_CHANGED
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
 import taiwan.no1.app.ssfm.misc.extension.changeState
@@ -27,7 +26,6 @@ import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
-import java.util.Date
 
 /**
  *
@@ -84,9 +82,8 @@ class RecyclerViewPlaylistDetailViewModel(private val addPlaylistItemCase: AddPl
     fun trackOnClick(view: View) {
         item.let {
             // Copy a same object. There are some variables need to modify only.
-            val playlistEntity = it.copy(id = 0,
-                                         playlistId = Constant.DATABASE_PLAYLIST_HISTORY_ID.toLong(),
-                                         timestamp = Date())
+            val playlistEntity = it.copy(id = 0)
+
             RxBus.get().post(VIEWMODEL_TRACK_CLICK, index)
             lifecycleProvider.playThenToPlaylist(addPlaylistItemCase, playlistEntity) {
                 RxBus.get().post(VIEWMODEL_TRACK_CLICK, playlistEntity.trackUri)

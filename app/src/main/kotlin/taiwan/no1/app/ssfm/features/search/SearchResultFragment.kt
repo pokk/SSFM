@@ -19,9 +19,7 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.SearchHistoryAdapter
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
-import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
-import java.util.Collections.addAll
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -127,12 +125,12 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
      * An anonymous callback function for updating the recyclerview list and the item lists
      * from the viewholder of the loading more event.
      */
-    private val updateListInfo = { keyword: String, musics: MutableList<MusicEntity.Music>, canLoadMore: Boolean ->
+    private val updateListInfo = { keyword: String, musics: MutableList<PlaylistItemEntity>, canLoadMore: Boolean ->
         res = (binding?.adapter as SearchHistoryAdapter)
             .refresh(res, ArrayList(res).apply { addAll(musics) })
             .toMutableList()
         // Update the playlist's tracks.
-        playerHelper.addList(musics.map { it.url })
+        playerHelper.addList(musics.map { it.trackUri })
         // TODO(jieyi): 9/28/17 Close the loading item or view.
         resInfo.isLoading = false
         // Raise the stopping loading more data flag for avoiding to load again.

@@ -156,9 +156,9 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
                     holder.binding.avm = RecyclerViewChartArtistHotTrackViewModel(searchMusicCase,
                                                                                   addPlaylistItemCase,
                                                                                   item,
-                                                                                  index)
+                                                                                  index + 1)
                 else
-                    holder.binding.avm?.setTrackItem(item, index)
+                    holder.binding.avm?.setTrackItem(item, index + 1)
             }
 
             artistDecoration = HorizontalItemDecorator(20)

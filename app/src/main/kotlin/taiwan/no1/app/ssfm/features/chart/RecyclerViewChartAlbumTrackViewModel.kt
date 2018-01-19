@@ -17,7 +17,6 @@ import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.searchTheTopMusicAndPlayThenToPlaylist
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
-import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
@@ -61,15 +60,12 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
     //endregion
 
     fun trackOnClick(view: View) {
-        (item as TrackEntity.Track).run track@ {
-            val trackName = name.orEmpty()
-            val artistName = artist?.name.orEmpty()
-
+        item.run track@ {
             RxBus.get().post(VIEWMODEL_TRACK_CLICK, index)
             lifecycleProvider.searchTheTopMusicAndPlayThenToPlaylist(searchMusicCase,
                                                                      addPlaylistItemCase,
                                                                      "$artistName $trackName") {
-                realUrl = it.trackUri
+                trackUri = it.trackUri
                 RxBus.get().post(RxBusTag.VIEWMODEL_TRACK_CLICK, it.trackUri)
             }
         }
@@ -101,7 +97,7 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
         item.let {
             isPlaying.set(playerHelper.isCurrentUri(it.trackUri) && playerHelper.isPlaying)
             trackName.set(it.trackName)
-//            trackNumber.set(it.attr?.rank ?: 0.toString())
+            trackNumber.set(index.toString())
             trackDuration.set(it.duration.toTimeString())
         }
     }
