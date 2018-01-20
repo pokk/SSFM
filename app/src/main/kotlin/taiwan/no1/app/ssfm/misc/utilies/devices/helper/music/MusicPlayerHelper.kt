@@ -17,6 +17,7 @@ import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.Normal
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.Random
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.Unknown
 import taiwan.no1.app.ssfm.misc.utilies.devices.manager.PlaylistManager
+import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import weian.cheng.mediaplayerwithexoplayer.ExoPlayerEventListener.PlayerEventListener
 import weian.cheng.mediaplayerwithexoplayer.ExoPlayerWrapper
 import weian.cheng.mediaplayerwithexoplayer.IMusicPlayer
@@ -80,11 +81,11 @@ class MusicPlayerHelper private constructor() {
     val isPlaying get() = Play == state
     val isPause get() = Pause == state
     val isStop get() = Standby == state
-    private var playlistManager: PlaylistManager<String>? = null
+    private var playlistManager: PlaylistManager<PlaylistItemEntity>? = null
     private lateinit var player: IMusicPlayer
     private lateinit var musicUri: String
 
-    fun hold(player: IMusicPlayer, playlistManager: PlaylistManager<String>? = null) {
+    fun hold(player: IMusicPlayer, playlistManager: PlaylistManager<PlaylistItemEntity>? = null) {
         this.player = player
         this.playlistManager = playlistManager
         this.playlistManager.takeIf { null != it }?.let {
@@ -139,22 +140,22 @@ class MusicPlayerHelper private constructor() {
     fun stop() = player.stop()
 
     fun next(callback: stateChangedListener = null) =
-        mode.playerMode.next?.let { trackUri -> play(trackUri, callback) } ?: throw Exception()
+        mode.playerMode.next?.let { entity -> play(entity.trackUri, callback) } ?: throw Exception()
 
     fun previous(callback: stateChangedListener = null) =
-        mode.playerMode.previous?.let { trackUri -> play(trackUri, callback) } ?: throw Exception()
+        mode.playerMode.previous?.let { entity -> play(entity.trackUri, callback) } ?: throw Exception()
 
     fun downloadMusic(uri: String) = player.writeToFile(uri)
 
-    fun addList(list: List<String>) = playlistManager?.append(list) ?: false
+    fun addList(list: List<PlaylistItemEntity>) = playlistManager?.append(list) ?: false
 
-    fun removeTrack(uri: String) = playlistManager?.remove(uri) ?: false
+    fun removeTrack(uri: PlaylistItemEntity) = playlistManager?.remove(uri) ?: false
 
-    fun removeTrack(index: Int) = playlistManager?.remove(index).orEmpty()
+    fun removeTrack(index: Int) = playlistManager?.remove(index)
 
     fun clearList() = playlistManager?.clearPlaylist() ?: Unit
 
-    fun setCurrentIndex(uri: String) = playlistManager?.setIndex(uri) ?: false
+    fun setCurrentIndex(uri: PlaylistItemEntity) = playlistManager?.setIndex(uri) ?: false
 
     private fun setPlayerListener() {
         player.setEventListener(PlayerEventListener {
@@ -188,8 +189,8 @@ class MusicPlayerHelper private constructor() {
     private fun autoPlayNext() =
         if (state == Standby && isPlayedTrack) {
             mode.playerMode.next?.let {
-                play(it)
-                RxBus.get().post(VIEWMODEL_TRACK_CLICK, it)
+                play(it.trackUri)
+                RxBus.get().post(VIEWMODEL_TRACK_CLICK, it.trackUri)
             }
         }
         else

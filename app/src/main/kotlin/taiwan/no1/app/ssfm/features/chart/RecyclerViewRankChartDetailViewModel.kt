@@ -84,7 +84,7 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
         lifecycleProvider.playThenToPlaylist(addPlaylistItemCase, item) {
             RxBus.get().post(VIEWMODEL_TRACK_CLICK, item.trackUri)
         }
-        RxBus.get().post(HELPER_ADD_TO_PLAYLIST, item.trackUri)
+        RxBus.get().post(HELPER_ADD_TO_PLAYLIST, item)
     }
 
     /**
@@ -98,7 +98,9 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
     }
 
     @Subscribe(tags = [Tag(VIEWMODEL_TRACK_CLICK)])
-    fun changeToStopIcon(uri: String) = isPlaying.set(uri == item.trackUri)
+    fun changeToStopIcon(uri: String) {
+        isPlaying.set(uri == item.trackUri)
+    }
 
     @Subscribe(tags = [Tag(VIEWMODEL_TRACK_CLICK)])
     fun notifyClickIndex(index: Integer) {

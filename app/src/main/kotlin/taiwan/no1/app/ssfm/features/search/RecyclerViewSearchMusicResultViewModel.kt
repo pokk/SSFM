@@ -74,7 +74,7 @@ class RecyclerViewSearchMusicResultViewModel(private var res: PlaylistItemEntity
         lifecycleProvider.playThenToPlaylist(addPlaylistItemCase, playlistEntity) {
             RxBus.get().post(VIEWMODEL_TRACK_CLICK, res.trackUri)
         }
-        RxBus.get().post(HELPER_ADD_TO_PLAYLIST, playlistEntity.trackUri)
+        RxBus.get().post(HELPER_ADD_TO_PLAYLIST, playlistEntity)
     }
 
     /**

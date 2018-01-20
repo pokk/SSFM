@@ -12,6 +12,7 @@ import taiwan.no1.app.ssfm.databinding.FragmentRankChartDetailBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.constants.Constant
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.HELPER_ADD_TO_PLAYLIST
+import taiwan.no1.app.ssfm.misc.extension.copy
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RankChartDetailAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
@@ -105,13 +106,13 @@ class ChartRankChartDetailFragment : AdvancedFragment<ChartRankChartDetailFragme
     //endregion
 
     @Subscribe(tags = [Tag(HELPER_ADD_TO_PLAYLIST)])
-    fun addToPlaylist(trackUri: String) {
+    fun addToPlaylist(playlistItem: PlaylistItemEntity) {
         playerHelper.also {
             if (it.isFirstTimePlayHere) {
                 it.clearList()
                 it.playInObject = this.javaClass.name
-                it.addList(trackRes.map { it.trackUri })
-                it.setCurrentIndex(trackUri)
+                it.addList(trackRes.copy())
+                it.setCurrentIndex(playlistItem)
             }
         }
     }

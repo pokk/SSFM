@@ -15,6 +15,7 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailTagBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.HELPER_ADD_TO_PLAYLIST
+import taiwan.no1.app.ssfm.misc.extension.copy
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RVCustomScrollCallback
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.TagTopAlbumAdapter
@@ -177,14 +178,13 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
     //endregion
 
     @Subscribe(tags = [(Tag(HELPER_ADD_TO_PLAYLIST))])
-    fun addToPlaylist(trackUri: String) {
+    fun addToPlaylist(playlistItem: PlaylistItemEntity) {
         playerHelper.also {
             if (it.isFirstTimePlayHere) {
                 it.clearList()
                 it.playInObject = this.javaClass.name
-                // TODO(jieyi): 2018/01/17 We can't get the track url so we need to search once then get the real url.
-//                it.addList(trackRes.map { (it as MusicRankEntity.Song).url })
-                it.setCurrentIndex(trackUri)
+                it.addList(trackRes.copy())
+                it.setCurrentIndex(playlistItem)
             }
         }
     }

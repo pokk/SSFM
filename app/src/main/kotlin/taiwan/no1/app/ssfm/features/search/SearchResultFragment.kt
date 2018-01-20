@@ -12,6 +12,7 @@ import taiwan.no1.app.ssfm.databinding.FragmentSearchResultBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.constants.Constant.SPECIAL_NUMBER
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.HELPER_ADD_TO_PLAYLIST
+import taiwan.no1.app.ssfm.misc.extension.copy
 import taiwan.no1.app.ssfm.misc.extension.gColor
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback
@@ -109,14 +110,14 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
     override fun provideInflateView(): Int = R.layout.fragment_search_result
     //endregion
 
-    @Subscribe(tags = [(Tag(HELPER_ADD_TO_PLAYLIST))])
-    fun addToPlaylist(trackUri: String) {
+    @Subscribe(tags = [Tag(HELPER_ADD_TO_PLAYLIST)])
+    fun addToPlaylist(playlistItem: PlaylistItemEntity) {
         playerHelper.also {
             if (it.isFirstTimePlayHere) {
                 it.clearList()
                 it.playInObject = this.javaClass.name
-                it.addList(res.map { it.trackUri })
-                it.setCurrentIndex(trackUri)
+                it.addList(res.copy())
+                it.setCurrentIndex(playlistItem)
             }
         }
     }
@@ -130,7 +131,7 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
             .refresh(res, ArrayList(res).apply { addAll(musics) })
             .toMutableList()
         // Update the playlist's tracks.
-        playerHelper.addList(musics.map { it.trackUri })
+        playerHelper.addList(musics.copy())
         // TODO(jieyi): 9/28/17 Close the loading item or view.
         resInfo.isLoading = false
         // Raise the stopping loading more data flag for avoiding to load again.
