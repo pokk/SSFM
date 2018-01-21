@@ -79,6 +79,12 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
         refreshView()
     }
 
+    /**
+     * @param view
+     *
+     * @event_to [taiwan.no1.app.ssfm.features.chart.ChartAlbumDetailFragment.addToPlaylist]
+     * @event_to [taiwan.no1.app.ssfm.features.chart.ChartRankChartDetailFragment.addToPlaylist]
+     */
     fun trackOnClick(view: View) {
         RxBus.get().post(VIEWMODEL_TRACK_CLICK, index)
         lifecycleProvider.playThenToPlaylist(addPlaylistItemCase, item) {

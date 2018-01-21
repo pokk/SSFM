@@ -9,6 +9,7 @@ import com.hwangjr.rxbus.annotation.Tag
 import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.HELPER_ADD_TO_PLAYLIST
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_LONG_CLICK
 import taiwan.no1.app.ssfm.misc.extension.changeState
@@ -56,6 +57,11 @@ class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: Sear
         refreshView()
     }
 
+    /**
+     * @param view
+     *
+     * @event_to [taiwan.no1.app.ssfm.features.chart.ChartArtistDetailFragment.addToPlaylist]
+     */
     fun trackOnClick(view: View) {
         item.run track@ {
             // Change the viewmodel state and view icon.
@@ -68,6 +74,7 @@ class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: Sear
                 RxBus.get().post(VIEWMODEL_TRACK_CLICK, it.trackUri)
             }
         }
+        RxBus.get().post(HELPER_ADD_TO_PLAYLIST, item)
     }
 
     /**

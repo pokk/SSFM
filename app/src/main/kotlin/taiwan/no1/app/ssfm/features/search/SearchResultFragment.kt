@@ -110,6 +110,11 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
     override fun provideInflateView(): Int = R.layout.fragment_search_result
     //endregion
 
+    /**
+     * @param playlistItem
+     *
+     * @event_from [taiwan.no1.app.ssfm.features.search.RecyclerViewSearchMusicResultViewModel.playOrStopMusicClick]
+     */
     @Subscribe(tags = [Tag(HELPER_ADD_TO_PLAYLIST)])
     fun addToPlaylist(playlistItem: PlaylistItemEntity) {
         playerHelper.also {

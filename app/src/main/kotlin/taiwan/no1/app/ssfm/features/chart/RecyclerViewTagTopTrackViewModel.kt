@@ -15,6 +15,7 @@ import com.hwangjr.rxbus.annotation.Tag
 import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.HELPER_ADD_TO_PLAYLIST
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_LONG_CLICK
 import taiwan.no1.app.ssfm.misc.extension.changeState
@@ -84,6 +85,11 @@ class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV
         clickedIndex = index.toInt()
     }
 
+    /**
+     * @param view
+     *
+     * @event_to [taiwan.no1.app.ssfm.features.chart.ChartTagDetailFragment.addToPlaylist]
+     */
     fun itemOnClick(view: View) {
         item.run track@ {
             RxBus.get().post(VIEWMODEL_TRACK_CLICK, index)
@@ -95,6 +101,7 @@ class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV
                 RxBus.get().post(VIEWMODEL_TRACK_CLICK, it.trackUri)
             }
         }
+        RxBus.get().post(HELPER_ADD_TO_PLAYLIST, item)
     }
 
     /**

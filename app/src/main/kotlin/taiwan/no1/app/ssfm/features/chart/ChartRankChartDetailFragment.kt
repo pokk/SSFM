@@ -105,6 +105,11 @@ class ChartRankChartDetailFragment : AdvancedFragment<ChartRankChartDetailFragme
     override fun provideInflateView(): Int = R.layout.fragment_rank_chart_detail
     //endregion
 
+    /**
+     * @param playlistItem
+     *
+     * @event_from [taiwan.no1.app.ssfm.features.chart.RecyclerViewRankChartDetailViewModel.trackOnClick]
+     */
     @Subscribe(tags = [Tag(HELPER_ADD_TO_PLAYLIST)])
     fun addToPlaylist(playlistItem: PlaylistItemEntity) {
         playerHelper.also {

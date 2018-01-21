@@ -67,6 +67,11 @@ class RecyclerViewSearchMusicResultViewModel(private var res: PlaylistItemEntity
     //endregion
 
     //region Action from View
+    /**
+     * @param view
+     *
+     * @event_to [taiwan.no1.app.ssfm.features.search.SearchResultFragment.addToPlaylist]
+     */
     fun playOrStopMusicClick(view: View) {
         val playlistEntity = res.copy(playlistId = DATABASE_PLAYLIST_HISTORY_ID.toLong())
 

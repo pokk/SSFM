@@ -184,7 +184,12 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
     override fun provideInflateView(): Int = R.layout.fragment_detail_artist
     //endregion
 
-    @Subscribe(tags = [(Tag(HELPER_ADD_TO_PLAYLIST))])
+    /**
+     * @param playlistItem
+     *
+     * @event_to [taiwan.no1.app.ssfm.features.chart.RecyclerViewChartArtistHotTrackViewModel.trackOnClick]
+     */
+    @Subscribe(tags = [Tag(HELPER_ADD_TO_PLAYLIST)])
     fun addToPlaylist(playlistItem: PlaylistItemEntity) {
         playerHelper.also {
             if (it.isFirstTimePlayHere) {
