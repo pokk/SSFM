@@ -2,13 +2,18 @@ package taiwan.no1.app.ssfm.misc.utilies.devices.helper.music
 
 import com.devrapid.kotlinknifer.WeakRef
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.logi
 import com.devrapid.kotlinknifer.logw
 import com.hwangjr.rxbus.RxBus
+import io.reactivex.CompletableOnSubscribe
+import io.reactivex.disposables.Disposable
+import io.reactivex.internal.operators.completable.CompletableCreate
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_BUFFER_PRECENT_CHANGED
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_CURRENT_TIME
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_DURATION_CHANGED
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_STATE_CHANGED
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
+import taiwan.no1.app.ssfm.misc.extension.copy
 import taiwan.no1.app.ssfm.misc.extension.gContext
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.EPlayerMode.PLAYLIST_STATE_NORMAL
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.LoopAll
@@ -17,18 +22,24 @@ import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.Normal
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.Random
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.Unknown
 import taiwan.no1.app.ssfm.misc.utilies.devices.manager.PlaylistManager
+import taiwan.no1.app.ssfm.models.data.local.LocalDataStore
+import taiwan.no1.app.ssfm.models.data.remote.RemoteDataStore
+import taiwan.no1.app.ssfm.models.data.repositories.DataRepository
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
+import taiwan.no1.app.ssfm.models.usecases.v2.GetMusicUriUsecase
 import weian.cheng.mediaplayerwithexoplayer.ExoPlayerEventListener.PlayerEventListener
 import weian.cheng.mediaplayerwithexoplayer.ExoPlayerWrapper
 import weian.cheng.mediaplayerwithexoplayer.IMusicPlayer
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState.Pause
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState.Play
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState.Standby
+import javax.inject.Singleton
 
 /**
  * @author  jieyi
  * @since   2017/12/02
  */
+@Singleton
 class MusicPlayerHelper private constructor() {
     private object Holder {
         val INSTANCE = MusicPlayerHelper()
@@ -81,6 +92,8 @@ class MusicPlayerHelper private constructor() {
     val isPlaying get() = Play == state
     val isPause get() = Pause == state
     val isStop get() = Standby == state
+    // FIXME(jieyi): 2018/01/22 ********* We need to get the object from dagger 2. *********
+    private val searchUsecase = GetMusicUriUsecase(DataRepository(LocalDataStore(), RemoteDataStore(gContext())))
     private var playlistManager: PlaylistManager<PlaylistItemEntity>? = null
     private lateinit var player: IMusicPlayer
     private lateinit var musicUri: String
@@ -156,6 +169,43 @@ class MusicPlayerHelper private constructor() {
     fun clearList() = playlistManager?.clearPlaylist() ?: Unit
 
     fun setCurrentIndex(uri: PlaylistItemEntity) = playlistManager?.setIndex(uri) ?: false
+
+    fun addToPlaylist(playlistItem: PlaylistItemEntity, newSource: List<PlaylistItemEntity>) {
+        playerHelper.also { helper ->
+            if (helper.isFirstTimePlayHere) {
+                helper.clearList()
+                helper.playInObject = this.javaClass.name
+                helper.addList(newSource.copy().apply {
+                    // For fetching the missing music uri's items.
+                    forEach {
+                        // Avoiding that there is a music uri, and fetching it again.
+                        if (playlistItem.trackUri.isNotBlank()) return@forEach
+                        helper.fetchMusicUri(it)
+                    }
+                })
+                helper.setCurrentIndex(playlistItem)
+            }
+        }
+    }
+
+    /**
+     * Get the music uri for the item without the music uri. Also, the item *variables* will be modified.
+     *
+     * @param playlistItem
+     */
+    fun fetchMusicUri(playlistItem: PlaylistItemEntity): Disposable {
+        if (playlistItem.trackUri.isNotBlank()) return CompletableCreate(CompletableOnSubscribe { }).subscribe()
+
+        return searchUsecase.execute(GetMusicUriUsecase.RequestValue(playlistItem)).subscribe {
+            logi(playlistItem)
+            it.data.items.first().apply {
+                playlistItem.trackUri = url
+                playlistItem.lyricUrl = lyricURL
+                playlistItem.duration = trackDuration
+            }
+            logw(playlistItem)
+        }
+    }
 
     private fun setPlayerListener() {
         player.setEventListener(PlayerEventListener {

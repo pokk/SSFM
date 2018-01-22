@@ -7,6 +7,7 @@ import com.cleveroad.fanlayoutmanager.FanLayoutManager
 import com.cleveroad.fanlayoutmanager.FanLayoutManagerSettings
 import com.devrapid.kotlinknifer.recyclerview.WrapContentLinearLayoutManager
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.HorizontalItemDecorator
+import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import org.jetbrains.anko.act
@@ -18,7 +19,6 @@ import taiwan.no1.app.ssfm.features.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME
 import taiwan.no1.app.ssfm.misc.constants.Constant.VIEWMODEL_PARAMS_ARTIST_NAME
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.HELPER_ADD_TO_PLAYLIST
-import taiwan.no1.app.ssfm.misc.extension.copy
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.ArtistTopAlbumAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.ArtistTopTrackAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
@@ -76,6 +76,11 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
     private val artistName: String by lazy { this.arguments.getString(ARG_PARAM_ARTIST_NAME) }
 
     //region Fragment lifecycle
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        RxBus.get().register(this)
+    }
+
     override fun onResume() {
         super.onResume()
         binding?.apply {
@@ -100,6 +105,11 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
                (binding?.trackAdapter as BaseDataBindingAdapter<*, *>),
                (binding?.albumAdapter as BaseDataBindingAdapter<*, *>)).forEach { it.detachAll() }
         super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        RxBus.get().unregister(this)
+        super.onDestroy()
     }
     //endregion
 
@@ -191,13 +201,6 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
      */
     @Subscribe(tags = [Tag(HELPER_ADD_TO_PLAYLIST)])
     fun addToPlaylist(playlistItem: PlaylistItemEntity) {
-        playerHelper.also {
-            if (it.isFirstTimePlayHere) {
-                it.clearList()
-                it.playInObject = this.javaClass.name
-                it.addList(trackRes.copy())
-                it.setCurrentIndex(playlistItem)
-            }
-        }
+        playerHelper.addToPlaylist(playlistItem, trackRes)
     }
 }

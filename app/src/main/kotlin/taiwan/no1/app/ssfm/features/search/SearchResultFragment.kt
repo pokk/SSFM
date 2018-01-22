@@ -3,6 +3,7 @@ package taiwan.no1.app.ssfm.features.search
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import com.devrapid.kotlinknifer.recyclerview.WrapContentLinearLayoutManager
+import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import org.jetbrains.anko.act
@@ -64,6 +65,11 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
     private val fgFogColor by lazy { arguments.getInt(ARG_PARAM_FOREGROUND_BLUR_COLOR) }
 
     //region Fragment lifecycle
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        RxBus.get().register(this)
+    }
+
     override fun onResume() {
         super.onResume()
         // Due to this object is kept by `SearchActivity`, this list need to be cleared every time.
@@ -75,6 +81,11 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
     override fun onDestroyView() {
         (binding?.adapter as BaseDataBindingAdapter<*, *>).detachAll()
         super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        RxBus.get().unregister(this)
+        super.onDestroy()
     }
     //endregion
 

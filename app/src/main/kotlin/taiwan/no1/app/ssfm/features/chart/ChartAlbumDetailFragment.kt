@@ -10,7 +10,6 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailAlbumBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.HELPER_ADD_TO_PLAYLIST
-import taiwan.no1.app.ssfm.misc.extension.copy
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.AlbumTrackAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
@@ -106,13 +105,6 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
      */
     @Subscribe(tags = [Tag(HELPER_ADD_TO_PLAYLIST)])
     fun addToPlaylist(playlistItem: PlaylistItemEntity) {
-        playerHelper.also {
-            if (it.isFirstTimePlayHere) {
-                it.clearList()
-                it.playInObject = this.javaClass.name
-                it.addList(trackRes.copy())
-                it.setCurrentIndex(playlistItem)
-            }
-        }
+        playerHelper.addToPlaylist(playlistItem, trackRes)
     }
 }

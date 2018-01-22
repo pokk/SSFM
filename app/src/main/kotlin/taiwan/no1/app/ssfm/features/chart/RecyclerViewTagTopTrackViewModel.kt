@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.view.View
 import com.devrapid.kotlinknifer.glideListener
+import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.palette
 import com.devrapid.kotlinknifer.toTimeString
 import com.hwangjr.rxbus.RxBus
@@ -101,6 +102,7 @@ class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV
                 RxBus.get().post(VIEWMODEL_TRACK_CLICK, it.trackUri)
             }
         }
+        logw(item)
         RxBus.get().post(HELPER_ADD_TO_PLAYLIST, item)
     }
 

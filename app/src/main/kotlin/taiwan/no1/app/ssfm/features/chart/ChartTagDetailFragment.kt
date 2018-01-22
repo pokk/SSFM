@@ -7,6 +7,7 @@ import android.widget.LinearLayout
 import com.devrapid.kotlinknifer.recyclerview.WrapContentLinearLayoutManager
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.HorizontalItemDecorator
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
+import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import org.jetbrains.anko.act
@@ -15,7 +16,6 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailTagBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.HELPER_ADD_TO_PLAYLIST
-import taiwan.no1.app.ssfm.misc.extension.copy
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RVCustomScrollCallback
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.TagTopAlbumAdapter
@@ -70,6 +70,11 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
     private val musicTag: String by lazy { this.arguments.getString(ARG_PARAM_TAG) }
 
     //region Fragment lifecycle
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        RxBus.get().register(this)
+    }
+
     override fun onResume() {
         super.onResume()
         binding?.apply {
@@ -96,6 +101,11 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
                (binding?.artistAdapter as BaseDataBindingAdapter<*, *>),
                (binding?.trackAdapter as BaseDataBindingAdapter<*, *>)).forEach { it.detachAll() }
         super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        RxBus.get().unregister(this)
+        super.onDestroy()
     }
     //endregion
 
@@ -184,13 +194,6 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
      */
     @Subscribe(tags = [Tag(HELPER_ADD_TO_PLAYLIST)])
     fun addToPlaylist(playlistItem: PlaylistItemEntity) {
-        playerHelper.also {
-            if (it.isFirstTimePlayHere) {
-                it.clearList()
-                it.playInObject = this.javaClass.name
-                it.addList(trackRes.copy())
-                it.setCurrentIndex(playlistItem)
-            }
-        }
+        playerHelper.addToPlaylist(playlistItem, trackRes)
     }
 }

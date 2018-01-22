@@ -28,7 +28,7 @@ import taiwan.no1.app.ssfm.models.IExpandVisitable
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 
-/**
+    /**
  * @author  jieyi
  * @since   10/13/17
  */
