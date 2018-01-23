@@ -34,7 +34,7 @@ class RecyclerViewSearchHistoryViewModel(private var keywordEntity: BaseEntity,
     }
 
     fun deleteHistoryClick(view: View) {
-        deleteHistoriesUsecase.execute(RemoveKeywordHistoriesUsecase.RequestValue(keyword.get()),
+        deleteHistoriesUsecase.execute(RemoveKeywordHistoriesUsecase.RequestValue(keyword.get().orEmpty()),
                                        observer = observer { deleteItemListener((keywordEntity as KeywordEntity), it) })
     }
 

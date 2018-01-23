@@ -1,9 +1,14 @@
 package taiwan.no1.app.ssfm.features.chart
 
 import android.databinding.ObservableField
+import com.devrapid.kotlinknifer.toInstance
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.extension.execute
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
+import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
+import taiwan.no1.app.ssfm.models.entities.transforms.tToPlaylist
 import taiwan.no1.app.ssfm.models.usecases.FetchTagInfoCase
 import taiwan.no1.app.ssfm.models.usecases.FetchTopAlbumOfTagCase
 import taiwan.no1.app.ssfm.models.usecases.FetchTopArtistOfTagCase
@@ -41,9 +46,16 @@ class ChartTagDetailFragmentViewModel(private val tagInfoUsecase: FetchTagInfoCa
         }
     }
 
-    fun fetchHotTrack(name: String, page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit) {
+    fun fetchHotTrack(name: String,
+                      page: Int,
+                      limit: Int,
+                      callback: (List<PlaylistItemEntity>, total: Int) -> Unit) {
         lifecycleProvider.execute(topTracksUsecase, GetTagTopTracksUsecase.RequestValue(name, page, limit)) {
-            onNext { callback(it.track.tracks, it.track.attr?.total?.toInt() ?: 0) }
+            onNext {
+                it.track.tracks.toInstance<TrackEntity.BaseTrack>()?.tToPlaylist()?.subscribe { tracks ->
+                    callback(playerHelper.attatchMusicUri(tracks), it.track.attr?.total?.toInt() ?: 0)
+                }
+            }
         }
     }
 }

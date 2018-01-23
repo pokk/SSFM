@@ -2,12 +2,15 @@ package taiwan.no1.app.ssfm.features.chart
 
 import android.databinding.ObservableField
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.toInstance
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.ImageSizes.EXTRA_LARGE
 import taiwan.no1.app.ssfm.misc.extension.execute
+import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.AlbumEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.ArtistEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
+import taiwan.no1.app.ssfm.models.entities.transforms.tToPlaylist
 import taiwan.no1.app.ssfm.models.usecases.FetchArtistInfoCase
 import taiwan.no1.app.ssfm.models.usecases.FetchTopAlbumOfArtistCase
 import taiwan.no1.app.ssfm.models.usecases.FetchTopTrackOfArtistCase
@@ -39,9 +42,13 @@ class ChartArtistDetailFragmentViewModel(private val artistsInfoUsecase: FetchAr
         }
     }
 
-    fun fetchHotTracks(name: String, callback: (entity: List<TrackEntity.TrackWithStreamableString>) -> Unit) {
+    fun fetchHotTracks(name: String, callback: (entity: List<PlaylistItemEntity>) -> Unit) {
         lifecycleProvider.execute(artistTopTracksUsecase, GetArtistTopTracksUsecase.RequestValue(name)) {
-            onNext { callback(it.toptracks.tracks) }
+            onNext {
+                it.toptracks.tracks.toInstance<TrackEntity.BaseTrack>()?.tToPlaylist()?.subscribe { tracks ->
+                    callback(tracks)
+                }
+            }
         }
     }
 

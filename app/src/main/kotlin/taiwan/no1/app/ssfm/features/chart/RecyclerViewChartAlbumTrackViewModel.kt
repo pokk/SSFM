@@ -10,15 +10,13 @@ import com.hwangjr.rxbus.annotation.Tag
 import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
-import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
 import taiwan.no1.app.ssfm.misc.extension.changeState
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.MusicPlayerHelper
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playMusic
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
-import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.searchTheTopMusicAndPlayThenToPlaylist
+import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
-import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
-import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
 
 /**
@@ -26,9 +24,8 @@ import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
  * @author  jieyi
  * @since   11/1/17
  */
-class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMusicV2Case,
-                                           private val addPlaylistItemCase: AddPlaylistItemCase,
-                                           private var item: BaseEntity,
+class RecyclerViewChartAlbumTrackViewModel(private val addPlaylistItemCase: AddPlaylistItemCase,
+                                           private var item: PlaylistItemEntity,
                                            private var index: Int) : BaseViewModel() {
     val trackName by lazy { ObservableField<String>() }
     val trackNumber by lazy { ObservableField<String>() }
@@ -41,7 +38,7 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
         refreshView()
     }
 
-    fun setTrackItem(item: BaseEntity, index: Int) {
+    fun setTrackItem(item: PlaylistItemEntity, index: Int) {
         this.item = item
         this.index = index
         refreshView()
@@ -59,19 +56,13 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
     }
     //endregion
 
+    /**
+     * @param view
+     *
+     * @event_to [taiwan.no1.app.ssfm.features.chart.ChartAlbumDetailFragment.addToPlaylist]
+     */
     fun trackOnClick(view: View) {
-        (item as TrackEntity.Track).run track@ {
-            val trackName = name.orEmpty()
-            val artistName = artist?.name.orEmpty()
-
-            RxBus.get().post(VIEWMODEL_TRACK_CLICK, index)
-            lifecycleProvider.searchTheTopMusicAndPlayThenToPlaylist(searchMusicCase,
-                                                                     addPlaylistItemCase,
-                                                                     "$artistName $trackName") {
-                realUrl = it.trackUri
-                RxBus.get().post(RxBusTag.VIEWMODEL_TRACK_CLICK, it.trackUri)
-            }
-        }
+        lifecycleProvider.playMusic(addPlaylistItemCase, item, index)
     }
 
     fun trackOptionalOnClick(view: View) {
@@ -79,9 +70,7 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
     }
 
     @Subscribe(tags = [(Tag(RxBusTag.VIEWMODEL_TRACK_CLICK))])
-    fun changeToStopIcon(uri: String) {
-        if (uri != (item as TrackEntity.Track).realUrl) isPlaying.set(false)
-    }
+    fun changeToStopIcon(uri: String) = isPlaying.set(uri == item.trackUri)
 
     @Subscribe(tags = [Tag(RxBusTag.VIEWMODEL_TRACK_CLICK)])
     fun notifyClickIndex(index: Integer) {
@@ -97,11 +86,11 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
     fun playerStateChanged(state: MusicPlayerState) = isPlaying.changeState(state, index, clickedIndex)
 
     private fun refreshView() {
-        (item as TrackEntity.Track).let {
-            isPlaying.set(playerHelper.isCurrentUri(it.realUrl.orEmpty()) && playerHelper.isPlaying)
-            trackName.set(it.name)
-            trackNumber.set(it.attr?.rank ?: 0.toString())
-            trackDuration.set(it.duration?.toInt()?.toTimeString())
+        item.let {
+            isPlaying.set(playerHelper.isCurrentUri(it.trackUri) && playerHelper.isPlaying)
+            trackName.set(it.trackName)
+            trackNumber.set(index.toString())
+            trackDuration.set(it.duration.toTimeString())
         }
     }
 }

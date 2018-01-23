@@ -3,6 +3,7 @@ package taiwan.no1.app.ssfm.features.search
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import com.devrapid.kotlinknifer.recyclerview.WrapContentLinearLayoutManager
+import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import org.jetbrains.anko.act
@@ -12,14 +13,14 @@ import taiwan.no1.app.ssfm.databinding.FragmentSearchResultBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.constants.Constant.SPECIAL_NUMBER
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.HELPER_ADD_TO_PLAYLIST
+import taiwan.no1.app.ssfm.misc.extension.copy
 import taiwan.no1.app.ssfm.misc.extension.gColor
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.SearchHistoryAdapter
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
-import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
-import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
+import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import javax.inject.Inject
 import javax.inject.Named
@@ -47,15 +48,16 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
             SearchResultFragment().apply {
                 arguments = bundleOf(ARG_PARAM_KEYWORD to keyword,
                                      ARG_PARAM_BACKGROUND_IMAGE_URL to imageUrl,
-                                     ARG_PARAM_FOREGROUND_BLUR_COLOR to (fgColor.takeIf { SPECIAL_NUMBER != it }.let { it } ?: gColor(
-                                         R.color.colorTransparent)))
+                                     ARG_PARAM_FOREGROUND_BLUR_COLOR to (fgColor.takeIf { SPECIAL_NUMBER != it }.let { it }
+                                                                         ?: gColor(
+                                                                             R.color.colorTransparent)))
             }
     }
     //endregion
 
     @Inject override lateinit var viewModel: SearchResultFragmentViewModel
     @field:[Inject Named("add_playlist_item")] lateinit var addPlaylistItemCase: AddPlaylistItemCase
-    private var res = mutableListOf<BaseEntity>()
+    private var res = mutableListOf<PlaylistItemEntity>()
     private val resInfo by lazy { DataInfo() }
     // Get the arguments from the bundle here.
     private val keyword by lazy { arguments.getString(ARG_PARAM_KEYWORD) }
@@ -63,6 +65,11 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
     private val fgFogColor by lazy { arguments.getInt(ARG_PARAM_FOREGROUND_BLUR_COLOR) }
 
     //region Fragment lifecycle
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        RxBus.get().register(this)
+    }
+
     override fun onResume() {
         super.onResume()
         // Due to this object is kept by `SearchActivity`, this list need to be cleared every time.
@@ -74,6 +81,11 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
     override fun onDestroyView() {
         (binding?.adapter as BaseDataBindingAdapter<*, *>).detachAll()
         super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        RxBus.get().unregister(this)
+        super.onDestroy()
     }
     //endregion
 
@@ -109,14 +121,19 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
     override fun provideInflateView(): Int = R.layout.fragment_search_result
     //endregion
 
-    @Subscribe(tags = [(Tag(HELPER_ADD_TO_PLAYLIST))])
-    fun addToPlaylist(trackUri: String) {
+    /**
+     * @param playlistItem
+     *
+     * @event_from [taiwan.no1.app.ssfm.features.search.RecyclerViewSearchMusicResultViewModel.playOrStopMusicClick]
+     */
+    @Subscribe(tags = [Tag(HELPER_ADD_TO_PLAYLIST)])
+    fun addToPlaylist(playlistItem: PlaylistItemEntity) {
         playerHelper.also {
             if (it.isFirstTimePlayHere) {
                 it.clearList()
                 it.playInObject = this.javaClass.name
-                it.addList(res.map { (it as MusicEntity.Music).url })
-                it.setCurrentIndex(trackUri)
+                it.addList(res.copy())
+                it.setCurrentIndex(playlistItem)
             }
         }
     }
@@ -125,12 +142,12 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
      * An anonymous callback function for updating the recyclerview list and the item lists
      * from the viewholder of the loading more event.
      */
-    private val updateListInfo = { keyword: String, musics: MutableList<MusicEntity.Music>, canLoadMore: Boolean ->
-        res = (binding?.adapter as SearchHistoryAdapter).
-            refresh(res, ArrayList(res).apply { addAll(musics) }).
-            toMutableList()
+    private val updateListInfo = { keyword: String, musics: MutableList<PlaylistItemEntity>, canLoadMore: Boolean ->
+        res = (binding?.adapter as SearchHistoryAdapter)
+            .refresh(res, ArrayList(res).apply { addAll(musics) })
+            .toMutableList()
         // Update the playlist's tracks.
-        playerHelper.addList(musics.map { it.url })
+        playerHelper.addList(musics.copy())
         // TODO(jieyi): 9/28/17 Close the loading item or view.
         resInfo.isLoading = false
         // Raise the stopping loading more data flag for avoiding to load again.

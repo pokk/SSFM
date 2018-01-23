@@ -7,6 +7,7 @@ import android.widget.LinearLayout
 import com.devrapid.kotlinknifer.recyclerview.WrapContentLinearLayoutManager
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.HorizontalItemDecorator
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
+import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import org.jetbrains.anko.act
@@ -27,9 +28,9 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.restoreAllLastItemPositio
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.decorators.TrackDividerDecorator
+import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
-import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -55,19 +56,23 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
     //endregion
 
     @Inject override lateinit var viewModel: ChartTagDetailFragmentViewModel
-    @Inject lateinit var searchMusicCase: SearchMusicV2Case
     @field:[Inject Named("add_playlist_item")] lateinit var addPlaylistItemCase: AddPlaylistItemCase
     private val albumInfo by lazy { DataInfo() }
     private val artistInfo by lazy { DataInfo() }
     private val trackInfo by lazy { DataInfo() }
     private var albumRes = mutableListOf<BaseEntity>()
     private var artistRes = mutableListOf<BaseEntity>()
-    private var trackRes = mutableListOf<BaseEntity>()
+    private var trackRes = mutableListOf<PlaylistItemEntity>()
     private var nestViewLastPosition = 0
     // Get the arguments from the bundle here.
     private val musicTag: String by lazy { this.arguments.getString(ARG_PARAM_TAG) }
 
     //region Fragment lifecycle
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        RxBus.get().register(this)
+    }
+
     override fun onResume() {
         super.onResume()
         binding?.apply {
@@ -94,6 +99,11 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
                (binding?.artistAdapter as BaseDataBindingAdapter<*, *>),
                (binding?.trackAdapter as BaseDataBindingAdapter<*, *>)).forEach { it.detachAll() }
         super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        RxBus.get().unregister(this)
+        super.onDestroy()
     }
     //endregion
 
@@ -124,27 +134,24 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
                                               R.layout.item_music_type_7,
                                               trackRes) { holder, item, index ->
                 if (null == holder.binding.avm)
-                    holder.binding.avm = RecyclerViewTagTopTrackViewModel(searchMusicCase,
-                                                                          addPlaylistItemCase,
-                                                                          item,
-                                                                          index + 1)
+                    holder.binding.avm = RecyclerViewTagTopTrackViewModel(addPlaylistItemCase, item, index + 1)
                 else
                     holder.binding.avm?.setTrackItem(item, index + 1)
             }
 
             albumLoadmore = RVCustomScrollCallback(binding?.albumAdapter as TagTopAlbumAdapter,
                                                    albumInfo,
-                                                   albumRes) { page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit ->
+                                                   albumRes) { page, limit, callback: (List<BaseEntity>, Int) -> Unit ->
                 viewModel.fetchHotAlbum(musicTag, page, limit, callback)
             }
             artistLoadmore = RVCustomScrollCallback(binding?.artistAdapter as TagTopArtistAdapter,
                                                     artistInfo,
-                                                    artistRes) { page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit ->
+                                                    artistRes) { page, limit, callback: (List<BaseEntity>, Int) -> Unit ->
                 viewModel.fetchHotArtist(musicTag, page, limit, callback)
             }
             trackLoadmore = RVCustomScrollCallback(binding?.trackAdapter as TagTopTrackAdapter,
                                                    trackInfo,
-                                                   trackRes) { page: Int, limit: Int, callback: (List<BaseEntity>, total: Int) -> Unit ->
+                                                   trackRes) { page, limit, callback: (List<PlaylistItemEntity>, Int) -> Unit ->
                 viewModel.fetchHotTrack(musicTag, page, limit, callback)
             }
 
@@ -167,7 +174,10 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
         }
         trackInfo.firstFetch {
             viewModel.fetchHotTrack(musicTag, it.page, it.limit) { resList, total ->
-                trackRes.refreshAndChangeList(resList, total, binding?.trackAdapter as TagTopTrackAdapter, it)
+                trackRes.refreshAndChangeList(playerHelper.attatchMusicUri(resList),
+                                              total,
+                                              binding?.trackAdapter as TagTopTrackAdapter,
+                                              it)
             }
         }
     }
@@ -175,16 +185,13 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
     override fun provideInflateView(): Int = R.layout.fragment_detail_tag
     //endregion
 
-    @Subscribe(tags = [(Tag(HELPER_ADD_TO_PLAYLIST))])
-    fun addToPlaylist(trackUri: String) {
-        playerHelper.also {
-            if (it.isFirstTimePlayHere) {
-                it.clearList()
-                it.playInObject = this.javaClass.name
-                // TODO(jieyi): 2018/01/17 We can't get the track url so we need to search once then get the real url.
-//                it.addList(trackRes.map { (it as MusicRankEntity.Song).url })
-                it.setCurrentIndex(trackUri)
-            }
-        }
+    /**
+     * @param playlistItem
+     *
+     * @event_from [taiwan.no1.app.ssfm.features.chart.RecyclerViewTagTopTrackViewModel.itemOnClick]
+     */
+    @Subscribe(tags = [Tag(HELPER_ADD_TO_PLAYLIST)])
+    fun addToPlaylist(playlistItem: PlaylistItemEntity) {
+        playerHelper.addToPlaylist(playlistItem, trackRes)
     }
 }

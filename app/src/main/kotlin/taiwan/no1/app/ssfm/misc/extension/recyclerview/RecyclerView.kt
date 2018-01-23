@@ -25,9 +25,10 @@ import taiwan.no1.app.ssfm.databinding.ItemTagType1Binding
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseMultipleTypeDataBindingAdapter
 import taiwan.no1.app.ssfm.models.IExpandVisitable
+import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 
-/**
+    /**
  * @author  jieyi
  * @since   10/13/17
  */
@@ -38,17 +39,17 @@ typealias TrackAdapter = BaseDataBindingAdapter<ItemMusicType1Binding, BaseEntit
 typealias TagAdapter = BaseDataBindingAdapter<ItemTagType1Binding, BaseEntity>
 typealias HistoryAdapter = BaseDataBindingAdapter<ItemSearchHistoryType1Binding, BaseEntity>
 typealias SimilarArtistAdapter = BaseDataBindingAdapter<ItemArtistType2Binding, BaseEntity>
-typealias ArtistTopTrackAdapter = BaseDataBindingAdapter<ItemMusicType2Binding, BaseEntity>
+typealias ArtistTopTrackAdapter = BaseDataBindingAdapter<ItemMusicType2Binding, PlaylistItemEntity>
 typealias ArtistTopAlbumAdapter = BaseDataBindingAdapter<ItemAlbumType1Binding, BaseEntity>
-typealias AlbumTrackAdapter = BaseDataBindingAdapter<ItemMusicType4Binding, BaseEntity>
+typealias AlbumTrackAdapter = BaseDataBindingAdapter<ItemMusicType4Binding, PlaylistItemEntity>
 typealias TagTopAlbumAdapter = BaseDataBindingAdapter<ItemAlbumType2Binding, BaseEntity>
 typealias TagTopArtistAdapter = BaseDataBindingAdapter<ItemArtistType3Binding, BaseEntity>
-typealias TagTopTrackAdapter = BaseDataBindingAdapter<ItemMusicType7Binding, BaseEntity>
-typealias RankChartDetailAdapter = BaseDataBindingAdapter<ItemMusicType6Binding, BaseEntity>
-typealias PlaylistItemAdapter = BaseDataBindingAdapter<ItemMusicType5Binding, BaseEntity>
+typealias TagTopTrackAdapter = BaseDataBindingAdapter<ItemMusicType7Binding, PlaylistItemEntity>
+typealias RankChartDetailAdapter = BaseDataBindingAdapter<ItemMusicType6Binding, PlaylistItemEntity>
+typealias PlaylistItemAdapter = BaseDataBindingAdapter<ItemMusicType5Binding, PlaylistItemEntity>
 typealias PlaylistAdapter = BaseDataBindingAdapter<ItemPlaylistType1Binding, BaseEntity>
-typealias RecentlyAdapter = BaseDataBindingAdapter<ItemMusicType3Binding, BaseEntity>
-typealias SearchHistoryAdapter = BaseDataBindingAdapter<ItemSearchMusicType1Binding, BaseEntity>
+typealias RecentlyAdapter = BaseDataBindingAdapter<ItemMusicType3Binding, PlaylistItemEntity>
+typealias SearchHistoryAdapter = BaseDataBindingAdapter<ItemSearchMusicType1Binding, PlaylistItemEntity>
 typealias MultipleTypeAdapter = BaseMultipleTypeDataBindingAdapter<ViewDataBinding, IExpandVisitable>
 typealias DFPlaylistAdapter = BaseDataBindingAdapter<ItemPlaylistType2Binding, BaseEntity>
 

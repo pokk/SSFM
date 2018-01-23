@@ -4,21 +4,24 @@ import android.os.Bundle
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.transition.TransitionInflater
 import com.devrapid.kotlinknifer.recyclerview.WrapContentLinearLayoutManager
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.annotation.Tag
 import org.jetbrains.anko.bundleOf
 import taiwan.no1.app.ssfm.App
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentPlaylistDetailBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedFragment
+import taiwan.no1.app.ssfm.misc.constants.RxBusTag.HELPER_ADD_TO_PLAYLIST
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.PlaylistItemAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.ItemTouchViewmodelCallback
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.SimpleItemTouchHelperCallback
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
-import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import javax.inject.Inject
 
@@ -55,7 +58,7 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
     @Inject override lateinit var viewModel: PlaylistDetailFragmentViewModel
     @Inject lateinit var addPlaylistItemCase: AddPlaylistItemCase
     private val playlistItemInfo by lazy { DataInfo() }
-    private var playlistItemRes = mutableListOf<BaseEntity>()
+    private var playlistItemRes = mutableListOf<PlaylistItemEntity>()
     // Get the arguments from the bundle here.
     private val playlist by lazy { arguments.getParcelable<PlaylistEntity>(ARG_PARAM_PLAYLIST_OBJECT) }
     private val transition by lazy { arguments.getStringArrayList(ARG_PARAM_PLAYLIST_TRANSITION) }
@@ -102,9 +105,19 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
     override fun provideInflateView(): Int = R.layout.fragment_playlist_detail
     //endregion
 
+    /**
+     * @param playlistItem
+     *
+     * @event_from [taiwan.no1.app.ssfm.features.playlist.RecyclerViewPlaylistDetailViewModel.trackOnClick]
+     */
+    @Subscribe(tags = [(Tag(HELPER_ADD_TO_PLAYLIST))])
+    fun addToPlaylist(playlistItem: PlaylistItemEntity) {
+        playerHelper.addToPlaylist(playlistItem, playlistItemRes)
+    }
+
     private val vmItemTouchCallback = object : ItemTouchViewmodelCallback {
         override fun onItemDismiss(position: Int, direction: Int) {
-            (playlistItemRes[position] as PlaylistItemEntity).let { deletedItem ->
+            playlistItemRes[position].let { deletedItem ->
                 viewModel.deleteItem(deletedItem) { if (it) playlistItemRes.remove(deletedItem) }
             }
         }

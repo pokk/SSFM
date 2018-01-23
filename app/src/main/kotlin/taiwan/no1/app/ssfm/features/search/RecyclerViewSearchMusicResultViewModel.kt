@@ -13,15 +13,12 @@ import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.Constant.DATABASE_PLAYLIST_HISTORY_ID
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
-import taiwan.no1.app.ssfm.misc.constants.RxBusTag.HELPER_ADD_TO_PLAYLIST
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
 import taiwan.no1.app.ssfm.misc.extension.changeState
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.MusicPlayerHelper
-import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playThenToPlaylist
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playMusic
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
-import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
-import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
 
@@ -29,7 +26,7 @@ import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
  * @author  jieyi
  * @since   9/20/17
  */
-class RecyclerViewSearchMusicResultViewModel(private var res: BaseEntity,
+class RecyclerViewSearchMusicResultViewModel(private var res: PlaylistItemEntity,
                                              private val addPlaylistItemCase: AddPlaylistItemCase,
                                              private val context: Context,
                                              private var index: Int) : BaseViewModel() {
@@ -50,7 +47,7 @@ class RecyclerViewSearchMusicResultViewModel(private var res: BaseEntity,
         refreshView()
     }
 
-    fun setSearchResItem(item: BaseEntity, index: Int) {
+    fun setSearchResItem(item: PlaylistItemEntity, index: Int) {
         this.res = item
         this.index = index
         refreshView()
@@ -69,21 +66,15 @@ class RecyclerViewSearchMusicResultViewModel(private var res: BaseEntity,
     //endregion
 
     //region Action from View
+    /**
+     * @param view
+     *
+     * @event_to [taiwan.no1.app.ssfm.features.search.SearchResultFragment.addToPlaylist]
+     */
     fun playOrStopMusicClick(view: View) {
-        val playlistEntity = (res as MusicEntity.Music).run {
-            PlaylistItemEntity(playlistId = DATABASE_PLAYLIST_HISTORY_ID.toLong(),
-                               trackUri = url,
-                               trackName = title,
-                               artistName = artist,
-                               coverUrl = coverURL,
-                               lyricUrl = lyricURL,
-                               duration = length)
-        }
-        RxBus.get().post(VIEWMODEL_TRACK_CLICK, index)
-        lifecycleProvider.playThenToPlaylist(addPlaylistItemCase, playlistEntity) {
-            RxBus.get().post(VIEWMODEL_TRACK_CLICK, (res as MusicEntity.Music).url)
-        }
-        RxBus.get().post(HELPER_ADD_TO_PLAYLIST, playlistEntity.trackUri)
+        val playlistEntity = res.copy(playlistId = DATABASE_PLAYLIST_HISTORY_ID.toLong())
+
+        lifecycleProvider.playMusic(addPlaylistItemCase, playlistEntity, index)
     }
 
     /**
@@ -94,9 +85,7 @@ class RecyclerViewSearchMusicResultViewModel(private var res: BaseEntity,
     fun optionClick(view: View) = RxBus.get().post(RxBusTag.VIEWMODEL_TRACK_LONG_CLICK, res)
 
     @Subscribe(tags = [(Tag(VIEWMODEL_TRACK_CLICK))])
-    fun changeToStopIcon(uri: String) {
-        if (uri != (res as MusicEntity.Music).url) isPlaying.set(false)
-    }
+    fun changeToStopIcon(uri: String) = isPlaying.set(uri == res.trackUri)
 
     @Subscribe(tags = [Tag(VIEWMODEL_TRACK_CLICK)])
     fun notifyClickIndex(index: Integer) {
@@ -113,11 +102,11 @@ class RecyclerViewSearchMusicResultViewModel(private var res: BaseEntity,
     //endregion
 
     private fun refreshView() {
-        (res as MusicEntity.Music).let {
-            isPlaying.set(playerHelper.isCurrentUri(it.url) && playerHelper.isPlaying)
-            songName.set(it.title)
-            singerName.set(it.artist)
-            coverUrl.set(it.coverURL)
+        res.let {
+            isPlaying.set(playerHelper.isCurrentUri(it.trackUri) && playerHelper.isPlaying)
+            songName.set(it.trackName)
+            singerName.set(it.artistName)
+            coverUrl.set(it.coverUrl)
         }
     }
 }

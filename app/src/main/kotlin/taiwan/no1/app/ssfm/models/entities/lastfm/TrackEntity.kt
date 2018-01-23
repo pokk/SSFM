@@ -28,5 +28,23 @@ data class TrackEntity(var track: Track?) {
                          var topTag: Tags? = null,
                          var url: String? = null,
                          var realUrl: String? = null,
-                         var wiki: Wiki? = null) : BaseEntity
+                         var wiki: Wiki? = null) : BaseEntity {
+        override fun toString() =
+            """
+album: $album
+attr: $attr
+artist: $artist
+duration: $duration
+images: $images
+listeners: $listeners
+match: $match
+mbid: $mbid
+name: $name
+playcount: $playcount
+topTag: $topTag
+url: $url
+realUrl: $realUrl
+wiki: $wiki
+"""
+    }
 }

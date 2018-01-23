@@ -30,9 +30,9 @@ abstract class BaseUsecase<T, R : RequestValues>(protected val repository: IData
     var parameters: R? = null
     // TODO(jieyi): 8/14/17 This two functions could be a interface.
     /** Obtain a thread for while [Observable] is doing their tasks.*/
-    open protected var obtainSubscribeScheduler = Schedulers.io()
+    protected open var obtainSubscribeScheduler = Schedulers.io()
     /** Obtain a thread for while [Observable] is doing their tasks.*/
-    open protected var obtainObserverScheduler: Scheduler = AndroidSchedulers.mainThread()
+    protected open var obtainObserverScheduler: Scheduler = AndroidSchedulers.mainThread()
 
     /**
      * Executes the current use case.
@@ -107,7 +107,7 @@ abstract class BaseUsecase<T, R : RequestValues>(protected val repository: IData
      *
      * @return an [Observer] for chaining on working threads.
      */
-    abstract protected fun fetchUsecase(): Observable<T>
+    protected abstract fun fetchUsecase(): Observable<T>
 
     /**
      * Builds an [Observable] which will be used when executing the current [BaseUsecase].

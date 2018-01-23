@@ -63,7 +63,7 @@ class PlaylistDetailFragmentViewModel(private val editPlaylistUsecase: EditPlayl
     fun editOnClick(view: View) {
         if (isEditMode.get()) {
             playlistItem?.let {
-                it.name = playlistName.get()
+                it.name = playlistName.get().orEmpty()
                 lifecycleProvider.execute(editPlaylistUsecase, AddPlaylistUsecase.RequestValue(it)) {
                     onNext { logw(it) }
                     onError { loge(it) }

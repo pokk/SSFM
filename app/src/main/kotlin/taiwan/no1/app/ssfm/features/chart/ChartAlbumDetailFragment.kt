@@ -2,6 +2,7 @@ package taiwan.no1.app.ssfm.features.chart
 
 import android.os.Bundle
 import com.devrapid.kotlinknifer.recyclerview.WrapContentLinearLayoutManager
+import com.devrapid.kotlinknifer.toInstance
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import org.jetbrains.anko.bundleOf
@@ -15,9 +16,11 @@ import taiwan.no1.app.ssfm.misc.extension.recyclerview.firstFetch
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.refreshAndChangeList
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
+import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
+import taiwan.no1.app.ssfm.models.entities.transforms.tToPlaylist
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
-import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -47,12 +50,11 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
     //endregion
 
     @Inject override lateinit var viewModel: ChartAlbumDetailFragmentViewModel
-    @Inject lateinit var fetchMusicCase: SearchMusicV2Case
     @field:[Inject Named("add_playlist_item")] lateinit var addPlaylistItemCase: AddPlaylistItemCase
     private val tagInfo by lazy { DataInfo() }
     private val trackInfo by lazy { DataInfo() }
     private var tagRes = mutableListOf<BaseEntity>()
-    private var trackRes = mutableListOf<BaseEntity>()
+    private var trackRes = mutableListOf<PlaylistItemEntity>()
     // Get the arguments from the bundle here.
     private val artistAlbumName: String by lazy { this.arguments.getString(ARG_PARAM_ARTIST_ALBUM_NAME) }
     private val artistName: String by lazy { this.arguments.getString(ARG_PARAM_ARTIST_NAME) }
@@ -72,10 +74,7 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
                                              R.layout.item_music_type_4,
                                              trackRes) { holder, item, index ->
                 if (null == holder.binding.avm)
-                    holder.binding.avm = RecyclerViewChartAlbumTrackViewModel(fetchMusicCase,
-                                                                              addPlaylistItemCase,
-                                                                              item,
-                                                                              index).apply {
+                    holder.binding.avm = RecyclerViewChartAlbumTrackViewModel(addPlaylistItemCase, item, index).apply {
                         clickEvent = { (activity as ChartActivity).openBottomSheet(item) }
                     }
                 else
@@ -83,9 +82,12 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
             }
         }
         trackInfo.firstFetch { info ->
-            viewModel.fetchDetailInfo(artistAlbumName, artistName) {
-                it.track?.tracks?.let {
-                    trackRes.refreshAndChangeList(it, 0, binding?.trackAdapter as AlbumTrackAdapter, info)
+            viewModel.fetchDetailInfo(artistAlbumName, artistName) { album ->
+                album.track?.tracks?.toInstance<TrackEntity.BaseTrack>()?.tToPlaylist()?.subscribe { tracks ->
+                    trackRes.refreshAndChangeList(playerHelper.attatchMusicUri(tracks),
+                                                  0,
+                                                  binding?.trackAdapter as AlbumTrackAdapter,
+                                                  info)
                 }
             }
         }
@@ -94,16 +96,13 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
     override fun provideInflateView(): Int = R.layout.fragment_detail_album
     //endregion
 
-    @Subscribe(tags = [(Tag(HELPER_ADD_TO_PLAYLIST))])
-    fun addToPlaylist(trackUri: String) {
-        playerHelper.also {
-            if (it.isFirstTimePlayHere) {
-                it.clearList()
-                it.playInObject = this.javaClass.name
-                // TODO(jieyi): 2018/01/17 We can't get the track url so we need to search once then get the real url.
-//                it.addList(trackRes.map { (it as TrackEntity.Track).realUrl.orEmpty() })
-                it.setCurrentIndex(trackUri)
-            }
-        }
+    /**
+     * @param playlistItem
+     *
+     * @event_from [taiwan.no1.app.ssfm.features.chart.RecyclerViewChartAlbumTrackViewModel.trackOnClick]
+     */
+    @Subscribe(tags = [Tag(HELPER_ADD_TO_PLAYLIST)])
+    fun addToPlaylist(playlistItem: PlaylistItemEntity) {
+        playerHelper.addToPlaylist(playlistItem, trackRes)
     }
 }

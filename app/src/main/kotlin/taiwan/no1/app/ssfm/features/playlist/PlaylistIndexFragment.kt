@@ -15,6 +15,7 @@ import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.ItemTouchViewmodelCallback
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.SimpleItemTouchHelperCallback
 import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAdapter
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
+import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import javax.inject.Inject
 
@@ -40,7 +41,7 @@ class PlaylistIndexFragment : AdvancedFragment<PlaylistIndexFragmentViewModel, F
     private val playlistInfo by lazy { DataInfo() }
     private val recentlyPlayedInfo by lazy { DataInfo() }
     private var playlistRes = mutableListOf<BaseEntity>()
-    private var recentlyPlayedRes = mutableListOf<BaseEntity>()
+    private var recentlyPlayedRes = mutableListOf<PlaylistItemEntity>()
 
     //region Fragment lifecycle
     override fun onResume() {

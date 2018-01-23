@@ -42,7 +42,8 @@ class RecyclerViewDialogPlaylistViewModel(private var entity: BaseEntity,
                                        artistName = musicEntity.artist,
                                        coverUrl = musicEntity.coverURL,
                                        lyricUrl = musicEntity.lyricURL,
-                                       duration = musicEntity.length)
+                                       duration = musicEntity.length,
+                                       isOffline = true)
                 }
                 is MusicRankEntity.Song -> {
                     PlaylistItemEntity(playlistId = playlistId,
@@ -51,7 +52,8 @@ class RecyclerViewDialogPlaylistViewModel(private var entity: BaseEntity,
                                        artistName = musicEntity.artist,
                                        coverUrl = musicEntity.coverURL,
                                        lyricUrl = musicEntity.lyricURL,
-                                       duration = musicEntity.length)
+                                       duration = musicEntity.length,
+                                       isOffline = true)
                 }
                 is TrackEntity.BaseTrack -> {
                     PlaylistItemEntity(playlistId = playlistId,

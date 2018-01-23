@@ -14,18 +14,15 @@ import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
-import taiwan.no1.app.ssfm.misc.constants.ImageSizes.LARGE
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_LONG_CLICK
 import taiwan.no1.app.ssfm.misc.extension.changeState
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.MusicPlayerHelper
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playMusic
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
-import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.searchTheTopMusicAndPlayThenToPlaylist
-import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
-import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
+import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
-import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
 
 /**
@@ -33,9 +30,8 @@ import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
  * @author  jieyi
  * @since   10/26/17
  */
-class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV2Case,
-                                       private val addPlaylistItemCase: AddPlaylistItemCase,
-                                       private var item: BaseEntity,
+class RecyclerViewTagTopTrackViewModel(private val addPlaylistItemCase: AddPlaylistItemCase,
+                                       private var item: PlaylistItemEntity,
                                        private var index: Int) : BaseViewModel() {
     val artistName by lazy { ObservableField<String>() }
     val thumbnail by lazy { ObservableField<String>() }
@@ -60,7 +56,7 @@ class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV
         refreshView()
     }
 
-    fun setTrackItem(item: BaseEntity, index: Int) {
+    fun setTrackItem(item: PlaylistItemEntity, index: Int) {
         this.item = item
         this.index = index
         refreshView()
@@ -78,30 +74,21 @@ class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV
     }
     //endregion
 
-    @Subscribe(tags = [(Tag(VIEWMODEL_TRACK_CLICK))])
-    fun changeToStopIcon(uri: String) {
-        if (uri != (item as TrackEntity.Track).realUrl.orEmpty()) isPlaying.set(false)
-    }
+    @Subscribe(tags = [Tag(VIEWMODEL_TRACK_CLICK)])
+    fun changeToStopIcon(uri: String) = isPlaying.set(uri == item.trackUri)
 
     @Subscribe(tags = [Tag(VIEWMODEL_TRACK_CLICK)])
     fun notifyClickIndex(index: Integer) {
         clickedIndex = index.toInt()
     }
 
+    /**
+     * @param view
+     *
+     * @event_to [taiwan.no1.app.ssfm.features.chart.ChartTagDetailFragment.addToPlaylist]
+     */
     fun itemOnClick(view: View) {
-        (item as TrackEntity.Track).run track@ {
-            val trackName = name.orEmpty()
-            val artistName = artist?.name.orEmpty()
-
-            RxBus.get().post(VIEWMODEL_TRACK_CLICK, index)
-            // Search the music first.
-            lifecycleProvider.searchTheTopMusicAndPlayThenToPlaylist(searchMusicCase,
-                                                                     addPlaylistItemCase,
-                                                                     "$artistName $trackName") {
-                realUrl = it.trackUri
-                RxBus.get().post(VIEWMODEL_TRACK_CLICK, it.trackUri)
-            }
-        }
+        lifecycleProvider.playMusic(addPlaylistItemCase, item, index)
     }
 
     /**
@@ -122,13 +109,13 @@ class RecyclerViewTagTopTrackViewModel(private val searchMusicCase: SearchMusicV
     fun playerStateChanged(state: MusicPlayerState) = isPlaying.changeState(state, index, clickedIndex)
 
     private fun refreshView() {
-        (item as TrackEntity.Track).let {
-            isPlaying.set(playerHelper.isCurrentUri(it.realUrl.orEmpty()) && playerHelper.isPlaying)
-            artistName.set(it.artist?.name)
-            trackName.set(it.name)
+        item.let {
+            isPlaying.set(playerHelper.isCurrentUri(it.trackUri) && playerHelper.isPlaying)
+            artistName.set(it.artistName)
+            trackName.set(it.trackName)
             ranking.set(index.toString())
-            duration.set(it.duration?.toInt()?.toTimeString())
-            thumbnail.set(it.images?.get(LARGE)?.text.orEmpty())
+            duration.set(it.duration.toTimeString())
+            thumbnail.set(it.coverUrl)
         }
     }
 }
