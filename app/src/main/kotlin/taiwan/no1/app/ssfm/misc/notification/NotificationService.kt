@@ -1,5 +1,6 @@
 package taiwan.no1.app.ssfm.misc.notification
 
+import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
@@ -8,6 +9,7 @@ import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
 import android.support.v4.app.NotificationCompat
+import android.widget.RemoteViews
 import taiwan.no1.app.ssfm.R
 
 /**
@@ -18,107 +20,42 @@ import taiwan.no1.app.ssfm.R
 
 class NotificationService : Service() {
 
+    private lateinit var notificationManager: NotificationManager
+    private lateinit var notification: Notification
+    private val binder = NotificationBinder()
+
     companion object {
-        private const val ACTION_PLAY = "ACTION_PLAY"
-        private const val ACTION_PAUSE = "ACTION_PAUSE"
-        private const val ACTION_NEXT = "ACTION_NEXT"
+        private const val NOTIFY_ID = 0
     }
 
-    private var actionPlay: NotificationCompat.Action
-    private var actionPause: NotificationCompat.Action
-    private var actionNext: NotificationCompat.Action
+    fun initNotification() {
 
-    private val ICON_MUSIC_PLAYER = R.drawable.ic_music_player
-    private val ICON_PLAY = R.drawable.ic_play_arrow
-    private val ICON_PAUSE = R.drawable.ic_pause
-    private val ICON_NEXT = R.drawable.ic_skip_next
+        val bigViews = RemoteViews(packageName, R.layout.big_notification)
+        bigViews.setImageViewResource(R.id.iv_big_album, R.drawable.test_album)
+        bigViews.setImageViewResource(R.id.btn_big_next, R.drawable.ic_skip_next)
+        bigViews.setImageViewResource(R.id.btn_big_play, R.drawable.ic_play_arrow)
+        bigViews.setTextViewText(R.id.tv_big_music_name, "this is big music name")
+        bigViews.setTextViewText(R.id.tv_big_singer, "this is big singer name")
+        bigViews.setTextViewText(R.id.tv_big_now_time, "00000:00000")
+        bigViews.setTextViewText(R.id.tv_big_duration, "00000:00000")
 
-    private val appName = "SSFM"
-    private val notifyID = 0
-    private val binder: IBinder = NotificationBinder()
-    private var manager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-    private var notificationBuilder: NotificationCompat.Builder
-    private var buttonEventListener: ButtonEvent? = null
+        notification = NotificationCompat.Builder(this).
+                setSmallIcon(R.drawable.ic_music_player).
+                setOngoing(true).
+                build()
 
-    init {
-
-        // action play
-        val intentPlay = Intent(this, NotificationService::class.java)
-        intentPlay.action = ACTION_PLAY
-        val pendingIntentPlay = PendingIntent.getService(this, 0, intentPlay, 0)
-        actionPlay = NotificationCompat.Action(ICON_PLAY, "Play", pendingIntentPlay)
-
-        // action pause
-        val intentPause = Intent(this, NotificationService::class.java)
-        intentPause.action = ACTION_PAUSE
-        val pendingIntentPause = PendingIntent.getService(this, 0, intentPause, 0)
-        actionPause = NotificationCompat.Action(ICON_PAUSE, "Pause", pendingIntentPause)
-
-        // action forward
-        val intentForward = Intent(this, NotificationService::class.java)
-        intentForward.action = ACTION_NEXT
-        val pendingIntentForward = PendingIntent.getService(this, 0, intentForward, 0)
-        actionNext = NotificationCompat.Action(ICON_NEXT, "Next", pendingIntentForward)
-
-        notificationBuilder = NotificationCompat.Builder(applicationContext).
-            setSmallIcon(ICON_MUSIC_PLAYER).
-            setContentTitle(appName).
-            addAction(actionPause).
-            addAction(actionNext)
-
-        manager.notify(notifyID, notificationBuilder.build())
-    }
-
-    private fun clickMusicPlayerPlay() {
-        notificationBuilder.mActions.clear()
-        notificationBuilder.addAction(actionPause)
-        notificationBuilder.addAction(actionNext)
-        notificationBuilder.setContentText(buttonEventListener?.onPlay())
-        manager.notify(notifyID, notificationBuilder.build())
-    }
-
-    private fun clickMusicPlayerPause() {
-        notificationBuilder.mActions.clear()
-        notificationBuilder.addAction(actionPlay)
-        notificationBuilder.addAction(actionNext)
-        manager.notify(notifyID, notificationBuilder.build())
-    }
-
-    private fun clickMusicPlayerNext() {
-        notificationBuilder.mActions.clear()
-        notificationBuilder.addAction(actionPause)
-        notificationBuilder.addAction(actionNext)
-        notificationBuilder.setContentText(buttonEventListener?.onNext())
-        manager.notify(notifyID, notificationBuilder.build())
-    }
-
-    fun play() {
-        clickMusicPlayerPlay()
-    }
-
-    fun pause() {
-        clickMusicPlayerPause()
+        notification.bigContentView = bigViews
+        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.notify(NOTIFY_ID, notification)
     }
 
     fun removeNotification() {
-        manager.cancel(notifyID)
-    }
-
-    fun setButtonEventListener(buttonEventListener: ButtonEvent) {
-        this.buttonEventListener = buttonEventListener
+        notificationManager.cancel(NOTIFY_ID)
     }
 
     override fun onBind(intent: Intent?): IBinder = binder
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        when {
-            intent?.action.equals(ACTION_PLAY) -> clickMusicPlayerPlay()
-            intent?.action.equals(ACTION_PAUSE) -> clickMusicPlayerPause()
-            intent?.action.equals(ACTION_NEXT) -> clickMusicPlayerNext()
-        }
-
-        return super.onStartCommand(intent, flags, startId)
-    }
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int) = super.onStartCommand(intent, flags, startId)
 
     inner class NotificationBinder : Binder() {
         fun getService() = this@NotificationService
