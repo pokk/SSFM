@@ -16,14 +16,13 @@ import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
-import taiwan.no1.app.ssfm.misc.constants.RxBusTag.HELPER_ADD_TO_PLAYLIST
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_LONG_CLICK
 import taiwan.no1.app.ssfm.misc.extension.changeState
 import taiwan.no1.app.ssfm.misc.extension.gAlphaIntColor
 import taiwan.no1.app.ssfm.misc.extension.gColor
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.MusicPlayerHelper
-import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playThenToPlaylist
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playMusic
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
@@ -82,15 +81,10 @@ class RecyclerViewRankChartDetailViewModel(private val addPlaylistItemCase: AddP
     /**
      * @param view
      *
-     * @event_to [taiwan.no1.app.ssfm.features.chart.ChartAlbumDetailFragment.addToPlaylist]
      * @event_to [taiwan.no1.app.ssfm.features.chart.ChartRankChartDetailFragment.addToPlaylist]
      */
     fun trackOnClick(view: View) {
-        RxBus.get().post(VIEWMODEL_TRACK_CLICK, index)
-        lifecycleProvider.playThenToPlaylist(addPlaylistItemCase, item) {
-            RxBus.get().post(VIEWMODEL_TRACK_CLICK, item.trackUri)
-        }
-        RxBus.get().post(HELPER_ADD_TO_PLAYLIST, item)
+        lifecycleProvider.playMusic(addPlaylistItemCase, item, index)
     }
 
     /**

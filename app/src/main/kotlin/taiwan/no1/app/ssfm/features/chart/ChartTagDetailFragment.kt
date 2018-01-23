@@ -31,7 +31,6 @@ import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.decorators.TrackDividerDec
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
-import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -57,7 +56,6 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
     //endregion
 
     @Inject override lateinit var viewModel: ChartTagDetailFragmentViewModel
-    @Inject lateinit var searchMusicCase: SearchMusicV2Case
     @field:[Inject Named("add_playlist_item")] lateinit var addPlaylistItemCase: AddPlaylistItemCase
     private val albumInfo by lazy { DataInfo() }
     private val artistInfo by lazy { DataInfo() }
@@ -136,10 +134,7 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
                                               R.layout.item_music_type_7,
                                               trackRes) { holder, item, index ->
                 if (null == holder.binding.avm)
-                    holder.binding.avm = RecyclerViewTagTopTrackViewModel(searchMusicCase,
-                                                                          addPlaylistItemCase,
-                                                                          item,
-                                                                          index + 1)
+                    holder.binding.avm = RecyclerViewTagTopTrackViewModel(addPlaylistItemCase, item, index + 1)
                 else
                     holder.binding.avm?.setTrackItem(item, index + 1)
             }
@@ -179,7 +174,10 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
         }
         trackInfo.firstFetch {
             viewModel.fetchHotTrack(musicTag, it.page, it.limit) { resList, total ->
-                trackRes.refreshAndChangeList(resList, total, binding?.trackAdapter as TagTopTrackAdapter, it)
+                trackRes.refreshAndChangeList(playerHelper.attatchMusicUri(resList),
+                                              total,
+                                              binding?.trackAdapter as TagTopTrackAdapter,
+                                              it)
             }
         }
     }

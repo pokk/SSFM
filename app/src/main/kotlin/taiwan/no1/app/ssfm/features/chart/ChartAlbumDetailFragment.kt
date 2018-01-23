@@ -21,7 +21,6 @@ import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
 import taiwan.no1.app.ssfm.models.entities.transforms.tToPlaylist
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
-import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -51,7 +50,6 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
     //endregion
 
     @Inject override lateinit var viewModel: ChartAlbumDetailFragmentViewModel
-    @Inject lateinit var fetchMusicCase: SearchMusicV2Case
     @field:[Inject Named("add_playlist_item")] lateinit var addPlaylistItemCase: AddPlaylistItemCase
     private val tagInfo by lazy { DataInfo() }
     private val trackInfo by lazy { DataInfo() }
@@ -76,10 +74,7 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
                                              R.layout.item_music_type_4,
                                              trackRes) { holder, item, index ->
                 if (null == holder.binding.avm)
-                    holder.binding.avm = RecyclerViewChartAlbumTrackViewModel(fetchMusicCase,
-                                                                              addPlaylistItemCase,
-                                                                              item,
-                                                                              index).apply {
+                    holder.binding.avm = RecyclerViewChartAlbumTrackViewModel(addPlaylistItemCase, item, index).apply {
                         clickEvent = { (activity as ChartActivity).openBottomSheet(item) }
                     }
                 else
@@ -89,7 +84,10 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
         trackInfo.firstFetch { info ->
             viewModel.fetchDetailInfo(artistAlbumName, artistName) { album ->
                 album.track?.tracks?.toInstance<TrackEntity.BaseTrack>()?.tToPlaylist()?.subscribe { tracks ->
-                    trackRes.refreshAndChangeList(tracks, 0, binding?.trackAdapter as AlbumTrackAdapter, info)
+                    trackRes.refreshAndChangeList(playerHelper.attatchMusicUri(tracks),
+                                                  0,
+                                                  binding?.trackAdapter as AlbumTrackAdapter,
+                                                  info)
                 }
             }
         }
@@ -101,7 +99,7 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
     /**
      * @param playlistItem
      *
-     * @event_from [taiwan.no1.app.ssfm.features.chart.RecyclerViewRankChartDetailViewModel.trackOnClick]
+     * @event_from [taiwan.no1.app.ssfm.features.chart.RecyclerViewChartAlbumTrackViewModel.trackOnClick]
      */
     @Subscribe(tags = [Tag(HELPER_ADD_TO_PLAYLIST)])
     fun addToPlaylist(playlistItem: PlaylistItemEntity) {

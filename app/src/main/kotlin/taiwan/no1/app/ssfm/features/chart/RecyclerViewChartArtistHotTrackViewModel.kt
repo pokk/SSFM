@@ -9,16 +9,14 @@ import com.hwangjr.rxbus.annotation.Tag
 import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
-import taiwan.no1.app.ssfm.misc.constants.RxBusTag.HELPER_ADD_TO_PLAYLIST
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_LONG_CLICK
 import taiwan.no1.app.ssfm.misc.extension.changeState
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.MusicPlayerHelper
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playMusic
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
-import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.searchTheTopMusicAndPlayThenToPlaylist
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
-import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
 
 /**
@@ -26,8 +24,7 @@ import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
  * @author  jieyi
  * @since   10/29/17
  */
-class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: SearchMusicV2Case,
-                                               private val addPlaylistItemCase: AddPlaylistItemCase,
+class RecyclerViewChartArtistHotTrackViewModel(private val addPlaylistItemCase: AddPlaylistItemCase,
                                                private var item: PlaylistItemEntity,
                                                private var index: Int) : BaseViewModel() {
     val trackName by lazy { ObservableField<String>() }
@@ -63,18 +60,7 @@ class RecyclerViewChartArtistHotTrackViewModel(private val searchMusicCase: Sear
      * @event_to [taiwan.no1.app.ssfm.features.chart.ChartArtistDetailFragment.addToPlaylist]
      */
     fun trackOnClick(view: View) {
-        item.run track@ {
-            // Change the viewmodel state and view icon.
-            RxBus.get().post(VIEWMODEL_TRACK_CLICK, index)
-            // Search the music first.
-            lifecycleProvider.searchTheTopMusicAndPlayThenToPlaylist(searchMusicCase,
-                                                                     addPlaylistItemCase,
-                                                                     "$artistName $trackName") {
-                trackUri = it.trackUri
-                RxBus.get().post(VIEWMODEL_TRACK_CLICK, it.trackUri)
-            }
-        }
-        RxBus.get().post(HELPER_ADD_TO_PLAYLIST, item)
+        lifecycleProvider.playMusic(addPlaylistItemCase, item, index)
     }
 
     /**

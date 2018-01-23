@@ -13,11 +13,10 @@ import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.Constant.DATABASE_PLAYLIST_HISTORY_ID
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
-import taiwan.no1.app.ssfm.misc.constants.RxBusTag.HELPER_ADD_TO_PLAYLIST
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
 import taiwan.no1.app.ssfm.misc.extension.changeState
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.MusicPlayerHelper
-import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playThenToPlaylist
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playMusic
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
@@ -75,11 +74,7 @@ class RecyclerViewSearchMusicResultViewModel(private var res: PlaylistItemEntity
     fun playOrStopMusicClick(view: View) {
         val playlistEntity = res.copy(playlistId = DATABASE_PLAYLIST_HISTORY_ID.toLong())
 
-        RxBus.get().post(VIEWMODEL_TRACK_CLICK, index)
-        lifecycleProvider.playThenToPlaylist(addPlaylistItemCase, playlistEntity) {
-            RxBus.get().post(VIEWMODEL_TRACK_CLICK, res.trackUri)
-        }
-        RxBus.get().post(HELPER_ADD_TO_PLAYLIST, playlistEntity)
+        lifecycleProvider.playMusic(addPlaylistItemCase, playlistEntity, index)
     }
 
     /**

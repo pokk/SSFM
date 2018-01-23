@@ -21,7 +21,7 @@ import taiwan.no1.app.ssfm.misc.extension.changeState
 import taiwan.no1.app.ssfm.misc.extension.gAlphaIntColor
 import taiwan.no1.app.ssfm.misc.extension.gColor
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.MusicPlayerHelper
-import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playThenToPlaylist
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playMusic
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
@@ -79,15 +79,17 @@ class RecyclerViewPlaylistDetailViewModel(private val addPlaylistItemCase: AddPl
         refreshView()
     }
 
+    /**
+     * @param view
+     *
+     * @event_to [taiwan.no1.app.ssfm.features.playlist.PlaylistDetailFragment.addToPlaylist]
+     */
     fun trackOnClick(view: View) {
         item.let {
             // Copy a same object. There are some variables need to modify only.
             val playlistEntity = it.copy(id = 0)
 
-            RxBus.get().post(VIEWMODEL_TRACK_CLICK, index)
-            lifecycleProvider.playThenToPlaylist(addPlaylistItemCase, playlistEntity) {
-                RxBus.get().post(VIEWMODEL_TRACK_CLICK, playlistEntity.trackUri)
-            }
+            lifecycleProvider.playMusic(addPlaylistItemCase, playlistEntity, index)
         }
     }
 

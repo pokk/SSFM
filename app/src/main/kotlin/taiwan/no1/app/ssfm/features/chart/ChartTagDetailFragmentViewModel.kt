@@ -4,6 +4,7 @@ import android.databinding.ObservableField
 import com.devrapid.kotlinknifer.toInstance
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.extension.execute
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.TrackEntity
@@ -52,7 +53,7 @@ class ChartTagDetailFragmentViewModel(private val tagInfoUsecase: FetchTagInfoCa
         lifecycleProvider.execute(topTracksUsecase, GetTagTopTracksUsecase.RequestValue(name, page, limit)) {
             onNext {
                 it.track.tracks.toInstance<TrackEntity.BaseTrack>()?.tToPlaylist()?.subscribe { tracks ->
-                    callback(tracks, it.track.attr?.total?.toInt() ?: 0)
+                    callback(playerHelper.attatchMusicUri(tracks), it.track.attr?.total?.toInt() ?: 0)
                 }
             }
         }

@@ -32,7 +32,6 @@ import taiwan.no1.app.ssfm.misc.widgets.recyclerviews.adapters.BaseDataBindingAd
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
-import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -62,7 +61,6 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
     //endregion
 
     @Inject override lateinit var viewModel: ChartArtistDetailFragmentViewModel
-    @Inject lateinit var searchMusicCase: SearchMusicV2Case
     @field:[Inject Named("add_playlist_item")] lateinit var addPlaylistItemCase: AddPlaylistItemCase
     private val artistInfo by lazy { DataInfo() }
     private val trackInfo by lazy { DataInfo() }
@@ -164,10 +162,7 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
                                                  R.layout.item_music_type_2,
                                                  trackRes) { holder, item, index ->
                 if (null == holder.binding.avm)
-                    holder.binding.avm = RecyclerViewChartArtistHotTrackViewModel(searchMusicCase,
-                                                                                  addPlaylistItemCase,
-                                                                                  item,
-                                                                                  index + 1)
+                    holder.binding.avm = RecyclerViewChartArtistHotTrackViewModel(addPlaylistItemCase, item, index + 1)
                 else
                     holder.binding.avm?.setTrackItem(item, index + 1)
             }
@@ -181,7 +176,10 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
                     artistRes.refreshAndChangeList(it, 0, binding?.artistAdapter as SimilarArtistAdapter, info)
                     // If the artist exists then we can find the artist's detail tracks and albums.
                     viewModel.fetchHotTracks(artistName) {
-                        trackRes.refreshAndChangeList(it, 0, binding?.trackAdapter as ArtistTopTrackAdapter, trackInfo)
+                        trackRes.refreshAndChangeList(playerHelper.attatchMusicUri(it),
+                                                      0,
+                                                      binding?.trackAdapter as ArtistTopTrackAdapter,
+                                                      trackInfo)
                     }
                     viewModel.fetchHotAlbum(artistName) {
                         albumRes.refreshAndChangeList(it, 0, binding?.albumAdapter as ArtistTopAlbumAdapter, albumInfo)

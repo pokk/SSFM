@@ -175,18 +175,21 @@ class MusicPlayerHelper private constructor() {
             if (helper.isFirstTimePlayHere) {
                 helper.clearList()
                 helper.playInObject = this.javaClass.name
-                helper.addList(newSource.copy().apply {
-                    // For fetching the missing music uri's items.
-                    forEach {
-                        // Avoiding that there is a music uri, and fetching it again.
-                        if (playlistItem.trackUri.isNotBlank()) return@forEach
-                        helper.fetchMusicUri(it)
-                    }
-                })
+                helper.addList(newSource)
                 helper.setCurrentIndex(playlistItem)
             }
         }
     }
+
+    fun attatchMusicUri(playlistItem: List<PlaylistItemEntity>) =
+        playlistItem.copy().apply {
+            // For fetching the missing music uri's items.
+            forEach {
+                // Avoiding that there is a music uri, and fetching it again.
+                if (it.trackUri.isNotBlank()) return@forEach
+                playerHelper.fetchMusicUri(it)
+            }
+        }
 
     /**
      * Get the music uri for the item without the music uri. Also, the item *variables* will be modified.

@@ -10,15 +10,13 @@ import com.hwangjr.rxbus.annotation.Tag
 import com.trello.rxlifecycle2.LifecycleProvider
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
-import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_TRACK_CLICK
 import taiwan.no1.app.ssfm.misc.extension.changeState
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.MusicPlayerHelper
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playMusic
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
-import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.searchTheTopMusicAndPlayThenToPlaylist
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
-import taiwan.no1.app.ssfm.models.usecases.SearchMusicV2Case
 import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
 
 /**
@@ -26,8 +24,7 @@ import weian.cheng.mediaplayerwithexoplayer.MusicPlayerState
  * @author  jieyi
  * @since   11/1/17
  */
-class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMusicV2Case,
-                                           private val addPlaylistItemCase: AddPlaylistItemCase,
+class RecyclerViewChartAlbumTrackViewModel(private val addPlaylistItemCase: AddPlaylistItemCase,
                                            private var item: PlaylistItemEntity,
                                            private var index: Int) : BaseViewModel() {
     val trackName by lazy { ObservableField<String>() }
@@ -59,16 +56,13 @@ class RecyclerViewChartAlbumTrackViewModel(private val searchMusicCase: SearchMu
     }
     //endregion
 
+    /**
+     * @param view
+     *
+     * @event_to [taiwan.no1.app.ssfm.features.chart.ChartAlbumDetailFragment.addToPlaylist]
+     */
     fun trackOnClick(view: View) {
-        item.run track@ {
-            RxBus.get().post(VIEWMODEL_TRACK_CLICK, index)
-            lifecycleProvider.searchTheTopMusicAndPlayThenToPlaylist(searchMusicCase,
-                                                                     addPlaylistItemCase,
-                                                                     "$artistName $trackName") {
-                trackUri = it.trackUri
-                RxBus.get().post(RxBusTag.VIEWMODEL_TRACK_CLICK, it.trackUri)
-            }
-        }
+        lifecycleProvider.playMusic(addPlaylistItemCase, item, index)
     }
 
     fun trackOptionalOnClick(view: View) {
