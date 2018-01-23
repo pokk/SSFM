@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:background="@color/colorGray">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/iv_big_album"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="2dp"
+        tools:src="@drawable/test_album"/>
+
+    <TextView
+        android:id="@+id/tv_big_music_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/iv_big_album"
+        android:lines="1"
+        android:layout_marginStart="10dp"
+        tools:text="big music name"/>
+
+    <TextView
+        android:id="@+id/tv_big_singer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_big_music_name"
+        android:layout_toEndOf="@id/iv_big_album"
+        android:layout_marginStart="10dp"
+        tools:text="big singer"/>
+
+    <TextView
+        android:id="@+id/tv_big_now_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_big_singer"
+        android:layout_toEndOf="@id/iv_big_album"
+        android:layout_marginStart="10dp"
+        tools:text="0000:0000"/>
+
+    <TextView
+        android:id="@+id/tv_big_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_big_singer"
+        android:layout_alignParentEnd="true"
+        tools:text="0000:0000"/>
+
+    <ImageButton
+        android:id="@+id/btn_big_next"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="120dp"
+        tools:src="@drawable/ic_skip_next"/>
+
+    <ImageButton
+        android:id="@+id/btn_big_play"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_toStartOf="@id/btn_big_next"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="120dp"
+        tools:src="@drawable/ic_play_arrow"/>
+
+</RelativeLayout>
