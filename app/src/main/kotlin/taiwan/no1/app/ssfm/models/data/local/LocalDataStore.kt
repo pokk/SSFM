@@ -126,7 +126,8 @@ class LocalDataStore : IDataStore {
         if (artistName.isBlank() || trackName.isBlank())
             (select from PlaylistItemEntity::class where (PlaylistItemEntity_Table.playlistId eq playlistItemId)).querySingle()
         else {
-            (select from
+            (select
+                from
                 PlaylistItemEntity::class
                 where
                 ((PlaylistItemEntity_Table.playlistId eq playlistItemId) and
@@ -148,18 +149,17 @@ class LocalDataStore : IDataStore {
 
     //region Search History
     override fun insertKeyword(keyword: String) =
-        (select from KeywordEntity::class where (KeywordEntity_Table.keyword eq keyword)).rx().list.
-            flatMapObservable {
-                (if (0 == it.size) KeywordEntity(keyword = keyword) else it.first().apply { searchTimes += 1 }).save().toObservable()
-            }
+        (select from KeywordEntity::class where (KeywordEntity_Table.keyword eq keyword)).rx().list.flatMapObservable {
+            (if (0 == it.size) KeywordEntity(keyword = keyword) else it.first().apply { searchTimes += 1 }).save().toObservable()
+        }
 
     override fun getKeywords(quantity: Int) = (quantity.takeIf { 0 < it } ?: Int.MAX_VALUE).let {
         (select from KeywordEntity::class orderBy KeywordEntity_Table.searchTimes.asc() limit it).rx().list.toObservable()
     }
 
     override fun removeKeywords(keyword: String?) =
-        (keyword?.let { (delete(KeywordEntity::class) where (KeywordEntity_Table.keyword eq keyword)).rx() } ?:
-         delete(KeywordEntity::class).rx()).
+        (keyword?.let { (delete(KeywordEntity::class) where (KeywordEntity_Table.keyword eq keyword)).rx() } ?: delete(
+            KeywordEntity::class).rx()).
             // The return value of `executeUpdateDelete` is the number of the deleted or updated items.
             executeUpdateDelete().map { 0 < it }.toObservable()
     //endregion

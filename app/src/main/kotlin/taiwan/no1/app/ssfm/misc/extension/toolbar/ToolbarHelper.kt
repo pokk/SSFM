@@ -16,10 +16,11 @@ class ToolbarHelper(private val view: View) {
         val toolbar = recursiveFindToolbar(view) ?: error("This view isn't in the toolbar. Please check it again.")
 
         val outerLayout = toolbar.parent as ViewGroup
-        (0..outerLayout.childCount).
-            first { outerLayout.getChildAt(it) is FrameLayout }.
-            toSingle().map { outerLayout.getChildAt(it) as ViewGroup }.
-            subscribe { container, t2 ->
+        (0..outerLayout.childCount)
+            .first { outerLayout.getChildAt(it) is FrameLayout }
+            .toSingle()
+            .map { outerLayout.getChildAt(it) as ViewGroup }
+            .subscribe { container, t2 ->
                 // TODO(jieyi): 11/17/17 Find the way for getting the fragment from viewgroup.
             }
     }

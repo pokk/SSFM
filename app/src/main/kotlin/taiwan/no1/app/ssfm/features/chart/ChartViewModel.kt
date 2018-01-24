@@ -4,7 +4,7 @@ import android.content.Context
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.view.View
-import com.devrapid.kotlinknifer.hideSoftKeyboard
+import com.devrapid.kotlinknifer.toggleSoftKeyboard
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
@@ -54,7 +54,7 @@ class ChartViewModel(private val context: Context) : BaseViewModel() {
         // - Close the search bar.
         // - Dismiss the previous search fragment.
         RxBus.get().post(VIEWMODEL_CLICK_SIMILAR, query)
-        context.hideSoftKeyboard()
+        context.toggleSoftKeyboard()
         return true
     }
 
