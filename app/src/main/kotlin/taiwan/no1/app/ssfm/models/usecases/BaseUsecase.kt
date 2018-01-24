@@ -34,73 +34,134 @@ abstract class BaseUsecase<T, R : RequestValues>(protected val repository: IData
     /** Obtain a thread for while [Observable] is doing their tasks.*/
     protected open var obtainObserverScheduler: Scheduler = AndroidSchedulers.mainThread()
 
+    //region Usecase with an anonymous function.
     /**
-     * Executes the current use case.
+     * Execute the current use case.
      *
+     * @param lifecycleProvider the life cycle provider for cutting RxJava runs.
+     * @param block add some chain actions between [subscribeOn] and [observeOn].
      * @param observer a reaction of [Observer] from viewmodel, the data are omitted from database or remote.
      */
-    fun execute(lifecycleProvider: LifecycleProvider<*>? = null,
-                observer: Observer<T>) = lifecycleProvider?.let {
-        buildUsecase().bindToLifecycle(it).subscribe(observer)
-    } ?: buildUsecase().subscribe(observer)
+    fun <F> execute(lifecycleProvider: LifecycleProvider<*>? = null,
+                    block: Observable<T>.() -> Observable<F>,
+                    observer: Observer<F>) =
+        buildUseCaseObservable(block).apply { lifecycleProvider?.let { bindToLifecycle(it) } }.subscribe(observer)
 
     /**
-     * Executes the current use case with request parameters.
+     * Execute the current use case with request [parameter].
      *
      * @param parameter the parameter for retrieving data.
+     * @param lifecycleProvider the life cycle provider for cutting RxJava runs.
+     * @param block add some chain actions between [subscribeOn] and [observeOn].
      * @param observer a reaction of [Observer] from viewmodel, the data are omitted from database or remote.
      */
-    fun execute(parameter: R,
-                lifecycleProvider: LifecycleProvider<*>? = null,
-                observer: Observer<T>) {
+    fun <F> execute(parameter: R,
+                    lifecycleProvider: LifecycleProvider<*>? = null,
+                    block: Observable<T>.() -> Observable<F>,
+                    observer: Observer<F>) {
+        parameters = parameter
+        execute(lifecycleProvider, block, observer)
+    }
+
+    /**
+     * Execute the current use case with an anonymous function.
+     *
+     * @param lifecycleProvider an activity or a fragment of the [LifecycleProvider] object.
+     * @param block add some chain actions between [subscribeOn] and [observeOn].
+     * @param observer a reaction of [ObserverPlugin] from viewmodel, the data are omitted from database or remote.
+     */
+    fun <F> execute(lifecycleProvider: LifecycleProvider<*>? = null,
+                    block: Observable<T>.() -> Observable<F>,
+                    observer: ObserverPlugin<F>.() -> Unit) =
+        execute(lifecycleProvider, block, ObserverPlugin<F>().apply(observer))
+
+    /**
+     * Execute the current use case with request [parameter] with an anonymous function..
+     *
+     * @param parameter the parameter for retrieving data.
+     * @param lifecycleProvider an activity or a fragment of the [LifecycleProvider] object.
+     * @param block add some chain actions between [subscribeOn] and [observeOn].
+     * @param observer a reaction of [ObserverPlugin] from viewmodel, the data are omitted from database or remote.
+     */
+    fun <F> execute(parameter: R,
+                    lifecycleProvider: LifecycleProvider<*>? = null,
+                    block: Observable<T>.() -> Observable<F>,
+                    observer: ObserverPlugin<F>.() -> Unit) {
+        parameters = parameter
+        execute(lifecycleProvider, block, observer)
+    }
+
+    /**
+     * Build an [Observable] which will be used when executing the current [BaseUseCase].
+     * There is a [subscribeOn] for fetching the data from the
+     * [com.cloverlab.kloveroid.repository.repositories.DataRepository] works on the new thread
+     * so after [subscribeOn]'s chain function will be ran on the same thread.
+     * This is for who needs transfer the thread to UI, IO, or new thread again.
+     *
+     * @param block add some chain actions between [subscribeOn] and [observeOn].
+     * @return [Observable] for connecting with a [Observer] from the kotlin layer.
+     */
+    private fun <F> buildUseCaseObservable(block: (Observable<T>.() -> Observable<F>)) =
+        fetchUsecase()
+            .subscribeOn(obtainSubscribeScheduler)
+            .run { block.invoke(this) }
+            .observeOn(obtainObserverScheduler)
+    //endregion
+
+    //region Usecase without an anonymous function.
+    /**
+     * Execute the current use case.
+     *
+     * @param lifecycleProvider the life cycle provider for cutting RxJava runs.
+     * @param observer a reaction of [Observer] from viewmodel, the data are omitted from database or remote.
+     */
+    fun execute(lifecycleProvider: LifecycleProvider<*>? = null, observer: Observer<T>) =
+        buildUseCaseObservable().apply { lifecycleProvider?.let { bindToLifecycle(it) } }.subscribe(observer)
+
+    /**
+     * Execute the current use case with request [parameter].
+     *
+     * @param parameter the parameter for retrieving data.
+     * @param lifecycleProvider the life cycle provider for cutting RxJava runs.
+     * @param observer a reaction of [Observer] from viewmodel, the data are omitted from database or remote.
+     */
+    fun execute(parameter: R, lifecycleProvider: LifecycleProvider<*>? = null, observer: Observer<T>) {
         parameters = parameter
         execute(lifecycleProvider, observer)
     }
 
     /**
-     * Executes the current use case.
-     *
-     * @param lifecycleProvider
-     */
-    fun execute(lifecycleProvider: LifecycleProvider<*>? = null) =
-        lifecycleProvider?.let { buildUsecase().bindToLifecycle(it) } ?: buildUsecase()
-
-    /**
-     * Executes the current use case with request parameters.
-     *
-     * @param parameter the parameter for retrieving data.
-     * @param lifecycleProvider an activity or a fragment of the [LifecycleProvider] object.
-     */
-    fun execute(parameter: R, lifecycleProvider: LifecycleProvider<*>? = null): Observable<T> {
-        parameters = parameter
-        return execute(lifecycleProvider)
-    }
-
-    /**
-     * Executes the current use case.
+     * Execute the current use case.
      *
      * @param lifecycleProvider an activity or a fragment of the [LifecycleProvider] object.
      * @param observer a reaction of [ObserverPlugin] from viewmodel, the data are omitted from database or remote.
      */
-    fun execute(lifecycleProvider: LifecycleProvider<*>? = null,
-                observer: ObserverPlugin<T>.() -> Unit) =
-        lifecycleProvider?.let {
-            buildUsecase().bindToLifecycle(it).subscribe(ObserverPlugin<T>().apply(observer))
-        } ?: buildUsecase().subscribe(ObserverPlugin<T>().apply(observer))
+    fun execute(lifecycleProvider: LifecycleProvider<*>? = null, observer: ObserverPlugin<T>.() -> Unit) =
+        execute(lifecycleProvider, ObserverPlugin<T>().apply(observer))
 
     /**
-     * Executes the current use case with request parameters.
+     * Execute the current use case with request [parameter].
      *
      * @param parameter the parameter for retrieving data.
      * @param lifecycleProvider an activity or a fragment of the [LifecycleProvider] object.
      * @param observer a reaction of [ObserverPlugin] from viewmodel, the data are omitted from database or remote.
      */
-    fun execute(parameter: R,
-                lifecycleProvider: LifecycleProvider<*>? = null,
-                observer: ObserverPlugin<T>.() -> Unit) {
+    fun execute(parameter: R, lifecycleProvider: LifecycleProvider<*>? = null, observer: ObserverPlugin<T>.() -> Unit) {
         parameters = parameter
         execute(lifecycleProvider, observer)
     }
+
+    /**
+     * Build an [Observable] which will be used when executing the current [BaseUseCase] and run on
+     * the UI thread.
+     *
+     * @return [Observable] for connecting with a [Observer] from the kotlin layer.
+     */
+    private fun buildUseCaseObservable() =
+        fetchUsecase()
+            .subscribeOn(obtainSubscribeScheduler)
+            .observeOn(obtainObserverScheduler)
+    //endregion
 
     /**
      * Choose a method from [IDataStore] and fit this usecase for return some data.

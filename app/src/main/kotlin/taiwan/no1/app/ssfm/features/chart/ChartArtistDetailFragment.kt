@@ -176,7 +176,7 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
                     artistRes.refreshAndChangeList(it, 0, binding?.artistAdapter as SimilarArtistAdapter, info)
                     // If the artist exists then we can find the artist's detail tracks and albums.
                     viewModel.fetchHotTracks(artistName) {
-                        trackRes.refreshAndChangeList(playerHelper.attatchMusicUri(it),
+                        trackRes.refreshAndChangeList(playerHelper.attachMusicUri(it),
                                                       0,
                                                       binding?.trackAdapter as ArtistTopTrackAdapter,
                                                       trackInfo)

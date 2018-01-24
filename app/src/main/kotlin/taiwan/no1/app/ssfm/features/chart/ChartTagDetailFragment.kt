@@ -174,7 +174,7 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
         }
         trackInfo.firstFetch {
             viewModel.fetchHotTrack(musicTag, it.page, it.limit) { resList, total ->
-                trackRes.refreshAndChangeList(playerHelper.attatchMusicUri(resList),
+                trackRes.refreshAndChangeList(playerHelper.attachMusicUri(resList),
                                               total,
                                               binding?.trackAdapter as TagTopTrackAdapter,
                                               it)

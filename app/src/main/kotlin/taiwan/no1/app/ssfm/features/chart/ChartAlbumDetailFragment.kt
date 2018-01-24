@@ -84,7 +84,7 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
         trackInfo.firstFetch { info ->
             viewModel.fetchDetailInfo(artistAlbumName, artistName) { album ->
                 album.track?.tracks?.toInstance<TrackEntity.BaseTrack>()?.tToPlaylist()?.subscribe { tracks ->
-                    trackRes.refreshAndChangeList(playerHelper.attatchMusicUri(tracks),
+                    trackRes.refreshAndChangeList(playerHelper.attachMusicUri(tracks),
                                                   0,
                                                   binding?.trackAdapter as AlbumTrackAdapter,
                                                   info)

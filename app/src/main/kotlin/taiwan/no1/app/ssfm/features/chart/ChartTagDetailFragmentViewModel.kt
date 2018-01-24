@@ -53,7 +53,7 @@ class ChartTagDetailFragmentViewModel(private val tagInfoUsecase: FetchTagInfoCa
         lifecycleProvider.execute(topTracksUsecase, GetTagTopTracksUsecase.RequestValue(name, page, limit)) {
             onNext {
                 it.track.tracks.toInstance<TrackEntity.BaseTrack>()?.tToPlaylist()?.subscribe { tracks ->
-                    callback(playerHelper.attatchMusicUri(tracks), it.track.attr?.total?.toInt() ?: 0)
+                    callback(playerHelper.attachMusicUri(tracks), it.track.attr?.total?.toInt() ?: 0)
                 }
             }
         }

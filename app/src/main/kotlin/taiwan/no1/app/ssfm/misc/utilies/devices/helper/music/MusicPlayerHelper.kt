@@ -5,9 +5,6 @@ import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logi
 import com.devrapid.kotlinknifer.logw
 import com.hwangjr.rxbus.RxBus
-import io.reactivex.CompletableOnSubscribe
-import io.reactivex.disposables.Disposable
-import io.reactivex.internal.operators.completable.CompletableCreate
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_BUFFER_PRECENT_CHANGED
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_CURRENT_TIME
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.MUSICPLAYER_DURATION_CHANGED
@@ -181,7 +178,7 @@ class MusicPlayerHelper private constructor() {
         }
     }
 
-    fun attatchMusicUri(playlistItem: List<PlaylistItemEntity>) =
+    fun attachMusicUri(playlistItem: List<PlaylistItemEntity>) =
         playlistItem.copy().apply {
             // For fetching the missing music uri's items.
             forEach {
@@ -196,18 +193,33 @@ class MusicPlayerHelper private constructor() {
      *
      * @param playlistItem
      */
-    fun fetchMusicUri(playlistItem: PlaylistItemEntity): Disposable {
-        if (playlistItem.trackUri.isNotBlank()) return CompletableCreate(CompletableOnSubscribe { }).subscribe()
+    fun fetchMusicUri(playlistItem: PlaylistItemEntity) {
+        if (playlistItem.trackUri.isNotBlank()) return
 
-        return searchUsecase.execute(GetMusicUriUsecase.RequestValue(playlistItem)).subscribe {
-            logi(playlistItem)
-            it.data.items.first().apply {
-                playlistItem.trackUri = url
-                playlistItem.lyricUrl = lyricURL
-                playlistItem.duration = trackDuration
+        return searchUsecase.execute(GetMusicUriUsecase.RequestValue(playlistItem),
+                                     null,
+                                     { map { it.data.items.first() } }) {
+            onNext {
+                logi(playlistItem)
+                playlistItem.apply {
+                    trackUri = it.url
+                    lyricUrl = it.lyricURL
+                    duration = trackDuration
+                }
+                logi(playlistItem)
             }
-            logw(playlistItem)
         }
+//        {
+//            onNext {
+//                logi(playlistItem)
+//                it.data.items.first().apply {
+//                    playlistItem.trackUri = url
+//                    playlistItem.lyricUrl = lyricURL
+//                    playlistItem.duration = trackDuration
+//                }
+//                logw(playlistItem)
+//            }
+//        }
     }
 
     private fun setPlayerListener() {
