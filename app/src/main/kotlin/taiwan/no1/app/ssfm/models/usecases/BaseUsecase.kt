@@ -1,6 +1,7 @@
 package taiwan.no1.app.ssfm.models.usecases
 
 import com.devrapid.kotlinknifer.ObserverPlugin
+import com.devrapid.kotlinknifer.isNotNull
 import com.trello.rxlifecycle2.LifecycleProvider
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import io.reactivex.Observable
@@ -39,7 +40,7 @@ abstract class BaseUsecase<T, R : RequestValues>(protected val repository: IData
      * Execute the current use case.
      *
      * @param lifecycleProvider the life cycle provider for cutting RxJava runs.
-     * @param block add some chain actions between [subscribeOn] and [observeOn].
+     * @param block add some chain actions between [Observable.subscribeOn] and [Observable.observeOn].
      * @param observer a reaction of [Observer] from viewmodel, the data are omitted from database or remote.
      */
     fun <F> execute(lifecycleProvider: LifecycleProvider<*>? = null,
@@ -52,7 +53,7 @@ abstract class BaseUsecase<T, R : RequestValues>(protected val repository: IData
      *
      * @param parameter the parameter for retrieving data.
      * @param lifecycleProvider the life cycle provider for cutting RxJava runs.
-     * @param block add some chain actions between [subscribeOn] and [observeOn].
+     * @param block add some chain actions between [Observable.subscribeOn] and [Observable.observeOn].
      * @param observer a reaction of [Observer] from viewmodel, the data are omitted from database or remote.
      */
     fun <F> execute(parameter: R,
@@ -67,7 +68,7 @@ abstract class BaseUsecase<T, R : RequestValues>(protected val repository: IData
      * Execute the current use case with an anonymous function.
      *
      * @param lifecycleProvider an activity or a fragment of the [LifecycleProvider] object.
-     * @param block add some chain actions between [subscribeOn] and [observeOn].
+     * @param block add some chain actions between [Observable.subscribeOn] and [Observable.observeOn].
      * @param observer a reaction of [ObserverPlugin] from viewmodel, the data are omitted from database or remote.
      */
     fun <F> execute(lifecycleProvider: LifecycleProvider<*>? = null,
@@ -80,7 +81,7 @@ abstract class BaseUsecase<T, R : RequestValues>(protected val repository: IData
      *
      * @param parameter the parameter for retrieving data.
      * @param lifecycleProvider an activity or a fragment of the [LifecycleProvider] object.
-     * @param block add some chain actions between [subscribeOn] and [observeOn].
+     * @param block add some chain actions between [Observable.subscribeOn] and [Observable.observeOn].
      * @param observer a reaction of [ObserverPlugin] from viewmodel, the data are omitted from database or remote.
      */
     fun <F> execute(parameter: R,
@@ -92,13 +93,13 @@ abstract class BaseUsecase<T, R : RequestValues>(protected val repository: IData
     }
 
     /**
-     * Build an [Observable] which will be used when executing the current [BaseUseCase].
-     * There is a [subscribeOn] for fetching the data from the
-     * [com.cloverlab.kloveroid.repository.repositories.DataRepository] works on the new thread
-     * so after [subscribeOn]'s chain function will be ran on the same thread.
+     * Build an [Observable] which will be used when executing the current [BaseUsecase].
+     * There is a [Observable.subscribeOn] for fetching the data from the
+     * [taiwan.no1.app.ssfm.models.data.repositories.DataRepository] works on the new thread
+     * so after [Observable.subscribeOn]'s chain function will be ran on the same thread.
      * This is for who needs transfer the thread to UI, IO, or new thread again.
      *
-     * @param block add some chain actions between [subscribeOn] and [observeOn].
+     * @param block add some chain actions between [Observable.subscribeOn] and [Observable.observeOn].
      * @return [Observable] for connecting with a [Observer] from the kotlin layer.
      */
     private fun <F> buildUseCaseObservable(block: (Observable<T>.() -> Observable<F>)) =
@@ -152,7 +153,7 @@ abstract class BaseUsecase<T, R : RequestValues>(protected val repository: IData
     }
 
     /**
-     * Build an [Observable] which will be used when executing the current [BaseUseCase] and run on
+     * Build an [Observable] which will be used when executing the current [BaseUsecase] and run on
      * the UI thread.
      *
      * @return [Observable] for connecting with a [Observer] from the kotlin layer.
@@ -164,6 +165,14 @@ abstract class BaseUsecase<T, R : RequestValues>(protected val repository: IData
     //endregion
 
     /**
+     * Build a pure [Observable] without thread switch. This functions's intention is for [flatMap].
+     *
+     * @param parameter the parameter for retrieving data.
+     */
+    fun pureUsecase(parameter: R? = null) =
+        apply { if (parameter.isNotNull()) parameters = parameter }.fetchUsecase()
+
+    /**
      * Choose a method from [IDataStore] and fit this usecase for return some data.
      *
      * @return an [Observer] for chaining on working threads.
@@ -171,13 +180,13 @@ abstract class BaseUsecase<T, R : RequestValues>(protected val repository: IData
     protected abstract fun fetchUsecase(): Observable<T>
 
     /**
-     * Builds an [Observable] which will be used when executing the current [BaseUsecase].
+     * Build an [Observable] which will be used when executing the current [BaseUsecase].
      *
      * @return [Observable] for connecting with a [Observer].
      */
-    private fun buildUsecase(): Observable<T> = fetchUsecase().
-        subscribeOn(obtainSubscribeScheduler).
-        observeOn(obtainObserverScheduler)
+    private fun buildUsecase() = fetchUsecase()
+        .subscribeOn(obtainSubscribeScheduler)
+        .observeOn(obtainObserverScheduler)
 
     /** Interface for wrap a data for passing to a request.*/
     interface RequestValues

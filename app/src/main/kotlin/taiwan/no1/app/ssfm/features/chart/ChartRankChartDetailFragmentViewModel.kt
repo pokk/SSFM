@@ -5,7 +5,9 @@ import android.databinding.ObservableField
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.extension.execute
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
+import taiwan.no1.app.ssfm.models.entities.transforms.sToPlaylist
 import taiwan.no1.app.ssfm.models.entities.v2.RankChartEntity
+import taiwan.no1.app.ssfm.models.usecases.AddRankChartUsecase
 import taiwan.no1.app.ssfm.models.usecases.EditRankChartCase
 import taiwan.no1.app.ssfm.models.usecases.FetchMusicRankCase
 import taiwan.no1.app.ssfm.models.usecases.v2.GetMusicRankUsecase
@@ -22,31 +24,20 @@ class ChartRankChartDetailFragmentViewModel(private val getMusicRankUsecase: Fet
     fun fetchRankChartDetail(code: Int,
                              entity: RankChartEntity?,
                              callback: (entity: List<PlaylistItemEntity>) -> Unit) {
-//        lifecycleProvider
-//            .compose(getMusicRankUsecase, GetMusicRankUsecase.RequestValue(code))
-//            .doOnNext { it.data.songs.sToPlaylist().subscribe(callback) }
-//            .map { it.data.songs.first() }
-//            .map { song ->
-//                entity?.apply {
-//                    coverUrl = song.coverURL
-//                    backgroundImageUrl.set(song.coverURL)
-//                } ?: RankChartEntity()
-//            }
-//            .flatMap { editRankChartUsecase.execute(AddRankChartUsecase.RequestValue(it)) }
-//            .subscribe {}
-        lifecycleProvider
-            .execute(getMusicRankUsecase, GetMusicRankUsecase.RequestValue(code), {
-                map {
-                    it.data.songs.firstOrNull()?.also {
-                        coverUrl = it.coverURL
-                        backgroundImageUrl.set(it.coverURL)
-                    } ?: RankChartEntity()
+        lifecycleProvider.execute(getMusicRankUsecase, GetMusicRankUsecase.RequestValue(code), {
+            doOnNext { it.data.songs.sToPlaylist().subscribe(callback) }
+                // Get the first track of the rank track list and obtain its cover uri then keeping
+                // the uri to the rank type entity.
+                .map {
+                    it.data.songs.firstOrNull()?.run {
+                        entity?.also {
+                            it.coverUrl = coverURL
+                            backgroundImageUrl.set(coverURL)
+                        }
+                    }
                 }
-            }) {
-                onNext {
-
-                }
-            }
-
+                // Update the entity info from the database.
+                .flatMap { editRankChartUsecase.pureUsecase(AddRankChartUsecase.RequestValue(it)) }
+        }) { onNext {} }
     }
 }
