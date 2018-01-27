@@ -167,14 +167,16 @@ class MusicPlayerHelper private constructor() {
 
     fun setCurrentIndex(uri: PlaylistItemEntity) = playlistManager?.setIndex(uri) ?: false
 
-    fun addToPlaylist(playlistItem: PlaylistItemEntity, newSource: List<PlaylistItemEntity>) {
+    fun addToPlaylist(playlistItem: PlaylistItemEntity,
+                      newSource: List<PlaylistItemEntity>,
+                      place: String) {
         playerHelper.also { helper ->
             if (helper.isFirstTimePlayHere) {
                 helper.clearList()
-                helper.playInObject = this.javaClass.name
-                helper.addList(newSource)
-                helper.setCurrentIndex(playlistItem)
+                helper.playInObject = place
             }
+            helper.addList(newSource)
+            helper.setCurrentIndex(playlistItem)
         }
     }
 
@@ -209,17 +211,6 @@ class MusicPlayerHelper private constructor() {
                 logi(playlistItem)
             }
         }
-//        {
-//            onNext {
-//                logi(playlistItem)
-//                it.data.items.first().apply {
-//                    playlistItem.trackUri = url
-//                    playlistItem.lyricUrl = lyricURL
-//                    playlistItem.duration = trackDuration
-//                }
-//                logw(playlistItem)
-//            }
-//        }
     }
 
     private fun setPlayerListener() {

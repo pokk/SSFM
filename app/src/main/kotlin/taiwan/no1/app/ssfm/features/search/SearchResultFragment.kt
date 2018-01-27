@@ -116,6 +116,7 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
             pBkgImageUrl = bkgImageUrl
             fogViewColor = fgFogColor
         }
+        playerHelper.currentObject = this.javaClass.name
     }
 
     override fun provideInflateView(): Int = R.layout.fragment_search_result
@@ -128,14 +129,7 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
      */
     @Subscribe(tags = [Tag(HELPER_ADD_TO_PLAYLIST)])
     fun addToPlaylist(playlistItem: PlaylistItemEntity) {
-        playerHelper.also {
-            if (it.isFirstTimePlayHere) {
-                it.clearList()
-                it.playInObject = this.javaClass.name
-                it.addList(res.copy())
-                it.setCurrentIndex(playlistItem)
-            }
-        }
+        playerHelper.addToPlaylist(playlistItem, res, this.javaClass.name)
     }
 
     /**

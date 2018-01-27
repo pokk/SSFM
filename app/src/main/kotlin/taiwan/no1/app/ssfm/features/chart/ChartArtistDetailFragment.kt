@@ -187,6 +187,7 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
                 }
             }
         }
+        playerHelper.currentObject = this.javaClass.name
     }
 
     override fun provideInflateView(): Int = R.layout.fragment_detail_artist
@@ -199,6 +200,6 @@ class ChartArtistDetailFragment : AdvancedFragment<ChartArtistDetailFragmentView
      */
     @Subscribe(tags = [Tag(HELPER_ADD_TO_PLAYLIST)])
     fun addToPlaylist(playlistItem: PlaylistItemEntity) {
-        playerHelper.addToPlaylist(playlistItem, trackRes)
+        playerHelper.addToPlaylist(playlistItem, trackRes, this.javaClass.name)
     }
 }

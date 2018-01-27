@@ -112,7 +112,7 @@ class PlaylistDetailFragment : AdvancedFragment<PlaylistDetailFragmentViewModel,
      */
     @Subscribe(tags = [(Tag(HELPER_ADD_TO_PLAYLIST))])
     fun addToPlaylist(playlistItem: PlaylistItemEntity) {
-        playerHelper.addToPlaylist(playlistItem, playlistItemRes)
+        playerHelper.addToPlaylist(playlistItem, playlistItemRes, this.javaClass.name)
     }
 
     private val vmItemTouchCallback = object : ItemTouchViewmodelCallback {
