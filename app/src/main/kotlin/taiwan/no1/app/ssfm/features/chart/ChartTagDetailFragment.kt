@@ -3,6 +3,7 @@ package taiwan.no1.app.ssfm.features.chart
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.widget.LinearLayout
 import com.devrapid.kotlinknifer.recyclerview.WrapContentLinearLayoutManager
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.HorizontalItemDecorator
@@ -16,8 +17,10 @@ import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.FragmentDetailTagBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedFragment
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.HELPER_ADD_TO_PLAYLIST
+import taiwan.no1.app.ssfm.misc.extension.copy
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.DataInfo
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.RVCustomScrollCallback
+import taiwan.no1.app.ssfm.misc.extension.recyclerview.RecyclerViewScrollCallback
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.TagTopAlbumAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.TagTopArtistAdapter
 import taiwan.no1.app.ssfm.misc.extension.recyclerview.TagTopTrackAdapter
@@ -149,10 +152,20 @@ class ChartTagDetailFragment : AdvancedFragment<ChartTagDetailFragmentViewModel,
                                                     artistRes) { page, limit, callback: (List<BaseEntity>, Int) -> Unit ->
                 viewModel.fetchHotArtist(musicTag, page, limit, callback)
             }
-            trackLoadmore = RVCustomScrollCallback(binding?.trackAdapter as TagTopTrackAdapter,
-                                                   trackInfo,
-                                                   trackRes) { page, limit, callback: (List<PlaylistItemEntity>, Int) -> Unit ->
-                viewModel.fetchHotTrack(musicTag, page, limit, callback)
+            trackLoadmore = object : RecyclerViewScrollCallback {
+                override fun loadMoreEvent(recyclerView: RecyclerView, total: Int) {
+                    if (trackInfo.canLoadMoreFlag && !trackInfo.isLoading) {
+                        trackInfo.isLoading = true
+                        viewModel.fetchHotTrack(musicTag, trackInfo.page, trackInfo.limit) { resList, total ->
+                            // Update the playlist's tracks.
+                            if (!playerHelper.isFirstTimePlayHere) playerHelper.addList(resList.copy())
+                            trackRes.refreshAndChangeList(resList,
+                                                          total,
+                                                          binding?.trackAdapter as TagTopTrackAdapter,
+                                                          trackInfo)
+                        }
+                    }
+                }
             }
 
             albumDecoration = HorizontalItemDecorator(20)

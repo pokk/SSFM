@@ -74,11 +74,13 @@ class ChartAlbumDetailFragment : AdvancedFragment<ChartAlbumDetailFragmentViewMo
                                              R.layout.item_music_type_4,
                                              trackRes) { holder, item, index ->
                 if (null == holder.binding.avm)
-                    holder.binding.avm = RecyclerViewChartAlbumTrackViewModel(addPlaylistItemCase, item, index).apply {
+                    holder.binding.avm = RecyclerViewChartAlbumTrackViewModel(addPlaylistItemCase,
+                                                                              item,
+                                                                              index + 1).apply {
                         clickEvent = { (activity as ChartActivity).openBottomSheet(item) }
                     }
                 else
-                    holder.binding.avm?.setTrackItem(item, index)
+                    holder.binding.avm?.setTrackItem(item, index + 1)
             }
         }
         trackInfo.firstFetch { info ->

@@ -141,7 +141,7 @@ class SearchResultFragment : AdvancedFragment<SearchResultFragmentViewModel, Fra
             .refresh(res, ArrayList(res).apply { addAll(musics) })
             .toMutableList()
         // Update the playlist's tracks.
-        playerHelper.addList(musics.copy())
+        if (!playerHelper.isFirstTimePlayHere) playerHelper.addList(musics.copy())
         // TODO(jieyi): 9/28/17 Close the loading item or view.
         resInfo.isLoading = false
         // Raise the stopping loading more data flag for avoiding to load again.
