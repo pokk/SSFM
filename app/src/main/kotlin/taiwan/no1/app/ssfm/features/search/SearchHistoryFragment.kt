@@ -58,8 +58,8 @@ class SearchHistoryFragment : AdvancedFragment<SearchHistoryFragmentViewModel, F
                                      R.layout.item_search_history_type_1,
                                      searchRes) { holder, item, _ ->
                 if (null == holder.binding.avm)
-                    holder.binding.avm = RecyclerViewSearchHistoryViewModel(item, activity, deleteUsecase).
-                        apply { deleteItemListener = deleteItem }
+                    holder.binding.avm = RecyclerViewSearchHistoryViewModel(item, activity, deleteUsecase)
+                        .apply { deleteItemListener = deleteItem }
                 else
                     holder.binding.avm?.setKeywordItem(item)
             }

@@ -76,9 +76,11 @@ class PlayerControllerLayout
                                                                   MeasureSpec.EXACTLY))
         }
         // Pick the highest component's height and plus left & right margin.
-        val maxHeight = listImageButtons.map { it.height }.max()?.plus(paddingTop)?.plus(
-            paddingBottom) ?:
-                        MeasureSpec.getSize(heightMeasureSpec)
+        val maxHeight = listImageButtons
+                            .map { it.height }
+                            .max()
+                            ?.plus(paddingTop)
+                            ?.plus(paddingBottom) ?: MeasureSpec.getSize(heightMeasureSpec)
         // Set this layout size.
         setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), maxHeight)
     }
@@ -93,8 +95,13 @@ class PlayerControllerLayout
         val layoutWidth = right - left
         // b: bottom, t: top
         // left, top, right, bottom are this layout's size.
-        val b = listImageButtons.map { it.measuredHeight }.max()?.times(0.7)?.minus(paddingTop)?.
-            minus(paddingBottom)?.toInt() ?: bottom
+        val b = listImageButtons
+                    .map { it.measuredHeight }
+                    .max()
+                    ?.times(0.7)
+                    ?.minus(paddingTop)
+                    ?.minus(paddingBottom)
+                    ?.toInt() ?: bottom
         val t = paddingTop
         var prev: ImageButton = imageButton()
 

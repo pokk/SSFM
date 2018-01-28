@@ -47,10 +47,11 @@ class NetModule {
 
     @Provides
     @Network
-    fun provideOkHttpClient(cache: Cache) = OkHttpClient.Builder().
-//        addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }).
-        cache(cache).
-        build()
+    fun provideOkHttpClient(cache: Cache) = OkHttpClient
+        .Builder()
+//        .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }).
+        .cache(cache)
+        .build()
 
     @Provides
     @Network

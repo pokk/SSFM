@@ -52,11 +52,15 @@ class Navigator(val activity: RxActivity) {
      *
      * @return
      */
-    private fun View.wrapClick() = clicks().
-        bindToLifecycle(activity).
-        doOnNext { menu.iv_content_hamburger.performClick() }.
-        flatMap { ObservableTimer.timer(500, MILLISECONDS, Schedulers.io()) }.
-        observeOn(AndroidSchedulers.mainThread())
+    private fun View.wrapClick() = clicks()
+        .bindToLifecycle(activity)
+        .doOnNext { menu.iv_content_hamburger.performClick() }
+        .flatMap {
+            ObservableTimer.timer(500,
+                                  MILLISECONDS,
+                                  Schedulers.io())
+        }
+        .observeOn(AndroidSchedulers.mainThread())
 
     private fun <T> transferClick(onNext: (() -> Unit)? = null): Observer<T> =
         observer<T>().onNext { onNext?.invoke() }.onComplete { activity.finish() }

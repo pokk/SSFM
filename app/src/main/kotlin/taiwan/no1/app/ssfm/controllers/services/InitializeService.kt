@@ -22,8 +22,8 @@ class InitializeService : IntentService("InitializeService") {
     companion object {
         private const val ACTION_INIT_WHEN_APP_CREATE = "taiwan.no1.service.action.INIT"
         fun start(context: Context) {
-            context.startService(Intent(context, InitializeService::class.java).
-                apply { action = ACTION_INIT_WHEN_APP_CREATE })
+            context.startService(Intent(context,
+                                        InitializeService::class.java).apply { action = ACTION_INIT_WHEN_APP_CREATE })
         }
     }
 

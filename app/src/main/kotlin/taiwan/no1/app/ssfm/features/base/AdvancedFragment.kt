@@ -27,7 +27,7 @@ abstract class AdvancedFragment<VM : IViewModel, B : ViewDataBinding> : BaseFrag
         viewModel.onAttach(this)
     }
 
-    override final fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+    final override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                                     savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, provideInflateView(), container, false)
         // HACK(jieyi): 8/21/17 Using reflection here, the performance might become lower. Maybe there are some better ways to do.

@@ -18,13 +18,13 @@ class MenuItem(context: Context) : LinearLayout(context) {
     var tv_menu: TextView
 
     init {
-        val view = (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).
-            inflate(R.layout.item_custom_menu, this)
+        val view = (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
+            .inflate(R.layout.item_custom_menu, this)
         tv_menu = view.tv_title
     }
 
-    constructor(context: Context, @DrawableRes resIcon: Int, @StringRes resTitle: Int) : this(
-        context) {
+    constructor(context: Context, @DrawableRes resIcon: Int, @StringRes resTitle: Int) :
+        this(context) {
         tv_menu.setText(resTitle)
         tv_menu.setCompoundDrawablesWithIntrinsicBounds(resIcon, 0, 0, 0)
     }

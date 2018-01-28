@@ -31,31 +31,32 @@ class FirstInitFlow {
     }
 
     private fun addHistoryData() {
-        AddPlaylistUsecase(LocalDataStore()).
-            execute(AddPlaylistUsecase.RequestValue(PlaylistEntity(name = "history", isHistory = true))) {
-                onNext { logd("Create the history playlist!") }
-                onError { loge("Fail to create the history playlist :(") }
-                onComplete { isFirstStartApp = true }
-            }
+        AddPlaylistUsecase(LocalDataStore()).execute(AddPlaylistUsecase.RequestValue(PlaylistEntity(name = "history",
+                                                                                                    isHistory = true))) {
+            onNext { logd("Create the history playlist!") }
+            onError { loge("Fail to create the history playlist :(") }
+            onComplete { isFirstStartApp = true }
+        }
     }
 
     private fun addRankChartData() {
-        gIntArray(R.array.TypeCode).
-            zip(gStringArray(R.array.TypeCodeName)).
-            zip(gStringArray(R.array.UpdatePeriod), this::pairToTriple).
-            forEach { (type, name, update) ->
-                // Get the image cover of each rank charts in the first time.
-                GetMusicRankUsecase(RemoteDataStore(gContext())).execute(GetMusicRankUsecase.RequestValue(type)) {
-                    onNext {
-                        AddRankChartUsecase(LocalDataStore()).
-                            execute(AddRankChartUsecase.RequestValue(RankChartEntity(0,
-                                                                                     type,
-                                                                                     it.data.songs[0].coverURL,
-                                                                                     name,
-                                                                                     update))) { onNext { logd(it) } }
+        gIntArray(R.array.TypeCode).zip(gStringArray(R.array.TypeCodeName)).zip(gStringArray(R.array.UpdatePeriod),
+                                                                                this::pairToTriple).forEach { (type, name, update) ->
+            // Get the image cover of each rank charts in the first time.
+            GetMusicRankUsecase(RemoteDataStore(gContext())).execute(GetMusicRankUsecase.RequestValue(type)) {
+                onNext {
+                    AddRankChartUsecase(LocalDataStore()).execute(AddRankChartUsecase.RequestValue(RankChartEntity(0,
+                                                                                                                   type,
+                                                                                                                   it.data.songs[0].coverURL,
+                                                                                                                   name,
+                                                                                                                   update))) {
+                        onNext {
+                            logd(it)
+                        }
                     }
                 }
             }
+        }
     }
 
     private fun <A, B, C> pairToTriple(a: Pair<A, B>, b: C) = Triple(a.first, a.second, b)

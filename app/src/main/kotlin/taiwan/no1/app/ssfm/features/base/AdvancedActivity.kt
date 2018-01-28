@@ -41,5 +41,5 @@ abstract class AdvancedActivity<VM : IViewModel, out B : ViewDataBinding> : Base
     }
     //endregion
 
-    abstract protected fun provideBindingLayoutId(): Pair<Activity, Int>
+    protected abstract fun provideBindingLayoutId(): Pair<Activity, Int>
 }

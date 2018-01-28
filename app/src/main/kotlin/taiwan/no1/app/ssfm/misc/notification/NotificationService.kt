@@ -2,7 +2,6 @@ package taiwan.no1.app.ssfm.misc.notification
 
 import android.app.Notification
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -39,10 +38,7 @@ class NotificationService : Service() {
         bigViews.setTextViewText(R.id.tv_big_now_time, "00000:00000")
         bigViews.setTextViewText(R.id.tv_big_duration, "00000:00000")
 
-        notification = NotificationCompat.Builder(this).
-                setSmallIcon(R.drawable.ic_music_player).
-                setOngoing(true).
-                build()
+        notification = NotificationCompat.Builder(this).setSmallIcon(R.drawable.ic_music_player).setOngoing(true).build()
 
         notification.bigContentView = bigViews
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -54,8 +50,6 @@ class NotificationService : Service() {
     }
 
     override fun onBind(intent: Intent?): IBinder = binder
-
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int) = super.onStartCommand(intent, flags, startId)
 
     inner class NotificationBinder : Binder() {
         fun getService() = this@NotificationService

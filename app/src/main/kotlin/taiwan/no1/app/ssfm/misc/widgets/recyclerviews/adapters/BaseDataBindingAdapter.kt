@@ -27,8 +27,10 @@ open class BaseDataBindingAdapter<BH : ViewDataBinding, D>(private val lifecycle
     private lateinit var bindingHolder: BindingHolder<BH>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        DataBindingUtil.inflate<BH>(LayoutInflater.from(parent.context), layoutId, parent, false).
-            let { BindingHolder(it).apply { bindingHolder = this } }
+        DataBindingUtil.inflate<BH>(LayoutInflater.from(parent.context),
+                                    layoutId,
+                                    parent,
+                                    false).let { BindingHolder(it).apply { bindingHolder = this } }
 
     override fun onBindViewHolder(holder: BindingHolder<BH>, position: Int) {
         bindVHBlock(holder, dataList[position], position)
@@ -73,12 +75,10 @@ open class BaseDataBindingAdapter<BH : ViewDataBinding, D>(private val lifecycle
     }
 
     private fun addToViewmodelKeeper(holder: BindingHolder<BH>) =
-        (holder.binding.javaClass.getMethod("getAvm").invoke(bindingHolder.binding) as BaseViewModel).
-            takeIf { it !in viewmodels }?.
-            let {
-                it.onAttach(lifecycleProvider)
-                viewmodels.add(it)
-            } ?: false
+        (holder.binding.javaClass.getMethod("getAvm").invoke(bindingHolder.binding) as BaseViewModel).takeIf { it !in viewmodels }?.let {
+            it.onAttach(lifecycleProvider)
+            viewmodels.add(it)
+        } ?: false
 
     private fun removeFromViewmodelKeeper(holder: BindingHolder<BH>) =
         (holder.binding.javaClass.getMethod("getAvm").invoke(bindingHolder.binding) as? BaseViewModel).let {

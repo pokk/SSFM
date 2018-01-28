@@ -149,8 +149,8 @@ class BaseMultipleTypeDataBindingAdapter<BH : ViewDataBinding, D>(lifecycleProvi
     private fun updateList(getNewListBlock: () -> MutableList<IExpandVisitable>) {
         val newList = getNewListBlock()
 
-        DiffUtil.calculateDiff(ExpandDiffUtil(dataList as MutableList<IExpandVisitable>, newList)).
-            dispatchUpdatesTo(this)
+        DiffUtil.calculateDiff(ExpandDiffUtil(dataList as MutableList<IExpandVisitable>, newList)).dispatchUpdatesTo(
+            this)
 
         dataList = newList as MutableList<D>
     }
