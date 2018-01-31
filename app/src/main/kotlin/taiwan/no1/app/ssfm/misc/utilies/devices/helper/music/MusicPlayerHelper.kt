@@ -43,6 +43,7 @@ class MusicPlayerHelper private constructor() {
     }
 
     companion object {
+        // For singleton object.
         val instance by lazy { Holder.INSTANCE }
 
         //region A new ExoPlayer for obtaining the information.
@@ -73,19 +74,33 @@ class MusicPlayerHelper private constructor() {
         //endregion
     }
 
+    /** The player's play mode. See [taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.mode.EPlayerMode] */
     var mode = PLAYLIST_STATE_NORMAL
+    /** The object place which is playing the music. */
     var currentObject = "!!!"
+    /** Keeping the last time which object was playing the music. */
     var playInObject = "???"
+    /** Current playing track's duration. Unit is 'second'. */
     var trackDuration = -1
         private set
+    /** Current track's playing time. Unit is 'second'. */
     var currentTime = -1
         private set
+    /**  */
     val isFirstTimePlayHere get() = currentObject != playInObject
+    /** Player's current state. */
     val state get() = player.getPlayerState()
+    /** The quantity of the tracks in the playlist. */
     val playlistSize get() = playlistManager?.playlistSize ?: 0
+    /**
+     * The current playing track's uri.
+     * For solving the problem is that avoiding the play icon and pause icon on the view.
+     */
     val currentUri get() = if (::musicUri.isInitialized) musicUri else "None"
-    val isPlayedTrack get() = 0 == currentTime
+    /** The index of the current playing track in the playlist. */
     val currentPlaylistIndex get() = playlistManager?.currentIndex ?: -1
+    /** Check the track finishes playing. */
+    val isPlayedTrack get() = 0 == currentTime
     val isPlaying get() = Play == state
     val isPause get() = Pause == state
     val isStop get() = Standby == state
@@ -95,6 +110,12 @@ class MusicPlayerHelper private constructor() {
     private lateinit var player: IMusicPlayer
     private lateinit var musicUri: String
 
+    /**
+     * Register the [player] object and the [playlistManager] object.
+     *
+     * @param player the media player object.
+     * @param playlistManager managing the play list object.
+     */
     fun hold(player: IMusicPlayer, playlistManager: PlaylistManager<PlaylistItemEntity>? = null) {
         this.player = player
         this.playlistManager = playlistManager
@@ -112,8 +133,18 @@ class MusicPlayerHelper private constructor() {
 
     fun isFirstTimePlayHere(objectName: String) = objectName != playInObject
 
+    /**
+     * Play a track from the [uri].
+     *
+     * @param uri track uri. If you don't input this parameter, just continue to play the same track.
+     * @param callback the player state callback function.
+     */
     fun play(uri: String = musicUri, callback: stateChangedListener = null) {
         if (::musicUri.isInitialized && isCurrentUri(uri)) {
+            // It will 
+            // 1. continue to play the same track.
+            // 2. pause the player.
+            // 3. repeat the same track.
             when {
                 isPlaying -> player.pause()
                 isPause -> player.resume()
@@ -129,6 +160,7 @@ class MusicPlayerHelper private constructor() {
             }
         }
         else {
+            // It will change a new track and notify to the view models that what's the new track.
             try {
                 if (::player.isInitialized && isPlaying) player.stop()
                 player.play(uri)
@@ -149,27 +181,60 @@ class MusicPlayerHelper private constructor() {
 
     fun stop() = player.stop()
 
+    /**
+     * Directly play the next track from the playlist.
+     *
+     * @param callback the player state callback function.
+     */
     fun next(callback: stateChangedListener = null) =
         mode.playerMode.next?.let { entity -> play(entity.trackUri, callback) } ?: throw Exception()
 
+    /**
+     * Directly play the previous track from the playlist.
+     *
+     * @param callback the player state callback function.
+     */
     fun previous(callback: stateChangedListener = null) =
         mode.playerMode.previous?.let { entity -> play(entity.trackUri, callback) } ?: throw Exception()
 
     fun downloadMusic(uri: String) = player.writeToFile(uri)
 
+    /**
+     * Add a new track [list] into the playlist.
+     *
+     * @param list a track list of the track entities.
+     */
     fun addList(list: List<PlaylistItemEntity>) = playlistManager?.append(list) ?: false
 
+    /**
+     * Remove a track entity from the playlist.
+     *
+     * @param uri a track entity.
+     */
     fun removeTrack(uri: PlaylistItemEntity) = playlistManager?.remove(uri) ?: false
 
+    /**
+     * Remove a track entity from the playlist by the index.
+     *
+     * @param index the track index in the playlist.
+     */
     fun removeTrack(index: Int) = playlistManager?.remove(index)
 
+    /**
+     * Remove all tracks from the playlist.
+     */
     fun clearList() = playlistManager?.clearPlaylist() ?: Unit
 
     fun setCurrentIndex(uri: PlaylistItemEntity) = playlistManager?.setIndex(uri) ?: false
 
-    fun addToPlaylist(playlistItem: PlaylistItemEntity,
-                      newSource: List<PlaylistItemEntity>,
-                      place: String) {
+    /**
+     * Add the [PlaylistItemEntity] list to the [playlistManager].
+     *
+     * @param playlistItem the current playing track's uri.
+     * @param newSource a list of the [PlaylistItemEntity].
+     * @param place the 'object name' where calls this function.
+     */
+    fun addToPlaylist(playlistItem: PlaylistItemEntity, newSource: List<PlaylistItemEntity>, place: String) {
         playerHelper.also { helper ->
             if (helper.isFirstTimePlayHere) {
                 helper.clearList()
@@ -180,6 +245,11 @@ class MusicPlayerHelper private constructor() {
         }
     }
 
+    /**
+     * Fetch the real track uri from the api and attach to the [PlaylistItemEntity].
+     *
+     * @param playlistItem a list of the [PlaylistItemEntity].
+     */
     fun attachMusicUri(playlistItem: List<PlaylistItemEntity>) =
         playlistItem.copy().apply {
             // For fetching the missing music uri's items.
@@ -195,14 +265,18 @@ class MusicPlayerHelper private constructor() {
      *
      * @param playlistItem
      */
-    fun fetchMusicUri(playlistItem: PlaylistItemEntity) {
+    private fun fetchMusicUri(playlistItem: PlaylistItemEntity) {
         if (playlistItem.trackUri.isNotBlank()) return
 
         return searchUsecase.execute(GetMusicUriUsecase.RequestValue(playlistItem),
                                      null,
-                                     { map { it.data.items.first() } }) {
+                                     {
+                                         // Just get the most exact track. NOTE: It might be incorrect, but the most exact!
+                                         map { it.data.items.first() }
+                                     }) {
             onNext {
                 logi(playlistItem)
+                // Attach the track uri to the entity.
                 playlistItem.apply {
                     trackUri = it.url
                     lyricUrl = it.lyricURL
@@ -213,6 +287,9 @@ class MusicPlayerHelper private constructor() {
         }
     }
 
+    /**
+     * Set the default player state changing listener.
+     */
     private fun setPlayerListener() {
         player.setEventListener(PlayerEventListener {
             onDurationChanged = {
@@ -242,6 +319,9 @@ class MusicPlayerHelper private constructor() {
         })
     }
 
+    /**
+     * When a track was finished playing, it'll fetch the next track uri and play it automatically.
+     */
     private fun autoPlayNext() =
         if (state == Standby && isPlayedTrack) {
             mode.playerMode.next?.let {
