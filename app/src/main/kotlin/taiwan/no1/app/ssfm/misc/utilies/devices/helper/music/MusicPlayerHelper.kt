@@ -112,7 +112,7 @@ class MusicPlayerHelper private constructor() {
 
     fun isFirstTimePlayHere(objectName: String) = objectName != playInObject
 
-    fun play(uri: String, callback: stateChangedListener = null) {
+    fun play(uri: String = musicUri, callback: stateChangedListener = null) {
         if (::musicUri.isInitialized && isCurrentUri(uri)) {
             when {
                 isPlaying -> player.pause()
