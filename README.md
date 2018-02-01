@@ -20,7 +20,19 @@
 # Introduction
 
 This project music app provides the functions that listening online musics, downloading a music from remote server, checking top charts for artists or tracks or albums in this week, and searching a music for yourself.
-Basically, it's a demo app but the basic functions we provide.
+Basically, it's a demo app but all the basic functions we provide.
+
+Talking is wasting time XD Let's just see the Demo.
+
+# Data Source
+
+The all of music data comes from last.fm. It let me be able to get so much artist and music information.
+
+# Demo
+
+![gif_animation_3](https://user-images.githubusercontent.com/5198104/35675004-d7e7ee68-0789-11e8-82c2-35446b370387.gif)
+
+
 
 # License
 
