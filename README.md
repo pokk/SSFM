@@ -24,14 +24,19 @@ Basically, it's a demo app but all the basic functions we provide.
 
 Talking is wasting time XD Let's just see the Demo.
 
+
 # Data Source
 
 The all of music data comes from last.fm. It let me be able to get so much artist and music information.
 
+
 # Demo
 
-![gif_animation_3](https://user-images.githubusercontent.com/5198104/35675004-d7e7ee68-0789-11e8-82c2-35446b370387.gif)
+![gif_animation_1](https://github.com/pokk/SSFM/blob/master/gif/gif_animation_1.gif)
 
+![gif_animation_2](https://github.com/pokk/SSFM/blob/master/gif/gif_animation_2.gif)
+
+![gif_animation_3](https://github.com/pokk/SSFM/blob/master/gif/gif_animation_3.gif)
 
 
 # License
