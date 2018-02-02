@@ -1,5 +1,10 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices.helper.music
 
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
+import android.os.IBinder
 import com.devrapid.kotlinknifer.WeakRef
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logi
@@ -331,4 +336,22 @@ class MusicPlayerHelper private constructor() {
         }
         else
             Unit
+
+    init {
+        startNotificationService()
+    }
+
+    private val notificationServiceConnection = object: ServiceConnection {
+        override fun onServiceDisconnected(p0: ComponentName?) {
+        }
+
+        override fun onServiceConnected(p0: ComponentName?, p1: IBinder?) {
+        }
+    }
+
+    private fun startNotificationService() {
+        val intent = Intent()
+        intent.setClassName("taiwan.no1.app.ssfm.misc.notification", "NotificationService")
+        gContext().bindService(intent, notificationServiceConnection, Context.BIND_AUTO_CREATE)
+    }
 }
