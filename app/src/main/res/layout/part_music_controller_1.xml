@@ -44,7 +44,7 @@
             app:layout_constraintStart_toEndOf="@+id/ib_repeat"
             app:layout_constraintTop_toTopOf="@+id/ib_lyrics"/>
 
-        <android.support.design.widget.FloatingActionButton
+        <ImageButton
             android:id="@+id/ib_lyrics"
             android:layout_width="60dp"
             android:layout_height="60dp"

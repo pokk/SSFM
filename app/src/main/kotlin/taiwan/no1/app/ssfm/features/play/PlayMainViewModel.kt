@@ -5,6 +5,7 @@ import android.databinding.ObservableField
 import android.view.View
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 
 /**
  *
@@ -16,18 +17,25 @@ class PlayMainViewModel(private val context: Context) : BaseViewModel() {
     val trackName by lazy { ObservableField<String>("The Cure") }
     val artistName by lazy { ObservableField<String>("Lady Gaga") }
 
+    init {
+        playerHelper.currentPlayingTrack.let {
+            trackName.set(it?.trackName.orEmpty())
+            artistName.set(it?.artistName.orEmpty())
+        }
+    }
+
     fun lyricsOnClick(view: View) {
     }
 
-    fun prevOnClick(view: View) {
-    }
+    fun prevOnClick(view: View) = playerHelper.previous()
 
-    fun nextOnClick(view: View) {
-    }
+    fun nextOnClick(view: View) = playerHelper.next()
 
     fun repeatOnClick(view: View) {
+        playerHelper.mode
     }
 
     fun shuffleOnClick(view: View) {
+        playerHelper.mode
     }
 }

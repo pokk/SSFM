@@ -104,6 +104,7 @@ class MusicPlayerHelper private constructor() {
     val currentUri get() = if (::musicUri.isInitialized) musicUri else "None"
     /** The index of the current playing track in the playlist. */
     val currentPlaylistIndex get() = playlistManager?.currentIndex ?: -1
+    val currentPlayingTrack get() = playlistManager?.playlist?.get(currentPlaylistIndex)
     /** Check the track finishes playing. */
     val isPlayedTrack get() = 0 == currentTime
     val isPlaying get() = Play == state
@@ -338,10 +339,10 @@ class MusicPlayerHelper private constructor() {
             Unit
 
     init {
-        startNotificationService()
+//        startNotificationService()
     }
 
-    private val notificationServiceConnection = object: ServiceConnection {
+    private val notificationServiceConnection = object : ServiceConnection {
         override fun onServiceDisconnected(p0: ComponentName?) {
         }
 
