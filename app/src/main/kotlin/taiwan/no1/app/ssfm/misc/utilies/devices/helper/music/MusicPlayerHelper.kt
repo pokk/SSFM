@@ -337,22 +337,4 @@ class MusicPlayerHelper private constructor() {
         }
         else
             Unit
-
-    init {
-//        startNotificationService()
-    }
-
-    private val notificationServiceConnection = object : ServiceConnection {
-        override fun onServiceDisconnected(p0: ComponentName?) {
-        }
-
-        override fun onServiceConnected(p0: ComponentName?, p1: IBinder?) {
-        }
-    }
-
-    private fun startNotificationService() {
-        val intent = Intent()
-        intent.setClassName("taiwan.no1.app.ssfm.misc.notification", "NotificationService")
-        gContext().bindService(intent, notificationServiceConnection, Context.BIND_AUTO_CREATE)
-    }
 }
