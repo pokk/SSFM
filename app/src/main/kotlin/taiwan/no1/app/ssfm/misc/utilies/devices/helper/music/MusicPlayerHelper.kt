@@ -1,10 +1,5 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices.helper.music
 
-import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
-import android.content.ServiceConnection
-import android.os.IBinder
 import com.devrapid.kotlinknifer.WeakRef
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logi
@@ -91,7 +86,6 @@ class MusicPlayerHelper private constructor() {
     /** Current track's playing time. Unit is 'second'. */
     var currentTime = -1
         private set
-    /**  */
     val isFirstTimePlayHere get() = currentObject != playInObject
     /** Player's current state. */
     val state get() = player.getPlayerState()

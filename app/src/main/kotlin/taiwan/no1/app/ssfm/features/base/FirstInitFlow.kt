@@ -50,9 +50,7 @@ class FirstInitFlow {
                                                                                                                    it.data.songs[0].coverURL,
                                                                                                                    name,
                                                                                                                    update))) {
-                        onNext {
-                            logd(it)
-                        }
+                        onNext { }
                     }
                 }
             }
