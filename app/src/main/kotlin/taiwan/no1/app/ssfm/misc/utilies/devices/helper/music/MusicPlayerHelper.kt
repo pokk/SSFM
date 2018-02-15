@@ -98,6 +98,7 @@ class MusicPlayerHelper private constructor() {
     val currentUri get() = if (::musicUri.isInitialized) musicUri else "None"
     /** The index of the current playing track in the playlist. */
     val currentPlaylistIndex get() = playlistManager?.currentIndex ?: -1
+    // FIXME(jieyi): 2/15/18 There're some problems will cause the app crash.
     val currentPlayingTrack get() = playlistManager?.playlist?.get(currentPlaylistIndex)
     /** Check the track finishes playing. */
     val isPlayedTrack get() = 0 == currentTime
