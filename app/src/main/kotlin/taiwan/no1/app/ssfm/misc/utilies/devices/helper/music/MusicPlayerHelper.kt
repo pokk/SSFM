@@ -187,7 +187,7 @@ class MusicPlayerHelper private constructor() {
      * @param callback the player state callback function.
      */
     fun next(callback: stateChangedListener = null) =
-        mode.playerMode.next?.let { entity -> play(entity.trackUri, callback) } ?: throw Exception()
+        mode.playerMode.next?.let { entity -> play(entity.trackUri, callback) } ?: Unit
 
     /**
      * Directly play the previous track from the playlist.
@@ -195,7 +195,7 @@ class MusicPlayerHelper private constructor() {
      * @param callback the player state callback function.
      */
     fun previous(callback: stateChangedListener = null) =
-        mode.playerMode.previous?.let { entity -> play(entity.trackUri, callback) } ?: throw Exception()
+        mode.playerMode.previous?.let { entity -> play(entity.trackUri, callback) } ?: Unit
 
     fun downloadMusic(uri: String) = player.writeToFile(uri)
 
