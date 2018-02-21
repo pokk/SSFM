@@ -13,3 +13,11 @@ fun TagGroup.setSrc(tags: ArrayList<String>) = setTags(tags)
 
 @BindingAdapter("android:blurBackground")
 fun RealtimeBlurView.setBackground(color: Int) = setOverlayColor(color)
+
+//@BindingAdapter("android:onClickListener",
+//                "android:startTime",
+//                "android:endTime",
+//                "android:imageUri",
+//                requireAll = false)
+//fun RealtimeBlurView.setEventCallback(color: Int) {
+//}

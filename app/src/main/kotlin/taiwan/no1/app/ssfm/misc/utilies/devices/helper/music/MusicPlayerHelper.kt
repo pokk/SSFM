@@ -98,7 +98,7 @@ class MusicPlayerHelper private constructor() {
     val currentUri get() = if (::musicUri.isInitialized) musicUri else "None"
     /** The index of the current playing track in the playlist. */
     val currentPlaylistIndex get() = playlistManager?.currentIndex ?: -1
-    val currentPlayingTrack get() = playlistManager?.playlist?.get(currentPlaylistIndex)
+    val currentPlayingTrack get() = playlistManager?.playlist?.takeIf { 0 < it.size }?.let { it[currentPlaylistIndex] }
     /** Check the track finishes playing. */
     val isPlayedTrack get() = 0 == currentTime
     val isPlaying get() = Play == state
@@ -187,7 +187,7 @@ class MusicPlayerHelper private constructor() {
      * @param callback the player state callback function.
      */
     fun next(callback: stateChangedListener = null) =
-        mode.playerMode.next?.let { entity -> play(entity.trackUri, callback) } ?: throw Exception()
+        mode.playerMode.next?.let { entity -> play(entity.trackUri, callback) } ?: Unit
 
     /**
      * Directly play the previous track from the playlist.
@@ -195,7 +195,7 @@ class MusicPlayerHelper private constructor() {
      * @param callback the player state callback function.
      */
     fun previous(callback: stateChangedListener = null) =
-        mode.playerMode.previous?.let { entity -> play(entity.trackUri, callback) } ?: throw Exception()
+        mode.playerMode.previous?.let { entity -> play(entity.trackUri, callback) } ?: Unit
 
     fun downloadMusic(uri: String, filePath: String) = player.writeToFile(uri, filePath)
 
