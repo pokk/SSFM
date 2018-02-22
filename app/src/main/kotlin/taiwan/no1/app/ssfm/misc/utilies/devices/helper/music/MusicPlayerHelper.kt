@@ -1,5 +1,6 @@
 package taiwan.no1.app.ssfm.misc.utilies.devices.helper.music
 
+import android.os.Environment
 import com.devrapid.kotlinknifer.WeakRef
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logi
@@ -197,7 +198,18 @@ class MusicPlayerHelper private constructor() {
     fun previous(callback: stateChangedListener = null) =
         mode.playerMode.previous?.let { entity -> play(entity.trackUri, callback) } ?: Unit
 
-    fun downloadMusic(uri: String, filePath: String? = null) = player.writeToFile(uri, filePath.orEmpty())
+    fun downloadMusic(
+        uri: String,
+        filePath: String? = arrayOf(Environment.getExternalStorageDirectory(),
+                                    Environment.DIRECTORY_MUSIC).joinToString("/")
+    ) {
+        val fileName = uri.split("/").lastOrNull()
+        val fullPath = arrayOf(filePath, fileName).joinToString("/")
+
+        logw(fullPath)
+
+        player.writeToFile(uri, fullPath)
+    }
 
     /**
      * Add a new track [list] into the playlist.
