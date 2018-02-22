@@ -47,8 +47,10 @@ abstract class BaseFragment : RxFragment(), HasFragmentInjector {
         super.onAttach(context)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Keep the instance data.
         retainInstance = true
         // FIXED: https://www.zybuluo.com/kimo/note/255244
@@ -59,7 +61,7 @@ abstract class BaseFragment : RxFragment(), HasFragmentInjector {
         return rootView
     }
 
-    override final fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    final override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         rendered(savedInstanceState)
@@ -89,15 +91,14 @@ abstract class BaseFragment : RxFragment(), HasFragmentInjector {
      *
      * @param savedInstanceState before status.
      */
-    abstract protected fun rendered(savedInstanceState: Bundle?)
+    protected abstract fun rendered(savedInstanceState: Bundle?)
 
     /**
      * Set the view for inflating.
      *
      * @return [LayoutRes] layout xml.
      */
-    @LayoutRes
-    abstract protected fun provideInflateView(): Int
+    @LayoutRes protected abstract fun provideInflateView(): Int
     //endregion
 
     /**

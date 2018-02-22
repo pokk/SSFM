@@ -197,7 +197,7 @@ class MusicPlayerHelper private constructor() {
     fun previous(callback: stateChangedListener = null) =
         mode.playerMode.previous?.let { entity -> play(entity.trackUri, callback) } ?: Unit
 
-    fun downloadMusic(uri: String, filePath: String) = player.writeToFile(uri, filePath)
+    fun downloadMusic(uri: String, filePath: String = "") = player.writeToFile(uri, filePath)
 
     /**
      * Add a new track [list] into the playlist.

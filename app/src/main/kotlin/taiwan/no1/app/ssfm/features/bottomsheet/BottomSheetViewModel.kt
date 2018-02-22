@@ -28,7 +28,7 @@ class BottomSheetViewModel(private val bsHelper: BottomSheetBehavior<View>) : Ba
                 else -> ""
             }.let {
                 playerHelper.apply {
-                    downloadMusic(it, "") // TODO(Weian, 2018/2/21): need to add the file path, or it would be the default path(/storage/emulated/0/Download/temp_track.mp3)
+                    downloadMusic(it) // TODO(Weian, 2018/2/21): need to add the file path, or it would be the default path(/storage/emulated/0/Download/temp_track.mp3)
                     // TODO(jieyi): 2017/12/21 Add downloading task into the download activity.
                 }
             }
