@@ -3,10 +3,12 @@ package taiwan.no1.app.ssfm.features.bottomsheet
 import android.annotation.SuppressLint
 import android.support.design.widget.BottomSheetBehavior
 import android.view.View
+import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.mvvm.createDebounce
 import com.hwangjr.rxbus.RxBus
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CLICK_PLAYLIST_FRAGMENT_DIALOG
+import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.musicDir
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
@@ -28,7 +30,9 @@ class BottomSheetViewModel(private val bsHelper: BottomSheetBehavior<View>) : Ba
                 else -> ""
             }.let {
                 playerHelper.apply {
-                    downloadMusic(it) // TODO(Weian, 2018/2/21): need to add the file path, or it would be the default path(/storage/emulated/0/Download/temp_track.mp3)
+                    // TODO(Weian, 2018/2/21): need to add the file path, or it would be the default path(/storage/emulated/0/Download/temp_track.mp3)
+                    logw(musicDir(currentUri))
+                    downloadMusic(it, musicDir(currentUri))
                     // TODO(jieyi): 2017/12/21 Add downloading task into the download activity.
                 }
             }
