@@ -11,6 +11,7 @@ import com.devrapid.kotlinknifer.addFragment
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
+import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.bottomsheet_track.rl_bottom_sheet
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityPlaylistBinding
@@ -28,13 +29,16 @@ import javax.inject.Inject
  */
 class PlaylistActivity : AdvancedActivity<PlaylistViewModel, ActivityPlaylistBinding>() {
     @Inject override lateinit var viewModel: PlaylistViewModel
+    private val permissions by lazy { RxPermissions(this) }
 
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.bottomSheetVm = BottomSheetViewModel(BottomSheetBehavior.from(rl_bottom_sheet).apply {
-            state = BottomSheetBehavior.STATE_HIDDEN
-        } as BottomSheetBehavior<View>)
+        binding.bottomSheetVm =
+            BottomSheetViewModel(permissions,
+                                 BottomSheetBehavior.from(rl_bottom_sheet).apply {
+                                     state = BottomSheetBehavior.STATE_HIDDEN
+                                 } as BottomSheetBehavior<View>)
         RxBus.get().register(this)
         fragmentManager.addFragment(R.id.fl_container, PlaylistIndexFragment.newInstance(), false)
     }
@@ -47,7 +51,8 @@ class PlaylistActivity : AdvancedActivity<PlaylistViewModel, ActivityPlaylistBin
     //endregion
 
     //region Base activity implement
-    override fun provideBindingLayoutId(): Pair<Activity, Int> = Pair(this, R.layout.activity_playlist)
+    override fun provideBindingLayoutId(): Pair<Activity, Int> =
+        Pair(this, R.layout.activity_playlist)
     //endregion
 
     /**
@@ -58,8 +63,10 @@ class PlaylistActivity : AdvancedActivity<PlaylistViewModel, ActivityPlaylistBin
      */
     @Subscribe(tags = [Tag(RxBusTag.VIEWMODEL_CLICK_PLAYLIST), Tag(RxBusTag.VIEWMODEL_CLICK_ADD_PLAYLIST)])
     fun navigateToPlaylistDetail(params: Pair<PlaylistEntity, List<Pair<View, String>>>) {
-        val sharedElements = params.second.takeIf { it.isNotEmpty() }?.let { HashMap(it.toMap()) } ?: HashMap()
-        navigate(PlaylistDetailFragment.newInstance(params.first, sharedElements.map { it.value }.toList()),
+        val sharedElements =
+            params.second.takeIf { it.isNotEmpty() }?.let { HashMap(it.toMap()) } ?: HashMap()
+        navigate(PlaylistDetailFragment.newInstance(params.first,
+                                                    sharedElements.map { it.value }.toList()),
                  true,
                  sharedElements)
     }
@@ -70,10 +77,17 @@ class PlaylistActivity : AdvancedActivity<PlaylistViewModel, ActivityPlaylistBin
             type = "image/*"
             action = Intent.ACTION_GET_CONTENT
         }
-        ActivityCompat.startActivityForResult(this, Intent.createChooser(intent, "Select Picture"), 32, null)
+        ActivityCompat.startActivityForResult(this,
+                                              Intent.createChooser(intent, "Select Picture"),
+                                              32,
+                                              null)
     }
 
-    private fun navigate(fragment: Fragment, needBack: Boolean, sharedElements: HashMap<View, String>) {
+    private fun navigate(
+        fragment: Fragment,
+        needBack: Boolean,
+        sharedElements: HashMap<View, String>
+    ) {
         fragmentManager.addFragment(R.id.fl_container, fragment, needBack, null, sharedElements)
     }
 }

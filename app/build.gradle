@@ -106,13 +106,15 @@ dependencies {
         exclude group: 'com.jakewharton.timber', module: 'timber'
     })
     // RxLifecycle
-    implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.1.0'
-    implementation 'com.trello.rxlifecycle2:rxlifecycle-kotlin:2.1.0'
+    implementation "com.trello.rxlifecycle2:rxlifecycle-components:2.1.0"
+    implementation "com.trello.rxlifecycle2:rxlifecycle-kotlin:2.1.0"
     // RxBinding
     implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:$rxbinding_vserion"
     implementation "com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:$rxbinding_vserion"
     implementation "com.jakewharton.rxbinding2:rxbinding-design-kotlin:$rxbinding_vserion"
     implementation "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7-kotlin:$rxbinding_vserion"
+    // RxPermission
+    implementation "com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar"
     //endregion
 
     //region Database

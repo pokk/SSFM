@@ -11,6 +11,7 @@ import com.devrapid.kotlinknifer.addFragment
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
+import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.bottomsheet_track.rl_bottom_sheet
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivitySearchBinding
@@ -46,6 +47,7 @@ class SearchActivity : AdvancedActivity<SearchViewModel, ActivitySearchBinding>(
     /** For judging a fragment should be pushed or popped. */
     private val fragmentStack by lazy { Stack<Fragment>() }
     private val playlistInfo by lazy { DataInfo() }
+    private val permissions by lazy { RxPermissions(this) }
     private var playlistRes = mutableListOf<BaseEntity>()
     private var track by WeakRef<BaseEntity>()
     private lateinit var dialogFragment: QuickDialogBindingFragment<FragmentDialogPlaylistBinding>
@@ -54,15 +56,19 @@ class SearchActivity : AdvancedActivity<SearchViewModel, ActivitySearchBinding>(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         RxBus.get().register(this)
-        binding.bottomSheetVm = BottomSheetViewModel(BottomSheetBehavior.from(rl_bottom_sheet).apply {
-            state = BottomSheetBehavior.STATE_HIDDEN
-        } as BottomSheetBehavior<View>)
+        binding.bottomSheetVm =
+            BottomSheetViewModel(
+                permissions,
+                BottomSheetBehavior.from(rl_bottom_sheet).apply {
+                    state = BottomSheetBehavior.STATE_HIDDEN
+                } as BottomSheetBehavior<View>)
         addFragmentAndToStack(SearchIndexFragment.newInstance())
         viewModel.apply {
             navigateListener = { fragmentTag, params ->
                 params?.let { navigate(fragmentTag, params) } ?: navigate(fragmentTag)
             }
-            popFragment = { toFragmentTag -> this@SearchActivity.popFragmentAndFromStack(toFragmentTag) }
+            popFragment =
+                { toFragmentTag -> this@SearchActivity.popFragmentAndFromStack(toFragmentTag) }
         }
     }
 

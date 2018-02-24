@@ -2,18 +2,15 @@ package taiwan.no1.app.ssfm.features.chart
 
 import android.app.Activity
 import android.app.Fragment
-import android.content.Context
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
-import android.support.v4.app.ActivityCompat
 import android.view.View
 import com.devrapid.dialogbuilder.QuickDialogBindingFragment
 import com.devrapid.kotlinknifer.addFragment
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
+import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.bottomsheet_track.rl_bottom_sheet
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityChartBinding
@@ -51,30 +48,19 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     @Inject lateinit var addPlaylistItemCase: AddPlaylistItemCase
     @field:[Inject Named("activity_playlist_usecase")] lateinit var fetchPlaylistCase: FetchPlaylistCase
     private val playlistInfo by lazy { DataInfo() }
+    private val permissions by lazy { RxPermissions(this) }
     private var playlistRes = mutableListOf<BaseEntity>()
     private lateinit var dialogFragment: QuickDialogBindingFragment<FragmentDialogPlaylistBinding>
 
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.bottomSheetVm = BottomSheetViewModel(BottomSheetBehavior.from(rl_bottom_sheet).apply {
-            state = BottomSheetBehavior.STATE_HIDDEN
-        } as BottomSheetBehavior<View>)
+        binding.bottomSheetVm =
+            BottomSheetViewModel(permissions,
+                                 BottomSheetBehavior.from(rl_bottom_sheet).apply {
+                                     state = BottomSheetBehavior.STATE_HIDDEN
+                                 } as BottomSheetBehavior<View>)
 
-        val REQUEST = 112
-
-        if (Build.VERSION.SDK_INT >= 23) {
-            val PERMISSIONS = listOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            if (!this@ChartActivity.hasPermissions(this@ChartActivity, PERMISSIONS)) {
-                ActivityCompat.requestPermissions(this@ChartActivity, PERMISSIONS.toTypedArray(), REQUEST)
-            }
-            else {
-                //do here
-            }
-        }
-        else {
-            //do here
-        }
         navigate(hashMapOf(RXBUS_PARAMETER_FRAGMENT to ChartIndexFragment.newInstance(),
                            RXBUS_PARAMETER_FRAGMENT_NEEDBACK to false))
         RxBus.get().register(this)
@@ -119,7 +105,8 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
      */
     @Subscribe(tags = [Tag(VIEWMODEL_CLICK_SIMILAR)])
     fun navigateToArtistDetail(artistName: String) {
-        navigate(hashMapOf(RXBUS_PARAMETER_FRAGMENT to ChartArtistDetailFragment.newInstance(artistName = artistName),
+        navigate(hashMapOf(RXBUS_PARAMETER_FRAGMENT to ChartArtistDetailFragment.newInstance(
+            artistName = artistName),
                            RXBUS_PARAMETER_FRAGMENT_NEEDBACK to true))
     }
 
@@ -132,7 +119,9 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     fun navigateToAlbumDetail(params: HashMap<String, String>) {
         val (artistName, artistAlbum) =
             (params[VIEWMODEL_PARAMS_ARTIST_NAME].orEmpty()) to (params[VIEWMODEL_PARAMS_ARTIST_ALBUM_NAME].orEmpty())
-        navigate(hashMapOf(RXBUS_PARAMETER_FRAGMENT to ChartAlbumDetailFragment.newInstance(artistAlbum, artistName),
+        navigate(hashMapOf(RXBUS_PARAMETER_FRAGMENT to ChartAlbumDetailFragment.newInstance(
+            artistAlbum,
+            artistName),
                            RXBUS_PARAMETER_FRAGMENT_NEEDBACK to true))
     }
 
@@ -144,7 +133,8 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     @Subscribe(tags = [Tag(VIEWMODEL_CLICK_RANK_CHART)])
     fun navigateToRankChartDetail(entity: RankChartEntity) {
         navigate(hashMapOf(
-            RXBUS_PARAMETER_FRAGMENT to ChartRankChartDetailFragment.newInstance(entity.rankType, entity),
+            RXBUS_PARAMETER_FRAGMENT to ChartRankChartDetailFragment.newInstance(entity.rankType,
+                                                                                 entity),
             RXBUS_PARAMETER_FRAGMENT_NEEDBACK to true))
     }
 
@@ -204,15 +194,4 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
         }
     }
     //endregion
-
-    private fun hasPermissions(context: Context?, permissions: List<String>): Boolean {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
-            for (permission in permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-                    return false
-                }
-            }
-        }
-        return true
-    }
 }
