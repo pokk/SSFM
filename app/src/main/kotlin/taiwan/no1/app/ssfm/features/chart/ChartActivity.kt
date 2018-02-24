@@ -56,10 +56,12 @@ class ChartActivity : AdvancedActivity<ChartViewModel, ActivityChartBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.bottomSheetVm =
-            BottomSheetViewModel(permissions,
+            BottomSheetViewModel(this,
+                                 permissions,
                                  BottomSheetBehavior.from(rl_bottom_sheet).apply {
                                      state = BottomSheetBehavior.STATE_HIDDEN
-                                 } as BottomSheetBehavior<View>)
+                                 } as BottomSheetBehavior<View>,
+                                 addPlaylistItemCase)
 
         navigate(hashMapOf(RXBUS_PARAMETER_FRAGMENT to ChartIndexFragment.newInstance(),
                            RXBUS_PARAMETER_FRAGMENT_NEEDBACK to false))

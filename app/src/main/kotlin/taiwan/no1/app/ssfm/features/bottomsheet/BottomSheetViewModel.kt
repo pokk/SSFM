@@ -4,17 +4,22 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.support.design.widget.BottomSheetBehavior
 import android.view.View
-import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.mvvm.createDebounce
 import com.hwangjr.rxbus.RxBus
 import com.tbruyelle.rxpermissions2.RxPermissions
+import com.trello.rxlifecycle2.LifecycleProvider
+import com.trello.rxlifecycle2.kotlin.bind
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
+import taiwan.no1.app.ssfm.misc.constants.Constant.DATABASE_PLAYLIST_DOWNLOAD_ID
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CLICK_PLAYLIST_FRAGMENT_DIALOG
 import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.playerHelper
 import taiwan.no1.app.ssfm.models.entities.PlaylistItemEntity
 import taiwan.no1.app.ssfm.models.entities.lastfm.BaseEntity
+import taiwan.no1.app.ssfm.models.entities.transforms.transformToPlaylist
 import taiwan.no1.app.ssfm.models.entities.v2.MusicEntity
 import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
+import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
+import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemUsecase
 
 /**
  * @author  jieyi
@@ -22,33 +27,37 @@ import taiwan.no1.app.ssfm.models.entities.v2.MusicRankEntity
  */
 @SuppressLint("CheckResult")
 class BottomSheetViewModel(
+    private val lifecycle: LifecycleProvider<*>,
     private val permission: RxPermissions,
-    private val bsHelper: BottomSheetBehavior<View>
+    private val bsHelper: BottomSheetBehavior<View>,
+    private val addPlaylistItemCase: AddPlaylistItemCase
 ) : BaseViewModel() {
     var obtainMusicEntity: BaseEntity? = null
     private val debounceDownload by lazy {
         createDebounce<View> { v ->
             permission
                 .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .subscribe {
+                .bind(lifecycle.lifecycle())
+                .map {
                     if (it) {
                         hideBottomSheet(v)
                         when (obtainMusicEntity) {
-                            is MusicEntity.Music -> (obtainMusicEntity as MusicEntity.Music).url
-                            is MusicRankEntity.Song -> (obtainMusicEntity as MusicRankEntity.Song).url
-                            is PlaylistItemEntity -> (obtainMusicEntity as PlaylistItemEntity).trackUri
-                            else -> ""
-                        }.let {
-                            playerHelper.apply {
-                                // TODO(Weian, 2018/2/21): need to add the file path, or it would be the default path(/storage/emulated/0/Download/temp_track.mp3)
-                                downloadMusic(it)
-                                // TODO(jieyi): 2017/12/21 Add downloading task into the download activity.
-                            }
+                            is MusicEntity.Music -> (obtainMusicEntity as MusicEntity.Music).transformToPlaylist()
+                            is MusicRankEntity.Song -> (obtainMusicEntity as MusicRankEntity.Song).transformToPlaylist()
+                            is PlaylistItemEntity -> obtainMusicEntity as PlaylistItemEntity
+                            else -> throw IllegalArgumentException("There is no kind of data type!")
                         }
                     }
                     else {
-                        loge("The user denies the permission! :(")
+                        throw IllegalArgumentException("There is no kind of data type!")
                     }
+                }
+                .map { it.apply { it.id = DATABASE_PLAYLIST_DOWNLOAD_ID.toLong() } }
+                .subscribe {
+                    if (!playerHelper.downloadMusic(it.trackUri)) throw RuntimeException("Cannot write to the external storage.")
+
+                    // TODO(jieyi): 2018/02/25 How add the download item to database!!!
+                    addPlaylistItemCase.pureUsecase(AddPlaylistItemUsecase.RequestValue(it))
                 }
         }
     }

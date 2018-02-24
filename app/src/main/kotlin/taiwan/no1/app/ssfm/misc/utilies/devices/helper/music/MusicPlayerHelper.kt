@@ -202,13 +202,9 @@ class MusicPlayerHelper private constructor() {
         uri: String,
         filePath: String? = arrayOf(Environment.getExternalStorageDirectory(),
                                     Environment.DIRECTORY_MUSIC).joinToString("/")
-    ) {
+    ) = run {
         val fileName = uri.split("/").lastOrNull()
         val fullPath = arrayOf(filePath, fileName).joinToString("/")
-
-        logw(fullPath)
-
-
 
         player.writeToFile(uri, fullPath)
     }

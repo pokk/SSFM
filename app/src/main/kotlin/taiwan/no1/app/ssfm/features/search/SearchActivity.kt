@@ -67,8 +67,7 @@ class SearchActivity : AdvancedActivity<SearchViewModel, ActivitySearchBinding>(
             navigateListener = { fragmentTag, params ->
                 params?.let { navigate(fragmentTag, params) } ?: navigate(fragmentTag)
             }
-            popFragment =
-                { toFragmentTag -> this@SearchActivity.popFragmentAndFromStack(toFragmentTag) }
+            popFragment = { toFragmentTag -> this@SearchActivity.popFragmentAndFromStack(toFragmentTag) }
         }
     }
 
