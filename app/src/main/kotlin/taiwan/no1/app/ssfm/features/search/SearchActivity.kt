@@ -58,10 +58,12 @@ class SearchActivity : AdvancedActivity<SearchViewModel, ActivitySearchBinding>(
         RxBus.get().register(this)
         binding.bottomSheetVm =
             BottomSheetViewModel(
+                this,
                 permissions,
                 BottomSheetBehavior.from(rl_bottom_sheet).apply {
                     state = BottomSheetBehavior.STATE_HIDDEN
-                } as BottomSheetBehavior<View>)
+                } as BottomSheetBehavior<View>,
+                addPlaylistItemCase)
         addFragmentAndToStack(SearchIndexFragment.newInstance())
         viewModel.apply {
             navigateListener = { fragmentTag, params ->

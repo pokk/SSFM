@@ -8,7 +8,6 @@ import com.devrapid.kotlinknifer.mvvm.createDebounce
 import com.hwangjr.rxbus.RxBus
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.trello.rxlifecycle2.LifecycleProvider
-import com.trello.rxlifecycle2.kotlin.bind
 import taiwan.no1.app.ssfm.features.base.BaseViewModel
 import taiwan.no1.app.ssfm.misc.constants.Constant.DATABASE_PLAYLIST_DOWNLOAD_ID
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.VIEWMODEL_CLICK_PLAYLIST_FRAGMENT_DIALOG
@@ -37,7 +36,7 @@ class BottomSheetViewModel(
         createDebounce<View> { v ->
             permission
                 .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .bind(lifecycle.lifecycle())
+                .compose(lifecycle.bindToLifecycle())
                 .map {
                     if (it) {
                         hideBottomSheet(v)
@@ -72,6 +71,12 @@ class BottomSheetViewModel(
     }
     private val debounceShare by lazy { createDebounce<View> { hideBottomSheet(it) } }
     private val debounceCancel by lazy { createDebounce<View> { hideBottomSheet(it) } }
+
+    init {
+//        debounceDownload.subscribe {
+//            logw("Hello world")
+//        }
+    }
 
     fun onBottomSheetDownloadClick(view: View) = debounceDownload.onNext(view)
 

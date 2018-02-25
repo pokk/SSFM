@@ -20,6 +20,7 @@ import taiwan.no1.app.ssfm.features.bottomsheet.BottomSheetViewModel
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag
 import taiwan.no1.app.ssfm.misc.constants.RxBusTag.OPEN_SERVICE
 import taiwan.no1.app.ssfm.models.entities.PlaylistEntity
+import taiwan.no1.app.ssfm.models.usecases.AddPlaylistItemCase
 import javax.inject.Inject
 
 /**
@@ -29,16 +30,18 @@ import javax.inject.Inject
  */
 class PlaylistActivity : AdvancedActivity<PlaylistViewModel, ActivityPlaylistBinding>() {
     @Inject override lateinit var viewModel: PlaylistViewModel
+    @Inject lateinit var addPlaylistItemCase: AddPlaylistItemCase
     private val permissions by lazy { RxPermissions(this) }
 
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.bottomSheetVm =
-            BottomSheetViewModel(permissions,
-                                 BottomSheetBehavior.from(rl_bottom_sheet).apply {
-                                     state = BottomSheetBehavior.STATE_HIDDEN
-                                 } as BottomSheetBehavior<View>)
+        binding.bottomSheetVm = BottomSheetViewModel(this,
+                                                     permissions,
+                                                     BottomSheetBehavior.from(rl_bottom_sheet).apply {
+                                                         state = BottomSheetBehavior.STATE_HIDDEN
+                                                     } as BottomSheetBehavior<View>,
+                                                     addPlaylistItemCase)
         RxBus.get().register(this)
         fragmentManager.addFragment(R.id.fl_container, PlaylistIndexFragment.newInstance(), false)
     }
