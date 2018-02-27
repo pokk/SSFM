@@ -3,7 +3,7 @@
     <integer-array name="ic_side_menu">
         <item>@drawable/ic_mail</item>
         <item>@drawable/ic_music</item>
-        <item>@drawable/ic_favorite</item>
+        <item>@drawable/ic_download</item>
         <item>@drawable/ic_search</item>
         <item>@drawable/ic_chart</item>
         <item>@drawable/ic_settings</item>
@@ -12,7 +12,7 @@
     <string-array name="side_menu">
         <item>Home</item>
         <item>My Playlist</item>
-        <item>My Favorite</item>
+        <item>Downloaded</item>
         <item>Search</item>
         <item>Charts</item>
         <item>Settings</item>

@@ -12,7 +12,7 @@ import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import com.tbruyelle.rxpermissions2.RxPermissions
-import kotlinx.android.synthetic.main.bottomsheet_track.rl_bottom_sheet
+import kotlinx.android.synthetic.main.bottomsheet_track.*
 import taiwan.no1.app.ssfm.R
 import taiwan.no1.app.ssfm.databinding.ActivityPlaylistBinding
 import taiwan.no1.app.ssfm.features.base.AdvancedActivity

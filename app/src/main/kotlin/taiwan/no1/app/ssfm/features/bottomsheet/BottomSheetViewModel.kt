@@ -4,7 +4,9 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.support.design.widget.BottomSheetBehavior
 import android.view.View
+import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.mvvm.createDebounce
+import com.devrapid.kotlinknifer.observable
 import com.hwangjr.rxbus.RxBus
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.trello.rxlifecycle2.LifecycleProvider
@@ -51,13 +53,20 @@ class BottomSheetViewModel(
                         throw IllegalArgumentException("There is no kind of data type!")
                     }
                 }
+                // Get the download map3 uri.
                 .map { it.apply { it.id = DATABASE_PLAYLIST_DOWNLOAD_ID.toLong() } }
-                .subscribe {
-                    if (!playerHelper.downloadMusic(it.trackUri)) throw RuntimeException("Cannot write to the external storage.")
-
-                    // TODO(jieyi): 2018/02/25 How add the download item to database!!!
-                    addPlaylistItemCase.pureUsecase(AddPlaylistItemUsecase.RequestValue(it))
+                // TODO(jieyi): 2018/02/28 Add the check the uri whether it downloaded or not.
+                // Download the mp3 into the mobile phone.
+                .map { it to playerHelper.downloadMusic(it.trackUri) }
+                // Add the record into the database.
+                // TODO(jieyi): 2018/02/28 The record's uri must be with local path.
+                .flatMap { (entity, isSuccess) ->
+                    if (isSuccess)
+                        addPlaylistItemCase.pureUsecase(AddPlaylistItemUsecase.RequestValue(entity))
+                    else
+                        observable { false }
                 }
+                .subscribe { logw(it) }
         }
     }
     /**
