@@ -1,6 +1,10 @@
 package taiwan.no1.app.ssfm
 
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
+import android.os.IBinder
 import android.support.multidex.MultiDex
 import com.raizlabs.android.dbflow.config.FlowManager
 import dagger.android.AndroidInjector
@@ -8,6 +12,7 @@ import dagger.android.DaggerApplication
 import taiwan.no1.app.ssfm.controllers.services.InitializeService
 import taiwan.no1.app.ssfm.internal.di.components.AppComponent
 import taiwan.no1.app.ssfm.internal.di.components.DaggerAppComponent
+import taiwan.no1.app.ssfm.misc.notification.NotificationService
 
 /**
  * Android Main Application.
@@ -38,6 +43,22 @@ class App : DaggerApplication() {
 
         // Initial necessary lib by intent service.
         InitializeService.start(this)
+
+        // Initial notification service
+        val intent = Intent(this, NotificationService::class.java)
+        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+    }
+
+    private var notificationService: NotificationService? = null
+    private val serviceConnection = object : ServiceConnection {
+        override fun onServiceDisconnected(name: ComponentName?) {
+            notificationService = null
+        }
+
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            notificationService = (service as NotificationService.NotificationBinder).getService()
+            notificationService?.initNotification()
+        }
     }
 
     override fun onTerminate() {
