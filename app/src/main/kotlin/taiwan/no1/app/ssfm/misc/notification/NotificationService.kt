@@ -17,8 +17,15 @@ import taiwan.no1.app.ssfm.misc.utilies.devices.helper.music.MusicPlayerHelper
  */
 
 class NotificationService : Service() {
-    private lateinit var notificationManager: NotificationManager
-    private lateinit var notificationBuilder: NotificationCompat.Builder
+    private val notificationManager by lazy { getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager }
+    private val notificationBuilder by lazy {
+        NotificationCompat.Builder(applicationContext, "test")
+            .setSmallIcon(PLAYER_ICON)
+            .setContentTitle(applicationContext.packageName.split(".").last())
+            .addAction(actionPlay)
+            .addAction(actionNext)
+            .setOngoing(true)
+    }
     private lateinit var notification: NotificationCompat
     private val binder = NotificationBinder()
     private var musicPlayerHelper: MusicPlayerHelper? = null
@@ -54,16 +61,7 @@ class NotificationService : Service() {
         private const val ACTION_PAUSE = "ACTION_PAUSE"
     }
 
-    fun initNotification() {
-        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        notificationBuilder = NotificationCompat.Builder(applicationContext, "test")
-            .setSmallIcon(PLAYER_ICON)
-            .setContentTitle(applicationContext.packageName.split(".").last())
-            .addAction(actionPlay)
-            .addAction(actionNext)
-            .setOngoing(true)
-
+    fun attatchNotification() {
         notificationManager.notify(NOTIFY_ID, notificationBuilder.build())
     }
 
